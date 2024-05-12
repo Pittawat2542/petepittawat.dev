@@ -1,0 +1,405 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Divider from '../components/Divider.astro';
+import TopicChip from '../components/TopicChip.astro';
+---
+
+<BaseLayout
+	title={`${SITE_TITLE} - Publications`}
+	description={SITE_DESCRIPTION}
+>
+	<section
+		class='prose prose-invert md:prose-lg mx-auto prose-a:text-[color:var(--accent)]'
+	>
+		<h1>Publications</h1>
+		<p class='italic'>Note: <u>Underline</u> denotes equal contribution.</p>
+		<Divider />
+		<h2>Journals</h2>
+		<h3>2024</h3>
+		<ol>
+			<li>
+				<p>
+					Febri Abdullah, <strong>Pittawat Taveekitworachai</strong>, Mury F.
+					Dewantoro, Ruck Thawonmas, Julian Togelius, and Jochen Renz. "<a
+						href='https://ieeexplore.ieee.org/abstract/document/10470422'
+						target='_blank'>1st ChatGPT4PCG Competition</a
+					>." IEEE Transactions on Games (2024).
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Level Generation' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+		</ol>
+		<h3>2023</h3>
+		<ol>
+			<li>
+				<p>
+					Gunt Chanmas, <strong>Pittawat Taveekitworachai</strong>, Pujana
+					Paliyawan, Ramita Thawonmas, Ruck Thawonmas, Chakarida Nukoolkit, and
+					Piyapat Dajpratham. "<a
+						href='https://www.tandfonline.com/doi/full/10.1080/10749357.2023.2165273'
+						target='_blank'
+						>Driving scenarios and environmental settings in simulator-based
+						driving assessment systems for stroke: a systematic review</a
+					>." Topics in stroke rehabilitation 30.8 (2023): 872-880.
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Simulator-based Driving Assessment' />
+					<TopicChip topic='Post-Stroke Driving' />
+				</div>
+			</li>
+		</ol>
+		<Divider />
+		<h2>Conferences</h2>
+		<h3>2024</h3>
+		<ol>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Febri Abdullah, Mury F.
+					Dewantoro, Yi Xia, Pratch Suntichaikul, Ruck Thawonmas, Julian
+					Togelius, and Jochen Renz. "<a
+						href='https://arxiv.org/abs/2403.02610'
+						target='_blank'
+						>ChatGPT4PCG 2 Competition: Prompt Engineering for Science Birds
+						Level Generation</a
+					>." <em>Accepted at</em> 2024 IEEE Conference on Games (CoG). IEEE, 2024.
+					[<a
+						href='https://github.com/orgs/chatgpt4pcg/repositories'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Level Generation' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+			<li>
+				<p>
+					Xiao You, <strong>Pittawat Taveekitworachai</strong>, Siyuan Chen,
+					Mustafa Can Gursesli, Xiaoxu Li, Yi Xia and Ruck Thawonmas. "Dungeons,
+					Dragons, and Emotions: A Preliminary Study of Player Sentiment in
+					LLM-driven TTRPGs." <em>Accepted at</em> the 19th International
+					Conference on the Foundations of Digital Games (FDG '24). 2024.
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='LLM-Powered Games' />
+					<TopicChip topic='Tabletop RPGs' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Peronsality Prompting' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Pratch Suntichaikul,
+					Chakarida Nukoolkit, and Ruck Thawonmmas. "Speed Up! Cost-Effective
+					Large Language Model for ADAS Via Knowledge Distillation." <em
+						>Accepted at</em
+					> 2024 IEEE Intelligent Vehicles Symposium (IV). 2024. [<a
+						href='https://github.com/Pittawat2542/driving-assessment-distillation'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Knowledge Distillation' />
+					<TopicChip topic='Efficient LLMs' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Vector Database' />
+					<TopicChip topic='Advanced Driver-Assistance System' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Febri Abdullah, Mustafa
+					Can Gursesli, Antonio Lanata, Andrea Guazzini, and Ruck Thawonmmas.
+					"Prompt Evolution Through Examples for Large Language Models—A Case
+					Study in Game Comment Toxicity Classification." <em>Accepted at</em> 2024
+					IEEE International Workshop on Metrology for Industry 4.0 & IoT. 2024.
+					[<a
+						href='https://github.com/Pittawat2542/pete-prompt-optimization'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Automatic Prompt Optimization' />
+					<TopicChip topic='Errorful Learning' />
+					<TopicChip topic='Evolutionary Computation' />
+					<TopicChip topic='Toxicity Classification' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+		</ol>
+		<h3>2023</h3>
+		<ol>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>
+					and Ruck Thawonmas. "<a
+						href='https://dl.acm.org/doi/abs/10.1145/3628454.3628456'
+						target='_blank'
+						>Enhancing Novelty in ChatGPT Responses: Incorporating Random Word
+						Brainstorming</a
+					>." Proceedings of the 13th International Conference on Advances in
+					Information Technology. 2023. [<a
+						href='https://github.com/Pittawat2542/chatgpt-idea-random-words'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Creavitity in LLMs' />
+					<TopicChip topic='Random Word Brainstorming' />
+				</div>
+			</li>
+			<li>
+				<p>
+					Chollakorn Nimpattanavong, <strong>Pittawat Taveekitworachai</strong>,
+					Ibrahim Khan, Thai Van Nguyen, Ruck Thawonmas, Worawat Choensawat, and
+					Kingkarn Sookhanaphibarn. "<a
+						href='https://dl.acm.org/doi/abs/10.1145/3628454.3629551'
+						target='_blank'
+						>Am I Fighting Well? Fighting Game Commentary Generation With
+						ChatGPT</a
+					>." Proceedings of the 13th International Conference on Advances in
+					Information Technology. 2023. [<a
+						href='https://github.com/Pittawat2542/chatgpt-game-comment'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='LLM Evaluation' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Game Commentary Generation' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Febri Abdullah, Mury F.
+					Dewantoro, Ruck Thawonmas, Julian Togelius, and Jochen Renz. "<a
+						href='https://ieeexplore.ieee.org/abstract/document/10333206'
+						target='_blank'
+						>ChatGPT4PCG Competition: Character-like Level Generation for
+						Science Birds</a
+					>." 2023 IEEE Conference on Games (CoG). IEEE, 2023. [<a
+						href='https://github.com/orgs/chatgpt4pcg/repositories'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Level Generation' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Febri Abdullah, Mustafa
+					Can Gursesli, Mury F. Dewantoro, Siyuan Chen, Antonio Lanata, Andrea
+					Guazzini, and Ruck Thawonmmas. "<a
+						href='https://link.springer.com/chapter/10.1007/978-3-031-47658-7_26'
+						target='_blank'
+						>What Is Waiting for Us at the End? Inherent Biases of Game Story
+						Endings in Large Language Models</a
+					>." International Conference on Interactive Digital Storytelling.
+					Cham: Springer Nature Switzerland, 2023. [<a
+						href='https://github.com/Pittawat2542/llms-story-generation-ending-biases'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Biases in LLMs' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Story Generation' />
+					<TopicChip topic='LLM Evaluation' />
+					<TopicChip topic='Sentiment Analysis' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Febri Abdullah, Mustafa
+					Can Gursesli, Mury F. Dewantoro, Siyuan Chen, Antonio Lanata, Andrea
+					Guazzini, and Ruck Thawonmmas. "<a
+						href='https://link.springer.com/chapter/10.1007/978-3-031-47658-7_27'
+						target='_blank'
+						>Breaking bad: Unraveling Influences and Risks of User Inputs to
+						ChatGPT for Game Story Generation</a
+					>." International Conference on Interactive Digital Storytelling.
+					Cham: Springer Nature Switzerland, 2023. [<a
+						href='https://github.com/Pittawat2542/chatgpt-words-influence-risks'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Risks in LLMs' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Story Generation' />
+					<TopicChip topic='Adversarial Prompting' />
+					<TopicChip topic='LLM Evaluation' />
+					<TopicChip topic='Sentiment Analysis' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<u>Mustafa Can Gursesli</u>, <u
+						><strong>Pittawat Taveekitworachai</strong></u
+					>, Febri Abdullah, Mury F. Dewantoro, Antonio Lanata, Andrea Guazzini,
+					and Ruck Thawonmmas. "<a
+						href='https://link.springer.com/chapter/10.1007/978-3-031-47658-7_16'
+						target='_blank'
+						>The Chronicles of ChatGPT: Generating and Evaluating Visual Novel
+						Narratives on Climate Change Through ChatGPT</a
+					>." International Conference on Interactive Digital Storytelling.
+					Cham: Springer Nature Switzerland, 2023. [<a
+						href='https://github.com/Pittawat2542/chatgpt-visual-novel-evaluation'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Story Generation' />
+					<TopicChip topic='LLM Evaluation' />
+					<TopicChip topic='Visual Novels' />
+				</div>
+			</li>
+			<li>
+				<p>
+					Xiaoxu Li, Xiao You, Siyuan Chen, <strong
+						>Pittawat Taveekitworachai</strong
+					>, and Ruck Thawonmmas. "<a
+						href='https://link.springer.com/chapter/10.1007/978-3-031-47658-7_20'
+						target='_blank'
+						>Analyzing Audience Comments: Improving Interactive Narrative with
+						ChatGPT</a
+					>." International Conference on Interactive Digital Storytelling.
+					Cham: Springer Nature Switzerland, 2023.
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Audience Participation Games' />
+					<TopicChip topic='Text Classification' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Mustafa Can Gursesli,
+					Febri Abdullah, Siyuan Chen, Federico Cala, Andrea Guazzini, Antonio
+					Lanata, and Ruck Thawonmmas. "<a
+						href='https://ieeexplore.ieee.org/abstract/document/10375663'
+						target='_blank'
+						>Journey of ChatGPT from Prompts to Stories in Games: the Positive,
+						the Negative, and the Neutral</a
+					>." 2023 IEEE 13th International Conference on Consumer
+					Electronics-Berlin (ICCE-Berlin). IEEE, 2023. [<a
+						href='https://github.com/Pittawat2542/chatgpt-game-story-generation'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Biases in LLMs' />
+					<TopicChip topic='Procedural Content Generation' />
+					<TopicChip topic='Story Generation' />
+					<TopicChip topic='LLM Evaluation' />
+					<TopicChip topic='Sentiment Analysis' />
+				</div>
+			</li>
+		</ol>
+		<h3>2022</h3>
+		<ol>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, and Jonathan H. Chan. "<a
+						href='https://ieeexplore.ieee.org/abstract/document/9910314'
+						target='_blank'>Krathu-500: Post-Comments Thai Corpus</a
+					>." 2022 Research, Invention, and Innovation Congress: Innovative
+					Electricals and Electronics (RI2C). IEEE, 2022. [<a
+						href='https://github.com/Pittawat2542/krathu-500'
+						target='_blank'>Research artifacts</a
+					>]
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Natural Language Processing Datasets' />
+					<TopicChip topic='Thai' />
+					<TopicChip topic='Sentiment Analysis' />
+				</div>
+			</li>
+		</ol>
+		<Divider />
+		<h2>Preprints</h2>
+		<h3>2024</h3>
+		<ol>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Febri Abdullah, and Ruck
+					Thawonmas. "<a href='https://arxiv.org/abs/2401.08273' target='_blank'
+						>Large Language Models are Null-Shot Learners</a
+					>." arXiv preprint arXiv:2401.08273 (2024).
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Null-Shot Prompting' />
+					<TopicChip topic='Hallucination in LLMs' />
+					<TopicChip topic='LLM Evaluation' />
+				</div>
+			</li>
+			<li>
+				<p>
+					<strong>Pittawat Taveekitworachai</strong>, Gunt Chanmas, Pujana
+					Paliyawan, Ramita Thawonmas, Chakarida Nukoolkit, Piyapat Dajpratham,
+					and Ruck Thawonmas, "<a
+						href='https://ssrn.com/abstract=4724476'
+						target='_blank'
+						>A Systematic Review of Major Evaluation Metrics for Simulator-Based
+						Automatic Assessment of Driving after Stroke</a
+					>." SSRN 4724476 (2024).
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Simulator-based Driving Assessment' />
+					<TopicChip topic='Post-Stroke Driving' />
+				</div>
+			</li>
+			<li>
+				<p>
+					Gunt Chanmas, <strong>Pittawat Taveekitworachai</strong>, Xiao You,
+					Ruck Thawonmas, Chakarida Nukoolkit, and Piyapat Dajpratham, "<a
+						href='https://ssrn.com/abstract=4711961'
+						target='_blank'
+						>Driving Assistant Using ChatGPT Pre-Generated Messages in
+						Simulator-Based Driving Assessment: Toward Low-Cost Driving
+						Assessment for Stroke Patients</a
+					>." SSRN 4711961 (2024).
+				</p>
+				<div class='flex flex-wrap gap-2'>
+					<TopicChip topic='Large Language Models' />
+					<TopicChip topic='Efficient LLMs' />
+					<TopicChip topic='Prompt Engineering' />
+					<TopicChip topic='Vector Database' />
+					<TopicChip topic='Simulator-based Driving Assessment' />
+				</div>
+			</li>
+		</ol>
+		<Divider />
+	</section>
+</BaseLayout>

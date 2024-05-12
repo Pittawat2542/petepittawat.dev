@@ -1,0 +1,80 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+:root {
+	--accent: #5ab2ff;
+	--white: #f6f5f2;
+	--black: #222831;
+	--black-nav: #153448;
+}
+
+body {
+	font-family: 'Krub', serif;
+	margin: 0;
+	padding: 0;
+	color: var(--white);
+	background: var(--black);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Anuphan', sans-serif;
+	margin-bottom: 0.5rem;
+	line-height: 1.2;
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+	clip: rect(1px 1px 1px 1px);
+	/* maybe deprecated but we need to support legacy browsers */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* modern browsers, clip-path works inwards from each corner */
+	clip-path: inset(50%);
+	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+	white-space: nowrap;
+}
+
+.hero-text-gradient-blue {
+	background: -webkit-linear-gradient(#caf4ff, #5ab2ff);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.hero-text-gradient-purple {
+	background: -webkit-linear-gradient(#ffe6e6, #7469b6);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.hero-text-gradient-orange {
+	background: -webkit-linear-gradient(#ffec9e, #ffaf61);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

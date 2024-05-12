@@ -1,0 +1,29 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogListPage from '../../components/BlogListPage';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const tags = [
+	'All',
+	...new Set(
+		posts
+			.flatMap((post) => post.data.tags)
+			.flat()
+			.sort()
+	),
+];
+---
+
+<BaseLayout title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION}>
+	<BlogListPage client:load posts={posts} tags={tags} />
+</BaseLayout>
+
+<style>
+	li:first-of-type {
+		column-span: all;
+	}
+</style>

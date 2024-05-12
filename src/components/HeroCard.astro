@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+
+const { image, url, title, description, isReverse = false } = Astro.props;
+---
+
+<div
+	class='border border-zinc-300 rounded-xl flex-1 pointer bg-zinc-800 hover:bg-zinc-600 hover:-translate-y-2 group transition-all'
+>
+	<a
+		class={`flex flex-col p-8 lg:p-12 gap-8 pointer items-center${isReverse ? ' 2xl:flex-row-reverse' : ' 2xl:flex-row'}`}
+		href={url}
+	>
+		<Image
+			class='flex-1 w-64 lg:w-72 h-64 lg:h-72 group-hover:scale-110 transition-transform duration-300 ease-in-out'
+			src={image}
+			alt='A cartoon avatar representing a man writing a blog'
+		/>
+		<div class={`flex flex-col flex-3 items-center xl:items-start h-full${isReverse ? ' xl:items-end' : ''}`}>
+			<h1 class='text-2xl lg:text-4xl mb-8 font-bold'>{title}</h1>
+			<p class={`text-lg text-center xl:text-start lg:text-xl${isReverse ? ' xl:text-end' : ''}`}>
+				{description}
+			</p>
+		</div>
+	</a>
+</div>

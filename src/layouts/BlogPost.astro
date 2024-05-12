@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import BaseLayout from './BaseLayout.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, excerpt, date, coverImage } = Astro.props;
+---
+
+<BaseLayout title={`${title} - PETEPITTAWAT.DEV`} description={excerpt}>
+	<article class='mx-auto prose xl:prose-lg prose-invert prose-img:rounded-xl prose-img:shadow-xl prose-a:text-[color:var(--accent)]'>
+		<div class='mb-6'>
+			{coverImage && <img class='rounded-xl' src={coverImage.src} alt='' />}
+		</div>
+		<div>
+			<h1 class="xl:text-4xl">{title}</h1>
+			<p class='italic text-base'>
+				Published on <FormattedDate date={date} />
+			</p>
+			<p class="text-base italic">Authored by <span class="font-bold">Pete</span>. Pittawat Taveekitworachai.</p>
+			<hr />
+			<slot />
+		</div>
+	</article></BaseLayout
+>
