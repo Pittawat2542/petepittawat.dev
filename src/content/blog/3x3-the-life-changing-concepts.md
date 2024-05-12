@@ -1,7 +1,6 @@
 ---
 title: '3x3: The Life-Changing Concepts That Have Driven My Personal and Professional Growth'
-
-date: '2023-04-24T05:08:00.000Z'
+pubDate: '2023-04-24T05:08:00.000Z'
 tags: ["General"]
 excerpt: Life is a journey full of twists and turns, ups and downs, and unexpected surprises. It is a journey that is shaped by various factors, including our personal experiences, values, and skills. Throughout my life, I have learned that there are certain skills and philosophies that have significantly influenced and driven my journey. These skills and philosophies have helped me navigate through the complexities of life, overcome obstacles, and pursue my goals with passion and purpose.
 coverImage: ./3x3-the-life-changing-concepts/cover.jpeg

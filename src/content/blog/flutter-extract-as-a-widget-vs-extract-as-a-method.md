@@ -1,7 +1,7 @@
 ---
 title: "Flutter: Extract as a Widget VS Extract as a Method ใช้แบบไหนดีนะ?"
 
-date: '2020-08-15T12:57:37.000Z'
+pubDate: '2020-08-15T12:57:37.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-extract-as-a-widget-vs-extract-as-a-method/cover.jpeg
 excerpt: 2 วิธีหลัก ๆ ที่เรามักใช้กันในการสร้างความเป็นระเบียบของวิดเจ็ตทรี (Widget tree) ของเรานั่นคือ การแยกส่วนของโค้ดออกเป็นวิดเจ็ต (Extract as a Widget) และการแยกส่วนของโค้ดออกเป็นเมธอด (Extract as a Method) แน่นอนว่าทั้งสองแบบนั้นต่างช่วยให้เราสามารถนำโค้ดไปใช้ซ้ำได้ (Reusable code) แต่ควรจะใช้แบบไหนเมื่อใด และมีอะไรที่ต้องคำนึงถึงบ้าง บทความนี้จะพาไปตอบคำถามนั้น

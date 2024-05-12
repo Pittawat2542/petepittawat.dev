@@ -10,7 +10,7 @@ type BlogListPageProps = {
 			title: string;
 			excerpt: string;
 			tags: string[];
-			date: Date;
+			pubDate: Date;
 			coverImage?: {
 				src: string;
 				width: number;
@@ -72,8 +72,8 @@ export default function BlogListPage({
 							</h4>
 							<p className='italic'>
 								Published on{' '}
-								<time dateTime={post.data.date.toISOString()}>
-									{post.data.date.toLocaleDateString('en-us', {
+								<time dateTime={post.data.pubDate.toISOString()}>
+									{post.data.pubDate.toLocaleDateString('en-us', {
 										year: 'numeric',
 										month: 'short',
 										day: 'numeric',

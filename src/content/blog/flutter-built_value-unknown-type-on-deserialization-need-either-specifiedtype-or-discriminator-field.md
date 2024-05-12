@@ -1,7 +1,7 @@
 ---
 title: "Flutter: วิธีแก้ปัญหาใช้ built_value แล้วเจอ Unknown type on deserialization. Need either specifiedType or discriminator field."
 
-date: '2020-09-05T11:38:45.000Z'
+pubDate: '2020-09-05T11:38:45.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-built_value-unknown-type-on-deserialization-need-either-specifiedtype-or-discriminator-field/cover.jpeg
 excerpt: built_value Package ขวัญใจใครหลาย ๆ คน นี่เป็นหนึ่งใน Source Gen ที่ได้รับความนิยมมากที่สุด Package หนึ่งของชาว Flutter Developer อย่างไรก็ตามการทำงานกับมันอาจไม่ง่ายนัก และไม่ใช่ทุก Error Message ที่อ่านเข้าใจได้ง่าย

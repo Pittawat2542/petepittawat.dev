@@ -1,7 +1,7 @@
 ---
 title: "Flutter: วิธีแก้ปัญหาใช้ built_value แล้วเจอ Deserializing failed due to '_InternalLinkedHashMap <String, dynamic>' is not subtype of type 'Iterable<dynamic>'"
 
-date: '2020-12-31T14:00:18.000Z'
+pubDate: '2020-12-31T14:00:18.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-built_value-deserializing-failed-due-to-interal-linked-hashed-map/cover.jpeg
 excerpt: built_value Package ขวัญใจใครหลาย ๆ คน นี่เป็นหนึ่งใน Source Gen ที่ได้รับความนิยมมากที่สุด Package หนึ่งของชาว Flutter Developer อย่างไรก็ตามการทำงานกับมันอาจไม่ง่ายนัก และไม่ใช่ทุก Error Message ที่อ่านเข้าใจได้ง่าย

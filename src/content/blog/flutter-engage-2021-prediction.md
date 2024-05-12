@@ -1,7 +1,7 @@
 ---
 title: คาดการณ์ Flutter Engage 2021
 
-date: '2021-02-20T13:17:55.000Z'
+pubDate: '2021-02-20T13:17:55.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-engage-2021-prediction/cover.jpeg
 excerpt: อีกไม่นานแล้วสำหรับ Flutter Engage งานใหญ่ประจำปีของ Flutter ที่จะมาอัพเดตรวมถึงปล่อยของใหม่ ๆ ออกมามากมาย ตอนนี้ก็ถึงเวลามาคาดการณ์กันดีกว่าว่าภายในงานจะมีอะไรบ้าง

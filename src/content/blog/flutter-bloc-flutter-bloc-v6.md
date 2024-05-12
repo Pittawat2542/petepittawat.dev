@@ -1,7 +1,7 @@
 ---
 title: "Flutter: bloc และ flutter_bloc v6 มาแล้ว!"
 
-date: '2020-07-27T07:18:30.000Z'
+pubDate: '2020-07-27T07:18:30.000Z'
 tags: ["Flutter", "News"]
 coverImage: ./flutter-bloc-flutter-bloc-v6/cover.jpeg
 excerpt: หลังจากที่ bloc v5 และ flutter_bloc v5 ได้ถูกปล่อยออกมาไม่นาน โดยมีการเปลี่ยนแปลงหลัก ๆ ในการนำ cubit มาเป็นพื้นฐานในการจัดการ State และสร้าง bloc on-top ขึ้นไปนั้น ไม่นานทางคุณ​ Felix Angelov ก็ได้ปล่อย bloc และ flutter_bloc v6 ออกมา โดยการเปลี่ยนแปลงหลัก ๆ จะเป็นการนำ cubit เข้ามาอยู่ภายใน bloc แทนที่จะเป็น Dependency ที่ bloc ไปเรียกใช้งาน นอกจากนี้ยังมีการปรับปรุงอื่น ๆ รวมถึงแก้ไขข้อผิดพลาด จะมีอะไรบ้างนั้นไปดูกันได้เลย

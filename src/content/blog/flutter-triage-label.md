@@ -1,7 +1,7 @@
 ---
 title: "Flutter: Triage Labels (Aug. 2020)"
 
-date: '2020-08-01T06:46:47.000Z'
+pubDate: '2020-08-01T06:46:47.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-triage-label/cover.jpeg
 excerpt: ใครมีโอกาสได้ลองไปกดดู Issues ของ Flutter บน GitHub คงได้เห็น Label มากมาย มีทั้งอันที่อ่านเข้าใจได้ทันที และอันที่อ่านแล้วไม่เข้าใจ ในบทความนี้เราจะมาดูกันว่าแต่ละตัวมีความหมายอย่างไรบ้าง เผื่อใครที่อยากรู้ว่าในอนาคตอันใกล้ Next Release ของ Flutter จะมีอะไรบ้าง หรืออยากช่วย Contribute ให้กับ Flutter

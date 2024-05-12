@@ -1,7 +1,7 @@
 ---
 title: "Flutter: การทำให้ Application รองรับ Dark Mode"
 
-date: '2020-06-10T14:24:58.000Z'
+pubDate: '2020-06-10T14:24:58.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-dark-mode/cover.jpeg
 excerpt: แน่นอนว่าเราควรเคารพการตั้งค่าของผู้ใช้งาน หากผู้ใช้งานตั้งค่าให้ OS เป็น Dark Mode แล้ว ทุกแอพก็ควรเคารพสิ่งนั้น แล้วเราจะสามารถทำแบบนั้นได้อย่างไรบ้างใน Flutter?

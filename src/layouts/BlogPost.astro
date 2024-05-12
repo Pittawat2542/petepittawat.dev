@@ -5,7 +5,7 @@ import BaseLayout from './BaseLayout.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, excerpt, date, coverImage } = Astro.props;
+const { title, excerpt, pubDate, coverImage } = Astro.props;
 ---
 
 <BaseLayout title={`${title} - PETEPITTAWAT.DEV`} description={excerpt}>
@@ -16,7 +16,7 @@ const { title, excerpt, date, coverImage } = Astro.props;
 		<div>
 			<h1 class="xl:text-4xl">{title}</h1>
 			<p class='italic text-base'>
-				Published on <FormattedDate date={date} />
+				Published on <FormattedDate date={pubDate} />
 			</p>
 			<p class="text-base italic">Authored by <span class="font-bold">Pete</span>. Pittawat Taveekitworachai.</p>
 			<hr />

@@ -1,7 +1,7 @@
 ---
 title: "Flutter: Package กับ Plugin ต่างกันยังไงนะ?"
 
-date: '2020-06-14T08:56:11.000Z'
+pubDate: '2020-06-14T08:56:11.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-package-vs-plugin/cover.jpeg
 excerpt: โลกของการพัฒนาซอฟต์แวร์ในปัจจุบัน เราแทบจะไม่เห็นโปรแกรมไหนที่ไม่พึ่งพา Public dependencies ในการพัฒนาอีกแล้ว อย่างน้อย ๆ พวก Utility ต่าง ๆ ในโปรแกรมที่เรามักจะใช้ประจำอย่างเช่น lodash Package ชื่อดังของ Node.js ที่แม้เราจะไม่ได้ใช้โดยตรงแต่หลาย ๆ Package ที่เราใช้ก็อาจจะนำมาใช้เช่นกัน

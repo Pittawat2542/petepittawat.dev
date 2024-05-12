@@ -1,7 +1,7 @@
 ---
 title: "Flask: จัดการกับ Form ให้ง่ายขึ้นด้วย Flask WTForm"
 
-date: '2021-01-23T13:35:16.000Z'
+pubDate: '2021-01-23T13:35:16.000Z'
 tags: ["Python"]
 coverImage: ./python-flask-wtform/cover.jpeg
 excerpt: หากใครที่ได้เริ่มต้นใช้ Flask ร่วมกับ Jinja ซึ่งเป็น Template Engine และต้องจัดการกับ Form คงคุ้นเคยกับ request.form.get("name") อะไรประมาณนี้กันเป็นอย่างดี เพื่อเข้าถึงข้อมูลที่ส่งมาจาก Front-end แน่นอนว่า เมื่อได้รับข้อมูลมาแล้วเราจะต้องมีการ Validate หรือยืนยันว่าข้อมูลเป็นไปตามรูปแบบที่กำหนดไว้หรือไม่อีกครั้ง ก่อนนำข้อมูลไปจัดการต่อ หากเขียนเป็นขั้นตอนคร่าว ๆ เราจะได้ว่า
@@ -110,7 +110,7 @@ parks.html
 
 ขั้นถัดไปเราจะนำข้อมูลออกมาใช้ โดยใน Function `parks()` เราสามารถจัดการกับ Form ได้ผ่าน `simple_form` ที่เราสร้างขึ้นมา
 
-```pytohn
+```python
     @app.route("/parks", methods=["GET", "POST"])
     def parks():
         simple_form = SimpleForm()

@@ -1,7 +1,7 @@
 ---
 title: "Dart: Sound Null Safety กำลังมาใน Dart 2.9!"
 
-date: '2020-06-11T10:50:00.000Z'
+pubDate: '2020-06-11T10:50:00.000Z'
 tags: ["Dart"]
 coverImage: ./dart-sound-null-safety/cover.jpeg
 excerpt: หลายครั้งที่เรามักจะมีปัญหาโดยมีสาเหตุมาจาก Null เพราะว่าตอนเขียนโปรแกรมเราไม่อาจรู้ได้เลยว่าตัวแปรที่ส่งมาจะเป็น Null หรือไม่ รู้ตัวอีกทีก็ตอน runtime ที่โปรแกรม Error ให้ผู้ใช้เห็นไปแล้ว Null safety จะมาเปลี่ยนแปลงสิ่งเหล่านั้นไป

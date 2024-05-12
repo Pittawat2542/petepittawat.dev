@@ -1,7 +1,7 @@
 ---
 title: "Flutter: จดจำตำแหน่งการ Scroll ใน ListView ด้วย PageStorageKey"
 
-date: '2020-05-27T15:06:45.000Z'
+pubDate: '2020-05-27T15:06:45.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-save-scroll-position-listview/cover.jpeg
 excerpt: หลาย ๆ คนคงเคยใช้แอพพลิเคชันที่จดจำตำแหน่งที่เรา scroll ไว้ เมื่อเราเปลี่ยนแท็บและกลับมาที่แท็บเดิม เช่น Facebook เป็นต้น ในบทความนี้จะพาไปดูกันว่าเราจะทำแบบนั้นได้อย่างไรบ้างใน Flutter ของเรา

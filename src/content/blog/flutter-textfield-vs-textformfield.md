@@ -1,7 +1,7 @@
 ---
 title: "Flutter: TextField vs TextFormField ใช้ตัวไหนดีนะ?"
 
-date: '2020-06-20T12:54:25.000Z'
+pubDate: '2020-06-20T12:54:25.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-textfield-vs-textformfield/cover.jpeg
 excerpt: หลาย ๆ คนที่อยากจะรับข้อความสั้น ๆ จากผู้ใช้งาน อาจจะรู้สึกสับสนว่าจะใช้ Widget ใน Flutter เนื่องจาก มีทั้ง TextFormField และ TextField ให้เลือกใช้งาน ในบทความนี้เราจะมาหาคำตอบกัน

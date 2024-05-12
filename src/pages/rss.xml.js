@@ -11,7 +11,6 @@ export async function GET(context) {
 		site: context.site,
 		items: posts.map((post) => ({
 			...post.data,
-			pubDate: new Date(post.date).toUTCString(),
 			link: `/blog/${post.slug}/`,
 		})),
 	});

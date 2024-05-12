@@ -1,7 +1,7 @@
 ---
 title: "Flutter: Flexible vs Expanded"
 
-date: '2020-07-03T09:15:38.000Z'
+pubDate: '2020-07-03T09:15:38.000Z'
 tags: ["Flutter"]
 coverImage: ./flutter-flexible-vs-expanded/cover.jpeg
 excerpt: บางครั้งเราต้องการให้ Widget ของเรา Take space ที่เหลือทั้งหมดของ Column/Row นั้น ๆ หรือ เราอาจต้องการให้ Widget แต่ละส่วนใน​ Column/Row ใช้ Space เท่า ๆ กัน แน่นอนว่า Widget 2 ตัว ที่มักถูกใช้รับมือกับสถานการณ์แบบนี้ คงหนีไม่พ้น Flexible และ Expanded แล้วทั้งสองตัวนี้ต่างกันอย่างไร?

@@ -1,7 +1,7 @@
 ---
 title: "Flutter: มีอะไรใหม่บ้างในเวอร์ชัน 1.17"
 
-date: '2020-05-22T13:25:25.000Z'
+pubDate: '2020-05-22T13:25:25.000Z'
 tags: ["Flutter", "News"]
 coverImage: ./flutter-whats-new-in-1-17/cover.jpeg
 excerpt: Flutter 1.17 ถือได้ว่าเป็น major stable version แรกของ Flutter ที่ทำการปล่อยออกมาในปีนี้ (2020) และเป็นเวอร์ชันแรกที่เปลี่ยนมาใช้การนับเลขเวอร์ชันแบบใหม่อีกด้วย

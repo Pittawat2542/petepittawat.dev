@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogListPage from '../../components/BlogListPage';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const tags = [
 	'All',

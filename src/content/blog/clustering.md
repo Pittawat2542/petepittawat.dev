@@ -1,7 +1,7 @@
 ---
 title: K-Means Clustering VS Hierarchical Clustering สองอย่างนี้ต่างกันยังไง
 
-date: '2020-10-31T09:28:06.000Z'
+pubDate: '2020-10-31T09:28:06.000Z'
 tags: ["AI", "Data Science"]
 coverImage: ./clustering/cover.jpeg
 excerpt: สำหรับ Unsupervised Learning แล้ว เราคงหนีไม่พ้นการทำ Clustering เพื่อหากลุ่มตามธรรมชาติของข้อมูล ซึ่งทำให้เราสามารถเข้าใจและได้ Insight ใหม่ ๆ จากข้อมูลเหล่านั้น ตัวอย่างในการทำ Clustering ที่เรามักพบเห็นได้บ่อยก็จะเป็น K-Means Clustering และ Hierarchical Clustering แต่ว่าจริง ๆ แล้วทั้งสองแบบนั้นทำงานแตกต่างกันอย่างไร

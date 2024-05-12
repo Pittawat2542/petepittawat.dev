@@ -1,7 +1,7 @@
 ---
 title: 'From Assistant to Collaborator: How Natural Language Agents Shape the World'
 
-date: '2023-05-28T05:11:15.000Z'
+pubDate: '2023-05-28T05:11:15.000Z'
 tags: ["General"]
 excerpt: Natural language agents like Siri and Alexa are evolving through generative models and transformers, generating human-like responses and revolutionizing language processing. The future of these agents involves multi-modal capabilities for interacting with the physical world in healthcare and disaster relief. Responsible development and ethical use are important due to the agents' potential and risks, including the possibility of sentient AI models.
 coverImage: ./ai-collaborator/cover.jpeg

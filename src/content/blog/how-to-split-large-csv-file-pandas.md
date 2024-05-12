@@ -1,6 +1,6 @@
 ---
 title: 'How to Split Large CSV Files into Equal Number of Rows using Pandas: A Step-by-Step Guide'
-date: '2023-04-23T11:09:00.000Z'
+pubDate: '2023-04-23T11:09:00.000Z'
 tags: ["Python"]
 coverImage: ./how-to-split-large-csv-file-pandas/cover.jpeg
 excerpt: When working with large datasets in CSV format, it can be challenging to process them efficiently. One solution to this problem is to split the large CSV file into smaller files with an equal number of rows using the Pandas library. This tutorial will show you how to split a large CSV file into smaller ones based on the given code.

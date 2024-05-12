@@ -1,7 +1,7 @@
 ---
 title: Parameter VS Argument มันต่างกันยังไงนะ !?
 
-date: '2020-05-27T14:36:46.000Z'
+pubDate: '2020-05-27T14:36:46.000Z'
 tags: ["Computer Science"]
 coverImage: ./parameter-vs-argument/cover.jpeg
 excerpt: หลาย ๆ คนเขียนโปรแกรมมาสักพักย่อมหนีไม่พ้นที่จะสร้าง function (method/procerdure ในภาษาอื่น ๆ แต่ในบทความนี้จะขอใช้คำว่า function) ขึ้นมาใช้งาน ทั้งเพื่อการลดความซ้ำซ้อนของโค้ดชุดเดิม ๆ เพื่อให้เราสามารถนำไป reuse ได้ง่ายยิ่งขึ้น หรือจะเพื่อการ encapsulate ซ่อน logic ในการทำงานก็ตาม แน่นอนละว่าหลายครั้งที่เราสร้าง function ขึ้นมา เราต้องการที่จะรับข้อมูลรับเข้า (input) อะไรบางอย่างเข้ามาใน function ด้วย
