@@ -34,12 +34,12 @@ export default function BlogListPage({
 
 	return (
 		<section className='mx-auto w-fit flex flex-col md:mx-4 xl:mx-32 2xl:mx-64'>
-			<p className='italic text-end'>{posts.length} entries</p>
+			<p className='italic text-end'>{filteredPosts.length} entries</p>
 			<hr className='block h-[1px] border-0 border-t mt-2 p-0 border-t-zinc-600' />
 			<div className='mt-4 flex flex-wrap gap-2 justify-center'>
 				{tags.map((tag) => (
 					<button
-						className={`color:var(--white) inline-block px-2 py-1 text-sm bg-zinc-600 first:bg-inherit first:border-2 first:border-zinc-300 text-zinc-100 rounded-lg mb-2 transition-colors duration-200 ease-in-out hover:bg-zinc-700${
+						className={`color:var(--white) inline-block px-2 py-1 text-sm bg-zinc-600 first:bg-inherit first:border-2 first:border-zinc-300 text-zinc-100 min-w-10 rounded-lg mb-2 transition-colors duration-200 ease-in-out hover:bg-zinc-700${
 							selectedTag === tag
 								? ' bg-zinc-300 first:bg-zinc-300 first:hover:bg-zinc-300 cursor-not-allowed text-zinc-900'
 								: ''
@@ -55,7 +55,7 @@ export default function BlogListPage({
 			<ul className='columns-1 xl:columns-2 2xl:columns-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
 				{filteredPosts.map((post) => (
 					<li
-						className='pointer border border-zinc-600 shadow-xl rounded-3xl hover:bg-zinc-700 hover:-translate-y-2 mb-6 md:mb-8 break-inside-avoid-column transition-all duration-100 ease-in-out'
+						className='mx-auto pointer border border-zinc-600 shadow-xl rounded-3xl hover:bg-zinc-700 hover:-translate-y-2 mb-6 md:mb-8 break-inside-avoid-column transition-all duration-100 ease-in-out max-w-md w-auto hyphens-auto'
 						key={post.data.title}
 					>
 						<a
