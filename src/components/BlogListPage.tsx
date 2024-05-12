@@ -36,12 +36,12 @@ export default function BlogListPage({
 		<section className='mx-auto w-fit flex flex-col md:mx-4 xl:mx-32 2xl:mx-64'>
 			<p className='italic text-end'>{filteredPosts.length} entries</p>
 			<hr className='block h-[1px] border-0 border-t mt-2 p-0 border-t-zinc-600' />
-			<div className='mt-4 flex flex-wrap gap-2 justify-center'>
+			<div className='mt-4 flex flex-wrap gap-2 justify-center max-w-5xl 2xl:max-w-6xl'>
 				{tags.map((tag) => (
 					<button
-						className={`color:var(--white) inline-block px-2 py-1 text-sm bg-zinc-600 first:bg-inherit first:border-2 first:border-zinc-300 text-zinc-100 min-w-10 rounded-lg mb-2 transition-colors duration-200 ease-in-out hover:bg-zinc-700${
+						className={`color:var(--white) inline-block px-2 py-1 text-sm bg-zinc-600 first:bg-inherit first:border-2 first:border-zinc-300 text-zinc-100 min-w-12 rounded-lg mb-2 transition-colors duration-200 ease-in-out hover:bg-slate-300 hover:text-zinc-900${
 							selectedTag === tag
-								? ' bg-zinc-300 first:bg-zinc-300 first:hover:bg-zinc-300 cursor-not-allowed text-zinc-900'
+								? ' first:bg-zinc-300 first:hover:bg-zinc-300 bg-slate-300 hover:bg-slate-300 cursor-not-allowed text-zinc-900'
 								: ''
 						}`}
 						key={tag}
@@ -52,10 +52,10 @@ export default function BlogListPage({
 				))}
 			</div>
 			<hr className='block h-[1px] border-0 border-t mt-2 mb-4 p-0 border-t-zinc-600' />
-			<ul className='columns-1 xl:columns-2 2xl:columns-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
+			<ul className='columns-1 lg:columns-2 2xl:columns-3 gap-6 md:gap-8 py-4 mt-4 max-w-5xl mx-auto'>
 				{filteredPosts.map((post) => (
 					<li
-						className='mx-auto pointer border border-zinc-600 shadow-xl rounded-3xl hover:bg-zinc-700 hover:-translate-y-2 mb-6 md:mb-8 break-inside-avoid-column transition-all duration-100 ease-in-out max-w-md w-auto hyphens-auto'
+						className='mx-auto pointer border border-zinc-600 shadow-xl rounded-3xl hover:bg-zinc-700 hover:-translate-y-2 mb-6 md:mb-8 break-inside-avoid-column transition-all duration-100 ease-in-out md:max-w-lg lg:max-w-md w-auto hyphens-auto'
 						key={post.data.title}
 					>
 						<a
