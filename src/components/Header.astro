@@ -3,6 +3,7 @@ import HeaderLink from './HeaderLink.astro';
 import logoImage from '../assets/images/logo.png';
 import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
+import { BookText, Home, MicVocal, ScrollText, User } from 'lucide-astro';
 ---
 
 <header
@@ -22,10 +23,18 @@ import { Image } from 'astro:assets';
 			>
 		</h2>
 		<div class='flex gap-8 overflow-x-auto'>
-			<HeaderLink class="hidden md:inline-block" href='/'>Home</HeaderLink>
-			<HeaderLink href='/blog'>Blog</HeaderLink>
-			<HeaderLink href='/publications'>Publications</HeaderLink>
-			<HeaderLink href='/about'>About</HeaderLink>
+			<HeaderLink class='hidden md:flex' href='/'
+				><Home class='hidden lg:inline-block' />Home</HeaderLink
+			>
+			<HeaderLink href='/blog'
+				><BookText class='hidden lg:inline-block' />Blog</HeaderLink
+			>
+			<HeaderLink href='/publications'
+				><ScrollText class='hidden lg:inline-block' />Publications</HeaderLink
+			>
+			<HeaderLink href='/about'
+				><User class='hidden lg:inline-block' />About</HeaderLink
+			>
 		</div>
 	</nav>
 </header>
