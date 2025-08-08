@@ -15,11 +15,12 @@ const { title, description } = Astro.props;
 		<link rel='sitemap' href='/sitemap-index.xml' />
 	</head>
 
-	<body>
-		<Header />
-		<main class='m-0 px-8 md:px-16 mx-auto mt-24 my-10'>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+        <body>
+                <a href="#main-content" class="skip-link">Skip to content</a>
+                <Header />
+                <main id="main-content" class='px-8 md:px-16 mx-auto mt-24 mb-10 max-w-screen-xl'>
+                        <slot />
+                </main>
+                <Footer />
+        </body>
 </html>
