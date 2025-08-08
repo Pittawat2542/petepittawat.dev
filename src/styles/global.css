@@ -17,9 +17,19 @@ body {
 	margin: 0;
 	padding: 0;
 	color: var(--white);
-	background: var(--black);
-	word-wrap: break-word;
-	overflow-wrap: break-word;
+        background: radial-gradient(at top left, var(--black-nav), var(--black));
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+}
+
+a {
+        color: var(--accent);
+        text-decoration: none;
+        transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+        text-decoration: underline;
 }
 
 h1,
@@ -59,6 +69,21 @@ img {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+.skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--accent);
+        color: var(--black);
+        padding: 0.5rem 1rem;
+        z-index: 100;
+        transition: top 0.3s ease-in-out;
+}
+
+.skip-link:focus {
+        top: 0;
 }
 
 .hero-text-gradient-blue {
