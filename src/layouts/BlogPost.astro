@@ -11,7 +11,7 @@ const { title, excerpt, pubDate, coverImage } = Astro.props;
 <BaseLayout title={`${title} - PETEPITTAWAT.DEV`} description={excerpt}>
 	<article class='mx-auto prose xl:prose-lg prose-invert prose-img:rounded-xl prose-img:shadow-xl prose-a:text-[color:var(--accent)]'>
 		<div class='mb-6'>
-			{coverImage && <img class='rounded-xl' src={coverImage.src} alt='' />}
+			{coverImage && <img class='rounded-xl' src={coverImage.src} alt={title} />}
 		</div>
 		<div>
 			<h1 class="xl:text-4xl">{title}</h1>
