@@ -39,11 +39,11 @@ export default function BlogListPage({
 			<div className='mt-4 flex flex-wrap gap-2 justify-center max-w-5xl 2xl:max-w-6xl'>
 				{tags.map((tag) => (
 					<button
-						className={`color:var(--white) inline-block px-2 py-1 text-sm bg-zinc-600 first:bg-inherit first:border-2 first:border-zinc-300 text-zinc-100 min-w-12 rounded-lg mb-2 transition-colors duration-200 ease-in-out hover:bg-slate-300 hover:text-zinc-900${
-							selectedTag === tag
-								? ' first:bg-zinc-300 first:hover:bg-zinc-300 bg-slate-300 hover:bg-slate-300 cursor-not-allowed text-zinc-900'
-								: ''
-						}`}
+                                                className={`text-[color:var(--white)] inline-block px-2 py-1 text-sm bg-zinc-600 first:bg-inherit first:border-2 first:border-zinc-300 text-zinc-100 min-w-12 rounded-lg mb-2 transition-colors duration-200 ease-in-out hover:bg-slate-300 hover:text-zinc-900${
+                                                        selectedTag === tag
+                                                                ? ' first:bg-zinc-300 first:hover:bg-zinc-300 bg-slate-300 hover:bg-slate-300 cursor-not-allowed text-zinc-900'
+                                                                : ''
+                                                }`}
 						key={tag}
 						onClick={() => setSelectedTag(tag)}
 					>
