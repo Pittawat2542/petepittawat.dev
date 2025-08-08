@@ -7,20 +7,20 @@ const { image, url, title, description, isReverse = false } = Astro.props;
 <div
         class='border-2 border-[var(--accent)] rounded-xl flex-1 pointer bg-[color:var(--black-nav)] hover:bg-[color:var(--black)] hover:-translate-y-2 group transition-all duration-300 shadow-md hover:shadow-[0_0_15px_var(--accent)]'
 >
-	<a
-		class={`flex flex-col p-8 lg:p-12 gap-8 pointer items-center${isReverse ? ' 2xl:flex-row-reverse' : ' 2xl:flex-row'}`}
-		href={url}
-	>
+       <a
+               class={`flex w-full flex-col p-8 lg:p-12 gap-8 pointer items-center${isReverse ? ' 2xl:flex-row-reverse' : ' 2xl:flex-row'}`}
+               href={url}
+       >
                 <Image
                         class='flex-1 w-64 lg:w-72 h-64 lg:h-72 group-hover:scale-110 transition-transform duration-300 ease-in-out'
                         src={image}
                         alt={title}
                 />
-		<div class={`flex flex-col flex-3 items-center 2xl:items-start h-full${isReverse ? ' 2xl:items-end' : ''}`}>
-			<h1 class='text-2xl lg:text-4xl mb-8 font-bold'>{title}</h1>
-			<p class={`text-lg text-center xl:text-start lg:text-xl${isReverse ? ' 2xl:text-end' : ''}`}>
-				{description}
-			</p>
-		</div>
-	</a>
+               <div class={`flex w-full flex-col flex-3 items-center 2xl:items-start h-full${isReverse ? ' 2xl:items-end' : ''}`}>
+                       <h1 class='text-2xl lg:text-4xl mb-8 font-bold'>{title}</h1>
+                       <p class={`text-lg text-center xl:text-start lg:text-xl break-words hyphens-auto${isReverse ? ' 2xl:text-end' : ''}`}>
+                               {description}
+                       </p>
+               </div>
+       </a>
 </div>
