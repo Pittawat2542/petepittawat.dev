@@ -6,10 +6,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-	--accent: #5ab2ff;
-	--white: #f6f5f2;
-	--black: #222831;
-	--black-nav: #153448;
+	--accent: #3B82F6;
+	--white: #F9FAFB;
+	--black: #111827;
+	--black-nav: #1F2937;
 }
 
 body {
@@ -17,9 +17,9 @@ body {
 	margin: 0;
 	padding: 0;
 	color: var(--white);
-        background: radial-gradient(at top left, var(--black-nav), var(--black));
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+	background-color: var(--black);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 a {
