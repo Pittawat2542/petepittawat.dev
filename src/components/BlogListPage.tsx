@@ -29,11 +29,11 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         ? posts
                         : posts.filter((post) => post.data.tags.includes(selectedTag));
 
-        return (
-                <section className='mx-auto w-fit flex flex-col md:mx-4 xl:mx-32 2xl:mx-64'>
+       return (
+               <section className='flex w-full flex-col'>
                         <p className='italic text-end'>{filteredPosts.length} entries</p>
                         <hr className='block h-[1px] border-0 border-t mt-2 p-0 border-t-zinc-600' />
-                        <div className='mt-4 flex flex-wrap gap-2 justify-center max-w-5xl 2xl:max-w-6xl'>
+                       <div className='mt-4 flex flex-wrap gap-2 justify-center'>
                                 {tags.map((tag) => (
                                         <button
                                                 key={tag}
@@ -46,7 +46,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 ))}
                         </div>
                         <hr className='block h-[1px] border-0 border-t mt-2 mb-4 p-0 border-t-zinc-600' />
-                        <ul className='columns-1 lg:columns-2 2xl:columns-3 gap-6 md:gap-8 py-4 mt-4 max-w-5xl mx-auto'>
+                       <ul className='columns-1 lg:columns-2 2xl:columns-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
                                 {filteredPosts.map((post) => (
                                         <li
                                                 key={post.data.title}
