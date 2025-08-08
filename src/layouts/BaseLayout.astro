@@ -5,7 +5,10 @@ import Header from '../components/Header.astro';
 
 
 const { title, description } = Astro.props;
-const ogImage = '/home-og-image.jpeg';
+const ogImagePath = '/home-og-image.jpeg';
+const ogImage = Astro.site
+  ? new URL(ogImagePath, Astro.site).href
+  : ogImagePath;
 ---
 
 <!doctype html>
