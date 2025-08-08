@@ -59,7 +59,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                                         <img
                                                                 className='rounded-xl mb-6'
                                                                 src={post.data.coverImage?.src}
-                                                                alt=''
+                                                                alt={post.data.title}
                                                         />
                                                         <h4 className='text-2xl md:text-3xl font-bold mb-4'>
                                                                 {post.data.title}
