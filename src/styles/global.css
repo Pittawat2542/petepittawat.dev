@@ -178,6 +178,26 @@ html {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.25);
 }
 
+/* Subtle highlight for first/co-first author publications */
+.first-author {
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent) !important;
+  box-shadow: 0 6px 16px -8px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+/* Smooth expand/collapse for details sections */
+.collapsible {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms ease, opacity 220ms ease;
+  opacity: 0.6;
+  overflow: hidden;
+}
+.collapsible.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.collapsible > div { min-height: 0; }
+
 /* Small glass chips (e.g., tags) */
 .glass-chip {
   @apply rounded-full px-2 py-0.5 text-xs;
