@@ -4,15 +4,13 @@ import { Image } from 'astro:assets';
 const { image, url, title, description, isReverse = false } = Astro.props;
 ---
 
-<div
-        class='rounded-2xl flex-1 pointer bg-[color:var(--black-nav)]/90 backdrop-blur-sm ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:-translate-y-1 group transition-all duration-300 shadow-sm'
->
+<div class='flex-1 cursor-pointer glass-card group'>
        <a
                class={`flex w-full flex-col p-8 lg:p-12 gap-8 pointer items-center${isReverse ? ' 2xl:flex-col-reverse' : ' 2xl:flex-col'}`}
                href={url}
        >
-                <Image
-                        class='flex-1 w-64 lg:w-72 h-64 lg:h-72 rounded-xl group-hover:scale-105 transition-transform duration-300 ease-in-out'
+               <Image
+                        class='flex-1 w-64 lg:w-72 h-64 lg:h-72 rounded-xl transition-transform duration-300 ease-in-out group-hover:scale-105'
                         src={image}
                         alt={title}
                 />

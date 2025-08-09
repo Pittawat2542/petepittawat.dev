@@ -22,8 +22,4 @@ const tags = [
 	<BlogListPage client:load posts={posts} tags={tags} />
 </BaseLayout>
 
-<style>
-	li:first-of-type {
-		column-span: all;
-	}
-</style>
+<!-- Removed column-span styling now that list uses CSS grid -->

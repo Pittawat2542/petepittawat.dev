@@ -48,21 +48,25 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 ))}
                         </div>
                         <hr className='block h-px border-0 border-t mt-2 mb-4 p-0 border-[color:var(--white)]/10' />
-                       <ul className='columns-1 lg:columns-2 2xl:columns-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
+                       <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
                                 {filteredPosts.map((post) => (
                                         <li
                                                 key={post.data.title}
-                                                className='mx-auto pointer rounded-3xl bg-[color:var(--black-nav)]/80 backdrop-blur-sm ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:-translate-y-1 shadow-sm mb-6 md:mb-8 break-inside-avoid-column transition-all duration-200 ease-in-out md:max-w-lg lg:max-w-md w-auto hyphens-auto'
+                                                className='cursor-pointer glass-card group w-full h-full hyphens-auto'
                                         >
                                                 <a
                                                         className='flex flex-col align-middle p-6 h-full'
                                                         href={`/blog/${post.slug}/`}
                                                 >
-                                                        <img
-                                                                className='rounded-xl mb-6'
-                                                                src={post.data.coverImage?.src}
-                                                                alt={post.data.title}
-                                                        />
+                                                        {post.data.coverImage?.src ? (
+                                                          <div className='mb-6 overflow-hidden rounded-xl'>
+                                                            <img
+                                                              className='w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-[1.03]'
+                                                              src={post.data.coverImage.src}
+                                                              alt={post.data.title}
+                                                            />
+                                                          </div>
+                                                        ) : null}
                                                         <h4 className='text-2xl md:text-3xl font-bold tracking-tight mb-2'>
                                                                 {post.data.title}
                                                         </h4>
@@ -76,7 +80,9 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                                                         })}
                                                                 </time>
                                                         </p>
-                                                        <p className='mt-3 text-justify leading-6 text-[color:var(--white)]/80'>{post.data.excerpt}</p>
+                                                        <p className='mt-3 text-justify leading-6 text-[color:var(--white)]/80'>
+                                                          {post.data.excerpt}
+                                                        </p>
                                                 </a>
                                         </li>
                                 ))}
