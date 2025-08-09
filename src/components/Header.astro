@@ -34,12 +34,13 @@ const isActive = (href: string) =>
                   backdrop-blur-md shadow-lg shadow-black/10 px-2 py-2 pr-3
                   transition-[background,box-shadow,transform] duration-300 ease-out
                   data-[scrolled=true]:shadow-black/20 data-[scrolled=true]:backdrop-blur-lg
-                  overflow-x-auto scrollbar-none
+                  overflow-x-auto overscroll-x-contain scrollbar-none
+                  snap-x snap-proximity md:snap-none
                   [mask-image:linear-gradient(to_right,transparent_0,black_12px,black_calc(100%-12px),transparent_100%)]">
         <a href="/" aria-label="Go to homepage"
            class="group text-[color:var(--white)] flex min-w-0 gap-2 items-center rounded-full px-3 py-2
                   hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
-                  focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30">
+                  focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 snap-start">
           <Image class="h-6 w-6 shrink-0 transition-transform motion-safe:group-hover:scale-105"
                  src={logoImage} alt="Main logo of PETEPITTAWAT.DEV" />
           <span class="hidden md:inline whitespace-nowrap md:ml-1 font-medium max-w-[40vw] truncate">
@@ -50,15 +51,15 @@ const isActive = (href: string) =>
         <ul class="ml-3 sm:ml-4 md:ml-6 flex items-center gap-1">
           {links.map(({ href, label, Icon }) => (
             <li>
-              <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label}>
-                <Icon class="inline-block md:hidden" aria-hidden="true" />
+              <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label} class="snap-start">
+                <Icon class="inline-block md:hidden h-[1.15rem] w-[1.15rem]" aria-hidden="true" />
                 <span class="hidden md:inline">{label}</span>
               </HeaderLink>
             </li>
           ))}
         </ul>
 
-        <div class="ml-3 pl-3 mr-2 shrink-0 sm:border-s border-[color:var(--white)]/10">
+        <div class="ml-3 pl-3 mr-2 shrink-0 sm:border-s border-[color:var(--white)]/10 snap-start">
           <ThemeToggle
             class="rounded-xl p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
             aria-label="Toggle theme"

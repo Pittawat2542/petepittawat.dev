@@ -37,15 +37,23 @@ export default function Filter({ q, setQ, filters, setFilters, filterOptions, pl
         />
       </label>
       {/* Filters */}
-      <div className="flex gap-2">
-        {Object.entries(filterOptions).map(([key, options]) => (
-          <label key={key} className="relative">
+      <div className="-mx-1 px-1 flex gap-2 overflow-x-auto md:overflow-visible scrollbar-none md:flex-wrap">
+        {Object.entries(filterOptions).map(([key, options]) => {
+          const selected = filters[key] || 'all';
+          const selectedLabel = selected === 'all' ? `All ${key}s` : selected;
+          return (
+          <label key={key} className="relative shrink-0 w-[60vw] max-w-[60vw] sm:w-auto sm:max-w-none">
             <span className="sr-only">Filter by {key}</span>
             <select
               title={`Filter by ${key}`}
               value={filters[key] || 'all'}
               onChange={(e) => setFilters((f) => ({ ...f, [key]: e.target.value }))}
-              className="select-glass bg-transparent px-2 py-2 text-sm"
+              className="select-glass bg-transparent px-2 py-2 text-sm w-full truncate"
+              aria-label={`Filter by ${key}: ${selectedLabel}`}
+              // Tooltip with full value on hover/long-press
+              data-selected={selectedLabel}
+              onFocus={(e) => (e.currentTarget.title = selectedLabel)}
+              onMouseEnter={(e) => (e.currentTarget.title = selectedLabel)}
             >
               <option value="all">All {key}s</option>
               {options.map((option) => (
@@ -70,7 +78,7 @@ export default function Filter({ q, setQ, filters, setFilters, filterOptions, pl
               <path d="m7 10 5 5 5-5"></path>
             </svg>
           </label>
-        ))}
+        );})}
       </div>
     </div>
   );

@@ -236,6 +236,7 @@ html {
   color: var(--white);
   border-radius: 0.5rem; /* md */
   transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  max-width: 100%;
 }
 .input-glass:focus,
 .select-glass:focus {
@@ -251,4 +252,8 @@ html {
   -webkit-appearance: none;
   -moz-appearance: none;
   padding-right: 2rem; /* space for chevron */
+  /* Help long selected values not blow up layout */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
