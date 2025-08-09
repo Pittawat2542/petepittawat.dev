@@ -195,6 +195,9 @@ html {
 .scrollbar-none { scrollbar-width: none; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
 
+/* Avoid hover float on modal cards */
+.modal-card:hover { transform: none; }
+
 /* Subtle highlight for first/co-first author publications */
 .first-author {
   border-color: color-mix(in oklab, var(--accent) 55%, transparent) !important;
