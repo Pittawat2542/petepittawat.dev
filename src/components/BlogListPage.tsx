@@ -92,21 +92,49 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         </div>
                         <p className='italic text-end opacity-80 mt-2'>{filteredPosts.length} entries</p>
                         <hr className='block h-px border-0 border-t mt-2 p-0 border-[color:var(--white)]/10' />
-                       <div className='mt-4 flex flex-wrap gap-2 justify-center'>
-                                {tags.map((tag) => {
-                                  const active = tag === 'All' ? selectedTags.size === 0 : selectedTags.has(tag);
-                                  return (
-                                    <Button
-                                      key={tag}
-                                      variant="pill"
-                                      onClick={() => toggleTag(tag)}
-                                      className={`mb-2 min-w-12 ${active ? 'ring-[color:var(--accent)] text-[color:var(--accent)]' : ''}`}
-                                    >
-                                      {tag}
-                                    </Button>
-                                  );
-                                })}
+                        
+                        {/* Improved Tag Selection Pane */}
+                        <div className='mt-6 mb-4'>
+                          <div className='flex items-center justify-between mb-3'>
+                            <h3 className='font-medium text-sm opacity-80'>Filter by tags</h3>
+                            {selectedTags.size > 0 && (
+                              <button 
+                                onClick={() => setSelectedTags(new Set())}
+                                className='text-xs opacity-70 hover:opacity-100 transition-opacity'
+                              >
+                                Clear all
+                              </button>
+                            )}
+                          </div>
+                          <div className='flex flex-wrap gap-2'>
+                            {tags.map((tag) => {
+                              const active = tag === 'All' ? selectedTags.size === 0 : selectedTags.has(tag);
+                              const tagCount = tag === 'All' 
+                                ? posts.length 
+                                : posts.filter(post => post.data.tags.includes(tag)).length;
+                              
+                              return (
+                                <button
+                                  key={tag}
+                                  onClick={() => toggleTag(tag)}
+                                  className={`
+                                    flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-all duration-200
+                                    ${active 
+                                      ? 'bg-[color:var(--accent)] text-black font-medium' 
+                                      : 'bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)]'}
+                                    ${tag === 'All' ? 'font-medium' : ''}
+                                  `}
+                                >
+                                  <span>{tag}</span>
+                                  <span className={`text-xs ${active ? 'text-black/80' : 'opacity-70'}`}>
+                                    {tagCount}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
                         </div>
+                        
                         <hr className='block h-px border-0 border-t mt-2 mb-4 p-0 border-[color:var(--white)]/10' />
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
                                 {filteredPosts.map((post) => (
