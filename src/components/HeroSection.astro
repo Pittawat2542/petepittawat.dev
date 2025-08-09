@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import profileImage from '../assets/images/profile.jpg';
+---
+
+<section class='relative reveal mt-12 md:mt-16 flex flex-col-reverse md:flex-row gap-12 md:gap-16 items-center justify-center md:justify-between px-8 mx-auto max-w-screen-lg'>
+  <!-- Decorative background blobs -->
+  <div aria-hidden='true' class='pointer-events-none absolute -z-10 inset-0 overflow-hidden'>
+    <div class='absolute -top-24 -left-24 h-72 w-72 rounded-full blur-3xl opacity-30'
+      style="background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 50%, transparent), transparent 70%);">
+    </div>
+    <div class='absolute -bottom-16 -right-28 h-80 w-80 rounded-full blur-3xl opacity-25'
+      style="background: radial-gradient(closest-side, color-mix(in oklab, var(--white) 22%, transparent), transparent 70%);">
+    </div>
+  </div>
+
+  <div class='text-center md:text-left flex flex-col gap-4 md:gap-3'>
+    <p class='font-bold text-5xl md:text-6xl'>
+      <span class='hero-text-gradient-blue'>Hello! 👋</span>
+    </p>
+    <h1 class='text-4xl md:text-5xl'>
+      I'm <span class='font-bold hero-text-gradient-orange'>Pete</span>
+    </h1>
+    <p class='text-xl md:text-2xl mt-1'>Pittawat Taveekitworachai</p>
+    <p class='mt-2 text-lg text-[color:var(--white)]/80 max-w-2xl'>
+      Researcher specializing in Large Language Models and Prompt Engineering
+    </p>
+  </div>
+  <div class='relative'>
+    <div class='absolute inset-0 rounded-full bg-[color:var(--accent)] blur-xl opacity-20 animate-pulse'>
+    </div>
+    <Image src={profileImage} alt="Pete's profile picture"
+      class='relative rounded-full w-48 h-48 md:w-56 md:h-56 ring-4 ring-[color:var(--white)]/20 hover:ring-[color:var(--accent)]/60 transition-[box-shadow,transform] duration-500 ease-in-out hover:-translate-y-1 shadow-lg' />
+  </div>
+</section>
