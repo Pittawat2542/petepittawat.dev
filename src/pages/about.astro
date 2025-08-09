@@ -4,375 +4,180 @@ import { Image } from 'astro:assets';
 import profileImage from '../assets/images/profile.jpg';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Github, Instagram, Linkedin } from 'lucide-astro';
+import ThemedPageHero from '../components/ThemedPageHero.astro';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
-    <section
-		class='mx-auto prose dark:prose-invert prose-a:text-[color:var(--accent)] hyphens-auto md:prose-lg'
-	>
-		<h1>About</h1>
-		<Image
-			src={profileImage}
-			alt="Pete's profile picture"
-			class='rounded-full w-48 h-48 mt-4 mx-auto'
-		/>
-		<div class='flex flex-wrap mx-auto w-4/5 justify-center gap-6'>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://github.com/Pittawat2542'
-				target='_blank'
-			>
-				<Github />
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://www.linkedin.com/in/pittawat-tav/'
-				target='_blank'
-			>
-				<Linkedin />
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://www.instagram.com/pete.pittawat/'
-				target='_blank'
-			>
-				<Instagram />
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en'
-				target='_blank'
-			>
-				Google Scholar
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://orcid.org/0000-0002-6824-2634'
-				target='_blank'
-			>
-				ORCID
-			</a>
-		</div>
-		<p>
-			Hey! I'm Pittawat Taveekitworachai, but you can just call me <strong
-				>Pete</strong
-			>. I'm currently living
-			in <strong>Bangkok, Thailand</strong> 🇹🇭, but previously used to live in <strong>Shiga, Japan</strong> 🇯🇵. I always believe in the power of technology
-			to <span
-				class='underline decoration-wavy hover:animate-bounce inline-block ease-in-out transition-transform duration-100'
-				>enrich human life</span
-			> ✨. In my free time, I enjoy playing video games 🎮, watching movies and
-			series 🎥, and reading books 📚.
-		</p>
-		<p>
-			I have just graduated from a Master's degree at
-			<a href='https://www.ice.ci.ritsumei.ac.jp/' target='_blank'
-				>Intelligent Computer Entertainment</a
-			>, <a href='https://en.ritsumei.ac.jp' target='_blank'
-				>Ritsumeikan University</a
-			>, Japan, working at the intersection of cutting-edge technology and
-			humanity. I received the <strong
-				>Japanese Government (MEXT) Scholarship</strong
-			> covering the entire period of my study. I was under the supervision of Prof.
-			<a href='https://www.ice.ci.ritsumei.ac.jp/~ruck/' target='_blank'
-				>Ruck Thawonmas</a
-			>. I'm working on various aspects of <em>large language models</em> (LLMs)
-			🤖 and
-			<em>prompt engineering</em> ✏️, as well as their applications. I also collaborated with various researchers in Thailand
-			🇹🇭, Japan 🇯🇵, Italy 🇮🇹, Australia 🇦🇺, and the US 🇺🇸. Currently, I'm currently interesting
-			in:
-		</p>
-		<ul>
-			<li>
-				<p>
-					<strong><em>💡 Creativity and 💫 hallucination in 🤖 LLMs</em></strong
-					>
-				</p>
-				<ul class='italic text-base'>
-					<li>
-						Does LLM require hallucinations to perform certain tasks
-						effectively?
-					</li>
-					<li>How does hallucination affect LLMs differently at each scale?</li>
-					<li>
-						Are there any connections between hallucination and creativity in
-						LLMs?
-					</li>
-				</ul>
-			</li>
-			<li>
-				<p>
-					<strong
-						><em
-							>An integration of 🎻 classical algorithmic approaches with 🤖
-							LLMs</em
-						></strong
-					>
-				</p>
-				<ul class='italic text-base'>
-					<li>
-						How can we combine classical algorithms with LLMs to perform complex
-						tasks?
-					</li>
-					<li>Do all algorithms work well with LLMs?</li>
-					<li>
-						When we view LLMs as black-box magic functions, how does it change
-						the way we design algorithms?
-					</li>
-				</ul>
-			</li>
-			<li>
-				<p><strong><em>⚖️ LLM evaluation</em></strong></p><ul
-					class='italic text-base'
-				>
-					<li>
-						Can LLM reliably produce structured output as tasks become more
-						complex?
-					</li>
-					<li>How does scale affect LLMs in various tasks?</li>
-					<li>How can we automatically evaluate LLMs in more complex tasks?</li>
-				</ul>
-			</li>
-			<li>
-				<p><strong>🪄 Prompt engineering</strong></p><ul
-					class='italic text-base'
-				>
-					<li>Why does prompt engineering work?</li>
-					<li>
-						If chain-of-thought and few-shot prompting can be viewed as
-						localization in latent space, can we apply the opposite for
-						exploration (creativity)?
-					</li>
-					<li>
-						How can we efficiently generate optimal prompts automatically?
-					</li>
-				</ul>
-			</li>
-			<li>
-				<p>
-					<strong>🧳 LLM Applications</strong>
-					<ul class='italic text-base'>
-						<li>Multi-modality in procedural content generation</li>
-						<li>Using LLMs as aesthetically pleasing educational tools</li>
-						<li>Simulator-Based Driving Assessment for Post-Stroke Patients</li>
-					</ul>
-				</p>
-			</li>
-		</ul>
-		<p>
-			I also believe in open science and democratizing knowledge. I believe in
-			software craftsmanship and always strive to improve it. I am experienced
-			in designing <strong>reproducible</strong>, <strong>resumable</strong>,
-			and <strong>fault-tolerant</strong> software, often requiring long evaluations
-			of LLMs experiments spanning over months and across computers, while ensuring
-			a <strong>smooth experience</strong> for software users who may extend and
-			build upon my software for further research. This is also why my software is
-			designed with <strong>extensibility</strong> and <strong
-				>simplicity</strong
-			> in mind. This philosophy is reflected in various research projects that serve
-			as platforms and frameworks for researchers to rely upon.
-		</p>
-		<h3>Software Engineering</h3>
-		<p>
-			I'm very familiar with <a href='https://www.python.org/' target='_blank'
-				>Python</a
-			> and <a href='https://www.typescriptlang.org/' target='_blank'
-				>TypeScript</a
-			> as well as their associated technologies, libraries, and frameworks. Python
-			is my primary language for many of my software for research. I'm familiar with
-			<a href='https://pytorch.org/' target='_blank'>PyTorch</a> and <a
-				href='https://www.tensorflow.org/'
-				target='_blank'>TensorFlow</a
-			> as well as <a href='https://huggingface.co/' target='_blank'
-				>HuggingFace</a
-			>'s <a
-				href='https://huggingface.co/docs/transformers/en/index'
-				target='_blank'>transformer</a
-			>. I also had some experience with <a
-				href='https://www.mathworks.com/products/matlab.html'
-				target='_blank'>MATLAB</a
-			> and <a href='https://www.r-project.org' target='_blank'>R</a>. I also
-			perform most of my data tasks like EDA, data pre-processing, and data
-			visualization in Python using various packages, such as <a
-				href='https://numpy.org/'
-				target='_blank'>numpy</a
-			>, <a href='https://pandas.pydata.org/' target='_blank'>pandas</a>, <a
-				href='https://matplotlib.org/'
-				target='_blank'>matplotlib</a
-			>, <a href='https://seaborn.pydata.org/' target='_blank'>seaborn</a>, and
-			more.
-		</p>
-		<p>
-			I am experienced in full-stack web development. My tools of choice for web
-			application development are <a href='https://reactjs.org/' target='_blank'
-				>React.js</a
-			>, <a href='https://vuejs.org/' target='_blank'>Vue.js</a>, and <a
-				href='https://nodejs.org/'
-				target='_blank'>Node.js</a
-			>. I also used to write back-end services in Python (<a
-				href='https://www.djangoproject.com/'
-				target='_blank'>Django</a
-			> and <a href='https://fastapi.tiangolo.com/' target='_blank'>FastAPI</a
-			>), <a href='https://golang.org/' target='_blank'>Go</a>, and <a
-				href='https://www.java.com/'
-				target='_blank'>Java</a
-			>, in addition to JavaScript and TypeScript. I also have experience using
-			<a href='https://astro.build' target='_blank'>Astro</a> (for this website)
-			as well as meta-frameworks such as <a
-				href='https://nextjs.org'
-				target='_blank'>Next.js</a
-			> and <a href='https://remix.run' target='_blank'>Remix</a>. For the
-			front-end, I use <a href='https://tailwindcss.com' target='_blank'
-				>Tailwind</a
-			> and native <strong>CSS</strong>. I used to work with <a
-				href='https://getbootstrap.com'
-				target='_blank'>Bootstrap</a
-			> and
-			<a href='https://semantic-ui.com' target='_blank'>Semantic UI</a>.
-		</p>
-		<p>
-			Previously, I also had experience with mobile application development in
-			native <a href='https://developer.android.com' target='_blank'
-				>Android
-			</a> (Java) as well as cross-platform frameworks like <a
-				href='https://reactnative.dev'
-				target='_blank'>React Native</a
-			> and <a href='https://flutter.dev' target='_blank'>Flutter</a>
-			using <a href='https://dart.dev' target='_blank'>Dart</a>. I also do user
-			interface and user experience design. My primary tool is <a
-				href='https://www.figma.com'
-				target='_blank'>Figma</a
-			>, but I also used to use <strong>Adobe XD</strong> and <strong
-				>Adobe Photoshop</strong
-			>.
-		</p>
-		<p>
-			I also had experience in computer network and computer security as well as
-			software testing and automation. My tools of choice include <a
-				href='https://jestjs.io/'
-				target='_blank'>Jest</a
-			>, <a href='https://www.cypress.io/' target='_blank'>Cypress</a>, <a
-				href='https://www.selenium.dev/'
-				target='_blank'>Selenium</a
-			>, <a
-				href='https://www.crummy.com/software/BeautifulSoup/'
-				target='_blank'>BeautifulSoup</a
-			>, and <a href='https://playwright.dev/' target='_blank'>Playwright</a>. I
-			am also familiar with serverless services like <a
-				href='https://firebase.google.com/'
-				target='_blank'>Firebase</a
-			>. I also utilize technologies like <a
-				href='https://git-scm.com/'
-				target='_blank'>Git</a
-			> and <a href='https://www.docker.com/' target='_blank'>Docker</a>
-			to help me streamline my workflow. I also work with both SQL and NoSQL, such
-			as <a href='https://www.mongodb.com/' target='_blank'>MongoDB</a>, as well
-			as graph databases like <a href='https://neo4j.com/' target='_blank'
-				>Neo4j</a
-			>. Multiple of my research projects also utilize various vector databases,
-			such as <a href='https://www.pinecone.io/' target='_blank'>Pinecone</a>, <a
-				href='https://milvus.io/'
-				target='_blank'>Milvus</a
-			>, and <a href='https://qdrant.tech/' target='_blank'>Qdrant</a>.
-		</p>
-		<h3>Educational and Related Experiences</h3>
-		<p>
-			Previously, I earned my Bachelor's degree in Computer Science with
-			first-class honors from <a
-				href='https://www.kmutt.ac.th/en/'
-				target='_blank'>King Mongkut's University of Technology Thonburi</a
-			>, Thailand, supported by the prestigious 💎 <strong
-				>Petchra Pra Jom Klao Scholarship - Distinguished Academic Capabilities</strong
-			>. Additionally, I received the 💎 <strong
-				>Jia Ra Nai Petchra Scholarship - Academic Distinguished Award</strong
-			> for my outstanding performance throughout the academic year, being recognized
-			as the top student in the program for a specific year. Upon my gradution, Upon
-			graduation, I was honored with the 🎖️ <strong
-				>Honor Award for Academic Distinguished Performance</strong
-			>
-			by the Prapa-Sompong Foundation, acknowledging me as the top student among
-			the graduates of the same year. Furthermore, my name was inscribed on the <strong
-				>Wall of Honors</strong
-			> at the university's president building.
-		</p>
-		<h4>Extra-curricular Activities</h4>
-		<p>
-			During my time pursuing my Bachelor's degree, I was also involved in a
-			medical research project on HFMD in collaboration with the <a
-				href='https://www2.si.mahidol.ac.th/en/'
-				target='_blank'
-				>Faculty of Medicine at Siriraj Hospital, Mahidol University</a
-			>, Thailand. Additionally, I had the opportunity to intern at <a
-				href='https://linecorp.com/en/'
-				target='_blank'>LINE Company (Thailand)</a
-			> as a software engineer, where I worked on the full-stack development of their
-			<a href='https://shop.line.me/home/' target='_blank'>e-commerce website</a
-			> and dealt with complex systems. Furthermore, I am honored to have been selected
-			as part of the inaugural batch of <a
-				href='https://developers.google.com/community/gdsc'
-				target='_blank'>Google Developer Student Clubs</a
-			> Leads in Thailand for my university. This provided me with the opportunity
-			to lead a team and organize various events over the years, as well as connect
-			with other leads across the country and region.
-		</p>
-		<h4>Research</h4>
-		<p>
-			I had the opportunity to join the Innovative Cognitive Computing
-			Laboratory at the School of Information Technology, King Mongkut's
-			University of Technology Thonburi, Thailand, as a research assistant. I
-			worked on various projects, including AR poster development, web
-			development, and natural language processing. This experience was my first
-			official exposure to the research community and motivated me to pursue a
-			Master's degree further.
-		</p>
-		<h4>Volunteer</h4>
-		<p>
-			I volunteer for various occasions because I believe in paying it forward
-			and helping others. One of my volunteering experiences includes organizing
-			and developing web applications for Junior Programmer Camp XV, an annual
-			camp organized by computer science students at the School of Information
-			Technology, King Mongkut's University of Technology Thonburi, targeted at
-			senior high school students throughout Thailand. In this camp,
-			participants have the opportunity to be exposed to various activities that
-			help them familiarize themselves with CS concepts and the university's
-			atmosphere. I oversee the IT aspect of the camp and lead the development
-			team. Alongside two other teammates, we developed the main website for the
-			camp, including the registration system. Additionally, we created a camp
-			management system to facilitate staff in the participant selection
-			process.
-		</p>
-		<p>
-			During the COVID-19 pandemic, I volunteered to help develop a web
-			application for the university. The university needed a system to manage
-			donated supplies that would be distributed across the country. As a lead,
-			I directed a team of eight members to urgently develop the system, as the
-			situation was critical. This support system not only helps the university
-			manage the supply but also allows hospitals to request additional
-			supplies. Throughout the period, we also provided maintenance services.
-			The code is accessible on <a
-				href='https://github.com/Pittawat2542/kmutt-covid-19'
-				target='_blank'>GitHub</a
-			>. Additionally, I currently serve as a reviewer for conferences to
-			contribute back to the communities.
-		</p>
-		<h4>Life-Long Learning</h4>
-		<p>
-			I also enjoy taking various online courses throughout the years (as can be
-			seen from certificates on my <a
-				href='https://www.linkedin.com/in/pittawat-tav/'
-				target='_blank'>LinkedIn</a
-			>.) I enjoy learning and its process. The feeling of understanding
-			something new satisfies me. It also helps me become better at what I do
-			and enables me to be <strong>creative</strong> and connect various seemingly
-			unrelated topics together to come up with new ideas. This is also a part of
-			my personal goal revolving around <strong>life-long learning</strong>, and
-			I believe that understanding leads to a better life and understanding of
-			other people and things. During my time pursuing my Bachelor's degree, I
-			also served as a tutor on various topics in computer science for my
-			classmates to help them prepare for upcoming exams. I believe that <em
-				>sharing knowledge not only helps other people but also helps me
-				understand the topic better.</em
-			>
-		</p>
-	</section>
+    <section class='mx-auto max-w-4xl'>
+      <ThemedPageHero 
+        title="About" 
+        subtitle="Learn more about me, my research interests, and my journey" 
+        page="about" 
+      />
+
+      <!-- About me card -->
+      <section id='about-me' class='glass-card p-6 md:p-8'>
+        <div class='prose dark:prose-invert mx-auto prose-a:text-[color:var(--accent-about)]'>
+          <Image src={profileImage} alt="Pete's profile picture" class='rounded-full w-32 h-32 md:w-40 md:h-40 mx-auto' />
+          <div class='flex flex-wrap mx-auto justify-center gap-4 mt-4'>
+            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://github.com/Pittawat2542' target='_blank'><Github /></a>
+            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://www.linkedin.com/in/pittawat-tav/' target='_blank'><Linkedin /></a>
+            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://www.instagram.com/pete.pittawat/' target='_blank'><Instagram /></a>
+            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en' target='_blank'>Google Scholar</a>
+            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://orcid.org/0000-0002-6824-2634' target='_blank'>ORCID</a>
+          </div>
+          <p>
+            Hey! I'm Pittawat Taveekitworachai, but you can just call me <strong>Pete</strong>. I'm currently living in
+            <strong>Bangkok, Thailand</strong> 🇹🇭, but previously used to live in <strong>Shiga, Japan</strong> 🇯🇵. I always believe in the power of
+            technology to <span class='underline decoration-wavy inline-block'>enrich human life</span> ✨. In my free time, I enjoy playing video games 🎮, watching movies and series 🎥, and reading books 📚.
+          </p>
+          <p>
+            I have just graduated from a Master's degree at <a href='https://www.ice.ci.ritsumei.ac.jp/' target='_blank'>Intelligent Computer Entertainment</a>,
+            <a href='https://en.ritsumei.ac.jp' target='_blank'>Ritsumeikan University</a>, Japan. I work on <em>large language models</em> (LLMs) and
+            <em>prompt engineering</em>, as well as their applications. I also collaborated with researchers in Thailand, Japan, Italy, Australia, and the US.
+          </p>
+        </div>
+      </section>
+
+      <!-- Research interests -->
+      <section id='interests' class='mt-8 glass-card p-6 md:p-8'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+          <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Research interests</h2>
+          <ul class='space-y-4'>
+            <li>
+              <p>
+                <strong><em>💡 Creativity and 💫 hallucination in 🤖 LLMs</em></strong>
+              </p>
+              <ul class='italic text-base ml-4 space-y-1'>
+                <li>Does LLM require hallucinations to perform certain tasks effectively?</li>
+                <li>How does hallucination affect LLMs differently at each scale?</li>
+                <li>Are there any connections between hallucination and creativity in LLMs?</li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                <strong><em>🎻 Classical algorithmic approaches with 🤖 LLMs</em></strong>
+              </p>
+              <ul class='italic text-base ml-4 space-y-1'>
+                <li>How can we combine classical algorithms with LLMs to perform complex tasks?</li>
+                <li>Do all algorithms work well with LLMs?</li>
+                <li>When we view LLMs as black-box magic functions, how does it change the way we design algorithms?</li>
+              </ul>
+            </li>
+            <li>
+              <p><strong><em>⚖️ LLM evaluation</em></strong></p>
+              <ul class='italic text-base ml-4 space-y-1'>
+                <li>Can LLM reliably produce structured output as tasks become more complex?</li>
+                <li>How does scale affect LLMs in various tasks?</li>
+                <li>How can we automatically evaluate LLMs in more complex tasks?</li>
+              </ul>
+            </li>
+            <li>
+              <p><strong>🪄 Prompt engineering</strong></p>
+              <ul class='italic text-base ml-4 space-y-1'>
+                <li>Why does prompt engineering work?</li>
+                <li>If chain-of-thought and few-shot prompting can be viewed as localization in latent space, can we apply the opposite for exploration (creativity)?</li>
+                <li>How can we efficiently generate optimal prompts automatically?</li>
+              </ul>
+            </li>
+            <li>
+              <p><strong>🧳 LLM Applications</strong></p>
+              <ul class='italic text-base ml-4 space-y-1'>
+                <li>Multi-modality in procedural content generation</li>
+                <li>Using LLMs as aesthetically pleasing educational tools</li>
+                <li>Simulator-Based Driving Assessment for Post-Stroke Patients</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section id='skills' class='mt-8 glass-card p-6 md:p-8'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+          <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Skills</h2>
+          <p>
+            I also believe in open science and democratizing knowledge. I believe in software craftsmanship and always strive to improve it. I am experienced in designing <strong>reproducible</strong>, <strong>resumable</strong>, and <strong>fault-tolerant</strong> software, often requiring long evaluations of LLMs experiments spanning over months and across computers, while ensuring a <strong>smooth experience</strong> for software users who may extend and build upon my software for further research. This is also why my software is designed with <strong>extensibility</strong> and <strong>simplicity</strong> in mind. This philosophy is reflected in various research projects that serve as platforms and frameworks for researchers to rely upon.
+          </p>
+          
+          <h3 class='mt-6 font-bold text-xl'>Software Engineering</h3>
+          <p>
+            I'm very familiar with <a href='https://www.python.org/' target='_blank'>Python</a> and <a href='https://www.typescriptlang.org/' target='_blank'>TypeScript</a> as well as their associated technologies, libraries, and frameworks. Python is my primary language for many of my software for research. I'm familiar with <a href='https://pytorch.org/' target='_blank'>PyTorch</a> and <a href='https://www.tensorflow.org/' target='_blank'>TensorFlow</a> as well as <a href='https://huggingface.co/' target='_blank'>HuggingFace</a>'s <a href='https://huggingface.co/docs/transformers/en/index' target='_blank'>transformer</a>. I also had some experience with <a href='https://www.mathworks.com/products/matlab.html' target='_blank'>MATLAB</a> and <a href='https://www.r-project.org' target='_blank'>R</a>. I also perform most of my data tasks like EDA, data pre-processing, and data visualization in Python using various packages, such as <a href='https://numpy.org/' target='_blank'>numpy</a>, <a href='https://pandas.pydata.org/' target='_blank'>pandas</a>, <a href='https://matplotlib.org/' target='_blank'>matplotlib</a>, <a href='https://seaborn.pydata.org/' target='_blank'>seaborn</a>, and more.
+          </p>
+          
+          <p>
+            I am experienced in full-stack web development. My tools of choice for web application development are <a href='https://reactjs.org/' target='_blank'>React.js</a>, <a href='https://vuejs.org/' target='_blank'>Vue.js</a>, and <a href='https://nodejs.org/' target='_blank'>Node.js</a>. I also used to write back-end services in Python (<a href='https://www.djangoproject.com/' target='_blank'>Django</a> and <a href='https://fastapi.tiangolo.com/' target='_blank'>FastAPI</a>), <a href='https://golang.org/' target='_blank'>Go</a>, and <a href='https://www.java.com/' target='_blank'>Java</a>, in addition to JavaScript and TypeScript. I also have experience using <a href='https://astro.build' target='_blank'>Astro</a> (for this website) as well as meta-frameworks such as <a href='https://nextjs.org' target='_blank'>Next.js</a> and <a href='https://remix.run' target='_blank'>Remix</a>. For the front-end, I use <a href='https://tailwindcss.com' target='_blank'>Tailwind</a> and native <strong>CSS</strong>. I used to work with <a href='https://getbootstrap.com' target='_blank'>Bootstrap</a> and <a href='https://semantic-ui.com' target='_blank'>Semantic UI</a>.
+          </p>
+          
+          <p>
+            Previously, I also had experience with mobile application development in native <a href='https://developer.android.com' target='_blank'>Android</a> (Java) as well as cross-platform frameworks like <a href='https://reactnative.dev' target='_blank'>React Native</a> and <a href='https://flutter.dev' target='_blank'>Flutter</a> using <a href='https://dart.dev' target='_blank'>Dart</a>. I also do user interface and user experience design. My primary tool is <a href='https://www.figma.com' target='_blank'>Figma</a>, but I also used to use <strong>Adobe XD</strong> and <strong>Adobe Photoshop</strong>.
+          </p>
+          
+          <p>
+            I also had experience in computer network and computer security as well as software testing and automation. My tools of choice include <a href='https://jestjs.io/' target='_blank'>Jest</a>, <a href='https://www.cypress.io/' target='_blank'>Cypress</a>, <a href='https://www.selenium.dev/' target='_blank'>Selenium</a>, <a href='https://www.crummy.com/software/BeautifulSoup/' target='_blank'>BeautifulSoup</a>, and <a href='https://playwright.dev/' target='_blank'>Playwright</a>. I am also familiar with serverless services like <a href='https://firebase.google.com/' target='_blank'>Firebase</a>. I also utilize technologies like <a href='https://git-scm.com/' target='_blank'>Git</a> and <a href='https://www.docker.com/' target='_blank'>Docker</a> to help me streamline my workflow. I also work with both SQL and NoSQL, such as <a href='https://www.mongodb.com/' target='_blank'>MongoDB</a>, as well as graph databases like <a href='https://neo4j.com/' target='_blank'>Neo4j</a>. Multiple of my research projects also utilize various vector databases, such as <a href='https://www.pinecone.io/' target='_blank'>Pinecone</a>, <a href='https://milvus.io/' target='_blank'>Milvus</a>, and <a href='https://qdrant.tech/' target='_blank'>Qdrant</a>.
+          </p>
+        </div>
+      </section>
+      
+      <!-- Education & Experiences -->
+      <section id='education' class='mt-8 glass-card p-6 md:p-8'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+          <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Education & Related Experiences</h2>
+          <p>
+            Previously, I earned my Bachelor's degree in Computer Science with first-class honors from <a href='https://www.kmutt.ac.th/en/' target='_blank'>King Mongkut's University of Technology Thonburi</a>, Thailand, supported by the prestigious 💎 <strong>Petchra Pra Jom Klao Scholarship - Distinguished Academic Capabilities</strong>. Additionally, I received the 💎 <strong>Jia Ra Nai Petchra Scholarship - Academic Distinguished Award</strong> for my outstanding performance throughout the academic year, being recognized as the top student in the program for a specific year. Upon graduation, I was honored with the 🎖️ <strong>Honor Award for Academic Distinguished Performance</strong> by the Prapa-Sompong Foundation, acknowledging me as the top student among the graduates of the same year. Furthermore, my name was inscribed on the <strong>Wall of Honors</strong> at the university's president building.
+          </p>
+          
+          <h3 class='mt-6 font-bold text-xl'>Extra-curricular Activities</h3>
+          <p>
+            During my time pursuing my Bachelor's degree, I was also involved in a medical research project on HFMD in collaboration with the <a href='https://www2.si.mahidol.ac.th/en/' target='_blank'>Faculty of Medicine at Siriraj Hospital, Mahidol University</a>, Thailand. Additionally, I had the opportunity to intern at <a href='https://linecorp.com/en/' target='_blank'>LINE Company (Thailand)</a> as a software engineer, where I worked on the full-stack development of their <a href='https://shop.line.me/home/' target='_blank'>e-commerce website</a> and dealt with complex systems. Furthermore, I am honored to have been selected as part of the inaugural batch of <a href='https://developers.google.com/community/gdsc' target='_blank'>Google Developer Student Clubs</a> Leads in Thailand for my university. This provided me with the opportunity to lead a team and organize various events over the years, as well as connect with other leads across the country and region.
+          </p>
+          
+          <h3 class='mt-6 font-bold text-xl'>Research</h3>
+          <p>
+            I had the opportunity to join the Innovative Cognitive Computing Laboratory at the School of Information Technology, King Mongkut's University of Technology Thonburi, Thailand, as a research assistant. I worked on various projects, including AR poster development, web development, and natural language processing. This experience was my first official exposure to the research community and motivated me to pursue a Master's degree further.
+          </p>
+        </div>
+      </section>
+
+      <!-- Volunteer -->
+      <section id='volunteer' class='mt-8 glass-card p-6 md:p-8'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+          <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Volunteer</h2>
+          <p>
+            I volunteer for various occasions because I believe in paying it forward and helping others. One of my volunteering experiences includes organizing and developing web applications for Junior Programmer Camp XV, an annual camp organized by computer science students at the School of Information Technology, King Mongkut's University of Technology Thonburi, targeted at senior high school students throughout Thailand. In this camp, participants have the opportunity to be exposed to various activities that help them familiarize themselves with CS concepts and the university's atmosphere. I oversee the IT aspect of the camp and lead the development team. Alongside two other teammates, we developed the main website for the camp, including the registration system. Additionally, we created a camp management system to facilitate staff in the participant selection process.
+          </p>
+          
+          <p>
+            During the COVID-19 pandemic, I volunteered to help develop a web application for the university. The university needed a system to manage donated supplies that would be distributed across the country. As a lead, I directed a team of eight members to urgently develop the system, as the situation was critical. This support system not only helps the university manage the supply but also allows hospitals to request additional supplies. Throughout the period, we also provided maintenance services. The code is accessible on <a href='https://github.com/Pittawat2542/kmutt-covid-19' target='_blank'>GitHub</a>. Additionally, I currently serve as a reviewer for conferences to contribute back to the communities.
+          </p>
+        </div>
+      </section>
+
+      <!-- Lifelong learning -->
+      <section id='learning' class='mt-8 glass-card p-6 md:p-8'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+          <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Lifelong Learning</h2>
+          <p>
+            I also enjoy taking various online courses throughout the years (as can be seen from certificates on my <a href='https://www.linkedin.com/in/pittawat-tav/' target='_blank'>LinkedIn</a>.) I enjoy learning and its process. The feeling of understanding something new satisfies me. It also helps me become better at what I do and enables me to be <strong>creative</strong> and connect various seemingly unrelated topics together to come up with new ideas. This is also a part of my personal goal revolving around <strong>life-long learning</strong>, and I believe that understanding leads to a better life and understanding of other people and things. During my time pursuing my Bachelor's degree, I also served as a tutor on various topics in computer science for my classmates to help them prepare for upcoming exams. I believe that <em>sharing knowledge not only helps other people but also helps me understand the topic better.</em>
+          </p>
+        </div>
+      </section>
+    </section>
 </BaseLayout>
+
+<style>
+  .about-nav-item {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .about-nav-item:hover {
+    background-color: color-mix(in oklab, var(--accent-about) 20%, transparent);
+    color: var(--accent-about);
+  }
+  
+  .about-nav-item:focus {
+    outline: 2px solid var(--accent-about);
+    outline-offset: 2px;
+    border-radius: 9999px;
+  }
+</style>

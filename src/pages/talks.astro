@@ -3,6 +3,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TalksExplorer from '../components/TalksExplorer.tsx';
 import talks from '../content/talks/talks.json';
+import ThemedPageHero from '../components/ThemedPageHero.astro';
 
 type Talk = {
   date: string;
@@ -18,13 +19,12 @@ type Talk = {
 ---
 
 <BaseLayout title={`${SITE_TITLE} - Talks`} description={SITE_DESCRIPTION}>
-  <section class='mx-auto prose dark:prose-invert prose-a:text-[color:var(--accent)] hyphens-auto md:prose-lg'>
-    <p>
-      Throughout the years, I have regularly shared my knowledge through talks or lectures at various venues, including for my lab
-      peers, conferences, and communities. Explore my talks and lectures below, with search and filters.
-    </p>
-  </section>
-  <section class='mx-auto mt-4 max-w-4xl'>
+  <ThemedPageHero 
+    title="Talks" 
+    subtitle="Presentations, lectures, and workshops I've delivered at conferences and events." 
+    page="talks" 
+  />
+  <section class='mx-auto max-w-4xl mt-4'>
     <TalksExplorer client:load items={talks} />
   </section>
 </BaseLayout>

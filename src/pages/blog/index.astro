@@ -3,6 +3,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogListPage from '../../components/BlogListPage';
+import ThemedPageHero from '../../components/ThemedPageHero.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -19,7 +20,14 @@ const tags = [
 ---
 
 <BaseLayout title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION}>
-	<BlogListPage client:load posts={posts} tags={tags} />
+	<ThemedPageHero 
+		title="Blog" 
+		subtitle="Explore my thoughts, tutorials, and insights on technology, programming, and AI." 
+		page="blog" 
+	/>
+	<section class='mx-auto max-w-4xl'>
+		<BlogListPage client:load posts={posts} tags={tags} />
+	</section>
 </BaseLayout>
 
 <!-- Removed column-span styling now that list uses CSS grid -->
