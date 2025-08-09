@@ -1,4 +1,9 @@
 ---
+import blogImg from '../assets/images/blog.png';
+import pubsImg from '../assets/images/publications.png';
+import talksImg from '../assets/images/talks.png';
+import { Image } from 'astro:assets';
+
 interface Props {
   stats: {
     posts: number;
@@ -17,7 +22,8 @@ const cards = [
     count: stats.posts,
     linkText: 'Read the blog →',
     accentColor: 'accent',
-    icon: `<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' class='text-[color:var(--accent)]'><path d='M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20' /></svg>`
+    image: blogImg,
+    alt: 'Blog posts illustration'
   },
   {
     href: '/publications',
@@ -26,7 +32,8 @@ const cards = [
     count: stats.publications,
     linkText: 'View publications →',
     accentColor: 'accent-publications',
-    icon: `<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' class='text-[color:var(--accent-publications)]'><path d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20v-6.5A2.5 2.5 0 0 1 22.5 8H22v6.5a2.5 2.5 0 0 1-2.5 2.5H6.5A2.5 2.5 0 0 1 4 14.5v5Z' /><path d='M8 7.5A2.5 2.5 0 0 1 10.5 5H22v12.5a2.5 2.5 0 0 1-2.5 2.5H10.5A2.5 2.5 0 0 1 8 17.5v-10Z' /></svg>`
+    image: pubsImg,
+    alt: 'Publications illustration'
   },
   {
     href: '/talks',
@@ -35,7 +42,8 @@ const cards = [
     count: stats.talks,
     linkText: 'See talks →',
     accentColor: 'accent-talks',
-    icon: `<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' class='text-[color:var(--accent-talks)]'><path d='M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z' /><path d='M19 10v2a7 7 0 0 1-14 0v-2' /><line x1='12' x2='12' y1='19' y2='22' /></svg>`
+    image: talksImg,
+    alt: 'Talks illustration'
   }
 ];
 ---
@@ -62,15 +70,13 @@ const cards = [
             <!-- portrait-safe frame -->
             <div class='rounded-2xl bg-white/[.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.05)]'>
               <div class='aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/[.02] flex items-center justify-center'>
-                <div class='h-full w-full flex items-center justify-center' set:html={card.icon} />
+                <Image src={card.image} alt={card.alt} class='max-h-full max-w-full object-contain' loading='lazy' decoding='async' />
               </div>
             </div>
             <!-- accent halo on hover (no border) -->
             <span
-              class='pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300
-                            group-hover:opacity-100'
-              style={`box-shadow: 0 0 0 1px color-mix(in oklab, var(--${card.accentColor}) 45%, transparent),
-                                   0 20px 50px -20px color-mix(in oklab, var(--${card.accentColor}) 45%, transparent);`}></span>
+              class='pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100'
+              style={`box-shadow: 0 0 0 1px color-mix(in oklab, var(--${card.accentColor}) 45%, transparent), 0 20px 50px -20px color-mix(in oklab, var(--${card.accentColor}) 45%, transparent);`}></span>
           </figure>
 
           <div class='mt-5 text-center'>
@@ -78,7 +84,7 @@ const cards = [
               {card.title}
             </p>
             <p
-              class={`text-4xl font-bold tracking-tight mt-1 bg-gradient-to-r from-[color:var(--${card.accentColor})] to-[color:var(--${card.accentColor})]/70 bg-clip-text text-transparent`}>
+              class={`text-4xl font-bold tracking-tight mt-1 text-[color:var(--${card.accentColor})]`}>
               {card.count}
             </p>
             <span

@@ -18,7 +18,7 @@ const isActive = (href: string) =>
   current === href || (href !== '/' && current.startsWith(href + '/'));
 ---
 
-<a href="#content"
+<a href="#main-content"
    class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:rounded-md focus:bg-black/80 focus:px-3 focus:py-2 focus:text-white">
   Skip to content
 </a>
@@ -70,6 +70,11 @@ const isActive = (href: string) =>
 
 <script is:inline>
   const nav = document.getElementById('site-nav');
-  const onScroll = () => nav && (nav.dataset.scrolled = window.scrollY > 6 ? 'true' : 'false');
+  const onScroll = () => {
+    if (!nav) return;
+    nav.dataset.scrolled = window.scrollY > 6 ? 'true' : 'false';
+  };
   onScroll();
-  addEve
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+

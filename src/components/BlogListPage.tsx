@@ -126,7 +126,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                                 className='cursor-pointer glass-card group w-full h-full hyphens-auto'
                                         >
                                                 <a
-                                                        className='flex flex-col align-middle p-6 h-full'
+                                                        className='flex flex-col align-middle p-6 h-full text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]'
                                                         href={`/blog/${post.slug}/`}
                                                 >
                                                         {post.data.coverImage?.src ? (
@@ -134,11 +134,15 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                                             <img
                                                               className='w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-[1.03]'
                                                               src={post.data.coverImage.src}
+                                                              width={post.data.coverImage.width}
+                                                              height={post.data.coverImage.height}
+                                                              loading='lazy'
+                                                              decoding='async'
                                                               alt={post.data.title}
                                                             />
                                                           </div>
                                                         ) : null}
-                                                        <h4 className='text-2xl md:text-3xl font-bold tracking-tight mb-2'>
+                                                        <h4 className='text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[color:var(--accent)]'>
                                                                 {post.data.title}
                                                         </h4>
                                                         <p className='italic opacity-80'>
