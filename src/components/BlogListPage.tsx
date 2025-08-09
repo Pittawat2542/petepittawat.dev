@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { BlogPost } from '../types';
+import BlogCard from './BlogCard';
 
 type BlogListPageProps = {
   posts: BlogPost[];
@@ -121,45 +122,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         <hr className='block h-px border-0 border-t mt-2 mb-4 p-0 border-[color:var(--white)]/10' />
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
                                 {filteredPosts.map((post) => (
-                                        <li
-                                                key={post.data.title}
-                                                className='cursor-pointer glass-card group w-full h-full hyphens-auto'
-                                        >
-                                                <a
-                                                        className='flex flex-col align-middle p-6 h-full text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]'
-                                                        href={`/blog/${post.slug}/`}
-                                                >
-                                                        {post.data.coverImage?.src ? (
-                                                          <div className='mb-6 overflow-hidden rounded-xl'>
-                                                            <img
-                                                              className='w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-[1.03]'
-                                                              src={post.data.coverImage.src}
-                                                              width={post.data.coverImage.width}
-                                                              height={post.data.coverImage.height}
-                                                              loading='lazy'
-                                                              decoding='async'
-                                                              alt={post.data.title}
-                                                            />
-                                                          </div>
-                                                        ) : null}
-                                                        <h4 className='text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[color:var(--accent)]'>
-                                                                {post.data.title}
-                                                        </h4>
-                                                        <p className='italic opacity-80'>
-                                                                Published on{' '}
-                                                                <time dateTime={post.data.pubDate.toISOString()}>
-                                                                        {post.data.pubDate.toLocaleDateString('en-us', {
-                                                                                year: 'numeric',
-                                                                                month: 'short',
-                                                                                day: 'numeric',
-                                                                        })}
-                                                                </time>
-                                                        </p>
-                                                        <p className='mt-3 text-justify leading-6 text-[color:var(--white)]/80'>
-                                                          {post.data.excerpt}
-                                                        </p>
-                                                </a>
-                                        </li>
+                                  <BlogCard key={post.slug} post={post} />
                                 ))}
                         </ul>
                 </section>
