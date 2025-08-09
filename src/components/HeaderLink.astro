@@ -1,24 +1,23 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
-
-type Props = HTMLAttributes<'a'>;
-
-const { href, class: className, ...props } = Astro.props;
-
-const { pathname } = Astro.url;
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + subpath?.[0];
+interface Props {
+  href: string;
+  class?: string;
+  isActive?: boolean;
+  ariaLabel?: string;
+}
+const { href, class: className = '', isActive = false, ariaLabel } = Astro.props;
 ---
 
 <a
-	href={href}
-    class:list={[
-        'flex items-center gap-2 py-2 text-[color:var(--white)] border-b-2 border-b-transparent hover:border-b-[color:var(--accent)] hover:text-[color:var(--accent)] transition-colors duration-200 ease-in-out',
-        { 'text-[var(--accent)]': isActive },
-        { 'border-b-[color:var(--accent)]': isActive },
-        className,
-    ]}
-	{...props}
+  href={href}
+  aria-label={ariaLabel}
+  aria-current={isActive ? 'page' : undefined}
+  class={`cursor-pointer rounded-full px-3 py-2 text-sm font-medium
+          text-[color:var(--white)]/85 hover:text-[color:var(--white)]
+          hover:bg-[color:var(--white)]/5 transition-colors
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
+          ${isActive ? 'bg-[color:var(--white)]/10 text-[color:var(--white)] shadow-inner ring-1 ring-[color:var(--white)]/15' : ''}
+          ${className}`}
 >
-	<slot />
+  <slot />
 </a>

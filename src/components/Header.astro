@@ -3,43 +3,73 @@ import HeaderLink from './HeaderLink.astro';
 import logoImage from '../assets/images/logo.png';
 import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
-import { BookText, Home, MicVocal, ScrollText, User } from 'lucide-astro';
+import { BookText, Mic, ScrollText, User } from 'lucide-astro';
 import ThemeToggle from './ThemeToggle.astro';
+
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const links = [
+  { href: '/blog', label: 'Blog', Icon: BookText },
+  { href: '/publications', label: 'Publications', Icon: ScrollText },
+  { href: '/talks', label: 'Talks', Icon: Mic },
+  { href: '/about', label: 'About', Icon: User },
+];
+
+const isActive = (href: string) =>
+  current === href || (href !== '/' && current.startsWith(href + '/'));
 ---
 
-<header
-	class='backdrop-blur-md bg-[color:var(--black-nav)] text-[color:var(--white)] m-0 px-4 md:px-8 shadow-sm border-b border-[color:var(--white)]/10 py-3 fixed w-full z-10 top-0 left-0'
->
-	<nav class='flex justify-between items-center gap-4'>
-		<h2 class='m-0 text-xl md:text-2xl no-underline'>
-			<a class='group text-[color:var(--white)] flex gap-3 md:gap-4 pointers' href='/'
-				><Image
-					class='h-8 w-8 md:group-hover:animate-shake'
-					src={logoImage}
-					alt='Main logo of PETEPITTAWAT.DEV'
-				/><span
-					class='self-center hidden md:inline group-hover:text-[color:var(--accent)] transition-colors duration-300 ease-in-out'
-					>{SITE_TITLE}</span
-				></a
-			>
-		</h2>
-		<div class='flex items-center gap-3 md:gap-6 overflow-x-auto md:overflow-visible'>
-			<HeaderLink class='hidden md:flex' href='/'
-				><Home class='hidden lg:inline-block' />Home</HeaderLink
-			>
-			<HeaderLink href='/blog'
-				><BookText class='hidden lg:inline-block' />Blog</HeaderLink
-			>
-			<HeaderLink href='/publications'
-				><ScrollText class='hidden lg:inline-block' />Publications</HeaderLink
-			>
-			<HeaderLink href='/talks'
-				><MicVocal class='hidden lg:inline-block' />Talks</HeaderLink
-			>
-			<HeaderLink href='/about'
-				><User class='hidden lg:inline-block' />About</HeaderLink
-			>
-			<ThemeToggle />
-		</div>
-	</nav>
+<a href="#content"
+   class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:rounded-md focus:bg-black/80 focus:px-3 focus:py-2 focus:text-white">
+  Skip to content
+</a>
+
+<header class="fixed top-4 inset-x-0 z-50">
+  <div class="mx-auto w-fit max-w-[min(92vw,72rem)]">
+    <div class="relative inline-flex rounded-full p-[1px]
+                bg-gradient-to-r from-[color:var(--white)]/15 via-transparent to-[color:var(--white)]/15">
+      <nav id="site-nav" aria-label="Primary"
+           class="inline-flex items-center gap-1 rounded-[inherit] border border-[color:var(--white)]/10
+                  bg-[color:var(--black-nav)]/70 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55
+                  backdrop-blur-md shadow-lg shadow-black/10 px-2 py-2 pr-3
+                  transition-[background,box-shadow,transform] duration-300 ease-out
+                  data-[scrolled=true]:shadow-black/20 data-[scrolled=true]:backdrop-blur-lg
+                  overflow-x-auto scrollbar-none
+                  [mask-image:linear-gradient(to_right,transparent_0,black_12px,black_calc(100%-12px),transparent_100%)]">
+        <a href="/" aria-label="Go to homepage"
+           class="group text-[color:var(--white)] flex min-w-0 gap-2 items-center rounded-full px-3 py-2
+                  hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
+                  focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30">
+          <Image class="h-6 w-6 shrink-0 transition-transform motion-safe:group-hover:scale-105"
+                 src={logoImage} alt="Main logo of PETEPITTAWAT.DEV" />
+          <span class="hidden md:inline whitespace-nowrap md:ml-1 font-medium max-w-[40vw] truncate">
+            {SITE_TITLE}
+          </span>
+        </a>
+
+        <ul class="ml-3 sm:ml-4 md:ml-6 flex items-center gap-1">
+          {links.map(({ href, label, Icon }) => (
+            <li>
+              <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label}>
+                <Icon class="inline-block md:hidden" aria-hidden="true" />
+                <span class="hidden md:inline">{label}</span>
+              </HeaderLink>
+            </li>
+          ))}
+        </ul>
+
+        <div class="ml-3 pl-3 mr-2 shrink-0 sm:border-s border-[color:var(--white)]/10">
+          <ThemeToggle
+            class="rounded-xl p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
+            aria-label="Toggle theme"
+          />
+        </div>
+      </nav>
+    </div>
+  </div>
 </header>
+
+<script is:inline>
+  const nav = document.getElementById('site-nav');
+  const onScroll = () => nav && (nav.dataset.scrolled = window.scrollY > 6 ? 'true' : 'false');
+  onScroll();
+  addEve
