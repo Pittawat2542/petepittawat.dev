@@ -49,3 +49,19 @@ export type BlogPost = {
     };
   };
 };
+
+export type ProjectLink = {
+  label: string;
+  href: string;
+};
+
+export type Project = {
+  year: number;
+  title: string;
+  summary: string;
+  tags: string[];
+  links: ProjectLink[];
+  role?: string;
+  collaborators?: string;
+  type?: string;
+};

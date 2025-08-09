@@ -12,6 +12,8 @@
 	--accent-publications: #10B981; /* green */
 	--accent-talks: #8B5CF6; /* purple */
 	--accent-about: #F59E0B; /* amber */
+	--accent-projects: #06B6D4; /* cyan */
+	--accent-research: #F472B6; /* pink */
 	--accent-1: #3B82F6; /* blue */
 	--accent-2: #8B5CF6; /* purple */
 	--white: #F9FAFB; /* foreground on dark */
@@ -221,4 +223,29 @@ html {
   backdrop-filter: blur(6px);
   border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
   color: color-mix(in oklab, var(--white) 90%, transparent);
+}
+
+/* Reusable form styles */
+.input-glass,
+.select-glass {
+  border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
+  background: color-mix(in oklab, var(--white) 4%, transparent);
+  color: var(--white);
+  border-radius: 0.5rem; /* md */
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.input-glass:focus,
+.select-glass:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--accent) 65%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
+}
+.input-glass::placeholder { color: color-mix(in oklab, var(--white) 55%, transparent); }
+
+/* Hide default select arrow and add space for custom chevron */
+.select-glass {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2rem; /* space for chevron */
 }

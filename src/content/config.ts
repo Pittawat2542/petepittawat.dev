@@ -45,5 +45,18 @@ const publicationSchema = z.object({
 
 const talks = defineCollection({ type: 'data', schema: z.array(talkSchema) });
 const publications = defineCollection({ type: 'data', schema: z.array(publicationSchema) });
+// Projects collection
+const projectLinkSchema = z.object({ label: z.string(), href: z.string().min(1) });
+const projectSchema = z.object({
+  year: z.number(),
+  title: z.string(),
+  summary: z.string(),
+  tags: z.array(z.string()),
+  links: z.array(projectLinkSchema),
+  role: z.string().optional(),
+  collaborators: z.string().optional(),
+  type: z.string().optional(),
+});
+const projects = defineCollection({ type: 'data', schema: z.array(projectSchema) });
 
-export const collections = { blog, talks, publications };
+export const collections = { blog, talks, publications, projects };

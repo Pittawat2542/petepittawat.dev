@@ -51,28 +51,38 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
        return (
                <section className='flex w-full flex-col'>
                         <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
-                          <div className='flex items-center gap-2 md:gap-3 w-full'>
+                        <div className='flex items-center gap-2 md:gap-3 w-full'>
+                          <label className='relative w-full md:max-w-md' aria-label='Search blog posts'>
+                            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className='absolute left-3 top-1/2 -translate-y-1/2 opacity-70' aria-hidden='true'>
+                              <circle cx='11' cy='11' r='8'></circle>
+                              <path d='m21 21-4.3-4.3'></path>
+                            </svg>
                             <input
                               type='search'
                               value={q}
                               onChange={(e) => setQ(e.target.value)}
                               placeholder='Search title, excerpt, or tags...'
-                              className='w-full rounded-md border border-[color:var(--white)]/15 bg-transparent px-3 py-2 text-sm'
-                              aria-label='Search blog posts'
+                              className='input-glass w-full pl-9 pr-3 py-2 text-sm bg-transparent'
                             />
-                          </div>
-                          <div className='flex items-center gap-2'>
-                            <label htmlFor='blog-sort' className='text-sm opacity-80'>Sort</label>
+                          </label>
+                        </div>
+                        <div className='flex items-center gap-2'>
+                          <label htmlFor='blog-sort' className='text-sm opacity-80'>Sort</label>
+                          <div className='relative'>
                             <select
                               id='blog-sort'
                               value={sort}
                               onChange={(e) => setSort(e.target.value as 'newest' | 'oldest')}
-                              className='rounded-md border border-[color:var(--white)]/15 bg-transparent px-2 py-2 text-sm'
+                              className='select-glass bg-transparent px-2 py-2 text-sm'
                             >
                               <option value='newest'>Newest</option>
                               <option value='oldest'>Oldest</option>
                             </select>
+                            <svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className='pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 opacity-70' aria-hidden='true'>
+                              <path d='m7 10 5 5 5-5'></path>
+                            </svg>
                           </div>
+                        </div>
                         </div>
                         <p className='italic text-end opacity-80 mt-2'>{filteredPosts.length} entries</p>
                         <hr className='block h-px border-0 border-t mt-2 p-0 border-[color:var(--white)]/10' />

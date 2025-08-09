@@ -1,0 +1,265 @@
+[
+  {
+    "year": 2025,
+    "title": "Typhoon T1: Open Thai Reasoning Model",
+    "summary": "An open Thai reasoning model (research preview) exploring test-time reasoning strategies and instruction-following for Thai language tasks.",
+    "tags": ["Large Language Models", "Reasoning", "Thai", "Open Source"],
+    "links": [
+      { "label": "Paper", "href": "https://arxiv.org/abs/2502.09042" },
+      { "label": "Model", "href": "https://huggingface.co/SCB10X/Typhoon-T1-8B-preview" }
+    ],
+    "role": "Lead author",
+    "collaborators": "SCB10X Research",
+    "type": "research"
+  },
+  {
+    "year": 2025,
+    "title": "BenchING: Structured Output Benchmark for LLMs",
+    "summary": "A benchmark and framework for evaluating how well LLMs follow structured output formats in narrative PCG tasks, with error taxonomy and scaling analysis.",
+    "tags": ["LLM Evaluation", "Prompt Engineering", "PCG", "Benchmark"],
+    "links": [
+      { "label": "Journal", "href": "https://ieeexplore.ieee.org/document/10840256" },
+      { "label": "Code", "href": "https://github.com/Pittawat2542/llm-output-formats" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2025,
+    "title": "Thai Earthquake Timeline Visualizer",
+    "summary": "Interactive timeline visualizer for Thailand earthquake events with filtering and temporal context.",
+    "tags": ["Visualization", "TypeScript", "Open Data"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/thailand-earthquake-visualizer" }
+    ],
+    "type": "side project"
+  },
+  {
+    "year": 2025,
+    "title": "Typhoon Application Week",
+    "summary": "Built and shipped 7+ web apps integrating LLM capabilities as part of a rapid prototyping initiative.",
+    "tags": ["LLM Applications", "Rapid Prototyping", "Typhoon"],
+    "links": [
+      { "label": "Apps", "href": "https://apps.opentyphoon.ai" }
+    ],
+    "type": "initiative"
+  },
+  {
+    "year": 2024,
+    "title": "Multiverse of Greatness: Story Branching with LLMs",
+    "summary": "Algorithms and tools for generating and evaluating branching storylines using LLMs, including UI and utilities.",
+    "tags": ["LLMs", "Narrative", "PCG", "Evaluation"],
+    "links": [
+      { "label": "Preprint", "href": "https://arxiv.org/abs/2411.14672" },
+      { "label": "Algorithms", "href": "https://github.com/multiverse-of-greatness/story-branching-algorithms" },
+      { "label": "UI", "href": "https://github.com/multiverse-of-greatness/multiverse-ui" },
+      { "label": "Utils", "href": "https://github.com/multiverse-of-greatness/story-branching-utils" },
+      { "label": "Evaluation", "href": "https://github.com/multiverse-of-greatness/evaluation-algorithm" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2024,
+    "title": "Driving Assistant for Simulator-Based Assessment",
+    "summary": "Low-latency speech assistant using pre-generated LLM messages to guide drivers in simulator-based assessment.",
+    "tags": ["Applied AI", "Speech", "Healthcare", "Driving Simulator"],
+    "links": [
+      { "label": "Journal", "href": "https://www.cell.com/heliyon/fulltext/S2405-8440(24)11972-X" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2024,
+    "title": "Prompt Engineering for Game Content Generation",
+    "summary": "Open tutorials and notebooks demonstrating prompt engineering techniques for generating game content.",
+    "tags": ["Prompt Engineering", "PCG", "Tutorial"],
+    "links": [
+      { "label": "Slides (CoG '24)", "href": "/files/cog_tutorial_2024.pdf" },
+      { "label": "Notebook", "href": "https://github.com/chatgpt4pcg/tutorial-2024-notebook" },
+      { "label": "PE Examples", "href": "https://github.com/chatgpt4pcg/pe-examples" },
+      { "label": "Org Repos (ChatGPT4PCG)", "href": "https://github.com/orgs/chatgpt4pcg/repositories" },
+      { "label": "ToG Article (Competition)", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" }
+    ],
+    "type": "tutorial"
+  },
+  {
+    "year": 2023,
+    "title": "Multi-modal LLM Anomaly Detection",
+    "summary": "Explorations in anomaly detection using multi-modal LLM pipelines.",
+    "tags": ["LLMs", "Multi-modal", "Anomaly Detection"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/mmllmad" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2023,
+    "title": "Dashcam Driving Video Generation with CARLA",
+    "summary": "Synthetic dashcam-style driving dataset generation using CARLA for downstream tasks.",
+    "tags": ["Simulation", "CARLA", "Computer Vision"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/dashcam-driving-data-gen" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2023,
+    "title": "ChatGPT4PCG Competition Platform",
+    "summary": "Competition and infrastructure exploring LLM abilities for physics-constrained content generation with stability and similarity metrics.",
+    "tags": ["Competition", "LLM", "PCG"],
+    "links": [
+      { "label": "Transactions on Games", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" },
+      { "label": "GitHub Org", "href": "https://github.com/orgs/chatgpt4pcg/repositories" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2022,
+    "title": "Ultra: AR Poster Showcase Platform",
+    "summary": "Web-based platform showcasing augmented reality posters for academic events.",
+    "tags": ["AR", "Web"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/ultra" }
+    ],
+    "type": "extracurricular"
+  },
+  {
+    "year": 2022,
+    "title": "Thai Learning",
+    "summary": "A simple site for learning basic Thai language phrases and vocabulary.",
+    "tags": ["Education", "Web"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/thai-learning" }
+    ],
+    "type": "extracurricular"
+  },
+  {
+    "year": 2022,
+    "title": "Poster Showcase Websites",
+    "summary": "Lightweight poster showcase sites for academic courses and events.",
+    "tags": ["Web", "Showcase"],
+    "links": [
+      { "label": "JSCI12", "href": "https://github.com/Pittawat2542/jsci12-poster-showcase" },
+      { "label": "CSC532", "href": "https://github.com/Pittawat2542/csc532-poster-showcase" },
+      { "label": "CSC491", "href": "https://github.com/Pittawat2542/csc491-poster-showcase" }
+    ],
+    "type": "extracurricular"
+  },
+  {
+    "year": 2021,
+    "title": "Krathu-500",
+    "summary": "A research dataset/tooling project (500+ items) supporting downstream NLP/LLM work.",
+    "tags": ["Dataset", "NLP"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/krathu-500" }
+    ],
+    "type": "research"
+  },
+  {
+    "year": 2021,
+    "title": "Coeus: Mind Map Generation from Text",
+    "summary": "Platform integrating NLP techniques to generate mind maps from un/structured text.",
+    "tags": ["NLP", "Information Extraction", "Visualization"],
+    "links": [
+      { "label": "Org Repos", "href": "https://github.com/orgs/cs-coeus/repositories" },
+      { "label": "Project Page", "href": "https://seniorproject.sit.kmutt.ac.th/showproject/CS61-RE38" }
+    ],
+    "type": "senior project"
+  },
+  {
+    "year": 2021,
+    "title": "Zeus: Interactive Physics Simulation",
+    "summary": "Interactive physics simulation platform built as a collaborative project.",
+    "tags": ["Physics", "Education", "Web"],
+    "links": [
+      { "label": "Org Repos", "href": "https://github.com/orgs/cs-zeus/repositories" }
+    ],
+    "type": "group project"
+  },
+  {
+    "year": 2020,
+    "title": "navi: Event Companion with AR Guidance",
+    "summary": "Event companion mobile app featuring AR map guidance.",
+    "tags": ["Mobile", "AR", "Events"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/navi" },
+      { "label": "Org Repo", "href": "https://github.com/CS-DSI-Integrated-Project-2019/navi" }
+    ],
+    "type": "group project"
+  },
+  {
+    "year": 2020,
+    "title": "GDSC/GDGoC Lead (KMUTT)",
+    "summary": "Inaugural Thai Google Developer Student Clubs (now GDGoC) lead at KMUTT, organizing workshops and developer community events.",
+    "tags": ["Leadership", "Community"],
+    "links": [],
+    "type": "leadership"
+  },
+  {
+    "year": 2019,
+    "title": "KMUTT COVID-19 Support Platform",
+    "summary": "A platform to support and manage donation requests during COVID-19.",
+    "tags": ["Web", "Crisis Response"],
+    "links": [],
+    "type": "extracurricular"
+  },
+  {
+    "year": 2019,
+    "title": "TravelAloha (Agoda‑clone)",
+    "summary": "Full‑stack web application inspired by Agoda, implemented as a course project.",
+    "tags": ["Full‑stack", "Web"],
+    "links": [
+      { "label": "Org Repos", "href": "https://github.com/orgs/CS19-SIT/repositories" }
+    ],
+    "type": "class project"
+  },
+  {
+    "year": 2019,
+    "title": "Junior Programmer Camp XV",
+    "summary": "Event websites and grading tools for a university programming camp.",
+    "tags": ["Web", "Education", "Events"],
+    "links": [
+      { "label": "Coming Soon", "href": "https://github.com/Pittawat2542/jpc-xv-coming-soon" },
+      { "label": "Grading", "href": "https://github.com/Pittawat2542/jpc-xv-public" },
+      { "label": "Main Web", "href": "https://github.com/Pittawat2542/jpc-xv-v1-public" }
+    ],
+    "type": "extracurricular"
+  },
+  {
+    "year": 2019,
+    "title": "Announce Message",
+    "summary": "Socket.io‑based big screen message broadcaster for events.",
+    "tags": ["Node.js", "Socket.io", "Events"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/announce-message" }
+    ],
+    "type": "side project"
+  },
+  {
+    "year": 2019,
+    "title": "SIT Code 2019",
+    "summary": "Main website and registration system for a high school coding competition hosted by the university.",
+    "tags": ["Web", "Events", "Registration"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/sit-code-2019" }
+    ],
+    "type": "extracurricular"
+  },
+  {
+    "year": 2019,
+    "title": "MedU",
+    "summary": "Mobile app for research participants to collect biometric health data.",
+    "tags": ["Mobile", "Health"],
+    "links": [],
+    "type": "freelance"
+  },
+  {
+    "year": 2016,
+    "title": "NewsHub",
+    "summary": "Android RSS reader application with category feeds and offline reading.",
+    "tags": ["Android", "RSS", "Mobile"],
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Pittawat2542/NewsHub" }
+    ],
+    "type": "extracurricular"
+  }
+]

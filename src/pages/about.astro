@@ -15,33 +15,128 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
         page="about" 
       />
 
-      <!-- About me card -->
+      <!-- Snapshot -->
       <section id='about-me' class='glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto prose-a:text-[color:var(--accent-about)]'>
-          <Image src={profileImage} alt="Pete's profile picture" class='rounded-full w-32 h-32 md:w-40 md:h-40 mx-auto' />
-          <div class='flex flex-wrap mx-auto justify-center gap-4 mt-4'>
-            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://github.com/Pittawat2542' target='_blank'><Github /></a>
-            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://www.linkedin.com/in/pittawat-tav/' target='_blank'><Linkedin /></a>
-            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://www.instagram.com/pete.pittawat/' target='_blank'><Instagram /></a>
-            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en' target='_blank'>Google Scholar</a>
-            <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://orcid.org/0000-0002-6824-2634' target='_blank'>ORCID</a>
+        <div class='mx-auto'>
+          <div class='flex flex-col items-center text-center'>
+            <Image src={profileImage} alt="Pete's profile picture" class='rounded-full w-28 h-28 md:w-36 md:h-36' />
+            <h2 class='mt-4 text-2xl md:text-3xl font-bold tracking-tight'>Pittawat Taveekitworachai (Pete)</h2>
+            <p class='mt-2 text-[color:var(--white)]/85 max-w-2xl'>
+              Researcher working on large language models, reasoning, and prompt engineering. I enjoy turning ideas into
+              practical, reliable systems and sharing what I learn.
+            </p>
+            <div class='flex flex-wrap gap-2 mt-4'>
+              <span class='glass-chip'>Bangkok, Thailand</span>
+              <span class='glass-chip'>LLMs</span>
+              <span class='glass-chip'>Reasoning</span>
+              <span class='glass-chip'>Prompt Engineering</span>
+              <span class='glass-chip'>Open Source</span>
+            </div>
+
+            <!-- Social / Links -->
+            <div class='flex flex-wrap justify-center gap-4 mt-5'>
+              <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://github.com/Pittawat2542' target='_blank' aria-label='GitHub'><Github /></a>
+              <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://www.linkedin.com/in/pittawat-tav/' target='_blank' aria-label='LinkedIn'><Linkedin /></a>
+              <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://www.instagram.com/pete.pittawat/' target='_blank' aria-label='Instagram'><Instagram /></a>
+              <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en' target='_blank'>Google Scholar</a>
+              <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://orcid.org/0000-0002-6824-2634' target='_blank'>ORCID</a>
+            </div>
+            <div class='mt-4 flex flex-wrap gap-3'>
+              <a href='/projects' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent-about)] text-[color:var(--white)] hover:text-[color:var(--accent-about)] transition-all font-medium'>Projects</a>
+              <a href='/publications' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent-about)] text-[color:var(--white)] hover:text-[color:var(--accent-about)] transition-all font-medium'>Publications</a>
+              <a href='/talks' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent-about)] text-[color:var(--white)] hover:text-[color:var(--accent-about)] transition-all font-medium'>Talks</a>
+            </div>
           </div>
-          <p>
-            Hey! I'm Pittawat Taveekitworachai, but you can just call me <strong>Pete</strong>. I'm currently living in
-            <strong>Bangkok, Thailand</strong> 🇹🇭, but previously used to live in <strong>Shiga, Japan</strong> 🇯🇵. I always believe in the power of
-            technology to <span class='underline decoration-wavy inline-block'>enrich human life</span> ✨. In my free time, I enjoy playing video games 🎮, watching movies and series 🎥, and reading books 📚.
-          </p>
-          <p>
-            I have just graduated from a Master's degree at <a href='https://www.ice.ci.ritsumei.ac.jp/' target='_blank'>Intelligent Computer Entertainment</a>,
-            <a href='https://en.ritsumei.ac.jp' target='_blank'>Ritsumeikan University</a>, Japan. I work on <em>large language models</em> (LLMs) and
-            <em>prompt engineering</em>, as well as their applications. I also collaborated with researchers in Thailand, Japan, Italy, Australia, and the US.
-          </p>
+        </div>
+      </section>
+
+      <!-- Timeline -->
+      <section id='timeline' class='mt-8 glass-card p-6 md:p-8'>
+        <div class='mx-auto'>
+          <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-4'>Timeline</h2>
+          <ol class='relative border-s border-[color:var(--white)]/10 ml-3 space-y-6'>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2025 — Typhoon T1 (research preview)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Open Thai reasoning model and test-time strategies.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2025 — Typhoon Application Week</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Built and shipped 7+ LLM-powered apps.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2024 — Multiverse of Greatness (preprint)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Story branching with LLMs and evaluation tools.</p>
+            </li>
+            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
+              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent)] ring-2 ring-[color:var(--white)]/30'></span>
+              <h3 class='font-semibold'>Oct 2024 – Present — Research Scientist, Typhoon team (SCB 10X R&D)</h3>
+              <p class='text-[color:var(--white)]/85 text-sm'>Large language model research and applications at SCB 10X.</p>
+            </li>
+            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
+              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
+              <h3 class='font-semibold'>Sep 2024 — M.Eng., Ritsumeikan University (Valedictorian)</h3>
+              <p class='text-[color:var(--white)]/85 text-sm'>Master of Engineering, Intelligent Computer Entertainment Laboratory.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2022 — Ethical Hacking Workshop</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>5‑day red‑team training by NIA & NBTC.</p>
+            </li>
+            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
+              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
+              <h3 class='font-semibold'>2022 — Research Associate (IC2, SIT KMUTT)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Led end‑to‑end ML/AR/web projects; presented Krathu‑500; hosted Kaggle competition.</p>
+            </li>
+            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
+              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
+              <h3 class='font-semibold'>2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)</h3>
+              <p class='text-[color:var(--white)]/85 text-sm'>Bachelor of Science (Computer Science), Petch Prajom Klao scholarship; multiple academic awards.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2021 — LINE Thailand Internship</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Full‑stack work on LINE Shopping; Vue 2→3 migration; microservices.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2020–2021 — Siriraj Hospital (Mahidol)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Tech lead & Flutter dev; React Native→Flutter migration; app size/load wins.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2020 — COVID‑19 Support Platform (KMUTT)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Led 10‑person team; 300+ shipments tracked; 50+ hospitals served.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2020 — Huawei ICT APAC (Network Track)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Participated in regional competition; routing/switching focus.</p>
+            </li>
+            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
+              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
+              <h3 class='font-semibold'>2019–2020 — Siriraj Hospital</h3>
+              <p class='text-[color:var(--white)]/85 text-sm'>React Native developer; added features and data collection flows.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2019 — Young Webmaster Camp 17th</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Selected (programming major); built MVP for social impact.</p>
+            </li>
+            <li class='ms-6'>
+              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
+              <h3 class='font-semibold'>2019 — Google Tech Challenge (Bangkok)</h3>
+              <p class='text-[color:var(--white)]/80 text-sm'>Selected team; coding + non‑coding puzzles.</p>
+            </li>
+          </ol>
         </div>
       </section>
 
       <!-- Research interests -->
       <section id='interests' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+        <div class='prose dark:prose-invert md:prose-lg my-4 max-w-none'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Research interests</h2>
           <ul class='space-y-4'>
             <li>
@@ -94,10 +189,10 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
 
       <!-- Skills -->
       <section id='skills' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+        <div class='prose dark:prose-invert md:prose-lg my-4 max-w-none'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Skills</h2>
           <p>
-            I also believe in open science and democratizing knowledge. I believe in software craftsmanship and always strive to improve it. I am experienced in designing <strong>reproducible</strong>, <strong>resumable</strong>, and <strong>fault-tolerant</strong> software, often requiring long evaluations of LLMs experiments spanning over months and across computers, while ensuring a <strong>smooth experience</strong> for software users who may extend and build upon my software for further research. This is also why my software is designed with <strong>extensibility</strong> and <strong>simplicity</strong> in mind. This philosophy is reflected in various research projects that serve as platforms and frameworks for researchers to rely upon.
+            I believe in open science and software craftsmanship. I design <strong>reproducible</strong>, <strong>resumable</strong>, and <strong>fault‑tolerant</strong> software for long‑running LLM evaluations, with <strong>extensibility</strong> and <strong>simplicity</strong> as core principles.
           </p>
           
           <h3 class='mt-6 font-bold text-xl'>Software Engineering</h3>
@@ -121,7 +216,7 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
       
       <!-- Education & Experiences -->
       <section id='education' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4 max-w-none'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Education & Related Experiences</h2>
           <p>
             Previously, I earned my Bachelor's degree in Computer Science with first-class honors from <a href='https://www.kmutt.ac.th/en/' target='_blank'>King Mongkut's University of Technology Thonburi</a>, Thailand, supported by the prestigious 💎 <strong>Petchra Pra Jom Klao Scholarship - Distinguished Academic Capabilities</strong>. Additionally, I received the 💎 <strong>Jia Ra Nai Petchra Scholarship - Academic Distinguished Award</strong> for my outstanding performance throughout the academic year, being recognized as the top student in the program for a specific year. Upon graduation, I was honored with the 🎖️ <strong>Honor Award for Academic Distinguished Performance</strong> by the Prapa-Sompong Foundation, acknowledging me as the top student among the graduates of the same year. Furthermore, my name was inscribed on the <strong>Wall of Honors</strong> at the university's president building.
@@ -141,7 +236,7 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
 
       <!-- Volunteer -->
       <section id='volunteer' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4 max-w-none'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Volunteer</h2>
           <p>
             I volunteer for various occasions because I believe in paying it forward and helping others. One of my volunteering experiences includes organizing and developing web applications for Junior Programmer Camp XV, an annual camp organized by computer science students at the School of Information Technology, King Mongkut's University of Technology Thonburi, targeted at senior high school students throughout Thailand. In this camp, participants have the opportunity to be exposed to various activities that help them familiarize themselves with CS concepts and the university's atmosphere. I oversee the IT aspect of the camp and lead the development team. Alongside two other teammates, we developed the main website for the camp, including the registration system. Additionally, we created a camp management system to facilitate staff in the participant selection process.
@@ -155,7 +250,7 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
 
       <!-- Lifelong learning -->
       <section id='learning' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4'>
+        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4 max-w-none'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Lifelong Learning</h2>
           <p>
             I also enjoy taking various online courses throughout the years (as can be seen from certificates on my <a href='https://www.linkedin.com/in/pittawat-tav/' target='_blank'>LinkedIn</a>.) I enjoy learning and its process. The feeling of understanding something new satisfies me. It also helps me become better at what I do and enables me to be <strong>creative</strong> and connect various seemingly unrelated topics together to come up with new ideas. This is also a part of my personal goal revolving around <strong>life-long learning</strong>, and I believe that understanding leads to a better life and understanding of other people and things. During my time pursuing my Bachelor's degree, I also served as a tutor on various topics in computer science for my classmates to help them prepare for upcoming exams. I believe that <em>sharing knowledge not only helps other people but also helps me understand the topic better.</em>

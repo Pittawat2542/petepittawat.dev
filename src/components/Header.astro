@@ -3,12 +3,13 @@ import HeaderLink from './HeaderLink.astro';
 import logoImage from '../assets/images/logo.png';
 import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
-import { BookText, Mic, ScrollText, User } from 'lucide-astro';
+import { BookText, Mic, ScrollText, User, FolderKanban } from 'lucide-astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const links = [
   { href: '/blog', label: 'Blog', Icon: BookText },
+  { href: '/projects', label: 'Projects', Icon: FolderKanban },
   { href: '/publications', label: 'Publications', Icon: ScrollText },
   { href: '/talks', label: 'Talks', Icon: Mic },
   { href: '/about', label: 'About', Icon: User },
