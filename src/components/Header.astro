@@ -4,14 +4,15 @@ import logoImage from '../assets/images/logo.png';
 import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
 import { BookText, Home, MicVocal, ScrollText, User } from 'lucide-astro';
+import ThemeToggle from './ThemeToggle.astro';
 ---
 
 <header
-	class='bg-[color:var(--black-nav)] text-[color:var(--white)] m-0 px-8 shadow-md py-4 fixed w-full z-10 top-0 left-0'
+	class='backdrop-blur-md bg-[color:var(--black-nav)] text-[color:var(--white)] m-0 px-4 md:px-8 shadow-sm border-b border-[color:var(--white)]/10 py-3 fixed w-full z-10 top-0 left-0'
 >
-	<nav class='flex justify-between items-center'>
+	<nav class='flex justify-between items-center gap-4'>
 		<h2 class='m-0 text-xl md:text-2xl no-underline'>
-			<a class='group text-[color:var(--white)] flex gap-4 pointers' href='/'
+			<a class='group text-[color:var(--white)] flex gap-3 md:gap-4 pointers' href='/'
 				><Image
 					class='h-8 w-8 md:group-hover:animate-shake'
 					src={logoImage}
@@ -22,7 +23,7 @@ import { BookText, Home, MicVocal, ScrollText, User } from 'lucide-astro';
 				></a
 			>
 		</h2>
-               <div class='flex gap-8 overflow-x-auto md:overflow-visible'>
+		<div class='flex items-center gap-3 md:gap-6 overflow-x-auto md:overflow-visible'>
 			<HeaderLink class='hidden md:flex' href='/'
 				><Home class='hidden lg:inline-block' />Home</HeaderLink
 			>
@@ -38,6 +39,7 @@ import { BookText, Home, MicVocal, ScrollText, User } from 'lucide-astro';
 			<HeaderLink href='/about'
 				><User class='hidden lg:inline-block' />About</HeaderLink
 			>
+			<ThemeToggle />
 		</div>
 	</nav>
 </header>

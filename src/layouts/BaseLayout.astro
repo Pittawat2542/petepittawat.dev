@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import ScrollTop from '../components/ScrollTop.astro';
 
 
 const { title, description } = Astro.props;
@@ -16,14 +17,46 @@ const ogImage = Astro.site
 	<head>
 		<BaseHead title={title} description={description} image={ogImage} />
 		<link rel='sitemap' href='/sitemap-index.xml' />
+		<script>
+		  // Apply saved/system theme early to avoid flash
+		  (function () {
+		    try {
+		      var root = document.documentElement;
+		      var saved = localStorage.getItem('theme');
+		      var theme = (saved === 'light' || saved === 'dark')
+		        ? saved
+		        : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		      if (theme === 'light') {
+		        root.setAttribute('data-theme', 'light');
+		        root.classList.remove('dark');
+		      } else {
+		        root.removeAttribute('data-theme');
+		        root.classList.add('dark');
+		      }
+		    } catch (_) { /* no-op */ }
+		  })();
+		</script>
 	</head>
 
         <body>
                 <a href="#main-content" class="skip-link">Skip to content</a>
                 <Header />
-                <main id="main-content" class='px-8 md:px-16 mx-auto mt-24 mb-10 max-w-screen-xl'>
+                <main id="main-content" class='px-6 md:px-10 mx-auto mt-24 mb-12 max-w-screen-lg md:max-w-screen-xl'>
                         <slot />
                 </main>
                 <Footer />
+                <ScrollTop />
+                <script>
+                  // Reveal-on-scroll for elements with `.reveal` class
+                  const io = new IntersectionObserver(
+                    (entries) => {
+                      for (const e of entries) {
+                        if (e.isIntersecting) e.target.classList.add('reveal-visible');
+                      }
+                    },
+                    { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+                  );
+                  for (const el of document.querySelectorAll('.reveal')) io.observe(el);
+                </script>
         </body>
 </html>

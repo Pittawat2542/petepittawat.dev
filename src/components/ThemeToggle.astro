@@ -1,0 +1,48 @@
+---
+const label = 'Toggle theme';
+---
+
+<button
+  type="button"
+  aria-label={label}
+  class="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-[color:var(--white)]/10 hover:border-[color:var(--accent)] text-[color:var(--white)] hover:text-[color:var(--accent)] transition-colors duration-200"
+  id="theme-toggle"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+    <path d="M21.752 15.002A9.718 9.718 0 0 1 12 21.75c-5.385 0-9.75-4.365-9.75-9.75 0-4.272 2.748-7.9 6.58-9.219.47-.165.948.23.822.713A7.5 7.5 0 0 0 12 17.25a7.5 7.5 0 0 0 7.256-5.651c.126-.482.694-.676 1.06-.322a9.72 9.72 0 0 1 1.436 3.725Z"/>
+  </svg>
+</button>
+
+<script is:inline>
+  const STORAGE_KEY = 'theme';
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+
+  /**
+   * @param {'light'|'dark'} theme
+   */
+  function apply(theme) {
+    if (theme === 'light') {
+      root.setAttribute('data-theme', 'light');
+      root.classList.remove('dark');
+    } else {
+      root.removeAttribute('data-theme'); // defaults to dark
+      root.classList.add('dark');
+    }
+  }
+
+  /** @returns {'light'|'dark'} */
+  function current() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === 'light' || saved === 'dark') return saved;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  apply(current());
+
+  btn?.addEventListener('click', () => {
+    const next = current() === 'light' ? 'dark' : 'light';
+    localStorage.setItem(STORAGE_KEY, next);
+    apply(next);
+  });
+</script>
