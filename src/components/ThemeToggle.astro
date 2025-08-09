@@ -85,8 +85,6 @@ const label = 'Toggle theme';
 
     // Follow OS changes if user is in "system" mode
     const onChange = () => { if (!saved()) apply(systemTheme()); };
-    media.addEventListener?.('change', onChange);
-    // Safari <16 fallback
-    media.addListener?.(onChange);
+    media.addEventListener('change', onChange);
   })();
 </script>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatDate } from '../../lib';
 import type { Talk } from '../../types';
 
@@ -23,7 +22,7 @@ export function TalkCard({ item }: { item: Talk }) {
         {item.tags?.length ? (
           <div className="mt-1 flex flex-wrap gap-2">
             {item.tags.map((t) => (
-              <span key={t} className="inline-block glass-chip">
+              <span key={t} className="inline-block glass-chip text-xs">
                 {t}
               </span>
             ))}

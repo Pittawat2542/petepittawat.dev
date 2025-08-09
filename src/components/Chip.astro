@@ -1,11 +1,10 @@
 ---
 interface Props {
-  children: string | string[];
   variant?: 'default' | 'primary' | 'secondary';
   className?: string;
 }
 
-const { children, variant = 'default', className = '' } = Astro.props;
+const { variant = 'default', className = '' } = Astro.props;
 
 const baseClasses = 'inline-block glass-chip whitespace-nowrap';
 
