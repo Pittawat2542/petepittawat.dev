@@ -23,7 +23,7 @@ const isActive = (href: string) =>
   Skip to content
 </a>
 
-<header class="fixed top-4 inset-x-0 z-50">
+<header class="fixed inset-x-0 z-50" style="top: max(env(safe-area-inset-top), 1rem)">
   <div class="mx-auto w-fit max-w-[min(92vw,72rem)]">
     <div class="relative inline-flex rounded-full p-[1px]
                 bg-gradient-to-r from-[color:var(--white)]/15 via-transparent to-[color:var(--white)]/15">
@@ -77,4 +77,3 @@ const isActive = (href: string) =>
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 </script>
-

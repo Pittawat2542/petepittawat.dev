@@ -184,6 +184,15 @@ html {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.25);
 }
 
+/* Mobile-friendly overflow handling for content */
+.prose pre { overflow: auto; -webkit-overflow-scrolling: touch; }
+.prose code { word-break: break-word; white-space: pre-wrap; }
+.prose table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Hide scrollbars where decorative (e.g., header scroller) */
+.scrollbar-none { scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
 /* Subtle highlight for first/co-first author publications */
 .first-author {
   border-color: color-mix(in oklab, var(--accent) 55%, transparent) !important;
