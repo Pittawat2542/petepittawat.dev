@@ -4,55 +4,56 @@ import { Image } from 'astro:assets';
 import profileImage from '../assets/images/profile.jpg';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Github, Instagram, Linkedin } from 'lucide-astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
-    <section
-		class='mx-auto prose dark:prose-invert prose-a:text-[color:var(--accent)] hyphens-auto md:prose-lg'
-	>
-		<h1>About</h1>
-		<Image
-			src={profileImage}
-			alt="Pete's profile picture"
-			class='rounded-full w-48 h-48 mt-4 mx-auto'
-		/>
-		<div class='flex flex-wrap mx-auto w-4/5 justify-center gap-6'>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://github.com/Pittawat2542'
-				target='_blank'
-			>
-				<Github />
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://www.linkedin.com/in/pittawat-tav/'
-				target='_blank'
-			>
-				<Linkedin />
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://www.instagram.com/pete.pittawat/'
-				target='_blank'
-			>
-				<Instagram />
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en'
-				target='_blank'
-			>
-				Google Scholar
-			</a>
-			<a
-				class='hover:-translate-y-1 transition-transform duration-100 p-1'
-				href='https://orcid.org/0000-0002-6824-2634'
-				target='_blank'
-			>
-				ORCID
-			</a>
-		</div>
+  <PageHeader title="About" subtitle="Learn more about me" />
+  <section
+    class='mx-auto prose dark:prose-invert prose-a:text-[color:var(--accent)] hyphens-auto md:prose-lg'
+  >
+    <Image
+      src={profileImage}
+      alt="Pete's profile picture"
+      class='rounded-full w-48 h-48 mt-4 mx-auto'
+    />
+    <div class='flex flex-wrap mx-auto w-4/5 justify-center gap-6'>
+      <a
+        class='hover:-translate-y-1 transition-transform duration-100 p-1'
+        href='https://github.com/Pittawat2542'
+        target='_blank'
+      >
+        <Github />
+      </a>
+      <a
+        class='hover:-translate-y-1 transition-transform duration-100 p-1'
+        href='https://www.linkedin.com/in/pittawat-tav/'
+        target='_blank'
+      >
+        <Linkedin />
+      </a>
+      <a
+        class='hover:-translate-y-1 transition-transform duration-100 p-1'
+        href='https://www.instagram.com/pete.pittawat/'
+        target='_blank'
+      >
+        <Instagram />
+      </a>
+      <a
+        class='hover:-translate-y-1 transition-transform duration-100 p-1'
+        href='https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en'
+        target='_blank'
+      >
+        Google Scholar
+      </a>
+      <a
+        class='hover:-translate-y-1 transition-transform duration-100 p-1'
+        href='https://orcid.org/0000-0002-6824-2634'
+        target='_blank'
+      >
+        ORCID
+      </a>
+    </div>
 		<p>
 			Hey! I'm Pittawat Taveekitworachai, but you can just call me <strong
 				>Pete</strong
