@@ -4,18 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import TalksExplorer from '../components/TalksExplorer.tsx';
 import talks from '../content/talks/talks.json';
 import ThemedPageHero from '../components/ThemedPageHero.astro';
-
-type Talk = {
-  date: string;
-  title: string;
-  audience: string;
-  audienceUrl: string | null;
-  mode: string;
-  resources: { label: string; href: string; download?: boolean }[];
-  tags: string[];
-};
-
-// Data is loaded directly from JSON array
+import type { Talk } from '../types';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - Talks`} description={SITE_DESCRIPTION}>

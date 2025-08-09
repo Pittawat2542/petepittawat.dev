@@ -1,24 +1,6 @@
 import React from 'react';
-
-export type TalkResource = { label: string; href: string; download?: boolean };
-export type Talk = {
-  date: string; // ISO date
-  title: string;
-  audience: string;
-  audienceUrl: string | null;
-  mode: 'online' | 'on-site' | 'hybrid' | string;
-  resources: TalkResource[];
-  tags: string[];
-};
-
-function formatDate(iso: string) {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-  } catch {
-    return iso;
-  }
-}
+import { formatDate } from '../../lib';
+import type { Talk } from '../../types';
 
 export function TalkCard({ item }: { item: Talk }) {
   return (

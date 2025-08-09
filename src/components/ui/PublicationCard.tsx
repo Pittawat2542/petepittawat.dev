@@ -1,55 +1,18 @@
 import React, { useState } from 'react';
-
-export type Artifact = { label: string; href: string };
-export type Publication = {
-  year: number;
-  type: 'journal' | 'conference' | 'preprint' | string;
-  title: string;
-  authors: string;
-  venue: string;
-  url: string | null;
-  artifacts: Artifact[];
-  tags: string[];
-  abstract?: string;
-};
-
-function highlightMyName(authors: string) {
-  // Highlight "Pittawat" and/or "Taveekitworachai" wherever they appear
-  const re = /(Pittawat|Taveekitworachai)/gi;
-  const parts = authors.split(re);
-  return parts.map((part, i) =>
-    re.test(part)
-      ? (
-          <strong key={i} className="text-[color:var(--accent)]">
-            {part}
-          </strong>
-        )
-      : (
-          <span key={i}>{part}</span>
-        )
-  );
-}
+import { highlightAuthorNames, isFirstAuthor } from '../../lib';
+import { FIRST_AUTHOR_TITLE } from '../../lib/constants';
+import type { Publication } from '../../types';
 
 export function PublicationCard({ item }: { item: Publication }) {
-  const firstAuthorTitle =
-    'The Chronicles of ChatGPT: Generating and Evaluating Visual Novel Narratives on Climate Change Through ChatGPT';
-
-  function isFirstAuthor(authors: string) {
-    // Normalize separators and get first name block
-    const normalized = authors.replace(/\sand\s/gi, ', ');
-    const [first = ''] = normalized.split(',');
-    return /pittawat|taveekitworachai/i.test(first);
-  }
-
   const firstAuthor = isFirstAuthor(item.authors);
-  const coFirstAuthor = item.title.trim() === firstAuthorTitle;
+  const coFirstAuthor = item.title.trim() === FIRST_AUTHOR_TITLE;
   const highlight = firstAuthor || coFirstAuthor;
   const badgeLabel = firstAuthor ? 'First author' : coFirstAuthor ? 'Co-first author' : null;
   const [open, setOpen] = useState(false);
   const detailsId = `pub-details-${encodeURIComponent(item.title).replace(/%/g, '')}`;
 
   return (
-    <article className={["glass-card p-4 md:p-5", highlight ? 'first-author' : ''].filter(Boolean).join(' ')}>
+    <article className={[`glass-card p-4 md:p-5`, highlight ? 'first-author' : ''].filter(Boolean).join(' ')}>
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h3 className="text-base md:text-lg font-semibold leading-snug">
@@ -61,7 +24,7 @@ export function PublicationCard({ item }: { item: Publication }) {
               item.title
             )}
           </h3>
-          <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightMyName(item.authors)}</p>
+          <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightAuthorNames(item.authors)}</p>
           <p className="mt-1 text-xs md:text-sm text-[color:var(--white)]/60">
             <span className="uppercase tracking-wide mr-2">{item.type}</span>
             <span>• {item.venue}</span>
@@ -90,7 +53,7 @@ export function PublicationCard({ item }: { item: Publication }) {
           >
             <span className="inline-flex items-center gap-1">
               Details
-              <svg className={["h-3 w-3 transition-transform", open ? 'rotate-180' : 'rotate-0'].join(' ')} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg className={[`h-3 w-3 transition-transform`, open ? 'rotate-180' : 'rotate-0'].join(' ')} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
               </svg>
             </span>
@@ -98,7 +61,7 @@ export function PublicationCard({ item }: { item: Publication }) {
         </div>
       </div>
       {/* Expandable details */}
-      <div id={detailsId} className={["collapsible mt-3", open ? 'open' : ''].join(' ')}>
+      <div id={detailsId} className={[`collapsible mt-3`, open ? 'open' : ''].join(' ')}>
         <div>
           <div className="rounded-xl ring-1 ring-[color:var(--white)]/10 bg-[color:var(--white)]/5 p-4 md:p-5">
             <div className="grid gap-4 md:grid-cols-5">

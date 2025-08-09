@@ -1,26 +1,9 @@
 import { useMemo, useState } from 'react';
-import Button from './ui/Button';
+import type { BlogPost } from '../types';
 
 type BlogListPageProps = {
-        posts: {
-                id: string;
-                body: string;
-                slug: string;
-                collection: string;
-                data: {
-                        title: string;
-                        excerpt: string;
-                        tags: string[];
-                        pubDate: Date;
-                        coverImage?: {
-                                src: string;
-                                width: number;
-                                height: number;
-                                format: string;
-                        };
-                };
-        }[];
-        tags: string[];
+  posts: BlogPost[];
+  tags: string[];
 };
 
 export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps>) {

@@ -3,42 +3,506 @@ import { Image } from 'astro:assets';
 import profileImage from '../assets/images/profile.jpg';
 import blogImage from '../assets/images/blog.png';
 import publicationsImage from '../assets/images/publications.png';
+import talksImage from '../assets/images/talks.png';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroCard from '../components/HeroCard.astro';
+import talks from '../content/talks/talks.json';
+import publications from '../content/publications/publications.json';
+
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const posts = allPosts.slice(0, 3);
+const stats = {
+	posts: allPosts.length,
+	publications: publications.length,
+	talks: talks.length,
+};
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-        <section class='reveal mt-4 flex flex-col-reverse md:flex-row gap-12 md:gap-16 items-center justify-center md:justify-between px-8 mx-auto max-w-screen-lg'>
-		<div class='text-center flex flex-col gap-4 md:gap-2 md:text-end'>
-			<p class='font-bold text-6xl'>
-				<span class='hero-text-gradient-blue'>สวัสดี!</span>
-				<span class='hero-text-gradient-purple'>Hello!</span>
+	<section
+		class='relative reveal mt-12 md:mt-16 flex flex-col-reverse md:flex-row gap-12 md:gap-16 items-center justify-center md:justify-between px-8 mx-auto max-w-screen-lg'
+	>
+		<div class='text-center md:text-left flex flex-col gap-4 md:gap-3'>
+			<p class='font-bold text-5xl md:text-6xl'>
+				<span class='hero-text-gradient-blue'>Hello! 👋</span>
 			</p>
-			<h1 class='text-4xl'>
+			<h1 class='text-4xl md:text-5xl'>
 				I'm <span class='font-bold hero-text-gradient-orange'>Pete</span>
 			</h1>
-			<p class='text-2xl'>Pittawat Taveekitworachai</p>
+			<p class='text-xl md:text-2xl mt-1'>Pittawat Taveekitworachai</p>
+			<p class='mt-2 text-lg text-[color:var(--white)]/80 max-w-2xl'>
+				Researcher specializing in Large Language Models and Prompt Engineering
+			</p>
 		</div>
-		<Image
-			src={profileImage}
-			alt="Pete's profile picture"
-			class='rounded-full w-48 h-48 mt-4'
-		/>
+		<div class='relative'>
+			<div
+				class='absolute inset-0 rounded-full bg-[color:var(--accent)] blur-xl opacity-20 animate-pulse'
+			>
+			</div>
+			<Image
+				src={profileImage}
+				alt="Pete's profile picture"
+				class='relative rounded-full w-48 h-48 md:w-56 md:h-56 ring-4 ring-[color:var(--white)]/20 hover:ring-[color:var(--accent)]/60 transition-[box-shadow,transform] duration-500 ease-in-out hover:-translate-y-1 shadow-lg'
+			/>
+		</div>
 	</section>
-        <section class='reveal mt-16 flex flex-col lg:flex-row gap-8 lg:gap-12 max-w-screen-lg mx-auto'>
-		<HeroCard
-			title='📝 Blog'
-			description='I write on various topics that benefit others. I believe in simplifying difficult concepts democritizing knowledge.'
-			image={blogImage}
-			url='/blog'
-		/>
-		<HeroCard
-			title='Publications 🧪'
-			description='My research interests lie in the field of large language models and prompt engineering. I am also interested in other topics related to LLMs as well as their applications in various domains.'
-			image={publicationsImage}
-			url='/publications'
-			isReverse={true}
-		/>
+
+	<!-- About Section -->
+	<section id='about' class='reveal mt-16 max-w-screen-lg mx-auto px-8'>
+		<div class='glass-card p-8 md:p-12'>
+			<div class='flex flex-col md:flex-row gap-8'>
+				<div class='flex-1'>
+					<h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-4'>
+						About Me
+					</h2>
+					<p class='text-lg text-[color:var(--white)]/80 mb-4'>
+						I’m Pete (Pittawat Taveekitworachai) — a researcher focused on large
+						language models and prompt engineering. My work explores how to make
+						LLMs <em>reliable, practical, and easy to use</em> in the real world.
+					</p>
+					<p class='text-[color:var(--white)]/80 mb-6'>
+						I bridge unconventional ideas to fundamental and applied research. I
+						share what I learn through my blog, publications, and talks.
+					</p>
+
+					<div class='flex flex-wrap gap-3 mb-6'>
+						<span class='glass-chip'>LLMs</span>
+						<span class='glass-chip'>Prompt Engineering</span>
+						<span class='glass-chip'>Agents & Tool Use</span>
+						<span class='glass-chip'>RFT / RL (rewards)</span>
+						<span class='glass-chip'>Evaluation</span>
+						<span class='glass-chip'>Open Source</span>
+					</div>
+
+					<a
+						href='/about'
+						class='inline-flex items-center gap-2 rounded-lg px-5 py-2.5 bg-[color:var(--accent)] text-white hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--accent)] transition-all duration-300 font-medium'
+					>
+						Learn more about me
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							width='16'
+							height='16'
+							viewBox='0 0 24 24'
+							fill='none'
+							stroke='currentColor'
+							stroke-width='2'
+							stroke-linecap='round'
+							stroke-linejoin='round'
+							class='lucide lucide-arrow-right'
+						>
+							<path d='M5 12h14'></path>
+							<path d='m12 5 7 7-7 7'></path>
+						</svg>
+					</a>
+				</div>
+
+				<div class='flex-1'>
+					<div class='space-y-6'>
+						<div
+							class='bg-gradient-to-br from-[color:var(--accent)]/20 to-[color:var(--accent-publications)]/20 rounded-2xl p-6 h-full'
+						>
+							<h3 class='text-xl font-semibold mb-3 flex items-center gap-2'>
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									width='20'
+									height='20'
+									viewBox='0 0 24 24'
+									fill='none'
+									stroke='currentColor'
+									stroke-width='2'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+									class='lucide lucide-graduation-cap'
+								>
+									<path d='M22 10v6M2 10l10-5 10 5-10 5z'></path>
+									<path d='M6 12v5c3 3 9 3 12 0v-5'></path>
+								</svg>
+								Research Focus
+							</h3>
+							<ul class='space-y-3'>
+								<li class='flex items-start gap-3'>
+									<div
+										class='w-2 h-2 rounded-full bg-[color:var(--accent)] mt-2'
+									>
+									</div>
+									<span
+										><strong>Reasoning Models:</strong> prompting, supervised fine-tuning,
+										and reinforcement with verifiable rewards (RLVR/RFT).</span
+									>
+								</li>
+								<li class='flex items-start gap-3'>
+									<div
+										class='w-2 h-2 rounded-full bg-[color:var(--accent)] mt-2'
+									>
+									</div>
+									<span
+										><strong
+											>Prompt engineering, test-time scaling, and agents:</strong
+										> getting better results from a model without additional training.</span
+									>
+								</li>
+								<li class='flex items-start gap-3'>
+									<div
+										class='w-2 h-2 rounded-full bg-[color:var(--accent)] mt-2'
+									>
+									</div>
+									<span
+										><strong>Applications:</strong> domain-specific models and applications.</span
+									>
+								</li>
+							</ul>
+						</div>
+
+						<div
+							class='bg-gradient-to-br from-[color:var(--accent-talks)]/20 to-[color:var(--accent-about)]/20 rounded-2xl p-6 h-full'
+						>
+							<h3 class='text-xl font-semibold mb-3 flex items-center gap-2'>
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									width='20'
+									height='20'
+									viewBox='0 0 24 24'
+									fill='none'
+									stroke='currentColor'
+									stroke-width='2'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+									class='lucide lucide-book-open'
+								>
+									<path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'></path>
+									<path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'></path>
+								</svg>
+								Professional Highlights
+							</h3>
+							<ul class='space-y-3'>
+								<li class='flex items-start gap-3'>
+									<div
+										class='w-2 h-2 rounded-full bg-[color:var(--accent-talks)] mt-2'
+									>
+									</div>
+									<span
+										>Research and writing on LLMs — a mix of peer-reviewed work
+										and preprints.</span
+									>
+								</li>
+								<li class='flex items-start gap-3'>
+									<div
+										class='w-2 h-2 rounded-full bg-[color:var(--accent-talks)] mt-2'
+									>
+									</div>
+									<span
+										>Talks and workshops for engineers, students, and AI
+										communities.</span
+									>
+								</li>
+								<li class='flex items-start gap-3'>
+									<div
+										class='w-2 h-2 rounded-full bg-[color:var(--accent-talks)] mt-2'
+									>
+									</div>
+									<span
+										>Open-source projects and prototypes around LLM workflows.</span
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class='reveal mt-16 max-w-screen-lg mx-auto px-8'>
+		<div class='text-center mb-10'>
+			<h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>
+				My Work at a Glance
+			</h2>
+			<p class='text-[color:var(--white)]/80 max-w-2xl mx-auto'>
+				Explore my contributions to research, writing, and knowledge sharing
+			</p>
+		</div>
+
+		<ul class='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
+			<!-- Blog -->
+			<li class='h-full'>
+				<a
+					href='/blog'
+					aria-label='Read the blog'
+					class='group block h-full rounded-3xl bg-[color:var(--black-nav)]/50 backdrop-blur-md
+               p-5 md:p-6 shadow-[0_12px_30px_-12px_rgba(0,0,0,.6)]
+               transition-all duration-300 motion-safe:hover:-translate-y-1
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/40'
+				>
+					<figure class='relative'>
+						<!-- portrait-safe frame -->
+						<div
+							class='rounded-2xl bg-white/[.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.05)]'
+						>
+							<div
+								class='aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/[.02] flex items-center justify-center'
+							>
+								<Image
+									src={blogImage}
+									alt='Blog'
+									class='h-full w-full object-contain transition-transform duration-300 motion-safe:group-hover:scale-[1.02]'
+								/>
+							</div>
+						</div>
+						<!-- accent halo on hover (no border) -->
+						<span
+							class='pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300
+                        group-hover:opacity-100'
+							style='box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent),
+                               0 20px 50px -20px color-mix(in oklab, var(--accent) 45%, transparent);'
+						></span>
+					</figure>
+
+					<div class='mt-5 text-center'>
+						<p
+							class='text-xs tracking-wider uppercase text-[color:var(--white)]/70'
+						>
+							Blog posts
+						</p>
+						<p
+							class='text-4xl font-bold tracking-tight mt-1 bg-gradient-to-r from-[color:var(--accent)] to-[color:var(--accent)]/70 bg-clip-text text-transparent'
+						>
+							{stats.posts}
+						</p>
+						<span
+							class='mt-2 inline-flex items-center gap-1 text-sm text-[color:var(--accent)] font-medium
+                       rounded-full px-2.5 py-1 bg-[color:var(--accent)]/[.08]
+                       transition-colors duration-200 group-hover:bg-[color:var(--accent)]/[.12]'
+						>
+							Read the blog →
+						</span>
+					</div>
+				</a>
+			</li>
+
+			<!-- Publications -->
+			<li class='h-full'>
+				<a
+					href='/publications'
+					aria-label='View publications'
+					class='group block h-full rounded-3xl bg-[color:var(--black-nav)]/50 backdrop-blur-md
+               p-5 md:p-6 shadow-[0_12px_30px_-12px_rgba(0,0,0,.6)]
+               transition-all duration-300 motion-safe:hover:-translate-y-1
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-publications)]/40'
+				>
+					<figure class='relative'>
+						<div
+							class='rounded-2xl bg-white/[.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.05)]'
+						>
+							<div
+								class='aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/[.02] flex items-center justify-center'
+							>
+								<Image
+									src={publicationsImage}
+									alt='Publications'
+									class='h-full w-full object-contain transition-transform duration-300 motion-safe:group-hover:scale-[1.02]'
+								/>
+							</div>
+						</div>
+						<span
+							class='pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100'
+							style='box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-publications) 45%, transparent),
+                               0 20px 50px -20px color-mix(in oklab, var(--accent-publications) 45%, transparent);'
+						></span>
+					</figure>
+
+					<div class='mt-5 text-center'>
+						<p
+							class='text-xs tracking-wider uppercase text-[color:var(--accent-publications)]'
+						>
+							Publications
+						</p>
+						<p
+							class='text-4xl font-bold tracking-tight mt-1 bg-gradient-to-r from-[color:var(--accent-publications)] to-[color:var(--accent-publications)]/70 bg-clip-text text-transparent'
+						>
+							{stats.publications}
+						</p>
+						<span
+							class='mt-2 inline-flex items-center gap-1 text-sm text-[color:var(--accent-publications)] font-medium
+                       rounded-full px-2.5 py-1 bg-[color:var(--accent-publications)]/[.08]
+                       transition-colors duration-200 group-hover:bg-[color:var(--accent-publications)]/[.12]'
+						>
+							View publications →
+						</span>
+					</div>
+				</a>
+			</li>
+
+			<!-- Talks -->
+			<li class='h-full'>
+				<a
+					href='/talks'
+					aria-label='See talks'
+					class='group block h-full rounded-3xl bg-[color:var(--black-nav)]/50 backdrop-blur-md
+               p-5 md:p-6 shadow-[0_12px_30px_-12px_rgba(0,0,0,.6)]
+               transition-all duration-300 motion-safe:hover:-translate-y-1
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-talks)]/40'
+				>
+					<figure class='relative'>
+						<div
+							class='rounded-2xl bg-white/[.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.05)]'
+						>
+							<div
+								class='aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/[.02] flex items-center justify-center'
+							>
+								<Image
+									src={talksImage}
+									alt='Talks'
+									class='h-full w-full object-contain transition-transform duration-300 motion-safe:group-hover:scale-[1.02]'
+								/>
+							</div>
+						</div>
+						<span
+							class='pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100'
+							style='box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-talks) 45%, transparent),
+                               0 20px 50px -20px color-mix(in oklab, var(--accent-talks) 45%, transparent);'
+						></span>
+					</figure>
+
+					<div class='mt-5 text-center'>
+						<p
+							class='text-xs tracking-wider uppercase text-[color:var(--accent-talks)]'
+						>
+							Talks
+						</p>
+						<p
+							class='text-4xl font-bold tracking-tight mt-1 bg-gradient-to-r from-[color:var(--accent-talks)] to-[color:var(--accent-talks)]/70 bg-clip-text text-transparent'
+						>
+							{stats.talks}
+						</p>
+						<span
+							class='mt-2 inline-flex items-center gap-1 text-sm text-[color:var(--accent-talks)] font-medium
+                       rounded-full px-2.5 py-1 bg-[color:var(--accent-talks)]/[.08]
+                       transition-colors duration-200 group-hover:bg-[color:var(--accent-talks)]/[.12]'
+						>
+							See talks →
+						</span>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</section>
+
+	<!-- Latest from the Blog -->
+	<section class='reveal mt-20 max-w-screen-lg mx-auto px-8'>
+		<div
+			class='flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8'
+		>
+			<div>
+				<h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-1'>
+					Latest from the blog
+				</h2>
+				<p class='text-[color:var(--white)]/80'>
+					Insights, tutorials, and thoughts on AI and technology
+				</p>
+			</div>
+			<a
+				href='/blog'
+				class='text-sm text-[color:var(--white)]/80 hover:text-[color:var(--accent)] flex items-center gap-1 font-medium'
+			>
+				Browse all articles
+				<svg
+					xmlns='http://www.w3.org/2000/svg'
+					width='16'
+					height='16'
+					viewBox='0 0 24 24'
+					fill='none'
+					stroke='currentColor'
+					stroke-width='2'
+					stroke-linecap='round'
+					stroke-linejoin='round'
+					class='lucide lucide-arrow-right'
+				>
+					<path d='M5 12h14'></path>
+					<path d='m12 5 7 7-7 7'></path>
+				</svg>
+			</a>
+		</div>
+		<ul class='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8'>
+			{
+				posts.map((post) => (
+					<li class='glass-card group transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--accent)]/60'>
+						<a class='flex flex-col p-5 h-full' href={`/blog/${post.slug}/`}>
+							{post.data.coverImage?.src ? (
+								<div class='mb-4 overflow-hidden rounded-xl aspect-video'>
+									<img
+										class='w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105'
+										src={post.data.coverImage.src}
+										alt={post.data.title}
+									/>
+								</div>
+							) : (
+								<div class='mb-4 overflow-hidden rounded-xl aspect-video bg-gradient-to-br from-[color:var(--accent)]/20 to-[color:var(--accent-publications)]/20 flex items-center justify-center'>
+									<svg
+										xmlns='http://www.w3.org/2000/svg'
+										width='32'
+										height='32'
+										viewBox='0 0 24 24'
+										fill='none'
+										stroke='currentColor'
+										stroke-width='1.5'
+										stroke-linecap='round'
+										stroke-linejoin='round'
+										class='lucide lucide-file-text text-[color:var(--white)]/30'
+									>
+										<path d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z' />
+										<path d='M14 2v4a2 2 0 0 0 2 2h4' />
+										<path d='M10 9H8' />
+										<path d='M16 13H8' />
+										<path d='M16 17H8' />
+									</svg>
+								</div>
+							)}
+							<div class='flex flex-wrap gap-2 mb-3'>
+								{post.data.tags.slice(0, 2).map((tag) => (
+									<span class='glass-chip text-xs'>{tag}</span>
+								))}
+							</div>
+							<h3 class='text-xl md:text-2xl font-semibold tracking-tight mb-2'>
+								{post.data.title}
+							</h3>
+							<p class='italic opacity-80 text-sm mb-3'>
+								<time datetime={post.data.pubDate.toISOString()}>
+									{post.data.pubDate.toLocaleDateString('en-us', {
+										year: 'numeric',
+										month: 'short',
+										day: 'numeric',
+									})}
+								</time>
+							</p>
+							<p class='text-[color:var(--white)]/80 line-clamp-3 flex-grow'>
+								{post.data.excerpt}
+							</p>
+							<div class='mt-4 flex items-center text-sm font-medium text-[color:var(--accent)]'>
+								Read more
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									width='16'
+									height='16'
+									viewBox='0 0 24 24'
+									fill='none'
+									stroke='currentColor'
+									stroke-width='2'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+									class='lucide lucide-arrow-right ml-1'
+								>
+									<path d='M5 12h14' />
+									<path d='m12 5 7 7-7 7' />
+								</svg>
+							</div>
+						</a>
+					</li>
+				))
+			}
+		</ul>
 	</section>
 </BaseLayout>
