@@ -5,8 +5,15 @@ import Header from '../components/Header.astro';
 import ScrollTop from '../components/ScrollTop.astro';
 
 
-const { title, description } = Astro.props;
-const ogImagePath = '/home-og-image.jpeg';
+const { title, description, image, type, publishedTime, tags } = Astro.props as {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  tags?: string[];
+};
+const ogImagePath = image ?? '/home-og-image.jpeg';
 const ogImage = Astro.site
   ? new URL(ogImagePath, Astro.site).href
   : ogImagePath;
@@ -15,7 +22,8 @@ const ogImage = Astro.site
 <!doctype html>
 <html lang='en'>
 	<head>
-		<BaseHead title={title} description={description} image={ogImage} />
+		<BaseHead title={title} description={description} image={ogImage} type={type} publishedTime={publishedTime} tags={tags} />
+		<slot name="head" />
 		<link rel='sitemap' href='/sitemap-index.xml' />
 		<script>
 		  // Apply saved/system theme early to avoid flash

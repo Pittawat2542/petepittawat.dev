@@ -2,16 +2,20 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
+import { SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	type?: 'website' | 'article';
+	publishedTime?: string;
+	tags?: string[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/home-og-image.jpeg' } = Astro.props;
+const { title, description, image = '/home-og-image.jpeg', type = 'website', publishedTime, tags = [] } = Astro.props as Props;
 ---
 
 <!-- Global Metadata -->
@@ -36,11 +40,22 @@ const { title, description, image = '/home-og-image.jpeg' } = Astro.props;
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.site ?? Astro.url)} />
+<meta property="og:site_name" content={SITE_TITLE} />
+{type === 'article' && publishedTime ? (
+  <meta property="article:published_time" content={publishedTime} />
+) : null}
+{type === 'article' && Array.isArray(tags) ? (
+  <>
+    {tags.map((t) => (
+      <meta property="article:tag" content={t} />
+    ))}
+  </>
+) : null}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -48,3 +63,11 @@ const { title, description, image = '/home-og-image.jpeg' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.site ?? Astro.url)} />
+{
+  import.meta.env.PUBLIC_TWITTER_HANDLE && (
+    <>
+      <meta name="twitter:site" content={import.meta.env.PUBLIC_TWITTER_HANDLE} />
+      <meta name="twitter:creator" content={import.meta.env.PUBLIC_TWITTER_HANDLE} />
+    </>
+  )
+}

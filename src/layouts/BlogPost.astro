@@ -3,12 +3,58 @@ import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
 
-const { title, excerpt, pubDate, coverImage } = Astro.props;
+const { title, excerpt, pubDate, coverImage, tags, slug } = Astro.props as Props;
+const authorUrl = Astro.site ? new URL('/about', Astro.site).href : '/about';
+const twitterHandle = import.meta.env.PUBLIC_TWITTER_HANDLE as string | undefined;
+const authorSameAs: string[] = [];
+if (twitterHandle) {
+  const handle = twitterHandle.startsWith('@') ? twitterHandle.slice(1) : twitterHandle;
+  authorSameAs.push(`https://twitter.com/${handle}`);
+}
+// Always include the site About page as a profile URL
+authorSameAs.push(authorUrl);
 ---
 
-<BaseLayout title={`${title} - PETEPITTAWAT.DEV`} description={excerpt}>
+<BaseLayout
+  title={`${title} - PETEPITTAWAT.DEV`}
+  description={excerpt}
+  image={coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : undefined)}
+  type="article"
+  publishedTime={pubDate.toISOString?.() ?? String(pubDate)}
+  tags={tags}
+>
+	<Fragment slot="head">
+		<script type="application/ld+json" is:inline>
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": ${JSON.stringify(title)},
+  "description": ${JSON.stringify(excerpt)},
+  "datePublished": ${JSON.stringify(pubDate.toISOString?.() ?? String(pubDate))},
+  "author": { 
+    "@type": "Person", 
+    "name": "Pittawat Taveekitworachai",
+    "url": ${JSON.stringify(authorUrl)},
+    "sameAs": ${JSON.stringify(authorSameAs)}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "PETEPITTAWAT.DEV",
+    "url": ${JSON.stringify(Astro.site ? new URL('/', Astro.site).href : '/')},
+    "logo": {
+      "@type": "ImageObject",
+      "url": ${JSON.stringify(Astro.site ? new URL('/favicon.svg', Astro.site).href : '/favicon.svg')}
+    }
+  },
+  "image": ${JSON.stringify(Astro.site 
+    ? new URL(coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'), Astro.site).href 
+    : (coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg')))},
+  "url": ${JSON.stringify(Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog/${slug}/`)}
+}
+		</script>
+	</Fragment>
 	<article class='mx-auto prose xl:prose-lg dark:prose-invert prose-img:rounded-xl prose-img:shadow-xl prose-a:text-[color:var(--accent)]'>
 		<div class='mb-6'>
 			{coverImage && (
@@ -34,5 +80,5 @@ const { title, excerpt, pubDate, coverImage } = Astro.props;
 			<hr />
 			<slot />
 		</div>
-	</article></BaseLayout
->
+	</article>
+</BaseLayout>
