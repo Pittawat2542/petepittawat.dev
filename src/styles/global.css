@@ -45,6 +45,11 @@ a {
   transition: color 0.2s ease-in-out;
 }
 
+/* Ensure hand cursor on interactive controls */
+:where(a[href], button, [role='button']) {
+  cursor: pointer;
+}
+
 /* Content link hover animation (prose only) */
 .prose a {
   text-decoration: none;

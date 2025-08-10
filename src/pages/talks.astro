@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import TalksExplorer from '../components/TalksExplorer.tsx';
 import talks from '../content/talks/talks.json';
 import ThemedPageHero from '../components/ThemedPageHero.astro';
+import Container from '../components/Container.astro';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - Talks`} description={SITE_DESCRIPTION}>
@@ -12,7 +13,7 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
     subtitle="Presentations, lectures, and workshops I've delivered at conferences and events." 
     page="talks" 
   />
-  <section class='mx-auto max-w-6xl mt-4'>
+  <Container class='mt-4'>
     <TalksExplorer client:load items={talks} />
-  </section>
+  </Container>
 </BaseLayout>

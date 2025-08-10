@@ -111,6 +111,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 <button
                                   key={tag}
                                   onClick={() => toggleTag(tag)}
+                                  aria-pressed={active}
                                   className={`
                                     flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-all duration-200
                                     ${active 

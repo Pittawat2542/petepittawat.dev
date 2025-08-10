@@ -1,9 +1,10 @@
 ---
+import Container from './Container.astro';
 import { Image } from 'astro:assets';
 import profileImage from '../assets/images/profile.jpg';
 ---
 
-<section class='relative reveal mt-12 md:mt-16 flex flex-col-reverse md:flex-row gap-12 md:gap-16 items-center justify-center md:justify-between px-4 sm:px-6 mx-auto max-w-screen-lg'>
+<Container class='relative reveal mt-12 md:mt-16 flex flex-col-reverse md:flex-row gap-12 md:gap-16 items-center justify-center md:justify-between'>
   <!-- Decorative background blobs -->
   <div aria-hidden='true' class='pointer-events-none absolute -z-10 inset-0 overflow-hidden'>
     <div class='absolute -top-24 -left-24 h-72 w-72 rounded-full blur-3xl opacity-30'
@@ -44,4 +45,4 @@ import profileImage from '../assets/images/profile.jpg';
     <Image src={profileImage} alt="Pete's profile picture"
       class='relative rounded-full w-48 h-48 md:w-56 md:h-56 ring-4 ring-[color:var(--white)]/20 hover:ring-[color:var(--accent)]/60 transition-[box-shadow,transform] duration-500 ease-in-out hover:-translate-y-1 shadow-lg' />
   </div>
-</section>
+</Container>

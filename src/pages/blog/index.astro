@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogListPage from '../../components/BlogListPage';
 import ThemedPageHero from '../../components/ThemedPageHero.astro';
+import Container from '../../components/Container.astro';
 import type { BlogPost } from '../../types';
 
 const posts = (await getCollection('blog')).sort(
@@ -26,9 +27,9 @@ const tags = [
 		subtitle="Explore my thoughts, tutorials, and insights on technology, programming, and AI." 
 		page="blog" 
 	/>
-	<section class='mx-auto max-w-6xl'>
+	<Container>
 		<BlogListPage client:load posts={posts} tags={tags} />
-	</section>
+	</Container>
 </BaseLayout>
 
 <!-- Removed column-span styling now that list uses CSS grid -->

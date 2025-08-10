@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Props extends HTMLAttributes<'div'> {
+  class?: string;
+}
+const { class: className, ...rest } = Astro.props as Props;
+---
+<div {...rest} class={`prose dark:prose-invert md:prose-lg my-4 max-w-none ${className ?? ''}`}>
+  <slot />
+</div>
+

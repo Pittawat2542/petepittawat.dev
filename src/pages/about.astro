@@ -5,10 +5,14 @@ import profileImage from '../assets/images/profile.jpg';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Github, Instagram, Linkedin } from 'lucide-astro';
 import ThemedPageHero from '../components/ThemedPageHero.astro';
+import Container from '../components/Container.astro';
+import GlassCard from '../components/GlassCard.astro';
+import Prose from '../components/Prose.astro';
+import timeline from '../content/about/timeline.json';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
-    <section class='mx-auto max-w-6xl'>
+    <Container>
       <ThemedPageHero 
         title="About" 
         subtitle="Learn more about me, my research interests, and my journey" 
@@ -16,7 +20,7 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
       />
 
       <!-- Snapshot -->
-      <section id='about-me' class='glass-card p-6 md:p-8'>
+      <GlassCard id='about-me'>
         <div class='mx-auto'>
           <div class='flex flex-col items-center text-center'>
             <Image src={profileImage} alt="Pete's profile picture" class='rounded-full w-28 h-28 md:w-36 md:h-36' />
@@ -48,95 +52,41 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
             </div>
           </div>
         </div>
-      </section>
+      </GlassCard>
 
       <!-- Timeline -->
-      <section id='timeline' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='mx-auto'>
+      <GlassCard id='timeline' class='mt-8'>
+        <Prose class='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-4'>Timeline</h2>
-          <ol class='relative border-s border-[color:var(--white)]/10 ml-3 space-y-6'>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2025 — Typhoon T1 (research preview)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Open Thai reasoning model and test-time strategies.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2025 — Typhoon Application Week</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Built and shipped 7+ LLM-powered apps.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2024 — Multiverse of Greatness (preprint)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Story branching with LLMs and evaluation tools.</p>
-            </li>
-            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
-              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent)] ring-2 ring-[color:var(--white)]/30'></span>
-              <h3 class='font-semibold'>Oct 2024 – Present — Research Scientist, Typhoon team (SCB 10X R&D)</h3>
-              <p class='text-[color:var(--white)]/85 text-sm'>Large language model research and applications at SCB 10X.</p>
-            </li>
-            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
-              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
-              <h3 class='font-semibold'>Sep 2024 — M.Eng., Ritsumeikan University (Valedictorian)</h3>
-              <p class='text-[color:var(--white)]/85 text-sm'>Master of Engineering, Intelligent Computer Entertainment Laboratory.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2022 — Ethical Hacking Workshop</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>5‑day red‑team training by NIA & NBTC.</p>
-            </li>
-            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
-              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
-              <h3 class='font-semibold'>2022 — Research Associate (IC2, SIT KMUTT)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Led end‑to‑end ML/AR/web projects; presented Krathu‑500; hosted Kaggle competition.</p>
-            </li>
-            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
-              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
-              <h3 class='font-semibold'>2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)</h3>
-              <p class='text-[color:var(--white)]/85 text-sm'>Bachelor of Science (Computer Science), Petch Prajom Klao scholarship; multiple academic awards.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2021 — LINE Thailand Internship</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Full‑stack work on LINE Shopping; Vue 2→3 migration; microservices.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2020–2021 — Siriraj Hospital (Mahidol)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Tech lead & Flutter dev; React Native→Flutter migration; app size/load wins.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2020 — COVID‑19 Support Platform (KMUTT)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Led 10‑person team; 300+ shipments tracked; 50+ hospitals served.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2020 — Huawei ICT APAC (Network Track)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Participated in regional competition; routing/switching focus.</p>
-            </li>
-            <li class='ms-6 p-4 rounded-xl ring-1 ring-[color:var(--accent-publications)]/50 bg-[color:var(--accent-publications)]/10'>
-              <span class='absolute -start-1.5 mt-1.5 h-3.5 w-3.5 rounded-full bg-[color:var(--accent-publications)] ring-2 ring-[color:var(--white)]/30'></span>
-              <h3 class='font-semibold'>2019–2020 — Siriraj Hospital</h3>
-              <p class='text-[color:var(--white)]/85 text-sm'>React Native developer; added features and data collection flows.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2019 — Young Webmaster Camp 17th</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Selected (programming major); built MVP for social impact.</p>
-            </li>
-            <li class='ms-6'>
-              <span class='absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full bg-[color:var(--accent-about)] ring-2 ring-[color:var(--white)]/20'></span>
-              <h3 class='font-semibold'>2019 — Google Tech Challenge (Bangkok)</h3>
-              <p class='text-[color:var(--white)]/80 text-sm'>Selected team; coding + non‑coding puzzles.</p>
-            </li>
-          </ol>
-        </div>
-      </section>
+          <ul class='relative list-none border-s border-[color:var(--white)]/10 ml-3 space-y-6'>
+            {timeline.map((item) => {
+              const accentVar = `var(--accent-${item.accent})`;
+              const isHighlight = Boolean(item.highlight);
+              return (
+                <li class='ms-6'>
+                  <div class={isHighlight ? 'p-4 rounded-xl' : ''} style={isHighlight ? {
+                    background: `color-mix(in oklab, ${accentVar} 10%, transparent)`,
+                    border: `1px solid color-mix(in oklab, ${accentVar} 50%, transparent)`
+                  } : {}}>
+                    <span class='absolute -start-1.5 mt-1.5 rounded-full ring-2 ring-[color:var(--white)]/25 w-3 h-3' style={{
+                      background: accentVar
+                    }}></span>
+                    <h3 class='font-semibold' style={{
+                      marginTop: '0.5rem',
+                      marginBottom: '0.5rem',
+                    }}>{item.title}</h3>
+                    <p class='text-[color:var(--white)]/80 text-sm'>{item.description}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </Prose>
+      </GlassCard>
 
       <!-- Research interests -->
-      <section id='interests' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert md:prose-lg my-4 max-w-none'>
+      <GlassCard id='interests' class='mt-8'>
+        <Prose>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Research interests</h2>
           <ul class='space-y-4'>
             <li>
@@ -184,12 +134,12 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
               </ul>
             </li>
           </ul>
-        </div>
-      </section>
+        </Prose>
+      </GlassCard>
 
       <!-- Skills -->
-      <section id='skills' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert md:prose-lg my-4 max-w-none'>
+      <GlassCard id='skills' class='mt-8'>
+        <Prose>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Skills</h2>
           <p>
             I believe in open science and software craftsmanship. I design <strong>reproducible</strong>, <strong>resumable</strong>, and <strong>fault‑tolerant</strong> software for long‑running LLM evaluations, with <strong>extensibility</strong> and <strong>simplicity</strong> as core principles.
@@ -211,12 +161,12 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
           <p>
             I also had experience in computer network and computer security as well as software testing and automation. My tools of choice include <a href='https://jestjs.io/' target='_blank'>Jest</a>, <a href='https://www.cypress.io/' target='_blank'>Cypress</a>, <a href='https://www.selenium.dev/' target='_blank'>Selenium</a>, <a href='https://www.crummy.com/software/BeautifulSoup/' target='_blank'>BeautifulSoup</a>, and <a href='https://playwright.dev/' target='_blank'>Playwright</a>. I am also familiar with serverless services like <a href='https://firebase.google.com/' target='_blank'>Firebase</a>. I also utilize technologies like <a href='https://git-scm.com/' target='_blank'>Git</a> and <a href='https://www.docker.com/' target='_blank'>Docker</a> to help me streamline my workflow. I also work with both SQL and NoSQL, such as <a href='https://www.mongodb.com/' target='_blank'>MongoDB</a>, as well as graph databases like <a href='https://neo4j.com/' target='_blank'>Neo4j</a>. Multiple of my research projects also utilize various vector databases, such as <a href='https://www.pinecone.io/' target='_blank'>Pinecone</a>, <a href='https://milvus.io/' target='_blank'>Milvus</a>, and <a href='https://qdrant.tech/' target='_blank'>Qdrant</a>.
           </p>
-        </div>
-      </section>
+        </Prose>
+      </GlassCard>
       
       <!-- Education & Experiences -->
-      <section id='education' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4 max-w-none'>
+      <GlassCard id='education' class='mt-8'>
+        <Prose class='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Education & Related Experiences</h2>
           <p>
             Previously, I earned my Bachelor's degree in Computer Science with first-class honors from <a href='https://www.kmutt.ac.th/en/' target='_blank'>King Mongkut's University of Technology Thonburi</a>, Thailand, supported by the prestigious 💎 <strong>Petchra Pra Jom Klao Scholarship - Distinguished Academic Capabilities</strong>. Additionally, I received the 💎 <strong>Jia Ra Nai Petchra Scholarship - Academic Distinguished Award</strong> for my outstanding performance throughout the academic year, being recognized as the top student in the program for a specific year. Upon graduation, I was honored with the 🎖️ <strong>Honor Award for Academic Distinguished Performance</strong> by the Prapa-Sompong Foundation, acknowledging me as the top student among the graduates of the same year. Furthermore, my name was inscribed on the <strong>Wall of Honors</strong> at the university's president building.
@@ -231,12 +181,12 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
           <p>
             I had the opportunity to join the Innovative Cognitive Computing Laboratory at the School of Information Technology, King Mongkut's University of Technology Thonburi, Thailand, as a research assistant. I worked on various projects, including AR poster development, web development, and natural language processing. This experience was my first official exposure to the research community and motivated me to pursue a Master's degree further.
           </p>
-        </div>
-      </section>
+        </Prose>
+      </GlassCard>
 
       <!-- Volunteer -->
-      <section id='volunteer' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4 max-w-none'>
+      <GlassCard id='volunteer' class='mt-8'>
+        <Prose class='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Volunteer</h2>
           <p>
             I volunteer for various occasions because I believe in paying it forward and helping others. One of my volunteering experiences includes organizing and developing web applications for Junior Programmer Camp XV, an annual camp organized by computer science students at the School of Information Technology, King Mongkut's University of Technology Thonburi, targeted at senior high school students throughout Thailand. In this camp, participants have the opportunity to be exposed to various activities that help them familiarize themselves with CS concepts and the university's atmosphere. I oversee the IT aspect of the camp and lead the development team. Alongside two other teammates, we developed the main website for the camp, including the registration system. Additionally, we created a camp management system to facilitate staff in the participant selection process.
@@ -245,19 +195,19 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
           <p>
             During the COVID-19 pandemic, I volunteered to help develop a web application for the university. The university needed a system to manage donated supplies that would be distributed across the country. As a lead, I directed a team of eight members to urgently develop the system, as the situation was critical. This support system not only helps the university manage the supply but also allows hospitals to request additional supplies. Throughout the period, we also provided maintenance services. The code is accessible on <a href='https://github.com/Pittawat2542/kmutt-covid-19' target='_blank'>GitHub</a>. Additionally, I currently serve as a reviewer for conferences to contribute back to the communities.
           </p>
-        </div>
-      </section>
+        </Prose>
+      </GlassCard>
 
       <!-- Lifelong learning -->
-      <section id='learning' class='mt-8 glass-card p-6 md:p-8'>
-        <div class='prose dark:prose-invert mx-auto md:prose-lg my-4 max-w-none'>
+      <GlassCard id='learning' class='mt-8'>
+        <Prose class='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Lifelong Learning</h2>
           <p>
             I also enjoy taking various online courses throughout the years (as can be seen from certificates on my <a href='https://www.linkedin.com/in/pittawat-tav/' target='_blank'>LinkedIn</a>.) I enjoy learning and its process. The feeling of understanding something new satisfies me. It also helps me become better at what I do and enables me to be <strong>creative</strong> and connect various seemingly unrelated topics together to come up with new ideas. This is also a part of my personal goal revolving around <strong>life-long learning</strong>, and I believe that understanding leads to a better life and understanding of other people and things. During my time pursuing my Bachelor's degree, I also served as a tutor on various topics in computer science for my classmates to help them prepare for upcoming exams. I believe that <em>sharing knowledge not only helps other people but also helps me understand the topic better.</em>
           </p>
-        </div>
-      </section>
-    </section>
+        </Prose>
+      </GlassCard>
+    </Container>
 </BaseLayout>
 
 <style>

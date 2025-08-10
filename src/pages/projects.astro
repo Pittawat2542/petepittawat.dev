@@ -4,6 +4,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import ProjectsExplorer from '../components/ProjectsExplorer.tsx';
 import projects from '../content/projects/projects.json';
 import ThemedPageHero from '../components/ThemedPageHero.astro';
+import Container from '../components/Container.astro';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - Projects`} description={SITE_DESCRIPTION}>
@@ -12,8 +13,7 @@ import ThemedPageHero from '../components/ThemedPageHero.astro';
     subtitle="Selected research, systems, and prototypes I've built or led." 
     page="projects" 
   />
-  <section class='mx-auto max-w-6xl mt-4'>
+  <Container class='mt-4'>
     <ProjectsExplorer client:load items={projects} />
-  </section>
+  </Container>
 </BaseLayout>
-

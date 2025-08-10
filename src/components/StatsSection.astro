@@ -1,4 +1,5 @@
 ---
+import Container from './Container.astro';
 import blogImg from '../assets/images/blog.png';
 import pubsImg from '../assets/images/publications.png';
 import talksImg from '../assets/images/talks.png';
@@ -48,7 +49,7 @@ const cards = [
 ];
 ---
 
-<section class='reveal mt-16 max-w-screen-lg mx-auto px-4 sm:px-6'>
+<Container class='reveal mt-16'>
   <div class='text-center mb-10'>
     <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>
       My Work at a Glance
@@ -62,40 +63,49 @@ const cards = [
     {cards.map((card) => (
       <li class='h-full'>
         <a href={card.href} aria-label={card.ariaLabel}
-          class={`group block h-full rounded-3xl bg-[color:var(--black-nav)]/50 backdrop-blur-md
-                 p-5 md:p-6 shadow-[0_12px_30px_-12px_rgba(0,0,0,.6)]
-                 transition-all duration-300 motion-safe:hover:-translate-y-1
-                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--${card.accentColor})]/40`}>
-          <figure class='relative'>
-            <!-- portrait-safe frame -->
-            <div class='rounded-2xl bg-white/[.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.05)]'>
-              <div class='aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/[.02] flex items-center justify-center'>
-                <Image src={card.image} alt={card.alt} class='max-h-full max-w-full object-contain' loading='lazy' decoding='async' />
+          class={`group block h-full rounded-3xl overflow-hidden
+                 bg-[color:var(--black-nav)]/60 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/50 backdrop-blur-lg
+                 ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--${card.accentColor})]/50
+                 shadow-[0_10px_30px_-15px_rgba(0,0,0,.6)]
+                 transition-all duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--${card.accentColor})]/60`}>
+          <div class='p-5 md:p-6'>
+            <figure class='relative'>
+              <div class='rounded-2xl bg-white/[.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.05)]'>
+                <div class='aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/[.02] flex items-center justify-center'>
+                  <Image src={card.image} alt={card.alt} class='max-h-full max-w-full object-contain' loading='lazy' decoding='async' />
+                </div>
               </div>
-            </div>
-            <!-- accent halo on hover (no border) -->
-            <span
-              class='pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100'
-              style={`box-shadow: 0 0 0 1px color-mix(in oklab, var(--${card.accentColor}) 45%, transparent), 0 20px 50px -20px color-mix(in oklab, var(--${card.accentColor}) 45%, transparent);`}></span>
-          </figure>
+            </figure>
 
-          <div class='mt-5 text-center'>
-            <p class={`text-xs tracking-wider uppercase text-[color:var(--${card.accentColor})]`}>
-              {card.title}
-            </p>
-            <p
-              class={`text-4xl font-bold tracking-tight mt-1 text-[color:var(--${card.accentColor})]`}>
-              {card.count}
-            </p>
-            <span
-              class={`mt-2 inline-flex items-center gap-1 text-sm text-[color:var(--${card.accentColor})] font-medium
-                           rounded-full px-2.5 py-1 bg-[color:var(--${card.accentColor})]/[.08]
-                           transition-colors duration-200 group-hover:bg-[color:var(--${card.accentColor})]/[.12]`}>
-              {card.linkText}
-            </span>
+            <div class='mt-5 text-center'>
+              <p class={`text-xs tracking-wider uppercase text-[color:var(--${card.accentColor})]`}>
+                {card.title}
+              </p>
+              <p class={`text-4xl font-extrabold tracking-tight mt-1 bg-[color:var(--${card.accentColor})] bg-clip-text text-transparent`}
+                 style={{ WebkitTextFillColor: 'transparent' }}>
+                {card.count}
+              </p>
+            </div>
+          </div>
+          <div class='px-5 pb-5'>
+            <div
+              class={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium cursor-pointer
+                        text-[color:var(--${card.accentColor})]
+                        bg-[color:var(--${card.accentColor})]/[.10]
+                        ring-1 ring-[color:var(--${card.accentColor})]/40
+                        transition-colors duration-200 group-hover:bg-[color:var(--${card.accentColor})]/[.16]`}
+              role='button'
+              aria-label={card.linkText}
+            >
+              <span>{card.linkText}</span>
+              <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>
+                <path d='M5 12h14'></path>
+                <path d='m12 5 7 7-7 7'></path>
+              </svg>
+            </div>
           </div>
         </a>
       </li>
     ))}
   </ul>
-</section>
+</Container>
