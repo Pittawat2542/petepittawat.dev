@@ -1,3 +1,5 @@
+import SearchInput from './ui/SearchInput';
+
 type Props = {
   q: string;
   setQ: (value: string) => void;
@@ -10,32 +12,7 @@ type Props = {
 export default function Filter({ q, setQ, filters, setFilters, filterOptions, placeholder = 'Search...' }: Props) {
   return (
     <div className="flex flex-col md:flex-row gap-3 md:items-center">
-      {/* Search field with icon */}
-      <label className="relative w-full md:max-w-md" aria-label="Search">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="absolute left-3 top-1/2 -translate-y-1/2 opacity-70"
-          aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.3-4.3"></path>
-        </svg>
-        <input
-          type="search"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder={placeholder}
-          className="input-glass w-full pl-9 pr-3 py-2 text-sm bg-transparent"
-        />
-      </label>
+      <SearchInput value={q} onChange={setQ} placeholder={placeholder} ariaLabel="Search" />
       {/* Filters */}
       <div className="-mx-1 px-1 flex gap-2 overflow-x-auto md:overflow-visible scrollbar-none md:flex-wrap">
         {Object.entries(filterOptions).map(([key, options]) => {

@@ -1,19 +1,18 @@
 ---
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import BaseLayout from '../layouts/BaseLayout.astro';
 import TalksExplorer from '../components/TalksExplorer.tsx';
 import talks from '../content/talks/talks.json';
-import ThemedPageHero from '../components/ThemedPageHero.astro';
-import Container from '../components/Container.astro';
+import PageWithHero from '../layouts/PageWithHero.astro';
 ---
 
-<BaseLayout title={`${SITE_TITLE} - Talks`} description={SITE_DESCRIPTION}>
-  <ThemedPageHero 
-    title="Talks" 
-    subtitle="Presentations, lectures, and workshops I've delivered at conferences and events." 
-    page="talks" 
-  />
-  <Container class='mt-4'>
-    <TalksExplorer client:load items={talks} />
-  </Container>
-</BaseLayout>
+<PageWithHero
+  title={`${SITE_TITLE} - Talks`}
+  description={SITE_DESCRIPTION}
+  hero={{
+    title: 'Talks',
+    subtitle: "Presentations, lectures, and workshops I've delivered at conferences and events.",
+    page: 'talks'
+  }}
+>
+  <TalksExplorer client:load items={talks} />
+</PageWithHero>

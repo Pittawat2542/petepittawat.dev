@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ThemedPageHero from '../components/ThemedPageHero.astro';
+import Container from '../components/Container.astro';
+
+interface HeroProps { title: string; subtitle?: string; page: string }
+const { title, description, hero } = Astro.props as {
+  title: string;
+  description: string;
+  hero: HeroProps;
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <ThemedPageHero {...hero} />
+  <Container>
+    <slot />
+  </Container>
+  <slot name="after" />
+  <!-- Optional named slot for content that should appear outside the container -->
+</BaseLayout>
+

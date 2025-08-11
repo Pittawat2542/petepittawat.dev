@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { BlogPost } from '../types';
 import BlogCard from './BlogCard';
+import SearchInput from './ui/SearchInput';
 
 type BlogListPageProps = {
   posts: BlogPost[];
@@ -52,19 +53,12 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                <section className='flex w-full flex-col'>
                         <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
                         <div className='flex items-center gap-2 md:gap-3 w-full'>
-                          <label className='relative w-full md:max-w-md' aria-label='Search blog posts'>
-                            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className='absolute left-3 top-1/2 -translate-y-1/2 opacity-70' aria-hidden='true'>
-                              <circle cx='11' cy='11' r='8'></circle>
-                              <path d='m21 21-4.3-4.3'></path>
-                            </svg>
-                            <input
-                              type='search'
-                              value={q}
-                              onChange={(e) => setQ(e.target.value)}
-                              placeholder='Search title, excerpt, or tags...'
-                              className='input-glass w-full pl-9 pr-3 py-2 text-sm bg-transparent'
-                            />
-                          </label>
+                          <SearchInput
+                            value={q}
+                            onChange={setQ}
+                            placeholder='Search title, excerpt, or tags...'
+                            ariaLabel='Search blog posts'
+                          />
                         </div>
                         <div className='flex items-center gap-2'>
                           <label htmlFor='blog-sort' className='text-sm opacity-80'>Sort</label>

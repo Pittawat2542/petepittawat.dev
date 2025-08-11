@@ -1,26 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageWithHero from '../layouts/PageWithHero.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import Divider from '../components/Divider.astro';
 import PublicationsExplorer from '../components/PublicationsExplorer.tsx';
 import publications from '../content/publications/publications.json';
-import ThemedPageHero from '../components/ThemedPageHero.astro';
 import Prose from '../components/Prose.astro';
-import Container from '../components/Container.astro';
 ---
 
-<BaseLayout
+<PageWithHero
   title={`${SITE_TITLE} - Publications`}
   description={SITE_DESCRIPTION}
+  hero={{
+    title: 'Publications',
+    subtitle: "Research papers, conference proceedings, and academic works I've contributed to.",
+    page: 'publications'
+  }}
 >
-  <ThemedPageHero 
-    title="Publications" 
-    subtitle="Research papers, conference proceedings, and academic works I've contributed to." 
-    page="publications" 
-  />
-  <Container class='mt-4'>
-    <PublicationsExplorer client:load items={publications} />
-  </Container>
+  <PublicationsExplorer client:load items={publications} />
+
+  <Fragment slot="after">
   <Prose class='mx-auto max-w-4xl prose-a:text-[color:var(--accent-publications)] mt-8 max-w-none'>
     <Divider />
     <h1>Academic Services</h1>
@@ -37,4 +35,5 @@ import Container from '../components/Container.astro';
     </p>
     <Divider />
   </Prose>
-</BaseLayout>
+  </Fragment>
+</PageWithHero>
