@@ -33,9 +33,9 @@ function typeAccentVar(type?: string) {
   }
 }
 
-export default function ProjectCard({ item }: { item: Project }) {
+export default function ProjectCard({ item, featured = false }: { item: Project; featured?: boolean }) {
   return (
-    <article className="glass-card p-4 md:p-5 h-full flex flex-col">
+    <article className={`glass-card p-4 md:p-5 h-full flex flex-col ${featured ? 'card-featured' : ''}`}>
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base md:text-lg font-semibold leading-snug">
           {item.title}

@@ -67,7 +67,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                               id='blog-sort'
                               value={sort}
                               onChange={(e) => setSort(e.target.value as 'newest' | 'oldest')}
-                              className='select-glass bg-transparent px-2 py-2 text-sm'
+                              className='select-glass bg-transparent px-2 py-2 text-sm max-w-[12rem] truncate'
                             >
                               <option value='newest'>Newest</option>
                               <option value='oldest'>Oldest</option>
@@ -78,13 +78,15 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                           </div>
                         </div>
                         </div>
-                        <p className='italic text-end opacity-80 mt-2'>{filteredPosts.length} entries</p>
+                        <p className='italic text-end opacity-80 mt-2' role='status' aria-live='polite'>
+                          {filteredPosts.length} entries
+                        </p>
                         <hr className='block h-px border-0 border-t mt-2 p-0 border-[color:var(--white)]/10' />
                         
                         {/* Improved Tag Selection Pane */}
                         <div className='mt-6 mb-4'>
                           <div className='flex items-center justify-between mb-3'>
-                            <h3 className='font-medium text-sm opacity-80'>Filter by tags</h3>
+                            <h3 id='tag-filter-heading' className='font-medium text-sm opacity-80'>Filter by tags</h3>
                             {selectedTags.size > 0 && (
                               <button 
                                 onClick={() => setSelectedTags(new Set())}
@@ -94,7 +96,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                               </button>
                             )}
                           </div>
-                          <div className='flex flex-wrap gap-2'>
+                          <div className='flex flex-wrap gap-2' role='group' aria-labelledby='tag-filter-heading'>
                             {tags.map((tag) => {
                               const active = tag === 'All' ? selectedTags.size === 0 : selectedTags.has(tag);
                               const tagCount = tag === 'All' 

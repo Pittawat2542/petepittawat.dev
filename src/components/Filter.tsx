@@ -19,7 +19,7 @@ export default function Filter({ q, setQ, filters, setFilters, filterOptions, pl
           const selected = filters[key] || 'all';
           const selectedLabel = selected === 'all' ? `All ${key}s` : selected;
           return (
-          <label key={key} className="relative shrink-0 w-[60vw] max-w-[60vw] sm:w-auto sm:max-w-none">
+          <label key={key} className="relative shrink-0 w-[60vw] max-w-[60vw] sm:w-auto sm:max-w-[18rem]">
             <span className="sr-only">Filter by {key}</span>
             <select
               title={`Filter by ${key}`}

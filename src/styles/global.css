@@ -3,7 +3,7 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
-@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+/* Fonts are loaded via <BaseHead /> with preconnect+preload for performance. */
 
 /* Theme tokens: default = dark. Switch with [data-theme='light'] on <html>. */
 :root {
@@ -61,6 +61,20 @@ a {
 }
 .prose a:hover,
 .prose a:focus-visible {
+  background-size: 100% 2px;
+}
+
+/* Reusable underline animation for nav and CTAs */
+.link-underline {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: color 0.2s ease-in-out, background-size 180ms ease;
+}
+.link-underline:hover,
+.link-underline:focus-visible {
   background-size: 100% 2px;
 }
 
@@ -179,16 +193,66 @@ html {
   /* shape */
   @apply rounded-2xl shadow-sm transition-all duration-300 ease-in-out;
   /* surface */
+  position: relative;
+  overflow: hidden;
   background-color: var(--black-nav);
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--white) 6%, transparent),
+    color-mix(in oklab, var(--white) 2%, transparent)
+  );
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   /* border */
-  border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
+  border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
 }
 .glass-card:hover {
-  transform: translateY(-0.25rem);
+  transform: translateY(-0.25rem) scale(1.01);
   border-color: color-mix(in oklab, var(--accent) 60%, transparent);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.25);
+}
+
+/* Subtle inner highlight */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0; /* full size */
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--white) 10%, transparent),
+    transparent 30%
+  );
+  opacity: 0.25;
+}
+
+/* Featured card with animated accent border */
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes rotate-border {
+  to { --angle: 360deg; }
+}
+.card-featured {
+  position: relative;
+  border: 1px solid transparent !important;
+  background: 
+    linear-gradient(color-mix(in oklab, var(--black) 92%, transparent), color-mix(in oklab, var(--black) 92%, transparent)) padding-box,
+    conic-gradient(from var(--angle), 
+      color-mix(in oklab, var(--accent) 60%, transparent),
+      color-mix(in oklab, var(--white) 20%, transparent),
+      color-mix(in oklab, var(--accent) 60%, transparent)
+    ) border-box;
+  animation: rotate-border 8s linear infinite;
+}
+.card-featured:hover {
+  transform: translateY(-0.3rem) scale(1.015);
+  box-shadow: 0 12px 20px -6px rgb(0 0 0 / 0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-featured { animation: none; }
 }
 
 /* Mobile-friendly overflow handling for content */
@@ -231,7 +295,9 @@ html {
   backdrop-filter: blur(6px);
   border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
   color: color-mix(in oklab, var(--white) 90%, transparent);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
+.glass-chip:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--accent) 55%, transparent); box-shadow: 0 8px 18px -12px rgb(0 0 0 / 0.4); }
 
 /* Reusable form styles */
 .input-glass,
@@ -249,6 +315,127 @@ html {
   border-color: color-mix(in oklab, var(--accent) 65%, transparent);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
 }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem; /* xl */
+  padding: 0.5rem 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+.btn:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+}
+.btn-primary {
+  color: #000;
+  background: var(--accent-projects);
+}
+.btn-primary:hover { filter: brightness(1.08); }
+
+.btn-ghost {
+  color: var(--white);
+  border: 1px solid color-mix(in oklab, var(--white) 15%, transparent);
+  background: color-mix(in oklab, var(--white) 5%, transparent);
+}
+.btn-ghost:hover {
+  color: var(--accent);
+  border-color: transparent;
+  background:
+    linear-gradient(color-mix(in oklab, var(--white) 5%, transparent), color-mix(in oklab, var(--white) 5%, transparent)) padding-box,
+    conic-gradient(from 0deg,
+      color-mix(in oklab, var(--accent) 60%, transparent),
+      color-mix(in oklab, var(--white) 20%, transparent),
+      color-mix(in oklab, var(--accent) 60%, transparent)
+    ) border-box;
+}
+
+.btn-sm { padding: 0.375rem 0.675rem; border-radius: 0.625rem; font-size: 0.875rem; }
+.btn-lg { padding: 0.6rem 1rem; border-radius: 0.9rem; font-size: 1rem; }
+
+/* Accent variant */
+.btn-accent { color: #fff; background: var(--accent); }
+.btn-accent:hover { filter: brightness(1.08); }
+
+/* Microanimations for buttons */
+.btn { will-change: transform; }
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0) scale(0.99); }
+.btn svg { transition: transform 150ms ease; }
+.btn:hover svg { transform: translateX(2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn:hover, .btn:active, .btn svg, .btn:hover svg { transition: none; transform: none; }
+}
+
+/* Glass nav refinement */
+.glass-nav {
+  border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--white) 6%, transparent), transparent) padding-box,
+    color-mix(in oklab, var(--black-nav) 70%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transition: backdrop-filter 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+.glass-nav[data-scrolled="true"] {
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-color: color-mix(in oklab, var(--white) 18%, transparent);
+  box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.5);
+}
+
+/* ScrollTop microinteraction */
+#scroll-top { transition: transform 150ms ease, box-shadow 150ms ease; }
+#scroll-top:hover { transform: translateY(-2px); box-shadow: 0 10px 18px -10px rgb(0 0 0 / 0.45); }
+
+/* Glass Section wrapper: subtle animated glow backdrop */
+.glass-section {
+  position: relative;
+}
+.glass-section::before {
+  content: '';
+  position: absolute;
+  inset: -10% -4%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 60% at 30% 20%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%),
+    radial-gradient(50% 50% at 80% 10%, color-mix(in oklab, var(--white) 10%, transparent), transparent 60%),
+    radial-gradient(70% 70% at 70% 80%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%);
+  filter: blur(28px) saturate(120%);
+  opacity: 0.45;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-section::before { filter: blur(18px) saturate(110%); }
+}
+
+/* Prose callouts */
+.prose .callout {
+  padding: 1rem 1rem 1rem 0.875rem;
+  border-radius: 0.875rem;
+  border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
+  background: color-mix(in oklab, var(--white) 6%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  margin: 1rem 0;
+}
+.prose .callout > .callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.prose .callout.tip { border-color: color-mix(in oklab, var(--accent-projects) 55%, transparent); }
+.prose .callout.info { border-color: color-mix(in oklab, var(--accent) 55%, transparent); }
+.prose .callout.warn { border-color: color-mix(in oklab, var(--accent-about) 55%, transparent); }
+.prose .callout.note { border-color: color-mix(in oklab, var(--accent-blog) 55%, transparent); }
 .input-glass::placeholder { color: color-mix(in oklab, var(--white) 55%, transparent); }
 
 /* Hide default select arrow and add space for custom chevron */
@@ -261,4 +448,7 @@ html {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Constrain displayed value width so it doesn't stretch layout */
+  min-width: 10rem;
+  max-width: min(100%, 16rem);
 }

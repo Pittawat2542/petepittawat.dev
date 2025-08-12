@@ -49,7 +49,7 @@ const cards = [
 ];
 ---
 
-<Container class='reveal mt-16'>
+<Container class='reveal mt-16 glass-section'>
 	<div class='text-center mb-10'>
 		<h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>
 			My Work at a Glance
@@ -66,11 +66,8 @@ const cards = [
 					<a
 						href={card.href}
 						aria-label={card.ariaLabel}
-						class={`group block h-full rounded-3xl overflow-hidden
-                 bg-[color:var(--black-nav)]/60 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/50 backdrop-blur-lg
-                 ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--${card.accentColor})]/50
-                 shadow-[0_10px_30px_-15px_rgba(0,0,0,.6)]
-                 transition-all duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--${card.accentColor})]/60`}
+						class={`group block h-full rounded-3xl overflow-hidden glass-card
+                hover:ring-[color:var(--${card.accentColor})]/50 transition-all duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--${card.accentColor})]/60`}
 					>
 						<div class='p-5 md:p-6'>
 							<figure class='relative'>

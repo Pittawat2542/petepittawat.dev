@@ -11,7 +11,7 @@ const { posts } = Astro.props as Props;
 ---
 
 <!-- Latest from the Blog -->
-<Container class='reveal mt-20'>
+<Container class='reveal mt-20 glass-section'>
   <div class='flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8'>
     <div>
       <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-1'>
@@ -21,8 +21,7 @@ const { posts } = Astro.props as Props;
         Insights, tutorials, and thoughts on AI and technology
       </p>
     </div>
-    <a href='/blog'
-      class='text-sm text-[color:var(--white)]/80 hover:text-[color:var(--accent)] flex items-center gap-1 font-medium'>
+    <a href='/blog' class='btn btn-sm btn-ghost'>
       Browse all articles
       <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor'
         stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-arrow-right'>
@@ -32,8 +31,8 @@ const { posts } = Astro.props as Props;
     </a>
   </div>
   <ul class='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8'>
-    {posts.map((post) => (
-      <BlogCard client:visible post={post} />
+    {posts.map((post, i) => (
+      <BlogCard post={post} />
     ))}
   </ul>
 </Container>

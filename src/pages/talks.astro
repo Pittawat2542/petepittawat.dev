@@ -14,5 +14,5 @@ import PageWithHero from '../layouts/PageWithHero.astro';
     page: 'talks'
   }}
 >
-  <TalksExplorer client:load items={talks} />
+  <TalksExplorer client:visible items={talks} />
 </PageWithHero>

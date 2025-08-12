@@ -2,11 +2,12 @@ import type { BlogPost } from '../types';
 
 type Props = {
   post: BlogPost;
+  featured?: boolean;
 };
 
-export default function BlogCard({ post }: Readonly<Props>) {
+export default function BlogCard({ post, featured = false }: Readonly<Props>) {
   return (
-    <li className="cursor-pointer glass-card group w-full h-full hyphens-auto">
+    <li className={`cursor-pointer glass-card group w-full h-full hyphens-auto ${featured ? 'card-featured' : ''}`}>
       <a
         className="flex flex-col align-middle p-6 h-full text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]"
         href={`/blog/${post.slug}/`}
@@ -44,4 +45,3 @@ export default function BlogCard({ post }: Readonly<Props>) {
     </li>
   );
 }
-

@@ -9,4 +9,5 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
 	site: 'https://petepittawat.dev',
 	integrations: [mdx(), sitemap(), react(), tailwind(), robotsTxt()],
+	compressHTML: true,
 });

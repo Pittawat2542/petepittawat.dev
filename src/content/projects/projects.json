@@ -6,10 +6,8 @@
     "tags": ["Large Language Models", "Reasoning", "Thai", "Open Source"],
     "links": [
       { "label": "Paper", "href": "https://arxiv.org/abs/2502.09042" },
-      { "label": "Model", "href": "https://huggingface.co/SCB10X/Typhoon-T1-8B-preview" }
+      { "label": "Model", "href": "https://huggingface.co/scb10x/llama3.2-typhoon2-t1-3b-research-preview" }
     ],
-    "role": "Lead author",
-    "collaborators": "SCB10X Research",
     "type": "research"
   },
   {
@@ -71,13 +69,11 @@
     "year": 2024,
     "title": "Prompt Engineering for Game Content Generation",
     "summary": "Open tutorials and notebooks demonstrating prompt engineering techniques for generating game content.",
-    "tags": ["Prompt Engineering", "PCG", "Tutorial"],
+    "tags": ["Prompt Engineering", "PCG"],
     "links": [
       { "label": "Slides (CoG '24)", "href": "/files/cog_tutorial_2024.pdf" },
-      { "label": "Notebook", "href": "https://github.com/chatgpt4pcg/tutorial-2024-notebook" },
-      { "label": "PE Examples", "href": "https://github.com/chatgpt4pcg/pe-examples" },
-      { "label": "Org Repos (ChatGPT4PCG)", "href": "https://github.com/orgs/chatgpt4pcg/repositories" },
-      { "label": "ToG Article (Competition)", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" }
+      { "label": "Interactive Tutorial", "href": "https://github.com/chatgpt4pcg/tutorial-2024-notebook" },
+      { "label": "Prompt Engineering Examples", "href": "https://github.com/chatgpt4pcg/pe-examples" }
     ],
     "type": "tutorial"
   },
@@ -108,7 +104,11 @@
     "tags": ["Competition", "LLM", "PCG"],
     "links": [
       { "label": "Transactions on Games", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" },
-      { "label": "GitHub Org", "href": "https://github.com/orgs/chatgpt4pcg/repositories" }
+      { "label": "Org Repos (ChatGPT4PCG)", "href": "https://github.com/orgs/chatgpt4pcg/repositories" },
+      { "label": "1st Competition Paper", "href": "https://ieeexplore.ieee.org/document/10333206" },
+      { "label": "1st Competition Report", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" },
+      { "label": "2nd Competition Paper", "href": "https://ieeexplore.ieee.org/document/10645641" },
+      { "label": "LLM4PCG Competition (Prelim.)", "href": "https://ieeexplore.ieee.org/document/10645646" }
     ],
     "type": "research"
   },

@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 type Props = {
   value: string;
   onChange: (value: string) => void;
@@ -7,8 +9,10 @@ type Props = {
 };
 
 export default function SearchInput({ value, onChange, placeholder = 'Search…', ariaLabel = 'Search', className = '' }: Props) {
+  const id = useId();
   return (
-    <label className={`relative w-full md:max-w-md ${className}`} aria-label={ariaLabel}>
+    <label className={`relative w-full md:max-w-md ${className}`} htmlFor={id}>
+      <span className="sr-only">{ariaLabel}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -30,9 +34,10 @@ export default function SearchInput({ value, onChange, placeholder = 'Search…'
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
+        id={id}
+        aria-label={ariaLabel}
         className="input-glass w-full pl-9 pr-3 py-2 text-sm bg-transparent"
       />
     </label>
   );
 }
-

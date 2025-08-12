@@ -30,7 +30,7 @@ function typeAccentVar(type?: string) {
   }
 }
 
-export function PublicationCard({ item }: { item: Publication }) {
+export function PublicationCard({ item, featured = false }: { item: Publication; featured?: boolean }) {
   const firstAuthor = isFirstAuthor(item.authors);
   const coFirstAuthor = item.title.trim() === FIRST_AUTHOR_TITLE;
   const highlight = firstAuthor || coFirstAuthor;
@@ -71,7 +71,7 @@ export function PublicationCard({ item }: { item: Publication }) {
 
   return (
     <article
-      className={[`glass-card p-4 md:p-5 cursor-pointer`, highlight ? 'first-author' : ''].filter(Boolean).join(' ')}
+      className={[`glass-card p-4 md:p-5 cursor-pointer`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
       role="button"
       tabIndex={0}
       onClick={onCardClick}

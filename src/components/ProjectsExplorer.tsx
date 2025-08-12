@@ -29,7 +29,7 @@ export default function ProjectsExplorer({ items }: Props) {
         {filtered
           .slice()
           .sort((a, b) => b.year - a.year)
-          .map((item) => (
+          .map((item, i) => (
             <ProjectCard key={`${item.title}-${item.year}`} item={item} />
           ))}
         {!filtered.length && (

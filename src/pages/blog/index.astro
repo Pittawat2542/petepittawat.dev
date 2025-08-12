@@ -28,7 +28,7 @@ const tags = [
     page: 'blog'
   }}
 >
-	<BlogListPage client:load posts={posts} tags={tags} />
+	<BlogListPage client:visible posts={posts} tags={tags} />
 </PageWithHero>
 
 <!-- Removed column-span styling now that list uses CSS grid -->

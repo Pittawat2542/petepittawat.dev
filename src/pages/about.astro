@@ -12,7 +12,7 @@ import timeline from '../content/about/timeline.json';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
-    <Container>
+    <Container class='glass-section'>
       <ThemedPageHero 
         title="About" 
         subtitle="Learn more about me, my research interests, and my journey" 
@@ -46,9 +46,9 @@ import timeline from '../content/about/timeline.json';
               <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://orcid.org/0000-0002-6824-2634' target='_blank'>ORCID</a>
             </div>
             <div class='mt-4 flex flex-wrap gap-3'>
-              <a href='/projects' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent-about)] text-[color:var(--white)] hover:text-[color:var(--accent-about)] transition-all font-medium'>Projects</a>
-              <a href='/publications' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent-about)] text-[color:var(--white)] hover:text-[color:var(--accent-about)] transition-all font-medium'>Publications</a>
-              <a href='/talks' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent-about)] text-[color:var(--white)] hover:text-[color:var(--accent-about)] transition-all font-medium'>Talks</a>
+              <a href='/projects' class='btn btn-sm btn-ghost'>Projects</a>
+              <a href='/publications' class='btn btn-sm btn-ghost'>Publications</a>
+              <a href='/talks' class='btn btn-sm btn-ghost'>Talks</a>
             </div>
           </div>
         </div>

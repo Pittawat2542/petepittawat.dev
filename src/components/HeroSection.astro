@@ -27,14 +27,14 @@ import profileImage from '../assets/images/profile.jpg';
       Researcher specializing in Large Language Models, reasoning, and prompt engineering.
     </p>
     <div class='mt-2 flex flex-wrap gap-3 items-center justify-center md:justify-start'>
-      <a href='/projects' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 bg-[color:var(--accent-projects)] text-black hover:brightness-110 transition-all font-medium'>
+      <a href='/projects' class='btn btn-lg btn-primary'>
         View projects
         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-arrow-right'>
           <path d='M5 12h14'></path>
           <path d='m12 5 7 7-7 7'></path>
         </svg>
       </a>
-      <a href='/blog' class='inline-flex items-center gap-2 rounded-lg px-4 py-2 ring-1 ring-[color:var(--white)]/15 hover:ring-[color:var(--accent)] text-[color:var(--white)] hover:text-[color:var(--accent)] transition-all font-medium'>
+      <a href='/blog' class='btn btn-lg btn-ghost'>
         Read the blog
       </a>
     </div>
@@ -42,7 +42,7 @@ import profileImage from '../assets/images/profile.jpg';
   <div class='relative'>
     <div class='absolute inset-0 rounded-full bg-[color:var(--accent)] blur-xl opacity-20 animate-pulse'>
     </div>
-    <Image src={profileImage} alt="Pete's profile picture"
+    <Image src={profileImage} alt="Pete's profile picture" loading="eager" fetchpriority="high" decoding="async"
       class='relative rounded-full w-48 h-48 md:w-56 md:h-56 ring-4 ring-[color:var(--white)]/20 hover:ring-[color:var(--accent)]/60 transition-[box-shadow,transform] duration-500 ease-in-out hover:-translate-y-1 shadow-lg' />
   </div>
 </Container>

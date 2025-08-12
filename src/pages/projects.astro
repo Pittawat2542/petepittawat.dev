@@ -13,6 +13,7 @@ import PageWithHero from '../layouts/PageWithHero.astro';
     subtitle: "Selected research, systems, and prototypes I've built or led.",
     page: 'projects'
   }}
+  containerClass="glass-section"
 >
-  <ProjectsExplorer client:load items={projects} />
+  <ProjectsExplorer client:visible items={projects} />
 </PageWithHero>
