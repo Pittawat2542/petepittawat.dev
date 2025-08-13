@@ -24,13 +24,15 @@ const isActive = (href: string) =>
     <div class="relative inline-flex rounded-full p-[1px]
                 bg-gradient-to-r from-[color:var(--white)]/15 via-transparent to-[color:var(--white)]/15">
       <nav id="site-nav" aria-label="Primary"
-           class="inline-flex items-center gap-1 rounded-[inherit] border border-[color:var(--white)]/10
-                  bg-[color:var(--black-nav)]/70 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55
-                  backdrop-blur-md shadow-lg shadow-black/10 px-2 py-2 pr-3 glass-nav
-                  transition-[background,box-shadow,transform] duration-300 ease-out
-                  data-[scrolled=true]:shadow-black/20 data-[scrolled=true]:backdrop-blur-lg
+           class="inline-flex items-center gap-1 rounded-[inherit] border border-transparent
+                  bg-transparent supports-[backdrop-filter]:bg-transparent
+                  backdrop-blur-none shadow-none
+                  transition-[background-color,box-shadow,transform,border-color] duration-300 ease-out
+                  data-[scrolled=true]:border-[color:var(--white)]/10
+                  data-[scrolled=true]:bg-[color:var(--black-nav)]/70 data-[scrolled=true]:supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55
+                  data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-lg data-[scrolled=true]:shadow-black/10
                   overflow-x-auto overscroll-x-contain scrollbar-none
-                  snap-x snap-proximity md:snap-none">
+                  snap-x snap-proximity md:snap-none p-2">
         <a href="/" aria-label="Go to homepage"
            class="group text-[color:var(--white)] flex min-w-0 gap-2 items-center rounded-full px-3 py-2
                   hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
