@@ -1,9 +1,12 @@
 import { formatDate } from '../../lib';
 import type { Talk } from '../../types';
+import { Card } from './card';
+import { Badge } from './badge';
+import { FileText, Video, Code2, ExternalLink } from 'lucide-react';
 
 export function TalkCard({ item }: { item: Talk }) {
   return (
-    <article className="glass-card p-4 md:p-5">
+    <Card className="p-4 md:p-5 hover-card">
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <span className="text-sm text-[color:var(--white)]/70">{formatDate(item.date)}</span>
@@ -22,9 +25,7 @@ export function TalkCard({ item }: { item: Talk }) {
         {item.tags?.length ? (
           <div className="mt-1 flex flex-wrap gap-2">
             {item.tags.map((t) => (
-              <span key={t} className="inline-block glass-chip text-xs">
-                {t}
-              </span>
+              <Badge key={t} className="text-xs" variant="outline">{t}</Badge>
             ))}
           </div>
         ) : null}
@@ -60,29 +61,15 @@ export function TalkCard({ item }: { item: Talk }) {
                   }}
                   aria-label={label}
                 >
-                  {icon === 'slides' ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="3" y="4" width="18" height="14" rx="2" />
-                      <path d="M8 20h8" />
-                    </svg>
-                  ) : icon === 'video' ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="m22 8-6 4 6 4V8Z" />
-                      <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
-                    </svg>
-                  ) : icon === 'code' ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="m18 16 4-4-4-4" />
-                      <path d="m6 8-4 4 4 4" />
-                      <path d="m14.5 4-5 16" />
-                    </svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <path d="M15 3h6v6"></path>
-                      <path d="M10 14 21 3"></path>
-                    </svg>
-                  )}
+              {icon === 'slides' ? (
+                <FileText size={14} aria-hidden="true" />
+              ) : icon === 'video' ? (
+                <Video size={14} aria-hidden="true" />
+              ) : icon === 'code' ? (
+                <Code2 size={14} aria-hidden="true" />
+              ) : (
+                <ExternalLink size={14} aria-hidden="true" />
+              )}
                   <span>{label}</span>
                 </a>
               );
@@ -90,7 +77,7 @@ export function TalkCard({ item }: { item: Talk }) {
           </div>
         ) : null}
       </div>
-    </article>
+    </Card>
   );
 }
 

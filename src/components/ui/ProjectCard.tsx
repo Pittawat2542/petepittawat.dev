@@ -1,4 +1,7 @@
 import type { Project } from '../../types';
+import { Card } from './card';
+import { Badge } from './badge';
+import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -35,15 +38,15 @@ function typeAccentVar(type?: string) {
 
 export default function ProjectCard({ item, featured = false }: { item: Project; featured?: boolean }) {
   return (
-    <article className={`glass-card p-4 md:p-5 h-full flex flex-col ${featured ? 'card-featured' : ''}`}>
+    <Card className={`p-4 md:p-5 h-full flex flex-col hover-card ${featured ? 'card-featured' : ''}`}>
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base md:text-lg font-semibold leading-snug">
           {item.title}
         </h3>
         <div className="flex items-center gap-2">
           {item.type ? (
-            <span
-              className="glass-chip text-xs whitespace-nowrap"
+            <Badge
+              className="text-xs whitespace-nowrap"
               style={{
                 color: typeAccentVar(item.type),
                 borderColor: `color-mix(in oklab, ${typeAccentVar(item.type)} 55%, transparent)`,
@@ -52,9 +55,9 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
               title={item.type}
             >
               {toTitleCase(item.type)}
-            </span>
+            </Badge>
           ) : null}
-          <span className="glass-chip text-xs whitespace-nowrap">{item.year}</span>
+          <Badge className="text-xs whitespace-nowrap" variant="outline">{item.year}</Badge>
         </div>
       </div>
       {item.role || item.collaborators ? (
@@ -67,7 +70,7 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
       {item.tags?.length ? (
         <div className="mt-3 flex flex-wrap gap-2">
           {item.tags.map((t) => (
-            <span key={t} className="glass-chip text-xs">{t}</span>
+            <Badge key={t} className="text-xs" variant="outline">{t}</Badge>
           ))}
         </div>
       ) : null}
@@ -98,24 +101,12 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
                 aria-label={l.label}
               >
                 <span>{l.label}</span>
-                {isExternal ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <path d="M15 3h6v6"></path>
-                    <path d="M10 14 21 3"></path>
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M9 18v-6h6"></path>
-                    <path d="M21 21 14 14"></path>
-                    <path d="M3 3h7v7H3z"></path>
-                  </svg>
-                )}
+                {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
               </a>
             );
           })}
         </div>
       ) : null}
-    </article>
+    </Card>
   );
 }

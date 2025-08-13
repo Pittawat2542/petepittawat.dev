@@ -58,5 +58,13 @@ const projectSchema = z.object({
   type: z.string().optional(),
 });
 const projects = defineCollection({ type: 'data', schema: z.array(projectSchema) });
+// About timeline collection to avoid auto-generated warnings
+const aboutTimelineItem = z.object({
+  title: z.string(),
+  description: z.string(),
+  accent: z.string(),
+  highlight: z.boolean().optional(),
+});
+const about = defineCollection({ type: 'data', schema: z.array(aboutTimelineItem) });
 
-export const collections = { blog, talks, publications, projects };
+export const collections = { blog, talks, publications, projects, about };

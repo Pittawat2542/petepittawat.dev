@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
+import siteLogo from '../assets/images/logo.png';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
 
@@ -45,7 +46,7 @@ authorSameAs.push(authorUrl);
     "url": ${JSON.stringify(Astro.site ? new URL('/', Astro.site).href : '/')},
     "logo": {
       "@type": "ImageObject",
-      "url": ${JSON.stringify(Astro.site ? new URL('/favicon.svg', Astro.site).href : '/favicon.svg')}
+      "url": ${JSON.stringify(Astro.site ? new URL(siteLogo.src, Astro.site).href : siteLogo.src)}
     }
   },
   "image": ${JSON.stringify(Astro.site 

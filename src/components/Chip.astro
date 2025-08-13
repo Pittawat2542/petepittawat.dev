@@ -6,12 +6,12 @@ interface Props {
 
 const { variant = 'default', className = '' } = Astro.props;
 
-const baseClasses = 'inline-block glass-chip whitespace-nowrap';
+const baseClasses = 'inline-flex items-center rounded-full border border-border bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium whitespace-nowrap';
 
 const variantClasses = {
   default: '',
-  primary: 'bg-[color:var(--accent)] text-black font-medium',
-  secondary: 'bg-[color:var(--accent)]/20 text-[color:var(--accent)] border-[color:var(--accent)]/30'
+  primary: 'bg-primary text-primary-foreground',
+  secondary: 'bg-secondary text-secondary-foreground'
 };
 
 const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;

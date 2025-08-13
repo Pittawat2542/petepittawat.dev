@@ -1,6 +1,7 @@
 ---
 import Container from './Container.astro';
 import { Image } from 'astro:assets';
+import { ArrowRight } from 'lucide-astro';
 import profileImage from '../assets/images/profile.jpg';
 ---
 
@@ -27,15 +28,13 @@ import profileImage from '../assets/images/profile.jpg';
       Researcher specializing in Large Language Models, reasoning, and prompt engineering.
     </p>
     <div class='mt-2 flex flex-wrap gap-3 items-center justify-center md:justify-start'>
-      <a href='/projects' class='btn btn-lg btn-primary'>
+      <a href='/projects' class='inline-flex items-center gap-2 rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>
         View projects
-        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-arrow-right'>
-          <path d='M5 12h14'></path>
-          <path d='m12 5 7 7-7 7'></path>
-        </svg>
+        <ArrowRight class='h-4 w-4' aria-hidden='true' />
       </a>
-      <a href='/blog' class='btn btn-lg btn-ghost'>
+      <a href='/blog' class='inline-flex items-center gap-2 rounded-md border border-input bg-transparent px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>
         Read the blog
+        <ArrowRight class='h-4 w-4' aria-hidden='true' />
       </a>
     </div>
   </div>

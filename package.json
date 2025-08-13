@@ -17,22 +17,31 @@
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.4.2",
     "@astrojs/tailwind": "^6.0.2",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "astro": "^5.12.9",
     "astro-robots-txt": "^1.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "katex": "^0.16.19",
     "lucide-astro": "^0.469.0",
+    "lucide-react": "^0.539.0",
     "react": "^19.0.0",
     "react-compiler-runtime": "19.1.0-rc.2",
     "react-dom": "^19.0.0",
     "sharp": "^0.33.5",
+    "tailwind-merge": "^3.3.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
-    "@types/katex": "^0.16.7"
+    "@types/katex": "^0.16.7",
+    "tailwindcss-animate": "^1.0.7"
   },
   "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
 }

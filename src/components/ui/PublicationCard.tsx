@@ -3,6 +3,9 @@ import { createPortal } from 'react-dom';
 import { highlightAuthorNames, isFirstAuthor } from '../../lib';
 import { FIRST_AUTHOR_TITLE } from '../../lib/constants';
 import type { Publication } from '../../types';
+import { Card } from './card';
+import { Badge } from './badge';
+import { ExternalLink, ArrowUpRight, Code2, Database, Video, X } from 'lucide-react';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -70,8 +73,8 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
   }
 
   return (
-    <article
-      className={[`glass-card p-4 md:p-5 cursor-pointer`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
+    <Card
+      className={[`p-4 md:p-5 cursor-pointer hover-card`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -95,8 +98,8 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
             <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightAuthorNames(item.authors)}</p>
             <p className="mt-1 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
               {item.type ? (
-                <span
-                  className="glass-chip text-xs whitespace-nowrap"
+                <Badge
+                  className="text-xs whitespace-nowrap"
                   style={{
                     color: typeAccentVar(item.type),
                     borderColor: `color-mix(in oklab, ${typeAccentVar(item.type)} 55%, transparent)`,
@@ -105,7 +108,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   title={item.type}
                 >
                   {toTitleCase(item.type)}
-                </span>
+                </Badge>
               ) : null}
               <span className="whitespace-nowrap">• {item.venue}</span>
               <span className="whitespace-nowrap">• {item.year}</span>
@@ -114,9 +117,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
           {/* First author badge */}
           <div className="flex items-center gap-2 sm:flex-col sm:items-end sm:gap-2">
             {badgeLabel && (
-              <span className="glass-chip text-[color:var(--accent)] font-semibold text-xs py-1 px-2 whitespace-nowrap shrink-0">
+              <Badge className="text-[color:var(--accent)] font-semibold text-xs py-1 px-2 whitespace-nowrap shrink-0" variant="outline">
                 {badgeLabel}
-              </span>
+              </Badge>
             )}
           </div>
         </div>
@@ -124,9 +127,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
         {item.tags?.length ? (
           <div className="flex flex-wrap gap-2">
             {item.tags.map((t) => (
-              <span key={t} className="inline-block glass-chip text-xs">
+              <Badge key={t} className="text-xs" variant="outline">
                 {t}
-              </span>
+              </Badge>
             ))}
           </div>
         ) : null}
@@ -156,11 +159,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 aria-label="Open paper"
               >
                 <span>Paper</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                  <path d="M15 3h6v6"></path>
-                  <path d="M10 14 21 3"></path>
-                </svg>
+                <ExternalLink size={14} aria-hidden="true" />
               </a>
             ) : null}
             {item.artifacts?.map((a) => {
@@ -188,19 +187,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   aria-label={a.label}
                 >
                   <span>{a.label}</span>
-                  {isExternal ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <path d="M15 3h6v6"></path>
-                      <path d="M10 14 21 3"></path>
-                    </svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M9 18v-6h6"></path>
-                      <path d="M21 21 14 14"></path>
-                      <path d="M3 3h7v7H3z"></path>
-                    </svg>
-                  )}
+                  {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
                 </a>
               );
             })}
@@ -219,8 +206,8 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
             >
               <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
               <div className="relative z-[1010] w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
-                <div
-                  className="glass-card modal-card p-5 md:p-6"
+                <Card
+                  className="modal-card p-5 md:p-6"
                   style={{
                     backgroundColor: 'color-mix(in oklab, var(--black) 84%, transparent)'
                   }}
@@ -234,18 +221,15 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                       onClick={() => setOpen(false)}
                       aria-label="Close details"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M18 6 6 18" />
-                        <path d="M6 6l12 12" />
-                      </svg>
+                      <X size={14} aria-hidden="true" />
                       Close
                     </button>
                   </div>
                   <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightAuthorNames(item.authors)}</p>
                   <p className="mt-2 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
                     {item.type ? (
-                      <span
-                        className="glass-chip text-xs whitespace-nowrap"
+                      <Badge
+                        className="text-xs whitespace-nowrap"
                         style={{
                           color: accent,
                           borderColor: `color-mix(in oklab, ${accent} 55%, transparent)`,
@@ -253,7 +237,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                         }}
                       >
                         {toTitleCase(item.type)}
-                      </span>
+                      </Badge>
                     ) : null}
                     <span className="whitespace-nowrap">• {item.venue}</span>
                     <span className="whitespace-nowrap">• {item.year}</span>
@@ -262,9 +246,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   {item.tags?.length ? (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {item.tags.map((t) => (
-                        <span key={t} className="inline-block glass-chip text-xs">
+                        <Badge key={t} className="text-xs" variant="outline">
                           {t}
-                        </span>
+                        </Badge>
                       ))}
                     </div>
                   ) : null}
@@ -316,27 +300,13 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                             >
                               {/* simple icon heuristic by label */}
                               {/^code$/i.test(a.label) ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                  <path d="m18 16 4-4-4-4" />
-                                  <path d="m6 8-4 4 4 4" />
-                                  <path d="m14.5 4-5 16" />
-                                </svg>
+                                <Code2 size={14} aria-hidden="true" />
                               ) : /data|dataset/i.test(a.label) ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                  <path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"></path>
-                                  <path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"></path>
-                                </svg>
+                                <Database size={14} aria-hidden="true" />
                               ) : /video|talk|presentation/i.test(a.label) ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                  <path d="m22 8-6 4 6 4V8Z" />
-                                  <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
-                                </svg>
+                                <Video size={14} aria-hidden="true" />
                               ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                  <path d="M10 13a5 5 0 1 0 7 7L22 15a5 5 0 0 0-7-7L9 14"></path>
-                                  <path d="M16 7a5 5 0 0 0-7 7"></path>
-                                </svg>
+                                <ExternalLink size={14} aria-hidden="true" />
                               )}
                               {a.label}
                             </a>
@@ -345,13 +315,13 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                       </div>
                     ) : null}
                   </div>
-                </div>
+                </Card>
               </div>
             </div>,
             document.body
           )
         : null}
-    </article>
+    </Card>
   );
 }
 

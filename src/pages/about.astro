@@ -7,6 +7,7 @@ import { Github, Instagram, Linkedin } from 'lucide-astro';
 import ThemedPageHero from '../components/ThemedPageHero.astro';
 import Container from '../components/Container.astro';
 import GlassCard from '../components/GlassCard.astro';
+import Chip from '../components/Chip.astro';
 import Prose from '../components/Prose.astro';
 import timeline from '../content/about/timeline.json';
 ---
@@ -30,11 +31,11 @@ import timeline from '../content/about/timeline.json';
               practical, reliable systems and sharing what I learn.
             </p>
             <div class='flex flex-wrap gap-2 mt-4'>
-              <span class='glass-chip'>Bangkok, Thailand</span>
-              <span class='glass-chip'>LLMs</span>
-              <span class='glass-chip'>Reasoning</span>
-              <span class='glass-chip'>Prompt Engineering</span>
-              <span class='glass-chip'>Open Source</span>
+              <Chip>Bangkok, Thailand</Chip>
+              <Chip>LLMs</Chip>
+              <Chip>Reasoning</Chip>
+              <Chip>Prompt Engineering</Chip>
+              <Chip>Open Source</Chip>
             </div>
 
             <!-- Social / Links -->
@@ -46,9 +47,9 @@ import timeline from '../content/about/timeline.json';
               <a class='hover:-translate-y-1 transition-transform duration-150 p-1' href='https://orcid.org/0000-0002-6824-2634' target='_blank'>ORCID</a>
             </div>
             <div class='mt-4 flex flex-wrap gap-3'>
-              <a href='/projects' class='btn btn-sm btn-ghost'>Projects</a>
-              <a href='/publications' class='btn btn-sm btn-ghost'>Publications</a>
-              <a href='/talks' class='btn btn-sm btn-ghost'>Talks</a>
+              <a href='/projects' class='inline-flex items-center gap-2 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>Projects</a>
+              <a href='/publications' class='inline-flex items-center gap-2 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>Publications</a>
+              <a href='/talks' class='inline-flex items-center gap-2 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>Talks</a>
             </div>
           </div>
         </div>
