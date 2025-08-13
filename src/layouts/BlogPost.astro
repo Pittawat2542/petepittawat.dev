@@ -31,25 +31,25 @@ authorSameAs.push(authorUrl);
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": ${JSON.stringify(title)},
-  "description": ${JSON.stringify(excerpt)},
-  "datePublished": ${JSON.stringify(pubDate.toISOString?.() ?? String(pubDate))},
+  "headline": "${title}",
+  "description": "${excerpt}",
+  "datePublished": "${pubDate.toISOString?.() ?? String(pubDate)}",
   "author": { 
     "@type": "Person", 
     "name": "Pittawat Taveekitworachai",
-    "url": ${JSON.stringify(authorUrl)},
-    "sameAs": ${JSON.stringify(authorSameAs)}
+    "url": "${authorUrl}",
+    "sameAs": "${authorSameAs}"
   },
   "publisher": {
     "@type": "Organization",
     "name": "PETEPITTAWAT.DEV",
-    "url": ${JSON.stringify(Astro.site ? new URL('/', Astro.site).href : '/')},
+    "url": "${Astro.site ? new URL('/', Astro.site).href : '/'}",
     "logo": {
       "@type": "ImageObject",
-      "url": ${JSON.stringify(Astro.site ? new URL(siteLogo.src, Astro.site).href : siteLogo.src)}
+      "url": "${Astro.site ? new URL(siteLogo.src, Astro.site).href : siteLogo.src}"
     }
   },
-  "image": ${JSON.stringify(Astro.site 
+  "image": "${Astro.site 
     ? new URL(coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'), Astro.site).href 
     : (coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg')))},
   "url": ${JSON.stringify(Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog/${slug}/`)}
