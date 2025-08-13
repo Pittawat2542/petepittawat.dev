@@ -159,7 +159,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 aria-label="Open paper"
               >
                 <span>Paper</span>
-                <ExternalLink size={14} aria-hidden="true" />
+                <span title="External link">
+                  <ExternalLink size={14} aria-hidden="true" />
+                </span>
               </a>
             ) : null}
             {item.artifacts?.map((a) => {
@@ -187,7 +189,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   aria-label={a.label}
                 >
                   <span>{a.label}</span>
-                  {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
+                  <span title={isExternal ? "External link" : "Internal link"} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
+                  </span>
                 </a>
               );
             })}
@@ -220,6 +224,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                       className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all"
                       onClick={() => setOpen(false)}
                       aria-label="Close details"
+                      title="Close"
                     >
                       <X size={14} aria-hidden="true" />
                       Close
@@ -276,11 +281,13 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                                 boxShadow: `0 6px 18px -10px ${accent}`
                               }}
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                <path d="M15 3h6v6"></path>
-                                <path d="M10 14 21 3"></path>
-                              </svg>
+                              <span title="Paper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                  <path d="M15 3h6v6"></path>
+                                  <path d="M10 14 21 3"></path>
+                                </svg>
+                              </span>
                               Paper
                             </a>
                           ) : null}
@@ -298,16 +305,23 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                                 boxShadow: `0 6px 18px -10px ${accent}`
                               }}
                             >
-                              {/* simple icon heuristic by label */}
-                              {/^code$/i.test(a.label) ? (
-                                <Code2 size={14} aria-hidden="true" />
-                              ) : /data|dataset/i.test(a.label) ? (
-                                <Database size={14} aria-hidden="true" />
-                              ) : /video|talk|presentation/i.test(a.label) ? (
-                                <Video size={14} aria-hidden="true" />
-                              ) : (
-                                <ExternalLink size={14} aria-hidden="true" />
-                              )}
+                              <span title={
+                                /^code$/i.test(a.label) ? "Code" :
+                                /data|dataset/i.test(a.label) ? "Data" :
+                                /video|talk|presentation/i.test(a.label) ? "Video" :
+                                "External link"
+                              }>
+                                {/* simple icon heuristic by label */}
+                                {/^code$/i.test(a.label) ? (
+                                  <Code2 size={14} aria-hidden="true" />
+                                ) : /data|dataset/i.test(a.label) ? (
+                                  <Database size={14} aria-hidden="true" />
+                                ) : /video|talk|presentation/i.test(a.label) ? (
+                                  <Video size={14} aria-hidden="true" />
+                                ) : (
+                                  <ExternalLink size={14} aria-hidden="true" />
+                                )}
+                              </span>
                               {a.label}
                             </a>
                           ))}

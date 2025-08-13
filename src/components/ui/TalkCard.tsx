@@ -61,6 +61,12 @@ export function TalkCard({ item }: { item: Talk }) {
                   }}
                   aria-label={label}
                 >
+              <span title={
+                icon === 'slides' ? "Slides" :
+                icon === 'video' ? "Video" :
+                icon === 'code' ? "Code" :
+                "External link"
+              }>
               {icon === 'slides' ? (
                 <FileText size={14} aria-hidden="true" />
               ) : icon === 'video' ? (
@@ -70,6 +76,7 @@ export function TalkCard({ item }: { item: Talk }) {
               ) : (
                 <ExternalLink size={14} aria-hidden="true" />
               )}
+              </span>
                   <span>{label}</span>
                 </a>
               );

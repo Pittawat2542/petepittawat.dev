@@ -22,6 +22,7 @@ export default function SearchInput({ value, onChange, placeholder = 'Search…'
         placeholder={placeholder}
         id={id}
         aria-label={ariaLabel}
+        title={ariaLabel}
         className="w-full pl-9 pr-3 py-2 text-sm bg-transparent rounded-md border border-input text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       />
     </label>

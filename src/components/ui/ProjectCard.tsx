@@ -100,8 +100,10 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
                 }}
                 aria-label={l.label}
               >
+                <span title={isExternal ? "External link" : "Internal link"} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
+                </span>
                 <span>{l.label}</span>
-                {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
               </a>
             );
           })}

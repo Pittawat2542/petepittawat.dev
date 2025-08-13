@@ -86,5 +86,21 @@ const label = 'Toggle theme';
     // Follow OS changes if user is in "system" mode
     const onChange = () => { if (!saved()) apply(systemTheme()); };
     media.addEventListener('change', onChange);
+
+    // Tooltip for right-click
+    btn?.addEventListener('mouseover', () => {
+      btn.dataset.tooltip = btn.title;
+    });
+    btn?.addEventListener('mousedown', (e) => {
+      if (e.button === 2) {
+        btn.title = 'Reset to system preference';
+      }
+    });
+    btn?.addEventListener('mouseup', () => {
+      btn.title = btn.dataset.tooltip ?? '';
+    });
+    btn?.addEventListener('mouseleave', () => {
+      btn.title = btn.dataset.tooltip ?? '';
+    });
   })();
 </script>
