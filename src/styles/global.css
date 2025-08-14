@@ -361,7 +361,9 @@ html {
 .glass-section::before {
   content: '';
   position: absolute;
-  inset: -10% -4%;
+  /* Prevent the decorative glow from extending below the section,
+     which created extra scrollable space after the footer. */
+  inset: -10% -4% 0 -4%;
   z-index: -1;
   pointer-events: none;
   background:
