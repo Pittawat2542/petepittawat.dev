@@ -110,7 +110,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   {toTitleCase(item.type)}
                 </Badge>
               ) : null}
-              <span className="whitespace-nowrap">• {item.venue}</span>
+              <span className="break-words">• {item.venue}</span>
               <span className="whitespace-nowrap">• {item.year}</span>
             </p>
           </div>
@@ -244,7 +244,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                         {toTitleCase(item.type)}
                       </Badge>
                     ) : null}
-                    <span className="whitespace-nowrap">• {item.venue}</span>
+                    <span className="break-words">• {item.venue}</span>
                     <span className="whitespace-nowrap">• {item.year}</span>
                   </p>
 

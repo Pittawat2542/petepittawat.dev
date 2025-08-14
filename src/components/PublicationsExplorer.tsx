@@ -25,7 +25,7 @@ export default function PublicationsExplorer({ items }: Props) {
         filterOptions={filterOptions}
         placeholder="Search title, authors, venue..."
       />
-      <div className="grid gap-3">
+      <div className="grid grid-cols-1 gap-3">
         {filtered.map((item, i) => (
           <PublicationCard key={`${item.title}-${item.year}`} item={item} />
         ))}
