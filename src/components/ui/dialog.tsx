@@ -31,6 +31,8 @@ const DialogContent = React.forwardRef<
       className={cn(
         'fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border border-border bg-card glass-card p-6 text-card-foreground shadow-lg',
         'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
+        // Constrain height and allow scrolling on small screens
+        'max-h-[85vh] overflow-y-auto',
         'focus-visible:outline-none',
         className
       )}

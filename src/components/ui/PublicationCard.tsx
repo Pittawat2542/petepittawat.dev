@@ -241,12 +241,12 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
               role="dialog"
               aria-modal="true"
               aria-labelledby={detailsId}
-              className="fixed inset-0 z-[1000] flex items-center justify-center p-4"
+              className="fixed inset-0 z-[1000] flex items-start sm:items-center justify-center p-4 overflow-y-auto"
             >
               <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
-              <div className="relative z-[1010] w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
+              <div className="relative z-[1010] w-full max-w-3xl my-6" onClick={(e) => e.stopPropagation()}>
                 <Card
-                  className="modal-card p-5 md:p-6"
+                  className="modal-card p-5 md:p-6 flex flex-col max-h-[85vh] overflow-hidden"
                   style={{
                     backgroundColor: 'color-mix(in oklab, var(--black) 84%, transparent)'
                   }}
@@ -319,7 +319,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                     </div>
                   ) : null}
 
-                  <div className="mt-4 max-h-[min(80vh,48rem)] overflow-auto pr-1">
+                  <div className="mt-4 overflow-y-auto pr-1 flex-1 min-h-0">
                     <p className="text-sm text-[color:var(--white)]/90 font-medium mb-1">Abstract</p>
                     <p className="text-sm text-[color:var(--white)]/80 whitespace-pre-wrap">
                       {item.abstract?.trim() || 'Abstract coming soon.'}
