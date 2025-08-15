@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://petepittawat.dev/sitemap-index.xml
