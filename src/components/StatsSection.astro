@@ -23,7 +23,8 @@ const cards = [
 		title: 'Blog posts',
 		count: stats.posts,
 		linkText: 'Read the blog',
-		accentColor: 'accent',
+		accentColor: 'accent-blog',
+		accentBgClass: 'bg-[color:var(--accent-blog)]',
 		image: blogImg,
 		alt: 'Blog posts illustration',
 		Icon: BookText,
@@ -34,7 +35,8 @@ const cards = [
 		title: 'Publications',
 		count: stats.publications,
 		linkText: 'View publications',
-		accentColor: 'accent',
+		accentColor: 'accent-publications',
+		accentBgClass: 'bg-[color:var(--accent-publications)]',
 		image: pubsImg,
 		alt: 'Publications illustration',
 		Icon: ScrollText,
@@ -45,7 +47,8 @@ const cards = [
 		title: 'Talks',
 		count: stats.talks,
 		linkText: 'See talks',
-		accentColor: 'accent',
+		accentColor: 'accent-talks',
+		accentBgClass: 'bg-[color:var(--accent-talks)]',
 		image: talksImg,
 		alt: 'Talks illustration',
 		Icon: Mic,
@@ -64,14 +67,14 @@ const cards = [
 	</div>
 
     <ul class='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
-      {
+  {
         cards.map((card) => (
           <li class='h-full'>
             <a
               href={card.href}
               aria-label={card.ariaLabel}
               class={`group relative overflow-hidden block h-full rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm transition-all duration-300 ease-in-out
-                motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--${card.accentColor})]/40`}
+                motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
             >
               <!-- Decorative oversized background image (partial, right-aligned) -->
               <Image
@@ -80,8 +83,10 @@ const cards = [
                 aria-hidden="true"
                 loading="lazy"
                 decoding="async"
-                class='pointer-events-none select-none absolute -right-10 top-1/2 -translate-y-1/2 h-[220%] opacity-15 blur-[0.5px]'
+                class='pointer-events-none select-none absolute -right-10 top-[64%] -translate-y-1/2 h-[220%] opacity-18 blur-sm'
               />
+              <!-- Left-side gradient overlay to improve text contrast -->
+              <div class='pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[color:var(--black)]/55 via-[color:var(--black)]/15 to-transparent'></div>
 
               <div class='relative z-10 p-5 md:p-6 flex h-full flex-col gap-4'>
                 <div class='flex items-center justify-between'>
@@ -93,23 +98,14 @@ const cards = [
 
                 <div class='mt-1'>
                   <p class='text-[color:var(--white)]/70 text-xs tracking-wider uppercase'>{card.title}</p>
-                  <p class={`mt-1 text-4xl font-extrabold tracking-tight bg-[color:var(--${card.accentColor})] bg-clip-text text-transparent`} style={{ WebkitTextFillColor: 'transparent' }}>
+                  <p class={`mt-1 text-4xl font-extrabold tracking-tight ${card.accentBgClass} bg-clip-text text-transparent`} style={{ WebkitTextFillColor: 'transparent' }}>
                     {card.count}
                   </p>
                 </div>
 
-                <div class='mt-auto pt-2'>
-                  <span
-                    class={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium
-                    text-[color:var(--${card.accentColor})]
-                    bg-[color:var(--${card.accentColor})]/[.10]
-                    ring-1 ring-[color:var(--${card.accentColor})]/40
-                    transition-colors duration-200 group-hover:bg-[color:var(--${card.accentColor})]/[.16]`}
-                    aria-hidden='true'
-                  >
-                    <span>{card.linkText}</span>
-                    <ArrowRight class='h-4 w-4' aria-hidden='true' />
-                  </span>
+                <!-- Subtle footer hint instead of a second arrow/button -->
+                <div class='mt-auto pt-1 text-[color:var(--white)]/60 text-xs'>
+                  {card.linkText}
                 </div>
               </div>
             </a>
