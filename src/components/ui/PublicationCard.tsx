@@ -43,10 +43,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
 
   const accent = typeAccentVar(item.type);
 
-  function onCardClick(e: React.MouseEvent) {
-    // Ignore clicks on links or buttons inside the card
-    const target = e.target as HTMLElement;
-    if (target.closest('a, button')) return;
+  function onCardClick() {
     setOpen(true);
   }
   
@@ -88,7 +85,18 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
           <div className="min-w-0">
             <h3 className="text-base md:text-lg font-semibold leading-snug">
               {item.url ? (
-                <a href={item.url} target="_blank" rel="noreferrer" className="text-[color:var(--accent)] hover:underline">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[color:var(--accent)] hover:underline"
+                  onClick={(e) => {
+                    // Prefer expanding details modal on title click
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setOpen(true);
+                  }}
+                >
                   {item.title}
                 </a>
               ) : (

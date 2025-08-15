@@ -7,7 +7,7 @@ type Props = {
 
 export default function BlogCard({ post, featured = false }: Readonly<Props>) {
   return (
-    <li className={`cursor-pointer rounded-2xl border border-border bg-card text-card-foreground shadow-sm transition-all duration-300 ease-in-out group w-full h-full hyphens-auto hover-card ${featured ? 'card-featured' : ''}`}>
+    <li className={`cursor-pointer rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm transition-all duration-300 ease-in-out group w-full h-full hyphens-auto hover-card ${featured ? 'card-featured' : ''}`}>
       <a
         className="flex flex-col align-middle p-6 h-full text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]"
         href={`/blog/${post.slug}/`}

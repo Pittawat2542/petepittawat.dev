@@ -92,7 +92,7 @@ const pageUrl = Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog
       <ul class="flex flex-wrap gap-2">
         {tags.map((t) => (
           <li>
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-[color:var(--accent)] bg-[color:var(--accent)]/[.10] ring-1 ring-[color:var(--accent)]/40">#{t}</span>
+            <a href={`/blog?tag=${encodeURIComponent(t)}`} class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-[color:var(--accent)] bg-[color:var(--accent)]/[.10] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.16] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">#{t}</a>
           </li>
         ))}
       </ul>

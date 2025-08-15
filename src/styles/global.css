@@ -266,6 +266,27 @@ html {
     box-shadow: 0 12px 20px -12px rgb(0 0 0 / 0.35);
     border-color: hsl(var(--ring));
   }
+
+  /* Glassmorphism card surface with subtle gradient */
+  .glass-card {
+    position: relative;
+    border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
+    background:
+      linear-gradient(180deg,
+        color-mix(in oklab, var(--white) 7%, transparent),
+        color-mix(in oklab, var(--black) 0%, transparent)) padding-box,
+      radial-gradient(120% 140% at 100% -20%,
+        color-mix(in oklab, var(--accent) 10%, transparent),
+        transparent 35%) padding-box,
+      color-mix(in oklab, var(--black-nav) 62%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    backdrop-filter: blur(14px) saturate(120%);
+    box-shadow: 0 10px 22px -14px rgb(0 0 0 / 0.45);
+  }
+  .glass-card:hover {
+    border-color: color-mix(in oklab, var(--white) 18%, transparent);
+    box-shadow: 0 14px 28px -14px rgb(0 0 0 / 0.5);
+  }
 }
 /* Removed legacy glass-card styles (migrated to shadcn tokens) */
 
@@ -312,8 +333,24 @@ html {
 
 /* Subtle highlight for first/co-first author publications */
 .first-author {
-  border-color: color-mix(in oklab, var(--accent) 55%, transparent) !important;
-  box-shadow: 0 6px 16px -8px color-mix(in oklab, var(--accent) 35%, transparent);
+  /* Subtly brighter surface instead of a colored ring */
+  background:
+    /* slightly stronger top highlight */
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--white) 12%, transparent),
+      transparent
+    ) padding-box,
+    /* faint inner glow for depth */
+    radial-gradient(120% 140% at 100% -20%,
+      color-mix(in oklab, var(--white) 10%, transparent),
+      transparent 40%
+    ) padding-box,
+    /* brighten base translucency */
+    color-mix(in oklab, var(--black-nav) 50%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(14px) saturate(125%);
+  border-color: color-mix(in oklab, var(--white) 18%, transparent) !important;
+  box-shadow: 0 12px 24px -16px rgb(0 0 0 / 0.55);
 }
 
 /* Smooth expand/collapse for details sections */
