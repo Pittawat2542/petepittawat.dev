@@ -5,7 +5,8 @@ import { FIRST_AUTHOR_TITLE } from '../../lib/constants';
 import type { Publication } from '../../types';
 import { Card } from './card';
 import { Badge } from './badge';
-import { ExternalLink, ArrowUpRight, Code2, Database, Video, X } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, Code2, Database, Video, X, Building2, CalendarDays } from 'lucide-react';
+import Tooltip from './tooltip';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -109,17 +110,43 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 <Badge
                   className="text-xs whitespace-nowrap"
                   style={{
-                    color: typeAccentVar(item.type),
-                    borderColor: `color-mix(in oklab, ${typeAccentVar(item.type)} 55%, transparent)`,
-                    background: `color-mix(in oklab, ${typeAccentVar(item.type)} 12%, transparent)`
+                    color: accent,
+                    borderColor: `color-mix(in oklab, ${accent} 55%, transparent)`,
+                    background: `color-mix(in oklab, ${accent} 12%, transparent)`
                   }}
                   title={item.type}
                 >
                   {toTitleCase(item.type)}
                 </Badge>
               ) : null}
-              <span className="break-words">• {item.venue}</span>
-              <span className="whitespace-nowrap">• {item.year}</span>
+              {item.venue ? (
+                <Tooltip content={item.venue}>
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] md:text-xs font-medium truncate max-w-[60vw] md:max-w-[22rem]"
+                    style={{
+                      color: accent,
+                      background: `color-mix(in oklab, ${accent} 10%, transparent)`,
+                      border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
+                    }}
+                  >
+                    <Building2 size={12} aria-hidden="true" />
+                    <span className="truncate">{item.venue}</span>
+                  </span>
+                </Tooltip>
+              ) : null}
+              <Tooltip content={String(item.year)}>
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] md:text-xs font-medium"
+                  style={{
+                    color: accent,
+                    background: `color-mix(in oklab, ${accent} 10%, transparent)`,
+                    border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
+                  }}
+                >
+                  <CalendarDays size={12} aria-hidden="true" />
+                  <span>{item.year}</span>
+                </span>
+              </Tooltip>
             </p>
           </div>
           {/* First author badge */}
@@ -252,8 +279,34 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                         {toTitleCase(item.type)}
                       </Badge>
                     ) : null}
-                    <span className="break-words">• {item.venue}</span>
-                    <span className="whitespace-nowrap">• {item.year}</span>
+                    {item.venue ? (
+                      <Tooltip content={item.venue}>
+                        <span
+                          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium truncate max-w-full"
+                          style={{
+                            color: accent,
+                            background: `color-mix(in oklab, ${accent} 10%, transparent)`,
+                            border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
+                          }}
+                        >
+                          <Building2 size={14} aria-hidden="true" />
+                          <span className="truncate">{item.venue}</span>
+                        </span>
+                      </Tooltip>
+                    ) : null}
+                    <Tooltip content={String(item.year)}>
+                      <span
+                        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
+                        style={{
+                          color: accent,
+                          background: `color-mix(in oklab, ${accent} 10%, transparent)`,
+                          border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
+                        }}
+                      >
+                        <CalendarDays size={14} aria-hidden="true" />
+                        <span>{item.year}</span>
+                      </span>
+                    </Tooltip>
                   </p>
 
                   {item.tags?.length ? (
