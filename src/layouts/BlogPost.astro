@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
+import ReadingProgressBar from '../components/ReadingProgressBar.astro';
 import siteLogo from '../assets/images/logo.png';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
@@ -33,6 +34,7 @@ const pageUrl = Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog
   publishedTime={pubDate.toISOString?.() ?? String(pubDate)}
   tags={tags}
 >
+	<ReadingProgressBar />
 	<Fragment slot="head">
 		<script type="application/ld+json" is:inline>
 {JSON.stringify({
