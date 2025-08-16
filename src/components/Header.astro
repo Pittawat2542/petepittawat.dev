@@ -3,16 +3,15 @@ import HeaderLink from './HeaderLink.astro';
 import logoImage from '../assets/images/logo.png';
 import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
-import { BookText, Mic, ScrollText, User, FolderKanban } from 'lucide-astro';
 import SearchModal from './SearchModal.tsx';
 
 const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const links = [
-  { href: '/blog', label: 'Blog', Icon: BookText },
-  { href: '/projects', label: 'Projects', Icon: FolderKanban },
-  { href: '/publications', label: 'Publications', Icon: ScrollText },
-  { href: '/talks', label: 'Talks', Icon: Mic },
-  { href: '/about', label: 'About', Icon: User },
+  { href: '/blog', label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/talks', label: 'Talks' },
+  { href: '/about', label: 'About' },
 ];
 
 const isActive = (href: string) =>
@@ -45,11 +44,10 @@ const isActive = (href: string) =>
         </a>
 
         <ul class="ml-3 sm:ml-4 md:ml-6 flex items-center gap-1">
-          {links.map(({ href, label, Icon }) => (
+          {links.map(({ href, label }) => (
             <li>
               <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label} class="snap-start nav-link">
-                <Icon class="inline-block md:hidden h-[1.15rem] w-[1.15rem] icon-bounce" aria-hidden="true" />
-                <span class="hidden md:inline">{label}</span>
+                <span class="inline whitespace-nowrap">{label}</span>
               </HeaderLink>
             </li>
           ))}
