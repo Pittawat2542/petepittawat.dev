@@ -2,6 +2,7 @@ import Filter from './Filter';
 import type { Publication } from '../types';
 import PublicationCard from './ui/PublicationCard';
 import { useDataFilter } from '../lib/hooks';
+import { useEffect } from 'react';
 
 type Props = { items: Publication[] };
 
@@ -14,6 +15,16 @@ export default function PublicationsExplorer({ items }: Props) {
       tag: (item) => item.tags,
     },
   });
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const qParam = params.get('q');
+      if (qParam) setQ(qParam);
+    } catch {}
+  }, [setQ]);
+
+  const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   return (
     <div className="flex flex-col gap-4">
@@ -28,7 +39,7 @@ export default function PublicationsExplorer({ items }: Props) {
       />
       <div className="grid grid-cols-1 gap-3">
         {filtered.map((item, i) => (
-          <div key={`${item.title}-${item.year}`} className="stagger-fade-in" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+          <div id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
             <PublicationCard item={item} />
           </div>
         ))}

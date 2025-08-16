@@ -4,6 +4,7 @@ import logoImage from '../assets/images/logo.png';
 import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
 import { BookText, Mic, ScrollText, User, FolderKanban } from 'lucide-astro';
+import SearchModal from './SearchModal.tsx';
 
 const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const links = [
@@ -53,6 +54,10 @@ const isActive = (href: string) =>
             </li>
           ))}
         </ul>
+
+        <div class="ml-2 md:ml-3">
+          <SearchModal client:load />
+        </div>
 
       </nav>
     </div>

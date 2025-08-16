@@ -52,6 +52,15 @@ function wrapText(text, max = 32) {
   return lines;
 }
 
+function escapeXml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 async function readLogoDataUrl() {
   try {
     const logoPath = path.join(ROOT, 'src', 'assets', 'images', 'logo.png');
@@ -66,12 +75,14 @@ async function readLogoDataUrl() {
 function svgTemplate({ title, siteTitle = 'PETEPITTAWAT.DEV', logoDataUrl }) {
   const nonAscii = hasNonAscii(title);
   const lines = wrapText(title, nonAscii ? 22 : 28);
+  const safeLines = lines.map(escapeXml);
   const yStart = 250;
   const lineHeight = nonAscii ? 60 : 64;
   const fontSize = nonAscii ? 54 : 60;
-  const tspans = lines
+  const tspans = safeLines
     .map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : lineHeight}">${l}</tspan>`) 
     .join('');
+  const safeSiteTitle = escapeXml(siteTitle);
   return `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -89,7 +100,7 @@ function svgTemplate({ title, siteTitle = 'PETEPITTAWAT.DEV', logoDataUrl }) {
     <text x="80" y="${yStart}" xml:space="preserve" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,'Noto Sans','Noto Sans Thai',sans-serif,Apple Color Emoji,Segoe UI Emoji" font-size="${fontSize}" font-weight="800" fill="#f9fafb">
       ${tspans}
     </text>
-    <text x="80" y="560" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,'Noto Sans',sans-serif" font-size="28" font-weight="600" fill="#93c5fd" filter="url(#shadow)">${siteTitle}</text>
+    <text x="80" y="560" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,'Noto Sans',sans-serif" font-size="28" font-weight="600" fill="#93c5fd" filter="url(#shadow)">${safeSiteTitle}</text>
   </svg>`;
 }
 
