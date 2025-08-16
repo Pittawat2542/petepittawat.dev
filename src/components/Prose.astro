@@ -5,7 +5,7 @@ interface Props extends HTMLAttributes<'div'> {
 }
 const { class: className, ...rest } = Astro.props as Props;
 ---
-<div {...rest} class={`prose dark:prose-invert md:prose-lg my-4 max-w-none ${className ?? ''}`}>
+<div {...rest} class={`prose prose-invert md:prose-lg my-4 max-w-none ${className ?? ''}`}>
   <slot />
 </div>
 

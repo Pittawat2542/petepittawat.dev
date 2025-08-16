@@ -72,7 +72,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
 
   return (
     <Card
-      className={[`p-4 md:p-5 cursor-pointer hover-card`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
+      className={[`p-4 md:p-5 cursor-pointer publication-card`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -129,7 +129,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                       border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
                     }}
                   >
-                    <Building2 size={12} aria-hidden="true" />
+                  <Building2 size={12} aria-hidden="true" className="icon-bounce" />
                     <span className="truncate">{item.venue}</span>
                   </span>
                 </Tooltip>
@@ -143,7 +143,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                     border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
                   }}
                 >
-                  <CalendarDays size={12} aria-hidden="true" />
+                  <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
                   <span>{item.year}</span>
                 </span>
               </Tooltip>
@@ -177,7 +177,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 href={item.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple"
                 style={{
                   color: accent,
                   background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -195,7 +195,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
               >
                 <span>Paper</span>
                 <span title="External link">
-                  <ExternalLink size={14} aria-hidden="true" />
+                  <ExternalLink size={14} aria-hidden="true" className="icon-bounce" />
                 </span>
               </a>
             ) : null}
@@ -207,7 +207,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   href={a.href}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noreferrer' : undefined}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple"
                   style={{
                     color: accent,
                     background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -225,7 +225,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 >
                   <span>{a.label}</span>
                   <span title={isExternal ? "External link" : "Internal link"} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                    {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
+                    {isExternal ? <ExternalLink size={14} aria-hidden="true" className="icon-bounce" /> : <ArrowUpRight size={14} aria-hidden="true" className="icon-bounce" />}
                   </span>
                 </a>
               );

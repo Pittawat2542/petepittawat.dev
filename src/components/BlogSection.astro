@@ -1,6 +1,7 @@
 ---
 import Container from './Container.astro';
 import BlogCard from './BlogCard';
+import GlassButton from './GlassButton.astro';
 import { ArrowRight } from 'lucide-astro';
 import type { BlogPost } from '../types';
 
@@ -22,10 +23,10 @@ const { posts } = Astro.props as Props;
         Insights, tutorials, and thoughts on AI and technology
       </p>
     </div>
-    <a href='/blog' class='inline-flex items-center gap-2 rounded-md border border-input bg-transparent px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>
+    <GlassButton href='/blog' variant='ghost' size='md'>
       Browse all articles
       <ArrowRight class='h-4 w-4' aria-hidden='true' />
-    </a>
+    </GlassButton>
   </div>
   <ul class='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8'>
     {posts.map((post, i) => (

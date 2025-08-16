@@ -1,27 +1,43 @@
-import { formatDate } from '../../lib';
-import type { Talk } from '../../types';
-import { Card } from './card';
+import { Calendar, Clock, Code2, ExternalLink, FileText, MapPin, Presentation, Users, Video } from 'lucide-react';
+
 import { Badge } from './badge';
-import { FileText, Video, Code2, ExternalLink } from 'lucide-react';
+import { Card } from './card';
+import type { Talk } from '../../types';
+import { formatDate } from '../../lib';
 
 export function TalkCard({ item }: { item: Talk }) {
   return (
-    <Card className="p-4 md:p-5 hover-card">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm text-[color:var(--white)]/70">{formatDate(item.date)}</span>
-          <span className="text-xs uppercase tracking-wide text-[color:var(--white)]/60">{item.mode}</span>
+    <Card className="p-4 md:p-5 card-subtle-lift">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 text-sm text-[color:var(--white)]/70">
+            <Calendar size={14} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
+            <span>{formatDate(item.date)}</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-[color:var(--white)]/60">
+            <div className="flex items-center gap-1">
+              {item.mode?.toLowerCase().includes('virtual') || item.mode?.toLowerCase().includes('online') ? (
+                <Video size={12} className="text-[color:var(--accent)]/60 icon-bounce" aria-hidden="true" />
+              ) : (
+                <MapPin size={12} className="text-[color:var(--accent)]/60 icon-bounce" aria-hidden="true" />
+              )}
+              <span>{item.mode}</span>
+            </div>
+          </div>
         </div>
-        <h3 className="text-base md:text-lg font-semibold leading-snug">{item.title}</h3>
-        <p className="text-sm text-[color:var(--white)]/80">
+        <div className="flex items-start gap-2">
+          <h3 className="text-base md:text-lg font-semibold leading-snug flex-1">{item.title}</h3>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-[color:var(--white)]/80">
+          <Users size={14} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
           {item.audienceUrl ? (
-            <a href={item.audienceUrl} target="_blank" rel="noreferrer" className="text-[color:var(--accent)] hover:underline">
+            <a href={item.audienceUrl} target="_blank" rel="noreferrer" className="text-[color:var(--accent)] hover:underline link-glow">
               {item.audience}
             </a>
           ) : (
-            item.audience
+            <span>{item.audience}</span>
           )}
-        </p>
+        </div>
         {item.tags?.length ? (
           <div className="mt-1 flex flex-wrap gap-2">
             {item.tags.map((t) => (
@@ -46,7 +62,7 @@ export function TalkCard({ item }: { item: Talk }) {
                   {...(r.download ? { download: '' } : {})}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noreferrer' : undefined}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple"
                   style={{
                     color: accent,
                     background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -68,13 +84,13 @@ export function TalkCard({ item }: { item: Talk }) {
                 "External link"
               }>
               {icon === 'slides' ? (
-                <FileText size={14} aria-hidden="true" />
+                <FileText size={14} aria-hidden="true" className="icon-bounce" />
               ) : icon === 'video' ? (
-                <Video size={14} aria-hidden="true" />
+                <Video size={14} aria-hidden="true" className="icon-bounce" />
               ) : icon === 'code' ? (
-                <Code2 size={14} aria-hidden="true" />
+                <Code2 size={14} aria-hidden="true" className="icon-bounce" />
               ) : (
-                <ExternalLink size={14} aria-hidden="true" />
+                <ExternalLink size={14} aria-hidden="true" className="icon-bounce" />
               )}
               </span>
                   <span>{label}</span>

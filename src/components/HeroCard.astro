@@ -16,7 +16,7 @@ const { image, url, title, description, isReverse = false } = Astro.props;
                 />
                <div class={`flex w-full flex-col flex-3 items-center 2xl:items-start h-full${isReverse ? ' 2xl:items-end' : ''}`}>
                        <h1 class='text-2xl lg:text-3xl mb-4 font-bold tracking-tight'>{title}</h1>
-                       <p class={`text-base md:text-lg text-center xl:text-start text-gray-900 dark:text-white break-words hyphens-auto${isReverse ? ' 2xl:text-end' : ''}`}>
+                       <p class={`text-base md:text-lg text-center xl:text-start text-[color:var(--white)] break-words hyphens-auto${isReverse ? ' 2xl:text-end' : ''}`}>
                                {description}
                        </p>
                </div>

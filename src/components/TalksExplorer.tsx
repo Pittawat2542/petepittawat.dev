@@ -31,10 +31,13 @@ export default function TalksExplorer({ items }: Props) {
         setFilters={setFilters}
         filterOptions={filterOptions}
         placeholder="Search title, audience..."
+        filteredCount={sortedFiltered.length}
       />
       <div className="grid gap-3">
-        {sortedFiltered.map((item) => (
-          <TalkCard key={`${item.title}-${item.date}`} item={item} />
+        {sortedFiltered.map((item, i) => (
+          <div key={`${item.title}-${item.date}`} className="stagger-fade-in" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+            <TalkCard item={item} />
+          </div>
         ))}
         {!sortedFiltered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>

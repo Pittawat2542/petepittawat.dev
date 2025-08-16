@@ -24,10 +24,13 @@ export default function PublicationsExplorer({ items }: Props) {
         setFilters={setFilters}
         filterOptions={filterOptions}
         placeholder="Search title, authors, venue..."
+        filteredCount={filtered.length}
       />
       <div className="grid grid-cols-1 gap-3">
         {filtered.map((item, i) => (
-          <PublicationCard key={`${item.title}-${item.year}`} item={item} />
+          <div key={`${item.title}-${item.year}`} className="stagger-fade-in" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+            <PublicationCard item={item} />
+          </div>
         ))}
         {!filtered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>

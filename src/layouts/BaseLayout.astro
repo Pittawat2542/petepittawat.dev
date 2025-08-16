@@ -25,25 +25,6 @@ const ogImage = Astro.site
 		<BaseHead title={title} description={description} image={ogImage} type={type} publishedTime={publishedTime} tags={tags} />
 		<slot name="head" />
 		<link rel='sitemap' href='/sitemap-index.xml' />
-		<script>
-		  // Apply saved/system theme early to avoid flash
-		  (function () {
-		    try {
-		      var root = document.documentElement;
-		      var saved = localStorage.getItem('theme');
-		      var theme = (saved === 'light' || saved === 'dark')
-		        ? saved
-		        : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-		      if (theme === 'light') {
-		        root.setAttribute('data-theme', 'light');
-		        root.classList.remove('dark');
-		      } else {
-		        root.removeAttribute('data-theme');
-		        root.classList.add('dark');
-		      }
-		    } catch (_) { /* no-op */ }
-		  })();
-		</script>
 	</head>
 
         <body>

@@ -1,5 +1,6 @@
 ---
 import Container from './Container.astro';
+import GlassButton from './GlassButton.astro';
 import { Image } from 'astro:assets';
 import { ArrowRight } from 'lucide-astro';
 import profileImage from '../assets/images/profile.jpg';
@@ -28,14 +29,14 @@ import profileImage from '../assets/images/profile.jpg';
       Researcher specializing in Large Language Models, reasoning, and prompt engineering.
     </p>
     <div class='mt-2 flex flex-wrap gap-3 items-center justify-center md:justify-start'>
-      <a href='/projects' class='inline-flex items-center gap-2 rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>
+      <GlassButton href='/projects' variant='primary' size='lg'>
         View projects
         <ArrowRight class='h-4 w-4' aria-hidden='true' />
-      </a>
-      <a href='/blog' class='inline-flex items-center gap-2 rounded-md border border-input bg-transparent px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors'>
+      </GlassButton>
+      <GlassButton href='/blog' variant='secondary' size='lg'>
         Read the blog
         <ArrowRight class='h-4 w-4' aria-hidden='true' />
-      </a>
+      </GlassButton>
     </div>
   </div>
   <div class='relative'>

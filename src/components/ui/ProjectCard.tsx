@@ -1,7 +1,8 @@
-import type { Project } from '../../types';
-import { Card } from './card';
+import { ArrowUpRight, Calendar, ExternalLink, FolderOpen, Star, Users } from 'lucide-react';
+
 import { Badge } from './badge';
-import { ExternalLink, ArrowUpRight } from 'lucide-react';
+import { Card } from './card';
+import type { Project } from '../../types';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -38,15 +39,17 @@ function typeAccentVar(type?: string) {
 
 export default function ProjectCard({ item, featured = false }: { item: Project; featured?: boolean }) {
   return (
-    <Card className={`p-4 md:p-5 h-full flex flex-col hover-card ${featured ? 'card-featured' : ''}`}>
+    <Card className={`p-4 md:p-5 h-full flex flex-col project-card ${featured ? 'card-featured' : ''}`}>
       <div className="flex items-start justify-between gap-3">
-        <h3 className="text-base md:text-lg font-semibold leading-snug">
-          {item.title}
-        </h3>
-        <div className="flex items-center gap-2">
+        <div className="flex items-start gap-2 flex-1 min-w-0">
+          <h3 className="text-base md:text-lg font-semibold leading-snug flex-1">
+            {item.title}
+          </h3>
+        </div>
+        <div className="flex items-center gap-2 flex-wrap">
           {item.type ? (
             <Badge
-              className="text-xs whitespace-nowrap"
+              className="text-xs whitespace-nowrap inline-flex items-center gap-1"
               style={{
                 color: typeAccentVar(item.type),
                 borderColor: `color-mix(in oklab, ${typeAccentVar(item.type)} 55%, transparent)`,
@@ -54,17 +57,31 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
               }}
               title={item.type}
             >
+              <Star size={10} aria-hidden="true" className="icon-bounce" />
               {toTitleCase(item.type)}
             </Badge>
           ) : null}
-          <Badge className="text-xs whitespace-nowrap" variant="outline">{item.year}</Badge>
+          <Badge className="text-xs whitespace-nowrap inline-flex items-center gap-1" variant="outline">
+            <Calendar size={10} aria-hidden="true" className="icon-bounce" />
+            {item.year}
+          </Badge>
         </div>
       </div>
       {item.role || item.collaborators ? (
-        <p className="mt-1 text-xs md:text-sm text-[color:var(--white)]/70">
-          {item.role ? <span className="mr-2">{item.role}</span> : null}
-          {item.collaborators ? <span className="opacity-80">• {item.collaborators}</span> : null}
-        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-3 text-xs md:text-sm text-[color:var(--white)]/70">
+          {item.role ? (
+            <div className="flex items-center gap-1.5">
+              <Users size={12} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
+              <span>{item.role}</span>
+            </div>
+          ) : null}
+          {item.collaborators ? (
+            <div className="flex items-center gap-1.5">
+              <Users size={12} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
+              <span className="opacity-80">{item.collaborators}</span>
+            </div>
+          ) : null}
+        </div>
       ) : null}
       <p className="mt-3 text-sm text-[color:var(--white)]/85">{item.summary}</p>
       {item.tags?.length ? (
@@ -100,7 +117,7 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
                 }}
                 aria-label={l.label}
               >
-                <span title={isExternal ? "External link" : "Internal link"} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <span title={isExternal ? "External link" : "Internal link"} className="icon-bounce transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
                 </span>
                 <span>{l.label}</span>

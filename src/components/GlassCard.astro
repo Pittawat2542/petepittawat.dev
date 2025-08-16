@@ -2,9 +2,26 @@
 import type { HTMLAttributes } from 'astro/types';
 interface Props extends HTMLAttributes<'section'> {
   class?: string;
+  variant?: 'default' | 'elevated' | 'premium' | 'glow';
+  animated?: boolean;
 }
-const { class: className, ...rest } = Astro.props as Props;
+const { class: className, variant = 'default', animated = false, ...rest } = Astro.props as Props;
+
+const getVariantClasses = (variant: 'default' | 'elevated' | 'premium' | 'glow', animated: boolean) => {
+  const baseClasses = 'rounded-2xl text-card-foreground transition-all duration-300 ease-in-out p-6 md:p-8';
+  
+  const variantClasses = {
+    default: 'glass-card',
+    elevated: 'glass-surface-elevated',
+    premium: 'glass-surface-premium',
+    glow: 'glass-card glass-glow'
+  } as const;
+  
+  const animatedClass = animated ? 'glass-border-animated' : '';
+  
+  return `${baseClasses} ${variantClasses[variant]} ${animatedClass}`;
+};
 ---
-<section {...rest} class={`rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm transition-all duration-300 ease-in-out p-6 md:p-8 ${className ?? ''}`}>
+<section {...rest} class={`${getVariantClasses(variant, animated)} ${className ?? ''}`}>
   <slot />
 </section>

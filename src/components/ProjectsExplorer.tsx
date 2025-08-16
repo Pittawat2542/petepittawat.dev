@@ -24,13 +24,16 @@ export default function ProjectsExplorer({ items }: Props) {
         setFilters={setFilters}
         filterOptions={filterOptions}
         placeholder="Search title, summary, collaborators..."
+        filteredCount={filtered.length}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filtered
           .slice()
           .sort((a, b) => b.year - a.year)
           .map((item, i) => (
-            <ProjectCard key={`${item.title}-${item.year}`} item={item} />
+            <div key={`${item.title}-${item.year}`} className="stagger-fade-in" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+              <ProjectCard item={item} />
+            </div>
           ))}
         {!filtered.length && (
           <p className="text-sm text-[color:var(--white)]/60">No results.</p>
