@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type React from 'react';
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from './ui/dialog';
 import SearchInput from './ui/SearchInput';
 import { Badge } from './ui/badge';
 import { cn } from '../lib/utils';
-import { Command, Search as SearchIcon, ExternalLink, BookText, FolderKanban, ScrollText, Mic, Home } from 'lucide-react';
+import { Command, Search as SearchIcon, ExternalLink, BookText, FolderKanban, ScrollText, Mic, Home, CornerDownLeft, Clock } from 'lucide-react';
 
 type Item = {
   id: string;
@@ -31,6 +31,14 @@ function typeColor(type: Item['type']) {
       return 'bg-muted text-muted-foreground';
   }
 }
+
+const typeIcon: Record<Item['type'], React.ElementType> = {
+  blog: BookText,
+  project: FolderKanban,
+  publication: ScrollText,
+  talk: Mic,
+  page: Home,
+};
 
 type MatchResult = {
   item: Item;
@@ -144,6 +152,7 @@ export default function SearchModal() {
   const listRef = useRef<HTMLUListElement | null>(null);
   const [active, setActive] = useState(0);
   const [typeFilter, setTypeFilter] = useState<Set<Item['type']>>(new Set(['blog','project','publication','talk','page']));
+  const [recent, setRecent] = useState<string[]>([]);
 
   // Load index on first open
   useEffect(() => {
@@ -172,6 +181,25 @@ export default function SearchModal() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
+
+  // Load recent searches when modal opens (client-only)
+  useEffect(() => {
+    if (!open) return;
+    try {
+      const raw = localStorage.getItem('recent-searches');
+      if (raw) setRecent(JSON.parse(raw));
+    } catch {}
+  }, [open]);
+
+  const saveRecent = (query: string) => {
+    const t = query.trim();
+    if (!t) return;
+    const next = [t, ...recent.filter((x) => x.toLowerCase() !== t.toLowerCase())].slice(0, 6);
+    setRecent(next);
+    try {
+      localStorage.setItem('recent-searches', JSON.stringify(next));
+    } catch {}
+  };
 
   // Compute filtered results early so effects can depend on it safely
   const filtered = useMemo(() => {
@@ -207,6 +235,7 @@ export default function SearchModal() {
       if (key === 'Enter') {
         const it: any = results[active];
         if (it) {
+          saveRecent(q);
           if (e.metaKey || e.ctrlKey) window.open(it.url, '_blank');
           else window.location.assign(it.url);
         }
@@ -276,21 +305,33 @@ export default function SearchModal() {
           <SearchIcon size={18} className="opacity-90" />
         </button>
       </DialogTrigger>
-      <DialogContent className="w-[min(56rem,92vw)] p-0 overflow-hidden">
-        <div className="p-4 border-b border-border">
-          <SearchInput
-            value={q}
-            onChange={setQ}
-            placeholder="Search posts, projects, publications, talks..."
-            ariaLabel="Universal search"
-            size="lg"
-          />
-          <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+      <DialogContent className="max-w-none w-[min(72rem,92vw)] p-0 overflow-hidden">
+        <div className="p-4 md:p-5 lg:p-6 border-b border-border">
+          <div className="flex items-center gap-2">
+            <div className="flex-1">
+              <SearchInput
+                value={q}
+                onChange={setQ}
+                placeholder="Search posts, projects, publications, talks..."
+                ariaLabel="Universal search"
+                size="lg"
+              />
+            </div>
+            <DialogClose
+              className="shrink-0 inline-flex items-center justify-center rounded-full p-2 text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              aria-label="Close search"
+              title="Close"
+            >
+              <span className="sr-only">Close</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </DialogClose>
+          </div>
+          <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground" aria-live="polite">
             <div className="flex items-center gap-1.5">
               <span className="hidden sm:inline">Navigate with</span>
               <kbd className="rounded border px-1 py-0.5">↑</kbd>
               <kbd className="rounded border px-1 py-0.5">↓</kbd>
-              <span>Enter</span>
+              <span className="inline-flex items-center gap-1"><CornerDownLeft size={12} /> Enter</span>
               <span className="hidden sm:inline">• Esc to close</span>
             </div>
             <div>{filtered.length} results</div>
@@ -323,8 +364,35 @@ export default function SearchModal() {
               </button>
             ))}
           </div>
+          {open && loaded && q.trim() === '' && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {recent.length > 0 && (
+                <>
+                  <span className="inline-flex items-center gap-1 text-xs text-muted-foreground"><Clock size={12} /> Recent:</span>
+                  {recent.map((r) => (
+                    <button
+                      key={r}
+                      className="text-xs rounded-full px-3 py-1 border border-white/10 hover:bg-white/5"
+                      onClick={() => setQ(r)}
+                      aria-label={`Use recent search ${r}`}
+                    >
+                      {r}
+                    </button>
+                  ))}
+                  <button
+                    className="ml-1 text-[11px] text-muted-foreground hover:text-foreground underline decoration-dotted"
+                    onClick={() => { setRecent([]); localStorage.removeItem('recent-searches'); }}
+                    aria-label="Clear recent searches"
+                  >Clear</button>
+                </>
+              )}
+            </div>
+          )}
         </div>
-        <div className="max-h-[60vh] overflow-y-auto p-2">
+        <div className="relative max-h-[60vh] overflow-y-auto p-3 md:p-4">
+          {/* top/bottom scroll shadows */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-3 bg-gradient-to-b from-card/80 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3 bg-gradient-to-t from-card/80 to-transparent" />
           {!loaded && (
             <ul className="divide-y divide-border animate-pulse">
               {Array.from({ length: 6 }).map((_, i) => (
@@ -335,7 +403,17 @@ export default function SearchModal() {
               ))}
             </ul>
           )}
-          {loaded && filtered.length === 0 && (
+          {loaded && q.trim() === '' && (
+            <div className="px-3 py-8 text-sm text-muted-foreground">
+              <p className="mb-3">Start typing to search across the site, or explore:</p>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.map((s) => (
+                  <a key={s.id} href={s.url} className="rounded-full px-3 py-1 border border-white/10 hover:bg-white/5">{s.title}</a>
+                ))}
+              </div>
+            </div>
+          )}
+          {loaded && q.trim() !== '' && filtered.length === 0 && (
             <div className="px-3 py-4 text-sm text-muted-foreground">
               <p className="mb-2">No results. Try a different query or explore:</p>
               <div className="flex flex-wrap gap-2">
@@ -345,7 +423,7 @@ export default function SearchModal() {
               </div>
             </div>
           )}
-          {loaded && filtered.length > 0 && (
+          {loaded && q.trim() !== '' && filtered.length > 0 && (
             <ul ref={listRef} className="divide-y divide-border" role="listbox" aria-activedescendant={`sr-${active}`}>
               {filtered.slice(0, 50).map((it: any, idx: number) => (
                 <li id={`sr-${idx}`} key={it.id} role="option" aria-selected={idx === active} className={cn(idx === active && 'bg-white/10')}>
@@ -355,9 +433,15 @@ export default function SearchModal() {
                       'flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40'
                     )}
-                    onClick={() => setOpen(false)}
+                    onClick={() => { saveRecent(q); setOpen(false); }}
                   >
-                    <div className="pt-0.5">
+                    <div className="pt-0.5 flex items-center gap-2 min-w-[7rem]">
+                      <div className={cn('rounded-md p-1.5 border border-white/10', typeColor(it.type))}>
+                        {(() => {
+                          const Icon = typeIcon[it.type as Item['type']];
+                          return <Icon size={14} />;
+                        })()}
+                      </div>
                       <Badge className={cn('capitalize', typeColor(it.type))}>{it.type}</Badge>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -378,7 +462,15 @@ export default function SearchModal() {
                         </div>
                       )}
                     </div>
-                    <ExternalLink size={14} className="mt-1 opacity-60" />
+                    <div className="mt-1 flex items-center gap-2 text-[11px] text-muted-foreground">
+                      {idx === active && (
+                        <>
+                          <span className="hidden sm:inline-flex items-center gap-1"><CornerDownLeft size={12} /> Open</span>
+                          <span className="hidden lg:inline-flex items-center gap-1"><Command size={12} /> + Enter new tab</span>
+                        </>
+                      )}
+                      <ExternalLink size={14} className="opacity-60" />
+                    </div>
                   </a>
                 </li>
               ))}

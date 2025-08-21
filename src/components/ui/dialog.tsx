@@ -12,11 +12,15 @@ const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={cn('fixed inset-0 z-50 bg-black/60 backdrop-blur-sm', className)}
-    {...props}
-  />
+  <DialogPrimitive.Close asChild>
+    <DialogPrimitive.Overlay
+      ref={ref}
+      className={cn('fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm', className)}
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => e.stopPropagation()}
+      {...props}
+    />
+  </DialogPrimitive.Close>
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
@@ -36,18 +40,11 @@ const DialogContent = React.forwardRef<
         'focus-visible:outline-none',
         className
       )}
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => e.stopPropagation()}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close
-        className={cn(
-          'absolute right-4 top-4 rounded-md opacity-70 ring-offset-background transition-opacity',
-          'hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
-        )}
-        aria-label="Close"
-      >
-        <X size={16} aria-hidden="true" />
-      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));

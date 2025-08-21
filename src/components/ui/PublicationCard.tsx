@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { highlightAuthorNames, isFirstAuthor } from '../../lib';
 import { FIRST_AUTHOR_TITLE } from '../../lib/constants';
 import type { Publication } from '../../types';
 import { Card } from './card';
+import { Dialog, DialogContent, DialogClose } from './dialog';
 import { Badge } from './badge';
 import { ExternalLink, ArrowUpRight, Code2, Database, Video, X, Building2, CalendarDays } from 'lucide-react';
 import Tooltip from './tooltip';
@@ -234,37 +234,26 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
         ) : null}
       </div>
       
-      {/* Modal with full details (rendered in a portal to avoid stacking/containment issues) */}
-      {open
-        ? createPortal(
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby={detailsId}
-              className="fixed inset-0 z-[1000] flex items-start sm:items-center justify-center p-4 overflow-y-auto"
-            >
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
-              <div className="relative z-[1010] w-full max-w-3xl my-6" onClick={(e) => e.stopPropagation()}>
-                <Card
-                  className="modal-card p-5 md:p-6 flex flex-col max-h-[85vh] overflow-hidden"
-                  style={{
-                    backgroundColor: 'color-mix(in oklab, var(--black) 84%, transparent)'
-                  }}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 id={detailsId} className="text-lg md:text-xl font-semibold leading-snug">
-                      {item.title}
-                    </h3>
-                    <button
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all"
-                      onClick={() => setOpen(false)}
-                      aria-label="Close details"
-                      title="Close"
-                    >
-                      <X size={14} aria-hidden="true" />
-                      Close
-                    </button>
-                  </div>
+      {/* Modal with full details (Radix Dialog for consistency) */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-none w-[min(48rem,94vw)] p-0 overflow-hidden">
+          <Card
+            className="modal-card p-5 md:p-6 flex flex-col max-h-[85vh] overflow-hidden"
+            style={{ backgroundColor: 'color-mix(in oklab, var(--black) 84%, transparent)' }}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <h3 id={detailsId} className="text-lg md:text-xl font-semibold leading-snug">
+                {item.title}
+              </h3>
+              <DialogClose
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all"
+                aria-label="Close details"
+                title="Close"
+              >
+                <X size={14} aria-hidden="true" />
+                Close
+              </DialogClose>
+            </div>
                   <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightAuthorNames(item.authors)}</p>
                   <p className="mt-2 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
                     {item.type ? (
@@ -390,12 +379,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                       </div>
                     ) : null}
                   </div>
-                </Card>
-              </div>
-            </div>,
-            document.body
-          )
-        : null}
+          </Card>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
