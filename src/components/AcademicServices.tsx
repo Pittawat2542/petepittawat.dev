@@ -1,5 +1,4 @@
 import { Building2, Calendar, ExternalLink } from 'lucide-react';
-import type React from 'react';
 
 type ServiceItem = {
   venue: string;
@@ -75,4 +74,3 @@ export default function AcademicServices({ data }: Props) {
     </section>
   );
 }
-

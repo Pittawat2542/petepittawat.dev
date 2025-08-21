@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import SelectionItem from './SelectionItem';
@@ -10,7 +10,7 @@ import {
   DropdownMenuRadioItem,
 } from './dropdown-menu';
 
-export type SelectorOption = { value: string; label: string; count?: number; icon?: React.ReactNode };
+export type SelectorOption = { value: string; label: string; count?: number; icon?: ReactNode };
 
 type SelectorProps = {
   label?: string;

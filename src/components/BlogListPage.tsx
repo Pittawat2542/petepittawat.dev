@@ -48,18 +48,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                 } catch {}
         }, [q, sort, selectedTags, filters]);
 
-        function toggleTag(tag: string) {
-                if (tag === 'All') {
-                        setSelectedTags(new Set());
-                        return;
-                }
-                setSelectedTags((prev) => {
-                        const next = new Set(prev);
-                        if (next.has(tag)) next.delete(tag);
-                        else next.add(tag);
-                        return next;
-                });
-        }
+        // tag toggle handled inline in FilterPanel via onTagsChange
 
         const filteredPosts = useMemo(() => {
                 const qLower = q.trim().toLowerCase();

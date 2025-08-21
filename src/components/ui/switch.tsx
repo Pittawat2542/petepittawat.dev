@@ -4,7 +4,7 @@ import { cn } from '../../lib/utils';
 
 export interface SwitchProps extends React.ComponentPropsWithoutRef<typeof RadixSwitch.Root> {}
 
-const Switch = React.forwardRef<React.ElementRef<typeof RadixSwitch.Root>, SwitchProps>(
+const Switch = React.forwardRef<React.ComponentRef<typeof RadixSwitch.Root>, SwitchProps>(
   ({ className, ...props }, ref) => (
     <RadixSwitch.Root
       ref={ref}
@@ -28,4 +28,3 @@ const Switch = React.forwardRef<React.ElementRef<typeof RadixSwitch.Root>, Switc
 Switch.displayName = 'Switch';
 
 export { Switch };
-

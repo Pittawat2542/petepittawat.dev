@@ -1,4 +1,4 @@
-import { Calendar, Clock, Code2, ExternalLink, FileText, MapPin, Presentation, Users, Video } from 'lucide-react';
+import { Calendar, Code2, ExternalLink, FileText, MapPin, Users, Video } from 'lucide-react';
 
 import { Badge } from './badge';
 import { Card } from './card';

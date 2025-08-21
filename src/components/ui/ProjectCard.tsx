@@ -1,4 +1,4 @@
-import { ArrowUpRight, Calendar, ExternalLink, FolderOpen, Star, Users } from 'lucide-react';
+import { ArrowUpRight, Calendar, ExternalLink, Star, Users } from 'lucide-react';
 
 import { Badge } from './badge';
 import { Card } from './card';

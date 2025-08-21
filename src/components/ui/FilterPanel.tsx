@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SlidersHorizontal } from 'lucide-react';
 import SearchInput from './SearchInput';
 import FilterChip from './FilterChip';

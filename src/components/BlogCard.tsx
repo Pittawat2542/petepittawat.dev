@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Calendar, Clock } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 
 import type { BlogPost } from '../types';
 
