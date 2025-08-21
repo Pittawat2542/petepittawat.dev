@@ -1,0 +1,23 @@
+{
+  "sections": [
+    {
+      "type": "conferences",
+      "label": "Conferences",
+      "items": [
+        { "venue": "ACL 2025 SRW", "year": 2025, "url": "https://acl2025-srw.github.io" },
+        { "venue": "ICIDS 2023", "year": 2023, "url": "https://icids2023.ardin.online" },
+        { "venue": "ACM FDG 2024", "year": 2024, "url": "https://fdg2024.org" },
+        { "venue": "IEEE ICCE 2024", "year": 2024, "url": "https://icce.org/2024/" },
+        { "venue": "IEEE CoG 2024", "year": 2024, "url": "https://2024.ieee-cog.org" }
+      ]
+    },
+    {
+      "type": "journals",
+      "label": "Journals",
+      "items": [
+        { "venue": "IEEE Transactions on Games (ToG)", "years": [2024, 2025], "url": "https://transactions.games" }
+      ]
+    }
+  ]
+}
+

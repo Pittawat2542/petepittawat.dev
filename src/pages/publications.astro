@@ -5,6 +5,8 @@ import Divider from '../components/Divider.astro';
 import PublicationsExplorer from '../components/PublicationsExplorer.tsx';
 import publications from '../content/publications/publications.json';
 import Prose from '../components/Prose.astro';
+import AcademicServices from '../components/AcademicServices.tsx';
+import academicServices from '../content/services/academic.json';
 ---
 
 <PageWithHero
@@ -18,23 +20,5 @@ import Prose from '../components/Prose.astro';
   containerClass="glass-section"
 >
   <PublicationsExplorer client:visible items={publications} />
-
-  <Fragment slot="after">
-  <Prose class='mx-auto max-w-4xl prose-a:text-[color:var(--accent-publications)] mt-8 max-w-none'>
-    <Divider />
-    <h1>Academic Services</h1>
-    <p>I'm servering/served as a reviewer at the following venues:</p>
-    <p>
-      Conferences: <a href='https://acl2025-srw.github.io' target='_blank'>ACL 2025 SRW</a>,
-      <a href='https://icids2023.ardin.online' target='_blank'>ICIDS 2023</a>,
-      <a href='https://fdg2024.org' target='_blank'>ACM FDG 2024</a>,
-      <a href='https://icce.org/2024/' target='_blank'>IEEE ICCE 2024</a>, and
-      <a href='https://2024.ieee-cog.org' target='_blank'>IEEE CoG 2024</a>
-    </p>
-    <p>
-      Journal: <a href='https://transactions.games' target='_blank'>IEEE ToG 2024 | 2025</a>.
-    </p>
-    <Divider />
-  </Prose>
-  </Fragment>
+  <AcademicServices client:visible data={academicServices} />
 </PageWithHero>
