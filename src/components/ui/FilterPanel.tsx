@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { ChevronDown, SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import SearchInput from './SearchInput';
 import FilterChip from './FilterChip';
 import GlassButton from './GlassButton';
+import Selector from './Selector';
+import { Calendar, Building2, Tags, User, Award, Code2, Database, Video, FileText, Presentation, Globe, ArrowUpAZ, ArrowDownAZ } from 'lucide-react';
 
 type FilterPanelProps = {
   // Search
@@ -123,26 +125,23 @@ export default function FilterPanel({
 
         {/* Sort and results info */}
         <div className="flex items-center gap-4">
-          {hasSort && (
+          {hasSort && sortValue !== undefined && onSortChange && (
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground whitespace-nowrap">Sort:</span>
-              <div className="relative">
-                <select
-                  value={sortValue}
-                  onChange={(e) => onSortChange?.(e.target.value)}
-                  className="glass-surface rounded-lg px-3 py-2 text-sm bg-transparent border-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 appearance-none pr-8 min-w-[100px]"
-                >
-                  {sortOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown 
-                  size={14} 
-                  className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 pointer-events-none" 
-                />
-              </div>
+              <Selector
+                value={sortValue}
+                onChange={onSortChange}
+                options={sortOptions.map(o => {
+                  const v = o.value;
+                  let icon: React.ReactNode | undefined;
+                  if (v.includes('newest') || v.includes('oldest')) icon = <Calendar size={14} />;
+                  else if (v.includes('title-az')) icon = <ArrowUpAZ size={14} />;
+                  else if (v.includes('title-za')) icon = <ArrowDownAZ size={14} />;
+                  else if (v.includes('venue-')) icon = <Building2 size={14} />;
+                  else if (v.includes('type')) icon = <FileText size={14} />;
+                  return { value: o.value, label: o.label, icon };
+                })}
+              />
             </div>
           )}
           
@@ -181,25 +180,52 @@ export default function FilterPanel({
               <div className="flex flex-wrap gap-2">
                 {Object.entries(filterOptions).map(([key, options]) => {
                   const selectedValue = filters[key] || 'all';
+                  const toTitle = (s: string) => s.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+                  const iconFor = (k: string, v: string) => {
+                    switch (k) {
+                      case 'year':
+                        return <Calendar size={14} />;
+                      case 'venue':
+                        return <Building2 size={14} />;
+                      case 'tag':
+                        return <Tags size={14} />;
+                      case 'authorship':
+                        return v === 'first-author' ? <Award size={14} /> : <User size={14} />;
+                      case 'resource':
+                        if (/code/.test(v)) return <Code2 size={14} />;
+                        if (/data/.test(v)) return <Database size={14} />;
+                        if (/video/.test(v)) return <Video size={14} />;
+                        if (/slides?/.test(v)) return <Presentation size={14} />;
+                        if (/paper|preprint|journal/.test(v)) return <FileText size={14} />;
+                        return <Globe size={14} />;
+                      case 'type':
+                        return <FileText size={14} />;
+                      case 'mode':
+                        return <Globe size={14} />;
+                      case 'audience':
+                        return <User size={14} />;
+                      case 'role':
+                        return <User size={14} />;
+                      case 'link':
+                        if (/github|code/.test(v)) return <Code2 size={14} />;
+                        if (/paper|journal|preprint/.test(v)) return <FileText size={14} />;
+                        return <Globe size={14} />;
+                      default:
+                        return undefined;
+                    }
+                  };
+                  const optObjects = [
+                    { value: 'all', label: `All ${toTitle(key)}s`, icon: iconFor(key, 'all') },
+                    ...options.map((o) => ({ value: o, label: toTitle(String(o)), icon: iconFor(key, String(o)) })),
+                  ];
                   return (
-                    <div key={key} className="relative min-w-[120px]">
+                    <div key={key} className="min-w-[180px]">
                       <label className="sr-only">Filter by {key}</label>
-                      <select
+                      <Selector
+                        label={`Filter by ${toTitle(key)}`}
                         value={selectedValue}
-                        onChange={(e) => onFiltersChange?.((f) => ({ ...f, [key]: e.target.value }))}
-                        className="glass-surface rounded-lg px-3 py-2 text-sm bg-transparent border-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 appearance-none pr-8 w-full"
-                        title={`Filter by ${key}`}
-                      >
-                        <option value="all">All {key}s</option>
-                        {options.map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown 
-                        size={14} 
-                        className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 pointer-events-none" 
+                        options={optObjects}
+                        onChange={(val) => onFiltersChange?.((f) => ({ ...f, [key]: val }))}
                       />
                     </div>
                   );

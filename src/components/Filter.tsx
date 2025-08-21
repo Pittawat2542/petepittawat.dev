@@ -8,6 +8,10 @@ type Props = {
   filterOptions: Record<string, string[]>;
   placeholder?: string;
   filteredCount?: number;
+  // Optional sorting controls
+  sortOptions?: Array<{ value: string; label: string }>;
+  sortValue?: string;
+  onSortChange?: (value: string) => void;
 };
 
 export default function Filter({ 
@@ -17,7 +21,10 @@ export default function Filter({
   setFilters, 
   filterOptions, 
   placeholder = 'Search...', 
-  filteredCount 
+  filteredCount,
+  sortOptions,
+  sortValue,
+  onSortChange,
 }: Props) {
   return (
     <FilterPanel
@@ -28,6 +35,9 @@ export default function Filter({
       onFiltersChange={setFilters}
       filterOptions={filterOptions}
       filteredResults={filteredCount}
+      sortOptions={sortOptions}
+      sortValue={sortValue}
+      onSortChange={onSortChange}
       compact={false}
     />
   );

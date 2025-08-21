@@ -1,8 +1,11 @@
+import { useEffect, useMemo, useState } from 'react';
+
+import { FIRST_AUTHOR_TITLE } from '../lib/constants';
 import Filter from './Filter';
 import type { Publication } from '../types';
 import PublicationCard from './ui/PublicationCard';
+import { isFirstAuthor } from '../lib';
 import { useDataFilter } from '../lib/hooks';
-import { useEffect } from 'react';
 
 type Props = { items: Publication[] };
 
@@ -13,8 +16,40 @@ export default function PublicationsExplorer({ items }: Props) {
       type: (item) => item.type,
       year: (item) => item.year.toString(),
       tag: (item) => item.tags,
+      venue: (item) => item.venue,
+      authorship: (item) => {
+        const first = isFirstAuthor(item.authors);
+        const coFirst = item.title.trim() === FIRST_AUTHOR_TITLE;
+        return first ? 'first-author' : coFirst ? 'co-first-author' : 'author';
+      },
     },
   });
+
+  const [sort, setSort] = useState<'newest' | 'oldest' | 'title-az' | 'title-za' | 'venue-az' | 'venue-za' | 'type'>('newest');
+
+  const sortedFiltered = useMemo(() => {
+    const list = [...filtered];
+    list.sort((a, b) => {
+      switch (sort) {
+        case 'oldest':
+          return a.year - b.year || a.title.localeCompare(b.title);
+        case 'title-az':
+          return a.title.localeCompare(b.title);
+        case 'title-za':
+          return b.title.localeCompare(a.title);
+        case 'venue-az':
+          return (a.venue || '').localeCompare(b.venue || '') || a.title.localeCompare(b.title);
+        case 'venue-za':
+          return (b.venue || '').localeCompare(a.venue || '') || a.title.localeCompare(b.title);
+        case 'type':
+          return (a.type || '').localeCompare(b.type || '') || b.year - a.year;
+        case 'newest':
+        default:
+          return b.year - a.year || a.title.localeCompare(b.title);
+      }
+    });
+    return list;
+  }, [filtered, sort]);
 
   useEffect(() => {
     try {
@@ -35,15 +70,26 @@ export default function PublicationsExplorer({ items }: Props) {
         setFilters={setFilters}
         filterOptions={filterOptions}
         placeholder="Search title, authors, venue..."
-        filteredCount={filtered.length}
+        filteredCount={sortedFiltered.length}
+        sortOptions={[
+          { value: 'newest', label: 'Newest' },
+          { value: 'oldest', label: 'Oldest' },
+          { value: 'title-az', label: 'Title A→Z' },
+          { value: 'title-za', label: 'Title Z→A' },
+          { value: 'venue-az', label: 'Venue A→Z' },
+          { value: 'venue-za', label: 'Venue Z→A' },
+          { value: 'type', label: 'Type' },
+        ]}
+        sortValue={sort}
+        onSortChange={(v) => setSort(v as typeof sort)}
       />
       <div className="grid grid-cols-1 gap-3">
-        {filtered.map((item, i) => (
+        {sortedFiltered.map((item, i) => (
           <div id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
             <PublicationCard item={item} />
           </div>
         ))}
-        {!filtered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
+        {!sortedFiltered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>
     </div>
   );

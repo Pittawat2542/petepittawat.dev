@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+import Filter from './Filter';
+import type { Talk } from '../types';
 import TalkCard from './ui/TalkCard';
 import { useDataFilter } from '../lib/hooks';
-import type { Talk } from '../types';
-import Filter from './Filter';
 
 type Props = { items: Talk[] };
 
@@ -13,8 +14,11 @@ export default function TalksExplorer({ items }: Props) {
       mode: (item) => item.mode,
       year: (item) => new Date(item.date).getFullYear().toString(),
       tag: (item) => item.tags,
+      audience: (item) => item.audience,
     },
   });
+
+  const [sort, setSort] = useState<'newest' | 'oldest' | 'title-az' | 'title-za'>('newest');
 
   useEffect(() => {
     try {
@@ -25,10 +29,23 @@ export default function TalksExplorer({ items }: Props) {
   }, [setQ]);
 
   // Sort filtered items by date
-  const sortedFiltered = useMemo(() => 
-    [...filtered].sort((a, b) => +new Date(b.date) - +new Date(a.date)),
-    [filtered]
-  );
+  const sortedFiltered = useMemo(() => {
+    const list = [...filtered];
+    list.sort((a, b) => {
+      switch (sort) {
+        case 'oldest':
+          return +new Date(a.date) - +new Date(b.date) || a.title.localeCompare(b.title);
+        case 'title-az':
+          return a.title.localeCompare(b.title);
+        case 'title-za':
+          return b.title.localeCompare(a.title);
+        case 'newest':
+        default:
+          return +new Date(b.date) - +new Date(a.date) || a.title.localeCompare(b.title);
+      }
+    });
+    return list;
+  }, [filtered, sort]);
 
   const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -42,6 +59,14 @@ export default function TalksExplorer({ items }: Props) {
         filterOptions={filterOptions}
         placeholder="Search title, audience..."
         filteredCount={sortedFiltered.length}
+        sortOptions={[
+          { value: 'newest', label: 'Newest' },
+          { value: 'oldest', label: 'Oldest' },
+          { value: 'title-az', label: 'Title A→Z' },
+          { value: 'title-za', label: 'Title Z→A' },
+        ]}
+        sortValue={sort}
+        onSortChange={(v) => setSort(v as typeof sort)}
       />
       <div className="grid gap-3">
         {sortedFiltered.map((item, i) => (

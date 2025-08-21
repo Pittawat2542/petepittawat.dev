@@ -46,12 +46,22 @@ DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayNam
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+>(({ className, sideOffset = 4, side = 'bottom', align = 'start', avoidCollisions = false, style, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={cn('z-50 min-w-[10rem] overflow-hidden rounded-md border bg-popover glass-card p-1 text-popover-foreground shadow-md', className)}
+      side={side}
+      align={align}
+      avoidCollisions={avoidCollisions}
+      collisionPadding={8}
+      className={cn('z-50 min-w-[10rem] w-auto overflow-hidden rounded-md border bg-popover glass-card p-1 text-popover-foreground shadow-md', className)}
+      style={{
+        maxHeight: 'min(60vh, var(--radix-popper-available-height))',
+        maxWidth: 'min(32rem, var(--radix-popper-available-width))',
+        overflowY: 'auto',
+        ...style,
+      }}
       {...props}
     />
   </DropdownMenuPrimitive.Portal>
@@ -101,12 +111,9 @@ const DropdownMenuRadioItem = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
-    className={cn('relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground', className)}
+    className={cn('relative flex cursor-default select-none items-center rounded-sm px-1 py-0.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground', className)}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <Dot className="h-3.5 w-3.5" aria-hidden="true" />
-    </span>
     {children}
   </DropdownMenuPrimitive.RadioItem>
 ));

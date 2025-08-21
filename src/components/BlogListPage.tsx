@@ -13,6 +13,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
         const [q, setQ] = useState('');
         const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
         const [sort, setSort] = useState<'newest' | 'oldest'>('newest');
+        const [filters, setFilters] = useState<Record<string, string>>({});
 
         // Initialize from URL ?tag=foo&tag=bar
         useEffect(() => {
@@ -26,6 +27,8 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         if (qParam) setQ(qParam);
                         const sParam = params.get('sort');
                         if (sParam === 'oldest' || sParam === 'newest') setSort(sParam);
+                        const yearParam = params.get('year');
+                        if (yearParam) setFilters((f) => ({ ...f, year: yearParam }));
                 } catch {}
         }, []);
 
@@ -38,11 +41,12 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         if (selectedTags.size) {
                                 for (const t of Array.from(selectedTags).sort()) params.append('tag', t);
                         }
+                        if (filters.year && filters.year !== 'all') params.set('year', filters.year);
                         const query = params.toString();
                         const url = query ? `?${query}` : window.location.pathname;
                         window.history.replaceState({}, '', url);
                 } catch {}
-        }, [q, sort, selectedTags]);
+        }, [q, sort, selectedTags, filters]);
 
         function toggleTag(tag: string) {
                 if (tag === 'All') {
@@ -70,6 +74,11 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 const hasAny = post.data.tags.some((t) => selectedTags.has(t));
                                 if (!hasAny) return false;
                         }
+                        // Year filter
+                        if (filters.year && filters.year !== 'all') {
+                                const y = new Date(post.data.pubDate).getFullYear().toString();
+                                if (y !== filters.year) return false;
+                        }
                         return true;
                 });
                 // Sort
@@ -93,12 +102,21 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                 return counts;
         }, [posts, tags]);
 
+        // Prepare year filter options
+        const yearOptions = useMemo(() => {
+                const years = Array.from(new Set(posts.map(p => new Date(p.data.pubDate).getFullYear().toString()))).sort().reverse();
+                return { year: years } as Record<string, string[]>;
+        }, [posts]);
+
        return (
                <section className='flex w-full flex-col'>
                         <FilterPanel
                                 searchValue={q}
                                 onSearchChange={setQ}
                                 searchPlaceholder='Search title, excerpt, or tags...'
+                                filters={filters}
+                                onFiltersChange={setFilters}
+                                filterOptions={yearOptions}
                                 availableTags={tags}
                                 selectedTags={selectedTags}
                                 onTagsChange={setSelectedTags}
