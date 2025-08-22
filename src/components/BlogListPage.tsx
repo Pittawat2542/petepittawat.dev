@@ -156,7 +156,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 filteredResults={filteredPosts.length}
                                 compact={true}
                         />
-                       <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
+                       <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5 md:gap-8 py-3 md:py-4 mt-2 md:mt-4 w-full'>
                                 {pagePosts.map((post, index) => (
                                   <div key={post.slug} className="stagger-fade-in" style={{ animationDelay: `${Math.min(index * 100, 800)}ms` }}>
                                     <BlogCard post={post} />

@@ -19,11 +19,11 @@ const isActive = (href: string) =>
 ---
 
 <header class="fixed inset-x-0 z-50" style="top: max(env(safe-area-inset-top), 1rem)">
-  <div class="mx-auto w-fit max-w-[min(92vw,72rem)]">
-    <div class="relative inline-flex rounded-full p-[1px]
+  <div class="mx-auto w-full md:w-fit max-w-[min(92vw,72rem)]">
+    <div class="relative block md:inline-flex w-full md:w-auto rounded-full p-[1px]
                 bg-gradient-to-r from-[color:var(--white)]/15 via-transparent to-[color:var(--white)]/15">
       <nav id="site-nav" aria-label="Primary"
-           class="inline-flex items-center gap-1 rounded-[inherit] border border-transparent
+           class="flex w-full items-center justify-between md:justify-start gap-1 rounded-[inherit] border border-transparent
                   bg-transparent supports-[backdrop-filter]:bg-transparent
                   backdrop-blur-none shadow-none
                   transition-[background-color,box-shadow,transform,border-color] duration-300 ease-out
@@ -43,7 +43,8 @@ const isActive = (href: string) =>
           </span>
         </a>
 
-        <ul class="ml-3 sm:ml-4 md:ml-6 flex items-center gap-1">
+        <!-- Desktop nav -->
+        <ul class="ml-3 sm:ml-4 md:ml-6 hidden md:flex items-center gap-1">
           {links.map(({ href, label }) => (
             <li>
               <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label} class="snap-start nav-link">
@@ -53,23 +54,91 @@ const isActive = (href: string) =>
           ))}
         </ul>
 
-        <div class="ml-2 md:ml-3">
+        <!-- Actions -->
+        <div class="ml-2 md:ml-3 flex items-center gap-1">
           <SearchModal client:idle />
+          <!-- Mobile menu toggle -->
+          <button id="menu-toggle"
+                  class="md:hidden inline-flex items-center justify-center rounded-full p-2 text-[color:var(--white)]/85
+                         hover:text-[color:var(--white)] hover:bg-[color:var(--white)]/5 transition-colors
+                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
+                  aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </div>
 
       </nav>
+
+      <!-- Mobile menu panel -->
+      <div id="mobile-menu"
+           class="md:hidden pointer-events-none absolute left-1/2 top-full z-40 w-[min(92vw,72rem)] -translate-x-1/2 pt-2 opacity-0
+                  transition-opacity duration-200 ease-out">
+        <div class="rounded-2xl border border-[color:var(--white)]/10 shadow-xl shadow-black/10
+                    bg-[color:var(--black-nav)]/80 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/60 backdrop-blur-md">
+          <ul class="py-1">
+            {links.map(({ href, label }) => (
+              <li>
+                <a href={href}
+                   class="block px-3 py-3 text-sm font-medium text-[color:var(--white)]/85 hover:text-[color:var(--white)]
+                          hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
+                          focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 min-h-[44px]"
+                   aria-current={isActive(href) ? 'page' : undefined}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </header>
 
 <script is:inline>
   const nav = document.getElementById('site-nav');
+  const menu = document.getElementById('mobile-menu');
+  const toggle = document.getElementById('menu-toggle');
   const onScroll = () => {
     if (!nav) return;
     nav.dataset.scrolled = window.scrollY > 6 ? 'true' : 'false';
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile menu toggle
+  const setMenuOpen = (open) => {
+    if (!menu || !toggle) return;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) {
+      menu.classList.remove('opacity-0', 'pointer-events-none');
+      menu.classList.add('opacity-100', 'pointer-events-auto');
+    } else {
+      menu.classList.add('opacity-0', 'pointer-events-none');
+      menu.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+  };
+  let isOpen = false;
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      setMenuOpen(isOpen);
+    });
+  }
+  // Close on navigation
+  if (menu) {
+    menu.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t && t.tagName === 'A') {
+        isOpen = false;
+        setMenuOpen(false);
+      }
+    });
+  }
 
   // Light prefetch of search index on intent (hover/focus/shortcut)
   // Keeps initial JS light (SearchModal hydrates on idle), but makes first open snappy.

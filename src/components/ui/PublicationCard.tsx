@@ -82,7 +82,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
       aria-controls={detailsId}
     >
       <div className="flex flex-col gap-3">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 min-w-0 overflow-x-hidden">
           <div className="min-w-0">
             <h3 className="text-base md:text-lg font-semibold leading-snug">
               {item.url ? (
@@ -177,7 +177,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 href={item.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words"
                 style={{
                   color: accent,
                   background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -207,7 +207,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   href={a.href}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noreferrer' : undefined}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words"
                   style={{
                     color: accent,
                     background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -249,6 +249,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all"
                 aria-label="Close details"
                 title="Close"
+                onClick={(e) => e.stopPropagation()}
               >
                 <X size={14} aria-hidden="true" />
                 Close
@@ -271,15 +272,17 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                     {item.venue ? (
                       <Tooltip content={item.venue}>
                         <span
-                          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium truncate max-w-full"
+                          className="inline-block rounded-lg px-2.5 py-1 text-xs font-medium max-w-full"
                           style={{
                             color: accent,
                             background: `color-mix(in oklab, ${accent} 10%, transparent)`,
                             border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
                           }}
                         >
-                          <Building2 size={14} aria-hidden="true" />
-                          <span className="truncate">{item.venue}</span>
+                          <span className="flex items-start gap-1.5 text-left">
+                            <Building2 size={14} aria-hidden="true" className="mt-0.5 shrink-0" />
+                            <span className="whitespace-normal break-words leading-snug">{item.venue}</span>
+                          </span>
                         </span>
                       </Tooltip>
                     ) : null}
@@ -323,7 +326,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                               href={item.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2"
+                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
                               style={{
                                 color: accent,
                                 background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -347,7 +350,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                               href={a.href}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2"
+                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
                               style={{
                                 color: accent,
                                 background: `color-mix(in oklab, ${accent} 14%, transparent)`,

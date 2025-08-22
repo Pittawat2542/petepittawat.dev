@@ -305,7 +305,7 @@ export default function SearchModal() {
           <SearchIcon size={18} className="opacity-90" />
         </button>
       </DialogTrigger>
-      <DialogContent className="max-w-none w-[min(72rem,92vw)] p-0 overflow-hidden">
+      <DialogContent className="max-w-none w-[min(72rem,92vw)] p-0 overflow-hidden top-[12vh] -translate-y-0 sm:top-1/2 sm:-translate-y-1/2">
         <div className="p-4 md:p-5 lg:p-6 border-b border-border">
           <div className="flex items-center gap-2">
             <div className="flex-1">
@@ -389,7 +389,7 @@ export default function SearchModal() {
             </div>
           )}
         </div>
-        <div className="relative max-h-[60vh] overflow-y-auto p-3 md:p-4">
+        <div className="relative max-h-[60dvh] md:max-h-[60vh] overflow-y-auto p-3 md:p-4">
           {/* top/bottom scroll shadows */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-3 bg-gradient-to-b from-card/80 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3 bg-gradient-to-t from-card/80 to-transparent" />

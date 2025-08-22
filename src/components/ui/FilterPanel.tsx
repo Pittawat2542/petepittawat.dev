@@ -131,13 +131,14 @@ export default function FilterPanel({
         </div>
 
         {/* Sort and results info */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           {hasSort && sortValue !== undefined && onSortChange && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <span className="text-sm text-muted-foreground whitespace-nowrap">Sort:</span>
               <Selector
                 value={sortValue}
                 onChange={onSortChange}
+                className="w-full sm:w-auto"
                 options={sortOptions.map(o => {
                   const v = o.value;
                   let icon: React.ReactNode | undefined;
@@ -153,7 +154,7 @@ export default function FilterPanel({
           )}
           
           {(totalResults !== undefined || filteredResults !== undefined) && (
-            <div className="text-sm text-muted-foreground whitespace-nowrap">
+            <div className="text-sm text-muted-foreground whitespace-nowrap w-full sm:w-auto">
               {filteredResults !== undefined 
                 ? `${filteredResults} ${filteredResults === 1 ? 'result' : 'results'}` 
                 : `${totalResults} total`
