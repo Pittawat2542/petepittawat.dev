@@ -28,6 +28,17 @@ const tags = [
     page: 'blog'
   }}
 >
+	<Fragment slot="head" />
+	<Fragment slot="after">
+		<!-- Actions under hero -->
+		<div class="-mt-4 mb-2 flex items-center justify-center">
+			<a href="/tags" class="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-[color:var(--accent)] bg-[color:var(--accent)]/[.12] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.18] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+				Browse tags
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+			</a>
+		</div>
+	</Fragment>
+
 	<BlogListPage client:visible posts={posts} tags={tags} />
 </PageWithHero>
 

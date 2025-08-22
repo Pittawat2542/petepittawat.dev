@@ -7,9 +7,10 @@ import FilterPanel from './ui/FilterPanel';
 type BlogListPageProps = {
   posts: BlogPost[];
   tags: string[];
+  initialTags?: string[]; // Optional: preselect tags when mounting (e.g., tag pages)
 };
 
-export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps>) {
+export default function BlogListPage({ posts, tags, initialTags }: Readonly<BlogListPageProps>) {
         const [q, setQ] = useState('');
         const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
         const [sort, setSort] = useState<'newest' | 'oldest'>('newest');
@@ -18,13 +19,15 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
         const [page, setPage] = useState<number>(1);
         const [loadingMore, setLoadingMore] = useState(false);
 
-        // Initialize from URL ?tag=foo&tag=bar
+        // Initialize from URL ?tag=foo&tag=bar or from initialTags
         useEffect(() => {
                 try {
                         const params = new URLSearchParams(window.location.search);
                         const urlTags = params.getAll('tag');
                         if (urlTags.length) {
                                 setSelectedTags(new Set(urlTags));
+                        } else if (initialTags && initialTags.length) {
+                                setSelectedTags(new Set(initialTags));
                         }
                         const qParam = params.get('q');
                         if (qParam) setQ(qParam);

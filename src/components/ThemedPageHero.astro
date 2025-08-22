@@ -36,6 +36,9 @@ const { title, subtitle, page } = Astro.props as { title: string; subtitle?: str
         {subtitle}
       </p>
     ) : null}
+    <div class="mt-5 md:mt-6 flex items-center justify-center gap-3">
+      <slot name="actions" />
+    </div>
   </div>
 </div>
 

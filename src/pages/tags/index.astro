@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import PageWithHero from '../../layouts/PageWithHero.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { slugifyTag } from '../../lib/slug';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const tagCounts = new Map<string, number>();
+for (const p of posts) {
+  for (const t of p.data.tags) tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+}
+const url = new URL(Astro.url, Astro.site);
+const sort = url.searchParams.get('sort') === 'count' ? 'count' : 'name';
+const tags = Array.from(tagCounts.entries()).sort((a, b) => {
+  if (sort === 'count') return b[1] - a[1] || a[0].localeCompare(b[0]);
+  return a[0].localeCompare(b[0]);
+});
+---
+
+<PageWithHero
+  title={`${SITE_TITLE} - Tags`}
+  description={SITE_DESCRIPTION}
+  hero={{
+    title: 'Tags',
+    subtitle: 'Browse articles by topic. Click a tag to see all related posts.',
+    page: 'blog'
+  }}
+>
+  <section class="mt-2 md:mt-4">
+    <div class="mb-4 flex items-center justify-center gap-2">
+      <a href="/tags?sort=name" aria-current={sort === 'name' ? 'page' : undefined}
+         class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium border border-white/10 text-white/90 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[active=true]:bg-white/10"
+         data-active={String(sort === 'name')}>Sort: Name</a>
+      <a href="/tags?sort=count" aria-current={sort === 'count' ? 'page' : undefined}
+         class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium border border-white/10 text-white/90 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[active=true]:bg-white/10"
+         data-active={String(sort === 'count')}>Sort: Count</a>
+    </div>
+    <ul class="flex flex-wrap gap-3 md:gap-4">
+      {tags.map(([name, count]) => (
+        <li>
+          <a
+            href={`/tags/${slugifyTag(name)}`}
+            class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm md:text-base font-medium text-[color:var(--accent)] bg-[color:var(--accent)]/[.10] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.16] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            #{name}
+            <span class="inline-flex items-center justify-center text-xs font-semibold px-2 py-0.5 rounded-full bg-white/10 text-white/80">{count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</PageWithHero>
