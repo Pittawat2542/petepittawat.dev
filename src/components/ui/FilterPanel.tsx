@@ -64,6 +64,11 @@ export default function FilterPanel({
   const hasActiveFilters = Object.values(filters).some(v => v !== 'all' && v !== '') || 
                           (selectedTags && selectedTags.size > 0);
 
+  const activeDropdownEntries = Object.entries(filters).filter(([, v]) => v !== 'all' && v !== '');
+  const activeTags = selectedTags ? Array.from(selectedTags) : [];
+
+  const activeCount = activeDropdownEntries.length + activeTags.length;
+
   const clearAllFilters = () => {
     if (onFiltersChange) {
       onFiltersChange(() => ({}));
@@ -117,7 +122,9 @@ export default function FilterPanel({
               <SlidersHorizontal size={16} />
               Filters
               {hasActiveFilters && (
-                <span className="bg-ring text-white rounded-full w-2 h-2 text-xs" />
+                <span className="ml-2 inline-flex items-center justify-center rounded-full bg-ring text-white text-[10px] leading-none min-w-[1.1rem] h-[1.1rem] px-1">
+                  {activeCount}
+                </span>
               )}
             </GlassButton>
           )}
@@ -155,6 +162,49 @@ export default function FilterPanel({
           )}
         </div>
       </div>
+
+      {/* Compact active filters summary row (when collapsed) */}
+      {compact && !showFilters && hasActiveFilters && (
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">Active filters</span>
+            <GlassButton
+              variant="ghost"
+              size="sm"
+              onClick={clearAllFilters}
+              className="text-xs"
+            >
+              Clear all
+            </GlassButton>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {activeDropdownEntries.map(([key, value]) => (
+              <FilterChip
+                key={`${key}-${value}`}
+                active
+                removable
+                onRemove={() => onFiltersChange?.((f) => { const n = { ...f }; delete n[key]; return n; })}
+                variant="default"
+                size="sm"
+              >
+                {`${key.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}: ${String(value).replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}`}
+              </FilterChip>
+            ))}
+            {activeTags.map((tag) => (
+              <FilterChip
+                key={`tag-${tag}`}
+                active
+                removable
+                onRemove={() => onTagsChange?.((prev) => { const next = new Set(prev); next.delete(tag); return next; })}
+                variant="accent"
+                size="sm"
+              >
+                {tag}
+              </FilterChip>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Expandable filters section */}
       {(showFilters && (hasDropdownFilters || hasTags || hasActiveFilters)) && (

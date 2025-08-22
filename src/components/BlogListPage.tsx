@@ -154,7 +154,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 sortValue={sort}
                                 onSortChange={(value) => setSort(value as 'newest' | 'oldest')}
                                 filteredResults={filteredPosts.length}
-                                compact={false}
+                                compact={true}
                         />
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
                                 {pagePosts.map((post, index) => (

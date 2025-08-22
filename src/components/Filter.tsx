@@ -38,7 +38,7 @@ export default function Filter({
       sortOptions={sortOptions}
       sortValue={sortValue}
       onSortChange={onSortChange}
-      compact={false}
+      compact={true}
     />
   );
 }
