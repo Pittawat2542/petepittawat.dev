@@ -45,6 +45,23 @@ const ogImage = Astro.site
                     { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
                   );
                   for (const el of document.querySelectorAll('.reveal')) io.observe(el);
+
+                  // Security: ensure rel for target=_blank links
+                  const fixExternalRel = () => {
+                    try {
+                      document.querySelectorAll('a[target="_blank"]').forEach((a) => {
+                        const current = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
+                        if (!current.includes('noopener')) current.push('noopener');
+                        if (!current.includes('noreferrer')) current.push('noreferrer');
+                        a.setAttribute('rel', current.join(' '));
+                      });
+                    } catch {}
+                  };
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', fixExternalRel);
+                  } else {
+                    fixExternalRel();
+                  }
                 </script>
         </body>
 </html>

@@ -3,7 +3,6 @@ import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
 import ReadingProgressBar from '../components/ReadingProgressBar.astro';
-import siteLogo from '../assets/images/logo.png';
 import { Image } from 'astro:assets';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
@@ -19,12 +18,7 @@ if (twitterHandle) {
 // Always include the site About page as a profile URL
 authorSameAs.push(authorUrl);
 
-const publisherUrl = Astro.site ? new URL('/', Astro.site).href : '/';
-const logoUrl = Astro.site ? new URL(siteLogo.src, Astro.site).href : siteLogo.src;
-const imageUrl = Astro.site
-  ? new URL(coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'), Astro.site).href
-  : (coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'));
-const pageUrl = Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog/${slug}/`;
+// Note: compute JSON-LD URLs inline to avoid unused-variable hints
 ---
 
 <BaseLayout
@@ -53,14 +47,18 @@ const pageUrl = Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog
   publisher: {
     "@type": "Organization",
     name: "PETEPITTAWAT.DEV",
-    url: publisherUrl,
+    url: (Astro.site ? new URL('/', Astro.site).href : '/'),
     logo: {
       "@type": "ImageObject",
-      url: logoUrl,
+      url: (Astro.site ? new URL('/favicon.svg', Astro.site).href : '/favicon.svg'),
     },
   },
-  image: imageUrl,
-  url: pageUrl,
+  image: (
+    Astro.site
+      ? new URL(coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'), Astro.site).href
+      : (coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'))
+  ),
+  url: (Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog/${slug}/`),
 })}
 		</script>
 	</Fragment>
@@ -133,10 +131,23 @@ const pageUrl = Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog
       pre.appendChild(btn);
     });
   };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupCopyButtons);
-  } else {
+  // Improve loading behavior for article images from Markdown
+  const improveImages = () => {
+    const imgs = document.querySelectorAll('article img');
+    imgs.forEach((img) => {
+      if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+      if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+      if (!img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'low');
+    });
+  };
+  const onReady = () => {
     setupCopyButtons();
+    improveImages();
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onReady);
+  } else {
+    onReady();
   }
 </script>
 
