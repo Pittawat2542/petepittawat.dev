@@ -23,6 +23,7 @@ export default function BlogCard({ post, featured = false }: Readonly<Props>) {
               height={post.data.coverImage.height}
               loading="lazy"
               decoding="async"
+              sizes="(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw"
               alt={post.data.title}
             />
           </div>

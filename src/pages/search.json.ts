@@ -1,4 +1,5 @@
 import type { APIContext } from 'astro';
+export const prerender = true;
 import { getCollection } from 'astro:content';
 import projects from '../content/projects/projects.json';
 import publications from '../content/publications/publications.json';

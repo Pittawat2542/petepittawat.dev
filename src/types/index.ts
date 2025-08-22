@@ -41,12 +41,7 @@ export type BlogPost = {
     excerpt: string;
     tags: string[];
     pubDate: Date;
-    coverImage?: {
-      src: string;
-      width: number;
-      height: number;
-      format: string;
-    };
+    coverImage?: import('astro').ImageMetadata;
   };
 };
 

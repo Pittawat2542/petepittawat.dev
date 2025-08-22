@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import BlogCard from './BlogCard';
 import type { BlogPost } from '../types';
@@ -14,6 +14,9 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
         const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
         const [sort, setSort] = useState<'newest' | 'oldest'>('newest');
         const [filters, setFilters] = useState<Record<string, string>>({});
+        const [per] = useState<number>(12);
+        const [page, setPage] = useState<number>(1);
+        const [loadingMore, setLoadingMore] = useState(false);
 
         // Initialize from URL ?tag=foo&tag=bar
         useEffect(() => {
@@ -29,6 +32,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         if (sParam === 'oldest' || sParam === 'newest') setSort(sParam);
                         const yearParam = params.get('year');
                         if (yearParam) setFilters((f) => ({ ...f, year: yearParam }));
+                        // no per/page in URL for pure infinite scroll
                 } catch {}
         }, []);
 
@@ -42,6 +46,7 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 for (const t of Array.from(selectedTags).sort()) params.append('tag', t);
                         }
                         if (filters.year && filters.year !== 'all') params.set('year', filters.year);
+                        // omit per/page from URL
                         const query = params.toString();
                         const url = query ? `?${query}` : window.location.pathname;
                         window.history.replaceState({}, '', url);
@@ -76,7 +81,39 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                         return sort === 'newest' ? -cmp : cmp;
                 });
                 return list;
-        }, [posts, q, selectedTags, sort]);
+        }, [posts, q, selectedTags, sort, filters]);
+
+        // Reset page when filters/search/sort change
+        useEffect(() => { setPage(1); }, [q, selectedTags, sort, filters]);
+
+        const visibleCount = Math.min(filteredPosts.length, per * page);
+        const pagePosts = useMemo(() => filteredPosts.slice(0, visibleCount), [filteredPosts, visibleCount]);
+
+        const loadNext = useCallback(() => {
+          if (loadingMore) return;
+          if (visibleCount >= filteredPosts.length) return;
+          setLoadingMore(true);
+          // Small delay lets skeletons render for perceived smoothness
+          setTimeout(() => {
+            setPage((p) => p + 1);
+            setLoadingMore(false);
+          }, 250);
+        }, [loadingMore, visibleCount, filteredPosts.length]);
+
+        // Lazy load next page when sentinel enters view
+        useEffect(() => {
+          const el = (document.getElementById('blog-sentinel')) as HTMLDivElement | null;
+          if (!el) return;
+          const io = new IntersectionObserver((entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                loadNext();
+              }
+            }
+          }, { rootMargin: '800px 0px' });
+          io.observe(el);
+          return () => io.disconnect();
+        }, [loadNext]);
 
         // Prepare tag counts
         const tagCounts = useMemo(() => {
@@ -120,12 +157,23 @@ export default function BlogListPage({ posts, tags }: Readonly<BlogListPageProps
                                 compact={false}
                         />
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-8 py-4 mt-4 w-full'>
-                                {filteredPosts.map((post, index) => (
+                                {pagePosts.map((post, index) => (
                                   <div key={post.slug} className="stagger-fade-in" style={{ animationDelay: `${Math.min(index * 100, 800)}ms` }}>
                                     <BlogCard post={post} />
                                   </div>
                                 ))}
+                                {loadingMore && (
+                                  Array.from({ length: Math.min(12, Math.max(0, filteredPosts.length - visibleCount)) }).map((_, i) => (
+                                    <li key={`skeleton-${i}`} className="rounded-2xl border border-border bg-card glass-card p-6 animate-pulse">
+                                      <div className="h-40 w-full bg-white/10 rounded-xl mb-4" />
+                                      <div className="h-6 w-3/4 bg-white/10 rounded mb-2" />
+                                      <div className="h-4 w-full bg-white/10 rounded mb-1" />
+                                      <div className="h-4 w-5/6 bg-white/10 rounded" />
+                                    </li>
+                                  ))
+                                )}
                         </ul>
+                        <div id="blog-sentinel" className="h-6 w-full" aria-hidden="true" />
                 </section>
         );
 }

@@ -54,7 +54,7 @@ const isActive = (href: string) =>
         </ul>
 
         <div class="ml-2 md:ml-3">
-          <SearchModal client:load />
+          <SearchModal client:idle />
         </div>
 
       </nav>
@@ -70,4 +70,29 @@ const isActive = (href: string) =>
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Light prefetch of search index on intent (hover/focus/shortcut)
+  // Keeps initial JS light (SearchModal hydrates on idle), but makes first open snappy.
+  let prefetched = false;
+  const prefetchSearch = () => {
+    if (prefetched) return;
+    prefetched = true;
+    try {
+      // Respect Data Saver
+      // @ts-ignore
+      if (navigator?.connection?.saveData) return;
+    } catch {}
+    try { fetch('/search.json').catch(() => {}); } catch {}
+  };
+  // Prefetch on pointer intent and focus of any search trigger
+  const triggers = document.querySelectorAll('button[aria-label="Open search"]');
+  triggers.forEach((t) => {
+    t.addEventListener('mouseenter', prefetchSearch, { once: true, passive: true });
+    t.addEventListener('focus', prefetchSearch, { once: true });
+    t.addEventListener('touchstart', prefetchSearch, { once: true, passive: true });
+  });
+  // Prefetch when user tries the shortcut early
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') prefetchSearch();
+  }, { passive: true });
 </script>

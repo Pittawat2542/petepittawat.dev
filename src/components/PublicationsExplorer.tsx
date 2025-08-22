@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { FIRST_AUTHOR_TITLE } from '../lib/constants';
 import Filter from './Filter';
@@ -26,6 +26,9 @@ export default function PublicationsExplorer({ items }: Props) {
   });
 
   const [sort, setSort] = useState<'newest' | 'oldest' | 'title-az' | 'title-za' | 'venue-az' | 'venue-za' | 'type'>('newest');
+  const [per] = useState<number>(12);
+  const [page, setPage] = useState<number>(1);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const sortedFiltered = useMemo(() => {
     const list = [...filtered];
@@ -51,6 +54,34 @@ export default function PublicationsExplorer({ items }: Props) {
     return list;
   }, [filtered, sort]);
 
+  // Reset page on search/filter/sort change
+  useEffect(() => { setPage(1); }, [q, filters, sort]);
+
+  const visibleCount = Math.min(sortedFiltered.length, per * page);
+  const paged = useMemo(() => sortedFiltered.slice(0, visibleCount), [sortedFiltered, visibleCount]);
+
+  const loadNext = useCallback(() => {
+    if (loadingMore) return;
+    if (visibleCount >= sortedFiltered.length) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      setPage((p) => p + 1);
+      setLoadingMore(false);
+    }, 250);
+  }, [loadingMore, visibleCount, sortedFiltered.length]);
+
+  useEffect(() => {
+    const el = document.getElementById('publications-sentinel');
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) loadNext();
+      }
+    }, { rootMargin: '800px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [loadNext]);
+
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -58,6 +89,19 @@ export default function PublicationsExplorer({ items }: Props) {
       if (qParam) setQ(qParam);
     } catch {}
   }, [setQ]);
+
+  // Pure infinite scroll: do not read per/page from URL
+
+  // Keep URL in sync (omit per/page)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams();
+      if (q.trim()) params.set('q', q.trim());
+      const query = params.toString();
+      const url = query ? `?${query}` : window.location.pathname;
+      window.history.replaceState({}, '', url);
+    } catch {}
+  }, [q]);
 
   const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -84,13 +128,19 @@ export default function PublicationsExplorer({ items }: Props) {
         onSortChange={(v) => setSort(v as typeof sort)}
       />
       <div className="grid grid-cols-1 gap-3">
-        {sortedFiltered.map((item, i) => (
+        {paged.map((item, i) => (
           <div id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
             <PublicationCard item={item} />
           </div>
         ))}
+        {loadingMore && (
+          Array.from({ length: Math.min(12, Math.max(0, sortedFiltered.length - visibleCount)) }).map((_, i) => (
+            <div key={`pub-skeleton-${i}`} className="p-4 md:p-5 glass-card rounded-2xl border border-border animate-pulse h-32" />
+          ))
+        )}
         {!sortedFiltered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>
+      <div id="publications-sentinel" className="h-6 w-full" aria-hidden="true" />
     </div>
   );
 }

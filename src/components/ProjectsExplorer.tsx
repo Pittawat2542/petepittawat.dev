@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Filter from './Filter';
 import type { Project } from '../types';
@@ -18,6 +18,9 @@ export default function ProjectsExplorer({ items }: Props) {
   });
 
   const [sort, setSort] = useState<'newest' | 'oldest' | 'title-az' | 'title-za'>('newest');
+  const [per] = useState<number>(12);
+  const [page, setPage] = useState<number>(1);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const sortedFiltered = useMemo(() => {
     const list = [...filtered];
@@ -42,10 +45,50 @@ export default function ProjectsExplorer({ items }: Props) {
       const params = new URLSearchParams(window.location.search);
       const qParam = params.get('q');
       if (qParam) setQ(qParam);
+      // omit per/page from URL for pure infinite scroll
     } catch {}
   }, [setQ]);
 
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams();
+      if (q.trim()) params.set('q', q.trim());
+      const query = params.toString();
+      const url = query ? `?${query}` : window.location.pathname;
+      window.history.replaceState({}, '', url);
+    } catch {}
+  }, [q]);
+
   const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  // Reset page when inputs change
+  useEffect(() => { setPage(1); }, [q, filters, sort]);
+
+  const visibleCount = Math.min(sortedFiltered.length, per * page);
+  const paged = useMemo(() => sortedFiltered.slice(0, visibleCount), [sortedFiltered, visibleCount]);
+
+  const loadNext = useCallback(() => {
+    if (loadingMore) return;
+    if (visibleCount >= sortedFiltered.length) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      setPage((p) => p + 1);
+      setLoadingMore(false);
+    }, 250);
+  }, [loadingMore, visibleCount, sortedFiltered.length]);
+
+  // Lazy load more
+  useEffect(() => {
+    const el = document.getElementById('projects-sentinel');
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) loadNext();
+      }
+    }, { rootMargin: '800px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [loadNext]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -67,15 +110,21 @@ export default function ProjectsExplorer({ items }: Props) {
         onSortChange={(v) => setSort(v as typeof sort)}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sortedFiltered.map((item, i) => (
+        {paged.map((item, i) => (
           <div id={`project-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
             <ProjectCard item={item} />
           </div>
         ))}
+        {loadingMore && (
+          Array.from({ length: Math.min(12, Math.max(0, sortedFiltered.length - visibleCount)) }).map((_, i) => (
+            <div key={`project-skeleton-${i}`} className="p-4 md:p-5 glass-card rounded-2xl border border-border animate-pulse h-40" />
+          ))
+        )}
         {!sortedFiltered.length && (
           <p className="text-sm text-[color:var(--white)]/60">No results.</p>
         )}
       </div>
+      <div id="projects-sentinel" className="h-6 w-full" aria-hidden="true" />
     </div>
   );
 }

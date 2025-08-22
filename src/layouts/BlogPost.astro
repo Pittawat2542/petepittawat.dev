@@ -4,6 +4,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
 import ReadingProgressBar from '../components/ReadingProgressBar.astro';
 import siteLogo from '../assets/images/logo.png';
+import { Image } from 'astro:assets';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
 
@@ -66,16 +67,14 @@ const pageUrl = Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog
 	<article class='mx-auto prose xl:prose-lg prose-invert prose-img:rounded-xl prose-img:shadow-xl prose-a:text-[color:var(--accent)]'>
 		<div class='mb-6'>
 			{coverImage && (
-				<img
+				<Image
 					class='rounded-xl'
-					src={coverImage.src}
-					width={coverImage.width}
-					height={coverImage.height}
+					src={coverImage}
+					alt=""
 					loading="eager"
 					fetchpriority="high"
+					sizes="(min-width: 1280px) 960px, (min-width: 768px) 768px, 100vw"
 					decoding="async"
-					alt=""
-					aria-hidden="true"
 				/>
 			)}
 		</div>

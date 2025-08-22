@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Filter from './Filter';
 import type { Talk } from '../types';
@@ -19,12 +19,16 @@ export default function TalksExplorer({ items }: Props) {
   });
 
   const [sort, setSort] = useState<'newest' | 'oldest' | 'title-az' | 'title-za'>('newest');
+  const [per] = useState<number>(12);
+  const [page, setPage] = useState<number>(1);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const qParam = params.get('q');
       if (qParam) setQ(qParam);
+      // omit per/page from URL for pure infinite scroll
     } catch {}
   }, [setQ]);
 
@@ -46,6 +50,42 @@ export default function TalksExplorer({ items }: Props) {
     });
     return list;
   }, [filtered, sort]);
+
+  // Reset and derive paged
+  useEffect(() => { setPage(1); }, [q, filters, sort]);
+  const visibleCount = Math.min(sortedFiltered.length, per * page);
+  const paged = useMemo(() => sortedFiltered.slice(0, visibleCount), [sortedFiltered, visibleCount]);
+
+  // Keep URL updated
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams();
+      if (q.trim()) params.set('q', q.trim());
+      const url = `${window.location.pathname}${params.size ? `?${params.toString()}` : ''}`;
+      window.history.replaceState({}, '', url);
+    } catch {}
+  }, [q]);
+
+  const loadNext = useCallback(() => {
+    if (loadingMore) return;
+    if (visibleCount >= sortedFiltered.length) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      setPage((p) => p + 1);
+      setLoadingMore(false);
+    }, 250);
+  }, [loadingMore, visibleCount, sortedFiltered.length]);
+
+  // Lazy load more
+  useEffect(() => {
+    const el = document.getElementById('talks-sentinel');
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) loadNext();
+    }, { rootMargin: '800px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [loadNext]);
 
   const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -69,13 +109,19 @@ export default function TalksExplorer({ items }: Props) {
         onSortChange={(v) => setSort(v as typeof sort)}
       />
       <div className="grid gap-3">
-        {sortedFiltered.map((item, i) => (
+        {paged.map((item, i) => (
           <div id={`talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`} key={`${item.title}-${item.date}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
             <TalkCard item={item} />
           </div>
         ))}
+        {loadingMore && (
+          Array.from({ length: Math.min(12, Math.max(0, sortedFiltered.length - visibleCount)) }).map((_, i) => (
+            <div key={`talk-skeleton-${i}`} className="p-4 md:p-5 glass-card rounded-2xl border border-border animate-pulse h-28" />
+          ))
+        )}
         {!sortedFiltered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>
+      <div id="talks-sentinel" className="h-6 w-full" aria-hidden="true" />
     </div>
   );
 }
