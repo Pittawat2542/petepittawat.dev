@@ -88,7 +88,7 @@ authorSameAs.push(authorUrl);
   {tags?.length ? (
     <div class="mt-8">
       <h2 class="text-lg font-semibold mb-3">Tags</h2>
-      <ul class="flex flex-wrap gap-2">
+      <ul class="not-prose flex flex-wrap gap-2 list-none p-0 m-0">
         {tags.map((t) => (
           <li>
             <a href={`/tags/${t.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`} class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-[color:var(--accent)] bg-[color:var(--accent)]/[.10] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.16] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">#{t}</a>

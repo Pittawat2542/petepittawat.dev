@@ -12,7 +12,7 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   href={href}
   aria-label={ariaLabel}
   aria-current={isActive ? 'page' : undefined}
-  class={`cursor-pointer rounded-full px-3 py-2 text-sm font-medium link-underline
+  class={`cursor-pointer rounded-full px-3 py-2 text-sm font-medium link-underline inline-flex items-center gap-1.5 leading-none
           text-[color:var(--white)]/85 hover:text-[color:var(--white)]
           hover:bg-[color:var(--white)]/5 transition-colors
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
