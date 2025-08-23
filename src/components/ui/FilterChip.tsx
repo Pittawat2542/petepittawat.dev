@@ -31,7 +31,7 @@ export default function FilterChip({
   };
 
   const getVariantClasses = (variant: string, active: boolean) => {
-    const baseClasses = 'glass-surface rounded-full transition-all duration-200 ease-out backdrop-blur-md border';
+    const baseClasses = 'glass-surface rounded-full transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-out backdrop-blur-md border will-change-transform';
     
     if (active) {
       switch (variant) {
@@ -67,7 +67,7 @@ export default function FilterChip({
         ${sizeClasses[size]}
         ${getVariantClasses(variant, active)}
         ${onClick ? 'cursor-pointer' : 'cursor-default'}
-        ${onClick ? 'hover:scale-105 active:scale-95' : ''}
+        ${onClick ? 'hover:scale-[1.03] active:scale-95' : ''}
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-1
         ${className}
       `}
@@ -88,7 +88,7 @@ export default function FilterChip({
                 : 'bg-white/20 text-white font-bold shadow-sm'
             : 'bg-muted/40 text-muted-foreground opacity-70'
           }
-          transition-all duration-200
+          transition-[background-color,color,border-color] duration-150
         `}>
           {count}
         </span>
@@ -99,7 +99,7 @@ export default function FilterChip({
           type="button"
           onClick={handleRemove}
           className={`
-            p-0.5 rounded-full transition-all duration-200
+            p-0.5 rounded-full transition-[background-color,color] duration-150 ease-out
             ${active 
               ? 'hover:bg-black/20 text-black/60 hover:text-black' 
               : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'

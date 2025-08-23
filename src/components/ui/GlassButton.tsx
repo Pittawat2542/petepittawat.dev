@@ -13,7 +13,7 @@ const GlassButton = React.forwardRef<HTMLElement, GlassButtonProps>(
   ({ className, variant = 'primary', size = 'md', as, href, children, ...props }, ref) => {
     const Component = (as || (href ? 'a' : 'button')) as any;
     
-    const baseClasses = 'glass-button rounded-xl font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
+    const baseClasses = 'glass-button rounded-xl font-medium transition-[transform,box-shadow,background-color,color,border-color] duration-150 ease-out will-change-transform active:scale-[0.98] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
     
     const sizeClasses = {
       sm: 'px-3 py-2 text-sm h-8',

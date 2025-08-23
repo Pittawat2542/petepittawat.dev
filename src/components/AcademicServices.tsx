@@ -44,7 +44,7 @@ export default function AcademicServices({ data }: Props) {
                       href={it.url || '#'}
                       target={it.url ? '_blank' : undefined}
                       rel={it.url ? 'noreferrer' : undefined}
-                      className="group inline-flex items-center justify-between w-full rounded-xl px-3 py-2 ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent-publications)]/50 transition-all glass-surface"
+                      className="group inline-flex items-center justify-between w-full rounded-xl px-3 py-2 ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent-publications)]/50 transition-[transform,box-shadow,border-color,background-color] duration-150 ease-out will-change-transform hover:-translate-y-0.5 glass-surface"
                       style={{
                         color: 'var(--white)',
                         background: 'color-mix(in oklab, var(--accent-publications) 6%, transparent)'

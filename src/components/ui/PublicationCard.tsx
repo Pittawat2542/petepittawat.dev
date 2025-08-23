@@ -177,7 +177,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 href={item.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words will-change-transform hover:-translate-y-0.5"
                 style={{
                   color: accent,
                   background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -207,7 +207,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   href={a.href}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noreferrer' : undefined}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words will-change-transform hover:-translate-y-0.5"
                   style={{
                     color: accent,
                     background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -246,7 +246,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 {item.title}
               </h3>
               <DialogClose
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs bg-[color:var(--black-nav)]/80 text-[color:var(--white)] ring-1 ring-[color:var(--white)]/10 hover:ring-[color:var(--accent)] hover:text-[color:var(--accent)] transition-[color,border-color,background-color] duration-150 ease-out"
                 aria-label="Close details"
                 title="Close"
                 onClick={(e) => e.stopPropagation()}
@@ -326,7 +326,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                               href={item.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
+                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
                               style={{
                                 color: accent,
                                 background: `color-mix(in oklab, ${accent} 14%, transparent)`,
@@ -350,7 +350,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                               href={a.href}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
+                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
                               style={{
                                 color: accent,
                                 background: `color-mix(in oklab, ${accent} 14%, transparent)`,

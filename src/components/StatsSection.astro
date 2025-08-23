@@ -73,7 +73,7 @@ const cards = [
             <a
               href={card.href}
               aria-label={card.ariaLabel}
-              class={`group relative overflow-hidden block h-full rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm transition-all duration-300 ease-in-out
+              class={`group relative overflow-hidden block h-full rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
                 motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
             >
               <!-- Decorative oversized background image (partial, right-aligned) -->
@@ -83,7 +83,7 @@ const cards = [
                 aria-hidden="true"
                 loading="lazy"
                 decoding="async"
-                class='pointer-events-none select-none absolute -right-10 top-[90%] md:top-[64%] -translate-y-1/2 w-[90%] h-auto md:w-auto md:h-[220%] max-w-none opacity-20 blur-sm object-contain transition-transform duration-500 ease-out will-change-transform origin-right group-hover:scale-[1.08]'
+                class='pointer-events-none select-none absolute -right-10 top-[90%] md:top-[64%] -translate-y-1/2 w-[90%] h-auto md:w-auto md:h-[220%] max-w-none opacity-20 blur-sm object-contain transition-transform duration-300 ease-out will-change-transform origin-right group-hover:scale-[1.06]'
               />
               <!-- Left-side gradient overlay to improve text contrast -->
               <div class='pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[color:var(--black)]/55 via-[color:var(--black)]/15 to-transparent'></div>

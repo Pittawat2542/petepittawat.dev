@@ -17,7 +17,7 @@ export default function BlogCard({ post, featured = false }: Readonly<Props>) {
         {post.data.coverImage?.src ? (
           <div className="mb-4 md:mb-6 overflow-hidden rounded-xl">
             <img
-              className="w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-[1.03]"
+              className="w-full h-auto transition-transform duration-200 ease-out group-hover:scale-[1.02] will-change-transform"
               src={post.data.coverImage.src}
               width={post.data.coverImage.width}
               height={post.data.coverImage.height}

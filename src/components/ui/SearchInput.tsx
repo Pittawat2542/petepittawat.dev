@@ -49,14 +49,14 @@ export default function SearchInput({
       
       {/* Glass container */}
       <div className={`
-        relative glass-surface rounded-xl transition-all duration-300 ease-out
+        relative glass-surface rounded-xl transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
         ${isFocused ? 'glass-surface-elevated ring-2 ring-ring/40' : ''}
         group-hover:glass-surface-elevated
       `}>
         {/* Search icon */}
         <Search 
           className={`
-            absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-200
+            absolute left-3 top-1/2 -translate-y-1/2 transition-[color,opacity] duration-150 ease-out
             ${isFocused ? 'text-ring opacity-100' : 'text-muted-foreground opacity-70'}
           `} 
           size={iconSizes[size]} 
@@ -79,7 +79,7 @@ export default function SearchInput({
             bg-transparent rounded-xl border-0
             text-foreground placeholder:text-muted-foreground
             focus-visible:outline-none
-            transition-all duration-200
+            transition-[color,background-color] duration-150 ease-out
           `}
         />
         
@@ -92,7 +92,7 @@ export default function SearchInput({
               absolute right-3 top-1/2 -translate-y-1/2
               p-1 rounded-full
               text-muted-foreground hover:text-foreground
-              hover:bg-muted/30 transition-all duration-200
+              hover:bg-muted/30 transition-[background-color,color] duration-150 ease-out
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40
             `}
             aria-label="Clear search"
@@ -103,7 +103,7 @@ export default function SearchInput({
         )}
         
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
       </div>
     </label>
   );

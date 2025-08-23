@@ -62,7 +62,7 @@ export function TalkCard({ item }: { item: Talk }) {
                   {...(r.download ? { download: '' } : {})}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noreferrer' : undefined}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 btn-ripple"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple will-change-transform hover:-translate-y-0.5"
                   style={{
                     color: accent,
                     background: `color-mix(in oklab, ${accent} 14%, transparent)`,
