@@ -7,7 +7,11 @@ const label = 'Back to top';
   id="scroll-top"
   aria-label={label}
   title="Scroll to top"
-  class="fixed bottom-6 right-6 z-30 hidden md:inline-flex items-center justify-center h-11 w-11 rounded-full glass-button bg-muted/20 border-muted/40 hover:bg-muted/30 hover:border-muted/60 text-[color:var(--white)] hover:text-[color:var(--accent)] transition-[transform,box-shadow,color,background-color,border-color] duration-150 ease-out will-change-transform"
+  class="fixed bottom-6 right-6 z-30 inline-flex items-center justify-center h-11 w-11 rounded-full glass-button bg-muted/20 border-muted/40 hover:bg-muted/30 hover:border-muted/60 text-[color:var(--white)] hover:text-[color:var(--accent)] shadow-md shadow-black/10
+         transition-[opacity,transform,box-shadow,color,background-color,border-color] duration-200 ease-out will-change-transform
+         active:scale-[0.98]"
+  style="right: max(1.25rem, env(safe-area-inset-right)); bottom: max(1.25rem, env(safe-area-inset-bottom));"
+  data-visible="false"
 >
   <ArrowUp class="h-5 w-5" aria-hidden="true" />
 </button>
@@ -16,9 +20,18 @@ const label = 'Back to top';
   const btn = document.getElementById('scroll-top');
   function onScroll() {
     if (!btn) return;
-    btn.style.display = window.scrollY > 400 ? 'inline-flex' : 'none';
+    const show = window.scrollY > 200;
+    btn.dataset.visible = show ? 'true' : 'false';
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
   btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
+
+<style is:inline>
+  #scroll-top { opacity: 0; transform: translateY(0.5rem); pointer-events: none; }
+  #scroll-top[data-visible="true"] { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    #scroll-top { transition: none; }
+  }
+</style>
