@@ -4,10 +4,16 @@ import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
 import ReadingProgressBar from '../components/ReadingProgressBar.astro';
 import { Image } from 'astro:assets';
+// Simplified layout for focused reading
+import { Calendar, User2, Clock3, Tag as TagIcon } from 'lucide-astro';
+import Toc from '../components/Toc.astro';
 
-type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
+type Props = CollectionEntry<'blog'>['data'] & { slug?: string; readingTimeMin?: number };
 
-const { title, excerpt, pubDate, coverImage, tags, slug } = Astro.props as Props;
+const { title, excerpt, pubDate, coverImage, tags, slug, readingTimeMin } = Astro.props as Props;
+const maxTagsToShow = 6;
+const visibleTags = (tags ?? []).slice(0, maxTagsToShow);
+const hiddenTagCount = Math.max(0, (tags?.length ?? 0) - maxTagsToShow);
 const authorUrl = Astro.site ? new URL('/about', Astro.site).href : '/about';
 const twitterHandle = import.meta.env.PUBLIC_TWITTER_HANDLE as string | undefined;
 const authorSameAs: string[] = [];
@@ -20,6 +26,7 @@ authorSameAs.push(authorUrl);
 
 // Note: compute JSON-LD URLs inline to avoid unused-variable hints
 ---
+
 
 <BaseLayout
   title={`${title} - PETEPITTAWAT.DEV`}
@@ -62,46 +69,88 @@ authorSameAs.push(authorUrl);
 })}
 		</script>
 	</Fragment>
-	<article class='mx-auto prose xl:prose-lg prose-invert prose-img:rounded-xl prose-img:shadow-xl prose-a:text-[color:var(--accent)]'>
-		<div class='mb-6'>
-			{coverImage && (
-				<Image
-					class='rounded-xl'
-					src={coverImage}
-					alt=""
-					loading="eager"
-					fetchpriority="high"
-					sizes="(min-width: 1280px) 960px, (min-width: 768px) 768px, 100vw"
-					decoding="async"
-				/>
-			)}
-		</div>
-		<div>
-			<h1 class="xl:text-4xl">{title}</h1>
-			<p class='italic text-base'>
-				Published on <FormattedDate date={pubDate} />
-			</p>
-			<p class="text-base italic">Authored by <span class="font-bold">Pete</span>. Pittawat Taveekitworachai.</p>
-			<hr />
-  <slot />
 
-  {tags?.length ? (
-    <div class="mt-8">
-      <h2 class="text-lg font-semibold mb-3">Tags</h2>
-      <ul class="not-prose flex flex-wrap gap-2 list-none p-0 m-0">
-        {tags.map((t) => (
-          <li>
-            <a href={`/tags/${t.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`} class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-[color:var(--accent)] bg-[color:var(--accent)]/[.10] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.16] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">#{t}</a>
-          </li>
-        ))}
-      </ul>
+  <div class="mx-auto px-0 md:px-2">
+    <div class="max-w-prose mx-auto">
+      <a href="/blog" class="text-sm text-[color:var(--accent)]/80 hover:text-[color:var(--accent)]">← All posts</a>
+      <h1 class="mt-2 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">{title}</h1>
+      <div class="space-y-4 text-xs md:text-sm text-[color:var(--white)]/70 my-4">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span class="inline-flex items-center gap-1.5">
+            <span class="sr-only">Published</span>
+            <Calendar class="h-4 w-4 opacity-80" aria-hidden="true" />
+            <span class="font-medium text-[color:var(--white)]/85"><FormattedDate date={pubDate} /></span>
+          </span>
+          <span aria-hidden class="opacity-25">·</span>
+          <span class="inline-flex items-center gap-1.5">
+            <span class="sr-only">Author</span>
+            <User2 class="h-4 w-4 opacity-80" aria-hidden="true" />
+            <span class="text-[color:var(--white)]/80">Pete</span>
+          </span>
+          {typeof readingTimeMin === 'number' ? (
+            <>
+              <span aria-hidden class="opacity-25">·</span>
+              <span class="inline-flex items-center gap-1.5">
+                <span class="sr-only">Reading time</span>
+                <Clock3 class="h-4 w-4 opacity-80" aria-hidden="true" />
+                <span class="text-[color:var(--white)]/80">{readingTimeMin} min read</span>
+              </span>
+            </>
+          ) : null}
+        </div>
+
+        {visibleTags.length ? (
+          <div class="flex items-start gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1.5 text-[color:var(--white)]/70">
+              <span class="sr-only">Tags</span>
+              <TagIcon class="h-4 w-4 opacity-80" aria-hidden="true" />
+            </span>
+            <ul class="flex flex-wrap items-center gap-1.5 m-0 p-0 list-none">
+              {visibleTags.map((t) => (
+                <li>
+                  <a
+                    href={`/tags/${t.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`}
+                    class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] md:text-xs font-medium text-[color:var(--accent-blog)] bg-[color:var(--accent-blog)]/[.10] ring-1 ring-[color:var(--accent-blog)]/30 hover:bg-[color:var(--accent-blog)]/[.20] hover:ring-[color:var(--accent-blog)]/60 transition-[transform,background-color,ring-color] duration-150 ease-out will-change-transform hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-blog)]/70"
+                    >#{t}
+                  </a>
+                </li>
+              ))}
+              {hiddenTagCount > 0 ? (
+                <li>
+                  <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] md:text-xs font-medium text-[color:var(--white)]/70 ring-1 ring-[color:var(--white)]/20">+{hiddenTagCount} more</span>
+                </li>
+              ) : null}
+            </ul>
+          </div>
+        ) : null}
+      </div>
     </div>
-  ) : null}
 
+    {coverImage && (
+      <div class="max-w-prose mx-auto mt-4 md:mt-6 lg:mt-8">
+        <Image
+          class='rounded-xl'
+          src={coverImage}
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+          sizes="(min-width: 1024px) 768px, (min-width: 768px) 640px, 100vw"
+          decoding="async"
+        />
+      </div>
+    )}
 
-		</div>
-	</article>
-  <slot name="after" />
+    <Toc selector="#post-article" levels={[2,3]} collapsed={true} />
+    <article id="post-article" class="prose prose-invert mx-auto max-w-prose mt-6 prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-lg prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-8 prose-headings:mb-3 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-7">
+      <slot />
+
+      
+    </article>
+  </div>
+
+  <div class="max-w-prose mx-auto">
+    <slot name="after" />
+  </div>
 </BaseLayout>
 
 <script is:inline>

@@ -7,17 +7,17 @@ const { posts } = Astro.props as { posts: BlogPost[] };
 ---
 
 {posts.length ? (
-  <section class="mt-12">
+  <section class="mt-12 max-w-prose mx-auto">
     <h2 class="text-xl md:text-2xl font-bold tracking-tight mb-4">Related posts</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <ul class="grid grid-cols-1 gap-4">
       {posts.map((p) => (
         <li class="rounded-xl border border-[color:var(--white)]/10 p-3 hover:border-[color:var(--accent)]/40 transition-[border-color,transform,box-shadow] duration-150 ease-out hover:translate-y-[-2px] will-change-transform">
           <a href={`/blog/${p.slug}/`} class="flex items-start gap-3">
             <div class="shrink-0 w-20 h-14 overflow-hidden rounded-lg bg-white/10">
               {p.data.coverImage ? (
-                <Image class="block h-full w-full object-cover" src={p.data.coverImage} alt="" width={160} height={112} sizes="80px" loading="lazy" decoding="async" />
+                <Image class="block h-full w-full object-cover object-center" src={p.data.coverImage} alt="" width={160} height={112} sizes="80px" loading="lazy" decoding="async" />
               ) : (
-                <img class="block h-full w-full object-cover" src={`/og/blog/${p.slug}.png`} width="160" height="112" alt="" loading="lazy" decoding="async" />
+                <img class="block h-full w-full object-cover object-center" src={`/og/blog/${p.slug}.png`} width="160" height="112" alt="" loading="lazy" decoding="async" />
               )}
             </div>
             <div class="min-w-0">
