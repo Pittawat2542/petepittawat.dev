@@ -54,7 +54,7 @@ Astro.response.status = 404;
     const btn = document.getElementById('open-search');
     const openSearch = () => {
       const triggers = document.querySelectorAll('button[aria-label="Open search"]');
-      for (const t of triggers) { if (typeof (t as any).click === 'function') { (t as any).click(); break; } }
+      for (const t of triggers) { if (typeof (t).click === 'function') { (t).click(); break; } }
     };
     if (btn) btn.addEventListener('click', openSearch);
   </script>
