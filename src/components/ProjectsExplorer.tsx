@@ -49,6 +49,34 @@ export default function ProjectsExplorer({ items }: Props) {
     } catch {}
   }, [setQ]);
 
+  // Keep q in sync with URL on navigation
+  useEffect(() => {
+    const syncFromUrl = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const qParam = params.get('q') || '';
+        setQ(qParam);
+      } catch {}
+    };
+    window.addEventListener('popstate', syncFromUrl);
+    window.addEventListener('hashchange', syncFromUrl);
+    return () => {
+      window.removeEventListener('popstate', syncFromUrl);
+      window.removeEventListener('hashchange', syncFromUrl);
+    };
+  }, [setQ]);
+
+  // Focus targeted project from hash for better UX
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith('#project-')) return;
+    const t = setTimeout(() => {
+      const el = document.querySelector(hash) as HTMLElement | null;
+      if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }, 100);
+    return () => clearTimeout(t);
+  }, []);
+
   useEffect(() => {
     try {
       const params = new URLSearchParams();

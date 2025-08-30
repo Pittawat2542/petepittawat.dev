@@ -39,6 +39,23 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                 } catch {}
         }, []);
 
+        // Keep q in sync with URL on navigation
+        useEffect(() => {
+                const syncFromUrl = () => {
+                        try {
+                                const params = new URLSearchParams(window.location.search);
+                                const qParam = params.get('q') || '';
+                                setQ(qParam);
+                        } catch {}
+                };
+                window.addEventListener('popstate', syncFromUrl);
+                window.addEventListener('hashchange', syncFromUrl);
+                return () => {
+                        window.removeEventListener('popstate', syncFromUrl);
+                        window.removeEventListener('hashchange', syncFromUrl);
+                };
+        }, []);
+
         // Keep URL in sync for shareability
         useEffect(() => {
                 try {

@@ -70,6 +70,21 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
     }
   }
 
+  // Deduplicate artifact links by href and avoid duplicating the main paper URL
+  const dedupedArtifacts = (() => {
+    const arr = Array.isArray(item.artifacts) ? item.artifacts : [];
+    const seen = new Set<string>();
+    const cleaned = [] as NonNullable<typeof item.artifacts>;
+    for (const a of arr) {
+      if (!a || !a.href) continue;
+      if (item.url && a.href === item.url) continue;
+      if (seen.has(a.href)) continue;
+      seen.add(a.href);
+      cleaned.push(a);
+    }
+    return cleaned;
+  })();
+
   return (
     <Card
       className={[`p-4 md:p-5 cursor-pointer publication-card`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
@@ -170,7 +185,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
         ) : null}
 
         {/* Resource links (always visible) */}
-        {(item.url || item.artifacts?.length) ? (
+        {(item.url || dedupedArtifacts.length) ? (
           <div className="mt-2 flex flex-wrap gap-2">
             {item.url ? (
               <a
@@ -199,11 +214,11 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 </span>
               </a>
             ) : null}
-            {item.artifacts?.map((a) => {
+            {dedupedArtifacts.map((a, idx) => {
               const isExternal = !a.href.startsWith('/');
               return (
                 <a
-                  key={a.href}
+                  key={`${a.href}-${idx}`}
                   href={a.href}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noreferrer' : undefined}

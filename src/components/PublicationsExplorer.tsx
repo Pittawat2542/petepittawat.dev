@@ -90,6 +90,37 @@ export default function PublicationsExplorer({ items }: Props) {
     } catch {}
   }, [setQ]);
 
+  // Keep q in sync with URL on back/forward navigation
+  useEffect(() => {
+    const syncFromUrl = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const qParam = params.get('q') || '';
+        setQ(qParam);
+      } catch {}
+    };
+    window.addEventListener('popstate', syncFromUrl);
+    window.addEventListener('hashchange', syncFromUrl);
+    return () => {
+      window.removeEventListener('popstate', syncFromUrl);
+      window.removeEventListener('hashchange', syncFromUrl);
+    };
+  }, [setQ]);
+
+  // Auto-expand targeted publication from hash (open modal)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith('#pub-')) return;
+    // Delay to allow initial render
+    const t = setTimeout(() => {
+      const container = document.querySelector(hash) as HTMLElement | null;
+      if (!container) return;
+      const card = container.querySelector('.publication-card') as HTMLElement | null;
+      if (card) card.click();
+    }, 150);
+    return () => clearTimeout(t);
+  }, []);
+
   // Pure infinite scroll: do not read per/page from URL
 
   // Keep URL in sync (omit per/page)

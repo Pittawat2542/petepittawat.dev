@@ -10,11 +10,13 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDate(date: string | number | Date) {
   try {
     const d = new Date(date);
-    return d.toLocaleDateString(undefined, {
+    // Use a fixed locale and timezone to avoid SSR/CSR hydration mismatches
+    return new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'short',
       day: '2-digit',
-    });
+      timeZone: 'UTC',
+    }).format(d);
   } catch {
     return String(date);
   }

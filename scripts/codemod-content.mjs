@@ -94,7 +94,7 @@ async function codemodFile(file) {
   }
 
   // Convert local Figure src strings to static imports for asset correctness
-  const figImportRes = transformFigureSrcToImports(file, workingBody);
+  const figImportRes = transformFigureSrcToImports(workingBody);
   if (figImportRes.changed) {
     workingBody = figImportRes.body;
     importsToAdd.push(...figImportRes.imports);
@@ -162,7 +162,7 @@ function transformMarkdownImagesToFigure(body) {
 /**
  * Replace <Figure src="./local.png" .../> with src={importedVar} and add import.
  */
-function transformFigureSrcToImports(filePath, body) {
+function transformFigureSrcToImports(body) {
   let changed = false;
   const importSet = new Set();
   const existingImports = new Set(

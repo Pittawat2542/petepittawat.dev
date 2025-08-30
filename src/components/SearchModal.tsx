@@ -216,6 +216,22 @@ export default function SearchModal() {
     return matches.map((m) => ({ ...m.item, __titlePositions: m.titlePositions } as any));
   }, [items, q, typeFilter]);
 
+  // Helper to build href adding ?q before any #fragment
+  const buildHref = (it: any, qInput: string) => {
+    const raw = String(it.url || '');
+    const hasHash = raw.includes('#');
+    const [base, hash] = hasHash ? [raw.slice(0, raw.indexOf('#')), raw.slice(raw.indexOf('#'))] : [raw, ''];
+    const url = new URL(base, window.location.origin);
+    // Prefill with item title for anchored list pages (projects/publications/talks)
+    const preferTitle = hasHash && (it.type === 'project' || it.type === 'publication' || it.type === 'talk');
+    const qVal = (preferTitle ? it.title : qInput).trim();
+    // Only add ?q= for destinations that support it
+    const path = url.pathname.replace(/\/$/, '');
+    const supportsQ = preferTitle || path === '/blog' || path === '/projects' || path === '/publications' || path === '/talks' || path.startsWith('/tags');
+    if (supportsQ && qVal) url.searchParams.set('q', qVal);
+    return `${url.pathname}${url.search}${hash}`;
+  };
+
   // In-modal keyboard navigation and selection
   useEffect(() => {
     if (!open) return;
@@ -235,9 +251,10 @@ export default function SearchModal() {
       if (key === 'Enter') {
         const it: any = results[active];
         if (it) {
-          saveRecent(q);
-          if (e.metaKey || e.ctrlKey) window.open(it.url, '_blank');
-          else window.location.assign(it.url);
+          const href = buildHref(it, q);
+          saveRecent((Object.prototype.hasOwnProperty.call(it, 'title') && it.type !== 'page') ? it.title : q);
+          if (e.metaKey || e.ctrlKey) window.open(href, '_blank');
+          else window.location.assign(href);
         }
       }
     };
@@ -428,12 +445,12 @@ export default function SearchModal() {
               {filtered.slice(0, 50).map((it: any, idx: number) => (
                 <li id={`sr-${idx}`} key={it.id} role="option" aria-selected={idx === active} className={cn(idx === active && 'bg-white/10')}>
                   <a
-                    href={`${it.url}${q.trim() ? (it.url.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(q.trim()) : ''}`}
+                    href={buildHref(it, q)}
                     className={cn(
                       'flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40'
                     )}
-                    onClick={() => { saveRecent(q); setOpen(false); }}
+                    onClick={() => { saveRecent((it.type !== 'page') ? it.title : q); setOpen(false); }}
                   >
                     <div className="pt-0.5 flex items-center gap-2 min-w-[7rem]">
                       <div className={cn('rounded-md p-1.5 border border-white/10', typeColor(it.type))}>

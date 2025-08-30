@@ -15,6 +15,15 @@ const maxTagsToShow = 6;
 const visibleTags = (tags ?? []).slice(0, maxTagsToShow);
 const hiddenTagCount = Math.max(0, (tags?.length ?? 0) - maxTagsToShow);
 const authorUrl = Astro.site ? new URL('/about', Astro.site).href : '/about';
+const canonicalUrl = slug ? (Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog/${slug}/`) : (Astro.url?.pathname || '/');
+const imageUrl = (() => {
+  const fallback = slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg';
+  const src = coverImage?.src ?? fallback;
+  return Astro.site ? new URL(src, Astro.site).href : src;
+})();
+// Touch variables to satisfy TS analyzer in Astro frontmatter
+void canonicalUrl;
+void imageUrl;
 const twitterHandle = import.meta.env.PUBLIC_TWITTER_HANDLE as string | undefined;
 const authorSameAs: string[] = [];
 if (twitterHandle) {
@@ -45,6 +54,7 @@ authorSameAs.push(authorUrl);
   headline: title,
   description: excerpt,
   datePublished: pubDate.toISOString?.() ?? String(pubDate),
+  mainEntityOfPage: canonicalUrl,
   author: {
     "@type": "Person",
     name: "Pittawat Taveekitworachai",
@@ -60,12 +70,8 @@ authorSameAs.push(authorUrl);
       url: (Astro.site ? new URL('/favicon.svg', Astro.site).href : '/favicon.svg'),
     },
   },
-  image: (
-    Astro.site
-      ? new URL(coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'), Astro.site).href
-      : (coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg'))
-  ),
-  url: (Astro.site ? new URL(`/blog/${slug}/`, Astro.site).href : `/blog/${slug}/`),
+  image: imageUrl,
+  url: canonicalUrl,
 })}
 		</script>
 	</Fragment>
