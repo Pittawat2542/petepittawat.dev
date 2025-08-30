@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { ArrowUpRight, Building2, CalendarDays, Code2, Database, ExternalLink, Video, X } from 'lucide-react';
+import { Dialog, DialogClose, DialogContent } from './dialog';
 import { highlightAuthorNames, isFirstAuthor } from '../../lib';
+import { useEffect, useState } from 'react';
+
+import { Badge } from './badge';
+import { Card } from './card';
 import { FIRST_AUTHOR_TITLE } from '../../lib/constants';
 import type { Publication } from '../../types';
-import { Card } from './card';
-import { Dialog, DialogContent, DialogClose } from './dialog';
-import { Badge } from './badge';
-import { ExternalLink, ArrowUpRight, Code2, Database, Video, X, Building2, CalendarDays } from 'lucide-react';
 import Tooltip from './tooltip';
 
 function toTitleCase(input?: string) {
@@ -331,72 +332,73 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                     <p className="text-sm text-[color:var(--white)]/80 whitespace-pre-wrap">
                       {item.abstract?.trim() || 'Abstract coming soon.'}
                     </p>
+                    </div>
 
-                    {(item.url || item.artifacts?.length) ? (
-                      <div className="mt-5 pt-4 border-t border-[color:var(--white)]/10">
-                        <p className="text-sm text-[color:var(--white)]/90 font-medium mb-2">Resources</p>
-                        <div className="flex flex-wrap gap-2">
-                          {item.url ? (
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
-                              style={{
-                                color: accent,
-                                background: `color-mix(in oklab, ${accent} 14%, transparent)`,
-                                border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-                                boxShadow: `0 6px 18px -10px ${accent}`
-                              }}
-                            >
-                              <span title="Paper">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                  <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                  <path d="M15 3h6v6"></path>
-                                  <path d="M10 14 21 3"></path>
-                                </svg>
-                              </span>
-                              Paper
-                            </a>
-                          ) : null}
-                          {item.artifacts?.map((a) => (
-                            <a
-                              key={a.href}
-                              href={a.href}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
-                              style={{
-                                color: accent,
-                                background: `color-mix(in oklab, ${accent} 14%, transparent)`,
-                                border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-                                boxShadow: `0 6px 18px -10px ${accent}`
-                              }}
-                            >
-                              <span title={
-                                /^code$/i.test(a.label) ? "Code" :
-                                /data|dataset/i.test(a.label) ? "Data" :
-                                /video|talk|presentation/i.test(a.label) ? "Video" :
-                                "External link"
-                              }>
-                                {/* simple icon heuristic by label */}
-                                {/^code$/i.test(a.label) ? (
-                                  <Code2 size={14} aria-hidden="true" />
-                                ) : /data|dataset/i.test(a.label) ? (
-                                  <Database size={14} aria-hidden="true" />
-                                ) : /video|talk|presentation/i.test(a.label) ? (
-                                  <Video size={14} aria-hidden="true" />
-                                ) : (
-                                  <ExternalLink size={14} aria-hidden="true" />
-                                )}
-                              </span>
-                              {a.label}
-                            </a>
-                          ))}
-                        </div>
+                  {(item.url || item.artifacts?.length) ? (
+                    <div className="pt-4 mt-4 border-t border-[color:var(--white)]/10 sticky bottom-0 bg-[color:var(--black-nav)]/70 backdrop-blur-md">
+                      <p className="text-sm text-[color:var(--white)]/90 font-medium mb-2">Resources</p>
+                      <div className="flex flex-wrap gap-2">
+                        {item.url ? (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
+                            style={{
+                              color: accent,
+                              background: `color-mix(in oklab, ${accent} 14%, transparent)`,
+                              border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
+                              boxShadow: `0 6px 18px -10px ${accent}`
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span title="Paper">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <path d="M15 3h6v6"></path>
+                                <path d="M10 14 21 3"></path>
+                              </svg>
+                            </span>
+                            Paper
+                          </a>
+                        ) : null}
+                        {item.artifacts?.map((a) => (
+                          <a
+                            key={a.href}
+                            href={a.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
+                            style={{
+                              color: accent,
+                              background: `color-mix(in oklab, ${accent} 14%, transparent)`,
+                              border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
+                              boxShadow: `0 6px 18px -10px ${accent}`
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span title={
+                              /^code$/i.test(a.label) ? "Code" :
+                              /data|dataset/i.test(a.label) ? "Data" :
+                              /video|talk|presentation/i.test(a.label) ? "Video" :
+                              "External link"
+                            }>
+                              {/^code$/i.test(a.label) ? (
+                                <Code2 size={14} aria-hidden="true" />
+                              ) : /data|dataset/i.test(a.label) ? (
+                                <Database size={14} aria-hidden="true" />
+                              ) : /video|talk|presentation/i.test(a.label) ? (
+                                <Video size={14} aria-hidden="true" />
+                              ) : (
+                                <ExternalLink size={14} aria-hidden="true" />
+                              )}
+                            </span>
+                            {a.label}
+                          </a>
+                        ))}
                       </div>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
           </Card>
         </DialogContent>
       </Dialog>

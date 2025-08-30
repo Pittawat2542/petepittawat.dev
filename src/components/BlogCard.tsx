@@ -48,7 +48,7 @@ export default function BlogCard({ post, featured = false }: Readonly<Props>) {
         <p className="text-left md:text-justify leading-6 md:leading-7 text-[color:var(--white)]/80">
           {post.data.excerpt}
         </p>
-        <div className="mt-3 md:mt-4 flex items-center gap-2 text-sm text-[color:var(--accent)]/80 group/cta">
+        <div className="mt-3 md:mt-4 flex items-center gap-2 text-sm text-[color:var(--accent)]/80 group/cta mt-auto pt-2">
           <span className="font-medium">Read more</span>
           <ArrowRight size={14} className="icon-bounce transition-transform group-hover/cta:translate-x-1" aria-hidden="true" />
         </div>
