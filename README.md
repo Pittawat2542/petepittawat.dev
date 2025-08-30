@@ -96,7 +96,3 @@ The site is a static Astro build and can be hosted on any static platform (e.g.,
 - Hydration warnings from date formatting: the project formats dates with a fixed locale/timezone to avoid SSR/CSR mismatches.
 - JSON‑LD parse errors: JSON is rendered as a single serialized object; if you add new fields, keep values serializable.
 - Search not prefilling: ensure you’re on a supported page and the URL contains `?q=...` before any `#anchor`.
-
-## License
-
-MIT
