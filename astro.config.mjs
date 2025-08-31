@@ -25,15 +25,17 @@ export default defineConfig({
 	],
 	compressHTML: true,
 	// Performance optimizations
-	prefetch: {
-		prefetchAll: true,
-		defaultStrategy: 'viewport',
-	},
-	build: {
-		inlineStylesheets: 'auto', // Inline smaller CSS files
-		split: true, // Enable code splitting
-		format: 'file', // Use file format for better caching
-	},
+    prefetch: {
+        // Avoid prefetching non-critical routes/assets on first paint
+        prefetchAll: false,
+        defaultStrategy: 'hover',
+    },
+    build: {
+        // Inline all page CSS to remove render‑blocking stylesheet requests
+        inlineStylesheets: 'always',
+        split: true, // Enable code splitting
+        format: 'file', // Use file format for better caching
+    },
 	output: 'static',
 	image: {
 		service: {

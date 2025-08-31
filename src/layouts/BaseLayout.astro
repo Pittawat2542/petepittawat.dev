@@ -21,13 +21,30 @@ const ogImage = Astro.site
 
 <!doctype html>
 <html lang='en' style="background:#111827;color:#F9FAFB;color-scheme: dark;">
-	<head>
-		<BaseHead title={title} description={description} image={ogImage} type={type} publishedTime={publishedTime} tags={tags} />
-		<slot name="head" />
-		<link rel='sitemap' href='/sitemap-index.xml' />
-		<!-- Preload critical resources -->
-		<link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
-	</head>
+		<head>
+			<BaseHead title={title} description={description} image={ogImage} type={type} publishedTime={publishedTime} tags={tags} />
+			<slot name="head" />
+	    <link rel='sitemap' href='/sitemap-index.xml' />
+      {import.meta.env.DEV && (
+        <>
+          <script is:inline>
+            {`
+            try {
+              if (!window.__vite_plugin_react_preamble_installed__) {
+                window.__vite_plugin_react_preamble_installed__ = true;
+                window.$RefreshReg$ = () => {};
+                window.$RefreshSig$ = () => (type) => type;
+              }
+            } catch {}
+            `}
+          </script>
+          <script type="module">
+            {`import RefreshRuntime from '/@react-refresh';
+              try { RefreshRuntime.injectIntoGlobalHook(window); } catch {}`}
+          </script>
+        </>
+      )}
+		</head>
 
         <body>
                 <Header />

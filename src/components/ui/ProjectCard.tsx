@@ -93,15 +93,15 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
       ) : null}
       {item.links?.length ? (
         <div className="mt-4 flex flex-wrap gap-2">
-          {item.links.map((l) => {
+          {item.links.map((l, idx) => {
             const accent = typeAccentVar(item.type);
             const isExternal = !l.href.startsWith('/');
             return (
               <a
-                key={l.href}
+                key={`${l.href}-${idx}`}
                 href={l.href}
                 target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noreferrer' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
                 className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 will-change-transform hover:-translate-y-0.5"
                 style={{
                   color: accent,

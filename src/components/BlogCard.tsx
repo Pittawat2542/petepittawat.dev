@@ -81,9 +81,9 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
 
           {/* Title */}
           <div className="flex items-start gap-3 mb-2">
-            <h4 className="text-xl md:text-3xl font-bold tracking-tight text-[color:var(--accent)] flex-1 line-clamp-2">
+            <h3 className="text-xl md:text-3xl font-bold tracking-tight text-[color:var(--accent)] flex-1 line-clamp-2">
               {post.data.title}
-            </h4>
+            </h3>
           </div>
 
           {/* Meta */}

@@ -1,0 +1,29 @@
+# Generic caching rules for static hosting platforms that support _headers
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Cache hashed Astro assets for a year; filenames are content-hashed and safe to cache immutably.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache generated OG images and other static images for a long time
+/og/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Icons and manifest
+/favicon.ico
+  Cache-Control: public, max-age=31536000, immutable
+/favicon.svg
+  Cache-Control: public, max-age=31536000, immutable
+/apple-touch-icon.png
+  Cache-Control: public, max-age=31536000, immutable
+/apple-touch-icon-precomposed.png
+  Cache-Control: public, max-age=31536000, immutable
+/android-chrome-192x192.png
+  Cache-Control: public, max-age=31536000, immutable
+/android-chrome-512x512.png
+  Cache-Control: public, max-age=31536000, immutable
+/site.webmanifest
+  Cache-Control: public, max-age=31536000
+

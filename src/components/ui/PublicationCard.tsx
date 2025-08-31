@@ -1,5 +1,5 @@
 import { ArrowUpRight, Building2, CalendarDays, Code2, Database, ExternalLink, Video, X } from 'lucide-react';
-import { Dialog, DialogClose, DialogContent } from './dialog';
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogDescription } from './dialog';
 import { highlightAuthorNames } from '../../lib';
 import { useEffect, useState } from 'react';
 
@@ -124,7 +124,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 <a
                   href={item.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="text-[color:var(--accent)] hover:underline"
                   onClick={(e) => {
                     // Prefer expanding details modal on title click
@@ -140,7 +140,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
               )}
             </h3>
             <p className="mt-1 text-sm text-[color:var(--white)]/80">{renderAuthorsBold(item.authors)}</p>
-            <p className="mt-1 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
+            <div className="mt-1 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
               {item.type ? (
                 <Badge
                   className="text-xs whitespace-nowrap"
@@ -182,7 +182,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   <span>{item.year}</span>
                 </span>
               </Tooltip>
-            </p>
+            </div>
           </div>
           {/* Removed first-author badge */}
         </div>
@@ -234,7 +234,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   key={`${a.href}-${idx}`}
                   href={a.href}
                   target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noreferrer' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words will-change-transform hover:-translate-y-0.5"
                   style={{
                     color: accent,
@@ -265,6 +265,8 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
       {/* Modal with full details (Radix Dialog for consistency) */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-none w-[min(48rem,94vw)] p-0 overflow-hidden">
+          <DialogTitle className="sr-only">Publication Details</DialogTitle>
+          <DialogDescription className="sr-only">Full details and resources for the selected publication.</DialogDescription>
           <Card
             className="modal-card p-5 md:p-6 flex flex-col max-h-[85vh] overflow-hidden"
             style={{ backgroundColor: 'color-mix(in oklab, var(--black) 84%, transparent)' }}
@@ -284,7 +286,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
               </DialogClose>
             </div>
                   <p className="mt-1 text-sm text-[color:var(--white)]/80">{renderAuthorsBold(item.authors)}</p>
-                  <p className="mt-2 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
+                  <div className="mt-2 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
                     {item.type ? (
                       <Badge
                         className="text-xs whitespace-nowrap"
@@ -327,7 +329,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                         <span>{item.year}</span>
                       </span>
                     </Tooltip>
-                  </p>
+                  </div>
 
                   {item.tags?.length ? (
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -354,7 +356,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                           <a
                             href={item.url}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 max-w-full whitespace-normal break-words"
                             style={{
                               color: accent,

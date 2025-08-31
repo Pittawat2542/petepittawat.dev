@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type React from 'react';
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from './ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose, DialogTitle, DialogDescription } from './ui/dialog';
 import SearchInput from './ui/SearchInput';
 import { Badge } from './ui/badge';
 import { cn } from '../lib/utils';
@@ -144,8 +144,8 @@ function highlightTitle(title: string, positions?: number[]) {
   return out;
 }
 
-export default function SearchModal() {
-  const [open, setOpen] = useState(false);
+export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean } = {}) {
+  const [open, setOpen] = useState(!!autoOpen);
   const [q, setQ] = useState('');
   const [items, setItems] = useState<Item[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -153,6 +153,13 @@ export default function SearchModal() {
   const [active, setActive] = useState(0);
   const [typeFilter, setTypeFilter] = useState<Set<Item['type']>>(new Set(['blog','project','publication','talk','page']));
   const [recent, setRecent] = useState<string[]>([]);
+
+  // If requested, open immediately on mount
+  useEffect(() => {
+    if (autoOpen) setOpen(true);
+    // only run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Load index on first open
   useEffect(() => {
@@ -323,6 +330,8 @@ export default function SearchModal() {
         </button>
       </DialogTrigger>
       <DialogContent className="max-w-none w-[min(72rem,92vw)] p-0 overflow-hidden top-[12vh] -translate-y-0 sm:top-1/2 sm:-translate-y-1/2">
+        <DialogTitle className="sr-only">Site Search</DialogTitle>
+        <DialogDescription className="sr-only">Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate results.</DialogDescription>
         <div className="p-4 md:p-5 lg:p-6 border-b border-border">
           <div className="flex items-center gap-2">
             <div className="flex-1">

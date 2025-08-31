@@ -31,7 +31,7 @@ export function TalkCard({ item }: { item: Talk }) {
         <div className="flex items-center gap-2 text-sm text-[color:var(--white)]/80">
           <Users size={14} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
           {item.audienceUrl ? (
-            <a href={item.audienceUrl} target="_blank" rel="noreferrer" className="text-[color:var(--accent)] hover:underline link-glow">
+            <a href={item.audienceUrl} target="_blank" rel="noopener noreferrer" className="text-[color:var(--accent)] hover:underline link-glow">
               {item.audience}
             </a>
           ) : (
@@ -61,7 +61,7 @@ export function TalkCard({ item }: { item: Talk }) {
                   href={r.href}
                   {...(r.download ? { download: '' } : {})}
                   target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noreferrer' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple will-change-transform hover:-translate-y-0.5"
                   style={{
                     color: accent,
