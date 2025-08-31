@@ -31,7 +31,7 @@ export default function BlogCard({ post, featured = false, allPosts = [] }: Read
     <li className={`cursor-pointer rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm group w-full h-full hyphens-auto blog-card ${featured ? 'card-featured' : ''}`}>
       <a
         className="flex flex-col align-middle p-4 md:p-6 h-full text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]"
-        href={`/blog/${post.slug}/`}
+        href={`/blog/${post.slug}`}
       >
         {post.data.coverImage?.src ? (
           <div className="mb-4 md:mb-6 overflow-hidden rounded-xl">
