@@ -10,7 +10,7 @@ import Toc from '../components/Toc.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string; readingTimeMin?: number };
 
-const { title, excerpt, pubDate, coverImage, tags, slug, readingTimeMin } = Astro.props as Props;
+const { title, excerpt, pubDate, coverImage, tags, slug, readingTimeMin, seriesSlug, seriesTitle, seriesOrder } = Astro.props as Props;
 const maxTagsToShow = 6;
 const visibleTags = (tags ?? []).slice(0, maxTagsToShow);
 const hiddenTagCount = Math.max(0, (tags?.length ?? 0) - maxTagsToShow);
@@ -73,6 +73,15 @@ authorSameAs.push(authorUrl);
           },
           image: imageUrl,
           url: canonicalUrl,
+          // Add series information if available
+          ...(seriesSlug && seriesTitle ? {
+            "isPartOf": {
+              "@type": "BlogSeries",
+              "name": seriesTitle,
+              "url": (Astro.site ? new URL(`/series/`, Astro.site).href : '/series/'),
+            },
+            "position": seriesOrder || undefined,
+          } : {}),
         };
         return (
           <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

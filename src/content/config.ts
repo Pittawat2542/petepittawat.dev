@@ -8,6 +8,11 @@ const blog = defineCollection({
 		tags: z.array(z.string()),
 		pubDate: z.coerce.date(),
 		coverImage: image().optional(),
+		// Series support
+		seriesSlug: z.string().optional(),
+		seriesTitle: z.string().optional(),
+		seriesOrder: z.number().optional(),
+		seriesDescription: z.string().optional(),
 	}),
 });
 // Data collections: validate JSON array shape with Zod

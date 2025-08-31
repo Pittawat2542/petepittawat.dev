@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import BlogCard from './BlogCard';
 import type { BlogPost } from '../types';
 import FilterPanel from './ui/FilterPanel';
+import { getAllSeries } from '../lib/series';
 
 type BlogListPageProps = {
   posts: BlogPost[];
@@ -35,6 +36,8 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                         if (sParam === 'oldest' || sParam === 'newest') setSort(sParam);
                         const yearParam = params.get('year');
                         if (yearParam) setFilters((f) => ({ ...f, year: yearParam }));
+                        const seriesParam = params.get('series');
+                        if (seriesParam) setFilters((f) => ({ ...f, series: seriesParam }));
                         // no per/page in URL for pure infinite scroll
                 } catch {}
         }, []);
@@ -78,9 +81,14 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
         const filteredPosts = useMemo(() => {
                 const qLower = q.trim().toLowerCase();
                 let list = posts.filter((post) => {
-                        // Search
+                        // Search (now includes series title)
                         if (qLower) {
-                                const hay = [post.data.title, post.data.excerpt, post.data.tags.join(' ')].join(' ').toLowerCase();
+                                const hay = [
+                                        post.data.title, 
+                                        post.data.excerpt, 
+                                        post.data.tags.join(' '),
+                                        post.data.seriesTitle || ''
+                                ].join(' ').toLowerCase();
                                 if (!hay.includes(qLower)) return false;
                         }
                         // Tag filter (any-match)
@@ -92,6 +100,16 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                         if (filters.year && filters.year !== 'all') {
                                 const y = new Date(post.data.pubDate).getFullYear().toString();
                                 if (y !== filters.year) return false;
+                        }
+                        // Series filter
+                        if (filters.series && filters.series !== 'all') {
+                                if (filters.series === 'standalone') {
+                                        // Show only posts NOT part of a series
+                                        if (post.data.seriesSlug) return false;
+                                } else {
+                                        // Show only posts from the specified series
+                                        if (post.data.seriesSlug !== filters.series) return false;
+                                }
                         }
                         return true;
                 });
@@ -148,10 +166,18 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                 return counts;
         }, [posts, tags]);
 
-        // Prepare year filter options
-        const yearOptions = useMemo(() => {
+        // Prepare filter options
+        const filterOptions = useMemo(() => {
                 const years = Array.from(new Set(posts.map(p => new Date(p.data.pubDate).getFullYear().toString()))).sort().reverse();
-                return { year: years } as Record<string, string[]>;
+                
+                // Get all series
+                const allSeries = getAllSeries(posts);
+                const seriesOptions = ['standalone', ...allSeries.map(s => s.slug)];
+                
+                return { 
+                        year: years,
+                        series: seriesOptions
+                } as Record<string, string[]>;
         }, [posts]);
 
        return (
@@ -159,10 +185,10 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                         <FilterPanel
                                 searchValue={q}
                                 onSearchChange={setQ}
-                                searchPlaceholder='Search title, excerpt, or tags...'
+                                searchPlaceholder='Search title, excerpt, series, or tags...'
                                 filters={filters}
                                 onFiltersChange={setFilters}
-                                filterOptions={yearOptions}
+                                filterOptions={filterOptions}
                                 availableTags={tags}
                                 selectedTags={selectedTags}
                                 onTagsChange={setSelectedTags}
@@ -179,7 +205,7 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5 md:gap-8 py-3 md:py-4 mt-2 md:mt-4 w-full'>
                                 {pagePosts.map((post, index) => (
                                   <div key={post.slug} className="stagger-fade-in" style={{ animationDelay: `${Math.min(index * 100, 800)}ms` }}>
-                                    <BlogCard post={post} />
+                                    <BlogCard post={post} allPosts={posts} />
                                   </div>
                                 ))}
                                 {loadingMore && (
