@@ -662,8 +662,8 @@ html {
     font-display: swap; /* Prevents invisible text during font load */
   }
   
-  /* Prevent CLS by providing fallback dimensions */
-  img {
+  /* Prevent CLS by providing fallback dimensions; don't gate above-the-fold images */
+  img:not([fetchpriority="high"]):not([loading="eager"]) {
     content-visibility: auto;
     contain-intrinsic-size: 0 200px; /* Prevents CLS on lazy-loaded images */
   }
@@ -687,6 +687,9 @@ html {
   /* Let reveal containers paint outside bounds */
   .reveal { contain: none; }
 }
+
+/* Utility: force content-visibility visible (for LCP-critical media) */
+.no-cv { content-visibility: visible; contain-intrinsic-size: auto; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
