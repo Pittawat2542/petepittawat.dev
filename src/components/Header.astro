@@ -4,7 +4,15 @@ import { SITE_TITLE } from '../consts';
 import SearchModal from './SearchModal.tsx';
 import { BookOpenText, FolderKanban, FileText, Mic2, User2 } from 'lucide-astro';
 
-const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+// Normalize current path to work with both `build.format: "file"` (e.g. "/talks.html")
+// and directory-style paths (e.g. "/talks/"). This ensures active nav detection works.
+let current = Astro.url.pathname
+  // Map "/index.html" to root
+  .replace(/\/index\.html$/, '/')
+  // Strip any .html extension (e.g., "/talks.html" -> "/talks")
+  .replace(/\.html$/, '')
+  // Remove any trailing slashes
+  .replace(/\/+$/, '') || '/';
 const links = [
   { href: '/blog', label: 'Blog' },
   { href: '/projects', label: 'Projects' },
@@ -52,11 +60,11 @@ const isActive = (href: string) =>
 
         <!-- Desktop nav -->
         <ul class="ml-3 sm:ml-4 md:ml-6 hidden md:flex items-center gap-1">
-          {links.map(({ href, label }) => (
-            <li>
-              <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label} class="snap-start nav-link">
-                <span class="inline-flex items-center gap-1.5">
-                  {isActive(href) && (
+            {links.map(({ href, label }) => (
+              <li>
+                <HeaderLink href={href} isActive={isActive(href)} ariaLabel={label} class="snap-start nav-link">
+                  <span class="inline-flex items-center gap-1.5">
+                    {isActive(href) && (
                     <>
                       {label === 'Blog' && (<BookOpenText class="h-4 w-4 opacity-80 shrink-0" aria-hidden="true" />)}
                       {label === 'Projects' && (<FolderKanban class="h-4 w-4 opacity-80 shrink-0" aria-hidden="true" />)}
@@ -101,10 +109,14 @@ const isActive = (href: string) =>
             {links.map(({ href, label }) => (
               <li>
                 <a href={href}
-                   class="flex items-center gap-2 px-3 py-3 text-sm font-medium text-[color:var(--white)]/85 hover:text-[color:var(--white)]
+                   class={`flex items-center gap-2 px-3 py-3 text-sm font-medium min-h-[44px]
+                          text-[color:var(--white)]/85 hover:text-[color:var(--white)]
                           hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
-                          focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 min-h-[44px]"
-                   aria-current={isActive(href) ? 'page' : undefined}>
+                          focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
+                          ${isActive(href) ? 'bg-[color:var(--white)]/10 text-[color:var(--white)] shadow-inner pointer-events-none cursor-default' : ''}`}
+                   data-active={isActive(href) ? 'true' : undefined}
+                   aria-current={isActive(href) ? 'page' : undefined}
+                   tabindex={isActive(href) ? -1 : undefined}>
                   {label === 'Blog' && (<BookOpenText class="h-4 w-4 opacity-80" aria-hidden="true" />)}
                   {label === 'Projects' && (<FolderKanban class="h-4 w-4 opacity-80" aria-hidden="true" />)}
                   {label === 'Publications' && (<FileText class="h-4 w-4 opacity-80" aria-hidden="true" />)}
