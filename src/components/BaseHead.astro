@@ -114,6 +114,20 @@ const { title, description, image = '/home-og-image.jpeg', type = 'website', pub
 <link rel="canonical" href={canonicalURL} />
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
 
+<!-- Defer ambient background overlays until after first paint (avoid white-ish overlay on mobile first load) -->
+<script is:inline>
+  (function(){
+    var enable = function(){
+      try { document.documentElement.classList.add('ambient-ready'); } catch {}
+    };
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      requestAnimationFrame(enable);
+    } else {
+      window.addEventListener('DOMContentLoaded', function(){ requestAnimationFrame(enable); }, { once: true });
+    }
+  })();
+  </script>
+
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />

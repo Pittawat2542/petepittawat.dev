@@ -91,7 +91,7 @@ body::before {
     var(--ambient-glow-secondary),
     var(--ambient-glow-tertiary),
     var(--black);
-  opacity: 0.8;
+  opacity: 0; /* enabled after first paint via .ambient-ready */
   will-change: transform;
   animation: ambient-drift 20s ease-in-out infinite alternate;
   contain: layout style paint;
@@ -131,7 +131,7 @@ body::after {
     radial-gradient(ellipse 60% 80% at 80% 70%, rgba(139, 92, 246, 0.025), transparent 70%),
     radial-gradient(ellipse 70% 70% at 50% 50%, rgba(6, 182, 212, 0.02), transparent 80%),
     radial-gradient(ellipse 100% 40% at 10% 90%, rgba(16, 185, 129, 0.015), transparent 60%);
-  opacity: 0.6;
+  opacity: 0; /* enabled after first paint via .ambient-ready */
   will-change: transform;
   animation: mesh-drift 25s ease-in-out infinite alternate-reverse;
 }
@@ -150,6 +150,16 @@ body::after {
   100% {
     transform: translateX(2%) translateY(0%) scale(1.05) rotate(0.1deg);
   }
+}
+
+/* Enable ambient layers after first paint to avoid initial white-ish overlay, esp. on mobile */
+html.ambient-ready body::before { opacity: 0.55; }
+html.ambient-ready body::after { opacity: 0.25; }
+
+/* Tone down or disable overlays on small screens */
+@media (max-width: 640px) {
+  html.ambient-ready body::after { display: none; }
+  html.ambient-ready body::before { opacity: 0.35; animation: none; }
 }
 
 /* Generic links */
@@ -406,6 +416,8 @@ html {
   transform: translateY(-6px) scale(1.01);
   box-shadow: 0 16px 28px -12px rgba(0, 0, 0, 0.35);
 }
+
+/* Remove blog-card expansion */
 
 /* Project card animations */
 .project-card {
@@ -1057,6 +1069,22 @@ html {
   box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.5);
 }
 
+
+/* Multi-line clamp with smooth fade-out (improves long description cut-off) */
+.clamp-fade-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+@supports (-webkit-mask-image: linear-gradient(#000, transparent)) or (mask-image: linear-gradient(#000, transparent)) {
+  .clamp-fade-3 {
+    -webkit-mask-image: linear-gradient(180deg, #000 65%, rgba(0,0,0,0.7) 85%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 65%, rgba(0,0,0,0.7) 85%, transparent 100%);
+  }
+}
+
 /* ScrollTop microinteraction - hover effects only */
 #scroll-top:hover {
   transform: translateY(-2px) !important;
@@ -1091,3 +1119,6 @@ html {
 .prose .callout.warn { border-color: color-mix(in oklab, var(--accent-about) 55%, transparent); }
 .prose .callout.note { border-color: color-mix(in oklab, var(--accent-blog) 55%, transparent); }
   
+/* Avatar helpers: keep profile images perfectly round */
+.avatar-round { border-radius: 9999px; aspect-ratio: 1 / 1; object-fit: cover; }
+.aspect-square { aspect-ratio: 1 / 1; }
