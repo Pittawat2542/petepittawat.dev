@@ -70,7 +70,6 @@ body {
 	background-color: var(--black);
 	word-wrap: break-word;
 	overflow-wrap: break-word;
-  transition: background-color 200ms ease, color 200ms ease;
   position: relative;
 }
 
@@ -155,6 +154,8 @@ body::after {
 /* Enable ambient layers after first paint to avoid initial white-ish overlay, esp. on mobile */
 html.ambient-ready body::before { opacity: 0.55; }
 html.ambient-ready body::after { opacity: 0.25; }
+/* Also enable body color transitions only after first paint to avoid white flash */
+html.ambient-ready body { transition: background-color 200ms ease, color 200ms ease; }
 
 /* Tone down or disable overlays on small screens */
 @media (max-width: 640px) {
