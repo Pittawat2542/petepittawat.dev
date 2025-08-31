@@ -1,13 +1,17 @@
 ---
+import type { ImageMetadata } from 'astro';
+
+type FigureSrc = string | ImageMetadata | { src: string };
+
 interface Props {
-  src: any; // string URL or imported asset
+  src: FigureSrc; // string URL or imported asset
   alt?: string;
   caption?: string;
 }
 const { src, alt = '', caption } = Astro.props as Props;
 const imgSrc = typeof src === 'string'
   ? src
-  : (src && typeof src === 'object' && 'src' in src ? (src as any).src : String(src));
+  : (src && typeof src === 'object' && 'src' in src ? (src as { src: string }).src : String(src));
 ---
 
 <figure class="mdx-figure">

@@ -14,8 +14,10 @@ type Item = {
   url: string;
   tags?: string[];
   date?: string | number;
-  extra?: Record<string, any>;
+  extra?: Record<string, string | number | boolean | null | undefined>;
 };
+
+type AugmentedItem = Item & { __titlePositions?: number[] };
 
 function typeColor(type: Item['type']) {
   switch (type) {
@@ -32,7 +34,7 @@ function typeColor(type: Item['type']) {
   }
 }
 
-const typeIcon: Record<Item['type'], React.ElementType> = {
+const typeIcon: Record<Item['type'], React.ComponentType<{ size?: number }>> = {
   blog: BookText,
   project: FolderKanban,
   publication: ScrollText,
@@ -144,7 +146,7 @@ function highlightTitle(title: string, positions?: number[]) {
   return out;
 }
 
-export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean } = {}) {
+export default function SearchModal({ autoOpen = false, hideTriggers = false, openKey }: { autoOpen?: boolean; hideTriggers?: boolean; openKey?: number } = {}) {
   const [open, setOpen] = useState(!!autoOpen);
   const [q, setQ] = useState('');
   const [items, setItems] = useState<Item[]>([]);
@@ -160,6 +162,11 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
     // only run once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Programmatic open when key changes
+  useEffect(() => {
+    if (openKey !== undefined) setOpen(true);
+  }, [openKey]);
 
   // Load index on first open
   useEffect(() => {
@@ -209,7 +216,7 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
   };
 
   // Compute filtered results early so effects can depend on it safely
-  const filtered = useMemo(() => {
+  const filtered = useMemo<AugmentedItem[]>(() => {
     const allowed = new Set(typeFilter);
     const base = items.filter((it) => allowed.has(it.type));
     const ql = q.trim();
@@ -220,11 +227,11 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
       if (res) matches.push(res);
     }
     matches.sort((a, b) => b.score - a.score);
-    return matches.map((m) => ({ ...m.item, __titlePositions: m.titlePositions } as any));
+    return matches.map((m) => ({ ...m.item, __titlePositions: m.titlePositions }));
   }, [items, q, typeFilter]);
 
   // Helper to build href adding ?q before any #fragment
-  const buildHref = (it: any, qInput: string) => {
+  const buildHref = (it: AugmentedItem, qInput: string) => {
     const raw = String(it.url || '');
     const hasHash = raw.includes('#');
     const [base, hash] = hasHash ? [raw.slice(0, raw.indexOf('#')), raw.slice(raw.indexOf('#'))] : [raw, ''];
@@ -244,7 +251,7 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
       const key = e.key;
-      const results = filtered as any[];
+      const results = filtered;
       if (!results.length) return;
       if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'PageDown' || key === 'PageUp' || key === 'Home' || key === 'End') {
         e.preventDefault();
@@ -256,7 +263,7 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
       if (key === 'Home') setActive(0);
       if (key === 'End') setActive(results.length - 1);
       if (key === 'Enter') {
-        const it: any = results[active];
+        const it = results[active];
         if (it) {
           const href = buildHref(it, q);
           saveRecent((Object.prototype.hasOwnProperty.call(it, 'title') && it.type !== 'page') ? it.title : q);
@@ -286,7 +293,7 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
     return map;
   }, [items]);
 
-  const types: { key: Item['type']; label: string; Icon: any }[] = [
+  const types: { key: Item['type']; label: string; Icon: React.ComponentType<{ size?: number }> }[] = [
     { key: 'blog', label: 'Blog', Icon: BookText },
     { key: 'project', label: 'Projects', Icon: FolderKanban },
     { key: 'publication', label: 'Publications', Icon: ScrollText },
@@ -298,37 +305,41 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
 
   return (
     <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setQ(''); }}>
-      <DialogTrigger asChild>
-        <button
-          className={cn(
-            'hidden md:inline-flex items-center gap-2 rounded-full px-3 py-2',
-            'text-sm hover:bg-[color:var(--white)]/5 transition-colors',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30'
-          )}
-          aria-label="Open search"
-          title="Search (⌘/Ctrl + K)"
-        >
-          <SearchIcon size={16} className="opacity-80" />
-          <span className="opacity-90">Search</span>
-          <span className="ml-2 hidden lg:inline-flex items-center gap-1 rounded-md border border-white/10 px-1.5 py-0.5 text-xs text-white/70">
-            <Command size={12} />K
-          </span>
-        </button>
-      </DialogTrigger>
+      {!hideTriggers && (
+        <DialogTrigger asChild>
+          <button
+            className={cn(
+              'hidden md:inline-flex items-center gap-2 rounded-full px-3 py-2',
+              'text-sm hover:bg-[color:var(--white)]/5 transition-colors',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30'
+            )}
+            aria-label="Open search"
+            title="Search (⌘/Ctrl + K)"
+          >
+            <SearchIcon size={16} className="opacity-80" />
+            <span className="opacity-90">Search</span>
+            <span className="ml-2 hidden lg:inline-flex items-center gap-1 rounded-md border border-white/10 px-1.5 py-0.5 text-xs text-white/70">
+              <Command size={12} />K
+            </span>
+          </button>
+        </DialogTrigger>
+      )}
       {/* Mobile icon trigger */}
-      <DialogTrigger asChild>
-        <button
-          className={cn(
-            'md:hidden inline-flex items-center justify-center rounded-full p-2',
-            'hover:bg-[color:var(--white)]/10 focus-visible:outline-none',
-            'focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30'
-          )}
-          aria-label="Open search"
-          title="Search"
-        >
-          <SearchIcon size={18} className="opacity-90" />
-        </button>
-      </DialogTrigger>
+      {!hideTriggers && (
+        <DialogTrigger asChild>
+          <button
+            className={cn(
+              'md:hidden inline-flex items-center justify-center rounded-full p-2',
+              'hover:bg-[color:var(--white)]/10 focus-visible:outline-none',
+              'focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30'
+            )}
+            aria-label="Open search"
+            title="Search"
+          >
+            <SearchIcon size={18} className="opacity-90" />
+          </button>
+        </DialogTrigger>
+      )}
       <DialogContent className="max-w-none w-[min(72rem,92vw)] p-0 overflow-hidden top-[12vh] -translate-y-0 sm:top-1/2 sm:-translate-y-1/2">
         <DialogTitle className="sr-only">Site Search</DialogTitle>
         <DialogDescription className="sr-only">Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate results.</DialogDescription>
@@ -451,7 +462,7 @@ export default function SearchModal({ autoOpen = false }: { autoOpen?: boolean }
           )}
           {loaded && q.trim() !== '' && filtered.length > 0 && (
             <ul ref={listRef} className="divide-y divide-border" role="listbox" aria-activedescendant={`sr-${active}`}>
-              {filtered.slice(0, 50).map((it: any, idx: number) => (
+              {filtered.slice(0, 50).map((it, idx: number) => (
                 <li id={`sr-${idx}`} key={it.id} role="option" aria-selected={idx === active} className={cn(idx === active && 'bg-white/10')}>
                   <a
                     href={buildHref(it, q)}

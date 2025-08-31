@@ -1,8 +1,8 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import SearchModal from '../components/SearchModal';
 
 let root: ReturnType<typeof createRoot> | null = null;
+let seq = 0;
 
 export function mountSearchModal() {
   let container = document.getElementById('search-modal-root');
@@ -14,6 +14,6 @@ export function mountSearchModal() {
   if (!root) {
     root = createRoot(container);
   }
-  const Modal = SearchModal as unknown as React.ComponentType<{ autoOpen?: boolean }>;
-  root.render(React.createElement(Modal, { autoOpen: true }));
+  seq += 1;
+  root.render(<SearchModal hideTriggers autoOpen openKey={seq} />);
 }

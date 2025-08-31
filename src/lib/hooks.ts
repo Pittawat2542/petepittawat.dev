@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 
 export interface FilterOptions<T> {
   searchFields: (item: T) => string[];
-  filterFields?: Record<string, (item: T) => any>;
+  // Returns a primitive or array of primitives suitable for equality matching
+  filterFields?: Record<string, (item: T) => string | number | boolean | Array<string | number | boolean>>;
 }
 
 export function useDataFilter<T>(items: T[], options: FilterOptions<T>) {
@@ -19,21 +20,16 @@ export function useDataFilter<T>(items: T[], options: FilterOptions<T>) {
           const getter = options.filterFields?.[key];
           if (getter) {
             const v = getter(item);
-            if (Array.isArray(v)) {
-              if (!v.includes(value)) return false;
-            } else {
-              if (String(v) !== value) return false;
-            }
+            const arr = Array.isArray(v) ? v : [v];
+            if (!arr.map(String).includes(value)) return false;
           } else {
-            const v = (item as any)[key];
-            if (Array.isArray(v)) {
-              if (!v.includes(value)) return false;
-            } else {
-              if (String(v) !== value) return false;
-            }
+            // Fallback: try to read property by key (best-effort)
+            const v = (item as unknown as Record<string, unknown>)[key];
+            const arr = Array.isArray(v) ? v : [v];
+            if (!arr.map(String).includes(value)) return false;
           }
         }
-        
+
         // Apply search
         if (!qLower) return true;
         const hay = options.searchFields(item).join(' ').toLowerCase();
