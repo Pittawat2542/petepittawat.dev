@@ -81,10 +81,10 @@ html, body { overflow-x: hidden; }
 body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -100px;
+  left: -100px;
+  width: 120%;
+  height: 120%;
   z-index: -2;
   background:
     var(--ambient-glow-primary),
@@ -663,14 +663,16 @@ html {
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Optimize compositing layers */
-  .reveal,
+  /* Optimize compositing layers (avoid paint containment on .reveal to prevent clipping of hero glows) */
   .glass-card,
   .blog-card,
   .project-card {
     contain: layout style paint;
     /* Do not force GPU compositing globally; keep transforms lightweight */
   }
+
+  /* Let reveal containers paint outside bounds */
+  .reveal { contain: none; }
 }
 
 /* Respect reduced motion */
@@ -1065,24 +1067,6 @@ html {
 /* Glass Section wrapper: subtle animated glow backdrop */
 .glass-section {
   position: relative;
-}
-.glass-section::before {
-  content: '';
-  position: absolute;
-  /* Prevent the decorative glow from extending below the section,
-     which created extra scrollable space after the footer. */
-  inset: -10% -4% 0 -4%;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 60% at 30% 20%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%),
-    radial-gradient(50% 50% at 80% 10%, color-mix(in oklab, var(--white) 10%, transparent), transparent 60%),
-    radial-gradient(70% 70% at 70% 80%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%);
-  filter: blur(28px) saturate(120%);
-  opacity: 0.45;
-}
-@media (prefers-reduced-motion: reduce) {
-  .glass-section::before { filter: blur(18px) saturate(110%); }
 }
 
 /* Prose callouts */
