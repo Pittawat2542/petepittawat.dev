@@ -42,8 +42,9 @@ export default function BlogCard({ post, featured = false, allPosts = [] }: Read
               height={post.data.coverImage.height}
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
               sizes="(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw"
-              alt={post.data.title}
+              alt={`Cover image for article: ${post.data.title}`}
             />
           </div>
         ) : null}

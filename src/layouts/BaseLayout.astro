@@ -25,6 +25,8 @@ const ogImage = Astro.site
 		<BaseHead title={title} description={description} image={ogImage} type={type} publishedTime={publishedTime} tags={tags} />
 		<slot name="head" />
 		<link rel='sitemap' href='/sitemap-index.xml' />
+		<!-- Preload critical resources -->
+		<link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
 	</head>
 
         <body>
@@ -35,33 +37,60 @@ const ogImage = Astro.site
                 <Footer />
                 <ScrollTop />
                 <script>
-                  // Reveal-on-scroll for elements with `.reveal` class
-                  const io = new IntersectionObserver(
-                    (entries) => {
-                      for (const e of entries) {
-                        if (e.isIntersecting) e.target.classList.add('reveal-visible');
-                      }
-                    },
-                    { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }
-                  );
-                  for (const el of document.querySelectorAll('.reveal')) io.observe(el);
+                  // Performance optimized initialization
+                  (function() {
+                    // Reveal-on-scroll for elements with `.reveal` class - optimized with RAF
+                    const io = new IntersectionObserver(
+                      (entries) => {
+                        for (const e of entries) {
+                          if (e.isIntersecting) {
+                            requestAnimationFrame(() => {
+                              e.target.classList.add('reveal-visible');
+                            });
+                            io.unobserve(e.target); // Stop observing once revealed
+                          }
+                        }
+                      },
+                      { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }
+                    );
+                    
+                    // Batch DOM queries for better performance
+                    const initReveal = () => {
+                      const elements = document.querySelectorAll('.reveal');
+                      elements.forEach(el => io.observe(el));
+                    };
 
-                  // Security: ensure rel for target=_blank links
-                  const fixExternalRel = () => {
-                    try {
-                      document.querySelectorAll('a[target="_blank"]').forEach((a) => {
-                        const current = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
-                        if (!current.includes('noopener')) current.push('noopener');
-                        if (!current.includes('noreferrer')) current.push('noreferrer');
-                        a.setAttribute('rel', current.join(' '));
+                    // Security: ensure rel for target=_blank links - optimized
+                    const fixExternalRel = () => {
+                      try {
+                        const links = document.querySelectorAll('a[target="_blank"]');
+                        
+                        links.forEach((a) => {
+                          const current = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
+                          if (!current.includes('noopener')) current.push('noopener');
+                          if (!current.includes('noreferrer')) current.push('noreferrer');
+                          a.setAttribute('rel', current.join(' '));
+                        });
+                      } catch (e) {
+                        console.warn('Failed to fix external link rels:', e);
+                      }
+                    };
+                    
+                    // Optimize initialization timing
+                    if (document.readyState === 'loading') {
+                      document.addEventListener('DOMContentLoaded', () => {
+                        requestAnimationFrame(() => {
+                          initReveal();
+                          fixExternalRel();
+                        });
                       });
-                    } catch {}
-                  };
-                  if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', fixExternalRel);
-                  } else {
-                    fixExternalRel();
-                  }
+                    } else {
+                      requestAnimationFrame(() => {
+                        initReveal();
+                        fixExternalRel();
+                      });
+                    }
+                  })();
                 </script>
         </body>
 </html>

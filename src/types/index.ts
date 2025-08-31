@@ -31,19 +31,8 @@ export type Talk = {
   tags: string[];
 };
 
-export type BlogPost = {
-  id: string;
-  body: string;
-  slug: string;
-  collection: string;
-  data: {
-    title: string;
-    excerpt: string;
-    tags: string[];
-    pubDate: Date;
-    coverImage?: import('astro').ImageMetadata;
-  };
-};
+// Use Astro's built-in CollectionEntry type for consistency
+export type BlogPost = import('astro:content').CollectionEntry<'blog'>;
 
 export type ProjectLink = {
   label: string;
