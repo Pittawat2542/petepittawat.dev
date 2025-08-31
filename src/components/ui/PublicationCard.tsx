@@ -1,11 +1,11 @@
 import { ArrowUpRight, Building2, CalendarDays, Code2, Database, ExternalLink, Video, X } from 'lucide-react';
 import { Dialog, DialogClose, DialogContent } from './dialog';
-import { highlightAuthorNames, isFirstAuthor } from '../../lib';
+import { highlightAuthorNames } from '../../lib';
 import { useEffect, useState } from 'react';
 
 import { Badge } from './badge';
 import { Card } from './card';
-import { FIRST_AUTHOR_TITLE } from '../../lib/constants';
+// Removed first-author highlighting per request
 import type { Publication } from '../../types';
 import Tooltip from './tooltip';
 
@@ -36,14 +36,33 @@ function typeAccentVar(type?: string) {
 }
 
 export function PublicationCard({ item, featured = false }: { item: Publication; featured?: boolean }) {
-  const firstAuthor = isFirstAuthor(item.authors);
-  const coFirstAuthor = item.title.trim() === FIRST_AUTHOR_TITLE;
-  const highlight = firstAuthor || coFirstAuthor;
-  const badgeLabel = firstAuthor ? 'First author' : coFirstAuthor ? 'Co-first author' : null;
   const [open, setOpen] = useState(false);
   const detailsId = `pub-details-${encodeURIComponent(item.title).replace(/%/g, '')}`;
 
   const accent = typeAccentVar(item.type);
+
+  // Render authors with the site owner's name in bold
+  function renderAuthorsBold(authors: string) {
+    try {
+      const normalized = authors
+        .replace(/\s+(and)\s+/gi, ', ')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const isOwner = (name: string) => {
+        const lower = name.toLowerCase();
+        return lower.includes('pittawat') || lower.includes('taveekitworachai');
+      };
+      return normalized.map((name, idx) => (
+        <span key={`${name}-${idx}`}>
+          {isOwner(name) ? <strong>{name}</strong> : name}
+          {idx < normalized.length - 1 ? ', ' : ''}
+        </span>
+      ));
+    } catch {
+      return highlightAuthorNames(authors);
+    }
+  }
 
   function onCardClick() {
     setOpen(true);
@@ -88,7 +107,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
 
   return (
     <Card
-      className={[`p-4 md:p-5 cursor-pointer publication-card`, highlight ? 'first-author' : '', featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
+      className={[`p-4 md:p-5 cursor-pointer publication-card`, featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -120,7 +139,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 item.title
               )}
             </h3>
-            <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightAuthorNames(item.authors)}</p>
+            <p className="mt-1 text-sm text-[color:var(--white)]/80">{renderAuthorsBold(item.authors)}</p>
             <p className="mt-1 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
               {item.type ? (
                 <Badge
@@ -165,14 +184,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
               </Tooltip>
             </p>
           </div>
-          {/* First author badge */}
-          <div className="flex items-center gap-2 sm:flex-col sm:items-end sm:gap-2">
-            {badgeLabel && (
-              <Badge className="text-[color:var(--accent)] font-semibold text-xs py-1 px-2 whitespace-nowrap shrink-0" variant="outline">
-                {badgeLabel}
-              </Badge>
-            )}
-          </div>
+          {/* Removed first-author badge */}
         </div>
         
         {item.tags?.length ? (
@@ -271,7 +283,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                 Close
               </DialogClose>
             </div>
-                  <p className="mt-1 text-sm text-[color:var(--white)]/80">{highlightAuthorNames(item.authors)}</p>
+                  <p className="mt-1 text-sm text-[color:var(--white)]/80">{renderAuthorsBold(item.authors)}</p>
                   <p className="mt-2 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
                     {item.type ? (
                       <Badge

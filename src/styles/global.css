@@ -95,7 +95,7 @@ body::before {
   will-change: transform;
   animation: ambient-drift 20s ease-in-out infinite alternate;
   contain: layout style paint;
-  transform: translateZ(0); /* Force hardware acceleration */
+  /* Avoid forcing a new stacking context with translateZ(0) */
 }
 
 /* Ambient drift animation */
@@ -454,6 +454,62 @@ html {
   color: var(--accent);
 }
 
+/* SVG stroke-based pill outline trace */
+.nav-pill { position: relative; border-radius: 9999px; }
+.nav-outline { position: absolute; inset: 4px; border-radius: inherit; pointer-events: none; }
+.nav-outline-svg { display: block; width: 100%; height: 100%; transform: rotate(-1.6deg); transform-origin: 50% 50%; }
+.nav-outline-path {
+  fill: none;
+  stroke: color-mix(in oklab, var(--accent) 85%, transparent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  transition: stroke-dashoffset 240ms ease-out, opacity 120ms ease-out, stroke 120ms ease-out;
+}
+.nav-pill:hover .nav-outline-path,
+.nav-pill:focus-visible .nav-outline-path {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  stroke: color-mix(in oklab, var(--accent) 90%, transparent);
+}
+/* Default state: no visible outline. Active links are not interactive and have no hover trace. */
+.nav-pill[data-active="true"] { pointer-events: none; cursor: default; }
+.nav-pill[data-active="true"] .nav-outline-path {
+  opacity: 1;
+  stroke-dashoffset: 0;
+  /* Distinct, softer accent-toned outline with hand-drawn dash pattern */
+  stroke: color-mix(in oklab, var(--accent) 70%, transparent);
+  stroke-width: 2;
+}
+.nav-pill[data-active="true"] .nav-outline { inset: -2px; }
+.nav-pill[data-active="true"] .nav-outline-svg { transform: rotate(-1.2deg); }
+
+/* Generic sketch outline utility (for buttons, cards, etc.) */
+.sketch-container { position: relative; }
+.sketch-outline { position: absolute; inset: 4px; border-radius: inherit; pointer-events: none; z-index: 1; }
+.sketch-svg { display: block; width: 100%; height: 100%; transform: rotate(-1.6deg); transform-origin: 50% 50%; }
+.sketch-path {
+  fill: none;
+  stroke: color-mix(in oklab, var(--sketch-color, var(--accent)) 85%, transparent);
+  stroke-width: var(--sketch-stroke, 2);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  transition: stroke-dashoffset 220ms ease-out, opacity 120ms ease-out, stroke 120ms ease-out;
+}
+
+/* Hover/focus trace */
+[data-sketch="hover"]:hover .sketch-path,
+[data-sketch="hover"]:focus-visible .sketch-path { stroke-dashoffset: 0; opacity: 1; }
+
+/* Always visible outline */
+[data-sketch="static"] .sketch-path { stroke-dashoffset: 0; opacity: 1; }
+
 /* Button ripple effect */
 .btn-ripple {
   position: relative;
@@ -570,12 +626,12 @@ html {
 }
 
 .btn-magnetic:hover {
-  transform: translateY(-2px) translateZ(0);
+  transform: translateY(-2px);
   box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-magnetic:active {
-  transform: translateY(0) translateZ(0);
+  transform: translateY(0);
   box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.2);
   transition: all 100ms ease-out;
 }
@@ -613,7 +669,7 @@ html {
   .blog-card,
   .project-card {
     contain: layout style paint;
-    transform: translateZ(0); /* Create compositing layer */
+    /* Do not force GPU compositing globally; keep transforms lightweight */
   }
 }
 
@@ -719,6 +775,12 @@ html {
     box-shadow: 
       0 16px 48px var(--glass-shadow-hover),
       inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* Lift only when the glass-card itself is interactive */
+  a.glass-card:hover,
+  button.glass-card:hover,
+  .glass-card[role="button"]:hover {
     /* Preserve any Tailwind transforms (e.g., centering) and add subtle lift */
     transform:
       translate(var(--tw-translate-x), var(--tw-translate-y))
@@ -995,8 +1057,8 @@ html {
 
 /* ScrollTop microinteraction - hover effects only */
 #scroll-top:hover {
-  transform: translateZ(0) translateY(-2px) !important;
-  -webkit-transform: translateZ(0) translateY(-2px) !important;
+  transform: translateY(-2px) !important;
+  -webkit-transform: translateY(-2px) !important;
   box-shadow: 0 10px 18px -10px rgb(0 0 0 / 0.45);
 }
 

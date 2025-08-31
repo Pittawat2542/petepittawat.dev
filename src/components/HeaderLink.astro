@@ -12,12 +12,19 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   href={href}
   aria-label={ariaLabel}
   aria-current={isActive ? 'page' : undefined}
-  class={`cursor-pointer rounded-full px-3 py-2 text-sm font-medium link-underline inline-flex items-center gap-1.5 leading-none
+  data-active={isActive ? 'true' : undefined}
+  tabindex={isActive ? -1 : undefined}
+  class={`rounded-full px-3 py-2 text-sm font-medium inline-flex items-center gap-1.5 leading-none nav-pill nav-link
           text-[color:var(--white)]/85 hover:text-[color:var(--white)]
           hover:bg-[color:var(--white)]/5 transition-colors duration-150 ease-out
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
-          ${isActive ? 'bg-[color:var(--white)]/10 text-[color:var(--white)] shadow-inner ring-1 ring-[color:var(--white)]/15' : ''}
+          ${isActive ? 'bg-[color:var(--white)]/10 text-[color:var(--white)] shadow-inner pointer-events-none cursor-default' : 'cursor-pointer'}
           ${className}`}
 >
   <slot />
+  <span aria-hidden="true" class="nav-outline">
+    <svg class="nav-outline-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <rect class="nav-outline-path" x="5" y="5" width="90" height="90" rx="45" ry="45" pathLength="100" />
+    </svg>
+  </span>
 </a>

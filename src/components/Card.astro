@@ -14,9 +14,7 @@ const { href, ariaLabel, title, count, linkText, icon, accentColor } = Astro.pro
 
 <li class='h-full'>
   <a href={href} aria-label={ariaLabel}
-    class='group block h-full glass-card rounded-3xl p-5 md:p-6 transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
-           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-           glass-glow hover:glass-surface-elevated'>
+    class='group block h-full glass-card rounded-3xl p-5 md:p-6 transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform'>
     <figure class='relative'>
       <!-- Enhanced glass frame with gradient accents -->
       <div class='rounded-2xl p-3 glass-surface' style={`background: linear-gradient(135deg, var(--${accentColor})/5 0%, transparent 50%);`}>

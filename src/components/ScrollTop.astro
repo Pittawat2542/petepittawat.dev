@@ -127,16 +127,14 @@ const label = 'Back to top';
     -webkit-transform: translateY(0.5rem);
     -webkit-transition: opacity 200ms ease-out, transform 200ms ease-out, -webkit-transform 200ms ease-out;
     transition: opacity 200ms ease-out, transform 200ms ease-out;
-    /* Force hardware acceleration on Safari */
-    -webkit-transform: translateZ(0) translateY(0.5rem);
-    transform: translateZ(0) translateY(0.5rem);
+    /* Avoid forcing a new compositing layer */
     will-change: opacity, transform;
   }
   
   #scroll-top[data-visible="true"] {
     opacity: 1;
-    transform: translateZ(0) translateY(0);
-    -webkit-transform: translateZ(0) translateY(0);
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
     pointer-events: auto;
   }
   
