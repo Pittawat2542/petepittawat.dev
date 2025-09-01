@@ -55,12 +55,39 @@ export default defineConfig({
 			reportCompressedSize: false, // Disable for faster builds
 			rollupOptions: {
 				output: {
-					manualChunks: (id) => {
-						if (id.includes('node_modules')) {
-							if (id.includes('react')) return 'react-vendor';
-							if (id.includes('@radix-ui')) return 'radix-vendor';
-							if (id.includes('lucide')) return 'lucide-vendor';
-							return 'vendor';
+					// Split vendor by real package (robust for pnpm store),
+					// and co-locate React + scheduler to avoid runtime mismatches.
+					manualChunks(id) {
+						if (!id.includes('node_modules')) return;
+						// Keep React stack together
+						if (id.includes('/react-dom/')) return 'vendor-react';
+						if (id.includes('/react/')) return 'vendor-react';
+						if (id.includes('/scheduler/')) return 'vendor-react';
+						// Other common groups
+						if (id.includes('/@radix-ui/')) return 'vendor-radix-ui';
+						if (id.includes('/lucide-')) return 'vendor-lucide';
+
+						// Extract the actual package name even with pnpm's .pnpm indirection
+						try {
+							const after = id.split('node_modules/')[1];
+							const segs = after.split('/');
+							let pkg;
+							if (segs[0] === '.pnpm') {
+								const nmIdx = segs.indexOf('node_modules');
+								if (nmIdx !== -1 && nmIdx + 1 < segs.length) {
+									pkg = segs[nmIdx + 1];
+									if (pkg?.startsWith('@') && nmIdx + 2 < segs.length) {
+										pkg = `${pkg}/${segs[nmIdx + 2]}`;
+									}
+								}
+							} else {
+								pkg = segs[0].startsWith('@') ? `${segs[0]}/${segs[1]}` : segs[0];
+							}
+							if (!pkg) return;
+							return `vendor-${pkg.replace('@', '').replace('/', '-')}`;
+						} catch {
+							// Let Vite decide if we can't parse
+							return;
 						}
 					},
 				},

@@ -20,15 +20,25 @@ const stats = {
 	publications: publications.length,
 	talks: talks.length,
 };
+// Precompute hero image variants to enable accurate preload with imagesrcset
+const heroW192 = await getImage({ src: profileImage, width: 192, format: 'webp' });
+const heroW224 = await getImage({ src: profileImage, width: 224, format: 'webp' });
+const heroW384 = await getImage({ src: profileImage, width: 384, format: 'webp' });
+const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' });
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   { /* Preload likely LCP image for GitHub Pages to shorten the chain */ }
-  {(
-    await getImage({ src: profileImage, width: 384, format: 'webp' })
-  ) && (
+  {heroW384 && (
     <Fragment slot="head">
-      <link rel="preload" as="image" href={(await getImage({ src: profileImage, width: 384, format: 'webp' })).src} imagesizes="(min-width: 768px) 14rem, 12rem" />
+      <link
+        rel="preload"
+        as="image"
+        fetchpriority="high"
+        href={heroW384.src}
+        imagesrcset={`${heroW192.src} 192w, ${heroW224.src} 224w, ${heroW384.src} 384w, ${heroW448.src} 448w`}
+        imagesizes="(min-width: 768px) 14rem, 12rem"
+      />
     </Fragment>
   )}
 	<HeroSection />
