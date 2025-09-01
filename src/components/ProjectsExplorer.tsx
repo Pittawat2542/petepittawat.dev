@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Filter from './Filter';
 import type { Project } from '../types';
 import ProjectCard from './ui/ProjectCard';
+import Reveal from './ui/Reveal';
 import { useDataFilter } from '../lib/hooks';
 
 type Props = { items: Project[] };
@@ -21,6 +22,7 @@ export default function ProjectsExplorer({ items }: Props) {
   const [per] = useState<number>(12);
   const [page, setPage] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState(false);
+  const loadTimerRef = useRef<number | null>(null);
 
   const sortedFiltered = useMemo(() => {
     const list = [...filtered];
@@ -89,8 +91,15 @@ export default function ProjectsExplorer({ items }: Props) {
 
   const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-  // Reset page when inputs change
-  useEffect(() => { setPage(1); }, [q, filters, sort]);
+  // Reset page when inputs change; cancel in-flight loads
+  useEffect(() => {
+    setPage(1);
+    if (loadTimerRef.current) {
+      clearTimeout(loadTimerRef.current);
+      loadTimerRef.current = null;
+    }
+    setLoadingMore(false);
+  }, [q, filters, sort]);
 
   const visibleCount = Math.min(sortedFiltered.length, per * page);
   const paged = useMemo(() => sortedFiltered.slice(0, visibleCount), [sortedFiltered, visibleCount]);
@@ -99,9 +108,11 @@ export default function ProjectsExplorer({ items }: Props) {
     if (loadingMore) return;
     if (visibleCount >= sortedFiltered.length) return;
     setLoadingMore(true);
-    setTimeout(() => {
+    if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
+    loadTimerRef.current = window.setTimeout(() => {
       setPage((p) => p + 1);
       setLoadingMore(false);
+      loadTimerRef.current = null;
     }, 250);
   }, [loadingMore, visibleCount, sortedFiltered.length]);
 
@@ -115,7 +126,13 @@ export default function ProjectsExplorer({ items }: Props) {
       }
     }, { rootMargin: '800px 0px' });
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      if (loadTimerRef.current) {
+        clearTimeout(loadTimerRef.current);
+        loadTimerRef.current = null;
+      }
+    };
   }, [loadNext]);
 
   return (
@@ -139,9 +156,9 @@ export default function ProjectsExplorer({ items }: Props) {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {paged.map((item, i) => (
-          <div id={`project-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+          <Reveal id={`project-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 100, 800)} className="target-highlight">
             <ProjectCard item={item} />
-          </div>
+          </Reveal>
         ))}
         {loadingMore && (
           Array.from({ length: Math.min(12, Math.max(0, sortedFiltered.length - visibleCount)) }).map((_, i) => (

@@ -71,10 +71,24 @@ const ogImage = Astro.site
                       { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }
                     );
                     
-                    // Batch DOM queries for better performance
+                    // Observe existing and future .reveal elements
                     const initReveal = () => {
                       const elements = document.querySelectorAll('.reveal');
                       elements.forEach(el => io.observe(el));
+
+                      // Observe future additions
+                      const mo = new MutationObserver((mutations) => {
+                        for (const m of mutations) {
+                          m.addedNodes.forEach((node) => {
+                            if (!(node instanceof Element)) return;
+                            if (node.classList?.contains('reveal')) io.observe(node);
+                            node.querySelectorAll?.('.reveal').forEach((el) => io.observe(el));
+                          });
+                        }
+                      });
+                      try {
+                        mo.observe(document.body, { childList: true, subtree: true });
+                      } catch {}
                     };
 
                     // Security: ensure rel for target=_blank links - optimized

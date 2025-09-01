@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import BlogCard from './BlogCard';
+import Reveal from './ui/Reveal';
 import type { BlogPost } from '../types';
 import FilterPanel from './ui/FilterPanel';
 import { getAllSeries } from '../lib/series';
@@ -19,6 +20,7 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
         const [per] = useState<number>(12);
         const [page, setPage] = useState<number>(1);
         const [loadingMore, setLoadingMore] = useState(false);
+        const loadTimerRef = useRef<number | null>(null);
 
         // Initialize from URL ?tag=foo&tag=bar or from initialTags
         useEffect(() => {
@@ -121,8 +123,15 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                 return list;
         }, [posts, q, selectedTags, sort, filters]);
 
-        // Reset page when filters/search/sort change
-        useEffect(() => { setPage(1); }, [q, selectedTags, sort, filters]);
+        // Reset page when filters/search/sort change; cancel in-flight loads
+        useEffect(() => {
+          setPage(1);
+          if (loadTimerRef.current) {
+            clearTimeout(loadTimerRef.current);
+            loadTimerRef.current = null;
+          }
+          setLoadingMore(false);
+        }, [q, selectedTags, sort, filters]);
 
         const visibleCount = Math.min(filteredPosts.length, per * page);
         const pagePosts = useMemo(() => filteredPosts.slice(0, visibleCount), [filteredPosts, visibleCount]);
@@ -132,9 +141,11 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
           if (visibleCount >= filteredPosts.length) return;
           setLoadingMore(true);
           // Small delay lets skeletons render for perceived smoothness
-          setTimeout(() => {
+          if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
+          loadTimerRef.current = window.setTimeout(() => {
             setPage((p) => p + 1);
             setLoadingMore(false);
+            loadTimerRef.current = null;
           }, 250);
         }, [loadingMore, visibleCount, filteredPosts.length]);
 
@@ -150,7 +161,13 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
             }
           }, { rootMargin: '800px 0px' });
           io.observe(el);
-          return () => io.disconnect();
+          return () => {
+            io.disconnect();
+            if (loadTimerRef.current) {
+              clearTimeout(loadTimerRef.current);
+              loadTimerRef.current = null;
+            }
+          };
         }, [loadNext]);
 
         // Prepare tag counts
@@ -204,9 +221,9 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                         />
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5 md:gap-8 py-3 md:py-4 mt-2 md:mt-4 w-full'>
                                 {pagePosts.map((post, index) => (
-                                  <div key={post.slug} className="stagger-fade-in" style={{ animationDelay: `${Math.min(index * 100, 800)}ms` }}>
+                                  <Reveal key={post.slug} delayMs={Math.min(index * 100, 800)}>
                                     <BlogCard post={post} allPosts={posts} />
-                                  </div>
+                                  </Reveal>
                                 ))}
                                 {loadingMore && (
                                   Array.from({ length: Math.min(12, Math.max(0, filteredPosts.length - visibleCount)) }).map((_, i) => (

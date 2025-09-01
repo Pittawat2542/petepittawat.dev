@@ -4,6 +4,7 @@ import { SITE_TITLE } from '../consts';
 // SearchModal is loaded on demand to avoid shipping React vendor at startup
 // import SearchModal from './SearchModal.tsx';
 import { BookOpenText, FolderKanban, FileText, Mic2, User2 } from 'lucide-astro';
+// Client module: load search triggers and lazy-react modal
 
 // Normalize current path to work with both `build.format: "file"` (e.g. "/talks.html")
 // and directory-style paths (e.g. "/talks/"). This ensures active nav detection works.
@@ -213,47 +214,7 @@ const isActive = (href: string) =>
       });
     }
 
-    // Light prefetch of search index on intent (hover/focus/shortcut)
-    // Keeps initial JS light (SearchModal hydrates on idle), but makes first open snappy.
-    let prefetched = false;
-    const prefetchSearch = () => {
-      if (prefetched) return;
-      prefetched = true;
-      try {
-        if (navigator && navigator.connection && navigator.connection.saveData) return;
-      } catch {}
-      try { fetch('/search.json').catch(() => {}); } catch {}
-    };
-    // Prefetch on pointer intent and focus of any search trigger
-    const triggers = document.querySelectorAll('button[aria-label="Open search"]');
-    triggers.forEach((t) => {
-      t.addEventListener('mouseenter', prefetchSearch, { once: true, passive: true });
-      t.addEventListener('focus', prefetchSearch, { once: true });
-      t.addEventListener('touchstart', prefetchSearch, { once: true, passive: true });
-    });
-    // Prefetch when user tries the shortcut early
-    window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') prefetchSearch();
-    }, { passive: true });
-
-    // On-demand load for SearchModal (React) to avoid shipping React on initial load
-    const openSearchLazy = async () => {
-      try {
-        const m = await import('../scripts/openSearch.ts');
-        m.openSearch();
-      } catch (e) {
-        console.warn('Failed to open search modal', e);
-      }
-    };
-    const desktopBtn = document.getElementById('open-search-desktop');
-    const mobileBtn = document.getElementById('open-search-mobile');
-    if (desktopBtn) desktopBtn.addEventListener('click', openSearchLazy);
-    if (mobileBtn) mobileBtn.addEventListener('click', openSearchLazy);
-    window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        openSearchLazy();
-      }
-    });
+    // Search trigger setup is handled by a bundled module script now
   })();
 </script>
+<script src="../scripts/init-search.ts"></script>

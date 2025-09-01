@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Filter from './Filter';
 import type { Talk } from '../types';
 import TalkCard from './ui/TalkCard';
+import Reveal from './ui/Reveal';
 import { useDataFilter } from '../lib/hooks';
 
 type Props = { items: Talk[] };
@@ -22,6 +23,7 @@ export default function TalksExplorer({ items }: Props) {
   const [per] = useState<number>(12);
   const [page, setPage] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState(false);
+  const loadTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     try {
@@ -80,7 +82,14 @@ export default function TalksExplorer({ items }: Props) {
   }, [filtered, sort]);
 
   // Reset and derive paged
-  useEffect(() => { setPage(1); }, [q, filters, sort]);
+  useEffect(() => {
+    setPage(1);
+    if (loadTimerRef.current) {
+      clearTimeout(loadTimerRef.current);
+      loadTimerRef.current = null;
+    }
+    setLoadingMore(false);
+  }, [q, filters, sort]);
   const visibleCount = Math.min(sortedFiltered.length, per * page);
   const paged = useMemo(() => sortedFiltered.slice(0, visibleCount), [sortedFiltered, visibleCount]);
 
@@ -98,9 +107,11 @@ export default function TalksExplorer({ items }: Props) {
     if (loadingMore) return;
     if (visibleCount >= sortedFiltered.length) return;
     setLoadingMore(true);
-    setTimeout(() => {
+    if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
+    loadTimerRef.current = window.setTimeout(() => {
       setPage((p) => p + 1);
       setLoadingMore(false);
+      loadTimerRef.current = null;
     }, 250);
   }, [loadingMore, visibleCount, sortedFiltered.length]);
 
@@ -112,7 +123,13 @@ export default function TalksExplorer({ items }: Props) {
       for (const e of entries) if (e.isIntersecting) loadNext();
     }, { rootMargin: '800px 0px' });
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      if (loadTimerRef.current) {
+        clearTimeout(loadTimerRef.current);
+        loadTimerRef.current = null;
+      }
+    };
   }, [loadNext]);
 
   const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -138,9 +155,9 @@ export default function TalksExplorer({ items }: Props) {
       />
       <div className="grid gap-3">
         {paged.map((item, i) => (
-          <div id={`talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`} key={`${item.title}-${item.date}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+          <Reveal id={`talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`} key={`${item.title}-${item.date}`} delayMs={Math.min(i * 100, 800)} className="target-highlight">
             <TalkCard item={item} />
-          </div>
+          </Reveal>
         ))}
         {loadingMore && (
           Array.from({ length: Math.min(12, Math.max(0, sortedFiltered.length - visibleCount)) }).map((_, i) => (

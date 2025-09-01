@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { FIRST_AUTHOR_TITLE } from '../lib/constants';
 import Filter from './Filter';
 import type { Publication } from '../types';
 import PublicationCard from './ui/PublicationCard';
+import Reveal from './ui/Reveal';
 import { isFirstAuthor } from '../lib';
 import { useDataFilter } from '../lib/hooks';
 
@@ -29,6 +30,7 @@ export default function PublicationsExplorer({ items }: Props) {
   const [per] = useState<number>(12);
   const [page, setPage] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState(false);
+  const loadTimerRef = useRef<number | null>(null);
 
   const sortedFiltered = useMemo(() => {
     const list = [...filtered];
@@ -55,7 +57,14 @@ export default function PublicationsExplorer({ items }: Props) {
   }, [filtered, sort]);
 
   // Reset page on search/filter/sort change
-  useEffect(() => { setPage(1); }, [q, filters, sort]);
+  useEffect(() => {
+    setPage(1);
+    if (loadTimerRef.current) {
+      clearTimeout(loadTimerRef.current);
+      loadTimerRef.current = null;
+    }
+    setLoadingMore(false);
+  }, [q, filters, sort]);
 
   const visibleCount = Math.min(sortedFiltered.length, per * page);
   const paged = useMemo(() => sortedFiltered.slice(0, visibleCount), [sortedFiltered, visibleCount]);
@@ -64,9 +73,11 @@ export default function PublicationsExplorer({ items }: Props) {
     if (loadingMore) return;
     if (visibleCount >= sortedFiltered.length) return;
     setLoadingMore(true);
-    setTimeout(() => {
+    if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
+    loadTimerRef.current = window.setTimeout(() => {
       setPage((p) => p + 1);
       setLoadingMore(false);
+      loadTimerRef.current = null;
     }, 250);
   }, [loadingMore, visibleCount, sortedFiltered.length]);
 
@@ -79,7 +90,13 @@ export default function PublicationsExplorer({ items }: Props) {
       }
     }, { rootMargin: '800px 0px' });
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      if (loadTimerRef.current) {
+        clearTimeout(loadTimerRef.current);
+        loadTimerRef.current = null;
+      }
+    };
   }, [loadNext]);
 
   useEffect(() => {
@@ -160,9 +177,9 @@ export default function PublicationsExplorer({ items }: Props) {
       />
       <div className="grid grid-cols-1 gap-3">
         {paged.map((item, i) => (
-          <div id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} className="stagger-fade-in target-highlight" style={{ animationDelay: `${Math.min(i * 100, 800)}ms` }}>
+          <Reveal id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 100, 800)} className="target-highlight">
             <PublicationCard item={item} />
-          </div>
+          </Reveal>
         ))}
         {loadingMore && (
           Array.from({ length: Math.min(12, Math.max(0, sortedFiltered.length - visibleCount)) }).map((_, i) => (
