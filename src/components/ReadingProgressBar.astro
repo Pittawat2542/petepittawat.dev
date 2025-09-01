@@ -12,17 +12,51 @@
   
   // Only run on client
   if (progressBar && typeof window !== 'undefined') {
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progressBar.style.width = `${Math.min(progress, 100)}%`;
+    let ticking = false;
+    let docHeight = 0;
+
+    const computeDocHeight = () => {
+      // READ: only on resize/initialization
+      const body = document.body;
+      const html = document.documentElement;
+      const full = Math.max(
+        body.scrollHeight,
+        html.scrollHeight,
+        body.offsetHeight,
+        html.offsetHeight,
+        body.clientHeight,
+        html.clientHeight
+      );
+      docHeight = Math.max(0, full - window.innerHeight);
     };
-    
-    // Initial update
-    updateProgress();
-    
-    // Listen for scroll events
-    window.addEventListener('scroll', updateProgress, { passive: true });
+
+    const writeProgress = () => {
+      // READ: scroll position
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const pct = docHeight > 0 ? Math.min((y / docHeight) * 100, 100) : 0;
+      // WRITE: width
+      progressBar.style.width = `${pct}%`;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(writeProgress);
+    };
+
+    const onResize = () => {
+      computeDocHeight();
+      onScroll();
+    };
+
+    // Initial measure + paint
+    computeDocHeight();
+    requestAnimationFrame(writeProgress);
+
+    // Listeners (throttled via rAF)
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('orientationchange', onResize, { passive: true });
   }
 </script>

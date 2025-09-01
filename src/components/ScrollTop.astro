@@ -31,9 +31,6 @@ const label = 'Back to top';
       const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       const show = scrollY > 200;
       
-      // Force reflow by accessing offsetHeight (Safari sometimes needs this)
-      btn.offsetHeight;
-      
       if (show) {
         btn.setAttribute('data-visible', 'true');
         btn.style.opacity = '1';

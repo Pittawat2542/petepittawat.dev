@@ -162,12 +162,25 @@ const isActive = (href: string) =>
   const nav = document.getElementById('site-nav');
   const menu = document.getElementById('mobile-menu');
   const toggle = document.getElementById('menu-toggle');
-  const onScroll = () => {
+  // rAF-throttled scroll handler: separate read (scrollY) from write (dataset)
+  let ticking = false;
+  const readState = () => (window.scrollY > 6 ? 'true' : 'false');
+  const writeState = (value: 'true' | 'false') => {
     if (!nav) return;
-    nav.dataset.scrolled = window.scrollY > 6 ? 'true' : 'false';
+    if (nav.dataset.scrolled !== value) nav.dataset.scrolled = value;
   };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  const schedule = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const value = readState(); // READS
+      writeState(value); // WRITES
+      ticking = false;
+    });
+  };
+  // Initial state
+  requestAnimationFrame(schedule);
+  window.addEventListener('scroll', schedule, { passive: true });
 
   // Mobile menu toggle
   const setMenuOpen = (open: boolean) => {

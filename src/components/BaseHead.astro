@@ -194,3 +194,14 @@ const { title, description, image = '/home-og-image.jpeg', type = 'website', pub
     })
   }
 </script>
+
+<!-- Service worker: runtime caching tuned for GitHub Pages -->
+<script is:inline>
+  (function(){
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function(){
+        try { navigator.serviceWorker.register('/sw.js'); } catch {}
+      });
+    }
+  })();
+  </script>

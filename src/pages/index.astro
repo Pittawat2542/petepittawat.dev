@@ -5,6 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import talks from '../content/talks/talks.json';
 import publications from '../content/publications/publications.json';
 import HeroSection from '../components/HeroSection.astro';
+import { getImage } from 'astro:assets';
+import profileImage from '../assets/images/profile.jpg';
 import AboutSection from '../components/AboutSection.astro';
 import StatsSection from '../components/StatsSection.astro';
 import BlogSection from '../components/BlogSection.astro';
@@ -21,6 +23,14 @@ const stats = {
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  { /* Preload likely LCP image for GitHub Pages to shorten the chain */ }
+  {(
+    await getImage({ src: profileImage, width: 384, format: 'webp' })
+  ) && (
+    <Fragment slot="head">
+      <link rel="preload" as="image" href={(await getImage({ src: profileImage, width: 384, format: 'webp' })).src} imagesizes="(min-width: 768px) 14rem, 12rem" />
+    </Fragment>
+  )}
 	<HeroSection />
 	<AboutSection />
 	<StatsSection stats={stats} />
