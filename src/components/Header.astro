@@ -156,97 +156,104 @@ const isActive = (href: string) =>
   </div>
 </header>
 
-<script>
-  import { openSearch } from '../scripts/openSearch';
+<script is:inline>
+  (function(){
+    const nav = document.getElementById('site-nav');
+    const menu = document.getElementById('mobile-menu');
+    const toggle = document.getElementById('menu-toggle');
 
-  const nav = document.getElementById('site-nav');
-  const menu = document.getElementById('mobile-menu');
-  const toggle = document.getElementById('menu-toggle');
-  // rAF-throttled scroll handler: separate read (scrollY) from write (dataset)
-  let ticking = false;
-  const readState = () => (window.scrollY > 6 ? 'true' : 'false');
-  const writeState = (value: 'true' | 'false') => {
-    if (!nav) return;
-    if (nav.dataset.scrolled !== value) nav.dataset.scrolled = value;
-  };
-  const schedule = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const value = readState(); // READS
-      writeState(value); // WRITES
-      ticking = false;
-    });
-  };
-  // Initial state
-  requestAnimationFrame(schedule);
-  window.addEventListener('scroll', schedule, { passive: true });
+    // rAF-throttled scroll handler: separate read (scrollY) from write (dataset)
+    let ticking = false;
+    const readState = () => (window.scrollY > 6 ? 'true' : 'false');
+    const writeState = (value) => {
+      if (!nav) return;
+      if (nav.dataset.scrolled !== value) nav.dataset.scrolled = value;
+    };
+    const schedule = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const value = readState(); // READS
+        writeState(value); // WRITES
+        ticking = false;
+      });
+    };
+    // Initial state
+    requestAnimationFrame(schedule);
+    window.addEventListener('scroll', schedule, { passive: true });
 
-  // Mobile menu toggle
-  const setMenuOpen = (open: boolean) => {
-    if (!menu || !toggle) return;
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    if (open) {
-      menu.classList.remove('opacity-0', 'pointer-events-none');
-      menu.classList.add('opacity-100', 'pointer-events-auto');
-    } else {
-      menu.classList.add('opacity-0', 'pointer-events-none');
-      menu.classList.remove('opacity-100', 'pointer-events-auto');
+    // Mobile menu toggle
+    const setMenuOpen = (open) => {
+      if (!menu || !toggle) return;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (open) {
+        menu.classList.remove('opacity-0', 'pointer-events-none');
+        menu.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        menu.classList.add('opacity-0', 'pointer-events-none');
+        menu.classList.remove('opacity-100', 'pointer-events-auto');
+      }
+    };
+    let isOpen = false;
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        isOpen = !isOpen;
+        setMenuOpen(isOpen);
+      });
     }
-  };
-  let isOpen = false;
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      isOpen = !isOpen;
-      setMenuOpen(isOpen);
+    // Close on navigation
+    if (menu) {
+      menu.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t && t.tagName === 'A') {
+          isOpen = false;
+          setMenuOpen(false);
+        }
+      });
+    }
+
+    // Light prefetch of search index on intent (hover/focus/shortcut)
+    // Keeps initial JS light (SearchModal hydrates on idle), but makes first open snappy.
+    let prefetched = false;
+    const prefetchSearch = () => {
+      if (prefetched) return;
+      prefetched = true;
+      try {
+        if (navigator && navigator.connection && navigator.connection.saveData) return;
+      } catch {}
+      try { fetch('/search.json').catch(() => {}); } catch {}
+    };
+    // Prefetch on pointer intent and focus of any search trigger
+    const triggers = document.querySelectorAll('button[aria-label="Open search"]');
+    triggers.forEach((t) => {
+      t.addEventListener('mouseenter', prefetchSearch, { once: true, passive: true });
+      t.addEventListener('focus', prefetchSearch, { once: true });
+      t.addEventListener('touchstart', prefetchSearch, { once: true, passive: true });
     });
-  }
-  // Close on navigation
-  if (menu) {
-    menu.addEventListener('click', (e: Event) => {
-      const t = e.target as HTMLElement | null;
-      if (t && t.tagName === 'A') {
-        isOpen = false;
-        setMenuOpen(false);
+    // Prefetch when user tries the shortcut early
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') prefetchSearch();
+    }, { passive: true });
+
+    // On-demand load for SearchModal (React) to avoid shipping React on initial load
+    const openSearchLazy = async () => {
+      try {
+        const m = await import('../scripts/openSearch.ts');
+        m.openSearch();
+      } catch (e) {
+        console.warn('Failed to open search modal', e);
+      }
+    };
+    const desktopBtn = document.getElementById('open-search-desktop');
+    const mobileBtn = document.getElementById('open-search-mobile');
+    if (desktopBtn) desktopBtn.addEventListener('click', openSearchLazy);
+    if (mobileBtn) mobileBtn.addEventListener('click', openSearchLazy);
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openSearchLazy();
       }
     });
-  }
-
-  // Light prefetch of search index on intent (hover/focus/shortcut)
-  // Keeps initial JS light (SearchModal hydrates on idle), but makes first open snappy.
-  let prefetched = false;
-  const prefetchSearch = () => {
-    if (prefetched) return;
-    prefetched = true;
-    try {
-      // Respect Data Saver
-      // @ts-ignore
-      if (navigator?.connection?.saveData) return;
-    } catch {}
-    try { fetch('/search.json').catch(() => {}); } catch {}
-  };
-  // Prefetch on pointer intent and focus of any search trigger
-  const triggers = document.querySelectorAll('button[aria-label="Open search"]');
-  triggers.forEach((t) => {
-    t.addEventListener('mouseenter', prefetchSearch, { once: true, passive: true });
-    t.addEventListener('focus', prefetchSearch, { once: true });
-    t.addEventListener('touchstart', prefetchSearch, { once: true, passive: true });
-  });
-  // Prefetch when user tries the shortcut early
-  window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') prefetchSearch();
-  }, { passive: true });
-
-  // On-demand load for SearchModal (React) to avoid shipping React on initial load
-  const desktopBtn = document.getElementById('open-search-desktop');
-  const mobileBtn = document.getElementById('open-search-mobile');
-  desktopBtn?.addEventListener('click', openSearch);
-  mobileBtn?.addEventListener('click', openSearch);
-  window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      openSearch();
-    }
-  });
+  })();
 </script>
