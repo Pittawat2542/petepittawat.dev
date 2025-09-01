@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import BlogCard from './BlogCard';
-import Reveal from './ui/Reveal';
 import type { BlogPost } from '../types';
 import FilterPanel from './ui/FilterPanel';
 import { getAllSeries } from '../lib/series';
@@ -163,10 +162,6 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
           io.observe(el);
           return () => {
             io.disconnect();
-            if (loadTimerRef.current) {
-              clearTimeout(loadTimerRef.current);
-              loadTimerRef.current = null;
-            }
           };
         }, [loadNext]);
 
@@ -221,9 +216,7 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
                         />
                        <ul className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5 md:gap-8 py-3 md:py-4 mt-2 md:mt-4 w-full'>
                                 {pagePosts.map((post, index) => (
-                                  <Reveal key={post.slug} delayMs={Math.min(index * 100, 800)}>
-                                    <BlogCard post={post} allPosts={posts} />
-                                  </Reveal>
+                                  <BlogCard key={post.slug} post={post} allPosts={posts} className="reveal" style={{ transitionDelay: `${Math.min(index * 100, 800)}ms` }} />
                                 ))}
                                 {loadingMore && (
                                   Array.from({ length: Math.min(12, Math.max(0, filteredPosts.length - visibleCount)) }).map((_, i) => (

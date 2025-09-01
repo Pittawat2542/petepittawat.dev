@@ -1,15 +1,18 @@
 import { ArrowRight, Calendar, BookOpen } from 'lucide-react';
 
 import type { BlogPost } from '../types';
+import type React from 'react';
 
 type Props = {
   post: BlogPost;
   featured?: boolean;
   allPosts?: BlogPost[]; // To calculate series part number
   horizontalOnSingleColumn?: boolean; // Landing page: horizontal layout on 1-col
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-export default function BlogCard({ post, featured = false, allPosts = [], horizontalOnSingleColumn = false }: Readonly<Props>) {
+export default function BlogCard({ post, featured = false, allPosts = [], horizontalOnSingleColumn = false, className = '', style }: Readonly<Props>) {
   // Check if post is part of a series
   const isPartOfSeries = post.data.seriesSlug && post.data.seriesTitle;
   let partNumber = post.data.seriesOrder || 0;
@@ -33,7 +36,7 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
     : 'flex flex-col align-middle p-4 md:p-6 h-full';
 
   return (
-    <li className={`cursor-pointer rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm group w-full h-full hyphens-auto blog-card ${featured ? 'card-featured' : ''}`}>
+    <li style={style} className={`cursor-pointer rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm group w-full h-full hyphens-auto blog-card ${featured ? 'card-featured' : ''} ${className}`}>
       <a
         className={`${linkBase} text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]`}
         href={`/blog/${post.slug}`}

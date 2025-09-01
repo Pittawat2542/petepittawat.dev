@@ -128,10 +128,6 @@ export default function ProjectsExplorer({ items }: Props) {
     io.observe(el);
     return () => {
       io.disconnect();
-      if (loadTimerRef.current) {
-        clearTimeout(loadTimerRef.current);
-        loadTimerRef.current = null;
-      }
     };
   }, [loadNext]);
 
