@@ -340,9 +340,21 @@ export default function SearchModal({ autoOpen = false, hideTriggers = false, op
           </button>
         </DialogTrigger>
       )}
-      <DialogContent className="max-w-none w-[min(72rem,92vw)] p-0 overflow-hidden top-[12vh] -translate-y-0 sm:top-1/2 sm:-translate-y-1/2">
+      <DialogContent
+        className="no-paint-contain max-w-none w-[min(72rem,92vw)] p-0 overflow-visible top-[12vh] -translate-y-0 sm:top-1/2 sm:-translate-y-1/2"
+        style={{ overflowY: 'visible' }}
+      >
         <DialogTitle className="sr-only">Site Search</DialogTitle>
         <DialogDescription className="sr-only">Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate results.</DialogDescription>
+        {/* Close button moved to top-right to avoid clustering with input clear */}
+        <DialogClose
+          className="absolute -top-4 -right-4 z-10 inline-flex items-center justify-center rounded-full p-2.5 border border-white/15 bg-black/40 backdrop-blur-md text-muted-foreground hover:text-foreground hover:bg-white/10 shadow-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+          aria-label="Close search"
+          title="Close (Esc)"
+        >
+          <span className="sr-only">Close</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </DialogClose>
         <div className="p-4 md:p-5 lg:p-6 border-b border-border">
           <div className="flex items-center gap-2">
             <div className="flex-1">
@@ -354,14 +366,6 @@ export default function SearchModal({ autoOpen = false, hideTriggers = false, op
                 size="lg"
               />
             </div>
-            <DialogClose
-              className="shrink-0 inline-flex items-center justify-center rounded-full p-2 text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
-              aria-label="Close search"
-              title="Close"
-            >
-              <span className="sr-only">Close</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </DialogClose>
           </div>
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground" aria-live="polite">
             <div className="flex items-center gap-1.5">

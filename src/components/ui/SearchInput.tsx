@@ -49,9 +49,8 @@ export default function SearchInput({
       
       {/* Glass container */}
       <div className={`
-        relative glass-surface rounded-xl transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
-        ${isFocused ? 'glass-surface-elevated ring-2 ring-ring/40' : ''}
-        group-hover:glass-surface-elevated
+        relative glass-input rounded-full transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
+        ${isFocused ? 'ring-2 ring-ring/40' : ''}
       `}>
         {/* Search icon */}
         <Search 
@@ -76,7 +75,7 @@ export default function SearchInput({
           title={ariaLabel}
           className={`
             w-full ${paddingClasses[size]} ${sizeClasses[size]}
-            bg-transparent rounded-xl border-0
+            bg-transparent rounded-full border-0
             text-foreground placeholder:text-muted-foreground
             focus-visible:outline-none
             transition-[color,background-color] duration-150 ease-out
@@ -103,7 +102,7 @@ export default function SearchInput({
         )}
         
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
       </div>
     </label>
   );

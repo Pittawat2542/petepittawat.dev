@@ -31,7 +31,7 @@ export default function Selector({ label, value, options, onChange, className, a
         <button
           type="button"
           className={cn(
-            'glass-surface rounded-lg px-3 py-2 text-sm bg-transparent border-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 appearance-none pr-8 relative text-left',
+            'glass-input rounded-full px-3 py-2 text-sm bg-transparent border-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 appearance-none pr-8 relative text-left',
             // Mobile-friendly: take full width, drop min-width constraints
             'w-full sm:w-auto min-w-0 sm:min-w-[12rem] sm:max-w-[18rem]',
             className

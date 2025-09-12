@@ -797,6 +797,12 @@ html {
       inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
+  /* Allow specific glass-card instances (e.g., modal content) to paint outside bounds */
+  .glass-card.no-paint-contain {
+    contain: layout style; /* drop paint containment so floating controls can overflow */
+    overflow: visible; /* ensure children outside rounded corners are visible */
+  }
+
   /* Lift only when the glass-card itself is interactive */
   a.glass-card:hover,
   button.glass-card:hover,
@@ -872,28 +878,118 @@ html {
   .glass-button {
     position: relative;
     border: 1px solid var(--glass-border-primary);
-    background: var(--glass-bg-secondary);
-    backdrop-filter: blur(10px) saturate(110%);
-    -webkit-backdrop-filter: blur(10px) saturate(110%);
-    box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.2s ease;
+    /* Soft translucent surface with subtle depth */
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+      var(--glass-bg-secondary);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      0 8px 22px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease, background-color 140ms ease;
+  }
+  /* Gradient sheen overlay */
+  .glass-button[data-variant="primary"]::before,
+  .glass-button[data-variant="secondary"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--gradient-primary);
+    opacity: 0.28;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+  }
+  /* Glare highlight */
+  .glass-button::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -10%;
+    width: 70%;
+    height: 140%;
+    border-radius: 50%/60%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 70%);
+    transform: rotate(-15deg);
+    filter: blur(6px);
+    opacity: 0.65;
+    pointer-events: none;
+    transition: transform 220ms ease, opacity 160ms ease;
   }
   .glass-button:hover {
     border-color: var(--glass-border-secondary);
-    background: var(--glass-bg-tertiary);
-    box-shadow: 
-      0 8px 24px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 14px 36px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
     transform: translateY(-1px);
   }
-  .glass-button:active {
-    transform: translateY(0px);
-    box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  .glass-button:hover::before {
+    opacity: 0.42;
   }
+  .glass-button:hover::after {
+    transform: translateY(-4px) rotate(-12deg) scale(1.02);
+    opacity: 0.78;
+  }
+  .glass-button:active {
+    transform: translateY(0px) scale(0.99);
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Glass inputs (text, search, selects triggers) */
+  .glass-input {
+    position: relative;
+    border: 1px solid var(--glass-border-primary);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+      var(--glass-bg-secondary);
+    backdrop-filter: blur(12px) saturate(130%);
+    -webkit-backdrop-filter: blur(12px) saturate(130%);
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease, transform 140ms ease;
+  }
+  .glass-input:hover {
+    border-color: var(--glass-border-secondary);
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  .glass-input:focus-within {
+    border-color: color-mix(in oklab, hsl(var(--ring)) 60%, transparent);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.26),
+      0 0 0 2px color-mix(in oklab, hsl(var(--ring)) 20%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  /* Sheen for containers that have children (e.g., search input wrapper, selector trigger) */
+  .glass-input::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--gradient-primary);
+    opacity: 0.18;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+  }
+  .glass-input:hover::before { opacity: 0.28; }
+  .glass-input:focus-within::before { opacity: 0.36; }
+
+  /* Remove native clear buttons in search inputs to avoid duplicate X icons */
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+  /* Legacy/Edge (no-op in modern Chromium but harmless) */
+  input[type="search"]::-ms-clear { display: none; width: 0; height: 0; }
 
   /* Improve anchor navigation from search: ensure view and highlight */
   :target {

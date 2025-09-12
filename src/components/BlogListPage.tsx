@@ -182,13 +182,8 @@ export default function BlogListPage({ posts, tags, initialTags }: Readonly<Blog
         const filterOptions = useMemo(() => {
                 const years = Array.from(new Set(posts.map(p => new Date(p.data.pubDate).getFullYear().toString()))).sort().reverse();
                 
-                // Get all series
-                const allSeries = getAllSeries(posts);
-                const seriesOptions = ['standalone', ...allSeries.map(s => s.slug)];
-                
                 return { 
                         year: years,
-                        series: seriesOptions
                 } as Record<string, string[]>;
         }, [posts]);
 

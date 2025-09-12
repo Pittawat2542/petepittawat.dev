@@ -7,6 +7,10 @@ interface Props extends HTMLAttributes<'button'> {
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   as?: 'button' | 'a';
+  icon?: 'external' | 'arrow-right' | 'chevron-right' | 'search' | 'download' | 'plus' | 'mail';
+  iconPosition?: 'left' | 'right';
+  iconOnly?: boolean;
+  autoIcon?: boolean;
 }
 
 const { 
@@ -15,16 +19,20 @@ const {
   variant = 'primary', 
   size = 'md', 
   as = href ? 'a' : 'button',
+  icon,
+  iconPosition = 'right',
+  iconOnly = false,
+  autoIcon = true,
   ...rest 
 } = Astro.props as Props;
 
 const getVariantClasses = (variant: 'primary' | 'secondary' | 'ghost', size: 'sm' | 'md' | 'lg') => {
-  const baseClasses = 'glass-button rounded-xl font-medium transition-[transform,box-shadow,background-color,color,border-color] duration-150 ease-out will-change-transform active:scale-[0.98] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
+  const baseClasses = 'glass-button rounded-full font-medium transition-[transform,box-shadow,background-color,color,border-color] duration-150 ease-out will-change-transform active:scale-[0.98] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
   
   const sizeClasses = {
-    sm: 'px-3 py-2 text-sm h-8',
-    md: 'px-4 py-2.5 text-sm h-10',
-    lg: 'px-6 py-3 text-base h-12'
+    sm: iconOnly ? 'h-8 w-8 text-sm' : 'px-3 py-2 text-sm h-8',
+    md: iconOnly ? 'h-10 w-10 text-sm' : 'px-4 py-2.5 text-sm h-10',
+    lg: iconOnly ? 'h-12 w-12 text-base' : 'px-6 py-3 text-base h-12'
   } as const;
   
   const variantClasses = {
@@ -36,18 +44,62 @@ const getVariantClasses = (variant: 'primary' | 'secondary' | 'ghost', size: 'sm
   return `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]}`;
 };
 
+const isExternalHref = (u?: string) => !!u && /^(https?:)?\/\//i.test(u);
+
+const pickAutoIcon = (): Props['icon'] | undefined => {
+  if (!autoIcon) return undefined;
+  if (as === 'a' && href) {
+    const dl = (rest as any)?.download;
+    if (dl || /\.(pdf|zip|dmg|pkg|exe|apk|ipa|csv|xlsx?)$/i.test(href)) return 'download';
+    const target = (rest as any)?.target;
+    if (target === '_blank' || isExternalHref(href)) return 'external';
+  }
+  return undefined;
+};
+
+const finalIcon = icon ?? pickAutoIcon();
+
 const commonProps = {
   class: `${getVariantClasses(variant, size)} ${className ?? ''}`,
+  'data-variant': variant,
   ...rest
 };
 ---
 
 {as === 'a' ? (
   <a href={href} {...commonProps}>
-    <slot />
+    {iconPosition === 'left' && finalIcon === 'external' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'arrow-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'chevron-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'search' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'download' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'plus' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'mail' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" fill="none"/><polyline points="22,6 12,13 2,6"/></svg>)}
+    {!iconOnly && <slot />}
+    {iconPosition === 'right' && finalIcon === 'external' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'arrow-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'chevron-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'search' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'download' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'plus' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'mail' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" fill="none"/><polyline points="22,6 12,13 2,6"/></svg>)}
   </a>
 ) : (
   <button {...commonProps}>
-    <slot />
+    {iconPosition === 'left' && finalIcon === 'external' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'arrow-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'chevron-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'search' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'download' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'plus' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>)}
+    {iconPosition === 'left' && finalIcon === 'mail' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" fill="none"/><polyline points="22,6 12,13 2,6"/></svg>)}
+    {!iconOnly && <slot />}
+    {iconPosition === 'right' && finalIcon === 'external' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'arrow-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'chevron-right' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'search' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'download' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'plus' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>)}
+    {iconPosition === 'right' && finalIcon === 'mail' && (<svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" fill="none"/><polyline points="22,6 12,13 2,6"/></svg>)}
   </button>
 )}

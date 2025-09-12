@@ -37,7 +37,7 @@ const DropdownMenuSubContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.SubContent
     ref={ref}
-    className={cn('z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover glass-card p-1 text-popover-foreground shadow-md', className)}
+    className={cn('z-50 min-w-[8rem] overflow-hidden rounded-2xl border bg-popover glass-card p-1 text-popover-foreground shadow-md', className)}
     {...props}
   />
 ));
@@ -55,7 +55,7 @@ const DropdownMenuContent = React.forwardRef<
       align={align}
       avoidCollisions={avoidCollisions}
       collisionPadding={8}
-      className={cn('z-50 min-w-[10rem] w-auto overflow-hidden rounded-md border bg-popover glass-card p-1 text-popover-foreground shadow-md', className)}
+      className={cn('z-50 min-w-[10rem] w-auto overflow-hidden rounded-2xl border bg-popover glass-card p-1 text-popover-foreground shadow-md', className)}
       style={{
         maxHeight: 'min(60vh, var(--radix-popper-available-height))',
         maxWidth: 'min(32rem, var(--radix-popper-available-width))',
@@ -111,7 +111,7 @@ const DropdownMenuRadioItem = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
-    className={cn('relative flex cursor-default select-none items-center rounded-sm px-1 py-0.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground', className)}
+    className={cn('relative flex cursor-default select-none items-center rounded-full px-1 py-1 text-sm outline-none transition-colors w-full hover:bg-white/5 focus:bg-white/8', className)}
     {...props}
   >
     {children}
