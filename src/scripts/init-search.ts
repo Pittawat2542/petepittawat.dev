@@ -37,6 +37,7 @@ function setup() {
   // Click handlers for explicit buttons
   document.getElementById('open-search-desktop')?.addEventListener('click', openSearchLazy);
   document.getElementById('open-search-mobile')?.addEventListener('click', openSearchLazy);
+  document.getElementById('open-search-in-menu')?.addEventListener('click', openSearchLazy);
 
   // Keyboard shortcut
   window.addEventListener('keydown', (e) => {
@@ -53,4 +54,3 @@ if (document.readyState === 'loading') {
 } else {
   setup();
 }
-
