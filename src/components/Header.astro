@@ -3,7 +3,7 @@ import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 // SearchModal is loaded on demand to avoid shipping React vendor at startup
 // import SearchModal from './SearchModal.tsx';
-import { BookOpenText, FolderKanban, FileText, Mic2, User2 } from 'lucide-astro';
+import { BookOpenText, FolderKanban, FileText, Mic2, User2, ChevronRight } from 'lucide-astro';
 // Client module: load search triggers and lazy-react modal
 
 // Normalize current path to work with both `build.format: "file"` (e.g. "/talks.html")
@@ -113,40 +113,53 @@ const isActive = (href: string) =>
                          hover:text-[color:var(--white)] hover:bg-[color:var(--white)]/5 transition-colors
                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
                   aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- Hamburger icon -->
+            <svg id="menu-icon-open" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <!-- Close icon -->
+            <svg id="menu-icon-close" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
         </div>
 
       </nav>
 
+      <!-- Backdrop for mobile menu -->
+      <div id="mobile-menu-overlay" class="md:hidden fixed inset-0 z-30 bg-black/40 backdrop-blur-[2px] opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
       <!-- Mobile menu panel -->
       <div id="mobile-menu"
-           class="md:hidden pointer-events-none absolute left-1/2 top-full z-40 w-[min(92vw,72rem)] -translate-x-1/2 pt-2 opacity-0
-                  transition-opacity duration-200 ease-out">
-        <div class="rounded-2xl border border-[color:var(--white)]/10 shadow-xl shadow-black/10
-                    bg-[color:var(--black-nav)]/80 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/60 backdrop-blur-md">
-          <ul class="py-1">
+           class="md:hidden pointer-events-none absolute inset-x-0 top-full z-40 w-auto mx-3 sm:mx-4 pt-2 opacity-0 translate-y-1
+                  transition-all duration-200 ease-out">
+        <div class="glass-card no-hover-lift rounded-3xl border border-[color:var(--white)]/12 shadow-xl shadow-black/20
+                    bg-[color:var(--black-nav)]/75 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55 backdrop-blur-xl">
+          <ul class="p-2.5 grid grid-cols-1 gap-2.5">
             {links.map(({ href, label }) => (
               <li>
-                <a href={href}
-                   class={`flex items-center gap-2 px-3 py-3 text-sm font-medium min-h-[44px]
-                          text-[color:var(--white)]/85 hover:text-[color:var(--white)]
-                          hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
-                          focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
-                          ${isActive(href) ? 'bg-[color:var(--white)]/10 text-[color:var(--white)] shadow-inner pointer-events-none cursor-default' : ''}`}
+                 <a href={href}
+                   class={`group glass-button rounded-full w-full flex items-center justify-between px-5 py-4 text-base font-medium min-h-[56px] touch-manipulation
+                          text-[color:var(--white)]/90 bg-[color:var(--white)]/[0.06] border border-[color:var(--white)]/15
+                          hover:bg-[color:var(--white)]/[0.12] hover:border-[color:var(--white)]/25 hover:text-[color:var(--white)]
+                          transition-[background-color,border-color,color,transform] duration-150 ease-out focus-visible:outline-none
+                          focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 active:scale-[0.99]
+                          ${isActive(href) ? 'bg-[color:var(--white)]/[0.16] border-[color:var(--white)]/25 text-[color:var(--white)] pointer-events-none cursor-default' : ''}`}
                    data-active={isActive(href) ? 'true' : undefined}
                    aria-current={isActive(href) ? 'page' : undefined}
                    tabindex={isActive(href) ? -1 : undefined}>
-                  {label === 'Blog' && (<BookOpenText class="h-4 w-4 opacity-80" aria-hidden="true" />)}
-                  {label === 'Projects' && (<FolderKanban class="h-4 w-4 opacity-80" aria-hidden="true" />)}
-                  {label === 'Publications' && (<FileText class="h-4 w-4 opacity-80" aria-hidden="true" />)}
-                  {label === 'Talks' && (<Mic2 class="h-4 w-4 opacity-80" aria-hidden="true" />)}
-                  {label === 'About' && (<User2 class="h-4 w-4 opacity-80" aria-hidden="true" />)}
-                  <span>{label}</span>
+                  <span class="inline-flex items-center gap-3 flex-1 min-w-0">
+                    {label === 'Blog' && (<BookOpenText class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                    {label === 'Projects' && (<FolderKanban class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                    {label === 'Publications' && (<FileText class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                    {label === 'Talks' && (<Mic2 class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                    {label === 'About' && (<User2 class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                    <span class="ml-1 truncate">{label}</span>
+                  </span>
+                  <ChevronRight class="h-5 w-5 opacity-70 transition-transform duration-150 ease-out group-hover:translate-x-0.5" aria-hidden="true" />
                 </a>
               </li>
             ))}
@@ -161,7 +174,10 @@ const isActive = (href: string) =>
   (function(){
     const nav = document.getElementById('site-nav');
     const menu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('mobile-menu-overlay');
     const toggle = document.getElementById('menu-toggle');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
 
     // rAF-throttled scroll handler: separate read (scrollY) from write (dataset)
     let ticking = false;
@@ -188,13 +204,28 @@ const isActive = (href: string) =>
       if (!menu || !toggle) return;
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      if (open) {
-        menu.classList.remove('opacity-0', 'pointer-events-none');
-        menu.classList.add('opacity-100', 'pointer-events-auto');
-      } else {
-        menu.classList.add('opacity-0', 'pointer-events-none');
-        menu.classList.remove('opacity-100', 'pointer-events-auto');
+      // Toggle icons
+      if (iconOpen && iconClose) {
+        if (open) { iconOpen.classList.add('hidden'); iconClose.classList.remove('hidden'); }
+        else { iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }
       }
+      // Toggle menu panel visibility + subtle slide
+      if (open) {
+        menu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-1');
+        menu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      } else {
+        menu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-1');
+        menu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      }
+      // Toggle backdrop
+      if (overlay) {
+        if (open) { overlay.classList.remove('opacity-0', 'pointer-events-none'); overlay.classList.add('opacity-100', 'pointer-events-auto'); }
+        else { overlay.classList.add('opacity-0', 'pointer-events-none'); overlay.classList.remove('opacity-100', 'pointer-events-auto'); }
+      }
+      // Lock scroll on open (mobile friendliness)
+      const root = document.documentElement;
+      if (open) { root.style.overflow = 'hidden'; }
+      else { root.style.overflow = ''; }
     };
     let isOpen = false;
     if (toggle) {
@@ -211,6 +242,13 @@ const isActive = (href: string) =>
           isOpen = false;
           setMenuOpen(false);
         }
+      });
+    }
+    // Close on backdrop click
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        isOpen = false;
+        setMenuOpen(false);
       });
     }
 

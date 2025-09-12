@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import BlogCard from './BlogCard';
 import type { BlogPost } from '../types';
 import FilterPanel from './ui/FilterPanel';
-import { getAllSeries } from '../lib/series';
 
 type BlogListPageProps = {
   posts: BlogPost[];
