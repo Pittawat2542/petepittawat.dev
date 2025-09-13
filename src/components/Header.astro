@@ -27,7 +27,7 @@ const isActive = (href: string) =>
   current === href || (href !== '/' && current.startsWith(href + '/'));
 ---
 
-<header class="fixed inset-x-0 z-50" style="top: max(env(safe-area-inset-top), 1rem)">
+<header class="fixed inset-x-0 z-50" style="top: max(env(safe-area-inset-top), 1rem); view-transition-name: site-header;">
   <div class="mx-auto w-full md:w-fit max-w-[min(92vw,72rem)]">
     <div class="relative block md:inline-flex w-full md:w-auto rounded-full p-[1px]
                 bg-gradient-to-r from-[color:var(--white)]/15 via-transparent to-[color:var(--white)]/15">

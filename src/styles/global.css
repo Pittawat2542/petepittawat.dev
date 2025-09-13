@@ -61,6 +61,50 @@
 		rgba(31, 41, 55, 0.45);
 }
 
+/* Enable cross-document View Transitions with sensible defaults */
+@view-transition {
+  navigation: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* Opt the whole page into a named transition group */
+:root { view-transition-name: root; }
+
+/* Customize the global cross-fade timing slightly */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optional: subtle content slide-in for the main area */
+::view-transition-new(page) {
+  animation-name: vt-page-in;
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+::view-transition-old(page) {
+  animation-name: vt-page-out;
+  animation-duration: 220ms;
+  animation-timing-function: ease-out;
+}
+@keyframes vt-page-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.995); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+@keyframes vt-page-out {
+  from { opacity: 1; transform: translateY(0)   scale(1); }
+  to   { opacity: 0; transform: translateY(4px) scale(0.997); }
+}
+
+/* Keep shared elements layered above page content during transitions */
+::view-transition-group(site-header) { z-index: 5; }
+::view-transition-group(site-footer) { z-index: 4; }
+
 
 body {
 	font-family: 'Krub', serif;
