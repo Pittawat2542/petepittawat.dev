@@ -24,6 +24,7 @@ export default function AnimatedHeader() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -85,7 +86,7 @@ export default function AnimatedHeader() {
     <motion.header 
       className="fixed inset-x-0 top-4 z-50 px-4 md:px-6 lg:px-8" 
       style={{ viewTransitionName: 'site-header' }}
-      initial={{ opacity: 0, y: -20 }}
+      initial={false} // Keep SSR markup visible even if hydration never runs
       animate={{ opacity: 1, y: 0 }}
       transition={{ 
         type: "spring",
@@ -95,12 +96,8 @@ export default function AnimatedHeader() {
     >
       <div 
         id="site-nav-wrapper"
-        className={`mx-auto max-w-6xl rounded-3xl border transition-all duration-300 ease-out ${
-          scrolled 
-            ? 'border-white/8 bg-black/50 backdrop-blur-lg shadow-[0_20px_40px_-30px_rgba(10,20,30,0.8)]' 
-            : 'border-transparent'
-        }`}
-        data-scrolled={scrolled}
+        className={`mx-auto max-w-6xl rounded-3xl border border-transparent transition-[border-color,box-shadow,backdrop-filter,transform] duration-300 ease-out`}
+        data-scrolled={scrolled ? 'true' : undefined}
       >
         {/* Animated background that expands from center */}
         <motion.div
@@ -114,7 +111,11 @@ export default function AnimatedHeader() {
           }}
         />
         
-        <nav id="site-nav" className="relative flex items-center gap-6 px-4 sm:px-6 py-3 sm:py-4">
+        <nav
+          id="site-nav"
+          className="relative flex items-center gap-6 px-4 sm:px-6 py-3 sm:py-4"
+          data-scrolled={scrolled ? 'true' : undefined}
+        >
           {/* Brand */}
           <a href="/" aria-label="Go to homepage"
              className="relative flex items-center gap-3 rounded-full px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60">

@@ -8,7 +8,7 @@ import { formatDate } from '../../lib';
 export function TalkCard({ item }: { item: Talk }) {
   const accent = 'var(--accent-talks)';
   return (
-    <Card className="glass-entry group card-subtle-lift p-0">
+    <Card className="glass-entry group card-subtle-lift talk-card rounded-3xl p-0">
       <div className="glass-entry__glow" />
       <div className="glass-entry__content flex flex-col gap-3 p-5 md:p-6">
         <div className="flex items-center justify-between gap-3">

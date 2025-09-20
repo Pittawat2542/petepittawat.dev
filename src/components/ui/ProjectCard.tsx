@@ -1,4 +1,4 @@
-import { ArrowUpRight, Calendar, ExternalLink, Star, Users } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
 
 import { Badge } from './badge';
 import { Card } from './card';
@@ -39,64 +39,103 @@ function typeAccentVar(type?: string) {
 
 export default function ProjectCard({ item, featured = false }: { item: Project; featured?: boolean }) {
   const accentColor = typeAccentVar(item.type);
+  const tint = (intensity: number) => `color-mix(in oklab, ${accentColor} ${intensity}%, transparent)`;
   return (
-    <Card className={`glass-entry group project-card ${featured ? 'card-featured' : ''} p-0 h-full flex flex-col`}>
+    <Card
+      className={[`glass-entry group project-card rounded-3xl p-0 flex flex-col h-full`, featured ? 'card-featured' : '']
+        .filter(Boolean)
+        .join(' ')}
+    >
       <div className="glass-entry__glow" />
-      <div className="glass-entry__content flex flex-col gap-4 p-5 md:p-6 flex-1">
-        <div className="flex items-start justify-between gap-3">
-        <div className="flex items-start gap-2 flex-1 min-w-0">
-          <h3 className="text-base md:text-lg font-semibold leading-snug flex-1">
-            {item.title}
-          </h3>
+      <div className="glass-entry__content flex flex-col gap-5 p-6 md:p-7 flex-1">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-base md:text-lg font-semibold leading-snug break-words">
+              {item.title}
+            </h3>
+            {item.summary ? (
+              <p className="mt-2 text-sm text-[color:var(--white)]/82 leading-relaxed">
+                {item.summary}
+              </p>
+            ) : null}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 text-[10px] md:text-xs">
+            {item.type ? (
+              <Badge
+                className="inline-flex items-center gap-1.5 whitespace-nowrap px-3 py-1 font-medium"
+                style={{
+                  color: accentColor,
+                  borderColor: tint(55),
+                  background: tint(14)
+                }}
+                title={item.type}
+              >
+                <Star size={12} aria-hidden="true" className="icon-bounce" />
+                {toTitleCase(item.type)}
+              </Badge>
+            ) : null}
+            {item.year ? (
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium"
+                style={{
+                  color: accentColor,
+                  background: tint(12),
+                  border: `1px solid ${tint(45)}`
+                }}
+              >
+                <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
+                <span>{item.year}</span>
+              </span>
+            ) : null}
+          </div>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          {item.type ? (
-            <Badge
-              className="text-xs whitespace-nowrap inline-flex items-center gap-1"
-              style={{
-                color: typeAccentVar(item.type),
-                borderColor: `color-mix(in oklab, ${typeAccentVar(item.type)} 55%, transparent)`,
-                background: `color-mix(in oklab, ${typeAccentVar(item.type)} 12%, transparent)`
-              }}
-              title={item.type}
-            >
-              <Star size={10} aria-hidden="true" className="icon-bounce" />
-              {toTitleCase(item.type)}
-            </Badge>
-          ) : null}
-          <Badge className="text-xs whitespace-nowrap inline-flex items-center gap-1" variant="outline">
-            <Calendar size={10} aria-hidden="true" className="icon-bounce" />
-            {item.year}
-          </Badge>
-        </div>
+
+        {item.role || item.collaborators ? (
+          <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-[color:var(--white)]/75">
+            {item.role ? (
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1"
+                style={{
+                  color: accentColor,
+                  background: tint(10),
+                  border: `1px solid ${tint(35)}`
+                }}
+              >
+                <Users size={12} className="icon-bounce" aria-hidden="true" />
+                <span>{item.role}</span>
+              </span>
+            ) : null}
+            {item.collaborators ? (
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1"
+                style={{
+                  color: accentColor,
+                  background: tint(10),
+                  border: `1px solid ${tint(35)}`
+                }}
+              >
+                <Users size={12} className="icon-bounce" aria-hidden="true" />
+                <span className="truncate max-w-[14rem] md:max-w-[18rem]" title={item.collaborators}>
+                  {item.collaborators}
+                </span>
+              </span>
+            ) : null}
+          </div>
+        ) : null}
+
+        {item.tags?.length ? (
+          <div className="flex flex-wrap gap-2">
+            {item.tags.map((t) => (
+              <Badge key={t} className="text-xs" variant="outline">
+                {t}
+              </Badge>
+            ))}
+          </div>
+        ) : null}
       </div>
-      {item.role || item.collaborators ? (
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-xs md:text-sm text-[color:var(--white)]/70">
-          {item.role ? (
-            <div className="flex items-center gap-1.5">
-              <Users size={12} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
-              <span>{item.role}</span>
-            </div>
-          ) : null}
-          {item.collaborators ? (
-            <div className="flex items-center gap-1.5">
-              <Users size={12} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
-              <span className="opacity-80">{item.collaborators}</span>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-      <p className="text-sm text-[color:var(--white)]/82 leading-relaxed">{item.summary}</p>
-      {item.tags?.length ? (
-        <div className="flex flex-wrap gap-2">
-          {item.tags.map((t) => (
-            <Badge key={t} className="text-xs" variant="outline">{t}</Badge>
-          ))}
-        </div>
-      ) : null}
-      </div>
+
       {item.links?.length ? (
-        <div className="glass-entry__footer mt-auto flex flex-wrap items-center gap-2 px-5 py-3 md:px-6 md:py-4 text-sm text-white/78">
+        <div className="glass-entry__footer mt-auto flex flex-wrap items-center gap-2 px-6 py-3.5 md:px-7 md:py-4 text-xs text-white/78">
           {item.links.map((l, idx) => {
             const isExternal = !l.href.startsWith('/');
             return (
@@ -105,25 +144,25 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
                 href={l.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 will-change-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 will-change-transform hover:-translate-y-0.5"
                 style={{
                   color: accentColor,
-                  background: `color-mix(in oklab, ${accentColor} 12%, transparent)`,
-                  border: `1px solid color-mix(in oklab, ${accentColor} 38%, transparent)`,
+                  background: tint(14),
+                  border: `1px solid ${tint(45)}`,
                   boxShadow: `0 10px 22px -14px ${accentColor}`
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accentColor} 22%, transparent)`;
+                  (e.currentTarget as HTMLAnchorElement).style.background = tint(22);
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accentColor} 12%, transparent)`;
+                  (e.currentTarget as HTMLAnchorElement).style.background = tint(14);
                 }}
                 aria-label={l.label}
               >
-                <span title={isExternal ? "External link" : "Internal link"} className="icon-bounce transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <span>{l.label}</span>
+                <span title={isExternal ? 'External link' : 'Internal link'} className="icon-bounce transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   {isExternal ? <ExternalLink size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
                 </span>
-                <span>{l.label}</span>
               </a>
             );
           })}
