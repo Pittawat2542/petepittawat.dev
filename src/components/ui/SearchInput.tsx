@@ -23,50 +23,54 @@ export default function SearchInput({
   const [isFocused, setIsFocused] = useState(false);
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLDivElement>();
   
-  const sizeClasses = {
-    sm: 'h-8 text-xs',
-    md: 'h-10 text-sm',
-    lg: 'h-12 text-base'
-  };
-  
-  const paddingClasses = {
-    sm: 'pl-8 pr-8',
-    md: 'pl-9 pr-10',
-    lg: 'pl-10 pr-12'
-  };
-  
-  const iconSizes = {
-    sm: 14,
-    md: 16,
-    lg: 18
-  };
+  const sizeConfig = {
+    sm: {
+      wrapper: 'gap-2 px-3 py-1.5',
+      input: 'text-xs leading-5',
+      icon: 14,
+      button: 'h-6 w-6',
+    },
+    md: {
+      wrapper: 'gap-3 px-4 py-2',
+      input: 'text-sm leading-[1.35rem]',
+      icon: 16,
+      button: 'h-8 w-8',
+    },
+    lg: {
+      wrapper: 'gap-3 px-5 py-2.5',
+      input: 'text-base leading-[1.5rem]',
+      icon: 18,
+      button: 'h-9 w-9',
+    },
+  } as const;
   
   const clearValue = () => {
     onChange('');
   };
   
   return (
-    <label className={`relative w-full md:max-w-md group ${className}`} htmlFor={id}>
+    <label className={`relative w-full md:max-w-md ${className}`} htmlFor={id}>
       <span className="sr-only">{ariaLabel}</span>
       
       {/* Glass container */}
-      <div className={`
-        relative glass-input rounded-full transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
-        ${isFocused ? 'ring-2 ring-ring/40' : ''}
-      `}
+      <div
+        className={`glass-input group relative flex items-center w-full overflow-hidden rounded-full transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out ${sizeConfig[size].wrapper}`}
+        data-size={size}
+        data-active={isFocused ? 'true' : undefined}
         style={glowStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
         {/* Search icon */}
-        <Search 
-          className={`
-            absolute left-3 top-1/2 -translate-y-1/2 transition-[color,opacity] duration-150 ease-out
-            ${isFocused ? 'text-ring opacity-100' : 'text-muted-foreground opacity-70'}
-          `} 
-          size={iconSizes[size]} 
-          aria-hidden="true" 
-        />
+        <span
+          className={`relative z-10 inline-flex shrink-0 items-center justify-center rounded-full bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm transition-[color,opacity,background-color] duration-150 ease-out ${size === 'sm' ? 'min-h-[1.5rem] w-[2rem]' : size === 'lg' ? 'min-h-[2rem] w-[2.4rem]' : 'min-h-[1.75rem] w-[2.25rem]'}`}
+        >
+          <Search
+            className={`${isFocused ? 'text-[color:var(--accent,#6AC1FF)] opacity-100' : 'opacity-70 text-[color:var(--white,#FFFFFF)]/80'}`}
+            size={sizeConfig[size].icon}
+            aria-hidden="true"
+          />
+        </span>
         
         {/* Input */}
         <input
@@ -79,13 +83,7 @@ export default function SearchInput({
           id={id}
           aria-label={ariaLabel}
           title={ariaLabel}
-          className={`
-            w-full ${paddingClasses[size]} ${sizeClasses[size]}
-            bg-transparent rounded-full border-0
-            text-foreground placeholder:text-muted-foreground
-            focus-visible:outline-none
-            transition-[color,background-color] duration-150 ease-out
-          `}
+          className={`relative z-10 w-full flex-1 bg-transparent text-foreground placeholder:text-muted-foreground focus-visible:outline-none ${sizeConfig[size].input}`}
         />
         
         {/* Clear button */}
@@ -93,22 +91,15 @@ export default function SearchInput({
           <button
             type="button"
             onClick={clearValue}
-            className={`
-              absolute right-3 top-1/2 -translate-y-1/2
-              p-1 rounded-full
-              text-muted-foreground hover:text-foreground
-              hover:bg-muted/30 transition-[background-color,color] duration-150 ease-out
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40
-            `}
+            className={`relative z-10 inline-flex items-center justify-center rounded-full bg-white/6 text-[color:var(--white,#FFFFFF)]/70 transition-all duration-150 ease-out hover:bg-white/14 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(8,12,22,0.85)] ${sizeConfig[size].button}`}
             aria-label="Clear search"
             title="Clear search"
           >
-            <X size={iconSizes[size] - 2} />
+            <X size={sizeConfig[size].icon - 2} />
           </button>
         )}
         
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
+        <span className="glass-input__sheen" aria-hidden="true" />
       </div>
     </label>
   );

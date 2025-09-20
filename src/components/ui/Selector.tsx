@@ -33,9 +33,8 @@ export default function Selector({ label, value, options, onChange, className, a
         <button
           type="button"
           className={cn(
-            'glass-input rounded-full px-3 py-2 text-sm bg-transparent border-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 appearance-none pr-8 relative text-left',
-            // Mobile-friendly: take full width, drop min-width constraints
-            'w-full sm:w-auto min-w-0 sm:min-w-[12rem] sm:max-w-[18rem]',
+            'glass-input group relative w-full sm:w-auto min-w-0 appearance-none text-left text-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
+            'rounded-full px-4 py-2 sm:min-w-[12rem] sm:max-w-[18rem]',
             className
           )}
           aria-label={label}
@@ -44,14 +43,19 @@ export default function Selector({ label, value, options, onChange, className, a
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
-          <span className="block truncate inline-flex items-center gap-2">
-            {current?.icon ? <span className="opacity-80 shrink-0">{current.icon}</span> : null}
-            <span className="truncate">{current?.label}</span>
+          <span className="relative z-10 flex w-full items-center gap-2 truncate text-[color:var(--white,#FFFFFF)]/85">
+            {current?.icon ? <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-white/6 p-1 text-[color:var(--white,#FFFFFF)]/80">{current.icon}</span> : null}
+            <span className="truncate font-medium text-[color:var(--white,#FFFFFF)]">{current?.label}</span>
           </span>
-          <ChevronDown size={14} className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 pointer-events-none" />
+          <span className="glass-input__sheen" aria-hidden="true" />
+          <ChevronDown
+            size={16}
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--white,#FFFFFF)]/60 transition-transform duration-200 ease-out group-hover:translate-y-[1px]"
+            aria-hidden="true"
+          />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={align} side={side} className="min-w-[14rem] w-auto max-h-[60vh] overflow-y-auto p-1">
+      <DropdownMenuContent align={align} side={side} className="min-w-[14rem] w-auto max-h-[60vh] overflow-y-auto border-white/8 bg-[rgba(7,14,24,0.82)] p-1 backdrop-blur-xl">
         <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
           {options.map((opt) => (
             <DropdownMenuRadioItem key={opt.value} value={opt.value} className="cursor-pointer">

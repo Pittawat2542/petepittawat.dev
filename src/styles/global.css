@@ -1013,61 +1013,183 @@ html {
       inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
-  /* Glass inputs (text, search, selects triggers) */
+  /* Glass form controls (inputs, textareas, selectors) */
+  .glass-field,
   .glass-input {
     position: relative;
+    display: flex;
+    align-items: center;
     --glass-glow-x: 50%;
     --glass-glow-y: 50%;
+    border-radius: var(--glass-field-radius, 999px);
     border: 1px solid var(--glass-border-primary);
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
       var(--glass-bg-secondary);
-    backdrop-filter: blur(12px) saturate(130%);
-    -webkit-backdrop-filter: blur(12px) saturate(130%);
+    backdrop-filter: blur(14px) saturate(135%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
     box-shadow:
-      0 6px 18px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.10);
-    transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease, transform 140ms ease;
+      0 8px 24px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
+    overflow: hidden;
+    isolation: isolate;
   }
-  .glass-input:hover {
+  .glass-input:hover,
+  .glass-field:hover {
     border-color: var(--glass-border-secondary);
     box-shadow:
-      0 10px 24px rgba(0, 0, 0, 0.22),
+      0 14px 32px rgba(0, 0, 0, 0.26),
       inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
-  .glass-input:focus-within {
-    border-color: color-mix(in oklab, hsl(var(--ring)) 60%, transparent);
+  .glass-input:focus-within,
+  .glass-field:focus-within {
+    border-color: color-mix(in oklab, hsl(var(--ring)) 65%, transparent);
     box-shadow:
-      0 12px 28px rgba(0, 0, 0, 0.26),
-      0 0 0 2px color-mix(in oklab, hsl(var(--ring)) 20%, transparent),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 16px 40px rgba(0, 0, 0, 0.3),
+      0 0 0 2px color-mix(in oklab, hsl(var(--ring)) 22%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   /* Base sheen */
-  .glass-input::before {
+  .glass-input::before,
+  .glass-field::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
     background: var(--gradient-primary);
-    opacity: 0.16;
+    opacity: 0.14;
     pointer-events: none;
     transition: opacity 160ms ease;
+    z-index: 0;
   }
-  .glass-input:hover::before { opacity: 0.26; }
-  .glass-input:focus-within::before { opacity: 0.32; }
+  .glass-input:hover::before,
+  .glass-field:hover::before { opacity: 0.22; }
+  .glass-input:focus-within::before,
+  .glass-field:focus-within::before { opacity: 0.28; }
 
-  .glass-input::after {
+  .glass-input::after,
+  .glass-field::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(circle at var(--glass-glow-x, 50%) var(--glass-glow-y, 50%), rgba(255,255,255,0.3), transparent 60%);
+    background: radial-gradient(circle at var(--glass-glow-x, 50%) var(--glass-glow-y, 50%), rgba(255,255,255,0.38), transparent 62%);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 160ms ease;
+    transition: opacity 200ms ease;
+    z-index: 0;
   }
-  .glass-input:hover::after { opacity: 0.22; }
-  .glass-input:focus-within::after { opacity: 0.28; }
+  .glass-input:hover::after,
+  .glass-field:hover::after { opacity: 0.24; }
+  .glass-input:focus-within::after,
+  .glass-field:focus-within::after { opacity: 0.32; }
+
+  .glass-input[data-size="sm"],
+  .glass-field[data-size="sm"] {
+    --glass-field-radius: 999px;
+  }
+  .glass-input[data-size="lg"],
+  .glass-field[data-size="lg"] {
+    --glass-field-radius: 1.75rem;
+  }
+
+  .glass-input .glass-input__sheen,
+  .glass-field .glass-input__sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 45%, transparent 80%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+    z-index: 1;
+  }
+  .glass-input:hover .glass-input__sheen,
+  .glass-field:hover .glass-input__sheen,
+  .glass-input:focus-within .glass-input__sheen,
+  .glass-field:focus-within .glass-input__sheen {
+    opacity: 0.28;
+  }
+
+  /* Glass option/list styling for dropdowns */
+  .glass-option,
+  .glass-menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.25rem 0.375rem;
+    border: 1px solid transparent;
+    transition:
+      border-color 150ms ease,
+      background-color 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+    isolation: isolate;
+  }
+  .glass-option::before,
+  .glass-menu-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 60%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 0;
+  }
+  .glass-option:hover,
+  .glass-menu-item:hover,
+  .glass-option:focus-visible,
+  .glass-menu-item:focus-visible {
+    border-color: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.22);
+    color: rgba(255,255,255,0.92);
+  }
+  .glass-option:hover::before,
+  .glass-menu-item:hover::before,
+  .glass-option:focus-visible::before,
+  .glass-menu-item:focus-visible::before {
+    opacity: 0.22;
+  }
+  .glass-option[data-selected="true"],
+  .glass-menu-item[data-state="checked"] {
+    border-color: rgba(106, 193, 255, 0.4);
+    background: rgba(106, 193, 255, 0.16);
+    box-shadow:
+      0 10px 24px rgba(15, 32, 48, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    color: rgba(255,255,255,0.96);
+  }
+  .glass-option[data-selected="true"]::before,
+  .glass-menu-item[data-state="checked"]::before {
+    opacity: 0.32;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 70%);
+  }
+
+  .glass-menu-panel {
+    position: relative;
+    background:
+      radial-gradient(circle at top left, rgba(106,193,255,0.18), transparent 55%),
+      radial-gradient(circle at bottom right, rgba(139,92,246,0.12), transparent 60%),
+      rgba(5, 10, 18, 0.78);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+      0 24px 54px -24px rgba(3, 8, 18, 0.9),
+      inset 0 1px 0 rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px) saturate(138%);
+    -webkit-backdrop-filter: blur(18px) saturate(138%);
+  }
 
   /* Remove native clear buttons in search inputs to avoid duplicate X icons */
   input[type="search"]::-webkit-search-cancel-button,
