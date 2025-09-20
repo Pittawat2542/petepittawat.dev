@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import projects from '../content/projects/projects.json';
 import publications from '../content/publications/publications.json';
 import talks from '../content/talks/talks.json';
+import { slugify } from '../lib/slug';
 
 type SearchItem = {
   id: string;
@@ -18,12 +19,6 @@ type SearchItem = {
 
 export async function GET(_context: APIContext) {
   const items: SearchItem[] = [];
-
-  const slugify = (s: string) => s
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
 
   // Blog posts
   const blog = await getCollection('blog');

@@ -1,4 +1,5 @@
 import { useId, useState } from 'react';
+import { useGlassGlow } from '../../lib/hooks';
 import { Search, X } from 'lucide-react';
 
 type Props = {
@@ -20,6 +21,7 @@ export default function SearchInput({
 }: Props) {
   const id = useId();
   const [isFocused, setIsFocused] = useState(false);
+  const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLDivElement>();
   
   const sizeClasses = {
     sm: 'h-8 text-xs',
@@ -51,7 +53,11 @@ export default function SearchInput({
       <div className={`
         relative glass-input rounded-full transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform
         ${isFocused ? 'ring-2 ring-ring/40' : ''}
-      `}>
+      `}
+        style={glowStyle}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         {/* Search icon */}
         <Search 
           className={`

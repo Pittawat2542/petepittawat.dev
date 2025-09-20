@@ -1,8 +1,11 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import AnimatedHeader from '../components/AnimatedHeader';
 import ScrollTop from '../components/ScrollTop.astro';
+
+
+import SearchModal from '../components/SearchModal';
 
 
 const { title, description, image, type, publishedTime, tags } = Astro.props as {
@@ -47,12 +50,13 @@ const ogImage = Astro.site
 		</head>
 
         <body>
-                <Header />
+                <AnimatedHeader client:load />
                 <main id="main-content" class='px-6 md:px-10 mx-auto pt-28 mb-12 max-w-screen-lg md:max-w-screen-xl' style="view-transition-name: page;">
                         <slot />
                 </main>
                 <Footer />
                 <ScrollTop />
+                <SearchModal client:load />
                 <script>
                   // Performance optimized initialization
                   (function() {

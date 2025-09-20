@@ -9,6 +9,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
 } from './dropdown-menu';
+import { useGlassGlow } from '../../lib/hooks';
 
 export type SelectorOption = { value: string; label: string; count?: number; icon?: ReactNode };
 
@@ -24,6 +25,7 @@ type SelectorProps = {
 
 export default function Selector({ label, value, options, onChange, className, align = 'start', side = 'bottom' }: SelectorProps) {
   const current = options.find((o) => o.value === value) || options[0];
+  const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLButtonElement>();
 
   return (
     <DropdownMenu>
@@ -38,6 +40,9 @@ export default function Selector({ label, value, options, onChange, className, a
           )}
           aria-label={label}
           title={label}
+          style={glowStyle}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
         >
           <span className="block truncate inline-flex items-center gap-2">
             {current?.icon ? <span className="opacity-80 shrink-0">{current.icon}</span> : null}

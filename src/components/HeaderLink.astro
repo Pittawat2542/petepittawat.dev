@@ -14,17 +14,39 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   aria-current={isActive ? 'page' : undefined}
   data-active={isActive ? 'true' : undefined}
   tabindex={isActive ? -1 : undefined}
-  class={`rounded-full px-3 py-2 text-sm font-medium inline-flex items-center gap-1.5 leading-none nav-pill nav-link
+  class={`rounded-full px-4 py-2 text-sm font-medium inline-flex items-center gap-1.5 leading-none nav-pill nav-link
           text-[color:var(--white)]/85 hover:text-[color:var(--white)]
-          hover:bg-[color:var(--white)]/5 transition-colors duration-150 ease-out
+          transition-colors duration-150 ease-out
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
-          ${isActive ? 'bg-[color:var(--white)]/10 text-[color:var(--white)] shadow-inner pointer-events-none cursor-default' : 'cursor-pointer'}
+          ${isActive ? 'bg-[color:var(--white)]/15 text-white shadow-inner shadow-lg pointer-events-none cursor-default' : 'cursor-pointer'}
           ${className}`}
 >
   <slot />
-  <span aria-hidden="true" class="nav-outline">
-    <svg class="nav-outline-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <rect class="nav-outline-path" x="5" y="5" width="90" height="90" rx="45" ry="45" pathLength="100" />
-    </svg>
-  </span>
 </a>
+
+<style>
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
+  }
+
+  .nav-link:hover::before {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+</style>

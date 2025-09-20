@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
+import { useGlassGlow } from '../../lib/hooks';
 
 type IconName = 'external' | 'arrow-right' | 'chevron-right' | 'search' | 'download' | 'plus' | 'mail';
 
@@ -30,26 +31,30 @@ const GlassButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Glas
   ({ className, variant = 'primary', size = 'md', as, children, icon, iconPosition = 'right', iconOnly = false, autoIcon = true, ...props }, ref) => {
     const isAnchor = as === 'a' || ('href' in (props as AnchorLikeProps));
 
-    const baseClasses = 'glass-button rounded-full font-medium transition-[transform,box-shadow,background-color,color,border-color] duration-150 ease-out will-change-transform active:scale-[0.98] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
+    const { glowStyle, handleMouseMove: glowMouseMove, handleMouseLeave: glowMouseLeave } = useGlassGlow<HTMLElement>();
+
+    const baseClasses = [
+      'glass-button group relative inline-flex items-center justify-center gap-2',
+      'rounded-full font-medium tracking-tight transition-all duration-200 ease-out',
+      'border backdrop-blur-sm supports-[backdrop-filter]:backdrop-blur-sm',
+      'shadow-[0_10px_30px_-18px_rgba(15,15,35,0.45)] hover:shadow-[0_16px_34px_-16px_rgba(15,15,35,0.55)]',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#05070f)] focus-visible:ring-[color:var(--accent,#6AC1FF)]',
+      'active:scale-[0.985] motion-reduce:transition-none motion-reduce:active:scale-100'
+    ];
 
     const sizeClasses = {
-      sm: iconOnly ? 'h-8 w-8 text-sm' : 'px-3 py-2 text-sm h-8',
-      md: iconOnly ? 'h-10 w-10 text-sm' : 'px-4 py-2.5 text-sm h-10',
-      lg: iconOnly ? 'h-12 w-12 text-base' : 'px-6 py-3 text-base h-12'
+      sm: iconOnly ? 'h-9 w-9 text-sm' : 'min-h-[2.25rem] px-3.5 py-2 text-sm',
+      md: iconOnly ? 'h-[2.75rem] w-[2.75rem] text-sm' : 'min-h-[2.75rem] px-[1.125rem] py-2.5 text-sm',
+      lg: iconOnly ? 'h-12 w-12 text-base' : 'min-h-[3rem] px-6 py-3 text-base'
     } as const;
 
     const variantClasses = {
-      primary: 'text-white bg-primary/20 border-primary/40 hover:bg-primary/30 hover:text-white hover:border-primary/60 shadow-primary/20',
-      secondary: 'text-foreground bg-muted/30 border-muted/50 hover:bg-muted/40 hover:border-muted/70 hover:text-foreground',
-      ghost: 'text-muted-foreground bg-transparent border-transparent hover:bg-accent/30 hover:text-foreground hover:border-accent/20'
+      primary: 'text-[color:var(--white,#FFFFFF)] bg-[rgba(106,193,255,0.18)] border-[rgba(106,193,255,0.45)] hover:bg-[rgba(106,193,255,0.26)] hover:border-[rgba(106,193,255,0.6)]',
+      secondary: 'text-[color:var(--white,#FFFFFF)]/85 bg-[rgba(8,12,22,0.55)] border-[rgba(255,255,255,0.12)] hover:bg-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.18)]',
+      ghost: 'text-[color:var(--white,#FFFFFF)]/70 bg-transparent border-transparent hover:text-[color:var(--white,#FFFFFF)]/85 hover:bg-[rgba(255,255,255,0.08)]'
     } as const;
 
-    const combinedClassName = cn(
-      baseClasses,
-      sizeClasses[size],
-      variantClasses[variant],
-      className
-    );
+    const combinedClassName = cn(baseClasses, sizeClasses[size], variantClasses[variant], iconOnly && 'px-0', className);
 
     const href = (props as AnchorLikeProps).href;
     const target = (props as any)?.target as string | undefined;
@@ -90,9 +95,23 @@ const GlassButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Glas
     })();
 
     if (isAnchor) {
-      const { className: _ignored, ...rest } = props as AnchorLikeProps;
+      const { className: _ignored, onMouseMove: userMouseMove, onMouseLeave: userMouseLeave, style: userStyle, ...rest } = props as AnchorLikeProps;
       return (
-        <a ref={ref as React.Ref<HTMLAnchorElement>} data-variant={variant} className={combinedClassName} {...rest}>
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          data-variant={variant}
+          className={combinedClassName}
+          style={{ ...glowStyle, ...userStyle }}
+          onMouseMove={(event) => {
+            glowMouseMove(event);
+            userMouseMove?.(event);
+          }}
+          onMouseLeave={(event) => {
+            glowMouseLeave(event);
+            userMouseLeave?.(event);
+          }}
+          {...rest}
+        >
           {iconPosition === 'left' && finalIcon}
           {!iconOnly && children}
           {iconPosition === 'right' && finalIcon}
@@ -100,9 +119,24 @@ const GlassButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Glas
       );
     }
 
-    const { className: _ignored2, ...restBtn } = props as ButtonLikeProps;
+    const { className: _ignored2, type, onMouseMove: userMouseMove, onMouseLeave: userMouseLeave, style: userStyle, ...restBtn } = props as ButtonLikeProps;
     return (
-      <button ref={ref as React.Ref<HTMLButtonElement>} data-variant={variant} className={combinedClassName} {...restBtn}>
+      <button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        data-variant={variant}
+        className={combinedClassName}
+        type={type ?? 'button'}
+        style={{ ...glowStyle, ...userStyle }}
+        onMouseMove={(event) => {
+          glowMouseMove(event);
+          userMouseMove?.(event);
+        }}
+        onMouseLeave={(event) => {
+          glowMouseLeave(event);
+          userMouseLeave?.(event);
+        }}
+        {...restBtn}
+      >
         {iconPosition === 'left' && finalIcon}
         {!iconOnly && children}
         {iconPosition === 'right' && finalIcon}

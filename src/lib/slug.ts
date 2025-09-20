@@ -1,9 +1,13 @@
-export function slugifyTag(s: string): string {
+export function slugify(s: string): string {
   return s
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
+}
+
+export function slugifyTag(s: string): string {
+  return slugify(s);
 }
 
 export function createTagSlugMap(tags: string[]): Record<string, string> {
@@ -13,4 +17,3 @@ export function createTagSlugMap(tags: string[]): Record<string, string> {
   }
   return map;
 }
-

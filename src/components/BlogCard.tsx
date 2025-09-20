@@ -1,7 +1,8 @@
-import { ArrowRight, Calendar, BookOpen } from 'lucide-react';
+import { ArrowUpRight, Calendar, BookOpen } from 'lucide-react';
 
 import type { BlogPost } from '../types';
 import type React from 'react';
+import { useGlassGlow } from '../lib/hooks';
 
 type Props = {
   post: BlogPost;
@@ -32,25 +33,27 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
     }
   }
   const linkBase = horizontalOnSingleColumn
-    ? 'flex gap-4 lg:flex-col align-middle p-4 md:p-6 h-full'
-    : 'flex flex-col align-middle p-4 md:p-6 h-full';
+    ? 'flex gap-5 lg:flex-col p-4 md:p-6 h-full'
+    : 'flex flex-col gap-5 p-4 md:p-6 h-full';
+
+  const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
 
   return (
-    <li style={style} className={`cursor-pointer rounded-2xl border border-border bg-card glass-card text-card-foreground shadow-sm group w-full h-full hyphens-auto blog-card ${featured ? 'card-featured' : ''} ${className}`}>
+    <li style={style} className={`cursor-pointer rounded-3xl border border-border bg-card glass-card text-card-foreground shadow-sm group w-full h-full hyphens-auto blog-card overflow-hidden ${featured ? 'card-featured' : ''} ${className}`}>
       <a
-        className={`${linkBase} text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)]`}
+        className={`${linkBase} text-[color:var(--white)] hover:text-[color:var(--white)] focus-visible:text-[color:var(--white)] relative`}
         href={`/blog/${post.slug}`}
+        style={glowStyle}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
+        <div className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(139,92,246,0.06) 45%, transparent 100%)' }} />
+        <div className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         {/* Cover image */}
         {post.data.coverImage?.src ? (
-          <div
-            className={horizontalOnSingleColumn ?
-              'overflow-hidden rounded-xl shrink-0 w-32 h-24 md:w-44 md:h-32 lg:w-full lg:h-auto lg:mb-6' :
-              'mb-4 md:mb-6 overflow-hidden rounded-xl'
-            }
-          >
+          <div className={horizontalOnSingleColumn ? 'overflow-hidden rounded-2xl shrink-0 w-32 h-24 md:w-44 md:h-32 lg:w-full lg:h-auto' : 'overflow-hidden rounded-2xl'}>
             <img
-              className={`${horizontalOnSingleColumn ? 'h-full w-full object-cover lg:h-auto lg:w-full' : 'w-full h-auto'} transition-transform duration-200 ease-out group-hover:scale-[1.02] will-change-transform`}
+              className={`${horizontalOnSingleColumn ? 'h-full w-full object-cover lg:h-auto lg:w-full' : 'w-full h-auto'} transition-transform duration-300 ease-out group-hover:scale-[1.04] will-change-transform`}
               src={post.data.coverImage.src}
               width={post.data.coverImage.width}
               height={post.data.coverImage.height}
@@ -61,66 +64,59 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
               alt={`Cover image for article: ${post.data.title}`}
             />
           </div>
-        ) : null}
+        ) : (
+          <div className="rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(139,92,246,0.12))] p-6 text-xs uppercase tracking-[0.15em] text-white/70">
+            Field Notes
+          </div>
+        )}
 
         {/* Right/content column */}
-        <div className={horizontalOnSingleColumn ? 'flex min-w-0 flex-1 flex-col justify-between lg:justify-start' : ''}>
+        <div className={horizontalOnSingleColumn ? 'flex min-w-0 flex-1 flex-col lg:justify-start' : 'flex min-w-0 flex-1 flex-col'}>
           {/* Series badge */}
-          {isPartOfSeries && (
-            <div className="mb-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[color:var(--accent)]/15 border border-[color:var(--accent)]/30 text-xs font-medium">
-                <BookOpen size={12} className="text-[color:var(--accent)]" />
-                <span className="text-[color:var(--accent)]">
-                  {post.data.seriesTitle}
-                  {totalParts > 0 && (
-                    <span className="ml-1 text-[color:var(--accent)]/70">
-                      ({partNumber}/{totalParts})
-                    </span>
-                  )}
-                </span>
+          <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-white/60">
+            {isPartOfSeries ? (
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/10 px-3 py-1 text-[color:var(--accent)]">
+                <BookOpen size={12} />
+                {post.data.seriesTitle}
+                {totalParts > 0 && (
+                  <span className="text-white/60">({partNumber}/{totalParts})</span>
+                )}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 px-3 py-1 text-white/65">
+                {post.data.tags?.[0] ?? 'Article'}
+              </span>
+            )}
+          </div>
+
+          <div className="flex flex-1 flex-col">
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-[color:var(--white)] leading-tight">
+                  {post.data.title}
+                </h3>
               </div>
+              <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm opacity-75">
+                <div className="inline-flex items-center gap-1.5 uppercase tracking-wide">
+                  <Calendar size={14} className="text-[color:var(--accent)]/70" aria-hidden="true" />
+                  <time dateTime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString('en-us', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
+                </div>
+              </div>
+              <p className="text-left leading-7 text-[color:var(--white)]/80 line-clamp-3">
+                {post.data.excerpt}
+              </p>
             </div>
-          )}
 
-          {/* Title */}
-          <div className="flex items-start gap-3 mb-2">
-            <h3 className="text-xl md:text-3xl font-bold tracking-tight text-[color:var(--accent)] flex-1 line-clamp-2">
-              {post.data.title}
-            </h3>
-          </div>
-
-          {/* Meta */}
-          <div className="flex items-center gap-4 text-xs md:text-sm opacity-80 mb-2">
-            <div className="flex items-center gap-1.5">
-              <Calendar size={14} className="text-[color:var(--accent)]/70 icon-bounce" aria-hidden="true" />
-              <time dateTime={post.data.pubDate.toISOString()} className="italic">
-                {post.data.pubDate.toLocaleDateString('en-us', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                })}
-              </time>
-            </div>
-          </div>
-
-          {/* Excerpt + CTA */}
-          <div className={horizontalOnSingleColumn ? 'mt-auto' : ''}>
-            <p className="text-left md:text-justify leading-6 md:leading-7 text-[color:var(--white)]/80 clamp-fade-3">
-              {post.data.excerpt}
-            </p>
-            <div className="mt-3 md:mt-4 flex items-center gap-2 group/cta pt-2">
-              <span
-                className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium
-                           text-[color:var(--accent)] ring-1 ring-[color:var(--accent)]/40 bg-[color:var(--accent)]/10
-                           transition-[background-color,color,border-color,transform,box-shadow] duration-150 ease-out
-                           hover:bg-[color:var(--accent)]/20 hover:ring-[color:var(--accent)]/60 active:translate-y-px
-                           shadow-[0_6px_18px_-12px_color-mix(in_oklab,var(--accent)_80%,transparent)]">
-                <span>Read more</span>
-                <ArrowRight
-                  size={14}
-                  className="transition-transform duration-150 group-hover/cta:translate-x-1.5"
-                  aria-hidden="true"
-                />
+            <div className="mt-6 flex items-center justify-end text-sm text-[color:var(--white)]/70">
+              <span className="inline-flex items-center gap-2 text-[color:var(--accent)]/85 font-medium tracking-tight transition-transform duration-200 group-hover:translate-x-1">
+                Read article
+                <ArrowUpRight size={16} aria-hidden="true" />
               </span>
             </div>
           </div>
