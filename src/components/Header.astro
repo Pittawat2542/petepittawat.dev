@@ -30,31 +30,38 @@ const isActive = (href: string) =>
 <header class="fixed inset-x-0 z-50" style="top: max(env(safe-area-inset-top), 1rem); view-transition-name: site-header;">
   <div class="mx-auto w-full md:w-fit max-w-[min(92vw,72rem)]">
     <div class="relative block md:inline-flex w-full md:w-auto rounded-full p-[1px]
-                bg-gradient-to-r from-[color:var(--white)]/15 via-transparent to-[color:var(--white)]/15">
-      <nav id="site-nav" aria-label="Primary"
-           class="flex w-full items-center justify-between md:justify-start gap-1 rounded-[inherit] border border-transparent
-                  bg-transparent supports-[backdrop-filter]:bg-transparent
-                  backdrop-blur-none shadow-none
-                  transition-[background-color,box-shadow,transform,border-color,backdrop-filter] duration-200 ease-out
-                  data-[scrolled=true]:border-[color:var(--white)]/10
-                  data-[scrolled=true]:bg-[color:var(--black-nav)]/70 data-[scrolled=true]:supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55
-                  data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-lg data-[scrolled=true]:shadow-black/10
-                  overflow-x-auto overscroll-x-contain scrollbar-none
-                  snap-x snap-proximity md:snap-none p-2">
+                bg-gradient-to-r from-[color:var(--white)]/18 via-transparent to-[color:var(--white)]/18">
+      <div class="relative rounded-[inherit] overflow-hidden">
+        <nav id="site-nav" aria-label="Primary" data-scrolled="false"
+             class="flex w-full items-center justify-between md:justify-start gap-1 rounded-[inherit] border border-[color:var(--white)]/8
+                    bg-[color:var(--black-nav)]/55 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/35
+                    backdrop-blur-md shadow-[0_18px_40px_-26px_rgba(6,12,22,0.75)]
+                    transition-[background-color,box-shadow,transform,border-color,backdrop-filter] duration-300 ease-out
+                    data-[scrolled=false]:border-[color:var(--white)]/6
+                    data-[scrolled=false]:bg-white/[0.08] data-[scrolled=false]:supports-[backdrop-filter]:bg-white/[0.04]
+                    data-[scrolled=false]:backdrop-blur-md
+                    data-[scrolled=true]:border-[color:var(--white)]/14
+                    data-[scrolled=true]:bg-[color:var(--black-nav)]/70 data-[scrolled=true]:supports-[backdrop-filter]:bg-[color:var(--black-nav)]/48
+                    data-[scrolled=true]:backdrop-blur-xl data-[scrolled=true]:shadow-[0_20px_48px_-20px_rgba(3,7,15,0.85)]
+                    overflow-x-auto overscroll-x-contain scrollbar-none
+                    snap-x snap-proximity md:snap-none p-2">
         <a href="/" aria-label="Go to homepage"
            class="group text-[color:var(--white)] flex min-w-0 gap-2 items-center rounded-full px-3 py-2
-                  hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none
+                  hover:bg-[color:var(--white)]/6 transition-colors focus-visible:outline-none
                   focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 snap-start nav-link">
-          <svg class="h-6 w-6 shrink-0 transition-transform motion-safe:group-hover:scale-105" 
-               viewBox="0 0 512 512" fill="none" aria-hidden="true">
-            <!-- Blue background (site brand color) -->
-            <rect x="0" y="0" width="512" height="512" rx="64" fill="#6AC1FF"/>
-            <!-- PP Logo in dark color -->
-            <g fill="#222831">
-              <path d="M82 199.1L291.4 199.1L291.4 298.1C291.4 311.1 288.6 322.3 283 331.7C277.4 341.3 269.5 348.7 259.3 353.9C249.3 359.1 237.7 361.7 224.5 361.7C211.3 361.7 199.7 359.1 189.7 353.9C179.7 348.7 171.8 341.3 166 331.7C160.4 322.3 157.6 311.1 157.6 298.1L157.6 244.7L82 244.7L82 199.1ZM197.2 244.7L197.2 292.7C197.2 297.3 198 301.2 199.6 304.4C201.2 307.6 203.5 310.1 206.5 311.9C209.7 313.7 213.5 314.6 217.9 314.6L231.1 314.6C235.7 314.6 239.5 313.7 242.5 311.9C245.5 310.1 247.8 307.6 249.4 304.4C251 301.2 251.8 297.3 251.8 292.7L251.8 244.7L197.2 244.7Z"/>
-              <path d="M291 199.1L500.4 199.1L500.4 298.1C500.4 311.1 497.6 322.3 492 331.7C486.4 341.3 478.5 348.7 468.3 353.9C458.3 359.1 446.7 361.7 433.5 361.7C420.3 361.7 408.7 359.1 398.7 353.9C388.7 348.7 380.8 341.3 375 331.7C369.4 322.3 366.6 311.1 366.6 298.1L366.6 244.7L291 244.7L291 199.1ZM406.2 244.7L406.2 292.7C406.2 297.3 407 301.2 408.6 304.4C410.2 307.6 412.5 310.1 415.5 311.9C418.7 313.7 422.5 314.6 426.9 314.6L440.1 314.6C444.7 314.6 448.5 313.7 451.5 311.9C454.5 310.1 456.8 307.6 458.4 304.4C460 301.2 460.8 297.3 460.8 292.7L460.8 244.7L406.2 244.7Z"/>
-            </g>
-          </svg>
+          <span class="site-logo" aria-hidden="true">
+            <span class="site-logo__glow"></span>
+            <span class="site-logo__halo"></span>
+            <span class="site-logo__spark site-logo__spark--one"></span>
+            <span class="site-logo__spark site-logo__spark--two"></span>
+            <svg class="site-logo__mark" viewBox="0 0 512 512" fill="none">
+              <rect x="0" y="0" width="512" height="512" rx="64" fill="#6AC1FF" />
+              <g fill="#222831">
+                <path d="M82 199.1L291.4 199.1L291.4 298.1C291.4 311.1 288.6 322.3 283 331.7C277.4 341.3 269.5 348.7 259.3 353.9C249.3 359.1 237.7 361.7 224.5 361.7C211.3 361.7 199.7 359.1 189.7 353.9C179.7 348.7 171.8 341.3 166 331.7C160.4 322.3 157.6 311.1 157.6 298.1L157.6 244.7L82 244.7L82 199.1ZM197.2 244.7L197.2 292.7C197.2 297.3 198 301.2 199.6 304.4C201.2 307.6 203.5 310.1 206.5 311.9C209.7 313.7 213.5 314.6 217.9 314.6L231.1 314.6C235.7 314.6 239.5 313.7 242.5 311.9C245.5 310.1 247.8 307.6 249.4 304.4C251 301.2 251.8 297.3 251.8 292.7L251.8 244.7L197.2 244.7Z" />
+                <path d="M291 199.1L500.4 199.1L500.4 298.1C500.4 311.1 497.6 322.3 492 331.7C486.4 341.3 478.5 348.7 468.3 353.9C458.3 359.1 446.7 361.7 433.5 361.7C420.3 361.7 408.7 359.1 398.7 353.9C388.7 348.7 380.8 341.3 375 331.7C369.4 322.3 366.6 311.1 366.6 298.1L366.6 244.7L291 244.7L291 199.1ZM406.2 244.7L406.2 292.7C406.2 297.3 407 301.2 408.6 304.4C410.2 307.6 412.5 310.1 415.5 311.9C418.7 313.7 422.5 314.6 426.9 314.6L440.1 314.6C444.7 314.6 448.5 313.7 451.5 311.9C454.5 310.1 456.8 307.6 458.4 304.4C460 301.2 460.8 297.3 460.8 292.7L460.8 244.7L406.2 244.7Z" />
+              </g>
+            </svg>
+          </span>
           <span class="hidden md:inline whitespace-nowrap md:ml-1 font-medium max-w-[40vw] truncate">
             {SITE_TITLE}
           </span>
@@ -87,7 +94,7 @@ const isActive = (href: string) =>
           <!-- Progressive Search: load React modal on demand -->
           <button
             id="open-search-desktop"
-            class="hidden md:inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm hover:bg-[color:var(--white)]/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
+            class="search-trigger hidden md:inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm text-[color:var(--white)]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28"
             aria-label="Open search"
             title="Search (⌘/Ctrl + K)"
             type="button"
@@ -100,7 +107,7 @@ const isActive = (href: string) =>
           </button>
           <button
             id="open-search-mobile"
-            class="md:hidden inline-flex items-center justify-center rounded-full p-2 hover:bg-[color:var(--white)]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
+            class="search-trigger search-trigger--icon md:hidden inline-flex items-center justify-center rounded-full p-2.5 text-[color:var(--white)]/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28"
             aria-label="Open search"
             title="Search"
             type="button"
@@ -127,7 +134,8 @@ const isActive = (href: string) =>
           </button>
         </div>
 
-      </nav>
+        </nav>
+      </div>
 
       <!-- Backdrop for mobile menu -->
       <div id="mobile-menu-overlay" class="md:hidden fixed inset-0 z-30 bg-[color:var(--black-nav)]/60 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/45 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"></div>
@@ -141,7 +149,7 @@ const isActive = (href: string) =>
             <!-- Quick action: Search -->
             <div class="p-2.5">
               <button id="open-search-in-menu" type="button" aria-label="Open search"
-                      class="glass-button rounded-full w-full flex items-center gap-3 px-4 py-3 text-base font-medium
+                      class="search-trigger search-trigger--drawer glass-button rounded-full w-full flex items-center gap-3 px-4 py-3 text-base font-medium
                              text-[color:var(--white)]/90 bg-[color:var(--white)]/[0.06] border border-[color:var(--white)]/15
                              hover:bg-[color:var(--white)]/[0.12] hover:border-[color:var(--white)]/25 hover:text-[color:var(--white)] focus-visible:outline-none
                              focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30">
@@ -181,6 +189,287 @@ const isActive = (href: string) =>
     </div>
   </div>
 </header>
+
+<style>
+  .site-logo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 1rem;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.28), rgba(106, 193, 255, 0.35));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 12px 26px -18px rgba(9, 22, 42, 0.85);
+    overflow: visible;
+    isolation: isolate;
+    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 320ms ease,
+      background 320ms ease;
+  }
+
+  .group:hover .site-logo,
+  .group:focus-visible .site-logo {
+    transform: rotate(-2deg) scale(1.05);
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.46), rgba(104, 210, 255, 0.65));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52), 0 20px 36px -18px rgba(11, 30, 58, 0.9);
+  }
+
+  .site-logo__mark {
+    position: relative;
+    z-index: 2;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .group:hover .site-logo__mark,
+  .group:focus-visible .site-logo__mark {
+    transform: translateY(-1px) rotate(2deg);
+  }
+
+  .site-logo__glow {
+    position: absolute;
+    inset: -25%;
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.55), transparent 60%),
+      radial-gradient(circle at 75% 75%, rgba(106, 193, 255, 0.35), transparent 65%);
+    filter: blur(16px);
+    opacity: 0.85;
+    z-index: 0;
+    transition: opacity 320ms ease;
+  }
+
+  .group:hover .site-logo__glow,
+  .group:focus-visible .site-logo__glow {
+    opacity: 1;
+  }
+
+  .site-logo__halo {
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    opacity: 0.65;
+    z-index: 1;
+    transition: opacity 260ms ease, transform 320ms ease;
+  }
+
+  .group:hover .site-logo__halo,
+  .group:focus-visible .site-logo__halo {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+
+  .site-logo__spark {
+    position: absolute;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0.6rem rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    z-index: 3;
+    mix-blend-mode: screen;
+    transform-origin: center;
+    animation: site-logo-orbit 6s linear infinite;
+  }
+
+  .site-logo__spark--one {
+    animation-delay: 0.2s;
+  }
+
+  .site-logo__spark--two {
+    animation-delay: 3.1s;
+  }
+
+  .group:hover .site-logo__spark,
+  .group:focus-visible .site-logo__spark {
+    opacity: 1;
+  }
+
+  @keyframes site-logo-orbit {
+    0% {
+      transform: rotate(0deg) translateX(1.38rem) scale(0.8);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    50% {
+      transform: rotate(180deg) translateX(1.38rem) scale(1);
+      opacity: 0.9;
+    }
+    90% {
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(360deg) translateX(1.38rem) scale(0.8);
+      opacity: 0;
+    }
+  }
+
+  .search-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid transparent;
+    transition:
+      transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      border-color 280ms ease,
+      background-color 280ms ease,
+      box-shadow 280ms ease,
+      color 200ms ease;
+  }
+
+  .search-trigger:not(.search-trigger--drawer) {
+    background: rgba(15, 24, 38, 0.48);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 16px 28px -24px rgba(4, 12, 24, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .search-trigger::before {
+    content: none;
+  }
+
+  .search-trigger:not(.search-trigger--drawer)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
+      radial-gradient(circle at 80% 80%, rgba(106, 193, 255, 0.35), transparent 70%);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 280ms ease, transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: -1;
+  }
+
+  .search-trigger:not(.search-trigger--drawer)::after {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), transparent 60%);
+    opacity: 0;
+    transition: opacity 340ms ease;
+    z-index: -2;
+  }
+
+  .search-trigger svg,
+  .search-trigger span {
+    position: relative;
+    z-index: 2;
+  }
+
+  .search-trigger svg {
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1), filter 260ms ease;
+  }
+
+  .search-trigger span {
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 200ms ease;
+  }
+
+  .search-trigger:hover,
+  .search-trigger:focus-visible {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  .search-trigger:not(.search-trigger--drawer):hover,
+  .search-trigger:not(.search-trigger--drawer):focus-visible {
+    border-color: rgba(255, 255, 255, 0.32);
+    background: rgba(22, 34, 52, 0.58);
+    box-shadow: 0 22px 46px -28px rgba(6, 16, 34, 0.95);
+    color: rgba(255, 255, 255, 0.96);
+  }
+
+  .search-trigger:not(.search-trigger--drawer):hover::before,
+  .search-trigger:not(.search-trigger--drawer):focus-visible::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .search-trigger:not(.search-trigger--drawer):hover::after,
+  .search-trigger:not(.search-trigger--drawer):focus-visible::after {
+    opacity: 0.8;
+  }
+
+  .search-trigger:hover svg,
+  .search-trigger:focus-visible svg {
+    transform: translate(2px, -2px) scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(106, 193, 255, 0.35));
+  }
+
+  .search-trigger:hover span,
+  .search-trigger:focus-visible span {
+    transform: translateX(1px);
+    opacity: 1;
+  }
+
+  .search-trigger--icon {
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 999px;
+    padding: 0;
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .search-trigger--icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .search-trigger--drawer {
+    transform-origin: center;
+  }
+
+  .search-trigger--drawer:hover,
+  .search-trigger--drawer:focus-visible {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  .search-trigger--drawer svg {
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1), filter 260ms ease;
+  }
+
+  .search-trigger--drawer:hover svg,
+  .search-trigger--drawer:focus-visible svg {
+    transform: translate(2px, -2px) scale(1.04);
+    filter: drop-shadow(0 6px 10px rgba(106, 193, 255, 0.35));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-trigger,
+    .search-trigger svg,
+    .search-trigger span {
+      transition-duration: 0.001ms !important;
+      transition-delay: 0ms !important;
+    }
+    .search-trigger,
+    .search-trigger--drawer {
+      transform: none !important;
+    }
+    .search-trigger svg {
+      transform: none !important;
+      filter: none !important;
+    }
+    .search-trigger::before,
+    .search-trigger::after,
+    .search-trigger--drawer svg {
+      opacity: 1 !important;
+    }
+  }
+</style>
 
 <script is:inline>
   (function(){

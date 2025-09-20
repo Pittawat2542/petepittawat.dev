@@ -14,11 +14,13 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   aria-current={isActive ? 'page' : undefined}
   data-active={isActive ? 'true' : undefined}
   tabindex={isActive ? -1 : undefined}
-  class={`rounded-full px-4 py-2 text-sm font-medium inline-flex items-center gap-1.5 leading-none nav-pill nav-link
-          text-[color:var(--white)]/85 hover:text-[color:var(--white)]
-          transition-colors duration-150 ease-out
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30
-          ${isActive ? 'bg-[color:var(--white)]/15 text-white shadow-inner shadow-lg pointer-events-none cursor-default' : 'cursor-pointer'}
+  class={`nav-pill nav-link inline-flex items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-medium leading-none
+          text-[color:var(--white)]/72 hover:text-[color:var(--white)] hover:border-[color:var(--white)]/16
+          transition-[color,border-color,background-color,box-shadow] duration-200 ease-out
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28
+          ${isActive
+            ? 'bg-[color:var(--white)]/14 border-[color:var(--white)]/22 text-[color:var(--white)] shadow-[0_12px_26px_-18px_rgba(8,20,38,0.85)] pointer-events-none cursor-default'
+            : 'cursor-pointer bg-transparent'}
           ${className}`}
 >
   <slot />
@@ -28,25 +30,54 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   .nav-link {
     position: relative;
     overflow: hidden;
+    isolation: isolate;
   }
 
   .nav-link::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    padding-bottom: 100%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    inset: -18%;
+    border-radius: inherit;
+    transform: scale(0.75);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     z-index: -1;
   }
 
   .nav-link:hover::before {
-    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .nav-link[data-active="true"]::before {
+    opacity: 1;
+    transform: scale(1.05);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(107, 193, 255, 0.18));
+    border-color: rgba(255, 255, 255, 0.32);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(106,193,255,0.75), rgba(255,255,255,0));
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .nav-link[data-active="true"]::after {
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>
