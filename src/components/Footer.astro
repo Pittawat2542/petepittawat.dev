@@ -1,5 +1,5 @@
 ---
-import { BookOpenText, FolderKanban, FileText, Mic2, User2, ExternalLink } from 'lucide-astro';
+import { BookOpenText, FolderKanban, FileText, Mic2, User2, ExternalLink, Github, Linkedin, Instagram } from 'lucide-astro';
 
 const year = new Date().getFullYear();
 const quickLinks = [
@@ -9,14 +9,22 @@ const quickLinks = [
   { href: '/talks', label: 'Talks', icon: Mic2 },
   { href: '/about', label: 'About', icon: User2 }
 ];
+
+const socialLinks = [
+  { href: 'https://github.com/Pittawat2542', label: 'GitHub', icon: Github },
+  { href: 'https://www.linkedin.com/in/pittawat-tav/', label: 'LinkedIn', icon: Linkedin },
+  { href: 'https://www.instagram.com/pete.pittawat/', label: 'Instagram', icon: Instagram },
+  { href: 'https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en', label: 'Google Scholar' },
+  { href: 'https://orcid.org/0000-0002-6824-2634', label: 'ORCID' }
+];
 ---
 
 <footer class="site-footer" style="view-transition-name: site-footer;">
   <div class="site-footer__container">
     <div class="site-footer__grid">
       <div class="site-footer__brand">
-        <h2 class="site-footer__title">Stay curious.</h2>
-        <p class="site-footer__summary">Digging into practical language intelligence, reasoning, and design systems.</p>
+        <h2 class="site-footer__title">Building AI with purpose.</h2>
+        <p class="site-footer__summary">Exploring the intersection of language models, reasoning, and practical AI systems. Turning ideas into reliable tools and sharing what I learn along the way.</p>
       </div>
       <div class="site-footer__links">
         {quickLinks.map(({ href, label, icon: Icon }) => (
@@ -27,6 +35,31 @@ const quickLinks = [
         ))}
       </div>
       <div class="site-footer__contact">
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
+            {socialLinks.map(({ href, label, icon: Icon }) => (
+              <a
+                href={href}
+                title={label}
+                aria-label={label}
+                rel="noopener noreferrer"
+                target="_blank"
+                class="site-footer__contact-link"
+              >
+                {Icon && <Icon class="site-footer__icon" aria-hidden="true" />}
+                <span>{label}</span>
+                <ExternalLink class="site-footer__icon" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <p class="text-center md:text-left">&copy; 2020-{year} Pittawat Taveekitworachai. All rights reserved.</p>
+      <div class="flex items-center justify-center md:justify-end">
         <a
           href="https://webring.wonderful.software#petepittawat.dev"
           title="วงแหวนเว็บ"
@@ -42,14 +75,11 @@ const quickLinks = [
             loading="lazy"
             decoding="async"
           />
-          <span>Thai Webring</span>
-          <ExternalLink class="site-footer__icon" aria-hidden="true" />
+          <span class="ml-2">Thai Webring</span>
+          <ExternalLink class="site-footer__icon ml-1" aria-hidden="true" size={14} />
         </a>
       </div>
     </div>
-  </div>
-  <div class="site-footer__bottom">
-    <p>&copy; 2020-{year} Pittawat Taveekitworachai. All rights reserved.</p>
   </div>
 </footer>
 
