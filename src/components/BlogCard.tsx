@@ -18,7 +18,8 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
   const isPartOfSeries = post.data.seriesSlug && post.data.seriesTitle;
   let partNumber = post.data.seriesOrder || 0;
   let totalParts = 0;
-  
+  const fallbackTag = post.data.tags?.[0] ?? 'Article';
+
   // Calculate total parts in series if allPosts is provided
   if (isPartOfSeries && allPosts.length > 0) {
     const seriesPosts = allPosts.filter(p => p.data.seriesSlug === post.data.seriesSlug);
@@ -49,11 +50,13 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
+        <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(160deg,rgba(69,105,255,0.12),rgba(16,24,40,0.65))] opacity-0 transition-opacity duration-500 group-hover:opacity-80" />
         <div
           className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.14) 0%, rgba(139,92,246,0.08) 40%, transparent 100%)' }}
         />
         <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_120%_at_80%_-10%,rgba(255,255,255,0.16),transparent)] opacity-0 transition-opacity duration-[650ms] group-hover:opacity-90" />
+        <div className="pointer-events-none absolute -top-24 -right-20 h-44 w-44 rounded-full bg-[radial-gradient(circle,rgba(106,193,255,0.36),transparent_62%)] blur-3xl opacity-70 transition-all duration-500 group-hover:scale-110" />
 
         <div className="relative z-10 flex flex-1 flex-col">
           <div className={paddingClasses}>
@@ -93,7 +96,7 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-2 rounded-full border border-white/12 px-3 py-1 text-white/65 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/8 group-hover:text-white/85">
-                        {post.data.tags?.[0] ?? 'Article'}
+                        {fallbackTag}
                       </span>
                     )}
                   </div>
@@ -133,6 +136,9 @@ export default function BlogCard({ post, featured = false, allPosts = [], horizo
                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.08] text-white/80 transition-all duration-300 ease-out group-hover:bg-[color:var(--accent,#6AC1FF)]/42 group-hover:text-white group-hover:shadow-[0_10px_22px_rgba(18,42,70,0.45)]">
                   <ArrowUpRight size={16} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-[3px] group-hover:-translate-y-[2px]" />
                 </span>
+              </span>
+              <span className="hidden text-xs uppercase tracking-[0.3em] text-white/45 transition-opacity duration-300 md:inline-flex group-hover:text-white/75">
+                {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric' })}
               </span>
             </div>
           </div>

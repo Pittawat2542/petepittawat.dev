@@ -38,9 +38,12 @@ function typeAccentVar(type?: string) {
 }
 
 export default function ProjectCard({ item, featured = false }: { item: Project; featured?: boolean }) {
+  const accentColor = typeAccentVar(item.type);
   return (
-    <Card className={`p-4 md:p-5 h-full flex flex-col project-card ${featured ? 'card-featured' : ''}`}>
-      <div className="flex items-start justify-between gap-3">
+    <Card className={`glass-entry group project-card ${featured ? 'card-featured' : ''} p-0 h-full flex flex-col`}>
+      <div className="glass-entry__glow" />
+      <div className="glass-entry__content flex flex-col gap-4 p-5 md:p-6 flex-1">
+        <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-2 flex-1 min-w-0">
           <h3 className="text-base md:text-lg font-semibold leading-snug flex-1">
             {item.title}
@@ -83,18 +86,18 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
           ) : null}
         </div>
       ) : null}
-      <p className="mt-3 text-sm text-[color:var(--white)]/85">{item.summary}</p>
+      <p className="text-sm text-[color:var(--white)]/82 leading-relaxed">{item.summary}</p>
       {item.tags?.length ? (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {item.tags.map((t) => (
             <Badge key={t} className="text-xs" variant="outline">{t}</Badge>
           ))}
         </div>
       ) : null}
+      </div>
       {item.links?.length ? (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="glass-entry__footer mt-auto flex flex-wrap items-center gap-2 px-5 py-3 md:px-6 md:py-4 text-sm text-white/78">
           {item.links.map((l, idx) => {
-            const accent = typeAccentVar(item.type);
             const isExternal = !l.href.startsWith('/');
             return (
               <a
@@ -102,18 +105,18 @@ export default function ProjectCard({ item, featured = false }: { item: Project;
                 href={l.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 will-change-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 will-change-transform hover:-translate-y-0.5"
                 style={{
-                  color: accent,
-                  background: `color-mix(in oklab, ${accent} 14%, transparent)`,
-                  border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-                  boxShadow: `0 6px 18px -10px ${accent}`
+                  color: accentColor,
+                  background: `color-mix(in oklab, ${accentColor} 12%, transparent)`,
+                  border: `1px solid color-mix(in oklab, ${accentColor} 38%, transparent)`,
+                  boxShadow: `0 10px 22px -14px ${accentColor}`
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accent} 22%, transparent)`;
+                  (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accentColor} 22%, transparent)`;
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accent} 14%, transparent)`;
+                  (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accentColor} 12%, transparent)`;
                 }}
                 aria-label={l.label}
               >

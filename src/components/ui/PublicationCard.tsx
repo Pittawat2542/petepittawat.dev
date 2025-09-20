@@ -107,7 +107,9 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
 
   return (
     <Card
-      className={[`p-4 md:p-5 cursor-pointer publication-card`, featured ? 'card-featured' : ''].filter(Boolean).join(' ')}
+      className={[`glass-entry group cursor-pointer publication-card rounded-3xl p-0 flex flex-col`, featured ? 'card-featured' : '']
+        .filter(Boolean)
+        .join(' ')}
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -116,7 +118,8 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
       aria-expanded={open}
       aria-controls={detailsId}
     >
-      <div className="flex flex-col gap-3">
+      <div className="glass-entry__glow" />
+        <div className="glass-entry__content flex flex-col gap-4 p-6 md:p-7">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 min-w-0 overflow-x-hidden">
           <div className="min-w-0">
             <h3 className="text-base md:text-lg font-semibold leading-snug">
@@ -140,7 +143,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
               )}
             </h3>
             <p className="mt-1 text-sm text-[color:var(--white)]/80">{renderAuthorsBold(item.authors)}</p>
-            <div className="mt-1 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
+            <div className="mt-2 text-xs md:text-sm text-[color:var(--white)]/60 flex items-center gap-2 flex-wrap">
               {item.type ? (
                 <Badge
                   className="text-xs whitespace-nowrap"
@@ -178,7 +181,7 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                     border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`
                   }}
                 >
-                  <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
+                      <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
                   <span>{item.year}</span>
                 </span>
               </Tooltip>
@@ -196,21 +199,22 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
             ))}
           </div>
         ) : null}
+      </div>
 
-        {/* Resource links (always visible) */}
-        {(item.url || dedupedArtifacts.length) ? (
-          <div className="mt-2 flex flex-wrap gap-2">
+      {(item.url || dedupedArtifacts.length) ? (
+        <div className="glass-entry__footer flex items-center gap-3 px-6 py-3.5 md:px-7 md:py-4 text-xs text-white/78">
+          <div className="flex flex-wrap items-center gap-2 flex-1">
             {item.url ? (
               <a
                 href={item.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words will-change-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 will-change-transform hover:-translate-y-0.5"
                 style={{
                   color: accent,
                   background: `color-mix(in oklab, ${accent} 14%, transparent)`,
                   border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-                  boxShadow: `0 6px 18px -10px ${accent}`
+                  boxShadow: `0 10px 22px -14px ${accent}`
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accent} 22%, transparent)`;
@@ -235,12 +239,12 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   href={a.href}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noopener noreferrer' : undefined}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 btn-ripple max-w-full whitespace-normal break-words will-change-transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 will-change-transform hover:-translate-y-0.5"
                   style={{
                     color: accent,
                     background: `color-mix(in oklab, ${accent} 14%, transparent)`,
                     border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-                    boxShadow: `0 6px 18px -10px ${accent}`
+                    boxShadow: `0 10px 22px -14px ${accent}`
                   }}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLAnchorElement).style.background = `color-mix(in oklab, ${accent} 22%, transparent)`;
@@ -252,16 +256,22 @@ export function PublicationCard({ item, featured = false }: { item: Publication;
                   aria-label={a.label}
                 >
                   <span>{a.label}</span>
-                  <span title={isExternal ? "External link" : "Internal link"} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <span title={isExternal ? 'External link' : 'Internal link'} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                     {isExternal ? <ExternalLink size={14} aria-hidden="true" className="icon-bounce" /> : <ArrowUpRight size={14} aria-hidden="true" className="icon-bounce" />}
                   </span>
                 </a>
               );
             })}
           </div>
-        ) : null}
-      </div>
-      
+          <span className="inline-flex items-center gap-2 ml-auto text-[11px] uppercase tracking-[0.24em] text-white/50 transition-opacity duration-200 group-hover:text-white/70">
+            More details
+            <span className="arrow-hint inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.08] text-white/70">
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </span>
+          </span>
+        </div>
+      ) : null}
+
       {/* Modal with full details (Radix Dialog for consistency) */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-none w-[min(48rem,94vw)] p-0 overflow-hidden">
