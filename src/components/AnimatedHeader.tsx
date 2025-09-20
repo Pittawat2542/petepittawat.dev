@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookOpenText, FolderKanban, FileText, Mic2, User2, Search, Menu, X } from 'lucide-react';
+import { BookOpenText, FileText, FolderKanban, Menu, Mic2, Search, User2, X } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+
 import HeaderLink from './HeaderLink';
 import { SITE_TITLE } from '../consts';
 import { openSearch } from '../scripts/openSearch';
@@ -62,9 +63,6 @@ export default function AnimatedHeader() {
     if (typeof mq.addEventListener === 'function') {
       mq.addEventListener('change', handleMediaChange);
       detachMedia = () => mq.removeEventListener('change', handleMediaChange);
-    } else if (typeof mq.addListener === 'function') {
-      mq.addListener(handleMediaChange);
-      detachMedia = () => mq.removeListener(handleMediaChange);
     }
 
     const previousOverflow = document.documentElement.style.overflow;
@@ -152,6 +150,7 @@ export default function AnimatedHeader() {
             <button 
               id="search-button" 
               onClick={openSearch}
+              title="Search"
               className="relative flex items-center gap-3 rounded-full px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60"
             >
               <Search className="h-5 w-5 opacity-80" aria-hidden="true" />
@@ -161,7 +160,7 @@ export default function AnimatedHeader() {
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-white/80 transition-all hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 md:hidden"
               aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-controls="mobile-nav-panel"
-              aria-expanded={mobileOpen}
+              aria-expanded={mobileOpen ? 'true' : 'false'}
               onClick={() => setMobileOpen((open) => !open)}
             >
               {mobileOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
@@ -182,16 +181,19 @@ export default function AnimatedHeader() {
               exit={{ opacity: 0 }}
               onClick={() => setMobileOpen(false)}
             />
-            <motion.div
+            <dialog
               id="mobile-nav-panel"
-              role="dialog"
-              aria-modal="false"
-              className="md:hidden fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.5rem)] z-50"
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
+              open={true}
+              aria-modal="true"
+              className="md:hidden fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.5rem)] z-50 bg-transparent border-none p-0 max-w-none max-h-none w-auto h-auto"
             >
+              <motion.div
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="w-full"
+              >
               <div className="rounded-3xl border border-white/12 bg-black/80 p-3 shadow-2xl shadow-black/40 backdrop-blur-xl">
                 <ul className="flex flex-col gap-2">
                   {links.map(({ href, label, icon: Icon }) => (
@@ -210,7 +212,8 @@ export default function AnimatedHeader() {
                   ))}
                 </ul>
               </div>
-            </motion.div>
+              </motion.div>
+            </dialog>
           </>
         )}
       </AnimatePresence>

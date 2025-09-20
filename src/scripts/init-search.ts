@@ -10,7 +10,7 @@ function prefetchSearchIndexOnce() {
       // @ts-ignore
       if (navigator?.connection?.saveData) return;
     } catch {}
-    try { fetch('/search.json').catch(() => {}); } catch {}
+    fetch('/search.json').catch(() => {});
   };
 }
 

@@ -1,0 +1,93 @@
+---
+import SearchButton from './SearchButton.astro';
+import { BookOpenText, FolderKanban, FileText, Mic2, User2, ChevronRight } from 'lucide-astro';
+
+export interface Props {
+  currentPath: string;
+  class?: string;
+}
+
+const { currentPath } = Astro.props;
+
+const links = [
+  { href: '/blog', label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/talks', label: 'Talks' },
+  { href: '/about', label: 'About' },
+];
+
+const isActive = (href: string) =>
+  currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
+---
+
+<!-- Mobile menu toggle -->
+<button id="menu-toggle"
+        class="md:hidden inline-flex items-center justify-center rounded-full p-2 text-[color:var(--white)]/85
+               hover:text-[color:var(--white)] hover:bg-[color:var(--white)]/5 transition-colors
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30"
+        aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+  <!-- Hamburger icon -->
+  <svg id="menu-icon-open" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+  <!-- Close icon -->
+  <svg id="menu-icon-close" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+</button>
+
+<!-- Backdrop for mobile menu -->
+<div id="mobile-menu-overlay" class="md:hidden fixed inset-0 z-30 bg-[color:var(--black-nav)]/60 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/45 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+<!-- Mobile menu panel: full-screen overlay with centered glass sheet -->
+<div
+  id="mobile-menu"
+  class="md:hidden fixed inset-0 z-40 opacity-0 pointer-events-none transition-opacity duration-200 ease-out flex items-start justify-center"
+>
+  <div
+    id="mobile-menu-sheet"
+    class="w-[min(96vw,38rem)] mt-[max(env(safe-area-inset-top),1rem)] mx-auto transition-transform duration-200 ease-out -translate-y-2"
+  >
+    <div
+      class="glass-card no-hover-lift no-paint-contain rounded-3xl border border-[color:var(--white)]/12 shadow-2xl shadow-black/25
+             bg-[color:var(--black-nav)]/75 supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55 backdrop-blur-xl overflow-hidden"
+    >
+      <!-- Quick action: Search -->
+      <div class="p-2.5">
+        <SearchButton variant="drawer" />
+      </div>
+      <ul class="px-2.5 pb-3 grid grid-cols-1 gap-2.5">
+        {links.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class={`group glass-button rounded-full w-full flex items-center justify-between px-5 py-4 text-base font-medium min-h-[56px] touch-manipulation
+                     text-[color:var(--white)]/90 bg-[color:var(--white)]/[0.06] border border-[color:var(--white)]/15
+                     hover:bg-[color:var(--white)]/[0.12] hover:border-[color:var(--white)]/25 hover:text-[color:var(--white)]
+                     transition-[background-color,border-color,color,transform] duration-150 ease-out focus-visible:outline-none
+                     focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 active:scale-[0.99]
+                     ${isActive(href) ? 'bg-[color:var(--white)]/[0.16] border-[color:var(--white)]/25 text-[color:var(--white)] pointer-events-none cursor-default' : ''}`}
+              data-active={isActive(href) ? 'true' : undefined}
+              aria-current={isActive(href) ? 'page' : undefined}
+              tabindex={isActive(href) ? -1 : undefined}
+            >
+              <span class="inline-flex items-center gap-3 flex-1 min-w-0">
+                {label === 'Blog' && (<BookOpenText class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                {label === 'Projects' && (<FolderKanban class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                {label === 'Publications' && (<FileText class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                {label === 'Talks' && (<Mic2 class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                {label === 'About' && (<User2 class="h-6 w-6 opacity-90" aria-hidden="true" />)}
+                <span class="ml-1 truncate">{label}</span>
+              </span>
+              <ChevronRight class="h-5 w-5 opacity-70 transition-transform duration-150 ease-out group-hover:translate-x-0.5" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>

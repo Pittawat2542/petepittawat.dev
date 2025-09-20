@@ -12,6 +12,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "lint": "astro check && tsc --noEmit",
     "generate-favicons": "./scripts/generate-favicons.sh"
   },
   "dependencies": {

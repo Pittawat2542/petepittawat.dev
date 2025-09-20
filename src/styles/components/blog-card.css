@@ -1,0 +1,5 @@
+/* BlogCard component styles */
+
+.blog-card-gradient-overlay {
+  background: linear-gradient(135deg, rgba(59,130,246,0.14) 0%, rgba(139,92,246,0.08) 40%, transparent 100%);
+}
