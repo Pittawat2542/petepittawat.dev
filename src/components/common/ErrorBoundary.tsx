@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { ERROR_MESSAGES } from '@/lib/constants';
+import React from 'react';
 
 interface ErrorBoundaryState {
   hasError: boolean;

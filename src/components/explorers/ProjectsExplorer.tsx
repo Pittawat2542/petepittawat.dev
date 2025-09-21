@@ -22,7 +22,7 @@ const comparators: Record<ProjectSort, (a: Project, b: Project) => number> = {
 };
 
 const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
-  const { q, setQ, filters, setFilters, filtered, filterOptions } = useDataFilter(items, {
+  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(items, {
     searchFields: (item) => [item.title, item.summary, item.collaborators ?? '', item.role ?? ''],
     filterFields: {
       year: (item) => item.year.toString(),
@@ -60,6 +60,7 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
         filterOptions={filterOptions}
         placeholder="Search title, summary, collaborators..."
         filteredCount={sortedFiltered.length}
+        totalCount={totalCount}
         sortOptions={[
           { value: 'newest', label: 'Newest' },
           { value: 'oldest', label: 'Oldest' },

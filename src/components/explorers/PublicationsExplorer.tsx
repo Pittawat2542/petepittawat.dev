@@ -27,7 +27,7 @@ const comparators: Record<PublicationSort, (a: Publication, b: Publication) => n
 };
 
 const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items }) => {
-  const { q, setQ, filters, setFilters, filtered, filterOptions } = useDataFilter(items, {
+  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(items, {
     searchFields: (item) => [item.title, item.authors, item.venue, item.type],
     filterFields: {
       type: (item) => item.type,
@@ -73,6 +73,7 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
         filterOptions={filterOptions}
         placeholder="Search title, authors, venue..."
         filteredCount={sortedFiltered.length}
+        totalCount={totalCount}
         sortOptions={[
           { value: 'newest', label: 'Newest' },
           { value: 'oldest', label: 'Oldest' },

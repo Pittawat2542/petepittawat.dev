@@ -1,10 +1,10 @@
 import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
+import { memo } from 'react';
 
 import { Badge } from '@/components/ui/core/badge';
 import { Card } from '@/components/ui/core/card';
 import type { FC } from 'react';
 import type { Project } from '@/types';
-import { memo } from 'react';
 
 function toTitleCase(input?: string) {
   if (!input) return '';

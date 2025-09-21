@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import type { BlogPost } from '@/types';
-import FormattedDate from '@/components/FormattedDate';
+import FormattedDate from './FormattedDate';
 
 interface RelatedPostsProps {
   readonly posts: BlogPost[];

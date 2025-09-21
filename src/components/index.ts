@@ -5,6 +5,7 @@
 
 // Re-export organized component categories
 export * from './common';
+export * from './content';
 export * from './sections';
 export * from './ui';
 export * from './explorers';
@@ -17,21 +18,24 @@ export * from './mdx';
 export { default as BlogCard } from './ui/cards/BlogCard';
 export { default as ErrorBoundary } from './common/ErrorBoundary';
 export { default as AnimatedHeader } from './common/AnimatedHeader';
+export { default as AnimatedWrapper } from './common/AnimatedWrapper';
 export { default as AcademicServices } from './sections/AcademicServices';
 
-// Main component exports
-export { default as AnimatedWrapper } from './AnimatedWrapper';
-export { default as Callout } from './Callout';
-export { default as Prose } from './Prose';
-export { default as GlassCard } from './GlassCard';
-export { default as GlassSurface } from './GlassSurface';
-export { default as Card } from './Card';
-export { default as HeroCard } from './HeroCard';
-export { default as Container } from './Container';
-export { default as Divider } from './Divider';
-export { default as FormattedDate } from './FormattedDate';
-export { default as Chip } from './Chip';
-export { default as TopicChip } from './TopicChip';
-export { default as ReadingProgressBar } from './ReadingProgressBar';
-export { default as RelatedPosts } from './RelatedPosts';
-export { default as ThemedPageHero } from './ThemedPageHero';
+// Updated component exports from new locations
+export { default as HomeCard } from './ui/core/HomeCard';
+export { default as GlassCard } from './ui/core/GlassCard';
+export { default as GlassSurface } from './ui/core/GlassSurface';
+export { default as Container } from './ui/core/Container';
+export { default as Divider } from './ui/core/Divider';
+export { default as Chip } from './ui/core/Chip';
+export { default as TopicChip } from './ui/core/TopicChip';
+export { default as Filter } from './ui/filter/Filter';
+
+export { default as Callout } from './content/Callout';
+export { default as Prose } from './content/Prose';
+export { default as FormattedDate } from './content/FormattedDate';
+export { default as RelatedPosts } from './content/RelatedPosts';
+
+export { default as HeroCard } from './layout/core/HeroCard';
+export { default as ThemedPageHero } from './layout/core/ThemedPageHero';
+export { default as ReadingProgressBar } from './layout/core/ReadingProgressBar';

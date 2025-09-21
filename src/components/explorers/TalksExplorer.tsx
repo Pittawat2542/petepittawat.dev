@@ -22,7 +22,7 @@ const comparators: Record<TalkSort, (a: Talk, b: Talk) => number> = {
 };
 
 const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
-  const { q, setQ, filters, setFilters, filtered, filterOptions } = useDataFilter(items, {
+  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(items, {
     searchFields: (item) => [item.title, item.audience, item.mode],
     filterFields: {
       mode: (item) => item.mode,
@@ -62,6 +62,7 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
         filterOptions={filterOptions}
         placeholder="Search title, audience..."
         filteredCount={sortedFiltered.length}
+        totalCount={totalCount}
         sortOptions={[
           { value: 'newest', label: 'Newest' },
           { value: 'oldest', label: 'Oldest' },

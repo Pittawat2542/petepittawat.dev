@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import PageWithHero from '../../layouts/PageWithHero.astro';
 import { getAllSeries } from '../../lib/series';
 import { BookOpen, ChevronRight } from 'lucide-astro';
-import FormattedDate from '../../components/FormattedDate';
+import FormattedDate from '../../components/content/FormattedDate';
 
 const allPosts = await getCollection('blog');
 const allSeries = getAllSeries(allPosts);

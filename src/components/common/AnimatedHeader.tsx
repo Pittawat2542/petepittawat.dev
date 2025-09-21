@@ -1,6 +1,6 @@
 import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
-import { SITE_TITLE, UI_CONFIG } from '@/lib/constants';
 import { memo, useCallback, useEffect, useState } from 'react';
+import { SITE_TITLE, UI_CONFIG } from '@/lib/constants';
 
 import type { FC } from 'react';
 import { HeaderActions } from '@/components/ui/header/HeaderActions';

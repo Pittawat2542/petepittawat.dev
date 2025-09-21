@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { FilterPanel } from '@/components/ui/filter/FilterPanel';
+import { FilterPanel } from './FilterPanel';
 import { memo } from 'react';
 
 interface FilterProps {
@@ -10,6 +10,7 @@ interface FilterProps {
   readonly filterOptions: Readonly<Record<string, readonly string[]>>;
   readonly placeholder?: string;
   readonly filteredCount?: number;
+  readonly totalCount?: number;
   // Optional sorting controls
   readonly sortOptions?: Array<{ readonly value: string; readonly label: string }>;
   readonly sortValue?: string;
@@ -24,6 +25,7 @@ const FilterComponent: FC<FilterProps> = ({
   filterOptions, 
   placeholder = 'Search...', 
   filteredCount,
+  totalCount,
   sortOptions,
   sortValue,
   onSortChange,
@@ -36,10 +38,11 @@ const FilterComponent: FC<FilterProps> = ({
       filters={filters}
       onFiltersChange={setFilters}
       filterOptions={filterOptions}
-      filteredResults={filteredCount || 0}
-      sortOptions={sortOptions || []}
-      sortValue={sortValue || ''}
-      onSortChange={onSortChange || (() => {})}
+      filteredResults={filteredCount}
+      totalResults={totalCount}
+      sortOptions={sortOptions}
+      sortValue={sortValue}
+      onSortChange={onSortChange}
       compact={true}
     />
   );

@@ -10,7 +10,7 @@ interface CardProps {
   readonly accentColor: string;
 }
 
-const CardComponent: React.FC<CardProps> = ({ 
+const HomeCardComponent: React.FC<CardProps> = ({ 
   href, 
   ariaLabel, 
   title, 
@@ -95,8 +95,8 @@ const CardComponent: React.FC<CardProps> = ({
   );
 };
 
-const Card = memo(CardComponent);
-Card.displayName = 'Card';
+const HomeCard = memo(HomeCardComponent);
+HomeCard.displayName = 'HomeCard';
 
-export default Card;
-export { Card };
+export default HomeCard;
+export { HomeCard };

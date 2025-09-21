@@ -150,6 +150,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
         sortValue={sort}
         onSortChange={(value) => setSort(value as BlogSort)}
         filteredResults={sortedPosts.length}
+        totalResults={posts.length}
         compact
       />
       <ul className="mt-2 md:mt-4 grid w-full grid-cols-1 gap-5 py-3 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">

@@ -3,3 +3,4 @@
  */
 export { default as AnimatedHeader } from './AnimatedHeader';
 export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as AnimatedWrapper } from './AnimatedWrapper';

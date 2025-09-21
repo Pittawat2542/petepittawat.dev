@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
+import { memo } from 'react';
 
 import { cn } from '@/lib/utils';
-import { memo } from 'react';
 
 interface ContainerProps {
   readonly children: ReactNode;

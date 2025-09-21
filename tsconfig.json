@@ -1,6 +1,14 @@
 {
-  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    // Enable strict type checking
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    
     // Strict Type Checking
     "strictNullChecks": true,
     "noUnusedLocals": true,
@@ -12,19 +20,16 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     
-    // React Configuration
+    // JSX Configuration for React components
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     
-    // Module Resolution
-    "moduleResolution": "bundler",
+    // Additional options
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
     
     // Path Mapping
     "baseUrl": ".",

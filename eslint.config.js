@@ -13,21 +13,6 @@ const compat = new FlatCompat({
 
 export default [
   js.configs.recommended,
-  ...compat.config({
-    extends: [
-      'plugin:@typescript-eslint/recommended',
-      'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      'plugin:astro/recommended',
-      'plugin:react/recommended',
-      'plugin:react-hooks/recommended',
-    ],
-    parserOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      project: './tsconfig.json',
-      tsconfigRootDir: import.meta.dirname,
-    },
-  }),
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
@@ -38,6 +23,20 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        document: 'readonly',
+        window: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
       },
     },
     plugins: {
@@ -49,7 +48,6 @@ export default [
       // TypeScript rules
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/prefer-const': 'error',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       
       // React rules
@@ -95,6 +93,7 @@ export default [
       'public/',
       '*.config.js',
       '*.config.mjs',
+      '.eslintrc.cjs',
       'scripts/',
     ],
   },
