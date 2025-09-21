@@ -50,7 +50,7 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
             href={href} 
             isActive={isActive(href)} 
             ariaLabel={label} 
-            className="snap-start nav-link"
+            className="snap-start"
           >
             <span className="inline-flex items-center gap-1.5">
               {getIcon(label, isActive(href))}

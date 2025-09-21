@@ -76,6 +76,16 @@
       height: 0;
     }
   }
+  @keyframes nav-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 }
 
 /*
@@ -2290,8 +2300,24 @@
 }
 
 /* Mobile-friendly overflow handling for content */
-.prose pre { overflow: auto; -webkit-overflow-scrolling: touch; }
+.prose pre { 
+  position: relative;
+  overflow: auto; 
+  -webkit-overflow-scrolling: touch;
+  background: color-mix(in oklab, var(--black) 86%, var(--accent) 4%);
+  border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25) inset;
+  border-radius: 0.875rem;
+  padding-top: 2.2rem;
+}
 .prose code { word-break: break-word; white-space: pre-wrap; }
+.prose :not(pre) > code {
+  background: color-mix(in oklab, var(--white) 7%, transparent);
+  border: 1px solid color-mix(in oklab, var(--white) 16%, transparent);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.375rem;
+}
+.prose pre code { display: block; }
 .prose table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* Hide scrollbars where decorative (e.g., header scroller) */

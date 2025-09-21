@@ -1,4 +1,4 @@
-import '@/styles/components/blog-card.css';
+
 
 import type { CSSProperties, FC } from 'react';
 
