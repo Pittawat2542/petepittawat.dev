@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import PageWithHero from '../../layouts/PageWithHero.astro';
 import { getAllSeries } from '../../lib/series';
 import { BookOpen, ChevronRight } from 'lucide-astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import FormattedDate from '../../components/FormattedDate';
 
 const allPosts = await getCollection('blog');
 const allSeries = getAllSeries(allPosts);
@@ -74,7 +74,7 @@ allSeries.sort((a, b) => {
                       </span>
                       <span>~{totalReadingTime} min total</span>
                       <span>
-                        Last updated <FormattedDate date={lastPost.data.pubDate} />
+                        Last updated {lastPost && <FormattedDate date={lastPost.data.pubDate} />}
                       </span>
                     </div>
                   </header>
@@ -88,7 +88,7 @@ allSeries.sort((a, b) => {
                         
                         <div class="flex-1 min-w-0">
                           <a 
-                            href={`/blog/${post.slug}/`}
+                            href={`/blog/${String(post.slug)}/`}
                             class="block hover:text-[color:var(--accent)] transition-colors"
                           >
                             <h3 class="font-medium text-sm md:text-base leading-snug mb-1">
@@ -107,7 +107,7 @@ allSeries.sort((a, b) => {
 
                   <footer class="flex items-center justify-between">
                     <a
-                      href={`/blog/${firstPost.slug}/`}
+                      href={firstPost ? `/blog/${String(firstPost.slug)}/` : '#'}
                       class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[color:var(--accent)] text-[color:var(--bg)] hover:bg-[color:var(--accent)]/90 transition-colors duration-200 text-sm font-medium"
                     >
                       Start reading
@@ -116,7 +116,7 @@ allSeries.sort((a, b) => {
                     
                     <div class="flex items-center gap-2 text-xs text-[color:var(--white)]/50">
                       <span>Started</span>
-                      <FormattedDate date={firstPost.data.pubDate} />
+                      {firstPost && <FormattedDate date={firstPost.data.pubDate} />}
                     </div>
                   </footer>
                 </div>

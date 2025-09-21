@@ -1,8 +1,15 @@
+import type { FC } from 'react';
+import { memo } from 'react';
+
 interface SearchSkeletonProps {
-  count?: number;
+  readonly count?: number;
 }
 
-export function SearchSkeleton({ count = 6 }: Readonly<SearchSkeletonProps>) {
+const SearchSkeletonComponent: FC<SearchSkeletonProps> = ({ count = 6 }) => {
+  if (count <= 0) {
+    return null;
+  }
+
   return (
     <ul className="divide-y divide-border animate-pulse">
       {Array.from({ length: count }, (_, index) => `skeleton-${index}`).map((skeletonId) => (
@@ -13,4 +20,12 @@ export function SearchSkeleton({ count = 6 }: Readonly<SearchSkeletonProps>) {
       ))}
     </ul>
   );
-}
+};
+
+// Memoized component for performance optimization
+export const SearchSkeleton = memo(SearchSkeletonComponent);
+SearchSkeleton.displayName = 'SearchSkeleton';
+
+// Named export for consistency (already exists)
+// Default export for backward compatibility
+export default SearchSkeleton;

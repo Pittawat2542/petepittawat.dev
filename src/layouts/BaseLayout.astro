@@ -1,9 +1,9 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import AnimatedHeader from '../components/AnimatedHeader';
-import ScrollTop from '../components/ScrollTop.astro';
-import SearchModal from '../components/SearchModal';
+import BaseHead from '../components/layout/core/BaseHead.astro';
+import Footer from '../components/layout/core/Footer.astro';
+import AnimatedHeader from '../components/common/AnimatedHeader';
+import ScrollTop from '../components/layout/blog/ScrollTop';
+import SearchModal from '../components/layout/SearchModal';
 
 
 const { title, description, image, type, publishedTime, tags } = Astro.props as {
@@ -23,7 +23,7 @@ const ogImage = Astro.site
 <!doctype html>
 <html lang='en' style="background:#111827;color:#F9FAFB;color-scheme: dark;">
 		<head>
-			<BaseHead title={title} description={description} image={ogImage} type={type} publishedTime={publishedTime} tags={tags} />
+			<BaseHead title={title} description={description} image={ogImage} type={type || undefined} publishedTime={publishedTime || undefined} tags={tags || undefined} />
 			<slot name="head" />
 	    <link rel='sitemap' href='/sitemap-index.xml' />
       {import.meta.env.DEV && (

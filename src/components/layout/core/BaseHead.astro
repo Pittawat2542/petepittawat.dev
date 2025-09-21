@@ -1,0 +1,207 @@
+---
+// Import the global.css file here so that it is included on
+// all pages through the use of the <BaseHead /> component.
+import '../../../styles/global.css';
+import { SITE_TITLE } from '../../../consts';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string | undefined;
+	type?: 'website' | 'article' | undefined;
+	publishedTime?: string | undefined;
+	tags?: string[] | undefined;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const { title, description, image = '/home-og-image.jpeg', type = 'website', publishedTime, tags = [] } = Astro.props as Props;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<!-- Favicons -->
+<!-- Standard favicon -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+<link rel="shortcut icon" href="/favicon.ico" />
+
+<!-- PNG favicons for different sizes -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png" />
+
+<!-- Android/Chrome icons -->
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Microsoft Tile Configuration -->
+<meta name="msapplication-config" content="/browserconfig.xml" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+
+<!-- Safari Mask Icon -->
+<link rel="mask-icon" href="/favicon.svg" color="#111827" />
+<meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#111827" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+
+<!-- Performance optimizations -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Hint UA to render dark form controls and UI affordances -->
+<meta name="color-scheme" content="dark" />
+
+<!-- Performance: fonts preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<!-- Performance: Optimized Google Fonts loading with subset and display=swap -->
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&family=Krub:wght@300;400;500;600&display=swap&subset=latin"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&family=Krub:wght@300;400;500;600&display=swap&subset=latin"
+  media="print"
+  onload="this.setAttribute('media','all')"
+/>
+<noscript>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&family=Krub:wght@300;400;500;600&display=swap&subset=latin"
+  />
+</noscript>
+
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
+
+<!-- Defer ambient background overlays until after first paint (avoid white-ish overlay on mobile first load) -->
+<script is:inline>
+  (function(){
+    var enable = function(){
+      try { document.documentElement.classList.add('ambient-ready'); } catch {}
+    };
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      requestAnimationFrame(enable);
+    } else {
+      window.addEventListener('DOMContentLoaded', function(){ requestAnimationFrame(enable); }, { once: true });
+    }
+  })();
+  </script>
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.site ?? Astro.url)} />
+<meta property="og:site_name" content={SITE_TITLE} />
+{type === 'article' && publishedTime ? (
+  <meta property="article:published_time" content={publishedTime} />
+) : null}
+{type === 'article' && Array.isArray(tags) ? (
+  <>
+    {tags.map((t) => (
+      <meta property="article:tag" content={t} />
+    ))}
+  </>
+) : null}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.site ?? Astro.url)} />
+{
+  (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] && (
+    <>
+      <meta name="twitter:site" content={(import.meta.env as any)['PUBLIC_TWITTER_HANDLE']} />
+      <meta name="twitter:creator" content={(import.meta.env as any)['PUBLIC_TWITTER_HANDLE']} />
+    </>
+  )
+}
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": type === 'article' ? "BlogPosting" : "WebSite",
+    "headline": title,
+    "description": description,
+    "url": Astro.url.toString(),
+    "image": new URL(image, Astro.site ?? Astro.url).toString(),
+    "author": {
+      "@type": "Person",
+      "name": "Pete Pittawat Taveekitworachai",
+      "url": "https://petepittawat.dev",
+      "sameAs": [
+        "https://twitter.com/petepittawat",
+        "https://github.com/petepittawat",
+        "https://linkedin.com/in/petepittawat"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pete Pittawat Taveekitworachai",
+      "url": "https://petepittawat.dev"
+    },
+    ...(type === 'article' && publishedTime && {
+      "datePublished": publishedTime,
+      "dateModified": publishedTime,
+      "keywords": tags?.join(', ') || '',
+      "articleSection": "Technology",
+      "wordCount": "1000"
+    }),
+    ...(type === 'website' && {
+      "name": "PETEPITTAWAT.DEV",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://petepittawat.dev/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })
+  }
+</script>
+
+<!-- Service worker: runtime caching tuned for GitHub Pages -->
+<script is:inline>
+  (function(){
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function(){
+        try { navigator.serviceWorker.register('/sw.js'); } catch {}
+      });
+    }
+  })();
+  </script>

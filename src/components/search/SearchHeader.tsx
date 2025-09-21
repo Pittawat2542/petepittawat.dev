@@ -1,24 +1,27 @@
+import type { SearchItem, SearchItemType } from './types';
+
 import { CornerDownLeft } from 'lucide-react';
+import type { FC } from 'react';
 import { RecentSearches } from './RecentSearches';
 import { SearchFilterChips } from './SearchFilterChips';
-import SearchInput from '../ui/SearchInput';
-import type { SearchItemType } from './types';
+import SearchInput from '@/components/ui/interaction/SearchInput';
+import { memo } from 'react';
 
 interface SearchHeaderProps {
-  query: string;
-  onQueryChange: (query: string) => void;
-  filtered: any[];
-  typeFilter: Set<SearchItemType>;
-  countsByType: Map<SearchItemType, number>;
-  onToggleType: (type: SearchItemType) => void;
-  onSelectAllTypes: () => void;
-  showRecent: boolean;
-  recent: string[];
-  onSelectFromRecent: (value: string) => void;
-  onClearRecent: () => void;
+  readonly query: string;
+  readonly onQueryChange: (query: string) => void;
+  readonly filtered: readonly SearchItem[];
+  readonly typeFilter: Set<SearchItemType>;
+  readonly countsByType: Map<SearchItemType, number>;
+  readonly onToggleType: (type: SearchItemType) => void;
+  readonly onSelectAllTypes: () => void;
+  readonly showRecent: boolean;
+  readonly recent: readonly string[];
+  readonly onSelectFromRecent: (value: string) => void;
+  readonly onClearRecent: () => void;
 }
 
-export function SearchHeader({
+const SearchHeaderComponent: FC<SearchHeaderProps> = ({
   query,
   onQueryChange,
   filtered,
@@ -30,7 +33,7 @@ export function SearchHeader({
   recent,
   onSelectFromRecent,
   onClearRecent,
-}: Readonly<SearchHeaderProps>) {
+}) => {
   return (
     <div className="p-4 md:p-5 lg:p-6 border-b border-border">
       <div className="flex items-center gap-2">
@@ -74,4 +77,24 @@ export function SearchHeader({
       )}
     </div>
   );
-}
+};
+
+// Memoize the component with custom comparison
+export const SearchHeader = memo(SearchHeaderComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.query === nextProps.query &&
+    prevProps.filtered === nextProps.filtered &&
+    prevProps.typeFilter === nextProps.typeFilter &&
+    prevProps.countsByType === nextProps.countsByType &&
+    prevProps.showRecent === nextProps.showRecent &&
+    prevProps.recent === nextProps.recent &&
+    prevProps.onQueryChange === nextProps.onQueryChange &&
+    prevProps.onToggleType === nextProps.onToggleType &&
+    prevProps.onSelectAllTypes === nextProps.onSelectAllTypes &&
+    prevProps.onSelectFromRecent === nextProps.onSelectFromRecent &&
+    prevProps.onClearRecent === nextProps.onClearRecent
+  );
+});
+
+SearchHeader.displayName = 'SearchHeader';
+export default SearchHeader;

@@ -4,16 +4,16 @@ import { Image } from 'astro:assets';
 import profileImage from '../assets/images/profile.jpg';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Github, Instagram, Linkedin } from 'lucide-astro';
-import ThemedPageHero from '../components/ThemedPageHero.astro';
-import Container from '../components/Container.astro';
-import GlassCard from '../components/GlassCard.astro';
-import Chip from '../components/Chip.astro';
-import Prose from '../components/Prose.astro';
+import ThemedPageHero from '../components/ThemedPageHero';
+import Container from '../components/Container';
+import GlassCard from '../components/GlassCard';
+import Chip from '../components/Chip';
+import Prose from '../components/Prose';
 import timeline from '../content/about/timeline.json';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
-    <Container class='glass-section'>
+    <Container className='glass-section'>
       <ThemedPageHero 
         title="About" 
         subtitle="Learn more about me, my research interests, and my journey" 
@@ -59,8 +59,8 @@ import timeline from '../content/about/timeline.json';
       </GlassCard>
 
       <!-- Timeline -->
-      <GlassCard id='timeline' class='mt-8'>
-        <Prose class='mx-auto'>
+      <GlassCard id='timeline' className='mt-8'>
+        <Prose className='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-4'>Timeline</h2>
           <ul class='relative list-none border-s border-[color:var(--white)]/10 ml-3 space-y-6'>
             {timeline.map((item) => {
@@ -89,7 +89,7 @@ import timeline from '../content/about/timeline.json';
       </GlassCard>
 
       <!-- Research interests -->
-      <GlassCard id='interests' class='mt-8'>
+      <GlassCard id='interests' className='mt-8'>
         <Prose>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Research interests</h2>
           <ul class='space-y-4'>
@@ -142,7 +142,7 @@ import timeline from '../content/about/timeline.json';
       </GlassCard>
 
       <!-- Skills -->
-      <GlassCard id='skills' class='mt-8'>
+      <GlassCard id='skills' className='mt-8'>
         <Prose>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Skills</h2>
           <p>
@@ -169,8 +169,8 @@ import timeline from '../content/about/timeline.json';
       </GlassCard>
       
       <!-- Education & Experiences -->
-      <GlassCard id='education' class='mt-8'>
-        <Prose class='mx-auto'>
+      <GlassCard id='education' className='mt-8'>
+        <Prose className='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Education & Related Experiences</h2>
           <p>
             Previously, I earned my Bachelor's degree in Computer Science with first-class honors from <a href='https://www.kmutt.ac.th/en/' target='_blank'>King Mongkut's University of Technology Thonburi</a>, Thailand, supported by the prestigious 💎 <strong>Petchra Pra Jom Klao Scholarship - Distinguished Academic Capabilities</strong>. Additionally, I received the 💎 <strong>Jia Ra Nai Petchra Scholarship - Academic Distinguished Award</strong> for my outstanding performance throughout the academic year, being recognized as the top student in the program for a specific year. Upon graduation, I was honored with the 🎖️ <strong>Honor Award for Academic Distinguished Performance</strong> by the Prapa-Sompong Foundation, acknowledging me as the top student among the graduates of the same year. Furthermore, my name was inscribed on the <strong>Wall of Honors</strong> at the university's president building.
@@ -189,8 +189,8 @@ import timeline from '../content/about/timeline.json';
       </GlassCard>
 
       <!-- Volunteer -->
-      <GlassCard id='volunteer' class='mt-8'>
-        <Prose class='mx-auto'>
+      <GlassCard id='volunteer' className='mt-8'>
+        <Prose className='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Volunteer</h2>
           <p>
             I volunteer for various occasions because I believe in paying it forward and helping others. One of my volunteering experiences includes organizing and developing web applications for Junior Programmer Camp XV, an annual camp organized by computer science students at the School of Information Technology, King Mongkut's University of Technology Thonburi, targeted at senior high school students throughout Thailand. In this camp, participants have the opportunity to be exposed to various activities that help them familiarize themselves with CS concepts and the university's atmosphere. I oversee the IT aspect of the camp and lead the development team. Alongside two other teammates, we developed the main website for the camp, including the registration system. Additionally, we created a camp management system to facilitate staff in the participant selection process.
@@ -203,8 +203,8 @@ import timeline from '../content/about/timeline.json';
       </GlassCard>
 
       <!-- Lifelong learning -->
-      <GlassCard id='learning' class='mt-8'>
-        <Prose class='mx-auto'>
+      <GlassCard id='learning' className='mt-8'>
+        <Prose className='mx-auto'>
           <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-2'>Lifelong Learning</h2>
           <p>
             I also enjoy taking various online courses throughout the years (as can be seen from certificates on my <a href='https://www.linkedin.com/in/pittawat-tav/' target='_blank'>LinkedIn</a>.) I enjoy learning and its process. The feeling of understanding something new satisfies me. It also helps me become better at what I do and enables me to be <strong>creative</strong> and connect various seemingly unrelated topics together to come up with new ideas. This is also a part of my personal goal revolving around <strong>life-long learning</strong>, and I believe that understanding leads to a better life and understanding of other people and things. During my time pursuing my Bachelor's degree, I also served as a tutor on various topics in computer science for my classmates to help them prepare for upcoming exams. I believe that <em>sharing knowledge not only helps other people but also helps me understand the topic better.</em>

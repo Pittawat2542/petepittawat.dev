@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
-import { Badge } from '../ui/badge';
+import { Badge } from '@/components/ui/core/badge';
 import { CornerDownLeft, Command, ExternalLink } from 'lucide-react';
 
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 import { highlightTitle } from './utils';
 import {
   SEARCH_TYPE_META_MAP,

@@ -1,20 +1,22 @@
-import FilterPanel from './ui/FilterPanel';
+import type { FC } from 'react';
+import { FilterPanel } from './ui/filter/FilterPanel';
+import { memo } from 'react';
 
-type Props = {
-  q: string;
-  setQ: (value: string) => void;
-  filters: Record<string, string>;
-  setFilters: (updater: (prev: Record<string, string>) => Record<string, string>) => void;
-  filterOptions: Record<string, string[]>;
-  placeholder?: string;
-  filteredCount?: number;
+interface FilterProps {
+  readonly q: string;
+  readonly setQ: (value: string) => void;
+  readonly filters: Readonly<Record<string, string>>;
+  readonly setFilters: (updater: (prev: Record<string, string>) => Record<string, string>) => void;
+  readonly filterOptions: Readonly<Record<string, readonly string[]>>;
+  readonly placeholder?: string;
+  readonly filteredCount?: number;
   // Optional sorting controls
-  sortOptions?: Array<{ value: string; label: string }>;
-  sortValue?: string;
-  onSortChange?: (value: string) => void;
-};
+  readonly sortOptions?: Array<{ readonly value: string; readonly label: string }>;
+  readonly sortValue?: string;
+  readonly onSortChange?: (value: string) => void;
+}
 
-export default function Filter({ 
+const FilterComponent: FC<FilterProps> = ({ 
   q, 
   setQ, 
   filters, 
@@ -25,7 +27,7 @@ export default function Filter({
   sortOptions,
   sortValue,
   onSortChange,
-}: Props) {
+}) => {
   return (
     <FilterPanel
       searchValue={q}
@@ -41,4 +43,11 @@ export default function Filter({
       compact={true}
     />
   );
-}
+};
+
+// Memoized component for performance optimization
+export const Filter = memo(FilterComponent);
+Filter.displayName = 'Filter';
+
+// Default export for backward compatibility
+export default Filter;

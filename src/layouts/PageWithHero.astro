@@ -1,7 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import ThemedPageHero from '../components/ThemedPageHero.astro';
-import Container from '../components/Container.astro';
+import ThemedPageHero from '../components/ThemedPageHero';
+import Container from '../components/Container';
 
 interface HeroProps { title: string; subtitle?: string; page: string }
 const { title, description, hero, containerClass } = Astro.props as {
@@ -14,8 +14,7 @@ const { title, description, hero, containerClass } = Astro.props as {
 
 <BaseLayout title={title} description={description}>
   <ThemedPageHero {...hero} />
-  <Container class={containerClass}
-  >
+  <Container className={containerClass || undefined}>
     <slot />
   </Container>
   <slot name="after" />

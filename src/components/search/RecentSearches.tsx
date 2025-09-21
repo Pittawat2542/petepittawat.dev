@@ -1,12 +1,14 @@
 import { Clock } from 'lucide-react';
+import type { FC } from 'react';
+import { memo } from 'react';
 
 interface RecentSearchesProps {
-  recent: string[];
-  onSelect: (value: string) => void;
-  onClear: () => void;
+  readonly recent: readonly string[];
+  readonly onSelect: (value: string) => void;
+  readonly onClear: () => void;
 }
 
-export function RecentSearches({ recent, onSelect, onClear }: Readonly<RecentSearchesProps>) {
+const RecentSearchesComponent: FC<RecentSearchesProps> = ({ recent, onSelect, onClear }) => {
   if (recent.length === 0) return null;
 
   return (
@@ -33,4 +35,16 @@ export function RecentSearches({ recent, onSelect, onClear }: Readonly<RecentSea
       </button>
     </div>
   );
-}
+};
+
+// Memoize the component with custom comparison
+export const RecentSearches = memo(RecentSearchesComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.recent === nextProps.recent &&
+    prevProps.onSelect === nextProps.onSelect &&
+    prevProps.onClear === nextProps.onClear
+  );
+});
+
+RecentSearches.displayName = 'RecentSearches';
+export default RecentSearches;

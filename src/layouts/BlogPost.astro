@@ -1,12 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
+import FormattedDate from '../components/FormattedDate';
 import BaseLayout from './BaseLayout.astro';
-import ReadingProgressBar from '../components/ReadingProgressBar.astro';
+import ReadingProgressBar from '../components/ReadingProgressBar';
 import { Image } from 'astro:assets';
 // Simplified layout for focused reading
 import { Calendar, User2, Clock3, Tag as TagIcon } from 'lucide-astro';
-import Toc from '../components/Toc.astro';
+import Toc from '../components/layout/blog/Toc.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string; readingTimeMin?: number };
 
@@ -24,7 +24,7 @@ const imageUrl = (() => {
 // Touch variables to satisfy TS analyzer in Astro frontmatter
 void canonicalUrl;
 void imageUrl;
-const twitterHandle = import.meta.env.PUBLIC_TWITTER_HANDLE as string | undefined;
+const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
 const authorSameAs: string[] = [];
 if (twitterHandle) {
   const handle = twitterHandle.startsWith('@') ? twitterHandle.slice(1) : twitterHandle;
@@ -173,145 +173,10 @@ authorSameAs.push(authorUrl);
   </div>
 </BaseLayout>
 
-<script is:inline>
-  // Add copy buttons to code blocks within the article
-  const setupCopyButtons = () => {
-    const article = document.querySelector('article');
-    if (!article) return;
-    const blocks = article.querySelectorAll('pre > code');
-    blocks.forEach((code) => {
-      const pre = code.parentElement;
-      if (!pre || pre.classList.contains('has-copy')) return;
-      pre.classList.add('has-copy');
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'copy-btn';
-      btn.ariaLabel = 'Copy code to clipboard';
-      btn.textContent = 'Copy';
-      btn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(code.textContent || '');
-          const original = btn.textContent;
-          btn.textContent = 'Copied!';
-          btn.classList.add('copied');
-          setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1200);
-        } catch {}
-      });
-      pre.appendChild(btn);
-
-      // Add language badge
-      if (!pre.classList.contains('has-lang')) {
-        pre.classList.add('has-lang');
-        const detectLang = (preEl, codeEl) => {
-          const get = (el, k) => (el && el.getAttribute && el.getAttribute(k)) || '';
-          let lang = (get(preEl, 'data-language') || get(preEl, 'data-lang') || get(codeEl, 'data-language') || get(codeEl, 'data-lang') || '').toLowerCase();
-          if (!lang) {
-            const classes = `${(codeEl.className || '')} ${(preEl.className || '')}`.toLowerCase();
-            const m = classes.match(/(?:language|lang)-([a-z0-9+#\-]+)/);
-            if (m) lang = m[1];
-          }
-          // Normalize common aliases
-          const alias = {
-            js: 'JavaScript', jsx: 'JSX', ts: 'TypeScript', tsx: 'TSX',
-            py: 'Python', python: 'Python',
-            sh: 'Shell', shell: 'Shell', bash: 'Bash', zsh: 'Zsh',
-            plaintext: 'Text', text: 'Text', txt: 'Text',
-            json: 'JSON', yml: 'YAML', yaml: 'YAML', md: 'Markdown', markdown: 'Markdown',
-            html: 'HTML', css: 'CSS', scss: 'SCSS', sass: 'Sass',
-            c: 'C', 'c++': 'C++', cpp: 'C++', cxx: 'C++',
-            'c#': 'C#', csharp: 'C#', cs: 'C#',
-            java: 'Java', go: 'Go', rust: 'Rust', rs: 'Rust', dart: 'Dart', kotlin: 'Kotlin', swift: 'Swift',
-            sql: 'SQL', php: 'PHP', ruby: 'Ruby', rb: 'Ruby'
-          };
-          if (lang in alias) return alias[lang];
-          // Uppercase safe characters, keep + and #
-          if (lang) return lang.replace(/\b\w+/g, (w) => w.toUpperCase());
-          return 'Text';
-        };
-        const langLabel = detectLang(pre, code);
-        const badge = document.createElement('span');
-        badge.className = 'code-lang-badge';
-        badge.textContent = langLabel;
-        pre.appendChild(badge);
-      }
-    });
-  };
-  // Improve loading behavior for article images from Markdown
-  const improveImages = () => {
-    const imgs = document.querySelectorAll('article img');
-    imgs.forEach((img) => {
-      if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
-      if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
-      if (!img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'low');
-    });
-  };
-  const onReady = () => {
-    setupCopyButtons();
-    improveImages();
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onReady);
-  } else {
-    onReady();
-  }
+<script>
+  import '../scripts/blog-post.ts';
 </script>
 
-<style is:inline>
-  .prose pre { position: relative; }
-  .prose pre .copy-btn {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1;
-    padding: 0.35rem 0.5rem;
-    border-radius: 0.375rem;
-    background: color-mix(in oklab, var(--white) 8%, transparent);
-    border: 1px solid color-mix(in oklab, var(--white) 18%, transparent);
-    color: color-mix(in oklab, var(--white) 92%, transparent);
-    cursor: pointer;
-    transition: all .15s ease-in-out;
-  }
-  .prose pre .copy-btn:hover {
-    background: color-mix(in oklab, var(--accent) 16%, transparent);
-    border-color: color-mix(in oklab, var(--accent) 40%, transparent);
-    color: black;
-  }
-  .prose pre .copy-btn.copied {
-    background: color-mix(in oklab, var(--accent) 26%, transparent);
-    border-color: color-mix(in oklab, var(--accent) 46%, transparent);
-    color: black;
-  }
-
-  /* Code block styling */
-  .prose pre {
-    background: color-mix(in oklab, var(--black) 86%, var(--accent) 4%);
-    border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25) inset;
-    border-radius: 0.875rem;
-    padding-top: 2.2rem;
-    overflow: auto;
-  }
-  .prose :not(pre) > code {
-    background: color-mix(in oklab, var(--white) 7%, transparent);
-    border: 1px solid color-mix(in oklab, var(--white) 16%, transparent);
-    padding: 0.1rem 0.35rem;
-    border-radius: 0.375rem;
-  }
-  .prose pre code { display: block; }
-  .prose pre .code-lang-badge {
-    position: absolute;
-    top: 0.45rem;
-    left: 0.55rem;
-    font-size: 0.7rem;
-    line-height: 1;
-    letter-spacing: 0.04em;
-    padding: 0.25rem 0.45rem;
-    border-radius: 0.375rem;
-    color: color-mix(in oklab, var(--white) 92%, transparent);
-    background: color-mix(in oklab, var(--accent) 16%, transparent);
-    border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
-    user-select: none;
-    pointer-events: none;
-  }
+<style>
+  @import '../styles/blog-post.css';
 </style>

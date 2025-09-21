@@ -1,14 +1,17 @@
+import type { FC } from 'react';
+import { memo } from 'react';
+
 interface Suggestion {
-  id: string;
-  title: string;
-  url: string;
+  readonly id: string;
+  readonly title: string;
+  readonly url: string;
 }
 
 interface SearchSuggestionsProps {
-  suggestions: Suggestion[];
+  readonly suggestions: readonly Suggestion[];
 }
 
-export function SearchSuggestions({ suggestions }: Readonly<SearchSuggestionsProps>) {
+const SearchSuggestionsComponent: FC<SearchSuggestionsProps> = ({ suggestions }) => {
   if (!suggestions.length) return null;
 
   return (
@@ -27,4 +30,9 @@ export function SearchSuggestions({ suggestions }: Readonly<SearchSuggestionsPro
       </div>
     </div>
   );
-}
+};
+
+// Memoize the component
+export const SearchSuggestions = memo(SearchSuggestionsComponent);
+SearchSuggestions.displayName = 'SearchSuggestions';
+export default SearchSuggestions;

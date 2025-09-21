@@ -13,8 +13,8 @@ export interface SeriesInfo {
 export interface SeriesNavigation {
   current: BlogPost;
   series: SeriesInfo;
-  previousPost?: BlogPost;
-  nextPost?: BlogPost;
+  previousPost: BlogPost | undefined;
+  nextPost: BlogPost | undefined;
 }
 
 /**

@@ -1,5 +1,6 @@
-import React from 'react';
 import type { AugmentedSearchItem, SearchItem, SearchItemType } from './types';
+
+import React from 'react';
 
 function normalize(value: unknown) {
   return String(value ?? '').toLowerCase();
@@ -16,6 +17,7 @@ export function fuzzyMatch(query: string, target: string): FuzzyMatchResult | nu
   const positions: number[] = [];
   for (let qi = 0; qi < q.length; qi++) {
     const ch = q[qi];
+    if (ch === undefined) continue;
     const idx = t.indexOf(ch, ti);
     if (idx === -1) return null;
     positions.push(idx);
@@ -24,12 +26,15 @@ export function fuzzyMatch(query: string, target: string): FuzzyMatchResult | nu
 
   const start = positions[0];
   const end = positions[positions.length - 1];
+  if (start === undefined || end === undefined) return null;
   const span = Math.max(1, end - start + 1);
   const density = q.length / span;
   let maxRun = 1;
   let run = 1;
   for (let i = 1; i < positions.length; i++) {
-    if (positions[i] === positions[i - 1] + 1) {
+    const current = positions[i];
+    const previous = positions[i - 1];
+    if (current !== undefined && previous !== undefined && current === previous + 1) {
       run++;
       if (run > maxRun) maxRun = run;
     } else {
@@ -45,7 +50,7 @@ export function fuzzyMatch(query: string, target: string): FuzzyMatchResult | nu
 export type MatchResult = {
   item: SearchItem;
   score: number;
-  titlePositions?: number[];
+  titlePositions: number[] | undefined;
 };
 
 export function scoreItem(item: SearchItem, query: string): MatchResult | null {
@@ -57,7 +62,7 @@ export function scoreItem(item: SearchItem, query: string): MatchResult | null {
   ];
 
   let bestScore = 0;
-  let titlePositions: number[] | undefined;
+  let titlePositions: number[] | undefined = undefined;
   for (const field of fields) {
     const result = fuzzyMatch(query, field.text);
     if (!result) continue;
@@ -77,16 +82,22 @@ export function highlightTitle(title: string, positions?: number[]) {
   const ranges: [number, number][] = [];
   let start = positions[0];
   let prev = positions[0];
+  
+  if (start === undefined || prev === undefined) return title;
+  
   for (let i = 1; i < positions.length; i++) {
     const cur = positions[i];
-    if (cur === prev + 1) {
+    if (cur === undefined) continue;
+    if (prev !== undefined && cur === prev + 1) {
       prev = cur;
     } else {
       ranges.push([start, prev]);
       start = prev = cur;
     }
   }
-  ranges.push([start, prev]);
+  if (start !== undefined && prev !== undefined) {
+    ranges.push([start, prev]);
+  }
 
   const nodes: React.ReactNode[] = [];
   let last = 0;
@@ -116,7 +127,6 @@ export function buildHref(item: AugmentedSearchItem, query: string) {
   const path = url.pathname.replace(/\/$/, '');
   const supportsQ =
     preferTitle ||
-    path === '/blog' ||
     path === '/projects' ||
     path === '/publications' ||
     path === '/talks' ||

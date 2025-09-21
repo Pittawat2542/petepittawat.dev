@@ -34,10 +34,12 @@ function normalizeAuthors(input: string) {
 export function isFirstAuthor(authors: string) {
   const list = normalizeAuthors(authors);
   if (!list.length) return false;
-  const first = list[0].toLowerCase();
+  const first = list[0];
+  if (!first) return false;
+  const firstLower = first.toLowerCase();
   // Match against site owner name
   const full = 'pittawat taveekitworachai';
-  return first.includes('pittawat') || first.includes('taveekitworachai') || first === full;
+  return firstLower.includes('pittawat') || firstLower.includes('taveekitworachai') || firstLower === full;
 }
 
 export function highlightAuthorNames(authors: string) {

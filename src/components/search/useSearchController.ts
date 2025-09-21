@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-import { buildHref, ensureAllTypes, scoreItem } from './utils';
 import type { AugmentedSearchItem, SearchItem, SearchItemType } from './types';
+import { buildHref, ensureAllTypes, scoreItem } from './utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type UseSearchControllerParams = {
   autoOpen?: boolean;
@@ -86,7 +85,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     const trimmed = query.trim();
     if (!trimmed) return base;
 
-    const matches: { item: SearchItem; score: number; positions?: number[] }[] = [];
+    const matches: { item: SearchItem; score: number; positions: number[] | undefined }[] = [];
     for (const item of base) {
       const result = scoreItem(item, trimmed);
       if (result) {

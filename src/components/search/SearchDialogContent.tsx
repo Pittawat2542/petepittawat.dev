@@ -1,13 +1,31 @@
-import { DialogClose, DialogContent, DialogDescription, DialogTitle } from '../ui/dialog';
+import { DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/core/dialog';
+import type { FC, ReactNode } from 'react';
 
-import type { ReactNode } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 
+/**
+ * Props for the SearchDialogContent component
+ */
 interface SearchDialogContentProps {
-  children: ReactNode;
+  /** The content to be rendered inside the search dialog */
+  readonly children: ReactNode;
 }
 
-export function SearchDialogContent({ children }: Readonly<SearchDialogContentProps>) {
+/**
+ * A dialog content wrapper for the search modal with smooth animations.
+ * 
+ * This component provides:
+ * - Smooth entry/exit animations using Framer Motion
+ * - Proper dialog accessibility with ARIA labels
+ * - Responsive sizing and positioning
+ * - Glass morphism styling for the close button
+ * - Screen reader support with hidden titles and descriptions
+ * 
+ * @param props - The component props
+ * @returns A dialog content wrapper with animation support
+ */
+const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
@@ -48,4 +66,14 @@ export function SearchDialogContent({ children }: Readonly<SearchDialogContentPr
       </DialogContent>
     </motion.div>
   );
-}
+};
+
+/**
+ * Memoized search dialog content component.
+ * 
+ * The component is memoized since it typically doesn't need to re-render
+ * unless its children change, improving performance for the search modal.
+ */
+export const SearchDialogContent = memo(SearchDialogContentComponent);
+SearchDialogContent.displayName = 'SearchDialogContent';
+export default SearchDialogContent;

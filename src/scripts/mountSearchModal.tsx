@@ -1,5 +1,5 @@
+import SearchModal from '../components/layout/SearchModal';
 import { createRoot } from 'react-dom/client';
-import SearchModal from '../components/SearchModal';
 
 let root: ReturnType<typeof createRoot> | null = null;
 let seq = 0;

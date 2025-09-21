@@ -1,14 +1,16 @@
+import type { FC } from 'react';
+import { memo } from 'react';
 import { SEARCH_TYPE_META, type SearchItemType } from './types';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
-type SearchFilterChipsProps = {
-  activeTypes: Set<SearchItemType>;
-  counts: Map<SearchItemType, number>;
-  onToggle: (type: SearchItemType) => void;
-  onSelectAll: () => void;
-};
+interface SearchFilterChipsProps {
+  readonly activeTypes: Set<SearchItemType>;
+  readonly counts: Map<SearchItemType, number>;
+  readonly onToggle: (type: SearchItemType) => void;
+  readonly onSelectAll: () => void;
+}
 
-export function SearchFilterChips({ activeTypes, counts, onToggle, onSelectAll }: SearchFilterChipsProps) {
+const SearchFilterChipsComponent: FC<SearchFilterChipsProps> = ({ activeTypes, counts, onToggle, onSelectAll }) => {
   const allSelected = activeTypes.size === SEARCH_TYPE_META.length;
 
   return (
@@ -38,4 +40,17 @@ export function SearchFilterChips({ activeTypes, counts, onToggle, onSelectAll }
       ))}
     </div>
   );
-}
+};
+
+// Memoize the component with custom comparison
+export const SearchFilterChips = memo(SearchFilterChipsComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.activeTypes === nextProps.activeTypes &&
+    prevProps.counts === nextProps.counts &&
+    prevProps.onToggle === nextProps.onToggle &&
+    prevProps.onSelectAll === nextProps.onSelectAll
+  );
+});
+
+SearchFilterChips.displayName = 'SearchFilterChips';
+export default SearchFilterChips;

@@ -4,12 +4,12 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import talks from '../content/talks/talks.json';
 import publications from '../content/publications/publications.json';
-import HeroSection from '../components/HeroSection.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
 import { getImage } from 'astro:assets';
 import profileImage from '../assets/images/profile.jpg';
-import AboutSection from '../components/AboutSection.astro';
-import StatsSection from '../components/StatsSection.astro';
-import BlogSection from '../components/BlogSection.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
+import StatsSection from '../components/sections/StatsSection.astro';
+import BlogSection from '../components/sections/BlogSection.astro';
 
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()

@@ -1,13 +1,15 @@
 import { Command, Search as SearchIcon } from 'lucide-react';
 
-import { DialogTrigger } from '../ui/dialog';
-import { cn } from '../../lib/utils';
+import { DialogTrigger } from '@/components/ui/core/dialog';
+import type { FC } from 'react';
+import { cn } from '@/lib/utils';
+import { memo } from 'react';
 
 interface SearchTriggersProps {
-  hideTriggers?: boolean;
+  readonly hideTriggers?: boolean;
 }
 
-export function SearchTriggers({ hideTriggers = false }: Readonly<SearchTriggersProps>) {
+const SearchTriggersComponent: FC<SearchTriggersProps> = ({ hideTriggers = false }) => {
   if (hideTriggers) return null;
 
   return (
@@ -47,4 +49,9 @@ export function SearchTriggers({ hideTriggers = false }: Readonly<SearchTriggers
       </DialogTrigger>
     </>
   );
-}
+};
+
+// Memoize the component
+export const SearchTriggers = memo(SearchTriggersComponent);
+SearchTriggers.displayName = 'SearchTriggers';
+export default SearchTriggers;

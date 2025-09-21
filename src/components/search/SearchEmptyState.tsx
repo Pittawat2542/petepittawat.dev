@@ -1,14 +1,17 @@
+import type { FC } from 'react';
+import { memo } from 'react';
+
 interface Suggestion {
-  id: string;
-  title: string;
-  url: string;
+  readonly id: string;
+  readonly title: string;
+  readonly url: string;
 }
 
 interface SearchEmptyStateProps {
-  suggestions: Suggestion[];
+  readonly suggestions: readonly Suggestion[];
 }
 
-export function SearchEmptyState({ suggestions }: Readonly<SearchEmptyStateProps>) {
+const SearchEmptyStateComponent: FC<SearchEmptyStateProps> = ({ suggestions }) => {
   return (
     <div className="px-3 py-4 text-sm text-muted-foreground">
       <p className="mb-2">No results. Try a different query or explore:</p>
@@ -25,4 +28,9 @@ export function SearchEmptyState({ suggestions }: Readonly<SearchEmptyStateProps
       </div>
     </div>
   );
-}
+};
+
+// Memoize the component
+export const SearchEmptyState = memo(SearchEmptyStateComponent);
+SearchEmptyState.displayName = 'SearchEmptyState';
+export default SearchEmptyState;
