@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import robotsTxt from 'astro-robots-txt';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,9 +16,6 @@ export default defineConfig({
 			lastmod: new Date(),
 		}),
 		react(),
-		tailwind({
-			applyBaseStyles: false, // Use custom base styles for better performance
-		}),
 		robotsTxt({
 			sitemap: 'https://petepittawat.dev/sitemap-index.xml',
 		}),
@@ -50,6 +47,7 @@ export default defineConfig({
 		quality: 80,
 	},
 	vite: {
+		plugins: [tailwindcss()],
 		build: {
 			minify: 'esbuild',
 			cssMinify: 'esbuild',
