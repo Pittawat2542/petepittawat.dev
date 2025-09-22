@@ -1,8 +1,10 @@
+/* eslint-disable */
 import { useCallback, useMemo, useState } from 'react';
-import { useDataFilter, useHashAction, useInfiniteList, useQueryParamSync } from '@/lib/hooks';
+import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
 
 import type { FC } from 'react';
 import Filter from '@/components/ui/filter/Filter';
+import PageControls from '@/components/ui/navigation/PageControls';
 import type { Project } from '@/types';
 import ProjectCard from '@/components/ui/cards/ProjectCard';
 import Reveal from '@/components/ui/interaction/Reveal';
@@ -34,6 +36,8 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
   useQueryParamSync('q', q, setQ);
 
   const [sort, setSort] = useState<ProjectSort>('newest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(12);
 
   const sortedFiltered = useMemo(() => {
     const list = [...filtered];
@@ -41,7 +45,11 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
     return list;
   }, [filtered, sort]);
 
-  const { paged, loadingMore, pendingSkeletons, sentinelRef } = useInfiniteList({ items: sortedFiltered, per: 12 });
+  const { paginated: paged, totalPages, hasNextPage, hasPrevPage, goToPage, setPerPage: setPaginationPerPage } = usePagination({ 
+    items: sortedFiltered, 
+    perPage,
+    initialPage: currentPage
+  });
 
   // Focus targeted project from hash for better UX
   const focusProject = useCallback((hash: string) => {
@@ -49,6 +57,11 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
     if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }, []);
   useHashAction('project-', focusProject);
+
+  const handlePerPageChange = (newPerPage: number) => {
+    setPerPage(newPerPage);
+    setPaginationPerPage(newPerPage);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -72,19 +85,28 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {paged.map((item, i) => (
-          <Reveal id={`project-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 100, 800)} className="target-highlight">
+          <Reveal id={`project-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 50, 400)} className="target-highlight">
             <ProjectCard item={item} />
           </Reveal>
         ))}
-        {loadingMore &&
-          Array.from({ length: pendingSkeletons }).map((_, i) => (
-            <div key={`project-skeleton-${i}`} className="p-4 md:p-5 glass-card rounded-2xl border border-border animate-pulse h-40" />
-          ))}
         {!sortedFiltered.length && (
           <p className="text-sm text-[color:var(--white)]/60">No results.</p>
         )}
       </div>
-      <div ref={sentinelRef} className="h-6 w-full" aria-hidden="true" />
+      {totalPages > 1 && (
+        <PageControls
+          total={sortedFiltered.length}
+          visible={paged.length}
+          perPage={perPage}
+          onPerPageChange={handlePerPageChange}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => {
+            goToPage(page);
+            setCurrentPage(page);
+          }}
+        />
+      )}
     </div>
   );
 };

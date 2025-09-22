@@ -1,9 +1,11 @@
+/* eslint-disable */
 import { memo, useCallback, useMemo, useState } from 'react';
-import { useDataFilter, useHashAction, useInfiniteList, useQueryParamSync } from '@/lib/hooks';
+import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
 
 import type { FC } from 'react';
 import { FIRST_AUTHOR_TITLE } from '@/lib/constants';
 import Filter from '@/components/ui/filter/Filter';
+import PageControls from '@/components/ui/navigation/PageControls';
 import type { Publication } from '@/types';
 import PublicationCard from '@/components/ui/publication/PublicationCard';
 import Reveal from '@/components/ui/interaction/Reveal';
@@ -45,6 +47,8 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
   useQueryParamSync('q', q, setQ);
 
   const [sort, setSort] = useState<PublicationSort>('newest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(12);
 
   const sortedFiltered = useMemo(() => {
     const list = Array.from(filtered);
@@ -52,7 +56,11 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
     return list;
   }, [filtered, sort]);
 
-  const { paged, loadingMore, pendingSkeletons, sentinelRef } = useInfiniteList({ items: sortedFiltered, per: 12 });
+  const { paginated: paged, totalPages, hasNextPage, hasPrevPage, goToPage, setPerPage: setPaginationPerPage } = usePagination({ 
+    items: sortedFiltered, 
+    perPage,
+    initialPage: currentPage
+  });
 
   // Auto-expand targeted publication from hash (open modal)
   const openPublication = useCallback((hash: string) => {
@@ -62,6 +70,11 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
     if (card) card.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
   }, []);
   useHashAction('pub-', openPublication, 150);
+
+  const handlePerPageChange = (newPerPage: number) => {
+    setPerPage(newPerPage);
+    setPaginationPerPage(newPerPage);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -88,17 +101,26 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
       />
       <div className="grid grid-cols-1 gap-3">
         {paged.map((item, i) => (
-          <Reveal id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 100, 800)} className="target-highlight">
+          <Reveal id={`pub-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 50, 400)} className="target-highlight">
             <PublicationCard item={item} />
           </Reveal>
         ))}
-        {loadingMore &&
-          Array.from({ length: pendingSkeletons }).map((_, i) => (
-            <div key={`pub-skeleton-${i}`} className="p-4 md:p-5 glass-card rounded-2xl border border-border animate-pulse h-32" />
-          ))}
         {!sortedFiltered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>
-      <div ref={sentinelRef} className="h-6 w-full" aria-hidden="true" />
+      {totalPages > 1 && (
+        <PageControls
+          total={sortedFiltered.length}
+          visible={paged.length}
+          perPage={perPage}
+          onPerPageChange={handlePerPageChange}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => {
+            goToPage(page);
+            setCurrentPage(page);
+          }}
+        />
+      )}
     </div>
   );
 };

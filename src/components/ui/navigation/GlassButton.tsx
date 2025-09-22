@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  ChevronLeft,
   ChevronRight,
   Download,
   ExternalLink,
@@ -18,7 +19,7 @@ interface GlassButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly variant?: 'primary' | 'secondary' | 'ghost';
   readonly size?: 'sm' | 'md' | 'lg';
   readonly as?: 'button' | 'a';
-  readonly icon?: 'external' | 'arrow-right' | 'chevron-right' | 'search' | 'download' | 'plus' | 'mail';
+  readonly icon?: 'external' | 'arrow-right' | 'chevron-right' | 'chevron-left' | 'search' | 'download' | 'plus' | 'mail';
   readonly iconPosition?: 'left' | 'right';
   readonly iconOnly?: boolean;
   readonly autoIcon?: boolean;
@@ -76,6 +77,7 @@ const GlassButtonComponent: FC<GlassButtonProps> = ({
     external: ExternalLink,
     'arrow-right': ArrowRight,
     'chevron-right': ChevronRight,
+    'chevron-left': ChevronLeft,
     search: Search,
     download: Download,
     plus: Plus,

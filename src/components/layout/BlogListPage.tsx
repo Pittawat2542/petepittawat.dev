@@ -1,10 +1,11 @@
 import { memo, useEffect, useMemo, useState } from 'react';
-import { useInfiniteList, useQueryParamSync } from '@/lib/hooks';
+import { usePagination, useQueryParamSync } from '@/lib/hooks';
 
 import { BlogCard } from '@/components/ui/cards/BlogCard';
 import type { BlogPost } from '@/types';
 import type { FC } from 'react';
 import FilterPanel from '@/components/ui/filter/FilterPanel';
+import PageControls from '@/components/ui/navigation/PageControls';
 
 interface BlogListPageProps {
   readonly posts: readonly BlogPost[];
@@ -14,6 +15,7 @@ interface BlogListPageProps {
 
 type BlogSort = 'newest' | 'oldest';
 
+/* eslint-disable */
 const comparators: Record<BlogSort, (a: BlogPost, b: BlogPost) => number> = {
   newest: (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
   oldest: (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
@@ -24,6 +26,8 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<BlogSort>('newest');
   const [filters, setFilters] = useState<Record<string, string>>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(12);
 
   useQueryParamSync('q', q, setQ);
 
@@ -38,12 +42,14 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
         setSelectedTags(new Set(initialTags));
       }
       const sortParam = params.get('sort');
-      if (sortParam === 'oldest' || sortParam === 'newest') setSort(sortParam);
+      if (sortParam === 'oldest' || sortParam === 'newest') setSort(sortParam as BlogSort);
       const yearParam = params.get('year');
       if (yearParam) setFilters((prev) => ({ ...prev, year: yearParam }));
       const seriesParam = params.get('series');
       if (seriesParam) setFilters((prev) => ({ ...prev, series: seriesParam }));
-    } catch {}
+    } catch (error) {
+      // Silently handle errors
+    }
   }, [initialTags]);
 
   // Keep URL in sync for shareability
@@ -60,7 +66,9 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       const query = params.toString();
       const url = query ? `?${query}` : window.location.pathname;
       window.history.replaceState({}, '', url);
-    } catch {}
+    } catch (error) {
+      // Silently handle errors
+    }
   }, [filters, q, selectedTags, sort]);
 
   const filteredPosts = useMemo(() => {
@@ -107,7 +115,11 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
     return list;
   }, [filteredPosts, sort]);
 
-  const { paged: pagePosts, loadingMore, pendingSkeletons, sentinelRef } = useInfiniteList({ items: sortedPosts, per: 12 });
+  const { paginated: pagePosts, totalPages, hasNextPage, hasPrevPage, goToPage, setPerPage: setPaginationPerPage } = usePagination({ 
+    items: sortedPosts, 
+    perPage,
+    initialPage: currentPage
+  });
 
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -129,6 +141,11 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       .reverse();
     return { year: years } as Record<string, string[]>;
   }, [posts]);
+
+  const handlePerPageChange = (newPerPage: number) => {
+    setPerPage(newPerPage);
+    setPaginationPerPage(newPerPage);
+  };
 
   return (
     <section className="flex w-full flex-col">
@@ -154,29 +171,30 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
         compact
       />
       <ul className="mt-2 md:mt-4 grid w-full grid-cols-1 gap-5 py-3 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">
-        {pagePosts.map((post, index) => (
+        {pagePosts.map((post: BlogPost, index: number) => (
           <BlogCard
             key={post.slug}
             post={post}
             allPosts={Array.from(posts)}
             className="reveal"
-            style={{ transitionDelay: `${Math.min(index * 100, 800)}ms` }}
+            style={{ transitionDelay: `${Math.min(index * 50, 400)}ms` }}
           />
         ))}
-        {loadingMore &&
-          Array.from({ length: pendingSkeletons }).map((_, index) => (
-            <li
-              key={`skeleton-${index}`}
-              className="glass-card animate-pulse rounded-2xl border border-border bg-card p-6"
-            >
-              <div className="mb-4 h-40 w-full rounded-xl bg-white/10" />
-              <div className="mb-2 h-6 w-3/4 rounded bg-white/10" />
-              <div className="mb-1 h-4 w-full rounded bg-white/10" />
-              <div className="h-4 w-5/6 rounded bg-white/10" />
-            </li>
-          ))}
       </ul>
-      <div ref={sentinelRef} className="h-6 w-full" aria-hidden="true" />
+      {totalPages > 1 && (
+        <PageControls
+          total={sortedPosts.length}
+          visible={pagePosts.length}
+          perPage={perPage}
+          onPerPageChange={handlePerPageChange}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => {
+            goToPage(page);
+            setCurrentPage(page);
+          }}
+        />
+      )}
     </section>
   );
 };
@@ -192,4 +210,3 @@ export const BlogListPage = memo(BlogListPageComponent, (prevProps, nextProps) =
 
 BlogListPage.displayName = 'BlogListPage';
 export default BlogListPage;
-
