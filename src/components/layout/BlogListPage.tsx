@@ -71,7 +71,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
     }
   }, [filters, q, selectedTags, sort]);
 
-  const filteredPosts = useMemo(() => {
+  const filtered = useMemo(() => {
     const qLower = q.trim().toLowerCase();
 
     return posts.filter((post) => {
@@ -109,16 +109,24 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
     });
   }, [filters, posts, q, selectedTags]);
 
-  const sortedPosts = useMemo(() => {
-    const list = [...filteredPosts];
+  const sorted = useMemo(() => {
+    const list = [...filtered];
     list.sort(comparators[sort]);
     return list;
-  }, [filteredPosts, sort]);
+  }, [filtered, sort]);
 
-  const { paginated: pagePosts, totalPages, hasNextPage, hasPrevPage, goToPage, setPerPage: setPaginationPerPage } = usePagination({ 
-    items: sortedPosts, 
-    perPage,
-    initialPage: currentPage
+  // Pagination
+  const {
+    paginated: pagePosts,
+    totalPages,
+    // hasNextPage,
+    // hasPrevPage,
+    goToPage,
+    setPerPage: setPaginationPerPage,
+  } = usePagination({
+    items: [...filtered], // Convert readonly array to mutable array
+    perPage: 9,
+    initialPage: 1,
   });
 
   const tagCounts = useMemo(() => {
@@ -166,7 +174,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
         ]}
         sortValue={sort}
         onSortChange={(value) => setSort(value as BlogSort)}
-        filteredResults={sortedPosts.length}
+        filteredResults={sorted.length}
         totalResults={posts.length}
         compact
       />
@@ -183,7 +191,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       </ul>
       {totalPages > 1 && (
         <PageControls
-          total={sortedPosts.length}
+          total={sorted.length}
           visible={pagePosts.length}
           perPage={perPage}
           onPerPageChange={handlePerPageChange}

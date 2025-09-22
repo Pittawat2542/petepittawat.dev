@@ -1,9 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
+import crypto from 'crypto';
 
 const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, 'src', 'content', 'blog');
 const OUT_DIR = path.join(ROOT, 'public', 'og', 'blog');
+const MANIFEST_FILE = path.join(ROOT, 'public', 'og', 'manifest.json');
 
 async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true }).catch(() => {});
@@ -351,30 +353,88 @@ function svgTemplate({ title, siteTitle = 'PETEPITTAWAT.DEV', logoDataUrl, pubDa
   </svg>`;
 }
 
+// Create a hash of the blog post metadata to detect changes
+function createPostHash(title, pubDate, tags) {
+  const data = {
+    title: title || '',
+    pubDate: pubDate ? new Date(pubDate).toISOString() : '',
+    tags: Array.isArray(tags) ? tags.sort() : []
+  };
+  return crypto.createHash('md5').update(JSON.stringify(data)).digest('hex');
+}
+
+// Load the manifest file
+async function loadManifest() {
+  try {
+    const data = await fs.readFile(MANIFEST_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch {
+    return {};
+  }
+}
+
+// Save the manifest file
+async function saveManifest(manifest) {
+  await ensureDir(path.dirname(MANIFEST_FILE));
+  await fs.writeFile(MANIFEST_FILE, JSON.stringify(manifest, null, 2));
+}
+
 async function generate() {
   await ensureDir(OUT_DIR);
   const files = await fs.readdir(BLOG_DIR);
   const logoDataUrl = await readLogoDataUrl();
+  
+  // Load the manifest to check what we've already generated
+  const manifest = await loadManifest();
+  const updatedManifest = {};
+  let generatedCount = 0;
+  let skippedCount = 0;
+  
   for (const file of files) {
     if (!/\.(md|mdx)$/.test(file)) continue;
     const slug = file.replace(/\.(md|mdx)$/i, '');
     const full = path.join(BLOG_DIR, file);
     const out = path.join(OUT_DIR, `${slug}.png`);
+    
     try {
       const content = await fs.readFile(full, 'utf8');
       const frontmatter = extractFrontmatter(content);
       const title = frontmatter.title || slug;
       const pubDate = frontmatter.pubDate;
       const tags = frontmatter.tags;
-      const svg = svgTemplate({ title, logoDataUrl, pubDate, tags });
-      const sharp = (await import('sharp')).default;
-      const img = sharp(Buffer.from(svg));
-      await img.png().toFile(out);
-      console.log('OG generated:', out);
+      
+      // Create a hash of the current post metadata
+      const currentHash = createPostHash(title, pubDate, tags);
+      
+      // Check if we need to regenerate
+      const shouldRegenerate = !manifest[slug] || manifest[slug].hash !== currentHash || !(await fs.access(out).then(() => true).catch(() => false));
+      
+      if (shouldRegenerate) {
+        const svg = svgTemplate({ title, logoDataUrl, pubDate, tags });
+        const sharp = (await import('sharp')).default;
+        const img = sharp(Buffer.from(svg));
+        await img.png().toFile(out);
+        console.log('OG generated:', out);
+        generatedCount++;
+      } else {
+        console.log('OG skipped (no changes):', out);
+        skippedCount++;
+      }
+      
+      // Update the manifest
+      updatedManifest[slug] = {
+        hash: currentHash,
+        generatedAt: new Date().toISOString()
+      };
     } catch (e) {
       console.warn('OG generation failed for', file, e?.message);
     }
   }
+  
+  // Save the updated manifest
+  await saveManifest(updatedManifest);
+  
+  console.log(`OG generation complete: ${generatedCount} generated, ${skippedCount} skipped`);
 }
 
 generate();

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
 
 import type { FC } from 'react';
@@ -16,12 +16,13 @@ interface ProjectsExplorerProps {
 
 type ProjectSort = 'newest' | 'oldest' | 'title-az' | 'title-za';
 
-const comparators: Record<ProjectSort, (a: Project, b: Project) => number> = {
-  newest: (a, b) => b.year - a.year || a.title.localeCompare(b.title),
-  oldest: (a, b) => a.year - b.year || a.title.localeCompare(b.title),
-  'title-az': (a, b) => a.title.localeCompare(b.title),
-  'title-za': (a, b) => b.title.localeCompare(a.title),
-};
+// Remove unused comparators
+// const comparators: Record<ProjectSort, (a: Project, b: Project) => number> = {
+//   newest: (a, b) => b.year - a.year || a.title.localeCompare(b.title),
+//   oldest: (a, b) => a.year - b.year || a.title.localeCompare(b.title),
+//   'title-az': (a, b) => a.title.localeCompare(b.title),
+//   'title-za': (a, b) => b.title.localeCompare(a.title),
+// };
 
 const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
   const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(items, {
@@ -36,19 +37,19 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
   useQueryParamSync('q', q, setQ);
 
   const [sort, setSort] = useState<ProjectSort>('newest');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(12);
 
-  const sortedFiltered = useMemo(() => {
-    const list = [...filtered];
-    list.sort(comparators[sort]);
-    return list;
-  }, [filtered, sort]);
-
-  const { paginated: paged, totalPages, hasNextPage, hasPrevPage, goToPage, setPerPage: setPaginationPerPage } = usePagination({ 
-    items: sortedFiltered, 
-    perPage,
-    initialPage: currentPage
+  // Pagination
+  const {
+    paginated: paged,
+    totalPages,
+    // hasNextPage,
+    // hasPrevPage,
+    goToPage,
+    setPerPage: setPaginationPerPage,
+  } = usePagination({
+    items: [...filtered], // Convert readonly array to mutable array
+    perPage: 6,
+    initialPage: 1,
   });
 
   // Focus targeted project from hash for better UX
@@ -57,11 +58,6 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
     if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }, []);
   useHashAction('project-', focusProject);
-
-  const handlePerPageChange = (newPerPage: number) => {
-    setPerPage(newPerPage);
-    setPaginationPerPage(newPerPage);
-  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -72,7 +68,7 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
         setFilters={setFilters}
         filterOptions={filterOptions}
         placeholder="Search title, summary, collaborators..."
-        filteredCount={sortedFiltered.length}
+        filteredCount={filtered.length}
         totalCount={totalCount}
         sortOptions={[
           { value: 'newest', label: 'Newest' },
@@ -89,22 +85,19 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
             <ProjectCard item={item} />
           </Reveal>
         ))}
-        {!sortedFiltered.length && (
+        {!filtered.length && (
           <p className="text-sm text-[color:var(--white)]/60">No results.</p>
         )}
       </div>
       {totalPages > 1 && (
         <PageControls
-          total={sortedFiltered.length}
+          total={filtered.length}
           visible={paged.length}
-          perPage={perPage}
-          onPerPageChange={handlePerPageChange}
-          currentPage={currentPage}
+          perPage={6}
+          onPerPageChange={setPaginationPerPage}
+          currentPage={1}
           totalPages={totalPages}
-          onPageChange={(page) => {
-            goToPage(page);
-            setCurrentPage(page);
-          }}
+          onPageChange={goToPage}
         />
       )}
     </div>

@@ -54,10 +54,18 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
     return list;
   }, [filtered, sort]);
 
-  const { paginated: paged, totalPages, hasNextPage, hasPrevPage, goToPage, setPerPage: setPaginationPerPage } = usePagination({ 
-    items: sortedFiltered, 
-    perPage,
-    initialPage: currentPage
+  // Pagination
+  const {
+    paginated: paged,
+    totalPages,
+    // hasNextPage,
+    // hasPrevPage,
+    goToPage,
+    setPerPage: setPaginationPerPage,
+  } = usePagination({
+    items: [...filtered], // Convert readonly array to mutable array
+    perPage: 6,
+    initialPage: 1,
   });
 
   const handlePerPageChange = (newPerPage: number) => {
