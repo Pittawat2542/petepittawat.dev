@@ -14,13 +14,14 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   aria-current={isActive ? 'page' : undefined}
   data-active={isActive ? 'true' : undefined}
   tabindex={isActive ? -1 : undefined}
-  class={`nav-pill nav-link inline-flex items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-medium leading-none
+  class={`nav-pill nav-link group group/nav inline-flex items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-medium leading-none
           text-[color:var(--white)]/72 hover:text-[color:var(--white)] hover:border-[color:var(--white)]/16
-          transition-[color,border-color,background-color,box-shadow] duration-200 ease-out
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28
+          transition-[color,border-color,background-color,box-shadow,transform] duration-250 ease-out
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45
+          motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0 motion-reduce:active:translate-y-0
           ${isActive
-            ? 'bg-[color:var(--white)]/14 border-[color:var(--white)]/22 text-[color:var(--white)] shadow-[0_12px_26px_-18px_rgba(8,20,38,0.85)] pointer-events-none cursor-default'
-            : 'cursor-pointer bg-transparent'}
+            ? 'bg-[color:var(--white)]/18 border-[color:var(--white)]/28 text-[color:var(--white)] shadow-[0_16px_32px_-18px_rgba(6,14,28,0.92)] pointer-events-none cursor-default'
+            : 'bg-transparent hover:-translate-y-[1px] focus-visible:-translate-y-[1px] active:translate-y-0 cursor-pointer'}
           ${className}`}
 >
   <slot />
@@ -29,8 +30,9 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
 <style>
   .nav-link {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     isolation: isolate;
+    will-change: transform, background, border-color, box-shadow;
   }
 
   .nav-link::before {
@@ -38,46 +40,125 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
     position: absolute;
     inset: -18%;
     border-radius: inherit;
-    transform: scale(0.75);
-    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(12px) scale(0.78);
+    background: radial-gradient(120% 140% at 50% 10%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 68%, rgba(255, 255, 255, 0));
     border: 1px solid rgba(255, 255, 255, 0.14);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     opacity: 0;
-    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: -1;
-  }
-
-  .nav-link:hover::before {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-
-  .nav-link[data-active="true"]::before {
-    opacity: 1;
-    transform: scale(1.05);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(107, 193, 255, 0.18));
-    border-color: rgba(255, 255, 255, 0.32);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: -2;
   }
 
   .nav-link::after {
     content: '';
     position: absolute;
-    left: 18%;
-    right: 18%;
-    bottom: 6px;
+    inset-inline: 18%;
+    bottom: 4px;
     height: 2px;
     border-radius: 999px;
-    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(106,193,255,0.75), rgba(255,255,255,0));
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(106, 193, 255, 0.8), rgba(255, 255, 255, 0));
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.35s ease, transform 0.3s ease;
     z-index: -1;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before {
+    opacity: 1;
+    transform: translateY(0) scale(1.03);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+
+  .nav-link[data-active="true"]::before {
+    opacity: 1;
+    transform: translateY(0) scale(1.04);
+    background: linear-gradient(130deg, rgba(255, 255, 255, 0.25), rgba(107, 193, 255, 0.22) 55%, rgba(255, 255, 255, 0.1));
+    border-color: rgba(255, 255, 255, 0.32);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
   }
 
   .nav-link[data-active="true"]::after {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .nav-link .nav-link__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-link .nav-link__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    opacity: 0.62;
+  }
+
+  .nav-link .nav-link__label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    letter-spacing: 0.01em;
+    padding-inline-end: 0.75rem;
+  }
+
+  .nav-link .nav-link__pulse {
+    position: absolute;
+    inset-inline-end: 0.1rem;
+    top: 50%;
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-top: -0.225rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(106, 193, 255, 0.9), rgba(255, 255, 255, 0.72));
+    box-shadow: 0 0 0 0 rgba(106, 193, 255, 0.4);
+    transform: scale(0.5);
+    opacity: 0;
+    transition: transform 0.35s ease, box-shadow 0.45s ease, opacity 0.35s ease;
+  }
+
+  .nav-link:hover .nav-link__icon,
+  .nav-link:focus-visible .nav-link__icon {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+
+  .nav-link[data-active="true"] .nav-link__icon {
+    opacity: 1;
+  }
+
+  .nav-link[data-active="true"] .nav-link__pulse {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 12px 0 rgba(106, 193, 255, 0.52);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link[data-active="true"] .nav-link__icon {
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-link::before,
+    .nav-link::after,
+    .nav-link .nav-link__icon,
+    .nav-link .nav-link__pulse {
+      transition-duration: 0s;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      transform: none !important;
+    }
   }
 </style>

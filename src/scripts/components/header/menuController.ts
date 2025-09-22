@@ -15,26 +15,14 @@ export function createMenuController(): MenuController {
   let overlay: HTMLElement | null = null;
   let toggle: HTMLElement | null = null;
   let sheet: HTMLElement | null = null;
-  let iconOpen: HTMLElement | null = null;
-  let iconClose: HTMLElement | null = null;
 
   const setMenuOpen = (open: boolean) => {
     if (!menu || !toggle) return;
-    
+
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    
-    // Toggle icons
-    if (iconOpen && iconClose) {
-      if (open) {
-        iconOpen.classList.add('hidden');
-        iconClose.classList.remove('hidden');
-      } else {
-        iconOpen.classList.remove('hidden');
-        iconClose.classList.add('hidden');
-      }
-    }
-    
+    toggle.dataset['open'] = open ? 'true' : 'false';
+
     // Toggle menu panel visibility
     if (open) {
       menu.classList.remove('opacity-0', 'pointer-events-none');
@@ -47,14 +35,14 @@ export function createMenuController(): MenuController {
     // Subtle slide for the sheet
     if (sheet) {
       if (open) {
-        sheet.classList.remove('-translate-y-2');
-        sheet.classList.add('translate-y-0');
+        sheet.classList.remove('-translate-y-4', 'scale-[0.97]', 'opacity-0');
+        sheet.classList.add('translate-y-0', 'scale-100', 'opacity-100');
       } else {
-        sheet.classList.add('-translate-y-2');
-        sheet.classList.remove('translate-y-0');
+        sheet.classList.add('-translate-y-4', 'scale-[0.97]', 'opacity-0');
+        sheet.classList.remove('translate-y-0', 'scale-100', 'opacity-100');
       }
     }
-    
+
     // Toggle backdrop
     if (overlay) {
       if (open) {
@@ -100,8 +88,6 @@ export function createMenuController(): MenuController {
     overlay = document.getElementById('mobile-menu-overlay');
     toggle = document.getElementById('menu-toggle');
     sheet = document.getElementById('mobile-menu-sheet');
-    iconOpen = document.getElementById('menu-icon-open');
-    iconClose = document.getElementById('menu-icon-close');
 
     // Setup mobile menu
     if (toggle) {
@@ -142,8 +128,6 @@ export function createMenuController(): MenuController {
     overlay = null;
     toggle = null;
     sheet = null;
-    iconOpen = null;
-    iconClose = null;
   };
 
   return { init, cleanup };

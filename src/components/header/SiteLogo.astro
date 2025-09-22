@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE } from '../../consts';
+import SiteLogoMotion from './SiteLogoMotion';
 
 export interface Props {
   showTitle?: boolean;
@@ -9,34 +10,21 @@ export interface Props {
 const { showTitle = true, class: className } = Astro.props;
 ---
 
-<a
-  href="/"
-  aria-label="Go to homepage"
-  class={`group text-[color:var(--white)] flex min-w-0 gap-2 items-center rounded-full px-3 py-2
-           hover:bg-[color:var(--white)]/6 transition-colors focus-visible:outline-none
-           focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 snap-start nav-link ${className || ''}`}
->
-  <span class="site-logo" aria-hidden="true">
-    <span class="site-logo__glow"></span>
-    <span class="site-logo__halo"></span>
-    <span class="site-logo__spark site-logo__spark--one"></span>
-    <span class="site-logo__spark site-logo__spark--two"></span>
-    <svg class="site-logo__mark" viewBox="0 0 512 512" fill="none">
-      <rect x="0" y="0" width="512" height="512" rx="64" fill="#6AC1FF" />
-      <g fill="#222831">
-        <path d="M82 199.1L291.4 199.1L291.4 298.1C291.4 311.1 288.6 322.3 283 331.7C277.4 341.3 269.5 348.7 259.3 353.9C249.3 359.1 237.7 361.7 224.5 361.7C211.3 361.7 199.7 359.1 189.7 353.9C179.7 348.7 171.8 341.3 166 331.7C160.4 322.3 157.6 311.1 157.6 298.1L157.6 244.7L82 244.7L82 199.1ZM197.2 244.7L197.2 292.7C197.2 297.3 198 301.2 199.6 304.4C201.2 307.6 203.5 310.1 206.5 311.9C209.7 313.7 213.5 314.6 217.9 314.6L231.1 314.6C235.7 314.6 239.5 313.7 242.5 311.9C245.5 310.1 247.8 307.6 249.4 304.4C251 301.2 251.8 297.3 251.8 292.7L251.8 244.7L197.2 244.7Z" />
-        <path d="M291 199.1L500.4 199.1L500.4 298.1C500.4 311.1 497.6 322.3 492 331.7C486.4 341.3 478.5 348.7 468.3 353.9C458.3 359.1 446.7 361.7 433.5 361.7C420.3 361.7 408.7 359.1 398.7 353.9C388.7 348.7 380.8 341.3 375 331.7C369.4 322.3 366.6 311.1 366.6 298.1L366.6 244.7L291 244.7L291 199.1ZM406.2 244.7L406.2 292.7C406.2 297.3 407 301.2 408.6 304.4C410.2 307.6 412.5 310.1 415.5 311.9C418.7 313.7 422.5 314.6 426.9 314.6L440.1 314.6C444.7 314.6 448.5 313.7 451.5 311.9C454.5 310.1 456.8 307.6 458.4 304.4C460 301.2 460.8 297.3 460.8 292.7L460.8 244.7L406.2 244.7Z" />
-      </g>
-    </svg>
-  </span>
-  {showTitle && (
-    <span class="hidden md:inline whitespace-nowrap md:ml-1 font-medium max-w-[40vw] truncate">
-      {SITE_TITLE}
-    </span>
-  )}
-</a>
+<SiteLogoMotion
+  siteTitle={SITE_TITLE}
+  showTitle={showTitle}
+  className={className ?? ''}
+  client:idle
+/>
 
 <style>
+  .site-logo-link {
+    position: relative;
+    contain: layout paint style;
+    will-change: transform;
+    transition: background-color 220ms ease;
+  }
+
   .site-logo {
     position: relative;
     display: inline-flex;
@@ -49,31 +37,7 @@ const { showTitle = true, class: className } = Astro.props;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 12px 26px -18px rgba(9, 22, 42, 0.85);
     overflow: visible;
     isolation: isolate;
-    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      box-shadow 320ms ease,
-      background 320ms ease;
-  }
-
-  .group:hover .site-logo,
-  .group:focus-visible .site-logo {
-    transform: rotate(-2deg) scale(1.05);
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.46), rgba(104, 210, 255, 0.65));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52), 0 20px 36px -18px rgba(11, 30, 58, 0.9);
-  }
-
-  .site-logo__mark {
-    position: relative;
-    z-index: 2;
-    width: 1.85rem;
-    height: 1.85rem;
-    border-radius: 0.6rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
-    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-
-  .group:hover .site-logo__mark,
-  .group:focus-visible .site-logo__mark {
-    transform: translateY(-1px) rotate(2deg);
+    transform-style: preserve-3d;
   }
 
   .site-logo__glow {
@@ -85,12 +49,7 @@ const { showTitle = true, class: className } = Astro.props;
     filter: blur(16px);
     opacity: 0.85;
     z-index: 0;
-    transition: opacity 320ms ease;
-  }
-
-  .group:hover .site-logo__glow,
-  .group:focus-visible .site-logo__glow {
-    opacity: 1;
+    will-change: opacity, transform;
   }
 
   .site-logo__halo {
@@ -100,83 +59,52 @@ const { showTitle = true, class: className } = Astro.props;
     border: 2px solid rgba(255, 255, 255, 0.2);
     opacity: 0.65;
     z-index: 1;
-    transition: opacity 260ms ease, transform 320ms ease;
+    will-change: opacity, transform;
   }
 
-  .group:hover .site-logo__halo,
-  .group:focus-visible .site-logo__halo {
-    opacity: 0.9;
-    transform: scale(1.08);
+  .site-logo__orbit {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+    z-index: 3;
   }
 
   .site-logo__spark {
-    position: absolute;
-    width: 0.38rem;
-    height: 0.38rem;
+    --orbit-distance: 1.38rem;
+    display: inline-flex;
+    width: 0.4rem;
+    height: 0.4rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 0.6rem rgba(255, 255, 255, 0.7);
-    opacity: 0;
-    z-index: 3;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 0.65rem rgba(255, 255, 255, 0.72);
     mix-blend-mode: screen;
-    transform-origin: center;
-    animation: site-logo-orbit 6s linear infinite;
+    opacity: 0;
+    transform: translateX(var(--orbit-distance));
+    will-change: opacity, transform;
   }
 
-  .site-logo__spark--one {
-    animation-delay: 0.2s;
-  }
-
-  .site-logo__spark--two {
-    animation-delay: 3.1s;
-  }
-
-  .group:hover .site-logo__spark,
-  .group:focus-visible .site-logo__spark {
-    opacity: 1;
-  }
-
-  @keyframes site-logo-orbit {
-    0% {
-      transform: rotate(0deg) translateX(1.38rem) scale(0.8);
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    50% {
-      transform: rotate(180deg) translateX(1.38rem) scale(1);
-      opacity: 0.9;
-    }
-    90% {
-      opacity: 0;
-    }
-    100% {
-      transform: rotate(360deg) translateX(1.38rem) scale(0.8);
-      opacity: 0;
-    }
+  .site-logo__mark {
+    position: relative;
+    z-index: 2;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    will-change: transform;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .site-logo,
-    .site-logo__mark,
     .site-logo__glow,
     .site-logo__halo,
-    .site-logo__spark {
+    .site-logo__spark,
+    .site-logo__mark {
       transition-duration: 0.001ms !important;
       animation: none !important;
-    }
-    
-    .group:hover .site-logo,
-    .group:focus-visible .site-logo,
-    .group:hover .site-logo__mark,
-    .group:focus-visible .site-logo__mark {
-      transform: none !important;
-    }
-    
-    .group:hover .site-logo__spark,
-    .group:focus-visible .site-logo__spark {
-      opacity: 1 !important;
     }
   }
 </style>

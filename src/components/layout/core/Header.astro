@@ -25,7 +25,9 @@ let current = Astro.url.pathname
              class="flex relative z-0 w-full items-center justify-between md:justify-start gap-1 rounded-[inherit] border border-transparent
                     bg-transparent supports-[backdrop-filter]:bg-transparent
                     backdrop-blur-none shadow-none
-                    transition-[background-color,box-shadow,transform,border-color,backdrop-filter] duration-300 ease-out
+                    transition-[background-color,box-shadow,transform,border-color,backdrop-filter] duration-400 ease-out
+                    md:hover:-translate-y-[1.5px] md:hover:border-[color:var(--white)]/14 md:hover:shadow-[0_26px_56px_-28px_rgba(3,7,15,0.88)]
+                    motion-reduce:transition-none motion-reduce:transform-none
                     data-[scrolled=false]:border-transparent
                     data-[scrolled=false]:bg-transparent data-[scrolled=false]:supports-[backdrop-filter]:bg-transparent
                     data-[scrolled=false]:backdrop-blur-none
@@ -33,7 +35,7 @@ let current = Astro.url.pathname
                     data-[scrolled=true]:bg-transparent data-[scrolled=true]:supports-[backdrop-filter]:bg-transparent
                     data-[scrolled=true]:backdrop-blur-2xl data-[scrolled=true]:shadow-[0_28px_60px_-28px_rgba(3,7,15,0.88)]
                     overflow-x-auto overscroll-x-contain scrollbar-none
-                    snap-x snap-proximity md:snap-none p-2">
+                    snap-x snap-proximity md:snap-none p-2 md:px-3">
         
         <SiteLogo />
 
