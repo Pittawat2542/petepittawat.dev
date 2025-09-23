@@ -25,14 +25,17 @@ type ProjectSort = 'newest' | 'oldest' | 'title-az' | 'title-za';
 // };
 
 const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
-  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(items, {
-    searchFields: (item) => [item.title, item.summary, item.collaborators ?? '', item.role ?? ''],
-    filterFields: {
-      year: (item) => item.year.toString(),
-      tag: (item) => item.tags,
-      type: (item) => item.type ?? 'other',
-    },
-  });
+  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(
+    items,
+    {
+      searchFields: item => [item.title, item.summary, item.collaborators ?? '', item.role ?? ''],
+      filterFields: {
+        year: item => item.year.toString(),
+        tag: item => item.tags,
+        type: item => item.type ?? 'other',
+      },
+    }
+  );
 
   useQueryParamSync('q', q, setQ);
 
@@ -77,17 +80,20 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
           { value: 'title-za', label: 'Title Z→A' },
         ]}
         sortValue={sort}
-        onSortChange={(v) => setSort(v as typeof sort)}
+        onSortChange={v => setSort(v as typeof sort)}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {paged.map((item, i) => (
-          <Reveal id={`project-${slugify(item.title)}-${item.year}`} key={`${item.title}-${item.year}`} delayMs={Math.min(i * 50, 400)} className="target-highlight">
+          <Reveal
+            id={`project-${slugify(item.title)}-${item.year}`}
+            key={`${item.title}-${item.year}`}
+            delayMs={Math.min(i * 50, 400)}
+            className="target-highlight"
+          >
             <ProjectCard item={item} />
           </Reveal>
         ))}
-        {!filtered.length && (
-          <p className="text-sm text-[color:var(--white)]/60">No results.</p>
-        )}
+        {!filtered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
       </div>
       {totalPages > 1 && (
         <PageControls

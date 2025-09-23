@@ -12,22 +12,26 @@ interface SiteLogoMotionProps {
 
 const sparks = [
   { id: 'alpha', delay: 0 },
-  { id: 'beta', delay: 3.2 }
+  { id: 'beta', delay: 3.2 },
 ];
 
-export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: SiteLogoMotionProps) {
+export function SiteLogoMotion({
+  showTitle = true,
+  className = '',
+  siteTitle,
+}: SiteLogoMotionProps) {
   const prefersReducedMotion = useReducedMotion();
   const [canTilt, setCanTilt] = useState(false);
 
   const tiltX = useSpring(0, {
     stiffness: 180,
     damping: 20,
-    mass: 0.8
+    mass: 0.8,
   });
   const tiltY = useSpring(0, {
     stiffness: 180,
     damping: 20,
-    mass: 0.8
+    mass: 0.8,
   });
 
   useEffect(() => {
@@ -51,7 +55,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
   }, [prefersReducedMotion]);
 
   const handlePointerMove = useCallback<PointerEventHandler<HTMLAnchorElement>>(
-    (event) => {
+    event => {
       if (!canTilt || prefersReducedMotion) return;
       const target = event.currentTarget;
       const rect = target.getBoundingClientRect();
@@ -79,17 +83,17 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
         opacity: 1,
         scale: 1,
         rotate: 0,
-        transition: { type: 'spring', stiffness: 160, damping: 20, mass: 0.8 }
+        transition: { type: 'spring', stiffness: 160, damping: 20, mass: 0.8 },
       },
       hover: {
         scale: 1.02,
         rotate: -1.2,
-        transition: { type: 'spring', stiffness: 260, damping: 18 }
+        transition: { type: 'spring', stiffness: 260, damping: 18 },
       },
       tap: {
         scale: 0.98,
-        rotate: 0
-      }
+        rotate: 0,
+      },
     }),
     []
   );
@@ -101,14 +105,14 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
         scale: 1,
         rotate: 0,
         y: 0,
-        transition: { type: 'spring', stiffness: 340, damping: 24, delay: 0.08 }
+        transition: { type: 'spring', stiffness: 340, damping: 24, delay: 0.08 },
       },
       hover: {
         scale: 1.07,
         rotate: -2.4,
-        transition: { type: 'spring', stiffness: 320, damping: 16 }
+        transition: { type: 'spring', stiffness: 320, damping: 16 },
       },
-      tap: { scale: 0.97, rotate: 0 }
+      tap: { scale: 0.97, rotate: 0 },
     }),
     []
   );
@@ -120,18 +124,18 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
         scale: 1,
         rotate: 0,
         y: 0,
-        transition: { type: 'spring', stiffness: 380, damping: 22, delay: 0.14 }
+        transition: { type: 'spring', stiffness: 380, damping: 22, delay: 0.14 },
       },
       hover: {
         rotate: 4,
         y: -2,
-        transition: { type: 'spring', stiffness: 260, damping: 18 }
+        transition: { type: 'spring', stiffness: 260, damping: 18 },
       },
       tap: {
         scale: 0.96,
         rotate: 0,
-        y: 0
-      }
+        y: 0,
+      },
     }),
     []
   );
@@ -141,7 +145,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       const reduced: Variants = {
         initial: { opacity: 0.85, scale: 1 },
         animate: { opacity: 0.9, scale: 1 },
-        hover: { opacity: 1, scale: 1.02 }
+        hover: { opacity: 1, scale: 1.02 },
       };
       return reduced;
     }
@@ -150,9 +154,9 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       animate: {
         opacity: [0.72, 0.9, 0.75],
         scale: [0.96, 1.06, 0.98],
-        transition: { duration: 5.6, ease: 'easeInOut', repeat: Infinity }
+        transition: { duration: 5.6, ease: 'easeInOut', repeat: Infinity },
       },
-      hover: { opacity: 1, scale: 1.12 }
+      hover: { opacity: 1, scale: 1.12 },
     };
     return regular;
   }, [prefersReducedMotion]);
@@ -162,7 +166,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       const reduced: Variants = {
         initial: { opacity: 0.68, scale: 1 },
         animate: { opacity: 0.7, scale: 1 },
-        hover: { opacity: 0.92, scale: 1.06 }
+        hover: { opacity: 0.92, scale: 1.06 },
       };
       return reduced;
     }
@@ -171,9 +175,9 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       animate: {
         opacity: [0.6, 0.78, 0.62],
         scale: [0.98, 1.05, 0.98],
-        transition: { duration: 6.2, ease: 'easeInOut', repeat: Infinity, delay: 0.4 }
+        transition: { duration: 6.2, ease: 'easeInOut', repeat: Infinity, delay: 0.4 },
       },
-      hover: { opacity: 0.95, scale: 1.08 }
+      hover: { opacity: 0.95, scale: 1.08 },
     };
     return regular;
   }, [prefersReducedMotion]);
@@ -184,8 +188,8 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       animate: {
         opacity: 1,
         y: 0,
-        transition: { type: 'spring', stiffness: 260, damping: 22, delay: 0.22 }
-      }
+        transition: { type: 'spring', stiffness: 260, damping: 22, delay: 0.22 },
+      },
     }),
     []
   );
@@ -196,7 +200,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
         repeat: Infinity,
         repeatType: 'loop',
         duration: 7.4,
-        ease: 'linear'
+        ease: 'linear',
       };
 
   const sparkBaseTransition: Transition | undefined = prefersReducedMotion
@@ -205,7 +209,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
         duration: 2.4,
         repeat: Infinity,
         repeatType: 'loop',
-        ease: 'easeInOut'
+        ease: 'easeInOut',
       };
 
   const logoStyle: MotionStyle = prefersReducedMotion
@@ -213,7 +217,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
     : {
         rotateX: tiltX,
         rotateY: tiltY,
-        transformPerspective: 800
+        transformPerspective: 800,
       };
 
   return (
@@ -221,7 +225,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       href="/"
       aria-label="Go to homepage"
       className={cn(
-        'site-logo-link group snap-start text-[color:var(--white)] flex min-w-0 gap-2 items-center rounded-full px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] hover:bg-[color:var(--white)]/8',
+        'site-logo-link group flex min-w-0 snap-start items-center gap-2 rounded-full px-3 py-2 text-[color:var(--white)] transition-colors hover:bg-[color:var(--white)]/8 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none',
         className
       )}
       variants={containerVariants}
@@ -234,11 +238,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       onPointerLeave={resetTilt}
       onPointerUp={resetTilt}
     >
-      <motion.span
-        className="site-logo"
-        variants={logoVariants}
-        style={logoStyle}
-      >
+      <motion.span className="site-logo" variants={logoVariants} style={logoStyle}>
         <motion.span className="site-logo__glow" variants={glowVariants} />
         <motion.span className="site-logo__halo" variants={haloVariants} />
 
@@ -251,7 +251,7 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
             : {
                 opacity: [0, 1, 0],
                 scale: [0.7, 1, 0.7],
-                transition: { ...sparkBaseTransition!, delay: delay / 2 }
+                transition: { ...sparkBaseTransition!, delay: delay / 2 },
               };
 
           return (
@@ -285,7 +285,10 @@ export function SiteLogoMotion({ showTitle = true, className = '', siteTitle }: 
       </motion.span>
 
       {showTitle && (
-        <motion.span className="hidden md:inline whitespace-nowrap md:ml-1 font-medium max-w-[40vw] truncate" variants={titleVariants}>
+        <motion.span
+          className="hidden max-w-[40vw] truncate font-medium whitespace-nowrap md:ml-1 md:inline"
+          variants={titleVariants}
+        >
           {siteTitle}
         </motion.span>
       )}

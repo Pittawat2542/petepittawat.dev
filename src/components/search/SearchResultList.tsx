@@ -28,7 +28,12 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
     };
 
     return (
-      <ul ref={ref} className="divide-y divide-border" role="listbox" aria-activedescendant={`sr-${activeIndex}`}>
+      <ul
+        ref={ref}
+        className="divide-border divide-y"
+        role="listbox"
+        aria-activedescendant={`sr-${activeIndex}`}
+      >
         {items.slice(0, 50).map((item, index) => (
           <li
             id={`sr-${index}`}
@@ -40,37 +45,58 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
             <a
               href={getHref(item)}
               className={cn(
-                'flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40'
+                'flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/5',
+                'focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:outline-none'
               )}
               onClick={() => onItemClick(item)}
               onMouseEnter={() => onActiveIndexChange(index)}
             >
-              <div className="pt-0.5 flex items-center gap-2 min-w-[7rem]">
-                <div className={cn('rounded-md p-1.5 border border-white/10', typeAccentClasses(item.type))}>
+              <div className="flex min-w-[7rem] items-center gap-2 pt-0.5">
+                <div
+                  className={cn(
+                    'rounded-md border border-white/10 p-1.5',
+                    typeAccentClasses(item.type)
+                  )}
+                >
                   {renderTypeIcon(item.type)}
                 </div>
-                <Badge className={cn('capitalize', typeAccentClasses(item.type))}>{item.type}</Badge>
+                <Badge className={cn('capitalize', typeAccentClasses(item.type))}>
+                  {item.type}
+                </Badge>
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-medium truncate">{highlightTitle(item.title, item.__titlePositions)}</h3>
-                  {item.date && <span className="text-xs text-muted-foreground">{String(item.date).slice(0, 10)}</span>}
+                  <h3 className="truncate text-sm font-medium">
+                    {highlightTitle(item.title, item.__titlePositions)}
+                  </h3>
+                  {item.date && (
+                    <span className="text-muted-foreground text-xs">
+                      {String(item.date).slice(0, 10)}
+                    </span>
+                  )}
                 </div>
-                {item.description && <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>}
+                {item.description && (
+                  <p className="text-muted-foreground line-clamp-2 text-xs">{item.description}</p>
+                )}
                 {item.tags && item.tags.length > 0 && (
                   <div className="mt-1 flex flex-wrap gap-1">
-                    {item.tags.slice(0, 5).map((tag) => (
-                      <span key={tag} className="text-[10px] text-muted-foreground/80">#{tag}</span>
+                    {item.tags.slice(0, 5).map(tag => (
+                      <span key={tag} className="text-muted-foreground/80 text-[10px]">
+                        #{tag}
+                      </span>
                     ))}
                   </div>
                 )}
               </div>
-              <div className="mt-1 flex items-center gap-2 text-[11px] text-muted-foreground">
+              <div className="text-muted-foreground mt-1 flex items-center gap-2 text-[11px]">
                 {index === activeIndex && (
                   <>
-                    <span className="hidden sm:inline-flex items-center gap-1"><CornerDownLeft size={12} /> Open</span>
-                    <span className="hidden lg:inline-flex items-center gap-1"><Command size={12} /> + Enter new tab</span>
+                    <span className="hidden items-center gap-1 sm:inline-flex">
+                      <CornerDownLeft size={12} /> Open
+                    </span>
+                    <span className="hidden items-center gap-1 lg:inline-flex">
+                      <Command size={12} /> + Enter new tab
+                    </span>
                   </>
                 )}
                 <ExternalLink size={14} className="opacity-60" />

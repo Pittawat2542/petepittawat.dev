@@ -2,7 +2,10 @@ import type { CSSProperties, MouseEvent as ReactMouseEvent } from 'react';
 import { useCallback, useMemo } from 'react';
 
 export function useGlassGlow<T extends HTMLElement>() {
-  const glowStyle = useMemo(() => ({ '--glass-glow-x': '50%', '--glass-glow-y': '50%' } as CSSProperties), []);
+  const glowStyle = useMemo(
+    () => ({ '--glass-glow-x': '50%', '--glass-glow-y': '50%' }) as CSSProperties,
+    []
+  );
 
   const handleMouseMove = useCallback((event: ReactMouseEvent<T>) => {
     const target = event.currentTarget as HTMLElement;

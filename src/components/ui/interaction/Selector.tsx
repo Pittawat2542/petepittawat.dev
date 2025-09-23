@@ -13,11 +13,11 @@ import { cn } from '../../../lib/utils';
 import { memo } from 'react';
 import { useGlassGlow } from '../../../lib/hooks';
 
-export interface SelectorOption { 
-  readonly value: string; 
-  readonly label: string; 
-  readonly count?: number | undefined; 
-  readonly icon?: ReactNode; 
+export interface SelectorOption {
+  readonly value: string;
+  readonly label: string;
+  readonly count?: number | undefined;
+  readonly icon?: ReactNode;
 }
 
 interface SelectorProps {
@@ -30,8 +30,16 @@ interface SelectorProps {
   readonly side?: 'bottom' | 'top' | 'right' | 'left';
 }
 
-const SelectorComponent: FC<SelectorProps> = ({ label, value, options, onChange, className, align = 'start', side = 'bottom' }) => {
-  const current = options.find((o) => o.value === value) || options[0];
+const SelectorComponent: FC<SelectorProps> = ({
+  label,
+  value,
+  options,
+  onChange,
+  className,
+  align = 'start',
+  side = 'bottom',
+}) => {
+  const current = options.find(o => o.value === value) || options[0];
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLButtonElement>();
 
   return (
@@ -40,8 +48,8 @@ const SelectorComponent: FC<SelectorProps> = ({ label, value, options, onChange,
         <button
           type="button"
           className={cn(
-            'glass-input group relative w-full sm:w-auto min-w-0 appearance-none text-left text-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
-            'rounded-full px-4 py-2 sm:min-w-[12rem] sm:max-w-[18rem]',
+            'glass-input group relative w-full min-w-0 appearance-none text-left text-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out sm:w-auto',
+            'rounded-full px-4 py-2 sm:max-w-[18rem] sm:min-w-[12rem]',
             className
           )}
           aria-label={label}
@@ -51,22 +59,37 @@ const SelectorComponent: FC<SelectorProps> = ({ label, value, options, onChange,
           onMouseLeave={handleMouseLeave}
         >
           <span className="relative z-10 flex w-full items-center gap-2 truncate text-[color:var(--white,#FFFFFF)]/85">
-            {current?.icon ? <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-white/6 p-1 text-[color:var(--white,#FFFFFF)]/80">{current.icon}</span> : null}
-            <span className="truncate font-medium text-[color:var(--white,#FFFFFF)]">{current?.label}</span>
+            {current?.icon ? (
+              <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-white/6 p-1 text-[color:var(--white,#FFFFFF)]/80">
+                {current.icon}
+              </span>
+            ) : null}
+            <span className="truncate font-medium text-[color:var(--white,#FFFFFF)]">
+              {current?.label}
+            </span>
           </span>
           <span className="glass-input__sheen" aria-hidden="true" />
           <ChevronDown
             size={16}
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--white,#FFFFFF)]/60 transition-transform duration-200 ease-out group-hover:translate-y-[1px]"
+            className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[color:var(--white,#FFFFFF)]/60 transition-transform duration-200 ease-out group-hover:translate-y-[1px]"
             aria-hidden="true"
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={align} side={side} className="min-w-[14rem] w-auto max-h-[60vh] overflow-y-auto border-white/8 bg-[rgba(7,14,24,0.82)] p-1 backdrop-blur-xl">
+      <DropdownMenuContent
+        align={align}
+        side={side}
+        className="max-h-[60vh] w-auto min-w-[14rem] overflow-y-auto border-white/8 bg-[rgba(7,14,24,0.82)] p-1 backdrop-blur-xl"
+      >
         <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
-          {options.map((opt) => (
+          {options.map(opt => (
             <DropdownMenuRadioItem key={opt.value} value={opt.value} className="cursor-pointer">
-              <SelectionItem label={opt.label} selected={opt.value === value} count={opt.count} icon={opt.icon} />
+              <SelectionItem
+                label={opt.label}
+                selected={opt.value === value}
+                count={opt.count}
+                icon={opt.icon}
+              />
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

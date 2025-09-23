@@ -2,7 +2,7 @@ import type { Publication } from '../../../types';
 
 export function toTitleCase(input?: string) {
   if (!input) return '';
-  return input.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1));
+  return input.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1));
 }
 
 export function typeAccentVar(type?: string) {
@@ -32,18 +32,18 @@ export function renderAuthorsBold(authors: string) {
     const normalized = authors
       .replace(/\s+(and)\s+/gi, ', ')
       .split(',')
-      .map((s) => s.trim())
+      .map(s => s.trim())
       .filter(Boolean);
-    
+
     const isOwner = (name: string) => {
       const lower = name.toLowerCase();
       return lower.includes('pittawat') || lower.includes('taveekitworachai');
     };
-    
+
     return normalized.map((name, idx) => ({
       name,
       isOwner: isOwner(name),
-      isLast: idx === normalized.length - 1
+      isLast: idx === normalized.length - 1,
     }));
   } catch {
     // Fallback to highlightAuthorNames if available
@@ -55,7 +55,7 @@ export function deduplicateArtifacts(item: Publication) {
   const arr = Array.isArray(item.artifacts) ? item.artifacts : [];
   const seen = new Set<string>();
   const cleaned = [] as NonNullable<typeof item.artifacts>;
-  
+
   for (const a of arr) {
     if (!a || !a.href) continue;
     if (item.url && a.href === item.url) continue;
@@ -63,6 +63,6 @@ export function deduplicateArtifacts(item: Publication) {
     seen.add(a.href);
     cleaned.push(a);
   }
-  
+
   return cleaned;
 }

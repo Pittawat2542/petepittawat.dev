@@ -1,5 +1,5 @@
-export type Artifact = { 
-  label: string; 
+export type Artifact = {
+  label: string;
   href: string;
 };
 
@@ -15,10 +15,10 @@ export type Publication = {
   abstract?: string;
 };
 
-export type TalkResource = { 
-  label: string; 
-  href: string; 
-  download?: boolean 
+export type TalkResource = {
+  label: string;
+  href: string;
+  download?: boolean;
 };
 
 export type Talk = {

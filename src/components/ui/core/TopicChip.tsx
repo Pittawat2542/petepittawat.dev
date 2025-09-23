@@ -7,7 +7,7 @@ interface TopicChipProps {
 
 const TopicChipComponent: FC<TopicChipProps> = ({ topic }) => {
   return (
-    <div className="rounded-lg px-2 py-1 border text-sm font-semibold inline-block md:mr-1 mb-1 border-[color:var(--white)]/30 text-[color:var(--white)]/80">
+    <div className="mb-1 inline-block rounded-lg border border-[color:var(--white)]/30 px-2 py-1 text-sm font-semibold text-[color:var(--white)]/80 md:mr-1">
       {topic}
     </div>
   );

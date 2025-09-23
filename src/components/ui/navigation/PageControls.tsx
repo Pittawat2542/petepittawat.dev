@@ -19,17 +19,17 @@ interface PageControlsProps {
   readonly onPageChange?: (page: number) => void;
 }
 
-const PageControlsComponent: FC<PageControlsProps> = ({ 
-  total, 
-  visible, 
-  perPage, 
-  onPerPageChange, 
-  onLoadMore, 
-  className = '', 
+const PageControlsComponent: FC<PageControlsProps> = ({
+  total,
+  visible,
+  perPage,
+  onPerPageChange,
+  onLoadMore,
+  className = '',
   perPageOptions = [6, 12, 24, 48],
   currentPage = 1,
   totalPages = 1,
-  onPageChange
+  onPageChange,
 }) => {
   const [isEditingPage, setIsEditingPage] = useState(false);
   const [tempPage, setTempPage] = useState(currentPage?.toString() || '1');
@@ -84,33 +84,36 @@ const PageControlsComponent: FC<PageControlsProps> = ({
 
   return (
     <div className={`flex items-center justify-between gap-3 ${className}`}>
-      <div className="text-sm text-muted-foreground">
-        Showing <span className="font-medium text-foreground">{visible}</span> of <span className="font-medium text-foreground">{total}</span>
+      <div className="text-muted-foreground text-sm">
+        Showing <span className="text-foreground font-medium">{visible}</span> of{' '}
+        <span className="text-foreground font-medium">{total}</span>
       </div>
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Per page:</span>
+          <span className="text-muted-foreground text-sm">Per page:</span>
           <Selector
             label="Items per page"
             value={String(perPage)}
-            onChange={(v) => onPerPageChange(Number(v))}
-            options={perPageOptions.map((n) => ({ value: String(n), label: String(n) }))}
+            onChange={v => onPerPageChange(Number(v))}
+            options={perPageOptions.map(n => ({ value: String(n), label: String(n) }))}
           />
         </div>
         {onLoadMore && visible < total && (
-          <GlassButton size="sm" onClick={onLoadMore}>Load more</GlassButton>
+          <GlassButton size="sm" onClick={onLoadMore}>
+            Load more
+          </GlassButton>
         )}
         {onPageChange && totalPages > 1 && (
           <div className="flex items-center gap-1">
-            <GlassButton 
-              size="sm" 
+            <GlassButton
+              size="sm"
               variant="secondary"
               icon="chevron-left"
               iconOnly={true}
               onClick={handlePrevPage}
               disabled={currentPage <= 1}
               aria-label="Go to previous page"
-              className={currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : ''}
+              className={currentPage <= 1 ? 'cursor-not-allowed opacity-50' : ''}
             />
             {isEditingPage ? (
               <div className="relative">
@@ -123,29 +126,29 @@ const PageControlsComponent: FC<PageControlsProps> = ({
                   autoFocus
                   aria-label="Enter page number"
                   placeholder="Page"
-                  className="w-20 px-3 py-1.5 text-sm bg-muted/30 border border-muted/50 rounded-full text-center focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="bg-muted/30 border-muted/50 focus:ring-ring w-20 rounded-full border px-3 py-1.5 text-center text-sm focus:ring-2 focus:outline-none"
                 />
               </div>
             ) : (
-              <span 
-                className="flex items-center px-3 text-sm bg-muted/30 rounded-full py-1.5 min-w-[80px] justify-center cursor-pointer hover:bg-muted/50 transition-colors"
+              <span
+                className="bg-muted/30 hover:bg-muted/50 flex min-w-[80px] cursor-pointer items-center justify-center rounded-full px-3 py-1.5 text-sm transition-colors"
                 onClick={handlePageClick}
                 aria-label="Click to enter page number directly"
               >
                 <span className="font-medium">{currentPage}</span>
-                <span className="mx-1 text-muted-foreground">/</span>
+                <span className="text-muted-foreground mx-1">/</span>
                 <span className="text-muted-foreground">{totalPages}</span>
               </span>
             )}
-            <GlassButton 
-              size="sm" 
+            <GlassButton
+              size="sm"
               variant="secondary"
               icon="chevron-right"
               iconOnly={true}
               onClick={handleNextPage}
               disabled={currentPage >= totalPages}
               aria-label="Go to next page"
-              className={currentPage >= totalPages ? 'opacity-50 cursor-not-allowed' : ''}
+              className={currentPage >= totalPages ? 'cursor-not-allowed opacity-50' : ''}
             />
           </div>
         )}

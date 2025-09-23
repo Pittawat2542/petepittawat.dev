@@ -8,36 +8,34 @@ interface GlassCardProps extends HTMLAttributes<HTMLElement> {
   readonly animated?: boolean;
 }
 
-const GlassCardComponent: React.FC<GlassCardProps> = ({ 
+const GlassCardComponent: React.FC<GlassCardProps> = ({
   children,
   className,
-  variant = 'default', 
-  animated = false, 
-  ...rest 
+  variant = 'default',
+  animated = false,
+  ...rest
 }) => {
-  const getVariantClasses = (variant: 'default' | 'elevated' | 'premium' | 'glow', animated: boolean) => {
-    const baseClasses = 'rounded-2xl text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
-    
+  const getVariantClasses = (
+    variant: 'default' | 'elevated' | 'premium' | 'glow',
+    animated: boolean
+  ) => {
+    const baseClasses =
+      'rounded-2xl text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
+
     const variantClasses = {
       default: 'glass-card',
       elevated: 'glass-surface-elevated',
       premium: 'glass-surface-premium',
-      glow: 'glass-card glass-glow'
+      glow: 'glass-card glass-glow',
     } as const;
-    
+
     const animatedClass = animated ? 'glass-border-animated' : '';
-    
+
     return `${baseClasses} ${variantClasses[variant]} ${animatedClass}`;
   };
 
   return (
-    <section 
-      {...rest} 
-      className={cn(
-        getVariantClasses(variant, animated),
-        className
-      )}
-    >
+    <section {...rest} className={cn(getVariantClasses(variant, animated), className)}>
       {children}
     </section>
   );

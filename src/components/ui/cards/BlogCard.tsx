@@ -1,5 +1,3 @@
-
-
 import type { CSSProperties, FC } from 'react';
 
 import { BlogCardContent } from '@/components/ui/blog/BlogCardContent';
@@ -31,26 +29,29 @@ interface BlogCardProps {
 
 /**
  * A responsive blog post card component with glass morphism effects.
- * 
+ *
  * Features:
  * - Glass morphism design with hover effects
  * - Responsive layout (horizontal on single column displays)
  * - Series detection and display
  * - Optimized with React.memo for performance
  * - Accessible with proper ARIA labels
- * 
+ *
  * @param props - The component props
  * @returns A memoized blog card component
  */
-const BlogCardComponent: FC<BlogCardProps> = ({ 
-  post, 
-  featured = false, 
-  allPosts = [], 
-  horizontalOnSingleColumn = false, 
-  className = '', 
-  style 
+const BlogCardComponent: FC<BlogCardProps> = ({
+  post,
+  featured = false,
+  allPosts = [],
+  horizontalOnSingleColumn = false,
+  className = '',
+  style,
 }) => {
-  const { isPartOfSeries, partNumber, totalParts, seriesTitle } = useBlogCardSeries(post, Array.from(allPosts));
+  const { isPartOfSeries, partNumber, totalParts, seriesTitle } = useBlogCardSeries(
+    post,
+    Array.from(allPosts)
+  );
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
 
@@ -61,14 +62,14 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   const barPadding = horizontalOnSingleColumn ? 'px-4 md:px-5' : 'px-5 md:px-6';
 
   return (
-    <li 
-      style={style} 
-      className={`cursor-pointer rounded-3xl border border-border bg-card glass-card text-card-foreground shadow-sm group w-full h-full hyphens-auto blog-card overflow-hidden ${
+    <li
+      style={style}
+      className={`border-border bg-card glass-card text-card-foreground group blog-card h-full w-full cursor-pointer overflow-hidden rounded-3xl border hyphens-auto shadow-sm ${
         featured ? 'card-featured' : ''
       } ${className}`}
     >
       <a
-        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] focus-visible:text-[color:var(--white)] transition-[transform,box-shadow] duration-500 ease-out group-hover:-translate-y-[2px] group-hover:shadow-[0_22px_48px_-30px_rgba(0,15,40,0.95)]"
+        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-500 ease-out group-hover:-translate-y-[2px] group-hover:shadow-[0_22px_48px_-30px_rgba(0,15,40,0.95)] focus-visible:text-[color:var(--white)]"
         href={`/blog/${String(post.slug)}`}
         aria-label={`Read blog post: ${post.data.title}`}
         style={glowStyle}
@@ -79,14 +80,19 @@ const BlogCardComponent: FC<BlogCardProps> = ({
 
         <div className="relative z-10 flex flex-1 flex-col">
           <div className={paddingClasses}>
-            <div className={`${contentLayout} transition-transform duration-500 ease-out group-hover:translate-y-[-2px]`}>
-              <BlogCardImage 
-                post={post} 
-                horizontalOnSingleColumn={horizontalOnSingleColumn} 
-              />
+            <div
+              className={`${contentLayout} transition-transform duration-500 ease-out group-hover:translate-y-[-2px]`}
+            >
+              <BlogCardImage post={post} horizontalOnSingleColumn={horizontalOnSingleColumn} />
 
-              <div className={horizontalOnSingleColumn ? 'flex min-w-0 flex-1 flex-col lg:justify-start' : 'flex min-w-0 flex-1 flex-col'}>
-                <BlogCardContent 
+              <div
+                className={
+                  horizontalOnSingleColumn
+                    ? 'flex min-w-0 flex-1 flex-col lg:justify-start'
+                    : 'flex min-w-0 flex-1 flex-col'
+                }
+              >
+                <BlogCardContent
                   title={post.data.title}
                   excerpt={post.data.excerpt}
                   pubDate={post.data.pubDate}
@@ -100,10 +106,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
             </div>
           </div>
 
-          <BlogCardFooter 
-            pubDate={post.data.pubDate} 
-            barPadding={barPadding} 
-          />
+          <BlogCardFooter pubDate={post.data.pubDate} barPadding={barPadding} />
         </div>
       </a>
     </li>
@@ -112,13 +115,13 @@ const BlogCardComponent: FC<BlogCardProps> = ({
 
 /**
  * Memoized blog card component for optimal performance.
- * 
+ *
  * The component is memoized with a custom comparison function that checks:
  * - Post slug (primary identifier)
  * - Featured status
  * - Layout preferences
  * - CSS classes and all posts reference
- * 
+ *
  * This prevents unnecessary re-renders when parent components update
  * but the card's essential props remain unchanged.
  */
@@ -136,7 +139,7 @@ BlogCard.displayName = 'BlogCard';
 
 /**
  * Default export for backward compatibility with existing imports.
- * 
+ *
  * @deprecated Consider using the named export `BlogCard` instead
  */
 export default BlogCard;

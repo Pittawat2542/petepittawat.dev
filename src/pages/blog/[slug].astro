@@ -4,11 +4,11 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import RelatedPosts from '../../components/content/RelatedPosts';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
 }
 type Props = CollectionEntry<'blog'>;
 
@@ -20,14 +20,14 @@ const readingTimeMin = Math.max(1, Math.round(wordCount / 220));
 
 const all = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 const related = all
-  .filter((p) => p.slug !== post.slug && p.data.tags.some((t) => post.data.tags.includes(t)))
+  .filter(p => p.slug !== post.slug && p.data.tags.some(t => post.data.tags.includes(t)))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 4);
 ---
 
 <BlogPost {...post.data} slug={post.slug} readingTimeMin={readingTimeMin}>
-	<Content />
-  
+  <Content />
+
   <Fragment slot="after">
     <RelatedPosts posts={related} />
   </Fragment>

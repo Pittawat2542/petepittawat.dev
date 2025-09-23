@@ -20,28 +20,28 @@ export interface PaginationOptions<T> {
   initialPage?: number;
 }
 
-export function usePagination<T>({ 
-  items, 
-  perPage: initialPerPage = 12, 
-  initialPage = 1 
+export function usePagination<T>({
+  items,
+  perPage: initialPerPage = 12,
+  initialPage = 1,
 }: PaginationOptions<T>): PaginationResult<T> {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [perPage, setPerPageState] = useState(initialPerPage);
-  
+
   const { paginated, totalPages, hasNextPage, hasPrevPage } = useMemo(() => {
     const totalItems = items.length;
     const totalPages = Math.ceil(totalItems / perPage);
     const clampedPage = Math.max(1, Math.min(currentPage, totalPages || 1));
-    
+
     const start = (clampedPage - 1) * perPage;
     const end = start + perPage;
     const paginated = items.slice(start, end);
-    
+
     return {
       paginated,
       totalPages,
       hasNextPage: clampedPage < totalPages,
-      hasPrevPage: clampedPage > 1
+      hasPrevPage: clampedPage > 1,
     };
   }, [items, perPage, currentPage]);
 
@@ -78,6 +78,6 @@ export function usePagination<T>({
     nextPage,
     prevPage,
     goToPage,
-    setPerPage
+    setPerPage,
   };
 }

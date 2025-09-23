@@ -27,7 +27,7 @@ function normalizeAuthors(input: string) {
   const normalized = input.replace(/\s+(and)\s+/gi, ', ');
   return normalized
     .split(',')
-    .map((s) => s.trim())
+    .map(s => s.trim())
     .filter(Boolean);
 }
 
@@ -39,7 +39,11 @@ export function isFirstAuthor(authors: string) {
   const firstLower = first.toLowerCase();
   // Match against site owner name
   const full = 'pittawat taveekitworachai';
-  return firstLower.includes('pittawat') || firstLower.includes('taveekitworachai') || firstLower === full;
+  return (
+    firstLower.includes('pittawat') ||
+    firstLower.includes('taveekitworachai') ||
+    firstLower === full
+  );
 }
 
 export function highlightAuthorNames(authors: string) {

@@ -12,13 +12,13 @@ import StatsSection from '../components/sections/StatsSection.astro';
 import BlogSection from '../components/sections/BlogSection.astro';
 
 const allPosts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const posts = allPosts.slice(0, 3);
 const stats = {
-	posts: allPosts.length,
-	publications: publications.length,
-	talks: talks.length,
+  posts: allPosts.length,
+  publications: publications.length,
+  talks: talks.length,
 };
 // Precompute hero image variants to enable accurate preload with imagesrcset
 const heroW192 = await getImage({ src: profileImage, width: 192, format: 'webp' });
@@ -32,23 +32,25 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     <div class="landing-background__gradient"></div>
     <div class="landing-background__particles"></div>
   </div>
-  { /* Preload likely LCP image for GitHub Pages to shorten the chain */ }
-  {heroW384 && (
-    <Fragment slot="head">
-      <link
-        rel="preload"
-        as="image"
-        fetchpriority="high"
-        href={heroW384.src}
-        imagesrcset={`${heroW192.src} 192w, ${heroW224.src} 224w, ${heroW384.src} 384w, ${heroW448.src} 448w`}
-        imagesizes="(min-width: 768px) 14rem, 12rem"
-      />
-    </Fragment>
-  )}
-	<HeroSection />
-	<AboutSection />
-	<StatsSection stats={stats} />
-	<BlogSection posts={posts} />
+  {/* Preload likely LCP image for GitHub Pages to shorten the chain */}
+  {
+    heroW384 && (
+      <Fragment slot="head">
+        <link
+          rel="preload"
+          as="image"
+          fetchpriority="high"
+          href={heroW384.src}
+          imagesrcset={`${heroW192.src} 192w, ${heroW224.src} 224w, ${heroW384.src} 384w, ${heroW448.src} 448w`}
+          imagesizes="(min-width: 768px) 14rem, 12rem"
+        />
+      </Fragment>
+    )
+  }
+  <HeroSection />
+  <AboutSection />
+  <StatsSection stats={stats} />
+  <BlogSection posts={posts} />
 </BaseLayout>
 
 <style>
@@ -57,7 +59,8 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     inset: 0;
     z-index: -2;
     overflow: hidden;
-    background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.82), transparent 55%),
+    background:
+      radial-gradient(circle at top left, rgba(15, 23, 42, 0.82), transparent 55%),
       radial-gradient(circle at bottom right, rgba(30, 41, 59, 0.75), transparent 60%),
       rgba(10, 15, 28, 0.86);
   }
@@ -65,7 +68,13 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
   .landing-background__gradient {
     position: absolute;
     inset: -20%;
-    background: conic-gradient(from 120deg at 50% 50%, rgba(59, 130, 246, 0.24), rgba(129, 140, 248, 0.18), rgba(236, 72, 153, 0.14), rgba(59, 130, 246, 0.24));
+    background: conic-gradient(
+      from 120deg at 50% 50%,
+      rgba(59, 130, 246, 0.24),
+      rgba(129, 140, 248, 0.18),
+      rgba(236, 72, 153, 0.14),
+      rgba(59, 130, 246, 0.24)
+    );
     filter: blur(140px);
     opacity: 0.8;
     animation: landing-gradient-spin 36s linear infinite;

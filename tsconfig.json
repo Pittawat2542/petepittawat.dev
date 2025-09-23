@@ -8,7 +8,7 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
-    
+
     // Strict Type Checking
     "strictNullChecks": true,
     "noUnusedLocals": true,
@@ -19,18 +19,18 @@
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    
+
     // JSX Configuration for React components
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    
+
     // Additional options
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    
+
     // Path Mapping
     "baseUrl": ".",
     "paths": {
@@ -42,21 +42,11 @@
       "@/content/*": ["src/content/*"],
       "@/layouts/*": ["src/layouts/*"]
     },
-    
+
     // Performance Optimizations
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo"
   },
-  "include": [
-    "src/**/*",
-    "scripts/**/*",
-    "**/*.astro"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    ".astro",
-    "public"
-  ]
+  "include": ["src/**/*", "scripts/**/*", "**/*.astro", "test-format.ts"],
+  "exclude": ["node_modules", "dist", "build", ".astro", "public"]
 }

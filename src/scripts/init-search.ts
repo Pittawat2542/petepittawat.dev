@@ -28,7 +28,7 @@ function setup() {
 
   // Prefetch on pointer/focus intent
   const triggers = document.querySelectorAll('button[aria-label="Open search"]');
-  triggers.forEach((t) => {
+  triggers.forEach(t => {
     t.addEventListener('mouseenter', prefetch, { once: true, passive: true });
     t.addEventListener('focus', prefetch, { once: true });
     t.addEventListener('touchstart', prefetch, { once: true, passive: true });
@@ -40,7 +40,7 @@ function setup() {
   document.getElementById('open-search-drawer')?.addEventListener('click', openSearchLazy);
 
   // Keyboard shortcut
-  window.addEventListener('keydown', (e) => {
+  window.addEventListener('keydown', e => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
       prefetch();

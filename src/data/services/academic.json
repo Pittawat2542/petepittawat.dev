@@ -15,9 +15,12 @@
       "type": "journals",
       "label": "Journals",
       "items": [
-        { "venue": "IEEE Transactions on Games (ToG)", "years": [2024, 2025], "url": "https://transactions.games" }
+        {
+          "venue": "IEEE Transactions on Games (ToG)",
+          "years": [2024, 2025],
+          "url": "https://transactions.games"
+        }
       ]
     }
   ]
 }
-

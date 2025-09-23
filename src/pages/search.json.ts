@@ -81,12 +81,48 @@ export async function GET(_context: APIContext) {
 
   // Top-level pages
   const pages: SearchItem[] = [
-    { id: 'page:home', type: 'page', title: 'Home', url: '/', description: 'Welcome and highlights' },
-    { id: 'page:blog', type: 'page', title: 'Blog', url: '/blog', description: 'Articles and notes' },
-    { id: 'page:projects', type: 'page', title: 'Projects', url: '/projects', description: 'Selected work and systems' },
-    { id: 'page:publications', type: 'page', title: 'Publications', url: '/publications', description: 'Research papers and works' },
-    { id: 'page:talks', type: 'page', title: 'Talks', url: '/talks', description: 'Talks and workshops' },
-    { id: 'page:about', type: 'page', title: 'About', url: '/about', description: 'Bio and timeline' },
+    {
+      id: 'page:home',
+      type: 'page',
+      title: 'Home',
+      url: '/',
+      description: 'Welcome and highlights',
+    },
+    {
+      id: 'page:blog',
+      type: 'page',
+      title: 'Blog',
+      url: '/blog',
+      description: 'Articles and notes',
+    },
+    {
+      id: 'page:projects',
+      type: 'page',
+      title: 'Projects',
+      url: '/projects',
+      description: 'Selected work and systems',
+    },
+    {
+      id: 'page:publications',
+      type: 'page',
+      title: 'Publications',
+      url: '/publications',
+      description: 'Research papers and works',
+    },
+    {
+      id: 'page:talks',
+      type: 'page',
+      title: 'Talks',
+      url: '/talks',
+      description: 'Talks and workshops',
+    },
+    {
+      id: 'page:about',
+      type: 'page',
+      title: 'About',
+      url: '/about',
+      description: 'Bio and timeline',
+    },
   ];
   items.push(...pages);
 

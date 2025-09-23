@@ -34,17 +34,22 @@ const TextareaComponent = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         style={glowStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        onClick={(event) => {
+        onClick={event => {
           if (disabled) return;
           const textarea = event.currentTarget.querySelector('textarea');
           if (!textarea) return;
-          if (event.target instanceof HTMLElement && textarea.contains(event.target) && event.target !== event.currentTarget) return;
+          if (
+            event.target instanceof HTMLElement &&
+            textarea.contains(event.target) &&
+            event.target !== event.currentTarget
+          )
+            return;
           textarea.focus({ preventScroll: true });
         }}
       >
         <textarea
           className={cn(
-            'relative z-10 min-h-[96px] w-full resize-y bg-transparent text-sm leading-7 text-foreground placeholder:text-muted-foreground focus-visible:outline-none',
+            'text-foreground placeholder:text-muted-foreground relative z-10 min-h-[96px] w-full resize-y bg-transparent text-sm leading-7 focus-visible:outline-none',
             'disabled:cursor-not-allowed disabled:opacity-60',
             className
           )}

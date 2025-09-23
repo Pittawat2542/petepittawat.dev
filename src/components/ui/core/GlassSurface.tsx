@@ -10,56 +10,54 @@ interface GlassSurfaceProps extends HTMLAttributes<HTMLElement> {
   readonly as?: 'div' | 'section' | 'article' | 'aside' | 'nav';
 }
 
-const GlassSurfaceComponent: React.FC<GlassSurfaceProps> = ({ 
+const GlassSurfaceComponent: React.FC<GlassSurfaceProps> = ({
   children,
-  className, 
-  variant = 'default', 
+  className,
+  variant = 'default',
   rounded = 'lg',
   padding = 'md',
   as = 'div',
-  ...rest 
+  ...rest
 }) => {
   const getClasses = (
-    variant: 'default' | 'elevated' | 'premium', 
-    rounded: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full', 
+    variant: 'default' | 'elevated' | 'premium',
+    rounded: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full',
     padding: 'none' | 'sm' | 'md' | 'lg' | 'xl'
   ) => {
-    const baseClasses = 'transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform';
-    
+    const baseClasses =
+      'transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform';
+
     const variantClasses = {
       default: 'glass-surface',
       elevated: 'glass-surface-elevated',
-      premium: 'glass-surface-premium'
+      premium: 'glass-surface-premium',
     } as const;
-    
+
     const roundedClasses = {
       sm: 'rounded-sm',
       md: 'rounded-md',
       lg: 'rounded-lg',
       xl: 'rounded-xl',
       '2xl': 'rounded-2xl',
-      full: 'rounded-full'
+      full: 'rounded-full',
     } as const;
-    
+
     const paddingClasses = {
       none: '',
       sm: 'p-3',
       md: 'p-4 md:p-6',
       lg: 'p-6 md:p-8',
-      xl: 'p-8 md:p-12'
+      xl: 'p-8 md:p-12',
     } as const;
-    
+
     return `${baseClasses} ${variantClasses[variant]} ${roundedClasses[rounded]} ${paddingClasses[padding]}`;
   };
 
   return createElement(
     as,
     {
-      className: cn(
-        getClasses(variant, rounded, padding),
-        className
-      ),
-      ...rest
+      className: cn(getClasses(variant, rounded, padding), className),
+      ...rest,
     },
     children
   );

@@ -27,22 +27,26 @@ Personal website and blog of **Pittawat Taveekitworachai** — a modern, fast, a
 ## 🛠️ Tech Stack
 
 ### Core Framework
+
 - **[Astro 5.x](https://astro.build)** - Static site generation with islands architecture
 - **[TypeScript](https://typescriptlang.org)** - Type-safe development
 - **[React 19](https://react.dev)** - Interactive islands with React Compiler
 
 ### Styling & UI
+
 - **[Tailwind CSS 4.x](https://tailwindcss.com)** - Utility-first styling
 - **[Radix UI](https://radix-ui.com)** - Accessible component primitives
 - **[Framer Motion](https://framer.com/motion)** - Smooth animations
 - **[Lucide Icons](https://lucide.dev)** - Beautiful icon library
 
 ### Content & Data
+
 - **[Content Collections](https://docs.astro.build/en/guides/content-collections/)** - Type-safe content management
 - **[MDX](https://mdxjs.com)** - Markdown with React components
 - **[Zod](https://zod.dev)** - Schema validation
 
 ### Development Tools
+
 - **[ESLint](https://eslint.org)** - Code linting
 - **[Prettier](https://prettier.io)** - Code formatting
 - **[Sharp](https://sharp.pixelplumbing.com)** - Image optimization
@@ -64,17 +68,20 @@ Before you begin, ensure you have the following installed:
 ### Quick Start
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/petepittawat/petepittawat.dev.git
    cd petepittawat.dev
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Start development server**
+
    ```bash
    pnpm dev
    # or alternatively:
@@ -96,20 +103,21 @@ pnpm preview
 
 ### 🔧 Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production (includes type checking) |
-| `pnpm preview` | Preview production build |
-| `pnpm lint` | Run ESLint + Astro check + TypeScript |
-| `pnpm lint:fix` | Fix linting issues automatically |
-| `pnpm format` | Format code with Prettier |
-| `pnpm format:check` | Check code formatting |
-| `pnpm type-check` | Run TypeScript type checking |
-| `pnpm astro check` | Validate Astro/TypeScript types |
-| `pnpm astro sync` | Regenerate content types after schema changes |
-| `pnpm clean` | Clean build artifacts and dependencies |
-| `pnpm generate-favicons` | Generate favicon variants |
+| Command                  | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `pnpm dev`               | Start development server                       |
+| `pnpm build`             | Build for production (includes type checking)  |
+| `pnpm preview`           | Preview production build                       |
+| `pnpm lint`              | Run ESLint + Astro check + TypeScript          |
+| `pnpm lint:fix`          | Fix linting issues automatically               |
+| `pnpm format`            | Format code with Prettier                      |
+| `pnpm format:check`      | Check code formatting                          |
+| `pnpm type-check`        | Run TypeScript type checking                   |
+| `pnpm prepare`           | Setup Git hooks (run automatically on install) |
+| `pnpm astro check`       | Validate Astro/TypeScript types                |
+| `pnpm astro sync`        | Regenerate content types after schema changes  |
+| `pnpm clean`             | Clean build artifacts and dependencies         |
+| `pnpm generate-favicons` | Generate favicon variants                      |
 
 ## 📁 Project Structure
 
@@ -186,6 +194,14 @@ All content is validated using Zod schemas defined in `src/content/config.ts`:
 }
 ```
 
+### 🪝 Git Hooks
+
+This project uses Husky and lint-staged to automatically format code before commits:
+
+- **pre-commit** - Runs Prettier on staged files to ensure consistent formatting
+
+The hook is automatically installed when you run `pnpm install`. You can manually setup the hooks with `pnpm prepare`.
+
 ### ✨ Advanced Search Features
 
 - **🔍 Global Search** - Full-text search across all content types
@@ -196,6 +212,7 @@ All content is validated using Zod schemas defined in `src/content/config.ts`:
 - **⚡ Real-time Results** - Instant search as you type
 
 #### Search-Enabled Pages
+
 - `/blog` - Blog post search and filtering
 - `/projects` - Project portfolio filtering
 - `/publications` - Academic publication search
@@ -203,11 +220,15 @@ All content is validated using Zod schemas defined in `src/content/config.ts`:
 - `/tags/*` - Tag-based content discovery
 
 #### Deep Linking Support
+
 Results can link to specific content with both search context and anchors:
+
 ```
 /publications?q=machine+learning#paper-123
 ```
+
 This will:
+
 1. Load the publications page
 2. Filter results for "machine learning"
 3. Auto-focus and highlight "paper-123"
@@ -281,16 +302,18 @@ This will:
 ### Automated Scripts
 
 #### 🎨 OG Image Generation (`scripts/generate-og.mjs`)
+
 - **Purpose**: Generates social media preview images
 - **Trigger**: Runs automatically during `prebuild`
 - **Output**: Creates optimized images in `public/og/`
-- **Features**: 
+- **Features**:
   - Dynamic text rendering
   - Brand-consistent styling
   - Multiple size variants
   - Automatic optimization
 
 #### 🔄 Content Migration (`scripts/codemod-content.mjs`)
+
 - **Purpose**: Normalizes and migrates legacy content
 - **Usage**: Manual execution for content updates
 - **Features**:
@@ -300,6 +323,7 @@ This will:
   - Backup creation before changes
 
 #### 📱 Favicon Generation (`scripts/generate-favicons.sh`)
+
 - **Purpose**: Creates all favicon variants and platform icons
 - **Output**: Multiple sizes and formats for different devices
 - **Usage**: `pnpm generate-favicons`
@@ -322,7 +346,7 @@ Configuration is handled through environment variables. Create a `.env` file in 
 # Social Media Integration (Optional)
 PUBLIC_TWITTER_HANDLE=@yourusername
 
-# Analytics (Optional) 
+# Analytics (Optional)
 PUBLIC_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
 PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com
 
@@ -339,6 +363,7 @@ DEV_PORT=4321
 This site generates a static build and can be deployed to any static hosting platform:
 
 #### Recommended Platforms
+
 - **[Vercel](https://vercel.com)** - Zero-config deployment from Git
 - **[Netlify](https://netlify.com)** - Continuous deployment with edge functions
 - **[Cloudflare Pages](https://pages.cloudflare.com)** - Global CDN with serverless functions
@@ -347,6 +372,7 @@ This site generates a static build and can be deployed to any static hosting pla
 #### Deployment Configuration
 
 **Build Settings:**
+
 ```bash
 Build Command: pnpm build
 Output Directory: dist/
@@ -370,18 +396,21 @@ rsync -avz --delete dist/ user@server:/path/to/web/root/
 ## 📏 Coding Guidelines
 
 ### Code Style
+
 - **Indentation**: 2 spaces (configured in `.editorconfig`)
 - **Line Length**: Aim for concise lines, soft limit around 100 characters
 - **Quotes**: Single quotes for JavaScript/TypeScript, double quotes for JSX attributes
 - **Semicolons**: Always use semicolons
 
 ### File Organization
+
 - **Components**: Use PascalCase (`MyComponent.tsx`)
 - **Pages**: Use kebab-case (`about-me.astro`)
 - **Utilities**: Use camelCase (`formatDate.ts`)
 - **Constants**: Use UPPER_SNAKE_CASE (`API_ENDPOINTS`)
 
 ### Component Guidelines
+
 - Co-locate styles with components using Tailwind classes
 - Prefer composition over inheritance
 - Use TypeScript interfaces for props
@@ -389,6 +418,7 @@ rsync -avz --delete dist/ user@server:/path/to/web/root/
 - Keep components focused and single-purpose
 
 ### Content Guidelines
+
 - Use semantic HTML elements
 - Include alt text for all images
 - Write descriptive link text
@@ -399,23 +429,29 @@ rsync -avz --delete dist/ user@server:/path/to/web/root/
 ### Common Issues
 
 #### Hydration Warnings
+
 **Issue**: Date formatting causing SSR/CSR mismatches
 **Solution**: The project uses fixed locale/timezone for date formatting to prevent hydration issues.
 
 #### JSON-LD Parse Errors
+
 **Issue**: Invalid JSON in structured data
 **Solution**: JSON-LD is rendered as a single serialized object. Ensure all values are serializable when adding new fields.
 
 #### Search Not Prefilling
+
 **Issue**: Search doesn't auto-populate from URL parameters
-**Solution**: 
+**Solution**:
+
 - Ensure you're on a supported page (`/blog`, `/projects`, `/publications`, `/talks`, `/tags/*`)
 - Check that URL contains `?q=...` parameter
 - Verify parameter comes before any `#anchor` in the URL
 
 #### Build Failures
+
 **Issue**: TypeScript or Astro build errors
 **Solution**:
+
 ```bash
 # Clear cache and rebuild
 pnpm clean
@@ -425,8 +461,10 @@ pnpm build
 ```
 
 #### Performance Issues
+
 **Issue**: Slow development server or build times
 **Solution**:
+
 ```bash
 # Clear Astro cache
 rm -rf .astro
@@ -459,6 +497,7 @@ pnpm astro sync
 While this is a personal website, contributions are welcome! Here's how you can help:
 
 ### Ways to Contribute
+
 - 🐛 **Bug Reports** - Found an issue? Open an issue with details
 - 💡 **Feature Suggestions** - Have an idea? Start a discussion
 - 📝 **Documentation** - Help improve this README or code comments

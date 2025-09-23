@@ -53,7 +53,10 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
       let isInteractive = false;
       if (React.isValidElement(icon)) {
         const iconProps = icon.props as Record<string, unknown>;
-        const role = typeof (iconProps as any)['role'] === 'string' ? ((iconProps as any)['role'] as string) : undefined;
+        const role =
+          typeof (iconProps as any)['role'] === 'string'
+            ? ((iconProps as any)['role'] as string)
+            : undefined;
         const tabIndex = (iconProps as any)['tabIndex'];
 
         isInteractive =
@@ -69,9 +72,14 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             'relative z-10 inline-flex shrink-0 items-center justify-center rounded-full bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm transition-[background-color,box-shadow] duration-150 ease-out',
             !isInteractive && 'pointer-events-none',
-            isInteractive && 'cursor-pointer hover:bg-white/8 focus-within:outline-none focus-within:ring-2 focus-within:ring-ring/40',
-            position === 'leading' ? 'pl-2 pr-2.5' : 'pl-2.5 pr-2',
-            fieldSize === 'sm' ? 'min-h-[1.5rem]' : fieldSize === 'lg' ? 'min-h-[2rem]' : 'min-h-[1.75rem]'
+            isInteractive &&
+              'focus-within:ring-ring/40 cursor-pointer focus-within:ring-2 focus-within:outline-none hover:bg-white/8',
+            position === 'leading' ? 'pr-2.5 pl-2' : 'pr-2 pl-2.5',
+            fieldSize === 'sm'
+              ? 'min-h-[1.5rem]'
+              : fieldSize === 'lg'
+                ? 'min-h-[2rem]'
+                : 'min-h-[1.75rem]'
           )}
         >
           <span className={cn('flex items-center justify-center', sizeClasses.icon)}>{icon}</span>
@@ -92,11 +100,16 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
         style={glowStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        onClick={(event) => {
+        onClick={event => {
           if (disabled) return;
           const input = event.currentTarget.querySelector('input');
           if (!input) return;
-          if (event.target instanceof HTMLElement && input.contains(event.target) && event.target !== event.currentTarget) return;
+          if (
+            event.target instanceof HTMLElement &&
+            input.contains(event.target) &&
+            event.target !== event.currentTarget
+          )
+            return;
           input.focus({ preventScroll: true });
         }}
       >
@@ -104,7 +117,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'relative z-10 w-full flex-1 bg-transparent text-foreground placeholder:text-muted-foreground focus-visible:outline-none',
+            'text-foreground placeholder:text-muted-foreground relative z-10 w-full flex-1 bg-transparent focus-visible:outline-none',
             'disabled:cursor-not-allowed disabled:opacity-60',
             sizeClasses.input,
             !leadingIcon && 'pl-1',

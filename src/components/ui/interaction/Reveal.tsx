@@ -11,19 +11,16 @@ interface RevealProps {
   readonly style?: CSSProperties;
 }
 
-const RevealComponent: FC<RevealProps> = ({ 
-  children, 
-  className = '', 
-  delayMs, 
-  id, 
-  style 
-}) => {
+const RevealComponent: FC<RevealProps> = ({ children, className = '', delayMs, id, style }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const mergedStyle = useMemo(() => ({
-    ...(style || {}),
-    ...(delayMs ? { transitionDelay: `${delayMs}ms` } : {}),
-  }), [style, delayMs]);
+  const mergedStyle = useMemo(
+    () => ({
+      ...(style || {}),
+      ...(delayMs ? { transitionDelay: `${delayMs}ms` } : {}),
+    }),
+    [style, delayMs]
+  );
 
   useEffect(() => {
     const el = ref.current;
@@ -57,12 +54,7 @@ const RevealComponent: FC<RevealProps> = ({
   }, []);
 
   return (
-    <div 
-      ref={ref} 
-      id={id} 
-      className={`reveal ${className}`} 
-      style={mergedStyle}
-    >
+    <div ref={ref} id={id} className={`reveal ${className}`} style={mergedStyle}>
       {children}
     </div>
   );

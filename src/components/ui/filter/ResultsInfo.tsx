@@ -8,18 +8,17 @@ interface ResultsInfoProps {
   readonly hasActiveFilters: boolean;
 }
 
-const ResultsInfoComponent: FC<ResultsInfoProps> = ({ 
-  filteredResults, 
-  totalResults, 
-  searchValue, 
-  hasActiveFilters 
+const ResultsInfoComponent: FC<ResultsInfoProps> = ({
+  filteredResults,
+  totalResults,
+  searchValue,
+  hasActiveFilters,
 }) => {
   return (
-    <div className="text-sm text-muted-foreground whitespace-nowrap w-full sm:w-auto">
-      {filteredResults !== undefined 
+    <div className="text-muted-foreground w-full text-sm whitespace-nowrap sm:w-auto">
+      {filteredResults !== undefined
         ? `${filteredResults} of ${totalResults} ${searchValue || hasActiveFilters ? 'matching' : 'total'} results`
-        : `${totalResults} results`
-      }
+        : `${totalResults} results`}
     </div>
   );
 };

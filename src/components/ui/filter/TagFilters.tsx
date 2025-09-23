@@ -9,11 +9,11 @@ interface TagFiltersProps {
   readonly onToggleTag: (tag: string) => void;
 }
 
-const TagFiltersComponent: FC<TagFiltersProps> = ({ 
-  availableTags, 
-  selectedTags, 
-  tagCounts = {}, 
-  onToggleTag 
+const TagFiltersComponent: FC<TagFiltersProps> = ({
+  availableTags,
+  selectedTags,
+  tagCounts = {},
+  onToggleTag,
 }) => {
   if (availableTags.length === 0) {
     return null;
@@ -21,14 +21,15 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
 
   return (
     <div>
-      <h3 className="text-sm font-medium text-muted-foreground mb-3">Tags</h3>
+      <h3 className="text-muted-foreground mb-3 text-sm font-medium">Tags</h3>
       <div className="flex flex-wrap gap-2">
-        {availableTags.map((tag) => {
-          const isSelected = tag === 'All' 
-            ? !selectedTags || selectedTags.size === 0 
-            : Boolean(selectedTags?.has(tag));
+        {availableTags.map(tag => {
+          const isSelected =
+            tag === 'All'
+              ? !selectedTags || selectedTags.size === 0
+              : Boolean(selectedTags?.has(tag));
           const count = tagCounts[tag];
-          
+
           return (
             <FilterChip
               key={tag}

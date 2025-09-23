@@ -31,7 +31,7 @@ export const SEARCH_TYPE_META: SearchTypeMeta[] = [
 ];
 
 export const SEARCH_TYPE_META_MAP = Object.fromEntries(
-  SEARCH_TYPE_META.map((meta) => [meta.key, meta])
+  SEARCH_TYPE_META.map(meta => [meta.key, meta])
 ) as Record<SearchItemType, SearchTypeMeta>;
 
 export function typeAccentClasses(type: SearchItemType) {

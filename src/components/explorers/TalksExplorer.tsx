@@ -24,15 +24,18 @@ const comparators: Record<TalkSort, (a: Talk, b: Talk) => number> = {
 };
 
 const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
-  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(items, {
-    searchFields: (item) => [item.title, item.audience, item.mode],
-    filterFields: {
-      mode: (item) => item.mode,
-      year: (item) => new Date(item.date).getFullYear().toString(),
-      tag: (item) => item.tags,
-      audience: (item) => item.audience,
-    },
-  });
+  const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(
+    items,
+    {
+      searchFields: item => [item.title, item.audience, item.mode],
+      filterFields: {
+        mode: item => item.mode,
+        year: item => new Date(item.date).getFullYear().toString(),
+        tag: item => item.tags,
+        audience: item => item.audience,
+      },
+    }
+  );
 
   useQueryParamSync('q', q, setQ);
 
@@ -91,15 +94,22 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
           { value: 'title-za', label: 'Title Z→A' },
         ]}
         sortValue={sort}
-        onSortChange={(v) => setSort(v as typeof sort)}
+        onSortChange={v => setSort(v as typeof sort)}
       />
       <div className="grid gap-3">
         {paged.map((item, i) => (
-          <Reveal id={`talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`} key={`${item.title}-${item.date}`} delayMs={Math.min(i * 50, 400)} className="target-highlight">
+          <Reveal
+            id={`talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`}
+            key={`${item.title}-${item.date}`}
+            delayMs={Math.min(i * 50, 400)}
+            className="target-highlight"
+          >
             <TalkCard item={item} />
           </Reveal>
         ))}
-        {!sortedFiltered.length && <p className="text-sm text-[color:var(--white)]/60">No results.</p>}
+        {!sortedFiltered.length && (
+          <p className="text-sm text-[color:var(--white)]/60">No results.</p>
+        )}
       </div>
       {totalPages > 1 && (
         <PageControls
@@ -109,7 +119,7 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
           onPerPageChange={handlePerPageChange}
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={(page) => {
+          onPageChange={page => {
             goToPage(page);
             setCurrentPage(page);
           }}

@@ -3,7 +3,11 @@ import BaseLayout from './BaseLayout.astro';
 import ThemedPageHero from '../components/layout/core/ThemedPageHero';
 import Container from '../components/ui/core/Container';
 
-interface HeroProps { title: string; subtitle?: string; page: string }
+interface HeroProps {
+  title: string;
+  subtitle?: string;
+  page: string;
+}
 const { title, description, hero, containerClass } = Astro.props as {
   title: string;
   description: string;

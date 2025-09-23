@@ -7,7 +7,7 @@ interface YouTubeProps {
 }
 
 const YouTubeComponent: React.FC<YouTubeProps> = ({ id, url, title = 'YouTube video' }) => {
-  const videoId = id ?? (url ? new URL(url).searchParams.get('v') ?? '' : '');
+  const videoId = id ?? (url ? (new URL(url).searchParams.get('v') ?? '') : '');
   const src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
 
   return (
@@ -22,9 +22,10 @@ const YouTubeComponent: React.FC<YouTubeProps> = ({ id, url, title = 'YouTube vi
           referrerPolicy="strict-origin-when-cross-origin"
         />
       </div>
-      
-      <style dangerouslySetInnerHTML={{
-        __html: `
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           .yt-embed { 
             position: relative; 
             width: 100%; 
@@ -38,8 +39,9 @@ const YouTubeComponent: React.FC<YouTubeProps> = ({ id, url, title = 'YouTube vi
             border: 0; 
             border-radius: 0.75rem; 
           }
-        `
-      }} />
+        `,
+        }}
+      />
     </>
   );
 };

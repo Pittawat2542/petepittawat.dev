@@ -77,7 +77,7 @@ async function readLogoDataUrl() {
 // Generate random decorative elements for each SVG
 function generateRandomDecorations() {
   let decorations = '';
-  
+
   // Generate 5-8 random circles with better distribution
   const circleCount = 5 + Math.floor(Math.random() * 4);
   for (let i = 0; i < circleCount; i++) {
@@ -88,18 +88,18 @@ function generateRandomDecorations() {
     const accent = Math.floor(Math.random() * 3) + 1;
     decorations += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#accent${accent})" filter="url(#glow)" opacity="${0.3 + Math.random() * 0.4}"/>\n      `;
   }
-  
+
   // Generate 3-6 random paths with more organic shapes
   const pathCount = 3 + Math.floor(Math.random() * 4);
   for (let i = 0; i < pathCount; i++) {
     // Ensure paths are within visible bounds
     const startX = 200 + Math.floor(Math.random() * 800);
     const startY = 200 + Math.floor(Math.random() * 230);
-    
+
     // Create more complex, beautiful paths
     const segments = 2 + Math.floor(Math.random() * 3);
     let pathData = `M${startX},${startY}`;
-    
+
     for (let j = 0; j < segments; j++) {
       const controlX = startX + (Math.random() * 300 - 150);
       const controlY = startY + (Math.random() * 200 - 100);
@@ -107,17 +107,13 @@ function generateRandomDecorations() {
       const endY = startY + (Math.random() * 150 - 75);
       pathData += ` Q${controlX},${controlY} ${endX},${endY}`;
     }
-    
+
     const color = Math.floor(Math.random() * 3);
-    const colors = [
-      'rgba(59, 130, 246, 0.2)',
-      'rgba(139, 92, 246, 0.2)',
-      'rgba(6, 182, 212, 0.2)'
-    ];
-    
+    const colors = ['rgba(59, 130, 246, 0.2)', 'rgba(139, 92, 246, 0.2)', 'rgba(6, 182, 212, 0.2)'];
+
     decorations += `<path d="${pathData}" fill="none" stroke="${colors[color]}" stroke-width="${2 + Math.random() * 4}" filter="url(#glow)" opacity="${0.4 + Math.random() * 0.3}"/>\n      `;
   }
-  
+
   // Generate 2-5 random polygons with more varied shapes
   const polygonCount = 2 + Math.floor(Math.random() * 4);
   for (let i = 0; i < polygonCount; i++) {
@@ -126,26 +122,22 @@ function generateRandomDecorations() {
     const centerY = 200 + Math.floor(Math.random() * 230);
     const points = [];
     const pointCount = 4 + Math.floor(Math.random() * 6);
-    
+
     // Create more interesting polygon shapes
     for (let j = 0; j < pointCount; j++) {
-      const angle = (j * 2 * Math.PI / pointCount) + (Math.random() * 0.8);
+      const angle = (j * 2 * Math.PI) / pointCount + Math.random() * 0.8;
       const radius = 40 + Math.floor(Math.random() * 120);
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
       points.push(`${x},${y}`);
     }
-    
+
     const color = Math.floor(Math.random() * 3);
-    const colors = [
-      'rgba(245, 158, 11, 0.2)',
-      'rgba(239, 68, 68, 0.2)',
-      'rgba(16, 185, 129, 0.2)'
-    ];
-    
+    const colors = ['rgba(245, 158, 11, 0.2)', 'rgba(239, 68, 68, 0.2)', 'rgba(16, 185, 129, 0.2)'];
+
     decorations += `<polygon points="${points.join(' ')}" fill="${colors[color]}" filter="url(#glow)" opacity="${0.3 + Math.random() * 0.3}"/>\n      `;
   }
-  
+
   // Generate 3-7 small decorative elements for added beauty
   const smallElementCount = 3 + Math.floor(Math.random() * 5);
   for (let i = 0; i < smallElementCount; i++) {
@@ -153,21 +145,21 @@ function generateRandomDecorations() {
     const y = 100 + Math.floor(Math.random() * 430);
     const size = 5 + Math.floor(Math.random() * 25);
     const accent = Math.floor(Math.random() * 3) + 1;
-    
+
     // Randomly choose between different small decorative shapes
     const shapeType = Math.floor(Math.random() * 3);
     if (shapeType === 0) {
       // Circle
-      decorations += `<circle cx="${x}" cy="${y}" r="${size/2}" fill="url(#accent${accent})" filter="url(#glow)" opacity="${0.4 + Math.random() * 0.3}"/>\n      `;
+      decorations += `<circle cx="${x}" cy="${y}" r="${size / 2}" fill="url(#accent${accent})" filter="url(#glow)" opacity="${0.4 + Math.random() * 0.3}"/>\n      `;
     } else if (shapeType === 1) {
       // Square
-      decorations += `<rect x="${x-size/2}" y="${y-size/2}" width="${size}" height="${size}" fill="url(#accent${accent})" filter="url(#glow)" opacity="${0.4 + Math.random() * 0.3}"/>\n      `;
+      decorations += `<rect x="${x - size / 2}" y="${y - size / 2}" width="${size}" height="${size}" fill="url(#accent${accent})" filter="url(#glow)" opacity="${0.4 + Math.random() * 0.3}"/>\n      `;
     } else {
       // Star shape (5-pointed)
       let starPoints = [];
       for (let j = 0; j < 10; j++) {
-        const angle = (j * Math.PI / 5) - Math.PI / 2;
-        const radius = (j % 2 === 0) ? size/2 : size/4;
+        const angle = (j * Math.PI) / 5 - Math.PI / 2;
+        const radius = j % 2 === 0 ? size / 2 : size / 4;
         const px = x + radius * Math.cos(angle);
         const py = y + radius * Math.sin(angle);
         starPoints.push(`${px},${py}`);
@@ -175,17 +167,17 @@ function generateRandomDecorations() {
       decorations += `<polygon points="${starPoints.join(' ')}" fill="url(#accent${accent})" filter="url(#glow)" opacity="${0.4 + Math.random() * 0.3}"/>\n      `;
     }
   }
-  
+
   return decorations;
 }
 
 function svgTemplate({ title, siteTitle = 'PETEPITTAWAT.DEV', logoDataUrl, pubDate, tags }) {
   const nonAscii = hasNonAscii(title);
-  
+
   // Adjust text wrapping and font size based on title length
   let maxCharsPerLine, fontSize, lineHeight, yStart;
   const titleLength = String(title || '').length;
-  
+
   if (titleLength <= 30) {
     // Short titles - larger font, fewer lines
     maxCharsPerLine = nonAscii ? 18 : 24;
@@ -205,10 +197,10 @@ function svgTemplate({ title, siteTitle = 'PETEPITTAWAT.DEV', logoDataUrl, pubDa
     lineHeight = nonAscii ? 54 : 60;
     yStart = 220;
   }
-  
+
   const lines = wrapText(title, maxCharsPerLine);
   const safeLines = lines.map(escapeXml);
-  
+
   // Adjust vertical positioning based on number of lines
   const lineCount = safeLines.length;
   let adjustedYStart = yStart;
@@ -217,51 +209,56 @@ function svgTemplate({ title, siteTitle = 'PETEPITTAWAT.DEV', logoDataUrl, pubDa
   } else if (lineCount >= 4) {
     adjustedYStart = yStart - 10; // Move multi-line text up
   }
-  
+
   const tspans = safeLines
-    .map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : lineHeight}">${l}</tspan>`) 
+    .map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : lineHeight}">${l}</tspan>`)
     .join('');
   const safeSiteTitle = escapeXml(siteTitle);
-  
+
   // Format date
   let formattedDate = '';
   if (pubDate) {
     try {
       const date = new Date(pubDate);
-      formattedDate = date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
+      formattedDate = date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
       });
     } catch (e) {
       // If date parsing fails, use the raw value
       formattedDate = pubDate;
     }
   }
-  
+
   // Process tags with enhanced display
   let tagElements = '';
   if (tags && Array.isArray(tags) && tags.length > 0) {
     const maxTags = 3;
     const displayTags = tags.slice(0, maxTags);
-    
+
     // Add "TAGS" label
     tagElements = `<text x="80" y="440" font-family="'Anuphan', 'Krub', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif" font-size="20" font-weight="600" fill="#60a5fa">TAGS</text>`;
-    
+
     // Add tag elements
-    const tagItems = displayTags.map(tag => 
-      `<rect x="0" y="0" width="100%" height="100%" rx="6" fill="rgba(59, 130, 246, 0.2)" stroke="rgba(59, 130, 246, 0.4)" stroke-width="1"/>
+    const tagItems = displayTags
+      .map(
+        tag =>
+          `<rect x="0" y="0" width="100%" height="100%" rx="6" fill="rgba(59, 130, 246, 0.2)" stroke="rgba(59, 130, 246, 0.4)" stroke-width="1"/>
        <text x="50%" y="50%" font-family="'Anuphan', 'Krub', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif" font-size="20" font-weight="600" fill="#bfdbfe" text-anchor="middle" dominant-baseline="middle">${escapeXml(tag)}</text>`
-    ).map((tagSvg, index) => 
-      `<g transform="translate(${160 + index * 200}, 440) scale(1)">${tagSvg}</g>`
-    ).join('');
-    
+      )
+      .map(
+        (tagSvg, index) =>
+          `<g transform="translate(${160 + index * 200}, 440) scale(1)">${tagSvg}</g>`
+      )
+      .join('');
+
     tagElements += tagItems;
   }
-  
+
   // Generate random decorative elements
   const randomDecorations = generateRandomDecorations();
-  
+
   return `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -358,7 +355,7 @@ function createPostHash(title, pubDate, tags) {
   const data = {
     title: title || '',
     pubDate: pubDate ? new Date(pubDate).toISOString() : '',
-    tags: Array.isArray(tags) ? tags.sort() : []
+    tags: Array.isArray(tags) ? tags.sort() : [],
   };
   return crypto.createHash('md5').update(JSON.stringify(data)).digest('hex');
 }
@@ -383,32 +380,38 @@ async function generate() {
   await ensureDir(OUT_DIR);
   const files = await fs.readdir(BLOG_DIR);
   const logoDataUrl = await readLogoDataUrl();
-  
+
   // Load the manifest to check what we've already generated
   const manifest = await loadManifest();
   const updatedManifest = {};
   let generatedCount = 0;
   let skippedCount = 0;
-  
+
   for (const file of files) {
     if (!/\.(md|mdx)$/.test(file)) continue;
     const slug = file.replace(/\.(md|mdx)$/i, '');
     const full = path.join(BLOG_DIR, file);
     const out = path.join(OUT_DIR, `${slug}.png`);
-    
+
     try {
       const content = await fs.readFile(full, 'utf8');
       const frontmatter = extractFrontmatter(content);
       const title = frontmatter.title || slug;
       const pubDate = frontmatter.pubDate;
       const tags = frontmatter.tags;
-      
+
       // Create a hash of the current post metadata
       const currentHash = createPostHash(title, pubDate, tags);
-      
+
       // Check if we need to regenerate
-      const shouldRegenerate = !manifest[slug] || manifest[slug].hash !== currentHash || !(await fs.access(out).then(() => true).catch(() => false));
-      
+      const shouldRegenerate =
+        !manifest[slug] ||
+        manifest[slug].hash !== currentHash ||
+        !(await fs
+          .access(out)
+          .then(() => true)
+          .catch(() => false));
+
       if (shouldRegenerate) {
         const svg = svgTemplate({ title, logoDataUrl, pubDate, tags });
         const sharp = (await import('sharp')).default;
@@ -420,20 +423,20 @@ async function generate() {
         console.log('OG skipped (no changes):', out);
         skippedCount++;
       }
-      
+
       // Update the manifest
       updatedManifest[slug] = {
         hash: currentHash,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
       };
     } catch (e) {
       console.warn('OG generation failed for', file, e?.message);
     }
   }
-  
+
   // Save the updated manifest
   await saveManifest(updatedManifest);
-  
+
   console.log(`OG generation complete: ${generatedCount} generated, ${skippedCount} skipped`);
 }
 

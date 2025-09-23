@@ -14,7 +14,7 @@ export interface HeaderController {
 
 export function createHeaderController(): HeaderController {
   let isInitialized = false;
-  
+
   // Controller instances
   let scrollController: ScrollController | null = null;
   let menuController: MenuController | null = null;
@@ -23,12 +23,12 @@ export function createHeaderController(): HeaderController {
 
   const init = () => {
     if (isInitialized) return;
-    
+
     // Initialize controllers
     scrollController = createScrollController();
     menuController = createMenuController();
     searchController = createSearchController();
-    
+
     // Start all controllers
     scrollController.init();
     menuController.init();
@@ -39,7 +39,7 @@ export function createHeaderController(): HeaderController {
 
   const cleanup = () => {
     if (!isInitialized) return;
-    
+
     // Cleanup all controllers
     scrollController?.cleanup();
     menuController?.cleanup();
@@ -56,7 +56,7 @@ export function createHeaderController(): HeaderController {
 
   return {
     init,
-    cleanup
+    cleanup,
   };
 }
 
@@ -65,7 +65,7 @@ let headerController: HeaderController | null = null;
 
 function initializeHeader() {
   if (headerController) return;
-  
+
   headerController = createHeaderController();
   headerController.init();
 }

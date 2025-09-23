@@ -26,7 +26,7 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
           <motion.button
             type="button"
             aria-label="Close navigation menu"
-            className="md:hidden fixed inset-0 z-40 bg-[color:var(--black-nav,#020617)]/60 backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-[color:var(--black-nav,#020617)]/60 backdrop-blur-sm md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -36,7 +36,7 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
             id="mobile-nav-panel"
             open={true}
             aria-modal="true"
-            className="md:hidden fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.5rem)] z-50 bg-transparent border-none p-0 max-w-none max-h-none w-auto h-auto"
+            className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.5rem)] z-50 h-auto max-h-none w-auto max-w-none border-none bg-transparent p-0 md:hidden"
           >
             <motion.div
               initial={{ opacity: 0, y: -12 }}
@@ -50,7 +50,7 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                   {links.map(({ href, label, icon: Icon }, index) => {
                     const isCurrentPage = isActive(href);
                     return (
-                      <motion.li 
+                      <motion.li
                         key={href}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -60,33 +60,35 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                           href={href}
                           isActive={isCurrentPage}
                           ariaLabel={`Navigate to ${label}`}
-                          className="w-full justify-start px-5 py-3.5 text-base group relative overflow-hidden"
+                          className="group relative w-full justify-start overflow-hidden px-5 py-3.5 text-base"
                           onClick={onClose}
                         >
-                          <span className="relative flex items-center gap-3 z-10">
-                            <Icon 
+                          <span className="relative z-10 flex items-center gap-3">
+                            <Icon
                               className={`h-5 w-5 transition-all duration-300 ${
-                                isCurrentPage 
-                                  ? 'opacity-100 text-blue-400 scale-110' 
-                                  : 'opacity-75 group-hover:opacity-100 group-hover:scale-105'
-                              }`} 
-                              aria-hidden="true" 
+                                isCurrentPage
+                                  ? 'scale-110 text-blue-400 opacity-100'
+                                  : 'opacity-75 group-hover:scale-105 group-hover:opacity-100'
+                              }`}
+                              aria-hidden="true"
                             />
-                            <span className={`transition-all duration-300 ${
-                              isCurrentPage 
-                                ? 'font-semibold text-white' 
-                                : 'font-medium group-hover:font-semibold'
-                            }`}>
+                            <span
+                              className={`transition-all duration-300 ${
+                                isCurrentPage
+                                  ? 'font-semibold text-white'
+                                  : 'font-medium group-hover:font-semibold'
+                              }`}
+                            >
                               {label}
                             </span>
                           </span>
-                          
+
                           {/* Mobile menu item background effect */}
-                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
                           {/* Active indicator for mobile */}
                           {isCurrentPage && (
-                            <div className="absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/50" />
+                            <div className="absolute top-1/2 right-3 h-2 w-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/50" />
                           )}
                         </HeaderLink>
                       </motion.li>

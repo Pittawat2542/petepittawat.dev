@@ -1,4 +1,16 @@
-import { Award, Building2, Calendar, Code2, Database, FileText, Globe, Presentation, Tags, User, Video } from 'lucide-react';
+import {
+  Award,
+  Building2,
+  Calendar,
+  Code2,
+  Database,
+  FileText,
+  Globe,
+  Presentation,
+  Tags,
+  User,
+  Video,
+} from 'lucide-react';
 
 import type { FC } from 'react';
 import GlassButton from '@/components/ui/navigation/GlassButton';
@@ -8,24 +20,26 @@ import { memo } from 'react';
 interface DropdownFiltersProps {
   readonly filterOptions: Record<string, readonly string[]>;
   readonly filters: Record<string, string>;
-  readonly onFiltersChange?: (updater: (prev: Record<string, string>) => Record<string, string>) => void;
+  readonly onFiltersChange?: (
+    updater: (prev: Record<string, string>) => Record<string, string>
+  ) => void;
   readonly hasActiveFilters: boolean;
   readonly onClearAll: () => void;
 }
 
-const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({ 
-  filterOptions, 
-  filters, 
-  onFiltersChange, 
-  hasActiveFilters, 
-  onClearAll 
+const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
+  filterOptions,
+  filters,
+  onFiltersChange,
+  hasActiveFilters,
+  onClearAll,
 }) => {
   if (!Object.keys(filterOptions).length) {
     return null;
   }
 
-  const toTitle = (s: string) => s.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-  
+  const toTitle = (s: string) => s.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
   const iconFor = (k: string, v: string) => {
     switch (k) {
       case 'year':
@@ -62,28 +76,27 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-medium text-muted-foreground">Filters</h3>
+      <div className="mb-3 flex items-center justify-between">
+        <h3 className="text-muted-foreground text-sm font-medium">Filters</h3>
         {hasActiveFilters && (
-          <GlassButton
-            variant="ghost"
-            size="sm"
-            onClick={onClearAll}
-            className="text-xs"
-          >
+          <GlassButton variant="ghost" size="sm" onClick={onClearAll} className="text-xs">
             Clear all
           </GlassButton>
         )}
       </div>
-      
+
       <div className="flex flex-wrap gap-2">
         {Object.entries(filterOptions).map(([key, options]) => {
           const selectedValue = filters[key] || 'all';
           const optObjects = [
             { value: 'all', label: `All ${toTitle(key)}s`, icon: iconFor(key, 'all') },
-            ...options.map((o) => ({ value: o, label: toTitle(String(o)), icon: iconFor(key, String(o)) })),
+            ...options.map(o => ({
+              value: o,
+              label: toTitle(String(o)),
+              icon: iconFor(key, String(o)),
+            })),
           ];
-          
+
           return (
             <div key={key} className="min-w-[180px]">
               <label className="sr-only">Filter by {key}</label>
@@ -91,7 +104,7 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
                 label={`Filter by ${toTitle(key)}`}
                 value={selectedValue}
                 options={optObjects}
-                onChange={(val) => onFiltersChange?.((f) => ({ ...f, [key]: val }))}
+                onChange={val => onFiltersChange?.(f => ({ ...f, [key]: val }))}
               />
             </div>
           );

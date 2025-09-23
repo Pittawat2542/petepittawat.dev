@@ -10,15 +10,20 @@ interface SearchFilterChipsProps {
   readonly onSelectAll: () => void;
 }
 
-const SearchFilterChipsComponent: FC<SearchFilterChipsProps> = ({ activeTypes, counts, onToggle, onSelectAll }) => {
+const SearchFilterChipsComponent: FC<SearchFilterChipsProps> = ({
+  activeTypes,
+  counts,
+  onToggle,
+  onSelectAll,
+}) => {
   const allSelected = activeTypes.size === SEARCH_TYPE_META.length;
 
   return (
     <div className="mt-3 flex flex-wrap gap-1.5">
       <button
         className={cn(
-          'text-xs rounded-full px-3 py-1 border',
-          allSelected ? 'bg-white/10 border-white/20' : 'border-white/10 hover:bg-white/5'
+          'rounded-full border px-3 py-1 text-xs',
+          allSelected ? 'border-white/20 bg-white/10' : 'border-white/10 hover:bg-white/5'
         )}
         onClick={onSelectAll}
       >
@@ -28,8 +33,10 @@ const SearchFilterChipsComponent: FC<SearchFilterChipsProps> = ({ activeTypes, c
         <button
           key={key}
           className={cn(
-            'text-xs rounded-full px-3 py-1 border inline-flex items-center gap-1',
-            activeTypes.has(key) ? 'bg-white/10 border-white/20' : 'border-white/10 hover:bg-white/5'
+            'inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs',
+            activeTypes.has(key)
+              ? 'border-white/20 bg-white/10'
+              : 'border-white/10 hover:bg-white/5'
           )}
           onClick={() => onToggle(key)}
           aria-pressed={activeTypes.has(key)}

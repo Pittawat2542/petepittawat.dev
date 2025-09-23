@@ -12,7 +12,13 @@ interface SelectionItemProps {
   readonly className?: string;
 }
 
-const SelectionItemComponent: FC<SelectionItemProps> = ({ label, selected = false, count, icon, className }) => {
+const SelectionItemComponent: FC<SelectionItemProps> = ({
+  label,
+  selected = false,
+  count,
+  icon,
+  className,
+}) => {
   return (
     <div
       className={cn(
@@ -22,13 +28,19 @@ const SelectionItemComponent: FC<SelectionItemProps> = ({ label, selected = fals
       )}
       data-selected={selected ? 'true' : undefined}
     >
-      <div className="flex items-center gap-2 min-w-0">
-        {selected ? <span className="h-4 w-0.5 rounded-full bg-[color:var(--accent,#6AC1FF)]" aria-hidden /> : null}
-        {icon ? <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/8 text-[color:var(--white,#FFFFFF)]/85">{icon}</span> : null}
+      <div className="flex min-w-0 items-center gap-2">
+        {selected ? (
+          <span className="h-4 w-0.5 rounded-full bg-[color:var(--accent,#6AC1FF)]" aria-hidden />
+        ) : null}
+        {icon ? (
+          <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/8 text-[color:var(--white,#FFFFFF)]/85">
+            {icon}
+          </span>
+        ) : null}
         <Tooltip content={label}>
           <span
             className={cn(
-              'text-sm leading-snug whitespace-normal break-words line-clamp-2',
+              'line-clamp-2 text-sm leading-snug break-words whitespace-normal',
               selected && 'font-medium text-[color:var(--white,#FFFFFF)]'
             )}
           >

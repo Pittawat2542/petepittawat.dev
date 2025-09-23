@@ -5,7 +5,6 @@ import AnimatedHeader from '../components/common/AnimatedHeader';
 import ScrollTop from '../components/layout/blog/ScrollTop';
 import SearchModal from '../components/layout/SearchModal';
 
-
 const { title, description, image, type, publishedTime, tags } = Astro.props as {
   title: string;
   description: string;
@@ -15,18 +14,24 @@ const { title, description, image, type, publishedTime, tags } = Astro.props as 
   tags?: string[];
 };
 const ogImagePath = image ?? '/home-og-image.jpeg';
-const ogImage = Astro.site
-  ? new URL(ogImagePath, Astro.site).href
-  : ogImagePath;
+const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath;
 ---
 
 <!doctype html>
-<html lang='en' style="background:#111827;color:#F9FAFB;color-scheme: dark;">
-		<head>
-			<BaseHead title={title} description={description} image={ogImage} type={type || undefined} publishedTime={publishedTime || undefined} tags={tags || undefined} />
-			<slot name="head" />
-	    <link rel='sitemap' href='/sitemap-index.xml' />
-      {import.meta.env.DEV && (
+<html lang="en" style="background:#111827;color:#F9FAFB;color-scheme: dark;">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={ogImage}
+      type={type || undefined}
+      publishedTime={publishedTime || undefined}
+      tags={tags || undefined}
+    />
+    <slot name="head" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {
+      import.meta.env.DEV && (
         <>
           <script is:inline>
             {`
@@ -44,86 +49,91 @@ const ogImage = Astro.site
               try { RefreshRuntime.injectIntoGlobalHook(window); } catch {}`}
           </script>
         </>
-      )}
-		</head>
+      )
+    }
+  </head>
 
-        <body>
-                <AnimatedHeader client:load />
-                <main id="main-content" class='px-6 md:px-10 mx-auto pt-28 mb-12 max-w-screen-lg md:max-w-screen-xl' style="view-transition-name: page;">
-                        <slot />
-                </main>
-                <Footer />
-                <ScrollTop />
-                <SearchModal hideTriggers client:load />
-                <script>
-                  // Performance optimized initialization
-                  (function() {
-                    // Reveal-on-scroll for elements with `.reveal` class - optimized with RAF
-                    const io = new IntersectionObserver(
-                      (entries) => {
-                        for (const e of entries) {
-                          if (e.isIntersecting) {
-                            requestAnimationFrame(() => {
-                              e.target.classList.add('reveal-visible');
-                            });
-                            io.unobserve(e.target); // Stop observing once revealed
-                          }
-                        }
-                      },
-                      { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }
-                    );
-                    
-                    // Observe existing and future .reveal elements
-                    const initReveal = () => {
-                      const elements = document.querySelectorAll('.reveal');
-                      elements.forEach(el => io.observe(el));
+  <body>
+    <AnimatedHeader client:load />
+    <main
+      id="main-content"
+      class="mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
+      style="view-transition-name: page;"
+    >
+      <slot />
+    </main>
+    <Footer />
+    <ScrollTop />
+    <SearchModal hideTriggers client:load />
+    <script>
+      // Performance optimized initialization
+      (function () {
+        // Reveal-on-scroll for elements with `.reveal` class - optimized with RAF
+        const io = new IntersectionObserver(
+          entries => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                requestAnimationFrame(() => {
+                  e.target.classList.add('reveal-visible');
+                });
+                io.unobserve(e.target); // Stop observing once revealed
+              }
+            }
+          },
+          { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }
+        );
 
-                      // Observe future additions
-                      const mo = new MutationObserver((mutations) => {
-                        for (const m of mutations) {
-                          m.addedNodes.forEach((node) => {
-                            if (!(node instanceof Element)) return;
-                            if (node.classList?.contains('reveal')) io.observe(node);
-                            node.querySelectorAll?.('.reveal').forEach((el) => io.observe(el));
-                          });
-                        }
-                      });
-                      try {
-                        mo.observe(document.body, { childList: true, subtree: true });
-                      } catch {}
-                    };
+        // Observe existing and future .reveal elements
+        const initReveal = () => {
+          const elements = document.querySelectorAll('.reveal');
+          elements.forEach(el => io.observe(el));
 
-                    // Security: ensure rel for target=_blank links - optimized
-                    const fixExternalRel = () => {
-                      try {
-                        const links = document.querySelectorAll('a[target="_blank"]');
-                        
-                        links.forEach((a) => {
-                          const current = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
-                          if (!current.includes('noopener')) current.push('noopener');
-                          if (!current.includes('noreferrer')) current.push('noreferrer');
-                          a.setAttribute('rel', current.join(' '));
-                        });
-                      } catch (e) {
-                        console.warn('Failed to fix external link rels:', e);
-                      }
-                    };
-                    
-                    // Optimize initialization timing
-                    if (document.readyState === 'loading') {
-                      document.addEventListener('DOMContentLoaded', () => {
-                        requestAnimationFrame(() => {
-                          initReveal();
-                          fixExternalRel();
-                        });
-                      });
-                    } else {
-                      requestAnimationFrame(() => {
-                        initReveal();
-                        fixExternalRel();
-                      });
-                    }
-                  })();
-                </script>
-        </body>
+          // Observe future additions
+          const mo = new MutationObserver(mutations => {
+            for (const m of mutations) {
+              m.addedNodes.forEach(node => {
+                if (!(node instanceof Element)) return;
+                if (node.classList?.contains('reveal')) io.observe(node);
+                node.querySelectorAll?.('.reveal').forEach(el => io.observe(el));
+              });
+            }
+          });
+          try {
+            mo.observe(document.body, { childList: true, subtree: true });
+          } catch {}
+        };
+
+        // Security: ensure rel for target=_blank links - optimized
+        const fixExternalRel = () => {
+          try {
+            const links = document.querySelectorAll('a[target="_blank"]');
+
+            links.forEach(a => {
+              const current = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
+              if (!current.includes('noopener')) current.push('noopener');
+              if (!current.includes('noreferrer')) current.push('noreferrer');
+              a.setAttribute('rel', current.join(' '));
+            });
+          } catch (e) {
+            console.warn('Failed to fix external link rels:', e);
+          }
+        };
+
+        // Optimize initialization timing
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            requestAnimationFrame(() => {
+              initReveal();
+              fixExternalRel();
+            });
+          });
+        } else {
+          requestAnimationFrame(() => {
+            initReveal();
+            fixExternalRel();
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>

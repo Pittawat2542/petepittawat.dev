@@ -1,22 +1,21 @@
 ---
-title: "Flutter: Key สำคัญยังไงกันนะ"
+title: 'Flutter: Key สำคัญยังไงกันนะ'
 
 pubDate: '2020-05-30T13:36:41.000Z'
-tags: ["Flutter"]
+tags: ['Flutter']
 coverImage: ./flutter-key/cover.jpeg
 excerpt: Key เป็นหนึ่งใน optional attribute ที่เราจะเห็นได้กับแทบทุก Widget ใน Flutter ซึ่งโดยทั่วไป เราก็มักจะไม่ได้ใส่ค่า Key เข้าไปโดยปกติ แล้วเวลาไหนบ้างละที่เราควรใช้ Key?
-
 ---
 
-import key_explain_3 from './flutter-key/key-explain-3.jpeg'
+import key_explain_3 from './flutter-key/key-explain-3.jpeg';
 
-import key_explain_2 from './flutter-key/key-explain-2.jpeg'
+import key_explain_2 from './flutter-key/key-explain-2.jpeg';
 
-import key_explain_1 from './flutter-key/key-explain-1.jpeg'
+import key_explain_1 from './flutter-key/key-explain-1.jpeg';
 
-import Figure from '../../components/mdx/Figure'
+import Figure from '../../components/mdx/Figure';
 
-import Callout from '../../components/content/Callout'
+import Callout from '../../components/content/Callout';
 
 Key เป็นหนึ่งใน optional attribute ที่เราจะเห็นได้กับแทบทุก Widget ใน Flutter ซึ่งโดยทั่วไป เราก็มักจะไม่ได้ใส่ค่า Key เข้าไปโดยปกติ แล้วเวลาไหนบ้างละที่เราควรใช้ Key?
 
@@ -34,13 +33,13 @@ Key เป็นหนึ่งใน optional attribute ที่เราจ�
     class AppContainer extends StatelessWidget {
       final String text;
       final Color color;
-    
+
       const AppContainer({
         @required this.text,
         @required this.color,
         Key key,
       }) : super(key: key);
-    
+
       @override
       Widget build(BuildContext context) {
         return Container(
@@ -56,12 +55,12 @@ Key เป็นหนึ่งใน optional attribute ที่เราจ�
         );
       }
     }
-    
+
 
     AppContainer (Stateless widget)
         class _MyHomePageState extends State<MyHomePage> {
           var appContainers = [AppContainer(key: UniqueKey()), AppContainer(key: UniqueKey())];
-    
+
           @override
           Widget build(BuildContext context) {
             return Scaffold(
@@ -100,17 +99,17 @@ Key เป็นหนึ่งใน optional attribute ที่เราจ�
 ```dart
     class AppContainer extends StatefulWidget {
       AppContainer({Key key}) : super(key: key);
-    
+
       @override
       _AppContainerState createState() => _AppContainerState();
     }
-    
+
     class _AppContainerState extends State<AppContainer> {
       static const colors = [Colors.red, Colors.green, Colors.blue, Colors.yellow];
-    
+
       var _text = (Random().nextInt(3) + 1).toString();
       var _color = colors[Random().nextInt(colors.length)];
-    
+
       @override
       Widget build(BuildContext context) {
         return Container(
@@ -127,12 +126,12 @@ Key เป็นหนึ่งใน optional attribute ที่เราจ�
         );
       }
     }
-    
+
 
     AppContainer (Stateful widget)
         class _MyHomePageState extends State<MyHomePage> {
           var appContainers = [AppContainer(), AppContainer()];
-        
+
           @override
           Widget build(BuildContext context) {
             return Scaffold(
@@ -173,7 +172,7 @@ Key เป็นหนึ่งใน optional attribute ที่เราจ�
 ```dart
     class _MyHomePageState extends State<MyHomePage> {
       var appContainers = [AppContainer(key: UniqueKey()), AppContainer(key: UniqueKey())];
-    
+
       @override
       Widget build(BuildContext context) {
         return Scaffold(
@@ -222,4 +221,3 @@ Key เป็นหนึ่งใน optional attribute ที่เราจ�
 <Callout type="tip" title="Thanks for reading">
   📚 Hope you enjoy reading!
 </Callout>
-

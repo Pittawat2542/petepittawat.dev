@@ -15,121 +15,132 @@ const currentPart = currentIndex + 1;
 const progress = Math.round((currentPart / series.totalParts) * 100);
 ---
 
-<aside class="series-navigation not-prose my-8 rounded-xl border border-[color:var(--accent)]/30 bg-[color:var(--accent)]/[0.08] p-6">
+<aside
+  class="series-navigation not-prose my-8 rounded-xl border border-[color:var(--accent)]/30 bg-[color:var(--accent)]/[0.08] p-6"
+>
   <!-- Series Header -->
   <div class="mb-4">
-    <div class="flex items-center gap-2 mb-2">
+    <div class="mb-2 flex items-center gap-2">
       <BookOpen class="h-5 w-5 text-[color:var(--accent)]" />
       <h3 class="text-lg font-semibold text-[color:var(--accent)]">Series</h3>
     </div>
-    <h4 class="text-xl font-bold mb-2">{series.title}</h4>
-    {series.description && (
-      <p class="text-sm text-[color:var(--white)]/70 mb-3">{series.description}</p>
-    )}
-    
+    <h4 class="mb-2 text-xl font-bold">{series.title}</h4>
+    {
+      series.description && (
+        <p class="mb-3 text-sm text-[color:var(--white)]/70">{series.description}</p>
+      )
+    }
+
     <!-- Progress -->
     <div class="flex items-center gap-3 text-sm">
       <span class="text-[color:var(--white)]/80">
         Part {currentPart} of {series.totalParts}
       </span>
-      <div class="flex-1 bg-[color:var(--white)]/20 rounded-full h-2">
-        <div 
-          class="bg-[color:var(--accent)] h-2 rounded-full transition-all duration-300"
+      <div class="h-2 flex-1 rounded-full bg-[color:var(--white)]/20">
+        <div
+          class="h-2 rounded-full bg-[color:var(--accent)] transition-all duration-300"
           style={`width: ${progress}%`}
-        ></div>
+        >
+        </div>
       </div>
-      <span class="text-[color:var(--white)]/60 font-medium">{progress}%</span>
+      <span class="font-medium text-[color:var(--white)]/60">{progress}%</span>
     </div>
   </div>
 
   <!-- Navigation Buttons -->
-  <div class="flex justify-between mb-6">
-    {previousPost ? (
-      <a 
-        href={`/blog/${String(previousPost.slug)}`}
-        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[color:var(--accent)]/20 hover:bg-[color:var(--accent)]/30 text-[color:var(--accent)] transition-colors duration-200 text-sm font-medium"
-      >
-        <ChevronLeft class="h-4 w-4" />
-        Previous
-      </a>
-    ) : (
-      <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[color:var(--white)]/10 text-[color:var(--white)]/40 text-sm font-medium cursor-not-allowed">
-        <ChevronLeft class="h-4 w-4" />
-        Previous
-      </div>
-    )}
+  <div class="mb-6 flex justify-between">
+    {
+      previousPost ? (
+        <a
+          href={`/blog/${String(previousPost.slug)}`}
+          class="flex items-center gap-2 rounded-lg bg-[color:var(--accent)]/20 px-4 py-2 text-sm font-medium text-[color:var(--accent)] transition-colors duration-200 hover:bg-[color:var(--accent)]/30"
+        >
+          <ChevronLeft class="h-4 w-4" />
+          Previous
+        </a>
+      ) : (
+        <div class="flex cursor-not-allowed items-center gap-2 rounded-lg bg-[color:var(--white)]/10 px-4 py-2 text-sm font-medium text-[color:var(--white)]/40">
+          <ChevronLeft class="h-4 w-4" />
+          Previous
+        </div>
+      )
+    }
 
-    {nextPost ? (
-      <a 
-        href={`/blog/${String(nextPost.slug)}`}
-        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[color:var(--accent)]/20 hover:bg-[color:var(--accent)]/30 text-[color:var(--accent)] transition-colors duration-200 text-sm font-medium"
-      >
-        Next
-        <ChevronRight class="h-4 w-4" />
-      </a>
-    ) : (
-      <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[color:var(--white)]/10 text-[color:var(--white)]/40 text-sm font-medium cursor-not-allowed">
-        Next
-        <ChevronRight class="h-4 w-4" />
-      </div>
-    )}
+    {
+      nextPost ? (
+        <a
+          href={`/blog/${String(nextPost.slug)}`}
+          class="flex items-center gap-2 rounded-lg bg-[color:var(--accent)]/20 px-4 py-2 text-sm font-medium text-[color:var(--accent)] transition-colors duration-200 hover:bg-[color:var(--accent)]/30"
+        >
+          Next
+          <ChevronRight class="h-4 w-4" />
+        </a>
+      ) : (
+        <div class="flex cursor-not-allowed items-center gap-2 rounded-lg bg-[color:var(--white)]/10 px-4 py-2 text-sm font-medium text-[color:var(--white)]/40">
+          Next
+          <ChevronRight class="h-4 w-4" />
+        </div>
+      )
+    }
   </div>
 
   <!-- Series Table of Contents -->
   <details class="group">
-    <summary class="flex items-center gap-2 cursor-pointer text-sm font-medium text-[color:var(--accent)] hover:text-[color:var(--accent)]/80 transition-colors">
+    <summary
+      class="flex cursor-pointer items-center gap-2 text-sm font-medium text-[color:var(--accent)] transition-colors hover:text-[color:var(--accent)]/80"
+    >
       <List class="h-4 w-4" />
       All parts in this series
       <ChevronRight class="h-4 w-4 transition-transform group-open:rotate-90" />
     </summary>
-    
+
     <div class="mt-4 space-y-2">
-      {series.posts.map((post: any, index: number) => {
-        const partNumber = index + 1;
-        const isCurrent = post.slug === current.slug;
-        const isCompleted = index < currentIndex;
-        
-        return (
-          <div 
-            class={`flex items-center gap-3 p-2 rounded-lg transition-colors ${
-              isCurrent 
-                ? 'bg-[color:var(--accent)]/20 border border-[color:var(--accent)]/40' 
-                : 'hover:bg-[color:var(--white)]/5'
-            }`}
-          >
-            <div 
-              class={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+      {
+        series.posts.map((post: any, index: number) => {
+          const partNumber = index + 1;
+          const isCurrent = post.slug === current.slug;
+          const isCompleted = index < currentIndex;
+
+          return (
+            <div
+              class={`flex items-center gap-3 rounded-lg p-2 transition-colors ${
                 isCurrent
-                  ? 'bg-[color:var(--accent)] text-[color:var(--bg)]'
-                  : isCompleted
-                  ? 'bg-[color:var(--accent)]/60 text-[color:var(--bg)]'
-                  : 'bg-[color:var(--white)]/20 text-[color:var(--white)]/70'
+                  ? 'border border-[color:var(--accent)]/40 bg-[color:var(--accent)]/20'
+                  : 'hover:bg-[color:var(--white)]/5'
               }`}
             >
-              {partNumber}
-            </div>
-            
-            {isCurrent ? (
-              <span class="flex-1 font-medium text-[color:var(--accent)]">
-                {post.data.title}
-              </span>
-            ) : (
-              <a 
-                href={`/blog/${String(post.slug)}`}
-                class="flex-1 hover:text-[color:var(--accent)] transition-colors text-sm"
+              <div
+                class={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                  isCurrent
+                    ? 'bg-[color:var(--accent)] text-[color:var(--bg)]'
+                    : isCompleted
+                      ? 'bg-[color:var(--accent)]/60 text-[color:var(--bg)]'
+                      : 'bg-[color:var(--white)]/20 text-[color:var(--white)]/70'
+                }`}
               >
-                {post.data.title}
-              </a>
-            )}
-            
-            {isCurrent && (
-              <span class="text-xs text-[color:var(--accent)]/80 font-medium px-2 py-1 bg-[color:var(--accent)]/10 rounded-full">
-                Current
-              </span>
-            )}
-          </div>
-        );
-      })}
+                {partNumber}
+              </div>
+
+              {isCurrent ? (
+                <span class="flex-1 font-medium text-[color:var(--accent)]">{post.data.title}</span>
+              ) : (
+                <a
+                  href={`/blog/${String(post.slug)}`}
+                  class="flex-1 text-sm transition-colors hover:text-[color:var(--accent)]"
+                >
+                  {post.data.title}
+                </a>
+              )}
+
+              {isCurrent && (
+                <span class="rounded-full bg-[color:var(--accent)]/10 px-2 py-1 text-xs font-medium text-[color:var(--accent)]/80">
+                  Current
+                </span>
+              )}
+            </div>
+          );
+        })
+      }
     </div>
   </details>
 </aside>

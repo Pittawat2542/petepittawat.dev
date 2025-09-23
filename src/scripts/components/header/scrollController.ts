@@ -12,7 +12,7 @@ export function createScrollController(): ScrollController {
   let nav: HTMLElement | null = null;
 
   const readScrollState = () => (window.scrollY > 6 ? 'true' : 'false');
-  
+
   const writeScrollState = (value: string) => {
     if (!nav) return;
     if (nav.dataset['scrolled'] !== value) {
@@ -32,10 +32,10 @@ export function createScrollController(): ScrollController {
 
   const init = () => {
     nav = document.getElementById('site-nav');
-    
+
     // Initial scroll state
     requestAnimationFrame(scheduleScrollUpdate);
-    
+
     // Setup scroll handler
     window.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
   };

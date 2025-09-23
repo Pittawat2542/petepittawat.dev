@@ -8,20 +8,20 @@ import { createTagSlugMap } from '../../lib/slug';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  const allTags = Array.from(new Set(posts.flatMap((p) => p.data.tags)));
+  const allTags = Array.from(new Set(posts.flatMap(p => p.data.tags)));
   const map = createTagSlugMap(allTags);
-  return Object.keys(map).map((slug) => ({ params: { tag: slug } }));
+  return Object.keys(map).map(slug => ({ params: { tag: slug } }));
 }
 
 const params = Astro.params as { tag: string };
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 ) as BlogPost[];
-const allTags = ['All', ...Array.from(new Set(allPosts.flatMap((p) => p.data.tags))).sort()];
+const allTags = ['All', ...Array.from(new Set(allPosts.flatMap(p => p.data.tags))).sort()];
 
-const map = createTagSlugMap(allTags.filter((t) => t !== 'All'));
+const map = createTagSlugMap(allTags.filter(t => t !== 'All'));
 const selectedTag = map[params.tag] ?? params.tag;
-const filtered = allPosts.filter((p) => p.data.tags.includes(selectedTag));
+const filtered = allPosts.filter(p => p.data.tags.includes(selectedTag));
 ---
 
 <PageWithHero
@@ -29,8 +29,8 @@ const filtered = allPosts.filter((p) => p.data.tags.includes(selectedTag));
   description={SITE_DESCRIPTION}
   hero={{
     title: `#${selectedTag}`,
-    subtitle: `Posts tagged with “${selectedTag}”.` ,
-    page: 'blog'
+    subtitle: `Posts tagged with “${selectedTag}”.`,
+    page: 'blog',
   }}
 >
   <div class="mb-4">

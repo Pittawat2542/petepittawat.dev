@@ -9,7 +9,7 @@ export function useBlogCardSeries(post: BlogPost, allPosts: readonly BlogPost[])
   if (isPartOfSeries && allPosts.length > 0) {
     const seriesPosts = allPosts.filter(p => p.data.seriesSlug === post.data.seriesSlug);
     totalParts = seriesPosts.length;
-    
+
     // If no explicit order, calculate based on date
     if (!partNumber) {
       const sortedPosts = [...seriesPosts].sort(
@@ -23,6 +23,6 @@ export function useBlogCardSeries(post: BlogPost, allPosts: readonly BlogPost[])
     isPartOfSeries: !!isPartOfSeries,
     partNumber,
     totalParts,
-    seriesTitle: post.data.seriesTitle
+    seriesTitle: post.data.seriesTitle,
   };
 }

@@ -14,7 +14,7 @@ const SeparatorComponent = React.forwardRef<HTMLDivElement, SeparatorProps>(
       role="separator"
       aria-orientation={orientation}
       className={cn(
-        'shrink-0 bg-border',
+        'bg-border shrink-0',
         orientation === 'vertical' ? 'h-full w-px' : 'h-px w-full',
         className
       )}
@@ -27,4 +27,3 @@ SeparatorComponent.displayName = 'SeparatorComponent';
 // Memoize the separator component
 export const Separator = memo(SeparatorComponent);
 Separator.displayName = 'Separator';
-

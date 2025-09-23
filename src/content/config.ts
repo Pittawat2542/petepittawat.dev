@@ -1,19 +1,20 @@
 import { defineCollection, z } from 'astro:content';
 
 const blog = defineCollection({
-	type: 'content',
-	schema: ({ image }) => z.object({
-		title: z.string(),
-		excerpt: z.string(),
-		tags: z.array(z.string()),
-		pubDate: z.coerce.date(),
-		coverImage: image().optional(),
-		// Series support
-		seriesSlug: z.string().optional(),
-		seriesTitle: z.string().optional(),
-		seriesOrder: z.number().optional(),
-		seriesDescription: z.string().optional(),
-	}),
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      excerpt: z.string(),
+      tags: z.array(z.string()),
+      pubDate: z.coerce.date(),
+      coverImage: image().optional(),
+      // Series support
+      seriesSlug: z.string().optional(),
+      seriesTitle: z.string().optional(),
+      seriesOrder: z.number().optional(),
+      seriesDescription: z.string().optional(),
+    }),
 });
 // Data collections: validate JSON array shape with Zod
 const talkResourceSchema = z.object({

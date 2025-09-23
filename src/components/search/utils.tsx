@@ -82,9 +82,9 @@ export function highlightTitle(title: string, positions?: number[]) {
   const ranges: [number, number][] = [];
   let start = positions[0];
   let prev = positions[0];
-  
+
   if (start === undefined || prev === undefined) return title;
-  
+
   for (let i = 1; i < positions.length; i++) {
     const cur = positions[i];
     if (cur === undefined) continue;
@@ -122,7 +122,8 @@ export function buildHref(item: AugmentedSearchItem, query: string) {
   const base = hasHash ? raw.slice(0, hashIndex) : raw;
   const hash = hasHash ? raw.slice(hashIndex) : '';
   const url = new URL(base, window.location.origin);
-  const preferTitle = hasHash && (item.type === 'project' || item.type === 'publication' || item.type === 'talk');
+  const preferTitle =
+    hasHash && (item.type === 'project' || item.type === 'publication' || item.type === 'talk');
   const qValue = (preferTitle ? item.title : query).trim();
   const path = url.pathname.replace(/\/$/, '');
   const supportsQ =

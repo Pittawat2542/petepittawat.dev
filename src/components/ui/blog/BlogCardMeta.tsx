@@ -8,8 +8,8 @@ interface BlogCardMetaProps {
 
 const BlogCardMetaComponent: FC<BlogCardMetaProps> = ({ pubDate }) => {
   return (
-    <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-white/60 transition-colors duration-300 group-hover:text-white/80">
-      <div className="inline-flex items-center gap-1.5 uppercase tracking-wide">
+    <div className="flex flex-wrap items-center gap-3 text-xs text-white/60 transition-colors duration-300 group-hover:text-white/80 md:text-sm">
+      <div className="inline-flex items-center gap-1.5 tracking-wide uppercase">
         <Calendar size={14} className="text-[color:var(--accent)]/70" aria-hidden="true" />
         <time dateTime={pubDate.toISOString()}>
           {pubDate.toLocaleDateString('en-us', {

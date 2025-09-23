@@ -6,24 +6,23 @@ import Chip from '../ui/core/Chip';
 import { GraduationCap, BookOpen, ArrowRight } from 'lucide-astro';
 ---
 
-<Container className='reveal mt-16'>
-  <GlassCard className='p-8 md:p-12' id='about'>
-    <div class='flex flex-col md:flex-row gap-8'>
-      <div class='flex-1'>
-        <h2 class='text-2xl md:text-3xl font-bold tracking-tight mb-4'>
-          About Me
-        </h2>
-        <p class='text-lg text-[color:var(--white)]/80 mb-4'>
-          I’m Pete (Pittawat Taveekitworachai) — a researcher focused on large
-          language models and prompt engineering. My work explores how to make
-          LLMs <em>reliable, practical, and easy to use</em> in the real world.
+<Container className="reveal mt-16">
+  <GlassCard className="p-8 md:p-12" id="about">
+    <div class="flex flex-col gap-8 md:flex-row">
+      <div class="flex-1">
+        <h2 class="mb-4 text-2xl font-bold tracking-tight md:text-3xl">About Me</h2>
+        <p class="mb-4 text-lg text-[color:var(--white)]/80">
+          I’m Pete (Pittawat Taveekitworachai) — a researcher focused on large language models and
+          prompt engineering. My work explores how to make LLMs <em
+            >reliable, practical, and easy to use</em
+          > in the real world.
         </p>
-        <p class='text-[color:var(--white)]/80 mb-6'>
-          I bridge unconventional ideas to fundamental and applied research. I
-          share what I learn through my blog, publications, and talks.
+        <p class="mb-6 text-[color:var(--white)]/80">
+          I bridge unconventional ideas to fundamental and applied research. I share what I learn
+          through my blog, publications, and talks.
         </p>
 
-        <div class='flex flex-wrap gap-3 mb-6'>
+        <div class="mb-6 flex flex-wrap gap-3">
           <Chip>LLMs</Chip>
           <Chip>Prompt Engineering</Chip>
           <Chip>Agents &amp; Tool Use</Chip>
@@ -32,62 +31,63 @@ import { GraduationCap, BookOpen, ArrowRight } from 'lucide-astro';
           <Chip>Open Source</Chip>
         </div>
 
-        <GlassButton href='/about' variant='primary' size='md'>
+        <GlassButton href="/about" variant="primary" size="md">
           Learn more about me
-          <ArrowRight class='h-4 w-4' aria-hidden='true' />
+          <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </GlassButton>
       </div>
 
-      <div class='flex-1'>
-        <div class='space-y-6'>
+      <div class="flex-1">
+        <div class="space-y-6">
           <div
-            class='bg-gradient-to-br from-[color:var(--accent)]/20 to-[color:var(--accent-publications)]/20 rounded-2xl p-6 h-full'>
-            <h3 class='text-xl font-semibold mb-3 flex items-center gap-2'>
-              <GraduationCap class='h-5 w-5' aria-hidden='true' />
+            class="h-full rounded-2xl bg-gradient-to-br from-[color:var(--accent)]/20 to-[color:var(--accent-publications)]/20 p-6"
+          >
+            <h3 class="mb-3 flex items-center gap-2 text-xl font-semibold">
+              <GraduationCap class="h-5 w-5" aria-hidden="true" />
               Research Focus
             </h3>
-            <ul class='space-y-3'>
-              <li class='flex items-start gap-3'>
-                <div class='w-2 h-2 rounded-full bg-[color:var(--accent)] mt-2'>
-                </div>
-                <span><strong>Reasoning Models:</strong> prompting, supervised fine-tuning,
-                  and reinforcement with verifiable rewards (RLVR/RFT).</span>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <div class="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]"></div>
+                <span
+                  ><strong>Reasoning Models:</strong> prompting, supervised fine-tuning, and reinforcement
+                  with verifiable rewards (RLVR/RFT).</span
+                >
               </li>
-              <li class='flex items-start gap-3'>
-                <div class='w-2 h-2 rounded-full bg-[color:var(--accent)] mt-2'>
-                </div>
-                <span><strong>Prompt engineering, test-time scaling, and agents:</strong> getting better results from a model without additional training.</span>
+              <li class="flex items-start gap-3">
+                <div class="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]"></div>
+                <span
+                  ><strong>Prompt engineering, test-time scaling, and agents:</strong> getting better
+                  results from a model without additional training.</span
+                >
               </li>
-              <li class='flex items-start gap-3'>
-                <div class='w-2 h-2 rounded-full bg-[color:var(--accent)] mt-2'>
-                </div>
+              <li class="flex items-start gap-3">
+                <div class="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]"></div>
                 <span><strong>Applications:</strong> domain-specific models and applications.</span>
               </li>
             </ul>
           </div>
 
           <div
-            class='bg-gradient-to-br from-[color:var(--accent-talks)]/20 to-[color:var(--accent-about)]/20 rounded-2xl p-6 h-full'>
-            <h3 class='text-xl font-semibold mb-3 flex items-center gap-2'>
-              <BookOpen class='h-5 w-5' aria-hidden='true' />
+            class="h-full rounded-2xl bg-gradient-to-br from-[color:var(--accent-talks)]/20 to-[color:var(--accent-about)]/20 p-6"
+          >
+            <h3 class="mb-3 flex items-center gap-2 text-xl font-semibold">
+              <BookOpen class="h-5 w-5" aria-hidden="true" />
               Professional Highlights
             </h3>
-            <ul class='space-y-3'>
-              <li class='flex items-start gap-3'>
-                <div class='w-2 h-2 rounded-full bg-[color:var(--accent-talks)] mt-2'>
-                </div>
-                <span>Research and writing on LLMs — a mix of peer-reviewed work
-                  and preprints.</span>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <div class="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent-talks)]"></div>
+                <span
+                  >Research and writing on LLMs — a mix of peer-reviewed work and preprints.</span
+                >
               </li>
-              <li class='flex items-start gap-3'>
-                <div class='w-2 h-2 rounded-full bg-[color:var(--accent-talks)] mt-2'>
-                </div>
-                <span>Talks and workshops for engineers, students, and AI
-                  communities.</span>
+              <li class="flex items-start gap-3">
+                <div class="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent-talks)]"></div>
+                <span>Talks and workshops for engineers, students, and AI communities.</span>
               </li>
-              <li class='flex items-start gap-3'>
-                <div class='w-2 h-2 rounded-full bg-[color:var(--accent-talks)] mt-2'>
-                </div>
+              <li class="flex items-start gap-3">
+                <div class="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent-talks)]"></div>
                 <span>Open-source projects and prototypes around LLM workflows.</span>
               </li>
             </ul>

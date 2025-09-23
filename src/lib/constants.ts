@@ -7,7 +7,7 @@
 export const SITE_CONFIG = {
   TITLE: 'PETEPITTAWAT.DEV',
   DESCRIPTION:
-    "Pete (Pittawat Taveekitworachai) — research scientist and full-stack developer exploring large language models, prompt engineering, reasoning, and practical AI systems. Writing, projects, publications, and talks.",
+    'Pete (Pittawat Taveekitworachai) — research scientist and full-stack developer exploring large language models, prompt engineering, reasoning, and practical AI systems. Writing, projects, publications, and talks.',
   AUTHOR: 'Pittawat Taveekitworachai',
 } as const;
 
@@ -26,7 +26,7 @@ export const UI_CONFIG = {
     NORMAL: 250,
     SLOW: 400,
   },
-  
+
   // Common sizes used throughout the application
   SIZES: {
     ICON: {
@@ -43,7 +43,7 @@ export const UI_CONFIG = {
       FULL: '9999px',
     },
   },
-  
+
   // Z-index levels for consistent layering
   Z_INDEX: {
     DROPDOWN: 1000,
@@ -63,13 +63,13 @@ export const COMPONENT_CONFIG = {
     MAX_RESULTS: 50,
     MAX_RECENT_SEARCHES: 5,
   },
-  
+
   // Pagination defaults
   PAGINATION: {
     DEFAULT_PAGE_SIZE: 12,
     PAGE_SIZE_OPTIONS: [6, 12, 24, 48] as const,
   },
-  
+
   // Performance optimization
   PERFORMANCE: {
     INTERSECTION_THRESHOLD: 0.1,
@@ -82,11 +82,11 @@ export const COMPONENT_CONFIG = {
 export const API_CONFIG = {
   // Request timeouts
   TIMEOUT: {
-    SHORT: 5000,   // 5 seconds
+    SHORT: 5000, // 5 seconds
     MEDIUM: 15000, // 15 seconds
-    LONG: 30000,   // 30 seconds
+    LONG: 30000, // 30 seconds
   },
-  
+
   // Retry configuration
   RETRY: {
     MAX_ATTEMPTS: 3,
@@ -104,7 +104,7 @@ export const VALIDATION = {
     MAX_TAG_LENGTH: 50,
     MAX_TITLE_LENGTH: 200,
   },
-  
+
   // File size limits (in bytes)
   FILE_SIZE: {
     MAX_IMAGE: 5 * 1024 * 1024, // 5MB
@@ -182,6 +182,6 @@ export const CONSTANTS = {
 } as const;
 
 // Type helpers for better TypeScript support
-export type Route = typeof ROUTES[keyof typeof ROUTES];
-export type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
-export type ErrorMessage = typeof ERROR_MESSAGES[keyof typeof ERROR_MESSAGES];
+export type Route = (typeof ROUTES)[keyof typeof ROUTES];
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
+export type ErrorMessage = (typeof ERROR_MESSAGES)[keyof typeof ERROR_MESSAGES];

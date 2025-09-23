@@ -9,22 +9,23 @@ interface TooltipProps {
 
 const TooltipComponent: FC<TooltipProps> = ({ content, children, side = 'top' }) => {
   const id = React.useId();
-  const position = side === 'top'
-    ? 'bottom-full mb-2 left-1/2 -translate-x-1/2'
-    : 'top-full mt-2 left-1/2 -translate-x-1/2';
+  const position =
+    side === 'top'
+      ? 'bottom-full mb-2 left-1/2 -translate-x-1/2'
+      : 'top-full mt-2 left-1/2 -translate-x-1/2';
 
   return (
-    <span className="relative inline-flex group/tt" aria-describedby={id}>
+    <span className="group/tt relative inline-flex" aria-describedby={id}>
       {children}
       <span
         role="tooltip"
         id={id}
         className={[
-          'pointer-events-none absolute z-[2000] whitespace-nowrap rounded-md px-2 py-1 text-xs',
+          'pointer-events-none absolute z-[2000] rounded-md px-2 py-1 text-xs whitespace-nowrap',
           'bg-[color:var(--black)] text-[color:var(--white)] shadow-lg ring-1 ring-[color:var(--white)]/10',
-          'backdrop-blur-lg md:backdrop-blur-xl saturate-150',
+          'saturate-150 backdrop-blur-lg md:backdrop-blur-xl',
           'opacity-0 transition-opacity duration-150',
-          'group-hover/tt:opacity-100 group-focus-within/tt:opacity-100',
+          'group-focus-within/tt:opacity-100 group-hover/tt:opacity-100',
           position,
         ].join(' ')}
       >

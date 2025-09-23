@@ -25,8 +25,8 @@ async function writeFile(file, content) {
 async function listBlogFiles() {
   const entries = await fs.readdir(BLOG_DIR, { withFileTypes: true });
   return entries
-    .filter((e) => e.isFile() && /\.(md|mdx)$/i.test(e.name))
-    .map((e) => path.join(BLOG_DIR, e.name));
+    .filter(e => e.isFile() && /\.(md|mdx)$/i.test(e.name))
+    .map(e => path.join(BLOG_DIR, e.name));
 }
 
 /**
@@ -60,7 +60,8 @@ function ensureImport(raw, importLine) {
  * Handles variations with extra asterisks and optional surrounding horizontal rules.
  */
 function transformHopeCallout(body) {
-  const hopeLinePattern = /^(?:\s*---\s*\n)?(?:\s*\n)?^##\s*\**\s*📚\s*Hope you enjoy reading!\s*📚\s*\**\s*$\n(?:\s*\n)?(?:\s*---\s*\n)?/m;
+  const hopeLinePattern =
+    /^(?:\s*---\s*\n)?(?:\s*\n)?^##\s*\**\s*📚\s*Hope you enjoy reading!\s*📚\s*\**\s*$\n(?:\s*\n)?(?:\s*---\s*\n)?/m;
   if (!hopeLinePattern.test(body)) return { body, changed: false };
   const replacement = `\n<Callout type="tip" title="Thanks for reading">\n  📚 Hope you enjoy reading!\n</Callout>\n\n`;
   const newBody = body.replace(hopeLinePattern, replacement);
@@ -143,10 +144,7 @@ function transformMarkdownImagesToFigure(body) {
     if (!inFence && line.includes('![')) {
       const before = line;
       line = line.replace(imgRe, (_m, alt, src, title) => {
-        const attrs = [
-          `src=\"${src}\"`,
-          `alt=\"${alt.replace(/\"/g, '&quot;')}\"`,
-        ];
+        const attrs = [`src=\"${src}\"`, `alt=\"${alt.replace(/\"/g, '&quot;')}\"`];
         if (title && title.trim()) {
           attrs.push(`caption=\"${title.replace(/\"/g, '&quot;')}\"`);
         }
@@ -165,9 +163,7 @@ function transformMarkdownImagesToFigure(body) {
 function transformFigureSrcToImports(body) {
   let changed = false;
   const importSet = new Set();
-  const existingImports = new Set(
-    (body.match(/^import\s+[^;]+;?$/gm) || []).map((l) => l.trim())
-  );
+  const existingImports = new Set((body.match(/^import\s+[^;]+;?$/gm) || []).map(l => l.trim()));
 
   function makeVarName(p) {
     const base = path.basename(p).replace(/\.[^.]+$/, '');
@@ -175,7 +171,14 @@ function transformFigureSrcToImports(body) {
     if (/^[0-9]/.test(name)) name = '_' + name;
     let candidate = name;
     let i = 1;
-    while ([...importSet, ...existingImports].some((imp) => imp.includes(` ${candidate} `) || imp.includes(` ${candidate},`) || imp.includes(` ${candidate} from`))) {
+    while (
+      [...importSet, ...existingImports].some(
+        imp =>
+          imp.includes(` ${candidate} `) ||
+          imp.includes(` ${candidate},`) ||
+          imp.includes(` ${candidate} from`)
+      )
+    ) {
       candidate = `${name}_${i++}`;
     }
     return candidate;
@@ -216,13 +219,15 @@ async function run() {
   const files = await listBlogFiles();
   const results = [];
   for (const f of files) {
-    const res = await codemodFile(f).catch((e) => ({ file: f, error: e?.message }));
+    const res = await codemodFile(f).catch(e => ({ file: f, error: e?.message }));
     results.push(res);
   }
 
-  const changed = results.filter((r) => r && r.changed);
-  const errors = results.filter((r) => r && r.error);
-  console.log(`Processed ${results.length} files. Updated ${changed.length}. Errors ${errors.length}.`);
+  const changed = results.filter(r => r && r.changed);
+  const errors = results.filter(r => r && r.error);
+  console.log(
+    `Processed ${results.length} files. Updated ${changed.length}. Errors ${errors.length}.`
+  );
   for (const r of changed) {
     console.log(`Updated: ${path.relative(ROOT, r.outPath || r.file)}`);
   }

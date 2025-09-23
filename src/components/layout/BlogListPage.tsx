@@ -44,9 +44,9 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       const sortParam = params.get('sort');
       if (sortParam === 'oldest' || sortParam === 'newest') setSort(sortParam as BlogSort);
       const yearParam = params.get('year');
-      if (yearParam) setFilters((prev) => ({ ...prev, year: yearParam }));
+      if (yearParam) setFilters(prev => ({ ...prev, year: yearParam }));
       const seriesParam = params.get('series');
-      if (seriesParam) setFilters((prev) => ({ ...prev, series: seriesParam }));
+      if (seriesParam) setFilters(prev => ({ ...prev, series: seriesParam }));
     } catch (error) {
       // Silently handle errors
     }
@@ -74,7 +74,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
   const filtered = useMemo(() => {
     const qLower = q.trim().toLowerCase();
 
-    return posts.filter((post) => {
+    return posts.filter(post => {
       if (qLower) {
         const hay = [
           post.data.title,
@@ -88,7 +88,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       }
 
       if (selectedTags.size) {
-        const hasAny = post.data.tags.some((tag) => selectedTags.has(tag));
+        const hasAny = post.data.tags.some(tag => selectedTags.has(tag));
         if (!hasAny) return false;
       }
 
@@ -131,11 +131,11 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
 
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    tags.forEach((tag) => {
+    tags.forEach(tag => {
       if (tag === 'All') {
         counts[tag] = posts.length;
       } else {
-        counts[tag] = posts.filter((post) => post.data.tags.includes(tag)).length;
+        counts[tag] = posts.filter(post => post.data.tags.includes(tag)).length;
       }
     });
     return counts;
@@ -143,7 +143,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
 
   const filterOptions = useMemo(() => {
     const years = Array.from(
-      new Set(posts.map((post) => new Date(post.data.pubDate).getFullYear().toString())),
+      new Set(posts.map(post => new Date(post.data.pubDate).getFullYear().toString()))
     )
       .sort()
       .reverse();
@@ -173,12 +173,12 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
           { value: 'oldest', label: 'Oldest' },
         ]}
         sortValue={sort}
-        onSortChange={(value) => setSort(value as BlogSort)}
+        onSortChange={value => setSort(value as BlogSort)}
         filteredResults={sorted.length}
         totalResults={posts.length}
         compact
       />
-      <ul className="mt-2 md:mt-4 grid w-full grid-cols-1 gap-5 py-3 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">
+      <ul className="mt-2 grid w-full grid-cols-1 gap-5 py-3 md:mt-4 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">
         {pagePosts.map((post: BlogPost, index: number) => (
           <BlogCard
             key={post.slug}
@@ -197,7 +197,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
           onPerPageChange={handlePerPageChange}
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={(page) => {
+          onPageChange={page => {
             goToPage(page);
             setCurrentPage(page);
           }}

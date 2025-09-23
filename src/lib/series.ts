@@ -25,7 +25,7 @@ export function getAllSeries(posts: BlogPost[]): SeriesInfo[] {
 
   posts.forEach(post => {
     const { seriesSlug, seriesTitle, seriesDescription } = post.data;
-    
+
     if (seriesSlug && seriesTitle) {
       if (!seriesMap.has(seriesSlug)) {
         seriesMap.set(seriesSlug, {
@@ -33,10 +33,10 @@ export function getAllSeries(posts: BlogPost[]): SeriesInfo[] {
           title: seriesTitle,
           description: seriesDescription || '',
           posts: [],
-          totalParts: 0
+          totalParts: 0,
         });
       }
-      
+
       seriesMap.get(seriesSlug)!.posts.push(post);
     }
   });
@@ -65,9 +65,12 @@ export function getSeriesBySlug(posts: BlogPost[], seriesSlug: string): SeriesIn
 /**
  * Get series navigation information for a specific post
  */
-export function getSeriesNavigation(posts: BlogPost[], currentPost: BlogPost): SeriesNavigation | null {
+export function getSeriesNavigation(
+  posts: BlogPost[],
+  currentPost: BlogPost
+): SeriesNavigation | null {
   const { seriesSlug } = currentPost.data;
-  
+
   if (!seriesSlug) {
     return null;
   }
@@ -83,13 +86,14 @@ export function getSeriesNavigation(posts: BlogPost[], currentPost: BlogPost): S
   }
 
   const previousPost = currentIndex > 0 ? series.posts[currentIndex - 1] : undefined;
-  const nextPost = currentIndex < series.posts.length - 1 ? series.posts[currentIndex + 1] : undefined;
+  const nextPost =
+    currentIndex < series.posts.length - 1 ? series.posts[currentIndex + 1] : undefined;
 
   return {
     current: currentPost,
     series,
     previousPost,
-    nextPost
+    nextPost,
   };
 }
 
@@ -98,7 +102,7 @@ export function getSeriesNavigation(posts: BlogPost[], currentPost: BlogPost): S
  */
 export function getPostPartNumber(posts: BlogPost[], post: BlogPost): number | null {
   const { seriesSlug } = post.data;
-  
+
   if (!seriesSlug) {
     return null;
   }
@@ -125,6 +129,6 @@ export function isPartOfSeries(post: BlogPost): boolean {
 export function getSeriesProgress(series: SeriesInfo, currentPost: BlogPost): number {
   const currentIndex = series.posts.findIndex(post => post.slug === currentPost.slug);
   if (currentIndex === -1) return 0;
-  
+
   return Math.round(((currentIndex + 1) / series.totalParts) * 100);
 }

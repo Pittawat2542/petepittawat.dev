@@ -14,7 +14,11 @@ export interface InfiniteListOptions<T> {
   rootMargin?: string;
 }
 
-export function useInfiniteList<T>({ items, per = 12, rootMargin = '800px 0px' }: InfiniteListOptions<T>): InfiniteListResult<T> {
+export function useInfiniteList<T>({
+  items,
+  per = 12,
+  rootMargin = '800px 0px',
+}: InfiniteListOptions<T>): InfiniteListResult<T> {
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
   const loadTimerRef = useRef<number | null>(null);
@@ -32,14 +36,15 @@ export function useInfiniteList<T>({ items, per = 12, rootMargin = '800px 0px' }
     }
   }, [items]);
 
-  useEffect(() => (
-    () => {
+  useEffect(
+    () => () => {
       if (loadTimerRef.current) {
         clearTimeout(loadTimerRef.current);
         loadTimerRef.current = null;
       }
-    }
-  ), []);
+    },
+    []
+  );
 
   const visibleCount = Math.min(items.length, per * page);
   const paged = useMemo(() => items.slice(0, visibleCount), [items, visibleCount]);
@@ -51,7 +56,7 @@ export function useInfiniteList<T>({ items, per = 12, rootMargin = '800px 0px' }
     setLoadingMore(true);
     if (loadTimerRef.current) clearTimeout(loadTimerRef.current);
     loadTimerRef.current = window.setTimeout(() => {
-      setPage((p) => p + 1);
+      setPage(p => p + 1);
       setLoadingMore(false);
       loadTimerRef.current = null;
     }, 250);
@@ -60,11 +65,14 @@ export function useInfiniteList<T>({ items, per = 12, rootMargin = '800px 0px' }
   useEffect(() => {
     const node = sentinelRef.current;
     if (!node || typeof IntersectionObserver === 'undefined') return;
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) loadNext();
-      }
-    }, { rootMargin });
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) loadNext();
+        }
+      },
+      { rootMargin }
+    );
     observer.observe(node);
     return () => observer.disconnect();
   }, [loadNext, rootMargin]);

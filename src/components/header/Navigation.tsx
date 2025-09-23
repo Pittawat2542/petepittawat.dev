@@ -22,7 +22,7 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
     currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
 
   return (
-    <ul className={`ml-3 sm:ml-4 md:ml-6 hidden md:flex items-center gap-1 ${className || ''}`}>
+    <ul className={`ml-3 hidden items-center gap-1 sm:ml-4 md:ml-6 md:flex ${className || ''}`}>
       {links.map(({ href, label, Icon }) => {
         const active = isActive(href);
         const iconClasses = [
@@ -31,14 +31,14 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
           'group-hover/nav:border-[color:var(--white)]/18 group-hover/nav:bg-[color:var(--white)]/12 group-hover/nav:text-[color:var(--white)]/92',
           active
             ? 'text-[color:var(--accent,#6bc1ff)] border-[color:var(--accent,#6bc1ff)]/45 bg-[color:var(--accent,#6bc1ff)]/18 shadow-[0_0_12px_rgba(106,193,255,0.35)]'
-            : ''
+            : '',
         ].join(' ');
 
         return (
           <li key={href}>
-            <HeaderLink 
-              href={href} 
-              isActive={active} 
+            <HeaderLink
+              href={href}
+              isActive={active}
               ariaLabel={`Navigate to ${label}`}
               className="snap-start"
             >

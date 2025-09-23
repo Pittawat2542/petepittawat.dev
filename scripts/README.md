@@ -25,20 +25,24 @@ npm run generate-favicons
 The script generates the following files in the `public/` directory:
 
 #### Standard Favicons
+
 - `favicon.ico` (multi-size ICO file)
 - `favicon-16x16.png`
 - `favicon-32x32.png`
 
 #### Apple Touch Icons
+
 - `apple-touch-icon.png` (180×180, main Apple touch icon)
 - `apple-touch-icon-precomposed.png` (180×180, precomposed version)
 - Various sizes: 57×57, 60×60, 72×72, 76×76, 114×114, 120×120, 144×144, 152×152
 
 #### Android/Chrome Icons
+
 - `android-chrome-192x192.png`
 - `android-chrome-512x512.png`
 
 #### Microsoft Tile Icons
+
 - `mstile-70x70.png`
 - `mstile-144x144.png`
 - `mstile-150x150.png`
@@ -46,6 +50,7 @@ The script generates the following files in the `public/` directory:
 - `mstile-310x310.png`
 
 #### Configuration Files
+
 - `site.webmanifest` (PWA manifest)
 - `browserconfig.xml` (Microsoft tiles configuration)
 

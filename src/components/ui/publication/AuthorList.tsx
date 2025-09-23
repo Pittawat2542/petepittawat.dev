@@ -8,7 +8,7 @@ interface AuthorListProps {
 
 const AuthorListComponent: FC<AuthorListProps> = ({ authors }) => {
   const authorData = renderAuthorsBold(authors);
-  
+
   return (
     <>
       {authorData.map((author, idx) => (

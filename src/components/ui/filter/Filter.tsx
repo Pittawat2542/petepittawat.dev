@@ -17,13 +17,13 @@ interface FilterProps {
   readonly onSortChange?: (value: string) => void;
 }
 
-const FilterComponent: FC<FilterProps> = ({ 
-  q, 
-  setQ, 
-  filters, 
-  setFilters, 
-  filterOptions, 
-  placeholder = 'Search...', 
+const FilterComponent: FC<FilterProps> = ({
+  q,
+  setQ,
+  filters,
+  setFilters,
+  filterOptions,
+  placeholder = 'Search...',
   filteredCount,
   totalCount,
   sortOptions,

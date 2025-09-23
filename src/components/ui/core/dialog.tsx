@@ -16,8 +16,8 @@ const DialogOverlay = React.forwardRef<
     <DialogPrimitive.Overlay
       ref={ref}
       className={cn('fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm', className)}
-      onClick={(e) => e.stopPropagation()}
-      onMouseDown={(e) => e.stopPropagation()}
+      onClick={e => e.stopPropagation()}
+      onMouseDown={e => e.stopPropagation()}
       {...props}
     />
   </DialogPrimitive.Close>
@@ -33,15 +33,15 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border border-border bg-card glass-card no-hover-lift p-6 text-card-foreground shadow-lg',
-        'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
+        'border-border bg-card glass-card no-hover-lift text-card-foreground fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border p-6 shadow-lg',
+        'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
         // Constrain height and allow scrolling on small screens
         'max-h-[85vh] overflow-y-auto',
         'focus-visible:outline-none',
         className
       )}
-      onClick={(e) => e.stopPropagation()}
-      onMouseDown={(e) => e.stopPropagation()}
+      onClick={e => e.stopPropagation()}
+      onMouseDown={e => e.stopPropagation()}
       {...props}
     >
       {children}
@@ -57,7 +57,11 @@ const DialogTitle = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title ref={ref} className={cn('text-lg font-semibold leading-none tracking-tight', className)} {...props} />
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn('text-lg leading-none font-semibold tracking-tight', className)}
+    {...props}
+  />
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
@@ -65,8 +69,20 @@ const DialogDescription = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn('text-muted-foreground text-sm', className)}
+    {...props}
+  />
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
-export { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose };
+export {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+};

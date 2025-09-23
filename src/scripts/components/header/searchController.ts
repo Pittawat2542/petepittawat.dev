@@ -9,17 +9,17 @@ export interface SearchController {
 export function createSearchController(): SearchController {
   const init = () => {
     let prefetched = false;
-    
+
     const prefetchSearchIndex = () => {
       if (prefetched) return;
       prefetched = true;
-      
+
       try {
         // Respect Data Saver
         // @ts-ignore
         if (navigator?.connection?.saveData) return;
       } catch {}
-      
+
       fetch('/search.json').catch(() => {});
     };
 
@@ -36,7 +36,7 @@ export function createSearchController(): SearchController {
     const desktopButton = document.getElementById('open-search-desktop');
     const mobileButton = document.getElementById('open-search-mobile');
     const drawerButton = document.getElementById('open-search-drawer');
-    
+
     if (!desktopButton || !mobileButton || !drawerButton) {
       // Retry after a short delay if elements aren't ready
       setTimeout(() => init(), 100);
@@ -45,7 +45,7 @@ export function createSearchController(): SearchController {
 
     // Prefetch on pointer/focus intent
     const triggers = document.querySelectorAll('button[aria-label=\"Open search\"]');
-    triggers.forEach((trigger) => {
+    triggers.forEach(trigger => {
       trigger.addEventListener('mouseenter', prefetchSearchIndex, { once: true, passive: true });
       trigger.addEventListener('focus', prefetchSearchIndex, { once: true });
       trigger.addEventListener('touchstart', prefetchSearchIndex, { once: true, passive: true });

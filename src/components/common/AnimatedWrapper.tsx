@@ -10,10 +10,10 @@ const AnimatedWrapperComponent: React.FC<AnimatedWrapperProps> = ({ children }) 
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ 
-        type: "spring",
+      transition={{
+        type: 'spring',
         stiffness: 500,
-        damping: 30
+        damping: 30,
       }}
     >
       {children}

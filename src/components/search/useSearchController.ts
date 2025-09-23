@@ -29,8 +29,8 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   useEffect(() => {
     if (!open || loaded) return;
     fetch('/search.json')
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         setItems((data.items || []) as SearchItem[]);
         setLoaded(true);
       })
@@ -43,7 +43,9 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
         event.preventDefault();
         setOpen(true);
         setTimeout(() => {
-          const el = document.querySelector('input[aria-label="Universal search"]') as HTMLInputElement | null;
+          const el = document.querySelector(
+            'input[aria-label="Universal search"]'
+          ) as HTMLInputElement | null;
           el?.focus();
         }, 0);
       }
@@ -63,8 +65,11 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   const saveRecent = useCallback((value: string) => {
     const trimmed = value.trim();
     if (!trimmed) return;
-    setRecent((prev) => {
-      const next = [trimmed, ...prev.filter((entry) => entry.toLowerCase() !== trimmed.toLowerCase())].slice(0, 6);
+    setRecent(prev => {
+      const next = [
+        trimmed,
+        ...prev.filter(entry => entry.toLowerCase() !== trimmed.toLowerCase()),
+      ].slice(0, 6);
       try {
         localStorage.setItem('recent-searches', JSON.stringify(next));
       } catch {}
@@ -81,7 +86,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
 
   const filtered = useMemo<AugmentedSearchItem[]>(() => {
     const allowed = new Set(typeFilter);
-    const base = items.filter((item) => allowed.has(item.type));
+    const base = items.filter(item => allowed.has(item.type));
     const trimmed = query.trim();
     if (!trimmed) return base;
 
@@ -94,7 +99,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     }
 
     matches.sort((a, b) => b.score - a.score);
-    return matches.map((match) => ({ ...match.item, __titlePositions: match.positions }));
+    return matches.map(match => ({ ...match.item, __titlePositions: match.positions }));
   }, [items, query, typeFilter]);
 
   const countsByType = useMemo(() => {
@@ -105,10 +110,10 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     return map;
   }, [items]);
 
-  const suggestions = useMemo(() => items.filter((item) => item.type === 'page'), [items]);
+  const suggestions = useMemo(() => items.filter(item => item.type === 'page'), [items]);
 
   const toggleType = useCallback((type: SearchItemType) => {
-    setTypeFilter((prev) => {
+    setTypeFilter(prev => {
       const next = new Set(prev);
       if (next.has(type)) next.delete(type);
       else next.add(type);
@@ -128,10 +133,10 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
       if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].includes(key)) {
         event.preventDefault();
       }
-      if (key === 'ArrowDown') setActiveIndex((index) => Math.min(index + 1, results.length - 1));
-      if (key === 'ArrowUp') setActiveIndex((index) => Math.max(index - 1, 0));
-      if (key === 'PageDown') setActiveIndex((index) => Math.min(index + 5, results.length - 1));
-      if (key === 'PageUp') setActiveIndex((index) => Math.max(index - 5, 0));
+      if (key === 'ArrowDown') setActiveIndex(index => Math.min(index + 1, results.length - 1));
+      if (key === 'ArrowUp') setActiveIndex(index => Math.max(index - 1, 0));
+      if (key === 'PageDown') setActiveIndex(index => Math.min(index + 5, results.length - 1));
+      if (key === 'PageUp') setActiveIndex(index => Math.max(index - 5, 0));
       if (key === 'Home') setActiveIndex(0);
       if (key === 'End') setActiveIndex(results.length - 1);
       if (key === 'Enter') {

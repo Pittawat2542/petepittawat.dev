@@ -1,86 +1,86 @@
 [
-	{
-		"title": "2025 — Typhoon Application Week",
-		"description": "Built and shipped 7+ LLM-powered apps.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2025 — Typhoon T1 (research preview)",
-		"description": "The first Southeast Asia reasoning model.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "Oct 2024 – Present — Research Scientist, Typhoon team (SCB 10X R&D)",
-		"description": "Large language model research and applications at SCB 10X.",
-		"accent": "publications",
-		"highlight": true
-	},
-	{
-		"title": "Sep 2024 — M.Eng., Ritsumeikan University (Valedictorian)",
-		"description": "Master of Engineering, Intelligent Computer Entertainment Laboratory.",
-		"accent": "publications",
-		"highlight": true
-	},
-	{
-		"title": "2022 — Ethical Hacking Workshop",
-		"description": "5‑day red‑team training by NIA & NBTC.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2022 — Research Associate (IC2, SIT KMUTT)",
-		"description": "Led end‑to‑end ML/AR/web projects; presented Krathu‑500; hosted Kaggle competition.",
-		"accent": "publications",
-		"highlight": true
-	},
-	{
-		"title": "2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)",
-		"description": "Bachelor of Science (Computer Science), Petch Prajom Klao scholarship; multiple academic awards.",
-		"accent": "publications",
-		"highlight": true
-	},
-	{
-		"title": "2021 — LINE Thailand Internship",
-		"description": "Full‑stack work on LINE Shopping; Vue 2→3 migration; microservices.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2020–2021 — Siriraj Hospital (Mahidol)",
-		"description": "Tech lead & Flutter dev; React Native→Flutter migration; app size/load wins.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2020 — COVID‑19 Support Platform (KMUTT)",
-		"description": "Led 10‑person team; 300+ shipments tracked; 50+ hospitals served.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2020 — Huawei ICT APAC (Network Track)",
-		"description": "Participated in regional competition; routing/switching focus.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2019–2020 — Siriraj Hospital",
-		"description": "React Native developer; added features and data collection flows.",
-		"accent": "publications",
-		"highlight": true
-	},
-	{
-		"title": "2019 — Young Webmaster Camp 17th",
-		"description": "Selected (programming major); built MVP for social impact.",
-		"accent": "about",
-		"highlight": false
-	},
-	{
-		"title": "2019 — Google Tech Challenge (Bangkok)",
-		"description": "Selected team; coding + non‑coding puzzles.",
-		"accent": "about",
-		"highlight": false
-	}
+  {
+    "title": "2025 — Typhoon Application Week",
+    "description": "Built and shipped 7+ LLM-powered apps.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2025 — Typhoon T1 (research preview)",
+    "description": "The first Southeast Asia reasoning model.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "Oct 2024 – Present — Research Scientist, Typhoon team (SCB 10X R&D)",
+    "description": "Large language model research and applications at SCB 10X.",
+    "accent": "publications",
+    "highlight": true
+  },
+  {
+    "title": "Sep 2024 — M.Eng., Ritsumeikan University (Valedictorian)",
+    "description": "Master of Engineering, Intelligent Computer Entertainment Laboratory.",
+    "accent": "publications",
+    "highlight": true
+  },
+  {
+    "title": "2022 — Ethical Hacking Workshop",
+    "description": "5‑day red‑team training by NIA & NBTC.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2022 — Research Associate (IC2, SIT KMUTT)",
+    "description": "Led end‑to‑end ML/AR/web projects; presented Krathu‑500; hosted Kaggle competition.",
+    "accent": "publications",
+    "highlight": true
+  },
+  {
+    "title": "2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)",
+    "description": "Bachelor of Science (Computer Science), Petch Prajom Klao scholarship; multiple academic awards.",
+    "accent": "publications",
+    "highlight": true
+  },
+  {
+    "title": "2021 — LINE Thailand Internship",
+    "description": "Full‑stack work on LINE Shopping; Vue 2→3 migration; microservices.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2020–2021 — Siriraj Hospital (Mahidol)",
+    "description": "Tech lead & Flutter dev; React Native→Flutter migration; app size/load wins.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2020 — COVID‑19 Support Platform (KMUTT)",
+    "description": "Led 10‑person team; 300+ shipments tracked; 50+ hospitals served.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2020 — Huawei ICT APAC (Network Track)",
+    "description": "Participated in regional competition; routing/switching focus.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2019–2020 — Siriraj Hospital",
+    "description": "React Native developer; added features and data collection flows.",
+    "accent": "publications",
+    "highlight": true
+  },
+  {
+    "title": "2019 — Young Webmaster Camp 17th",
+    "description": "Selected (programming major); built MVP for social impact.",
+    "accent": "about",
+    "highlight": false
+  },
+  {
+    "title": "2019 — Google Tech Challenge (Bangkok)",
+    "description": "Selected team; coding + non‑coding puzzles.",
+    "accent": "about",
+    "highlight": false
+  }
 ]

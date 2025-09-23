@@ -6,7 +6,10 @@
     "tags": ["Large Language Models", "Reasoning", "Thai", "Open Source"],
     "links": [
       { "label": "Paper", "href": "https://arxiv.org/abs/2502.09042" },
-      { "label": "Model", "href": "https://huggingface.co/scb10x/llama3.2-typhoon2-t1-3b-research-preview" }
+      {
+        "label": "Model",
+        "href": "https://huggingface.co/scb10x/llama3.2-typhoon2-t1-3b-research-preview"
+      }
     ],
     "type": "research"
   },
@@ -27,7 +30,10 @@
     "summary": "Interactive timeline visualizer for Thailand earthquake events with filtering and temporal context.",
     "tags": ["Visualization", "TypeScript", "Open Data"],
     "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/thailand-earthquake-visualizer" }
+      {
+        "label": "GitHub",
+        "href": "https://github.com/Pittawat2542/thailand-earthquake-visualizer"
+      }
     ],
     "type": "side project"
   },
@@ -36,9 +42,7 @@
     "title": "Typhoon Application Week",
     "summary": "Built and shipped 7+ web apps integrating LLM capabilities as part of a rapid prototyping initiative.",
     "tags": ["LLM Applications", "Rapid Prototyping", "Typhoon"],
-    "links": [
-      { "label": "Apps", "href": "https://apps.opentyphoon.ai" }
-    ],
+    "links": [{ "label": "Apps", "href": "https://apps.opentyphoon.ai" }],
     "type": "initiative"
   },
   {
@@ -48,10 +52,19 @@
     "tags": ["LLMs", "Narrative", "PCG", "Evaluation"],
     "links": [
       { "label": "Preprint", "href": "https://arxiv.org/abs/2411.14672" },
-      { "label": "Algorithms", "href": "https://github.com/multiverse-of-greatness/story-branching-algorithms" },
+      {
+        "label": "Algorithms",
+        "href": "https://github.com/multiverse-of-greatness/story-branching-algorithms"
+      },
       { "label": "UI", "href": "https://github.com/multiverse-of-greatness/multiverse-ui" },
-      { "label": "Utils", "href": "https://github.com/multiverse-of-greatness/story-branching-utils" },
-      { "label": "Evaluation", "href": "https://github.com/multiverse-of-greatness/evaluation-algorithm" }
+      {
+        "label": "Utils",
+        "href": "https://github.com/multiverse-of-greatness/story-branching-utils"
+      },
+      {
+        "label": "Evaluation",
+        "href": "https://github.com/multiverse-of-greatness/evaluation-algorithm"
+      }
     ],
     "type": "research"
   },
@@ -72,8 +85,14 @@
     "tags": ["Prompt Engineering", "PCG"],
     "links": [
       { "label": "Slides (CoG '24)", "href": "/files/cog_tutorial_2024.pdf" },
-      { "label": "Interactive Tutorial", "href": "https://github.com/chatgpt4pcg/tutorial-2024-notebook" },
-      { "label": "Prompt Engineering Examples", "href": "https://github.com/chatgpt4pcg/pe-examples" }
+      {
+        "label": "Interactive Tutorial",
+        "href": "https://github.com/chatgpt4pcg/tutorial-2024-notebook"
+      },
+      {
+        "label": "Prompt Engineering Examples",
+        "href": "https://github.com/chatgpt4pcg/pe-examples"
+      }
     ],
     "type": "tutorial"
   },
@@ -82,9 +101,7 @@
     "title": "Multi-modal LLM Anomaly Detection",
     "summary": "Explorations in anomaly detection using multi-modal LLM pipelines.",
     "tags": ["LLMs", "Multi-modal", "Anomaly Detection"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/mmllmad" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/mmllmad" }],
     "type": "research"
   },
   {
@@ -103,12 +120,24 @@
     "summary": "Competition and infrastructure exploring LLM abilities for physics-constrained content generation with stability and similarity metrics.",
     "tags": ["Competition", "LLM", "PCG"],
     "links": [
-      { "label": "Transactions on Games", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" },
-      { "label": "Org Repos (ChatGPT4PCG)", "href": "https://github.com/orgs/chatgpt4pcg/repositories" },
+      {
+        "label": "Transactions on Games",
+        "href": "https://ieeexplore.ieee.org/abstract/document/10470422"
+      },
+      {
+        "label": "Org Repos (ChatGPT4PCG)",
+        "href": "https://github.com/orgs/chatgpt4pcg/repositories"
+      },
       { "label": "1st Competition Paper", "href": "https://ieeexplore.ieee.org/document/10333206" },
-      { "label": "1st Competition Report", "href": "https://ieeexplore.ieee.org/abstract/document/10470422" },
+      {
+        "label": "1st Competition Report",
+        "href": "https://ieeexplore.ieee.org/abstract/document/10470422"
+      },
       { "label": "2nd Competition Paper", "href": "https://ieeexplore.ieee.org/document/10645641" },
-      { "label": "LLM4PCG Competition (Prelim.)", "href": "https://ieeexplore.ieee.org/document/10645646" }
+      {
+        "label": "LLM4PCG Competition (Prelim.)",
+        "href": "https://ieeexplore.ieee.org/document/10645646"
+      }
     ],
     "type": "research"
   },
@@ -117,9 +146,7 @@
     "title": "Ultra: AR Poster Showcase Platform",
     "summary": "Web-based platform showcasing augmented reality posters for academic events.",
     "tags": ["AR", "Web"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/ultra" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/ultra" }],
     "type": "extracurricular"
   },
   {
@@ -127,9 +154,7 @@
     "title": "Thai Learning",
     "summary": "A simple site for learning basic Thai language phrases and vocabulary.",
     "tags": ["Education", "Web"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/thai-learning" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/thai-learning" }],
     "type": "extracurricular"
   },
   {
@@ -149,9 +174,7 @@
     "title": "Krathu-500",
     "summary": "A research dataset/tooling project (500+ items) supporting downstream NLP/LLM work.",
     "tags": ["Dataset", "NLP"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/krathu-500" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/krathu-500" }],
     "type": "research"
   },
   {
@@ -161,7 +184,10 @@
     "tags": ["NLP", "Information Extraction", "Visualization"],
     "links": [
       { "label": "Org Repos", "href": "https://github.com/orgs/cs-coeus/repositories" },
-      { "label": "Project Page", "href": "https://seniorproject.sit.kmutt.ac.th/showproject/CS61-RE38" }
+      {
+        "label": "Project Page",
+        "href": "https://seniorproject.sit.kmutt.ac.th/showproject/CS61-RE38"
+      }
     ],
     "type": "senior project"
   },
@@ -170,9 +196,7 @@
     "title": "Zeus: Interactive Physics Simulation",
     "summary": "Interactive physics simulation platform built as a collaborative project.",
     "tags": ["Physics", "Education", "Web"],
-    "links": [
-      { "label": "Org Repos", "href": "https://github.com/orgs/cs-zeus/repositories" }
-    ],
+    "links": [{ "label": "Org Repos", "href": "https://github.com/orgs/cs-zeus/repositories" }],
     "type": "group project"
   },
   {
@@ -207,9 +231,7 @@
     "title": "TravelAloha (Agoda‑clone)",
     "summary": "Full‑stack web application inspired by Agoda, implemented as a course project.",
     "tags": ["Full‑stack", "Web"],
-    "links": [
-      { "label": "Org Repos", "href": "https://github.com/orgs/CS19-SIT/repositories" }
-    ],
+    "links": [{ "label": "Org Repos", "href": "https://github.com/orgs/CS19-SIT/repositories" }],
     "type": "class project"
   },
   {
@@ -229,9 +251,7 @@
     "title": "Announce Message",
     "summary": "Socket.io‑based big screen message broadcaster for events.",
     "tags": ["Node.js", "Socket.io", "Events"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/announce-message" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/announce-message" }],
     "type": "side project"
   },
   {
@@ -239,9 +259,7 @@
     "title": "SIT Code 2019",
     "summary": "Main website and registration system for a high school coding competition hosted by the university.",
     "tags": ["Web", "Events", "Registration"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/sit-code-2019" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/sit-code-2019" }],
     "type": "extracurricular"
   },
   {
@@ -257,9 +275,7 @@
     "title": "NewsHub",
     "summary": "Android RSS reader application with category feeds and offline reading.",
     "tags": ["Android", "RSS", "Mobile"],
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/Pittawat2542/NewsHub" }
-    ],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/NewsHub" }],
     "type": "extracurricular"
   }
 ]

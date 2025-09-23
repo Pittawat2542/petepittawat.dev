@@ -28,7 +28,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   function onCardClick() {
     setOpen(true);
   }
-  
+
   // Lock scroll when modal is open and bind Esc to close
   useEffect(() => {
     if (!open) return;
@@ -56,7 +56,10 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
 
   return (
     <Card
-      className={[`glass-entry group cursor-pointer publication-card rounded-3xl p-0 flex flex-col`, featured ? 'card-featured' : '']
+      className={[
+        `glass-entry group publication-card flex cursor-pointer flex-col rounded-3xl p-0`,
+        featured ? 'card-featured' : '',
+      ]
         .filter(Boolean)
         .join(' ')}
       role="button"
@@ -68,17 +71,17 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       aria-controls={detailsId}
     >
       <div className="glass-entry__glow" />
-        <div className="glass-entry__content flex flex-col gap-4 p-6 md:p-7">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 min-w-0 overflow-x-hidden">
+      <div className="glass-entry__content flex flex-col gap-4 p-6 md:p-7">
+        <div className="flex min-w-0 flex-col gap-2 overflow-x-hidden sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
-            <h3 className="text-base md:text-lg font-semibold leading-snug">
+            <h3 className="text-base leading-snug font-semibold md:text-lg">
               {item.url ? (
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[color:var(--accent)] hover:underline"
-                  onClick={(e) => {
+                  onClick={e => {
                     // Prefer expanding details modal on title click
                     e.preventDefault();
                     e.stopPropagation();
@@ -91,15 +94,17 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                 item.title
               )}
             </h3>
-            <p className="mt-1 text-sm text-[color:var(--white)]/80"><AuthorList authors={item.authors} /></p>
+            <p className="mt-1 text-sm text-[color:var(--white)]/80">
+              <AuthorList authors={item.authors} />
+            </p>
             <PublicationMeta item={item} accent={accent} />
           </div>
           {/* Removed first-author badge */}
         </div>
-        
+
         {item.tags?.length ? (
           <div className="flex flex-wrap gap-2">
-            {item.tags.map((t) => (
+            {item.tags.map(t => (
               <Badge key={t} className="text-xs" variant="outline">
                 {t}
               </Badge>
@@ -108,15 +113,15 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
         ) : null}
       </div>
 
-      {(item.url || dedupedArtifacts.length) ? (
-        <div className="glass-entry__footer flex items-center gap-3 px-6 py-3.5 md:px-7 md:py-4 text-xs text-white/78">
-          <PublicationActions 
-            item={item} 
-            dedupedArtifacts={dedupedArtifacts} 
-            accent={accent} 
-            onStopPropagation={(e) => e.stopPropagation()}
+      {item.url || dedupedArtifacts.length ? (
+        <div className="glass-entry__footer flex items-center gap-3 px-6 py-3.5 text-xs text-white/78 md:px-7 md:py-4">
+          <PublicationActions
+            item={item}
+            dedupedArtifacts={dedupedArtifacts}
+            accent={accent}
+            onStopPropagation={e => e.stopPropagation()}
           />
-          <span className="inline-flex items-center gap-2 ml-auto text-[11px] uppercase tracking-[0.24em] text-white/50 transition-opacity duration-200 group-hover:text-white/70">
+          <span className="ml-auto inline-flex items-center gap-2 text-[11px] tracking-[0.24em] text-white/50 uppercase transition-opacity duration-200 group-hover:text-white/70">
             More details{` `}
             <span className="arrow-hint inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.08] text-white/70">
               <ArrowUpRight size={13} aria-hidden="true" />
@@ -126,12 +131,12 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       ) : null}
 
       {/* Modal with full details */}
-      <PublicationModal 
-        item={item} 
-        open={open} 
-        onOpenChange={setOpen} 
-        accent={accent} 
-        detailsId={detailsId} 
+      <PublicationModal
+        item={item}
+        open={open}
+        onOpenChange={setOpen}
+        accent={accent}
+        detailsId={detailsId}
       />
     </Card>
   );

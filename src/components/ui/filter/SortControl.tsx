@@ -1,7 +1,7 @@
-import { ArrowDownAZ, ArrowUpAZ, Calendar, Clock } from "lucide-react";
+import { ArrowDownAZ, ArrowUpAZ, Calendar, Clock } from 'lucide-react';
 import type { FC, ReactNode } from 'react';
 
-import Selector from "@/components/ui/interaction/Selector";
+import Selector from '@/components/ui/interaction/Selector';
 import { memo } from 'react';
 
 interface SortControlProps {
@@ -28,8 +28,8 @@ const SortControlComponent: FC<SortControlProps> = ({ sortOptions, sortValue, on
   }));
 
   return (
-    <div className="flex items-center gap-2 w-full sm:w-auto">
-      <span className="text-sm text-muted-foreground whitespace-nowrap">Sort:</span>
+    <div className="flex w-full items-center gap-2 sm:w-auto">
+      <span className="text-muted-foreground text-sm whitespace-nowrap">Sort:</span>
       <Selector
         value={sortValue || ''}
         onChange={onSortChange}

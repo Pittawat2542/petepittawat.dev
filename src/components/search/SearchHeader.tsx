@@ -35,7 +35,7 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
   onClearRecent,
 }) => {
   return (
-    <div className="p-4 md:p-5 lg:p-6 border-b border-border">
+    <div className="border-border border-b p-4 md:p-5 lg:p-6">
       <div className="flex items-center gap-2">
         <div className="flex-1">
           <SearchInput
@@ -47,8 +47,11 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
           />
         </div>
       </div>
-      
-      <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground" aria-live="polite">
+
+      <div
+        className="text-muted-foreground mt-3 flex items-center justify-between text-xs"
+        aria-live="polite"
+      >
         <div className="flex items-center gap-1.5">
           <span className="hidden sm:inline">Navigate with</span>
           <kbd className="rounded border px-1 py-0.5">↑</kbd>
@@ -60,20 +63,16 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
         </div>
         <div>{filtered.length} results</div>
       </div>
-      
+
       <SearchFilterChips
         activeTypes={typeFilter}
         counts={countsByType}
         onToggle={onToggleType}
         onSelectAll={onSelectAllTypes}
       />
-      
+
       {showRecent && (
-        <RecentSearches
-          recent={recent}
-          onSelect={onSelectFromRecent}
-          onClear={onClearRecent}
-        />
+        <RecentSearches recent={recent} onSelect={onSelectFromRecent} onClear={onClearRecent} />
       )}
     </div>
   );

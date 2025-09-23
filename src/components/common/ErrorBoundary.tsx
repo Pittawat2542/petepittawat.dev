@@ -63,22 +63,20 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       }
 
       return (
-        <div className="min-h-[200px] flex items-center justify-center p-6">
-          <div className="text-center max-w-md">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
-              <img 
+        <div className="flex min-h-[200px] items-center justify-center p-6">
+          <div className="max-w-md text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+              <img
                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc2626' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='m12 17 .01 0'/%3E%3C/svg%3E"
                 alt="Warning"
-                className="w-8 h-8 text-red-600"
+                className="h-8 w-8 text-red-600"
               />
             </div>
-            <h2 className="text-xl font-semibold mb-2">Something went wrong</h2>
-            <p className="text-gray-600 mb-6">
-              {error?.message || ERROR_MESSAGES.GENERIC}
-            </p>
+            <h2 className="mb-2 text-xl font-semibold">Something went wrong</h2>
+            <p className="mb-6 text-gray-600">{error?.message || ERROR_MESSAGES.GENERIC}</p>
             <button
               onClick={this.resetErrorBoundary}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
             >
               Try Again
             </button>

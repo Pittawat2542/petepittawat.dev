@@ -31,7 +31,7 @@ export function createMenuController(): MenuController {
       menu.classList.add('opacity-0', 'pointer-events-none');
       menu.classList.remove('opacity-100', 'pointer-events-auto');
     }
-    
+
     // Subtle slide for the sheet
     if (sheet) {
       if (open) {
@@ -53,7 +53,7 @@ export function createMenuController(): MenuController {
         overlay.classList.remove('opacity-100', 'pointer-events-auto');
       }
     }
-    
+
     // Lock scroll on open (mobile friendliness)
     const root = document.documentElement;
     if (open) {
@@ -70,7 +70,7 @@ export function createMenuController(): MenuController {
 
   const handleMenuNavigation = (e: Event) => {
     const target = e.target;
-    const element = (target instanceof Element) ? target.closest('a') : null;
+    const element = target instanceof Element ? target.closest('a') : null;
     if (element && element.tagName === 'A') {
       isMenuOpen = false;
       setMenuOpen(false);
@@ -93,11 +93,11 @@ export function createMenuController(): MenuController {
     if (toggle) {
       toggle.addEventListener('click', handleMenuToggle);
     }
-    
+
     if (menu) {
       menu.addEventListener('click', handleMenuNavigation);
     }
-    
+
     if (overlay) {
       overlay.addEventListener('click', handleBackdropClick);
     }
@@ -108,11 +108,11 @@ export function createMenuController(): MenuController {
     if (toggle) {
       toggle.removeEventListener('click', handleMenuToggle);
     }
-    
+
     if (menu) {
       menu.removeEventListener('click', handleMenuNavigation);
     }
-    
+
     if (overlay) {
       overlay.removeEventListener('click', handleBackdropClick);
     }

@@ -10,7 +10,7 @@ interface FigureProps {
 const FigureComponent: React.FC<FigureProps> = ({ src, alt = '', caption, children }) => {
   // Handle both string sources and Astro image objects
   const imageSrc = typeof src === 'string' ? src : src.src;
-  
+
   return (
     <>
       <figure className="mdx-figure">
@@ -18,9 +18,10 @@ const FigureComponent: React.FC<FigureProps> = ({ src, alt = '', caption, childr
         {caption && <figcaption>{caption}</figcaption>}
         {children}
       </figure>
-      
-      <style dangerouslySetInnerHTML={{
-        __html: `
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           .mdx-figure { 
             margin: 1.5rem 0; 
           }
@@ -35,8 +36,9 @@ const FigureComponent: React.FC<FigureProps> = ({ src, alt = '', caption, childr
             font-size: 0.9rem; 
             text-align: center; 
           }
-        `
-      }} />
+        `,
+        }}
+      />
     </>
   );
 };

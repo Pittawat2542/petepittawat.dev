@@ -11,15 +11,15 @@ interface ActiveFiltersSummaryProps {
   readonly onRemoveTag: (tag: string) => void;
 }
 
-const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({ 
-  activeDropdownEntries, 
-  activeTags, 
-  onClearAll, 
+const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
+  activeDropdownEntries,
+  activeTags,
+  onClearAll,
   onRemoveDropdownFilter,
-  onRemoveTag 
+  onRemoveTag,
 }) => {
   const hasActiveFilters = activeDropdownEntries.length > 0 || activeTags.length > 0;
-  
+
   if (!hasActiveFilters) {
     return null;
   }
@@ -27,13 +27,8 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">Active filters</span>
-        <GlassButton
-          variant="ghost"
-          size="sm"
-          onClick={onClearAll}
-          className="text-xs"
-        >
+        <span className="text-muted-foreground text-xs">Active filters</span>
+        <GlassButton variant="ghost" size="sm" onClick={onClearAll} className="text-xs">
           Clear all
         </GlassButton>
       </div>
@@ -47,10 +42,12 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
             variant="default"
             size="sm"
           >
-            {`${key.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}: ${String(value).replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}`}
+            {`${key.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}: ${String(value)
+              .replace(/[-_]+/g, ' ')
+              .replace(/\b\w/g, c => c.toUpperCase())}`}
           </FilterChip>
         ))}
-        {activeTags.map((tag) => (
+        {activeTags.map(tag => (
           <FilterChip
             key={`tag-${tag}`}
             active

@@ -15,27 +15,29 @@ interface FilterPanelProps {
   readonly searchValue: string;
   readonly onSearchChange: (value: string) => void;
   readonly searchPlaceholder?: string | undefined;
-  
+
   // Dropdown filters
   readonly filters?: Record<string, string> | undefined;
-  readonly onFiltersChange?: ((updater: (prev: Record<string, string>) => Record<string, string>) => void) | undefined;
+  readonly onFiltersChange?:
+    | ((updater: (prev: Record<string, string>) => Record<string, string>) => void)
+    | undefined;
   readonly filterOptions?: Record<string, readonly string[]> | undefined;
-  
+
   // Tag filters
   readonly availableTags?: readonly string[] | undefined;
   readonly selectedTags?: Set<string> | undefined;
   readonly onTagsChange?: ((updater: (prev: Set<string>) => Set<string>) => void) | undefined;
   readonly tagCounts?: Record<string, number> | undefined;
-  
+
   // Sort
   readonly sortOptions?: Array<{ readonly value: string; readonly label: string }> | undefined;
   readonly sortValue?: string | undefined;
   readonly onSortChange?: ((value: string) => void) | undefined;
-  
+
   // Results info
   readonly totalResults?: number | undefined;
   readonly filteredResults?: number | undefined;
-  
+
   // Layout
   readonly className?: string | undefined;
   readonly compact?: boolean | undefined;
@@ -58,14 +60,15 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
   totalResults,
   filteredResults,
   className = '',
-  compact = false
+  compact = false,
 }) => {
   const [showFilters, setShowFilters] = useState(!compact);
-  
+
   const hasDropdownFilters = Object.keys(filterOptions).length > 0;
   const hasTags = availableTags.length > 0;
-  const hasActiveFilters = Object.values(filters).some(v => v !== 'all' && v !== '') || 
-                          (selectedTags && selectedTags.size > 0);
+  const hasActiveFilters =
+    Object.values(filters).some(v => v !== 'all' && v !== '') ||
+    (selectedTags && selectedTags.size > 0);
 
   const activeDropdownEntries = Object.entries(filters).filter(([, v]) => v !== 'all' && v !== '');
   const activeTags = selectedTags ? Array.from(selectedTags) : [];
@@ -83,22 +86,30 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
   };
 
   const removeDropdownFilter = (key: string) => {
-    onFiltersChange?.((f) => { const n = { ...f }; delete n[key]; return n; });
+    onFiltersChange?.(f => {
+      const n = { ...f };
+      delete n[key];
+      return n;
+    });
   };
 
   const removeTag = (tag: string) => {
-    onTagsChange?.((prev) => { const next = new Set(prev); next.delete(tag); return next; });
+    onTagsChange?.(prev => {
+      const next = new Set(prev);
+      next.delete(tag);
+      return next;
+    });
   };
 
   const toggleTag = (tag: string) => {
     if (!onTagsChange || !selectedTags) return;
-    
+
     if (tag === 'All') {
       onTagsChange(() => new Set());
       return;
     }
-    
-    onTagsChange((prev) => {
+
+    onTagsChange(prev => {
       const next = new Set(prev);
       if (next.has(tag)) {
         next.delete(tag);
@@ -112,15 +123,15 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Main search and controls row */}
-      <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-        <div className="flex-1 flex items-center gap-3">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-1 items-center gap-3">
           <SearchInput
             value={searchValue}
             onChange={onSearchChange}
             placeholder={searchPlaceholder}
             className="flex-1"
           />
-          
+
           {compact && (hasDropdownFilters || hasTags) && (
             <FilterToggle
               showFilters={showFilters}
@@ -139,7 +150,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
               onSortChange={onSortChange}
             />
           )}
-          
+
           <ResultsInfo
             totalResults={totalResults || 0}
             filteredResults={filteredResults}
@@ -161,9 +172,8 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
       )}
 
       {/* Expandable filters section */}
-      {(showFilters && (hasDropdownFilters || hasTags || hasActiveFilters)) && (
-        <div className="glass-card rounded-2xl p-4 space-y-4 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-          
+      {showFilters && (hasDropdownFilters || hasTags || hasActiveFilters) && (
+        <div className="glass-card animate-in fade-in-0 slide-in-from-top-2 space-y-4 rounded-2xl p-4 duration-300">
           {/* Dropdown filters */}
           {hasDropdownFilters && onFiltersChange && (
             <DropdownFilters

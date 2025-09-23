@@ -9,11 +9,7 @@ interface ContainerProps {
 }
 
 const ContainerComponent: FC<ContainerProps> = ({ children, className }) => {
-  return (
-    <section className={cn('mx-auto max-w-6xl', className)}>
-      {children}
-    </section>
-  );
+  return <section className={cn('mx-auto max-w-6xl', className)}>{children}</section>;
 };
 
 export const Container = memo(ContainerComponent);

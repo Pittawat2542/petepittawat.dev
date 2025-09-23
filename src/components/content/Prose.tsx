@@ -8,13 +8,7 @@ interface ProseProps extends HTMLAttributes<HTMLDivElement> {
 
 const ProseComponent: React.FC<ProseProps> = ({ children, className, ...rest }) => {
   return (
-    <div 
-      {...rest} 
-      className={cn(
-        'prose prose-invert md:prose-lg my-4 max-w-none',
-        className
-      )}
-    >
+    <div {...rest} className={cn('prose prose-invert md:prose-lg my-4 max-w-none', className)}>
       {children}
     </div>
   );

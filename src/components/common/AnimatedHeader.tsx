@@ -38,10 +38,12 @@ const AnimatedHeaderComponent: FC = () => {
   }, []);
 
   const normalizePath = useCallback((path: string) => {
-    return path
-      .replace(/\/index\.html$/, '/')
-      .replace(/\.html$/, '')
-      .replace(/\/+$/, '') || '/';
+    return (
+      path
+        .replace(/\/index\.html$/, '/')
+        .replace(/\.html$/, '')
+        .replace(/\/+$/, '') || '/'
+    );
   }, []);
 
   useEffect(() => {
@@ -89,7 +91,7 @@ const AnimatedHeaderComponent: FC = () => {
   );
 
   const handleToggleMobile = useCallback(() => {
-    setMobileOpen((prev) => !prev);
+    setMobileOpen(prev => !prev);
   }, []);
 
   const handleCloseMobile = useCallback(() => {
@@ -97,19 +99,19 @@ const AnimatedHeaderComponent: FC = () => {
   }, []);
 
   return (
-    <motion.header 
-      className="fixed inset-x-0 top-4 z-50 px-4 md:px-6 lg:px-8" 
+    <motion.header
+      className="fixed inset-x-0 top-4 z-50 px-4 md:px-6 lg:px-8"
       style={{ viewTransitionName: 'site-header' }}
       initial={false} // Keep SSR markup visible even if hydration never runs
       animate={{ opacity: 1, y: 0 }}
-      transition={{ 
-        type: "spring",
+      transition={{
+        type: 'spring',
         stiffness: 500,
         damping: 30,
-        duration: UI_CONFIG.ANIMATION.NORMAL / 1000
+        duration: UI_CONFIG.ANIMATION.NORMAL / 1000,
       }}
     >
-      <div 
+      <div
         id="site-nav-wrapper"
         className={`mx-auto max-w-6xl rounded-3xl border border-transparent transition-[border-color,box-shadow,backdrop-filter,transform] duration-300 ease-out`}
         data-scrolled={scrolled ? 'true' : undefined}
@@ -119,33 +121,41 @@ const AnimatedHeaderComponent: FC = () => {
           className="absolute inset-0 rounded-3xl bg-transparent"
           initial={{ scaleX: 0, originX: 0.5 }}
           animate={{ scaleX: 1 }}
-          transition={{ 
-            type: "spring",
+          transition={{
+            type: 'spring',
             stiffness: 300,
-            damping: 25
+            damping: 25,
           }}
           aria-hidden="true"
         />
-        
+
         <nav
           id="site-nav"
-          className="relative flex items-center gap-6 px-4 sm:px-6 py-3 sm:py-4"
+          className="relative flex items-center gap-6 px-4 py-3 sm:px-6 sm:py-4"
           data-scrolled={scrolled ? 'true' : undefined}
           role="navigation"
           aria-label="Main navigation"
         >
           {/* Brand */}
-          <a 
-            href="/" 
+          <a
+            href="/"
             aria-label="Go to homepage"
-            className="relative flex items-center gap-3 rounded-full px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60"
+            className="relative flex items-center gap-3 rounded-full px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 focus-visible:outline-none"
           >
             <span data-brand className="relative flex h-9 w-9 items-center justify-center">
               <span className="brand-shape absolute inset-0 rounded-full" aria-hidden="true" />
               <span className="brand-glow absolute inset-0 rounded-full" aria-hidden="true" />
               <span className="brand-glyph relative flex h-full w-full items-center justify-center">
-                <svg className="h-[18px] w-[18px] text-white" viewBox="0 0 512 512" fill="none" aria-hidden="true">
-                  <path fill="currentColor" d="M114 188h150v110c0 24-6 42-18 55s-28 19-48 19c-20 0-35-6-48-19-12-13-18-31-18-55v-57h-18v-53Zm64 53v57c0 10 2 18 6 22 4 5 9 7 16 7h12c7 0 12-2 16-7s6-12 6-22v-57h-56Zm123-53h152v110c0 24-6 42-18 55-12 13-28 19-48 19s-36-6-48-19c-12-13-18-31-18-55v-57h-18v-53Zm64 53v57c0 10 2 18 6 22s9 7 16 7h12c7 0 12-2 16-7 4-4 6-12 6-22v-57h-56Z"/>
+                <svg
+                  className="h-[18px] w-[18px] text-white"
+                  viewBox="0 0 512 512"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M114 188h150v110c0 24-6 42-18 55s-28 19-48 19c-20 0-35-6-48-19-12-13-18-31-18-55v-57h-18v-53Zm64 53v57c0 10 2 18 6 22 4 5 9 7 16 7h12c7 0 12-2 16-7s6-12 6-22v-57h-56Zm123-53h152v110c0 24-6 42-18 55-12 13-28 19-48 19s-36-6-48-19c-12-13-18-31-18-55v-57h-18v-53Zm64 53v57c0 10 2 18 6 22s9 7 16 7h12c7 0 12-2 16-7 4-4 6-12 6-22v-57h-56Z"
+                  />
                 </svg>
               </span>
             </span>
@@ -158,18 +168,15 @@ const AnimatedHeaderComponent: FC = () => {
           <NavigationLinks links={NAVIGATION_LINKS} isActive={isActive} />
 
           {/* Search button and mobile menu toggle */}
-          <HeaderActions 
-            mobileOpen={mobileOpen} 
-            onToggleMobile={handleToggleMobile} 
-          />
+          <HeaderActions mobileOpen={mobileOpen} onToggleMobile={handleToggleMobile} />
         </nav>
       </div>
 
-      <MobileMenu 
-        isOpen={mobileOpen} 
-        onClose={handleCloseMobile} 
-        links={NAVIGATION_LINKS} 
-        isActive={isActive} 
+      <MobileMenu
+        isOpen={mobileOpen}
+        onClose={handleCloseMobile}
+        links={NAVIGATION_LINKS}
+        isActive={isActive}
       />
     </motion.header>
   );

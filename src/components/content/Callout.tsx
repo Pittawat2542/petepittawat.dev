@@ -8,11 +8,11 @@ interface CalloutProps {
   readonly icon?: boolean;
 }
 
-const CalloutComponent: React.FC<CalloutProps> = ({ 
+const CalloutComponent: React.FC<CalloutProps> = ({
   children,
-  type = 'info', 
-  title, 
-  icon = true 
+  type = 'info',
+  title,
+  icon = true,
 }) => {
   const headingId = title
     ? `callout-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
@@ -23,7 +23,7 @@ const CalloutComponent: React.FC<CalloutProps> = ({
     tip: Lightbulb,
     warn: AlertTriangle,
     note: FileText,
-    info: Info
+    info: Info,
   };
 
   const IconComponent = iconMap[type] || Info;

@@ -5,7 +5,7 @@ const ReadingProgressBarComponent: React.FC = () => {
 
   useEffect(() => {
     const progressBar = progressBarRef.current;
-    
+
     if (!progressBar || typeof window === 'undefined') return;
 
     let ticking = false;
@@ -61,9 +61,9 @@ const ReadingProgressBarComponent: React.FC = () => {
   }, []);
 
   return (
-    <div 
+    <div
       ref={progressBarRef}
-      className="fixed top-0 left-0 h-1 bg-[color:var(--accent)] z-50 transition-[width] duration-150 ease-out will-change-[width]"
+      className="fixed top-0 left-0 z-50 h-1 bg-[color:var(--accent)] transition-[width] duration-150 ease-out will-change-[width]"
       style={{ width: '0%' }}
       role="progressbar"
       aria-label="Reading progress"

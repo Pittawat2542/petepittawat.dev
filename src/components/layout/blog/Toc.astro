@@ -5,41 +5,67 @@ interface Props {
   levels?: Array<2 | 3 | 4 | 5 | 6>;
   collapsed?: boolean;
 }
-const { title = 'Table of contents', selector = 'article', levels = [2,3], collapsed = true } = Astro.props as Props;
+const {
+  title = 'Table of contents',
+  selector = 'article',
+  levels = [2, 3],
+  collapsed = true,
+} = Astro.props as Props;
 import { List, ChevronDown } from 'lucide-astro';
 ---
 
-<nav class="mt-6 max-w-prose mx-auto" aria-label="Table of contents" data-selector={selector} data-levels={JSON.stringify(levels)} data-open={!collapsed}>
+<nav
+  class="mx-auto mt-6 max-w-prose"
+  aria-label="Table of contents"
+  data-selector={selector}
+  data-levels={JSON.stringify(levels)}
+  data-open={!collapsed}
+>
   <details class="group rounded-xl border border-[color:var(--white)]/10 bg-white/5 p-3">
-    <summary class="list-none cursor-pointer select-none inline-flex items-center gap-2 text-sm font-medium text-[color:var(--white)]/85">
+    <summary
+      class="inline-flex cursor-pointer list-none items-center gap-2 text-sm font-medium text-[color:var(--white)]/85 select-none"
+    >
       <span class="inline-flex items-center gap-2">
         <List class="h-4 w-4 opacity-80" aria-hidden="true" />
         {title}
       </span>
       <span id="toc-count" class="ml-1 text-[color:var(--white)]/60"></span>
-      <ChevronDown class="ml-auto h-4 w-4 opacity-70 transition-transform group-open:rotate-180" aria-hidden="true" />
+      <ChevronDown
+        class="ml-auto h-4 w-4 opacity-70 transition-transform group-open:rotate-180"
+        aria-hidden="true"
+      />
     </summary>
     <ul id="toc-list" class="mt-3 space-y-1.5"></ul>
   </details>
 </nav>
 
 <script is:inline>
-  const navEl = (document.currentScript && document.currentScript.previousElementSibling) || document.querySelector('nav[aria-label="Table of contents"]');
+  const navEl =
+    (document.currentScript && document.currentScript.previousElementSibling) ||
+    document.querySelector('nav[aria-label="Table of contents"]');
   const ds = (navEl && navEl.dataset) || {};
   const rootSelector = ds.selector || 'article';
-  let levels = [2,3];
-  try { levels = JSON.parse(ds.levels || '[2,3]'); } catch {}
+  let levels = [2, 3];
+  try {
+    levels = JSON.parse(ds.levels || '[2,3]');
+  } catch {}
   const openByDefault = ds.open === 'true';
 
-  const slugify = (s) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const slugify = s =>
+    s
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
 
   const initToc = () => {
     const article = document.querySelector(rootSelector) || document.querySelector('article');
     const details = navEl?.querySelector('details');
     if (!article || !details || !navEl) return;
-    if (openByDefault) details.setAttribute('open', ''); else details.removeAttribute('open');
+    if (openByDefault) details.setAttribute('open', '');
+    else details.removeAttribute('open');
 
-    const sel = levels.map((l) => `h${l}`).join(',');
+    const sel = levels.map(l => `h${l}`).join(',');
     const headings = Array.from(article.querySelectorAll(sel));
     const list = navEl.querySelector('#toc-list');
     const count = navEl.querySelector('#toc-count');
@@ -55,7 +81,7 @@ import { List, ChevronDown } from 'lucide-astro';
       return;
     }
 
-    headings.forEach((h) => {
+    headings.forEach(h => {
       const text = (h.textContent || '').trim();
       if (!text) return;
       if (!h.id) h.id = slugify(text);
@@ -69,11 +95,14 @@ import { List, ChevronDown } from 'lucide-astro';
 
       // Icon
       const icon = document.createElement('span');
-      icon.className = 'toc-icon inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center opacity-80';
+      icon.className =
+        'toc-icon inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center opacity-80';
       if (isH3) {
-        icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>';
+        icon.innerHTML =
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>';
       } else {
-        icon.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>';
+        icon.innerHTML =
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>';
       }
       a.prepend(icon);
       li.appendChild(a);
@@ -89,8 +118,12 @@ import { List, ChevronDown } from 'lucide-astro';
 </script>
 
 <style is:inline>
-  nav[aria-label="Table of contents"] .toc-item svg { display: block; }
+  nav[aria-label='Table of contents'] .toc-item svg {
+    display: block;
+  }
   @media (prefers-reduced-motion: reduce) {
-    nav[aria-label="Table of contents"] summary .transition-transform { transition: none; }
+    nav[aria-label='Table of contents'] summary .transition-transform {
+      transition: none;
+    }
   }
 </style>
