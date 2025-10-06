@@ -15,11 +15,20 @@ const { posts, allPosts } = Astro.props as Props;
 
 <!-- Latest from the Blog -->
 <Container className="reveal glass-section mt-20">
-  <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-    <div>
-      <h2 class="mb-1 text-2xl font-bold tracking-tight md:text-3xl">Latest from the blog</h2>
-      <p class="text-[color:var(--white)]/80">
-        Insights, tutorials, and thoughts on AI and technology
+  <div class="mb-8 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+    <div class="space-y-2">
+      <div
+        class="flex items-center gap-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/60 uppercase"
+      >
+        <span class="h-2 w-2 rounded-full bg-[color:var(--accent-blog)]"></span>
+        Latest Writing
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight md:text-3xl">
+        Fresh experiments and field notes
+      </h2>
+      <p class="max-w-xl text-[color:var(--white)]/75">
+        Short reads on evaluation, prompting techniques, and the practical side of running LLM
+        systems in production.
       </p>
     </div>
     <GlassButton href="/blog" variant="ghost" size="md">
@@ -27,11 +36,17 @@ const { posts, allPosts } = Astro.props as Props;
       <ArrowRight class="h-4 w-4" aria-hidden="true" />
     </GlassButton>
   </div>
-  <ul class="grid grid-cols-1 gap-6 md:gap-8 xl:grid-cols-3" id="latest-blog">
-    {
-      posts.map(post => (
-        <BlogCard post={post} allPosts={allPosts || undefined} horizontalOnSingleColumn={true} />
-      ))
-    }
-  </ul>
+  {
+    posts.length === 0 ? (
+      <div class="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-[color:var(--white)]/70">
+        No posts yet — new writing is on the way.
+      </div>
+    ) : (
+      <ul class="grid grid-cols-1 gap-5 md:gap-7 xl:grid-cols-3" id="latest-blog">
+        {posts.map(post => (
+          <BlogCard post={post} allPosts={allPosts || undefined} />
+        ))}
+      </ul>
+    )
+  }
 </Container>

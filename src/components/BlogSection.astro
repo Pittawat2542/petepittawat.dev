@@ -27,11 +27,7 @@ const { posts, allPosts } = Astro.props as Props;
       <ArrowRight class="h-4 w-4" aria-hidden="true" />
     </GlassButton>
   </div>
-  <ul class="grid grid-cols-1 gap-6 md:gap-8 xl:grid-cols-3" id="latest-blog">
-    {
-      posts.map(post => (
-        <BlogCard post={post} allPosts={allPosts} horizontalOnSingleColumn={true} />
-      ))
-    }
+  <ul class="grid grid-cols-1 gap-5 md:gap-7 xl:grid-cols-3" id="latest-blog">
+    {posts.map(post => <BlogCard post={post} allPosts={allPosts} />)}
   </ul>
 </Container>

@@ -2,49 +2,251 @@
 import Container from '../ui/core/Container';
 import GlassButton from '../ui/navigation/GlassButton';
 import { Image } from 'astro:assets';
-import { ArrowRight } from 'lucide-astro';
+import { Rocket, BookOpen, Mic } from 'lucide-astro';
 import profileImage from '../../assets/images/profile.jpg';
+
+const ctaItems = [
+  {
+    href: '/projects',
+    title: 'Ship-ready builds',
+    description: 'See the evaluation stacks and agent tooling delivered to teams.',
+    cta: 'Explore projects',
+    variant: 'primary' as const,
+    Icon: Rocket,
+  },
+  {
+    href: '/blog',
+    title: 'Research notes',
+    description: 'Read experiments, failure digs, and applied prompting patterns.',
+    cta: 'Dive into the blog',
+    variant: 'secondary' as const,
+    Icon: BookOpen,
+  },
+  {
+    href: '/talks',
+    title: 'Talks & workshops',
+    description: 'Watch practical walkthroughs from conferences and private sessions.',
+    cta: 'Listen to talks',
+    variant: 'ghost' as const,
+    Icon: Mic,
+  },
+];
 ---
 
 <Container
-  className="relative mt-12 flex flex-col-reverse items-center justify-center gap-12 md:mt-16 md:flex-row md:justify-between md:gap-16"
+  className="relative mt-12 flex flex-col items-center justify-center gap-10 md:mt-24 md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-start md:gap-16"
 >
-  <div class="flex flex-col gap-4 text-center md:gap-3 md:text-left">
-    <p class="text-5xl font-bold md:text-6xl">
-      <span class="hero-text-gradient-blue">Hello! 👋</span>
+  <div
+    class="order-1 flex max-w-2xl flex-col gap-6 text-center md:col-span-1 md:max-w-none md:text-left"
+  >
+    <div class="flex flex-col items-center gap-4 md:items-start">
+      <div
+        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/65 uppercase"
+      >
+        <span class="h-2 w-2 rounded-full bg-[color:var(--accent)]"></span>
+        Reliable LLM Systems
+      </div>
+      <div class="space-y-3">
+        <h1 class="text-4xl leading-tight font-bold md:text-5xl">
+          <span class="hero-text-gradient-blue">Hi, I'm Pete</span>{' '}
+          <span class="hero-text-gradient-orange">Pittawat Taveekitworachai</span>
+        </h1>
+        <p class="text-lg text-[color:var(--white)]/80 md:text-xl">
+          Researcher and builder shaping practical reasoning workflows for teams adopting large
+          language models.
+        </p>
+      </div>
+    </div>
+    <p class="text-base text-[color:var(--white)]/70 md:text-lg">
+      From Null-Shot Prompting (EMNLP 2024) and Prior Prompt Engineering (EMNLP 2025) to the
+      Typhoon T1 multilingual reasoning suite, I translate frontier research into tools that ship.
     </p>
-    <h1 class="text-4xl md:text-5xl">
-      I'm <span class="hero-text-gradient-orange font-bold">Pete</span>
-    </h1>
-    <p class="mt-1 text-xl md:text-2xl">Pittawat Taveekitworachai</p>
-    <p class="mt-2 max-w-2xl text-lg text-[color:var(--white)]/80">
-      Researcher specializing in Large Language Models, reasoning, and prompt engineering.
-    </p>
-    <div class="mt-2 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-      <GlassButton href="/projects" variant="primary" size="lg">
-        View projects
-        <ArrowRight class="h-4 w-4" aria-hidden="true" />
-      </GlassButton>
-      <GlassButton href="/blog" variant="secondary" size="lg">
-        Read the blog
-        <ArrowRight class="h-4 w-4" aria-hidden="true" />
-      </GlassButton>
+  </div>
+
+  <div
+    class="relative order-2 flex w-full max-w-[22rem] flex-col items-center md:ml-auto md:justify-self-end"
+  >
+    <div class="hero-avatar group relative mx-auto w-full overflow-visible md:mx-0">
+      <div class="hero-particles" aria-hidden="true">
+        <span
+          class="hero-particle"
+          style="--size: 1rem; --color: rgba(96, 165, 250, 0.9); --start-x: -0.75rem; --start-y: -0.5rem; --end-x: -12rem; --end-y: -8.5rem; --duration: 780ms;"
+        ></span>
+        <span
+          class="hero-particle"
+          style="--size: 0.65rem; --color: rgba(129, 140, 248, 0.85); --start-x: 0.4rem; --start-y: -0.9rem; --end-x: 11rem; --end-y: -8.5rem; --duration: 750ms; --delay: 40ms;"
+        ></span>
+        <span
+          class="hero-particle"
+          style="--size: 0.5rem; --color: rgba(244, 114, 182, 0.9); --start-x: -0.3rem; --start-y: 0.7rem; --end-x: -8.5rem; --end-y: 7.75rem; --duration: 720ms; --delay: 80ms; --blur: 1px;"
+        ></span>
+        <span
+          class="hero-particle"
+          style="--size: 0.85rem; --color: rgba(45, 212, 191, 0.85); --start-x: 0.9rem; --start-y: 0.45rem; --end-x: 9.5rem; --end-y: 11rem; --duration: 760ms; --delay: 120ms; --blur: 1.5px;"
+        ></span>
+        <span
+          class="hero-particle"
+          style="--size: 0.45rem; --color: rgba(56, 189, 248, 0.85); --start-x: 0rem; --start-y: 0.2rem; --end-x: 7.5rem; --end-y: -5.75rem; --duration: 680ms; --delay: 160ms; --blur: 0.75px;"
+        ></span>
+        <span
+          class="hero-particle"
+          style="--size: 0.55rem; --color: rgba(250, 204, 21, 0.85); --start-x: -0.6rem; --start-y: -0.1rem; --end-x: -9rem; --end-y: 5.5rem; --duration: 750ms; --delay: 200ms;"
+        ></span>
+      </div>
+      <div
+        class="pointer-events-none absolute -inset-4 animate-pulse rounded-full bg-[color:var(--accent)] opacity-25 blur-2xl md:-inset-6"
+      >
+      </div>
+      <div
+        class="pointer-events-none absolute top-8 -right-12 hidden h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent-publications)]/40 to-transparent blur-3xl md:block"
+      >
+      </div>
+      <Image
+        src={profileImage}
+        alt="Pete's profile picture"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        widths={[192, 224, 384, 448]}
+        sizes="(min-width: 768px) 18rem, 12rem"
+        class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15rem] object-cover shadow-lg ring-4 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20rem]"
+      />
+      <div
+        class="absolute -bottom-12 left-1/2 w-full max-w-[18rem] -translate-x-1/2 rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/75 px-5 py-4 text-left shadow-xl shadow-black/30 backdrop-blur-md sm:px-6 sm:py-5 md:-bottom-16 md:max-w-[20rem]"
+      >
+        <p class="text-xs font-semibold tracking-[0.25em] text-[color:var(--white)]/60 uppercase">
+          Current focus
+        </p>
+        <p class="mt-1.5 text-sm text-[color:var(--white)]/85">
+          Advancing reinforcement learning pipelines that strengthen reasoning fidelity.
+        </p>
+      </div>
     </div>
   </div>
-  <div class="relative overflow-visible">
-    <div
-      class="pointer-events-none absolute -inset-4 animate-pulse rounded-full bg-[color:var(--accent)] opacity-25 blur-2xl md:-inset-6"
-    >
-    </div>
-    <Image
-      src={profileImage}
-      alt="Pete's profile picture"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-      widths={[192, 224, 384, 448]}
-      sizes="(min-width: 768px) 14rem, 12rem"
-      class="avatar-round no-cv relative w-48 object-cover shadow-lg ring-4 ring-[color:var(--white)]/20 transition-[transform,box-shadow,ring-color] duration-200 ease-out will-change-transform hover:-translate-y-1 hover:ring-[color:var(--accent)]/60 md:w-56"
-    />
+
+  <div
+    class="order-3 mt-8 grid w-full gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-left shadow-lg shadow-black/20 backdrop-blur-sm sm:gap-4 md:col-span-2 md:mt-0 md:grid-cols-3 md:p-6"
+  >
+    {
+      ctaItems.map(({ href, title, description, cta, variant, Icon }) => (
+        <div class="group flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[color:var(--black-nav)]/45 p-4 transition-transform duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--black-nav)]/65 sm:gap-4 sm:p-5">
+          <div class="flex items-start gap-3">
+            <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[color:var(--accent)] shadow-inner shadow-black/10">
+              <Icon class="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div class="space-y-1.5 sm:space-y-2">
+              <p class="text-xs font-semibold tracking-[0.2em] text-[color:var(--white)]/58 uppercase sm:tracking-[0.3em]">
+                {title}
+              </p>
+              <p class="text-sm text-[color:var(--white)]/70">{description}</p>
+            </div>
+          </div>
+          <GlassButton
+            href={href}
+            variant={variant}
+            size="lg"
+            icon="arrow-right"
+            className="mt-auto w-full justify-between px-5 py-2.5 text-sm sm:px-6 sm:text-base"
+          >
+            {cta}
+          </GlassButton>
+        </div>
+      ))
+    }
   </div>
 </Container>
+
+<style>
+  .hero-avatar {
+    isolation: isolate;
+  }
+
+  .hero-particles {
+    position: absolute;
+    inset: -2.5rem;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero-particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--size, 0.75rem);
+    height: var(--size, 0.75rem);
+    border-radius: 999px;
+    background: radial-gradient(
+      circle at 30% 30%,
+      var(--color, rgba(255, 255, 255, 0.8)),
+      transparent 70%
+    );
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(var(--start-x, 0px), var(--start-y, 0px), 0)
+      scale(0.35);
+    filter: saturate(120%) blur(var(--blur, 0px));
+    mix-blend-mode: screen;
+  }
+
+  @media (min-width: 768px) {
+    .hero-particles {
+      inset: -3.5rem;
+    }
+  }
+
+  .hero-avatar__image {
+    transition-property: transform, box-shadow, filter, border-color;
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.2, 0.65, 0.25, 1);
+  }
+
+  .hero-avatar:hover .hero-avatar__image,
+  .hero-avatar:focus-within .hero-avatar__image {
+    transform: translate3d(0, -0.6rem, 0) scale(1.04);
+    box-shadow:
+      0 24px 60px -28px rgba(59, 130, 246, 0.45),
+      0 16px 32px -24px rgba(14, 28, 56, 0.55);
+    filter: saturate(110%);
+  }
+
+  .hero-avatar:hover .hero-particle,
+  .hero-avatar:focus-within .hero-particle {
+    animation: hero-particle-burst var(--duration, 650ms) cubic-bezier(0.21, 0.61, 0.35, 1)
+      var(--delay, 0ms) forwards;
+  }
+
+  @keyframes hero-particle-burst {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) translate3d(var(--start-x, 0px), var(--start-y, 0px), 0)
+        scale(0.35);
+    }
+    25% {
+      opacity: 0.95;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) translate3d(var(--end-x, 0px), var(--end-y, 0px), 0)
+        scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-avatar:hover .hero-particle,
+    .hero-avatar:focus-within .hero-particle {
+      animation: none;
+      opacity: 0;
+    }
+
+    .hero-avatar__image {
+      transition: none;
+      transform: none;
+    }
+
+    .hero-avatar:hover .hero-avatar__image,
+    .hero-avatar:focus-within .hero-avatar__image {
+      transform: none;
+      box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.45);
+      filter: none;
+    }
+  }
+</style>

@@ -31,6 +31,7 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
   <div class="landing-background" aria-hidden="true">
     <div class="landing-background__gradient"></div>
     <div class="landing-background__particles"></div>
+    <div class="landing-background__grid"></div>
   </div>
   {/* Preload likely LCP image for GitHub Pages to shorten the chain */}
   {
@@ -60,9 +61,9 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     z-index: -2;
     overflow: hidden;
     background:
-      radial-gradient(circle at top left, rgba(15, 23, 42, 0.82), transparent 55%),
-      radial-gradient(circle at bottom right, rgba(30, 41, 59, 0.75), transparent 60%),
-      rgba(10, 15, 28, 0.86);
+      radial-gradient(circle at 15% 20%, rgba(30, 43, 82, 0.85), transparent 60%),
+      radial-gradient(circle at 85% 80%, rgba(12, 25, 54, 0.8), transparent 60%),
+      linear-gradient(160deg, rgba(9, 12, 24, 0.94), rgba(9, 10, 22, 0.9));
   }
 
   .landing-background__gradient {
@@ -94,6 +95,19 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     animation: landing-particles-move 26s ease-in-out infinite alternate;
   }
 
+  .landing-background__grid {
+    position: absolute;
+    inset: -30%;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    background-size: 140px 140px;
+    mix-blend-mode: overlay;
+    opacity: 0.35;
+    transform: rotate(2deg) scale(1.05);
+    animation: landing-grid-shift 32s linear infinite;
+  }
+
   @keyframes landing-gradient-spin {
     from {
       transform: rotate(0deg) scale(1);
@@ -115,9 +129,22 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     }
   }
 
+  @keyframes landing-grid-shift {
+    0% {
+      transform: rotate(2deg) scale(1.05) translate3d(0, 0, 0);
+    }
+    50% {
+      transform: rotate(1deg) scale(1.04) translate3d(1%, -1%, 0);
+    }
+    100% {
+      transform: rotate(2deg) scale(1.05) translate3d(-1%, 1%, 0);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .landing-background__gradient,
-    .landing-background__particles {
+    .landing-background__particles,
+    .landing-background__grid {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transform: none !important;

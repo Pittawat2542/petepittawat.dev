@@ -10,9 +10,9 @@ interface BlogCardFooterProps {
 const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({ pubDate, barPadding }) => {
   return (
     <div className="relative mt-auto">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-45 transition-opacity duration-300 group-hover:opacity-80" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-40 transition-opacity duration-300 group-hover:opacity-70" />
       <div
-        className={`relative flex items-center justify-between gap-3 border-t border-white/12 bg-white/[0.032] ${barPadding} py-3 text-sm text-white/75 backdrop-blur-[18px] transition-all duration-300 ease-out group-hover:border-white/18 group-hover:bg-white/[0.085] group-hover:text-white md:py-4`}
+        className={`relative flex items-center justify-between gap-3 border-t border-white/10 bg-[color:var(--black-nav)]/55 ${barPadding} py-3 text-sm text-[color:var(--white)]/72 backdrop-blur-[18px] transition-all duration-300 ease-out group-hover:border-[color:var(--accent)]/45 group-hover:bg-[color:var(--black-nav)]/65 group-hover:text-[color:var(--white)] md:py-4`}
       >
         <span className="inline-flex items-center gap-1.5 text-[15px] font-medium tracking-tight">
           Continue reading{` `}

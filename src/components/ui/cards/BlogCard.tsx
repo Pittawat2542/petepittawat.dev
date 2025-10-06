@@ -19,8 +19,6 @@ interface BlogCardProps {
   readonly featured?: boolean | undefined;
   /** Array of all posts used to calculate series information */
   readonly allPosts?: readonly BlogPost[] | undefined;
-  /** Whether to use horizontal layout on single column displays */
-  readonly horizontalOnSingleColumn?: boolean | undefined;
   /** Additional CSS classes to apply */
   readonly className?: string | undefined;
   /** Inline styles to apply */
@@ -32,7 +30,7 @@ interface BlogCardProps {
  *
  * Features:
  * - Glass morphism design with hover effects
- * - Responsive layout (horizontal on single column displays)
+ * - Responsive layout with consistent vertical presentation
  * - Series detection and display
  * - Optimized with React.memo for performance
  * - Accessible with proper ARIA labels
@@ -44,7 +42,6 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   post,
   featured = false,
   allPosts = [],
-  horizontalOnSingleColumn = false,
   className = '',
   style,
 }) => {
@@ -55,21 +52,19 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
 
-  const contentLayout = horizontalOnSingleColumn ? 'flex gap-5 lg:flex-col' : 'flex flex-col gap-5';
-  const paddingClasses = horizontalOnSingleColumn
-    ? 'px-4 pt-4 pb-6 md:px-6 md:pt-6 md:pb-7'
-    : 'px-5 pt-5 pb-6 md:px-7 md:pt-7 md:pb-8';
-  const barPadding = horizontalOnSingleColumn ? 'px-4 md:px-5' : 'px-5 md:px-6';
+  const contentLayout = 'flex flex-col gap-5';
+  const paddingClasses = 'px-6 pt-6 pb-7 md:px-7 md:pt-8 md:pb-9';
+  const barPadding = 'px-6 md:px-7';
 
   return (
     <li
       style={style}
-      className={`border-border bg-card glass-card text-card-foreground group blog-card h-full w-full cursor-pointer overflow-hidden rounded-3xl border hyphens-auto shadow-sm ${
+      className={`group blog-card flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/45 text-[color:var(--white)] shadow-lg shadow-black/20 backdrop-blur-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:border-[color:var(--accent)]/35 ${
         featured ? 'card-featured' : ''
       } ${className}`}
     >
       <a
-        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-500 ease-out group-hover:-translate-y-[2px] group-hover:shadow-[0_22px_48px_-30px_rgba(0,15,40,0.95)] focus-visible:text-[color:var(--white)]"
+        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out focus-visible:text-[color:var(--white)]"
         href={`/blog/${String(post.slug)}`}
         aria-label={`Read blog post: ${post.data.title}`}
         style={glowStyle}
@@ -81,17 +76,11 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         <div className="relative z-10 flex flex-1 flex-col">
           <div className={paddingClasses}>
             <div
-              className={`${contentLayout} transition-transform duration-500 ease-out group-hover:translate-y-[-2px]`}
+              className={`${contentLayout} transition-transform duration-400 ease-out group-hover:translate-y-[-4px]`}
             >
-              <BlogCardImage post={post} horizontalOnSingleColumn={horizontalOnSingleColumn} />
+              <BlogCardImage post={post} />
 
-              <div
-                className={
-                  horizontalOnSingleColumn
-                    ? 'flex min-w-0 flex-1 flex-col lg:justify-start'
-                    : 'flex min-w-0 flex-1 flex-col'
-                }
-              >
+              <div className="flex min-w-0 flex-1 flex-col">
                 <BlogCardContent
                   title={post.data.title}
                   excerpt={post.data.excerpt}
@@ -119,7 +108,6 @@ const BlogCardComponent: FC<BlogCardProps> = ({
  * The component is memoized with a custom comparison function that checks:
  * - Post slug (primary identifier)
  * - Featured status
- * - Layout preferences
  * - CSS classes and all posts reference
  *
  * This prevents unnecessary re-renders when parent components update
@@ -130,7 +118,6 @@ export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
   return (
     prevProps.post.slug === nextProps.post.slug &&
     prevProps.featured === nextProps.featured &&
-    prevProps.horizontalOnSingleColumn === nextProps.horizontalOnSingleColumn &&
     prevProps.className === nextProps.className &&
     prevProps.allPosts === nextProps.allPosts
   );

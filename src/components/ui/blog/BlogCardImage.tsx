@@ -4,32 +4,21 @@ import { memo } from 'react';
 
 interface BlogCardImageProps {
   readonly post: BlogPost;
-  readonly horizontalOnSingleColumn: boolean;
 }
 
-const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, horizontalOnSingleColumn }) => {
+const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post }) => {
   if (post.data.coverImage?.src) {
     return (
-      <div
-        className={
-          horizontalOnSingleColumn
-            ? 'h-24 w-32 shrink-0 overflow-hidden rounded-2xl md:h-32 md:w-44 lg:h-auto lg:w-full'
-            : 'overflow-hidden rounded-2xl'
-        }
-      >
+      <div className="overflow-hidden rounded-2xl">
         <img
-          className={`${horizontalOnSingleColumn ? 'h-full w-full object-cover lg:h-auto lg:w-full' : 'h-auto w-full'} transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.05] group-hover:rotate-[0.35deg]`}
+          className="h-auto w-full transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.05] group-hover:rotate-[0.35deg]"
           src={post.data.coverImage.src}
           width={post.data.coverImage.width}
           height={post.data.coverImage.height}
           loading="lazy"
           decoding="async"
           fetchPriority="low"
-          sizes={
-            horizontalOnSingleColumn
-              ? '(min-width: 1024px) 600px, 176px'
-              : '(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw'
-          }
+          sizes="(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw"
           alt={`Cover of the article: ${post.data.title}`}
         />
       </div>
@@ -45,10 +34,7 @@ const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, horizontalOnSing
 
 // Memoize the component with custom comparison
 export const BlogCardImage = memo(BlogCardImageComponent, (prevProps, nextProps) => {
-  return (
-    prevProps.post === nextProps.post &&
-    prevProps.horizontalOnSingleColumn === nextProps.horizontalOnSingleColumn
-  );
+  return prevProps.post === nextProps.post;
 });
 
 BlogCardImage.displayName = 'BlogCardImage';
