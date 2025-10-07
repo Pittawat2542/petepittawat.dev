@@ -259,6 +259,12 @@ const ThemedPageHeroComponent: React.FC<ThemedPageHeroProps> = ({
             }
           }
 
+          @media (max-width: 639px) {
+            .themed-hero__badge {
+              display: none;
+            }
+          }
+
           @supports not (backdrop-filter: blur(1px)) {
             .themed-hero {
               background: linear-gradient(135deg, rgba(8, 14, 26, 0.92), rgba(12, 19, 36, 0.86));
