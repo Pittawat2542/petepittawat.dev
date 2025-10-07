@@ -10,441 +10,1142 @@ import GlassCard from '../components/ui/core/GlassCard';
 import Chip from '../components/ui/core/Chip';
 import Prose from '../components/content/Prose';
 import timeline from '../content/about/timeline.json';
+import publications from '../content/publications/publications.json';
+import projects from '../content/projects/projects.json';
+import talks from '../content/talks/talks.json';
+
+const totalPublications = publications.length;
+const totalProjects = projects.length;
+const totalTalks = talks.length;
+const makeAccentLabel = accent =>
+  (accent ?? 'about')
+    .split('-')
+    .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ');
+
+const highlightStats = [
+  {
+    value: '7+',
+    label: 'years in applied AI & creative tech',
+    description: 'From early creative coding experiments to production-grade reasoning systems.',
+  },
+  {
+    value: `${totalPublications}`,
+    label: 'published papers & deep dives',
+    description: 'Exploring creativity, evaluation, and tools that stay reliable in production.',
+  },
+  {
+    value: `${totalProjects}`,
+    label: 'shipped projects & open experiments',
+    description: 'Prototyping boldly, then hardening what works for partners and teams.',
+  },
+  {
+    value: `${totalTalks}`,
+    label: 'talks, workshops & keynotes delivered',
+    description: 'Helping communities across APAC build responsible AI workflows.',
+  },
+];
+
+const focusAreas = [
+  {
+    emoji: '💡',
+    title: 'Creative intelligence without collapse',
+    description: 'Testing how large models stay imaginative without drifting away from truth.',
+    bullets: [
+      'When do hallucinations become a useful spark instead of a failure?',
+      'How does model scale shift the boundary between imagination and reliability?',
+      'Which safety rails keep generative systems playful yet grounded?',
+    ],
+  },
+  {
+    emoji: '🧠',
+    title: 'Orchestrating algorithms with LLMs',
+    description: 'Pairing classical computing patterns with neural priors to tackle complex tasks.',
+    bullets: [
+      'Which traditional algorithms resonate—or clash—with probabilistic reasoning?',
+      'How do pipeline topologies change when an LLM becomes a black-box oracle?',
+      'Where should symbolic structure and neural intuition interleave?',
+    ],
+  },
+  {
+    emoji: '📏',
+    title: 'Evaluation without shortcuts',
+    description:
+      'Designing resilient evaluation frameworks that keep up with rapidly evolving models.',
+    bullets: [
+      'Can LLMs deliver structured output as tasks grow multi-dimensional?',
+      'How do we observe degradation across scales, prompts, and modalities?',
+      'What automation keeps humans focused on insight rather than grading?',
+    ],
+  },
+  {
+    emoji: '🪄',
+    title: 'Prompt architectures in practice',
+    description: 'Turning orchestration heuristics into human-centered AI experiences.',
+    bullets: [
+      'Why do prompt engineering patterns actually work?',
+      'What does “exploration” look like when prompts become navigation in latent space?',
+      'How can multimodal LLMs power creative tooling and healthcare support systems?',
+    ],
+  },
+];
+
+const craftStacks = [
+  {
+    title: 'Applied research engineering',
+    statement:
+      'I build reproducible, resumable evaluation rigs that bridge notebooks, services, and production dashboards.',
+    tools: ['Python', 'TypeScript', 'PyTorch', 'Transformers', 'TensorFlow', 'FastAPI'],
+    bullets: [
+      'Instrument experiments so findings stay auditable, extensible, and easy to reprise.',
+      'Context-switch between numerical computing in MATLAB/R and modern LLM tooling.',
+      'Use numpy, pandas, matplotlib, and seaborn to shorten the insight loop.',
+    ],
+  },
+  {
+    title: 'Full-stack systems & product',
+    statement: 'Ship interfaces and services that stay maintainable as teams grow and stakes rise.',
+    tools: ['React', 'Astro', 'Next.js', 'Node.js', 'Django', 'Go', 'Java'],
+    bullets: [
+      'Production experience across web, microservices, and API design, including LINE Shopping.',
+      'Delivered mobile apps from native Android to React Native and Flutter rebuilds.',
+      'Design background with Figma, Adobe XD, and Photoshop keeps user experience central.',
+    ],
+  },
+  {
+    title: 'Ops, assurance & platforms',
+    statement:
+      'Reliability stays non-negotiable—tests, automation, and observability are part of the canvas.',
+    tools: ['Jest', 'Cypress', 'Playwright', 'Selenium', 'Docker', 'Git', 'Firebase'],
+    bullets: [
+      'Security and networking foundations inform threat models and review practices.',
+      'Support rapid-response teams with structured workflows and clear runbooks.',
+      'Work comfortably with SQL/NoSQL and vector stores—MongoDB, Neo4j, Pinecone, Milvus, Qdrant.',
+    ],
+  },
+];
+
+const educationEntries = [
+  {
+    title: 'M.Eng., Intelligent Computer Entertainment Lab, Ritsumeikan University',
+    period: '2022 — 2024',
+    summary: 'Valedictorian focused on creative AI and evaluation tooling.',
+    bullets: [
+      'Investigated generative creativity and reliability across large language models.',
+      'Delivered Typhoon research contributions on reasoning and applied systems.',
+    ],
+  },
+  {
+    title: 'B.Sc. Computer Science, KMUTT (First-class honours)',
+    period: '2017 — 2021',
+    summary: 'Petchra Pra Jom Klao Scholarship recipient and academic distinction awardee.',
+    bullets: [
+      'Earned Jia Ra Nai Petchra Scholarship and Honor Award for program-leading performance.',
+      'Name engraved on KMUTT’s Wall of Honors recognizing the top graduate of the cohort.',
+    ],
+  },
+];
+
+const communityHighlights = [
+  {
+    title: 'Applied research collaborations',
+    description:
+      'Early in my journey I joined the Innovative Cognitive Computing Laboratory at KMUTT, partnering closely with clinicians and researchers.',
+    bullets: [
+      'Led AR, web, and natural language projects that turned ideas into usable systems.',
+      'Served as tech lead for Siriraj Hospital collaborations, shaping HFMD research tooling.',
+    ],
+  },
+  {
+    title: 'Industry immersion & mentoring',
+    description:
+      'From LINE Thailand to national innovation programs, I thrive in teams that move fast without losing craft.',
+    bullets: [
+      'Shipped LINE Shopping features and contributed to the Vue 2 → 3 migration across microservices.',
+      'Selected for Young Webmaster Camp and Google Tech Challenge; mentored peers as inaugural Google Developer Student Club lead at KMUTT.',
+    ],
+  },
+];
+
+const serviceHighlights = [
+  'Directed an eight-person rapid-response team during the COVID-19 outbreak to build KMUTT’s nationwide donation management platform—300+ shipments, 50+ hospitals supported.',
+  'Spearheaded Junior Programmer Camp XV, delivering admissions and staff tooling that opened computer science pathways for students across Thailand.',
+  'Continue to review for conferences and coach communities because sharing expertise compounds impact.',
+];
+
+const learningHighlights = [
+  'Lifelong learning is ritual: I constantly take online courses, pairing curiosity with deliberate practice.',
+  'Regularly tutor classmates and mentees—teaching is how I stress-test my own understanding.',
+  'Connecting disparate topics keeps me inventive and empathic when designing intelligent systems.',
+];
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
-  <Container className="glass-section">
+  <div class="about-backdrop" aria-hidden="true">
+    <div class="about-backdrop__gradient"></div>
+    <div class="about-backdrop__orb"></div>
+    <div class="about-backdrop__grid"></div>
+  </div>
+
+  <Container className="relative z-10 space-y-16 pb-24">
     <ThemedPageHero
-      title="About"
-      subtitle="Learn more about me, my research interests, and my journey"
+      title="About Pete"
+      subtitle="Research engineer building dependable reasoning systems that balance creativity, reliability, and human delight."
       page="about"
     />
 
-    <!-- Snapshot -->
-    <GlassCard id="about-me">
-      <div class="mx-auto">
-        <div class="flex flex-col items-center text-center">
-          <Image
-            src={profileImage}
-            alt="Pete's profile picture"
-            widths={[112, 144, 224, 288]}
-            sizes="(min-width: 768px) 9rem, 7rem"
-            loading="lazy"
-            decoding="async"
-            class="avatar-round w-28 object-cover md:w-36"
-          />
-          <h2 class="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-            Pittawat Taveekitworachai (Pete)
-          </h2>
-          <p class="mt-2 max-w-2xl text-[color:var(--white)]/85">
-            Researcher working on large language models, reasoning, and prompt engineering. I enjoy
-            turning ideas into practical, reliable systems and sharing what I learn.
-          </p>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <Chip>Bangkok, Thailand</Chip>
-            <Chip>LLMs</Chip>
-            <Chip>Reasoning</Chip>
-            <Chip>Prompt Engineering</Chip>
-            <Chip>Open Source</Chip>
+    <section id="profile" class="section-canvas">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)]">
+        <GlassCard variant="premium" className="profile-card overflow-hidden p-0">
+          <div class="profile-card__grid">
+            <div class="profile-card__media bg-[color:var(--black)]/20">
+              <figure class="profile-media">
+                <div class="profile-media__halo" aria-hidden="true"></div>
+                <div class="profile-media__glow" aria-hidden="true"></div>
+                <Image
+                  src={profileImage}
+                  alt="Pete's profile picture"
+                  widths={[160, 200, 260, 320]}
+                  sizes="(min-width: 1024px) 15rem, (min-width: 768px) 13rem, 12rem"
+                  loading="lazy"
+                  decoding="async"
+                  class="profile-media__image"
+                />
+              </figure>
+              <div class="profile-card__media-meta">
+                <span>Bangkok, Thailand</span>
+                <span>Research Scientist @ Typhoon</span>
+              </div>
+            </div>
+            <div class="profile-card__content">
+              <div class="profile-card__heading">
+                <div class="profile-card__title-group">
+                  <span class="profile-card__eyebrow">Research & Systems</span>
+                  <h2>Pittawat Taveekitworachai (Pete)</h2>
+                </div>
+              </div>
+              <p class="profile-card__bio">
+                I explore how large language models reason, create, and assist responsibly. My work
+                spans research, product, and community—turning fragile ideas into dependable systems
+                and sharing the playbooks that help others build with confidence.
+              </p>
+              <div class="profile-card__connect">
+                <span class="profile-card__meta-label">Connect</span>
+                <nav class="profile-card__social" aria-label="Social links">
+                  <a
+                    class="social-link"
+                    href="https://github.com/Pittawat2542"
+                    target="_blank"
+                    aria-label="GitHub"
+                  >
+                    <Github />
+                  </a>
+                  <a
+                    class="social-link"
+                    href="https://www.linkedin.com/in/pittawat-tav/"
+                    target="_blank"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin />
+                  </a>
+                  <a
+                    class="social-link"
+                    href="https://www.instagram.com/pete.pittawat/"
+                    target="_blank"
+                    aria-label="Instagram"
+                  >
+                    <Instagram />
+                  </a>
+                  <a
+                    class="social-link"
+                    href="https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en"
+                    target="_blank"
+                    aria-label="Google Scholar"
+                  >
+                    Scholar
+                  </a>
+                  <a
+                    class="social-link"
+                    href="https://orcid.org/0000-0002-6824-2634"
+                    target="_blank"
+                    aria-label="ORCID"
+                  >
+                    ORCID
+                  </a>
+                </nav>
+              </div>
+            </div>
           </div>
+        </GlassCard>
 
-          <!-- Social / Links -->
-          <div class="mt-5 flex flex-wrap justify-center gap-4">
-            <a
-              class="p-1 transition-transform duration-150 ease-out will-change-transform hover:-translate-y-1"
-              href="https://github.com/Pittawat2542"
-              target="_blank"
-              aria-label="GitHub"><Github /></a
-            >
-            <a
-              class="p-1 transition-transform duration-150 ease-out will-change-transform hover:-translate-y-1"
-              href="https://www.linkedin.com/in/pittawat-tav/"
-              target="_blank"
-              aria-label="LinkedIn"><Linkedin /></a
-            >
-            <a
-              class="p-1 transition-transform duration-150 ease-out will-change-transform hover:-translate-y-1"
-              href="https://www.instagram.com/pete.pittawat/"
-              target="_blank"
-              aria-label="Instagram"><Instagram /></a
-            >
-            <a
-              class="p-1 transition-transform duration-150 hover:-translate-y-1"
-              href="https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en"
-              target="_blank">Google Scholar</a
-            >
-            <a
-              class="p-1 transition-transform duration-150 hover:-translate-y-1"
-              href="https://orcid.org/0000-0002-6824-2634"
-              target="_blank">ORCID</a
-            >
+        <GlassCard variant="glow" className="profile-metrics overflow-hidden">
+          <div class="profile-metrics__backdrop" aria-hidden="true"></div>
+          <div class="profile-metrics__inner">
+            <header class="profile-metrics__header">
+              <span class="profile-metrics__eyebrow">At a glance</span>
+              <p>Data points that anchor how I build, teach, and experiment.</p>
+            </header>
+            <div class="profile-metrics__grid">
+              {
+                highlightStats.map(stat => (
+                  <article class="profile-metric">
+                    <span class="profile-metric__value">{stat.value}</span>
+                    <p class="profile-metric__label">{stat.label}</p>
+                    <p class="profile-metric__description">{stat.description}</p>
+                  </article>
+                ))
+              }
+            </div>
           </div>
-          <div class="mt-4 flex flex-wrap gap-3">
-            <a
-              href="/projects"
-              class="border-input hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring inline-flex items-center gap-2 rounded-md border bg-transparent px-3 py-1.5 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-              >Projects</a
-            >
-            <a
-              href="/publications"
-              class="border-input hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring inline-flex items-center gap-2 rounded-md border bg-transparent px-3 py-1.5 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-              >Publications</a
-            >
-            <a
-              href="/talks"
-              class="border-input hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring inline-flex items-center gap-2 rounded-md border bg-transparent px-3 py-1.5 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-              >Talks</a
-            >
+        </GlassCard>
+      </div>
+    </section>
+
+    <section id="focus" class="section-canvas">
+      <div class="section-heading">
+        <h2>Focus & Current Questions</h2>
+        <p>
+          Each project is a laboratory. Here are the questions that keep me iterating on research,
+          infrastructure, and storytelling.
+        </p>
+      </div>
+      <div class="grid gap-5 md:grid-cols-2">
+        {
+          focusAreas.map(area => (
+            <GlassCard variant="premium" className="focus-card h-full">
+              <div class="flex items-start gap-3">
+                <span class="text-3xl md:text-4xl" aria-hidden="true">
+                  {area.emoji}
+                </span>
+                <div>
+                  <h3 class="text-xl font-semibold tracking-tight text-[color:var(--white)] md:text-2xl">
+                    {area.title}
+                  </h3>
+                  <p class="mt-2 text-sm text-[color:var(--white)]/80 md:text-base">
+                    {area.description}
+                  </p>
+                </div>
+              </div>
+              <ul class="focus-card__list">
+                {area.bullets.map(point => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="craft" class="section-canvas">
+      <div class="section-heading">
+        <h2>How I Build</h2>
+        <p>
+          Reliability, clarity, and accessibility thread through everything—from research pipelines
+          to the tools communities adopt.
+        </p>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        {
+          craftStacks.map(stack => (
+            <GlassCard variant="elevated" className="craft-card h-full">
+              <h3 class="text-lg font-semibold tracking-tight text-[color:var(--white)] md:text-xl">
+                {stack.title}
+              </h3>
+              <p class="mt-2 text-sm text-[color:var(--white)]/80 md:text-base">
+                {stack.statement}
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {stack.tools.map(tool => (
+                  <Chip>{tool}</Chip>
+                ))}
+              </div>
+              <ul class="craft-card__list">
+                {stack.bullets.map(point => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="timeline" class="section-canvas">
+      <GlassCard variant="glow" className="timeline-card overflow-hidden p-0">
+        <div class="timeline-card__gradient" aria-hidden="true"></div>
+        <div class="timeline-card__body">
+          <header class="timeline-card__header">
+            <div class="timeline-card__headline">
+              <span class="timeline-card__eyebrow">Trajectory</span>
+              <h2>Trajectory Highlights</h2>
+              <p>
+                Research milestones, industry sprints, and community-led missions that inform how I
+                frame the next question.
+              </p>
+            </div>
+          </header>
+          <div class="timeline-card__list">
+            <ol>
+              {
+                timeline.map(item => {
+                  const accentVar = `var(--accent-${item.accent ?? 'about'})`;
+                  return (
+                    <li class={`timeline-item ${item.highlight ? 'timeline-item--highlight' : ''}`}>
+                      <span class="timeline-item__marker" style={{ background: accentVar }} />
+                      <div class="timeline-item__content">
+                        <div class="timeline-item__meta">
+                          <span class="timeline-item__accent" style={{ color: accentVar }}>
+                            {makeAccentLabel(item.accent)}
+                          </span>
+                          {item.highlight && <span class="timeline-item__badge">Spotlight</span>}
+                        </div>
+                        <h3 class="timeline-item__title">{item.title}</h3>
+                        <p class="timeline-item__description">{item.description}</p>
+                      </div>
+                    </li>
+                  );
+                })
+              }
+            </ol>
           </div>
         </div>
+      </GlassCard>
+    </section>
+
+    <section id="journey" class="section-canvas">
+      <div class="section-heading">
+        <h2>Journey, Community & Service</h2>
+        <p>
+          Degrees and job titles matter, but the real story lives in the people, places, and service
+          moments that shaped my judgment.
+        </p>
       </div>
-    </GlassCard>
-
-    <!-- Timeline -->
-    <GlassCard id="timeline" className="mt-8">
-      <Prose className="mx-auto">
-        <h2 class="mb-4 text-2xl font-bold tracking-tight md:text-3xl">Timeline</h2>
-        <ul class="relative ml-3 list-none space-y-6 border-s border-[color:var(--white)]/10">
-          {
-            timeline.map(item => {
-              const accentVar = `var(--accent-${item.accent})`;
-              const isHighlight = Boolean(item.highlight);
-              return (
-                <li class="ms-6">
-                  <div
-                    class={isHighlight ? 'rounded-xl p-4' : ''}
-                    style={
-                      isHighlight
-                        ? {
-                            background: `color-mix(in oklab, ${accentVar} 10%, transparent)`,
-                            border: `1px solid color-mix(in oklab, ${accentVar} 50%, transparent)`,
-                          }
-                        : {}
-                    }
-                  >
-                    <span
-                      class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full ring-2 ring-[color:var(--white)]/25"
-                      style={{
-                        background: accentVar,
-                      }}
-                    />
-                    <h3
-                      class="font-semibold"
-                      style={{
-                        marginTop: '0.5rem',
-                        marginBottom: '0.5rem',
-                      }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p class="text-sm text-[color:var(--white)]/80">{item.description}</p>
+      <div class="grid gap-5 lg:grid-cols-2">
+        <GlassCard variant="premium" className="journey-card h-full">
+          <h3>Education & Honours</h3>
+          <div class="journey-card__group">
+            {
+              educationEntries.map(entry => (
+                <div>
+                  <div class="journey-card__header">
+                    <p>{entry.title}</p>
+                    <span>{entry.period}</span>
                   </div>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </Prose>
-    </GlassCard>
+                  <p class="journey-card__summary">{entry.summary}</p>
+                  <ul class="journey-card__list">
+                    {entry.bullets.map(point => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </GlassCard>
 
-    <!-- Research interests -->
-    <GlassCard id="interests" className="mt-8">
-      <Prose>
-        <h2 class="mb-2 text-2xl font-bold tracking-tight md:text-3xl">Research interests</h2>
-        <ul class="space-y-4">
-          <li>
+        <GlassCard variant="premium" className="journey-card h-full">
+          <h3>Research & Industry Collaborations</h3>
+          <div class="journey-card__group">
+            {
+              communityHighlights.map(item => (
+                <div>
+                  <div class="journey-card__header">
+                    <p>{item.title}</p>
+                  </div>
+                  <p class="journey-card__summary">{item.description}</p>
+                  <ul class="journey-card__list">
+                    {item.bullets.map(point => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </GlassCard>
+
+        <GlassCard variant="premium" className="journey-card h-full">
+          <h3>Service & Volunteer Leadership</h3>
+          <ul class="journey-card__list">
+            {serviceHighlights.map(point => <li>{point}</li>)}
+          </ul>
+        </GlassCard>
+
+        <GlassCard variant="premium" className="journey-card h-full">
+          <h3>Lifelong Learning Rituals</h3>
+          <ul class="journey-card__list">
+            {learningHighlights.map(point => <li>{point}</li>)}
+          </ul>
+          <Prose className="mt-4 text-sm text-[color:var(--white)]/70">
             <p>
-              <strong><em>💡 Creativity and 💫 hallucination in 🤖 LLMs</em></strong>
+              Learning is how I stay curious and stay kind. Understanding a topic deeply makes it
+              easier to design with empathy and to uplift the people building alongside me.
             </p>
-            <ul class="ml-4 space-y-1 text-base italic">
-              <li>Does LLM require hallucinations to perform certain tasks effectively?</li>
-              <li>How does hallucination affect LLMs differently at each scale?</li>
-              <li>Are there any connections between hallucination and creativity in LLMs?</li>
-            </ul>
-          </li>
-          <li>
-            <p>
-              <strong><em>🎻 Classical algorithmic approaches with 🤖 LLMs</em></strong>
-            </p>
-            <ul class="ml-4 space-y-1 text-base italic">
-              <li>How can we combine classical algorithms with LLMs to perform complex tasks?</li>
-              <li>Do all algorithms work well with LLMs?</li>
-              <li>
-                When we view LLMs as black-box magic functions, how does it change the way we design
-                algorithms?
-              </li>
-            </ul>
-          </li>
-          <li>
-            <p><strong><em>⚖️ LLM evaluation</em></strong></p>
-            <ul class="ml-4 space-y-1 text-base italic">
-              <li>Can LLM reliably produce structured output as tasks become more complex?</li>
-              <li>How does scale affect LLMs in various tasks?</li>
-              <li>How can we automatically evaluate LLMs in more complex tasks?</li>
-            </ul>
-          </li>
-          <li>
-            <p><strong>🪄 Prompt engineering</strong></p>
-            <ul class="ml-4 space-y-1 text-base italic">
-              <li>Why does prompt engineering work?</li>
-              <li>
-                If chain-of-thought and few-shot prompting can be viewed as localization in latent
-                space, can we apply the opposite for exploration (creativity)?
-              </li>
-              <li>How can we efficiently generate optimal prompts automatically?</li>
-            </ul>
-          </li>
-          <li>
-            <p><strong>🧳 LLM Applications</strong></p>
-            <ul class="ml-4 space-y-1 text-base italic">
-              <li>Multi-modality in procedural content generation</li>
-              <li>Using LLMs as aesthetically pleasing educational tools</li>
-              <li>Simulator-Based Driving Assessment for Post-Stroke Patients</li>
-            </ul>
-          </li>
-        </ul>
-      </Prose>
-    </GlassCard>
-
-    <!-- Skills -->
-    <GlassCard id="skills" className="mt-8">
-      <Prose>
-        <h2 class="mb-2 text-2xl font-bold tracking-tight md:text-3xl">Skills</h2>
-        <p>
-          I believe in open science and software craftsmanship. I design <strong
-            >reproducible</strong
-          >, <strong>resumable</strong>, and <strong>fault‑tolerant</strong> software for long‑running
-          LLM evaluations, with <strong>extensibility</strong> and <strong>simplicity</strong> as core
-          principles.
-        </p>
-
-        <h3 class="mt-6 text-xl font-bold">Software Engineering</h3>
-        <p>
-          I'm very familiar with <a href="https://www.python.org/" target="_blank">Python</a> and <a
-            href="https://www.typescriptlang.org/"
-            target="_blank">TypeScript</a
-          > as well as their associated technologies, libraries, and frameworks. Python is my primary
-          language for many of my software for research. I'm familiar with <a
-            href="https://pytorch.org/"
-            target="_blank">PyTorch</a
-          > and <a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a> as well as <a
-            href="https://huggingface.co/"
-            target="_blank">HuggingFace</a
-          >'s <a href="https://huggingface.co/docs/transformers/en/index" target="_blank"
-            >transformer</a
-          >. I also had some experience with <a
-            href="https://www.mathworks.com/products/matlab.html"
-            target="_blank">MATLAB</a
-          > and <a href="https://www.r-project.org" target="_blank">R</a>. I also perform most of my
-          data tasks like EDA, data pre-processing, and data visualization in Python using various
-          packages, such as <a href="https://numpy.org/" target="_blank">numpy</a>, <a
-            href="https://pandas.pydata.org/"
-            target="_blank">pandas</a
-          >, <a href="https://matplotlib.org/" target="_blank">matplotlib</a>, <a
-            href="https://seaborn.pydata.org/"
-            target="_blank">seaborn</a
-          >, and more.
-        </p>
-
-        <p>
-          I am experienced in full-stack web development. My tools of choice for web application
-          development are <a href="https://reactjs.org/" target="_blank">React.js</a>, <a
-            href="https://vuejs.org/"
-            target="_blank">Vue.js</a
-          >, and <a href="https://nodejs.org/" target="_blank">Node.js</a>. I also used to write
-          back-end services in Python (<a href="https://www.djangoproject.com/" target="_blank"
-            >Django</a
-          > and <a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI</a>), <a
-            href="https://golang.org/"
-            target="_blank">Go</a
-          >, and <a href="https://www.java.com/" target="_blank">Java</a>, in addition to JavaScript
-          and TypeScript. I also have experience using <a href="https://astro.build" target="_blank"
-            >Astro</a
-          > (for this website) as well as meta-frameworks such as <a
-            href="https://nextjs.org"
-            target="_blank">Next.js</a
-          > and <a href="https://remix.run" target="_blank">Remix</a>. For the front-end, I use <a
-            href="https://tailwindcss.com"
-            target="_blank">Tailwind</a
-          > and native <strong>CSS</strong>. I used to work with <a
-            href="https://getbootstrap.com"
-            target="_blank">Bootstrap</a
-          > and <a href="https://semantic-ui.com" target="_blank">Semantic UI</a>.
-        </p>
-
-        <p>
-          Previously, I also had experience with mobile application development in native <a
-            href="https://developer.android.com"
-            target="_blank">Android</a
-          > (Java) as well as cross-platform frameworks like <a
-            href="https://reactnative.dev"
-            target="_blank">React Native</a
-          > and <a href="https://flutter.dev" target="_blank">Flutter</a> using <a
-            href="https://dart.dev"
-            target="_blank">Dart</a
-          >. I also do user interface and user experience design. My primary tool is <a
-            href="https://www.figma.com"
-            target="_blank">Figma</a
-          >, but I also used to use <strong>Adobe XD</strong> and <strong>Adobe Photoshop</strong>.
-        </p>
-
-        <p>
-          I also had experience in computer network and computer security as well as software
-          testing and automation. My tools of choice include <a
-            href="https://jestjs.io/"
-            target="_blank">Jest</a
-          >, <a href="https://www.cypress.io/" target="_blank">Cypress</a>, <a
-            href="https://www.selenium.dev/"
-            target="_blank">Selenium</a
-          >, <a href="https://www.crummy.com/software/BeautifulSoup/" target="_blank"
-            >BeautifulSoup</a
-          >, and <a href="https://playwright.dev/" target="_blank">Playwright</a>. I am also
-          familiar with serverless services like <a
-            href="https://firebase.google.com/"
-            target="_blank">Firebase</a
-          >. I also utilize technologies like <a href="https://git-scm.com/" target="_blank">Git</a>
-          and <a href="https://www.docker.com/" target="_blank">Docker</a> to help me streamline my workflow.
-          I also work with both SQL and NoSQL, such as <a
-            href="https://www.mongodb.com/"
-            target="_blank">MongoDB</a
-          >, as well as graph databases like <a href="https://neo4j.com/" target="_blank">Neo4j</a>.
-          Multiple of my research projects also utilize various vector databases, such as <a
-            href="https://www.pinecone.io/"
-            target="_blank">Pinecone</a
-          >, <a href="https://milvus.io/" target="_blank">Milvus</a>, and <a
-            href="https://qdrant.tech/"
-            target="_blank">Qdrant</a
-          >.
-        </p>
-      </Prose>
-    </GlassCard>
-
-    <!-- Education & Experiences -->
-    <GlassCard id="education" className="mt-8">
-      <Prose className="mx-auto">
-        <h2 class="mb-2 text-2xl font-bold tracking-tight md:text-3xl">
-          Education & Related Experiences
-        </h2>
-        <p>
-          Previously, I earned my Bachelor's degree in Computer Science with first-class honors from <a
-            href="https://www.kmutt.ac.th/en/"
-            target="_blank">King Mongkut's University of Technology Thonburi</a
-          >, Thailand, supported by the prestigious 💎 <strong
-            >Petchra Pra Jom Klao Scholarship - Distinguished Academic Capabilities</strong
-          >. Additionally, I received the 💎 <strong
-            >Jia Ra Nai Petchra Scholarship - Academic Distinguished Award</strong
-          > for my outstanding performance throughout the academic year, being recognized as the top
-          student in the program for a specific year. Upon graduation, I was honored with the 🎖️ <strong
-            >Honor Award for Academic Distinguished Performance</strong
-          > by the Prapa-Sompong Foundation, acknowledging me as the top student among the graduates
-          of the same year. Furthermore, my name was inscribed on the <strong>Wall of Honors</strong
-          > at the university's president building.
-        </p>
-
-        <h3 class="mt-6 text-xl font-bold">Extra-curricular Activities</h3>
-        <p>
-          During my time pursuing my Bachelor's degree, I was also involved in a medical research
-          project on HFMD in collaboration with the <a
-            href="https://www2.si.mahidol.ac.th/en/"
-            target="_blank">Faculty of Medicine at Siriraj Hospital, Mahidol University</a
-          >, Thailand. Additionally, I had the opportunity to intern at <a
-            href="https://linecorp.com/en/"
-            target="_blank">LINE Company (Thailand)</a
-          > as a software engineer, where I worked on the full-stack development of their <a
-            href="https://shop.line.me/home/"
-            target="_blank">e-commerce website</a
-          > and dealt with complex systems. Furthermore, I am honored to have been selected as part of
-          the inaugural batch of <a
-            href="https://developers.google.com/community/gdsc"
-            target="_blank">Google Developer Student Clubs</a
-          > Leads in Thailand for my university. This provided me with the opportunity to lead a team
-          and organize various events over the years, as well as connect with other leads across the
-          country and region.
-        </p>
-
-        <h3 class="mt-6 text-xl font-bold">Research</h3>
-        <p>
-          I had the opportunity to join the Innovative Cognitive Computing Laboratory at the School
-          of Information Technology, King Mongkut's University of Technology Thonburi, Thailand, as
-          a research assistant. I worked on various projects, including AR poster development, web
-          development, and natural language processing. This experience was my first official
-          exposure to the research community and motivated me to pursue a Master's degree further.
-        </p>
-      </Prose>
-    </GlassCard>
-
-    <!-- Volunteer -->
-    <GlassCard id="volunteer" className="mt-8">
-      <Prose className="mx-auto">
-        <h2 class="mb-2 text-2xl font-bold tracking-tight md:text-3xl">Volunteer</h2>
-        <p>
-          I volunteer for various occasions because I believe in paying it forward and helping
-          others. One of my volunteering experiences includes organizing and developing web
-          applications for Junior Programmer Camp XV, an annual camp organized by computer science
-          students at the School of Information Technology, King Mongkut's University of Technology
-          Thonburi, targeted at senior high school students throughout Thailand. In this camp,
-          participants have the opportunity to be exposed to various activities that help them
-          familiarize themselves with CS concepts and the university's atmosphere. I oversee the IT
-          aspect of the camp and lead the development team. Alongside two other teammates, we
-          developed the main website for the camp, including the registration system. Additionally,
-          we created a camp management system to facilitate staff in the participant selection
-          process.
-        </p>
-
-        <p>
-          During the COVID-19 pandemic, I volunteered to help develop a web application for the
-          university. The university needed a system to manage donated supplies that would be
-          distributed across the country. As a lead, I directed a team of eight members to urgently
-          develop the system, as the situation was critical. This support system not only helps the
-          university manage the supply but also allows hospitals to request additional supplies.
-          Throughout the period, we also provided maintenance services. The code is accessible on <a
-            href="https://github.com/Pittawat2542/kmutt-covid-19"
-            target="_blank">GitHub</a
-          >. Additionally, I currently serve as a reviewer for conferences to contribute back to the
-          communities.
-        </p>
-      </Prose>
-    </GlassCard>
-
-    <!-- Lifelong learning -->
-    <GlassCard id="learning" className="mt-8">
-      <Prose className="mx-auto">
-        <h2 class="mb-2 text-2xl font-bold tracking-tight md:text-3xl">Lifelong Learning</h2>
-        <p>
-          I also enjoy taking various online courses throughout the years (as can be seen from
-          certificates on my <a href="https://www.linkedin.com/in/pittawat-tav/" target="_blank"
-            >LinkedIn</a
-          >.) I enjoy learning and its process. The feeling of understanding something new satisfies
-          me. It also helps me become better at what I do and enables me to be <strong
-            >creative</strong
-          > and connect various seemingly unrelated topics together to come up with new ideas. This is
-          also a part of my personal goal revolving around <strong>life-long learning</strong>, and
-          I believe that understanding leads to a better life and understanding of other people and
-          things. During my time pursuing my Bachelor's degree, I also served as a tutor on various
-          topics in computer science for my classmates to help them prepare for upcoming exams. I
-          believe that <em
-            >sharing knowledge not only helps other people but also helps me understand the topic
-            better.</em
-          >
-        </p>
-      </Prose>
-    </GlassCard>
+          </Prose>
+        </GlassCard>
+      </div>
+    </section>
   </Container>
 </BaseLayout>
 
 <style>
-  .about-nav-item {
-    transition: all 0.2s ease-in-out;
+  .about-backdrop {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 20% 25%, rgba(63, 94, 251, 0.14), transparent 55%),
+      radial-gradient(circle at 80% 75%, rgba(244, 114, 182, 0.12), transparent 55%),
+      linear-gradient(160deg, rgba(7, 11, 24, 0.96), rgba(9, 13, 28, 0.92));
   }
 
-  .about-nav-item:hover {
-    background-color: color-mix(in oklab, var(--accent-about) 20%, transparent);
-    color: var(--accent-about);
+  .about-backdrop__gradient,
+  .about-backdrop__orb,
+  .about-backdrop__grid {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
   }
 
-  .about-nav-item:focus {
-    outline: 2px solid var(--accent-about);
-    outline-offset: 2px;
+  .about-backdrop__gradient {
+    background: conic-gradient(
+      from 120deg at 50% 50%,
+      rgba(59, 130, 246, 0.25),
+      rgba(129, 140, 248, 0.15),
+      rgba(236, 72, 153, 0.18),
+      rgba(59, 130, 246, 0.25)
+    );
+    filter: blur(160px);
+    opacity: 0.7;
+    animation: about-spin 42s linear infinite;
+  }
+
+  .about-backdrop__orb {
+    background: radial-gradient(circle at 60% 40%, rgba(244, 114, 182, 0.18), transparent 70%);
+    mix-blend-mode: screen;
+    animation: about-drift 32s ease-in-out infinite alternate;
+  }
+
+  .about-backdrop__grid {
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    background-size: 140px 140px;
+    transform: rotate(2deg) scale(1.05);
+    opacity: 0.4;
+    animation: about-grid 38s linear infinite;
+  }
+
+  .section-canvas {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.75rem, 2vw + 0.5rem, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: color-mix(in oklab, var(--accent-about) 40%, var(--white));
+  }
+
+  .section-heading p {
+    margin-top: 0.75rem;
+    max-width: 48rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+  }
+
+  .hero-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     border-radius: 9999px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.95rem;
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: rgba(255, 255, 255, 0.9);
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .hero-action svg {
+    flex-shrink: 0;
+  }
+
+  .hero-action:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.4));
+    background: color-mix(in oklab, var(--accent-about) 22%, rgba(15, 23, 42, 0.45));
+  }
+
+  .hero-action--primary {
+    background: linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--accent-about) 65%, rgba(14, 23, 42, 0.9)),
+      rgba(14, 23, 42, 0.85)
+    );
+    border-color: color-mix(in oklab, var(--accent-about) 55%, transparent);
+  }
+
+  .hero-action--primary:hover {
+    background: linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--accent-about) 75%, rgba(14, 23, 42, 0.9)),
+      rgba(14, 23, 42, 0.85)
+    );
+  }
+
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 10% 10%, rgba(129, 140, 248, 0.18), transparent 55%);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .profile-card__grid {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.4rem, 2vw, 2.6rem);
+  }
+
+  .profile-card__media {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    justify-content: center;
+    padding: clamp(1.6rem, 1.8vw + 1.3rem, 2.4rem);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+  }
+
+  .profile-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+    width: 100%;
+    max-width: 15rem;
+    margin: 0;
+  }
+
+  .profile-media__halo {
+    position: absolute;
+    inset: -18%;
+    background: radial-gradient(circle at 45% 20%, rgba(129, 140, 248, 0.35), transparent 65%);
+    filter: blur(45px);
+    opacity: 0.65;
+    z-index: 0;
+  }
+
+  .profile-media__glow {
+    position: absolute;
+    inset: 12% 14% 16% 12%;
+    background: radial-gradient(circle at 60% 35%, rgba(59, 130, 246, 0.38), transparent 62%);
+    filter: blur(55px);
+    opacity: 0.6;
+    border-radius: 36px;
+    z-index: 0;
+  }
+
+  .profile-media__image {
+    position: relative;
+    z-index: 1;
+    width: clamp(11rem, 20vw, 13rem);
+    height: clamp(11rem, 20vw, 13rem);
+    border-radius: 28px;
+    object-fit: cover;
+    box-shadow: 0 20px 45px rgba(12, 25, 54, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .profile-card__media-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .profile-card__media-meta span:last-child {
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .profile-card__content {
+    position: relative;
+    padding: clamp(1.6rem, 2vw + 1.45rem, 2.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .profile-card__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .profile-card__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .profile-card__title-group h2 {
+    margin: 0;
+    font-size: clamp(2rem, 2.6vw + 1rem, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .profile-card__eyebrow {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .profile-card__bio {
+    margin: 0;
+    font-size: clamp(1rem, 0.4vw + 0.96rem, 1.1rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 46ch;
+  }
+
+  .profile-card__connect {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+    border-radius: 1.15rem;
+    background: rgba(13, 22, 38, 0.56);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    box-shadow: 0 14px 32px rgba(12, 25, 54, 0.28);
+    backdrop-filter: blur(10px);
+  }
+
+  @media (min-width: 1024px) {
+    .profile-card__connect {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.25rem 1.6rem 1.35rem;
+    }
+  }
+
+  .profile-card__meta-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.58);
+  }
+
+  .profile-card__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .cta-link:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.45));
+    background: color-mix(in oklab, var(--accent-about) 25%, rgba(15, 23, 42, 0.45));
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .social-link:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.4));
+    color: color-mix(in oklab, var(--accent-about) 45%, var(--white));
+  }
+
+  .profile-metrics {
+    position: relative;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+  }
+
+  .profile-metrics__backdrop {
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle, rgba(129, 140, 248, 0.2), transparent 65%);
+    filter: blur(70px);
+    opacity: 0.85;
+  }
+
+  .profile-metrics__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: clamp(1.8rem, 2vw + 1.6rem, 2.65rem);
+  }
+
+  .profile-metrics__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 28rem;
+  }
+
+  .profile-metrics__eyebrow {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .profile-metrics__header p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .profile-metrics__grid {
+    display: grid;
+    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .profile-metric {
+    position: relative;
+    padding: 1.3rem 1.2rem;
+    border-radius: 1.15rem;
+    background: rgba(12, 20, 35, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    backdrop-filter: blur(10px);
+  }
+
+  .profile-metric__value {
+    display: inline-block;
+    font-size: clamp(1.7rem, 2.1vw + 1rem, 2.6rem);
+    font-weight: 700;
+    color: color-mix(in oklab, var(--accent-about) 55%, var(--white));
+  }
+
+  .profile-metric__label {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .profile-metric__description {
+    margin-top: 0.55rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.6;
+  }
+
+  .focus-card__list,
+  .craft-card__list,
+  .journey-card__list {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 0.65rem;
+    padding-left: 1.15rem;
+    color: rgba(248, 250, 252, 0.78);
+    font-size: 0.95rem;
+    list-style: disc;
+  }
+
+  .focus-card__list li,
+  .craft-card__list li,
+  .journey-card__list li {
+    line-height: 1.6;
+  }
+
+  .craft-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .timeline-card {
+    border: 1px solid rgba(148, 163, 184, 0.25);
+  }
+
+  .timeline-card__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(129, 140, 248, 0.22), transparent 55%),
+      radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.18), transparent 60%);
+    opacity: 0.8;
+    filter: blur(80px);
+  }
+
+  .timeline-card__body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-card__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.2rem, 2vw, 1.9rem);
+    padding: clamp(2rem, 2.2vw + 1.6rem, 2.9rem);
+    background: rgba(10, 16, 31, 0.62);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .timeline-card__headline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 36rem;
+  }
+
+  .timeline-card__eyebrow {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .timeline-card__headline h2 {
+    margin: 0;
+    font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.6rem);
+    font-weight: 700;
+    color: color-mix(in oklab, var(--accent-about) 52%, var(--white));
+  }
+
+  .timeline-card__headline p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.65;
+  }
+
+  .timeline-card__list {
+    position: relative;
+    padding: clamp(1.6rem, 1.8vw + 1.4rem, 2.2rem) clamp(1.4rem, 1.5vw + 1.2rem, 2rem)
+      clamp(1.4rem, 1.4vw + 1.1rem, 1.9rem);
+  }
+
+  .timeline-card__list::before {
+    content: '';
+    position: absolute;
+    top: clamp(1.6rem, 1.8vw + 1.2rem, 2.2rem);
+    bottom: clamp(1.3rem, 1.3vw + 1rem, 1.8rem);
+    left: 1.15rem;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      rgba(148, 163, 184, 0.1),
+      color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.25)),
+      rgba(148, 163, 184, 0.1)
+    );
+  }
+
+  .timeline-card__list ol {
+    position: relative;
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+
+  .timeline-item__marker {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.25rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 9999px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+  }
+
+  .timeline-item__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: rgba(13, 22, 38, 0.55);
+    border-radius: 1.15rem;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    padding: 1.05rem 1.2rem;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .timeline-item__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .timeline-item__accent {
+    font-weight: 600;
+  }
+
+  .timeline-item__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 9999px;
+    background: rgba(129, 140, 248, 0.18);
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.1em;
+  }
+
+  .timeline-item__title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .timeline-item__description {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .timeline-item--highlight .timeline-item__content {
+    border-color: color-mix(in oklab, var(--accent-about) 45%, rgba(148, 163, 184, 0.2));
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(12, 25, 54, 0.35);
+  }
+
+  .journey-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: color-mix(in oklab, var(--accent-about) 45%, var(--white));
+  }
+
+  .journey-card__group {
+    margin-top: 1.3rem;
+    display: grid;
+    gap: 1.8rem;
+  }
+
+  .journey-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .journey-card__header span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .journey-card__summary {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.65;
+  }
+
+  @keyframes about-spin {
+    from {
+      transform: rotate(0deg) scale(1);
+    }
+    to {
+      transform: rotate(360deg) scale(1.05);
+    }
+  }
+
+  @keyframes about-drift {
+    0% {
+      transform: translate3d(-2%, -1%, 0) scale(1.05);
+    }
+    50% {
+      transform: translate3d(2%, 3%, 0) scale(1.08);
+    }
+    100% {
+      transform: translate3d(4%, -2%, 0) scale(1.05);
+    }
+  }
+
+  @keyframes about-grid {
+    0% {
+      transform: rotate(2deg) scale(1.05) translate3d(0, 0, 0);
+    }
+    50% {
+      transform: rotate(1deg) scale(1.03) translate3d(1%, -1%, 0);
+    }
+    100% {
+      transform: rotate(2deg) scale(1.05) translate3d(-1%, 1%, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-backdrop__gradient,
+    .about-backdrop__orb,
+    .about-backdrop__grid,
+    .hero-action,
+    .cta-link,
+    .social-link,
+    .timeline-item__content {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transform: none !important;
+    }
   }
 </style>

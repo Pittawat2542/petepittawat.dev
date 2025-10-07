@@ -5,7 +5,7 @@ import { BlogCardFooter } from '@/components/ui/blog/BlogCardFooter';
 import { BlogCardImage } from '@/components/ui/blog/BlogCardImage';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import type { BlogPost } from '@/types';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
 import { useGlassGlow } from '@/lib/hooks';
 
@@ -55,12 +55,17 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   const contentLayout = 'flex flex-col gap-5';
   const paddingClasses = 'px-6 pt-6 pb-7 md:px-7 md:pt-8 md:pb-9';
   const barPadding = 'px-6 md:px-7';
+  const accentVar = useMemo(() => 'var(--accent-blog, var(--accent))', []);
+  const mergedStyle: CSSProperties = {
+    '--card-accent': accentVar,
+    ...style,
+  } as CSSProperties;
 
   return (
     <li
-      style={style}
-      className={`group blog-card flex h-full w-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/45 text-[color:var(--white)] shadow-lg shadow-black/20 backdrop-blur-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:border-[color:var(--accent)]/35 ${
-        featured ? 'card-featured' : ''
+      style={mergedStyle}
+      className={`group blog-card aurora-card flex h-full w-full flex-col text-[color:var(--white)] transition-transform duration-300 ease-out ${
+        featured ? 'aurora-card--featured' : ''
       } ${className}`}
     >
       <a
@@ -71,9 +76,9 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <BlogCardOverlays />
+        <BlogCardOverlays accent={accentVar} />
 
-        <div className="relative z-10 flex flex-1 flex-col">
+        <div className="aurora-card__body">
           <div className={paddingClasses}>
             <div
               className={`${contentLayout} transition-transform duration-400 ease-out group-hover:translate-y-[-4px]`}

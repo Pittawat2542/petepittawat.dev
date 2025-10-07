@@ -33,10 +33,10 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'border-border bg-card glass-card no-hover-lift text-card-foreground fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border p-6 shadow-lg',
+        'border-border bg-card no-hover-lift text-card-foreground fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border p-6 shadow-lg',
         'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-        // Constrain height and allow scrolling on small screens
-        'max-h-[85vh] overflow-y-auto',
+        // Constrain height while allowing inner content to manage overflow
+        'max-h-[90vh]',
         'focus-visible:outline-none',
         className
       )}

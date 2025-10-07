@@ -9,6 +9,7 @@ export interface SearchController {
 export function createSearchController(): SearchController {
   const init = () => {
     let prefetched = false;
+    const trackedButtons = new Set<HTMLButtonElement>();
 
     const prefetchSearchIndex = () => {
       if (prefetched) return;
@@ -32,31 +33,32 @@ export function createSearchController(): SearchController {
       }
     };
 
-    // Find search triggers
-    const desktopButton = document.getElementById('open-search-desktop');
-    const mobileButton = document.getElementById('open-search-mobile');
-    const drawerButton = document.getElementById('open-search-drawer');
+    const registerButton = (button: Element | null) => {
+      if (!button || !(button instanceof HTMLButtonElement) || trackedButtons.has(button)) {
+        return;
+      }
+      trackedButtons.add(button);
+      button.addEventListener('click', openSearchLazy);
+      button.addEventListener('mouseenter', prefetchSearchIndex, { once: true, passive: true });
+      button.addEventListener('focus', prefetchSearchIndex, { once: true });
+      button.addEventListener('touchstart', prefetchSearchIndex, { once: true, passive: true });
+    };
 
-    if (!desktopButton || !mobileButton || !drawerButton) {
-      // Retry after a short delay if elements aren't ready
-      setTimeout(() => init(), 100);
-      return () => {};
+    const connectButtons = () => {
+      registerButton(document.getElementById('open-search-desktop'));
+      registerButton(document.getElementById('open-search-mobile'));
+      registerButton(document.getElementById('open-search-drawer'));
+      document
+        .querySelectorAll<HTMLButtonElement>('button[aria-label="Open search"]')
+        .forEach(registerButton);
+    };
+
+    connectButtons();
+
+    if (trackedButtons.size === 0) {
+      setTimeout(connectButtons, 150);
     }
 
-    // Prefetch on pointer/focus intent
-    const triggers = document.querySelectorAll('button[aria-label=\"Open search\"]');
-    triggers.forEach(trigger => {
-      trigger.addEventListener('mouseenter', prefetchSearchIndex, { once: true, passive: true });
-      trigger.addEventListener('focus', prefetchSearchIndex, { once: true });
-      trigger.addEventListener('touchstart', prefetchSearchIndex, { once: true, passive: true });
-    });
-
-    // Click handlers
-    desktopButton.addEventListener('click', openSearchLazy);
-    mobileButton.addEventListener('click', openSearchLazy);
-    drawerButton.addEventListener('click', openSearchLazy);
-
-    // Keyboard shortcut
     const handleKeydown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -67,11 +69,14 @@ export function createSearchController(): SearchController {
 
     window.addEventListener('keydown', handleKeydown);
 
-    // Return cleanup function
     return () => {
-      desktopButton?.removeEventListener('click', openSearchLazy);
-      mobileButton?.removeEventListener('click', openSearchLazy);
-      drawerButton?.removeEventListener('click', openSearchLazy);
+      trackedButtons.forEach(button => {
+        button.removeEventListener('click', openSearchLazy);
+        button.removeEventListener('mouseenter', prefetchSearchIndex);
+        button.removeEventListener('focus', prefetchSearchIndex);
+        button.removeEventListener('touchstart', prefetchSearchIndex);
+      });
+      trackedButtons.clear();
       window.removeEventListener('keydown', handleKeydown);
     };
   };

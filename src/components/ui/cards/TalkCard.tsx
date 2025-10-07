@@ -1,11 +1,11 @@
 import { Calendar, Code2, ExternalLink, FileText, MapPin, Users, Video } from 'lucide-react';
 
 import { Badge } from '@/components/ui/core/badge';
-import { Card } from '@/components/ui/core/card';
-import type { FC } from 'react';
+import type { CSSProperties, FC } from 'react';
 import type { Talk } from '@/types';
 import { formatDate } from '@/lib';
 import { memo } from 'react';
+import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 interface TalkCardProps {
   readonly item: Talk;
@@ -13,10 +13,11 @@ interface TalkCardProps {
 
 const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
   const accent = 'var(--accent-talks)';
+  const cardStyle = { '--card-accent': accent } as CSSProperties;
   return (
-    <Card className="glass-entry group card-subtle-lift talk-card rounded-3xl p-0">
-      <div className="glass-entry__glow" />
-      <div className="glass-entry__content flex flex-col gap-3 p-5 md:p-6">
+    <article className="aurora-card group talk-card flex h-full flex-col" style={cardStyle}>
+      <BlogCardOverlays accent={accent} />
+      <div className="aurora-card__body flex flex-col gap-3 px-5 py-5 md:px-6 md:py-6">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-1.5 text-sm text-[color:var(--white)]/70">
             <Calendar
@@ -79,7 +80,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
         ) : null}
       </div>
       {item.resources?.length ? (
-        <div className="glass-entry__footer flex flex-wrap gap-2 px-5 py-3 text-xs text-white/78 md:px-6 md:py-4">
+        <div className="aurora-card__footer flex flex-wrap gap-2 text-xs text-white/80">
           {item.resources.map(r => {
             const isExternal = /^https?:\/\//i.test(r.href);
             const label = r.label || '';
@@ -100,21 +101,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
                 {...(r.download ? { download: '' } : {})}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out will-change-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 focus-visible:outline-none"
-                style={{
-                  color: accent,
-                  background: `color-mix(in oklab, ${accent} 14%, transparent)`,
-                  border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-                  boxShadow: `0 10px 22px -14px ${accent}`,
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.background =
-                    `color-mix(in oklab, ${accent} 22%, transparent)`;
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.background =
-                    `color-mix(in oklab, ${accent} 14%, transparent)`;
-                }}
+                className="aurora-chip aurora-chip--pill"
                 aria-label={label}
               >
                 <span
@@ -144,7 +131,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
           })}
         </div>
       ) : null}
-    </Card>
+    </article>
   );
 };
 

@@ -5,12 +5,12 @@ import { memo, useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { AuthorList } from './AuthorList';
 import { Badge } from '@/components/ui/core/badge';
-import { Card } from '@/components/ui/core/card';
-import type { FC } from 'react';
+import type { CSSProperties, FC } from 'react';
 import type { Publication } from '@/types';
 import { PublicationActions } from './PublicationActions';
 import { PublicationMeta } from './PublicationMeta';
 import { PublicationModal } from './PublicationModal';
+import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 interface PublicationCardProps {
   readonly item: Publication;
@@ -54,14 +54,12 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   // Use extracted utility function for artifact deduplication
   const dedupedArtifacts = deduplicateArtifacts(item);
 
+  const cardStyle = { '--card-accent': accent } as CSSProperties;
   return (
-    <Card
-      className={[
-        `glass-entry group publication-card flex cursor-pointer flex-col rounded-3xl p-0`,
-        featured ? 'card-featured' : '',
-      ]
-        .filter(Boolean)
-        .join(' ')}
+    <article
+      className={`aurora-card group publication-card flex cursor-pointer flex-col ${
+        featured ? 'aurora-card--featured' : ''
+      }`}
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -69,9 +67,10 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       aria-haspopup="dialog"
       aria-expanded={open}
       aria-controls={detailsId}
+      style={cardStyle}
     >
-      <div className="glass-entry__glow" />
-      <div className="glass-entry__content flex flex-col gap-4 p-6 md:p-7">
+      <BlogCardOverlays accent={accent} intensity="subtle" />
+      <div className="aurora-card__body flex flex-col gap-4 px-6 py-6 md:px-7 md:py-7">
         <div className="flex min-w-0 flex-col gap-2 overflow-x-hidden sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <h3 className="text-base leading-snug font-semibold md:text-lg">
@@ -114,7 +113,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       </div>
 
       {item.url || dedupedArtifacts.length ? (
-        <div className="glass-entry__footer flex items-center gap-3 px-6 py-3.5 text-xs text-white/78 md:px-7 md:py-4">
+        <div className="aurora-card__footer flex items-center gap-3 text-xs text-white/80">
           <PublicationActions
             item={item}
             dedupedArtifacts={dedupedArtifacts}
@@ -123,7 +122,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
           />
           <span className="ml-auto inline-flex items-center gap-2 text-[11px] tracking-[0.24em] text-white/50 uppercase transition-opacity duration-200 group-hover:text-white/70">
             More details{` `}
-            <span className="arrow-hint inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.08] text-white/70">
+            <span className="aurora-chip aurora-chip--icon inline-flex h-6 w-6 items-center justify-center text-white/80">
               <ArrowUpRight size={13} aria-hidden="true" />
             </span>
           </span>
@@ -138,7 +137,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
         accent={accent}
         detailsId={detailsId}
       />
-    </Card>
+    </article>
   );
 };
 

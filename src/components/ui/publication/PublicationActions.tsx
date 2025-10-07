@@ -1,5 +1,5 @@
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
-import type { FC, MouseEvent } from 'react';
+import type { CSSProperties, FC, MouseEvent } from 'react';
 
 import type { Publication } from '../../../types';
 import { memo } from 'react';
@@ -17,22 +17,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
   accent,
   onStopPropagation,
 }) => {
-  const buttonStyle = {
-    color: accent,
-    background: `color-mix(in oklab, ${accent} 14%, transparent)`,
-    border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
-    boxShadow: `0 10px 22px -14px ${accent}`,
-  };
-
-  const handleMouseEnter = (e: MouseEvent<HTMLAnchorElement>) => {
-    (e.currentTarget as HTMLAnchorElement).style.background =
-      `color-mix(in oklab, ${accent} 22%, transparent)`;
-  };
-
-  const handleMouseLeave = (e: MouseEvent<HTMLAnchorElement>) => {
-    (e.currentTarget as HTMLAnchorElement).style.background =
-      `color-mix(in oklab, ${accent} 14%, transparent)`;
-  };
+  const chipStyle = { '--card-accent': accent } as CSSProperties;
 
   return (
     <div className="flex flex-1 flex-wrap items-center gap-2">
@@ -41,10 +26,8 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
           href={item.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out will-change-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 focus-visible:outline-none"
-          style={buttonStyle}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          className="aurora-chip aurora-chip--pill"
+          style={chipStyle}
           onClick={onStopPropagation}
           aria-label="Open paper"
         >
@@ -63,10 +46,8 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
             href={a.href}
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noopener noreferrer' : undefined}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out will-change-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 focus-visible:outline-none"
-            style={buttonStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            className="aurora-chip aurora-chip--pill"
+            style={chipStyle}
             onClick={onStopPropagation}
             aria-label={a.label}
           >

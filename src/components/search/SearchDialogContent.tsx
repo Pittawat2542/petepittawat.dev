@@ -8,6 +8,7 @@ import type { FC, ReactNode } from 'react';
 
 import { memo } from 'react';
 import { motion } from 'framer-motion';
+import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 /**
  * Props for the SearchDialogContent component
@@ -39,7 +40,7 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
       transition={{ duration: 0.2, ease: 'easeInOut' }}
     >
       <DialogContent
-        className="no-paint-contain top-[12vh] w-[min(72rem,92vw)] max-w-none -translate-y-0 overflow-visible p-0 sm:top-1/2 sm:-translate-y-1/2"
+        className="no-paint-contain top-[12vh] w-[min(72rem,92vw)] max-w-none -translate-y-0 overflow-visible border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:-translate-y-1/2"
         style={{ overflowY: 'visible' }}
       >
         <DialogTitle className="sr-only">Site Search</DialogTitle>
@@ -47,28 +48,37 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
           Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate
           results.
         </DialogDescription>
-        <DialogClose
-          className="text-muted-foreground hover:text-foreground focus-visible:ring-ring/40 absolute -top-4 -right-4 z-10 inline-flex items-center justify-center rounded-full border border-white/15 bg-black/40 p-2.5 shadow-lg backdrop-blur-md transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:outline-none"
-          aria-label="Close search"
-          title="Close (Esc)"
-        >
-          <span className="sr-only">Close</span>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </DialogClose>
-        {children}
+        <div className="aurora-modal aurora-modal--search search-modal">
+          <BlogCardOverlays accent="var(--accent)" intensity="subtle" />
+          <header className="search-modal__header">
+            <div className="search-modal__headline">
+              <span className="search-modal__eyebrow">Search</span>
+              <p>Type to explore posts, projects, publications, talks, and pages.</p>
+            </div>
+            <DialogClose
+              className="search-modal__close"
+              aria-label="Close search"
+              title="Close (Esc)"
+            >
+              <span className="sr-only">Close</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </DialogClose>
+          </header>
+          <div className="search-modal__body">{children}</div>
+        </div>
       </DialogContent>
     </motion.div>
   );

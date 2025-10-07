@@ -22,16 +22,12 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
     currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
 
   return (
-    <ul className={`ml-3 hidden items-center gap-1 sm:ml-4 md:ml-6 md:flex ${className || ''}`}>
+    <ul className={`site-nav__links hidden items-center gap-1 sm:flex ${className || ''}`}>
       {links.map(({ href, label, Icon }) => {
         const active = isActive(href);
         const iconClasses = [
-          'nav-link__icon h-5 w-5 rounded-full border border-[color:var(--white)]/8 bg-[color:var(--white)]/5 text-[color:var(--white)]/70',
-          'transition-all duration-300 ease-out',
-          'group-hover/nav:border-[color:var(--white)]/18 group-hover/nav:bg-[color:var(--white)]/12 group-hover/nav:text-[color:var(--white)]/92',
-          active
-            ? 'text-[color:var(--accent,#6bc1ff)] border-[color:var(--accent,#6bc1ff)]/45 bg-[color:var(--accent,#6bc1ff)]/18 shadow-[0_0_12px_rgba(106,193,255,0.35)]'
-            : '',
+          'nav-link__icon',
+          active ? 'nav-link__icon--active' : 'nav-link__icon--idle',
         ].join(' ');
 
         return (
@@ -40,7 +36,7 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
               href={href}
               isActive={active}
               ariaLabel={`Navigate to ${label}`}
-              className="snap-start"
+              className="nav-link group/nav"
             >
               <span className="nav-link__content inline-flex items-center gap-2 whitespace-nowrap">
                 <span className={iconClasses} aria-hidden="true">

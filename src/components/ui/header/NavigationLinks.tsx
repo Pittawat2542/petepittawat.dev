@@ -56,14 +56,6 @@ const NavigationLinksComponent: FC<NavigationLinksProps> = ({ links, isActive })
                       {label}
                     </span>
                   </span>
-
-                  {/* Enhanced hover background effect */}
-                  <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                  {/* Active page indicator */}
-                  {isCurrentPage && (
-                    <div className="absolute -bottom-1 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 shadow-lg shadow-blue-500/50" />
-                  )}
                 </HeaderLink>
               </li>
             );

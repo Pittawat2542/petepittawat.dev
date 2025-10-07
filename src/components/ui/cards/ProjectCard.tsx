@@ -2,9 +2,9 @@ import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-re
 import { memo } from 'react';
 
 import { Badge } from '@/components/ui/core/badge';
-import { Card } from '@/components/ui/core/card';
-import type { FC } from 'react';
 import type { Project } from '@/types';
+import type { CSSProperties, FC } from 'react';
+import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -48,17 +48,14 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
   const accentColor = typeAccentVar(item.type);
   const tint = (intensity: number) =>
     `color-mix(in oklab, ${accentColor} ${intensity}%, transparent)`;
+  const cardStyle = { '--card-accent': accentColor } as CSSProperties;
   return (
-    <Card
-      className={[
-        `glass-entry group project-card flex h-full flex-col rounded-3xl p-0`,
-        featured ? 'card-featured' : '',
-      ]
-        .filter(Boolean)
-        .join(' ')}
+    <article
+      className={`aurora-card group project-card flex h-full flex-col ${featured ? 'aurora-card--featured' : ''}`}
+      style={cardStyle}
     >
-      <div className="glass-entry__glow" />
-      <div className="glass-entry__content flex flex-1 flex-col gap-5 p-6 md:p-7">
+      <BlogCardOverlays accent={accentColor} />
+      <div className="aurora-card__body flex flex-1 flex-col gap-5 px-6 py-6 md:px-7 md:py-7">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0 flex-1">
             <h3 className="text-base leading-snug font-semibold break-words md:text-lg">
@@ -149,7 +146,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       </div>
 
       {item.links?.length ? (
-        <div className="glass-entry__footer mt-auto flex flex-wrap items-center gap-2 px-6 py-3.5 text-xs text-white/78 md:px-7 md:py-4">
+        <div className="aurora-card__footer flex flex-wrap items-center gap-2 text-xs text-white/80">
           {item.links.map((l, idx) => {
             const isExternal = !l.href.startsWith('/');
             return (
@@ -158,19 +155,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                 href={l.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out will-change-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/20 focus-visible:outline-none"
-                style={{
-                  color: accentColor,
-                  background: tint(14),
-                  border: `1px solid ${tint(45)}`,
-                  boxShadow: `0 10px 22px -14px ${accentColor}`,
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = tint(22);
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = tint(14);
-                }}
+                className="aurora-chip aurora-chip--pill"
                 aria-label={l.label}
               >
                 <span>{l.label}</span>
@@ -189,7 +174,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
           })}
         </div>
       ) : null}
-    </Card>
+    </article>
   );
 };
 

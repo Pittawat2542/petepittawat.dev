@@ -74,9 +74,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
               onSelectFromRecent={setQueryFromRecent}
               onClearRecent={clearRecent}
             />
-            <div className="relative max-h-[60dvh] overflow-y-auto p-3 md:max-h-[60vh] md:p-4">
-              <div className="from-card/80 pointer-events-none absolute inset-x-0 top-0 h-3 bg-gradient-to-b to-transparent" />
-              <div className="from-card/80 pointer-events-none absolute inset-x-0 bottom-0 h-3 bg-gradient-to-t to-transparent" />
+            <div className="search-modal__content" role="presentation">
               {!loaded && <SearchSkeleton />}
               {showSuggestions && <SearchSuggestions suggestions={suggestions} />}
               {showEmpty && <SearchEmptyState suggestions={suggestions} />}

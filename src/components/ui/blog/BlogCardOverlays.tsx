@@ -1,13 +1,44 @@
-import type { FC } from 'react';
-import { memo } from 'react';
+import type { CSSProperties, FC } from 'react';
+import { memo, useMemo } from 'react';
 
-const BlogCardOverlaysComponent: FC = () => {
+interface BlogCardOverlaysProps {
+  readonly accent?: string;
+  readonly intensity?: 'default' | 'subtle';
+}
+
+const BlogCardOverlaysComponent: FC<BlogCardOverlaysProps> = ({
+  accent = 'var(--card-accent, var(--accent))',
+  intensity = 'default',
+}) => {
+  const layers = useMemo(() => {
+    const weight = intensity === 'subtle' ? 0.55 : 1;
+    const tintOne = `linear-gradient(130deg, color-mix(in oklab, ${accent} ${24 * weight}%, transparent) 0%, color-mix(in oklab, ${accent} ${18 * weight}%, rgba(236, 72, 153, 0.3)) 48%, transparent 100%)`;
+    const halo = `radial-gradient(120% 120% at 78% -10%, color-mix(in oklab, ${accent} ${42 * weight}%, rgba(255, 255, 255, 0.24)), transparent 70%)`;
+    const bubble = `radial-gradient(circle, color-mix(in oklab, ${accent} ${38 * weight}%, rgba(255, 255, 255, 0.28)), transparent 72%)`;
+    return {
+      tintOne: tintOne as CSSProperties['background'],
+      halo: halo as CSSProperties['background'],
+      bubble: bubble as CSSProperties['background'],
+    };
+  }, [accent, intensity]);
+
   return (
     <>
-      <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(155deg,rgba(37,58,109,0.45),rgba(11,18,36,0.55))] opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
-      <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(130deg,rgba(59,130,246,0.16)_0%,rgba(129,140,248,0.12)_38%,rgba(244,114,182,0.1)_70%,transparent_100%)] opacity-40 transition-opacity duration-500 group-hover:opacity-80" />
-      <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_120%_at_78%_-10%,rgba(255,255,255,0.18),transparent)] opacity-0 transition-opacity duration-600 group-hover:opacity-80" />
-      <div className="pointer-events-none absolute -top-28 -right-24 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.35),transparent_70%)] opacity-60 blur-3xl transition-all duration-500 group-hover:scale-110" />
+      <div
+        className="aurora-card__layer aurora-card__layer--tint"
+        style={{ background: layers.tintOne }}
+        aria-hidden="true"
+      />
+      <div
+        className="aurora-card__layer aurora-card__layer--halo"
+        style={{ background: layers.halo }}
+        aria-hidden="true"
+      />
+      <div
+        className="aurora-card__bubble"
+        style={{ background: layers.bubble }}
+        aria-hidden="true"
+      />
     </>
   );
 };

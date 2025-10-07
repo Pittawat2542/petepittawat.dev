@@ -1,4 +1,11 @@
-import { motion, useReducedMotion, useSpring } from 'framer-motion';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
 import type { MotionStyle, Transition, Variants } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useState, type PointerEventHandler } from 'react';
 
@@ -10,9 +17,17 @@ interface SiteLogoMotionProps {
   readonly siteTitle: string;
 }
 
-const sparks = [
-  { id: 'alpha', delay: 0 },
-  { id: 'beta', delay: 3.2 },
+interface SparkConfig {
+  readonly id: string;
+  readonly delay: number;
+  readonly distance: string;
+  readonly size: string;
+}
+
+const sparks: SparkConfig[] = [
+  { id: 'alpha', delay: 0, distance: '1.35rem', size: '0.42rem' },
+  { id: 'beta', delay: 2.8, distance: '1.6rem', size: '0.36rem' },
+  { id: 'gamma', delay: 4.4, distance: '1.05rem', size: '0.32rem' },
 ];
 
 export function SiteLogoMotion({
@@ -33,6 +48,18 @@ export function SiteLogoMotion({
     damping: 20,
     mass: 0.8,
   });
+
+  const pointerX = useMotionValue(0.5);
+  const pointerY = useMotionValue(0.5);
+  const pointerXPercent = useTransform(pointerX, value => value * 100);
+  const pointerYPercent = useTransform(pointerY, value => value * 100);
+  const accentColor = 'var(--accent, #6ac1ff)';
+  const fieldBackground = useMotionTemplate`
+    radial-gradient(120% 120% at ${pointerXPercent}% ${pointerYPercent}%,
+      rgba(255, 255, 255, 0.52),
+      color-mix(in oklab, ${accentColor} 42%, rgba(255, 255, 255, 0.08)) 62%,
+      transparent 78%)
+  `;
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -67,14 +94,18 @@ export function SiteLogoMotion({
 
       tiltX.set(rotateX);
       tiltY.set(rotateY);
+      pointerX.set(x);
+      pointerY.set(y);
     },
-    [canTilt, prefersReducedMotion, tiltX, tiltY]
+    [canTilt, prefersReducedMotion, pointerX, pointerY, tiltX, tiltY]
   );
 
   const resetTilt = useCallback(() => {
     tiltX.set(0);
     tiltY.set(0);
-  }, [tiltX, tiltY]);
+    pointerX.set(0.5);
+    pointerY.set(0.5);
+  }, [pointerX, pointerY, tiltX, tiltY]);
 
   const containerVariants = useMemo<Variants>(
     () => ({
@@ -182,6 +213,65 @@ export function SiteLogoMotion({
     return regular;
   }, [prefersReducedMotion]);
 
+  const fieldVariants = useMemo<Variants>(
+    () =>
+      prefersReducedMotion
+        ? {
+            initial: { opacity: 0.6, scale: 1 },
+            animate: { opacity: 0.62, scale: 1 },
+            hover: { opacity: 0.75, scale: 1.04 },
+          }
+        : {
+            initial: { opacity: 0.42, scale: 0.94 },
+            animate: {
+              opacity: [0.42, 0.68, 0.5],
+              scale: [0.94, 1.05, 0.98],
+              transition: { duration: 6.4, ease: 'easeInOut', repeat: Infinity, delay: 0.2 },
+            },
+            hover: { opacity: 0.92, scale: 1.12 },
+          },
+    [prefersReducedMotion]
+  );
+
+  const trailVariants = useMemo<Variants>(
+    () =>
+      prefersReducedMotion
+        ? {
+            initial: { opacity: 0.28, scale: 1 },
+            hover: { opacity: 0.38, scale: 1.02 },
+          }
+        : {
+            initial: { opacity: 0.12, scale: 0.96, rotate: -8 },
+            animate: {
+              opacity: [0.12, 0.32, 0.18],
+              scale: [0.96, 1.08, 0.98],
+              rotate: [-8, -2, -8],
+              transition: { duration: 5.8, ease: 'easeInOut', repeat: Infinity, delay: 0.6 },
+            },
+            hover: { opacity: 0.45, scale: 1.12 },
+          },
+    [prefersReducedMotion]
+  );
+
+  const flareVariants = useMemo<Variants>(
+    () =>
+      prefersReducedMotion
+        ? {
+            initial: { opacity: 0.18, rotate: 0 },
+            hover: { opacity: 0.32, rotate: 18 },
+          }
+        : {
+            initial: { opacity: 0.12, rotate: -12 },
+            animate: {
+              opacity: [0.12, 0.26, 0.14],
+              rotate: [-12, 12, -12],
+              transition: { duration: 10.5, ease: 'easeInOut', repeat: Infinity, delay: 0.8 },
+            },
+            hover: { opacity: 0.34, rotate: 22 },
+          },
+    [prefersReducedMotion]
+  );
+
   const titleVariants = useMemo<Variants>(
     () => ({
       initial: { opacity: 0, y: 8 },
@@ -189,6 +279,11 @@ export function SiteLogoMotion({
         opacity: 1,
         y: 0,
         transition: { type: 'spring', stiffness: 260, damping: 22, delay: 0.22 },
+      },
+      hover: {
+        y: -1,
+        color: 'var(--accent, #6ac1ff)',
+        transition: { type: 'spring', stiffness: 320, damping: 24 },
       },
     }),
     []
@@ -240,9 +335,16 @@ export function SiteLogoMotion({
     >
       <motion.span className="site-logo" variants={logoVariants} style={logoStyle}>
         <motion.span className="site-logo__glow" variants={glowVariants} />
+        <motion.span
+          className="site-logo__field"
+          style={{ background: fieldBackground }}
+          variants={fieldVariants}
+        />
         <motion.span className="site-logo__halo" variants={haloVariants} />
+        <motion.span className="site-logo__trail" variants={trailVariants} />
+        <motion.span className="site-logo__flare" variants={flareVariants} />
 
-        {sparks.map(({ id, delay }) => {
+        {sparks.map(({ id, delay, distance, size }) => {
           const orbitProps = prefersReducedMotion
             ? {}
             : { transition: { ...orbitBaseTransition!, delay } };
@@ -263,6 +365,12 @@ export function SiteLogoMotion({
             >
               <motion.span
                 className="site-logo__spark"
+                style={
+                  {
+                    '--orbit-distance': distance,
+                    '--spark-size': size,
+                  } as MotionStyle
+                }
                 animate={sparkAnimate}
                 initial={{ opacity: 0, scale: 0.5 }}
               />
