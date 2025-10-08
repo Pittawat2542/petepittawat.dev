@@ -11,49 +11,68 @@ const RelatedPostsComponent: React.FC<RelatedPostsProps> = ({ posts }) => {
   if (!posts.length) return null;
 
   return (
-    <section className="mx-auto mt-12 max-w-prose">
-      <h2 className="mb-4 text-xl font-bold tracking-tight md:text-2xl">Related posts</h2>
-      <ul className="grid grid-cols-1 gap-4">
-        {posts.map(p => (
-          <li
-            key={p.slug}
-            className="rounded-xl border border-[color:var(--white)]/10 p-3 transition-[border-color,transform,box-shadow] duration-150 ease-out will-change-transform hover:translate-y-[-2px] hover:border-[color:var(--accent)]/40"
-          >
-            <a href={`/blog/${String(p.slug)}`} className="flex items-start gap-3">
-              <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-white/10">
-                {p.data.coverImage ? (
-                  <img
-                    className="block h-full w-full object-cover object-center"
-                    src={
-                      typeof p.data.coverImage === 'string'
-                        ? p.data.coverImage
-                        : p.data.coverImage.src
-                    }
-                    alt=""
-                    width={160}
-                    height={112}
-                    loading="lazy"
-                  />
-                ) : (
-                  <img
-                    className="block h-full w-full object-cover object-center"
-                    src={`/og/blog/${p.slug}.png`}
-                    width="160"
-                    height="112"
-                    alt=""
-                    loading="lazy"
-                  />
-                )}
-              </div>
-              <div className="min-w-0">
-                <h3 className="line-clamp-2 leading-snug font-semibold">{p.data.title}</h3>
-                <p className="text-sm italic opacity-80">
-                  <FormattedDate date={p.data.pubDate} />
-                </p>
-              </div>
-            </a>
-          </li>
-        ))}
+    <section className="article-related-section reveal">
+      <div className="article-related-header">
+        <div className="article-related-badge">
+          <span className="article-related-badge-dot" aria-hidden="true" />
+          Keep reading
+        </div>
+        <h2 className="article-related-title">Related posts</h2>
+        <p className="article-related-copy">
+          Continue exploring adjacent research, playbooks, and hands-on experiments from the lab.
+        </p>
+      </div>
+      <ul className="article-related-list">
+        {posts.map((p, index) => {
+          const position = index + 1;
+          const primaryTag = p.data.tags?.[0];
+          const dateValue = p.data.pubDate;
+          const dateIso =
+            dateValue instanceof Date
+              ? dateValue.toISOString()
+              : dateValue
+                ? String(dateValue)
+                : undefined;
+          return (
+            <li key={p.slug} className="article-related-card">
+              <a
+                href={`/blog/${String(p.slug)}`}
+                className="article-related-link"
+                aria-label={`Read ${p.data.title}`}
+              >
+                <span className="article-related-node" aria-hidden="true">
+                  <span className="article-related-node__index">
+                    {position.toString().padStart(2, '0')}
+                  </span>
+                  {index < posts.length - 1 ? (
+                    <span className="article-related-node__connector" aria-hidden="true" />
+                  ) : null}
+                </span>
+                <span className="article-related-body">
+                  <span className="article-related-meta-row">
+                    {primaryTag ? (
+                      <span className="article-related-chip">#{primaryTag}</span>
+                    ) : null}
+                    {dateIso ? (
+                      <time className="article-related-date" dateTime={dateIso}>
+                        <FormattedDate date={p.data.pubDate} />
+                      </time>
+                    ) : null}
+                  </span>
+                  <span className="article-related-heading-wrap">
+                    <h3 className="article-related-heading">{p.data.title}</h3>
+                    <span className="article-related-cta">
+                      Continue reading <span aria-hidden="true">→</span>
+                    </span>
+                  </span>
+                  {p.data.excerpt ? (
+                    <p className="article-related-excerpt">{p.data.excerpt}</p>
+                  ) : null}
+                </span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

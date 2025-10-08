@@ -15,27 +15,29 @@ import { List, ChevronDown } from 'lucide-astro';
 ---
 
 <nav
-  class="mx-auto mt-6 max-w-prose"
+  class="toc-root"
   aria-label="Table of contents"
   data-selector={selector}
   data-levels={JSON.stringify(levels)}
   data-open={!collapsed}
 >
-  <details class="group rounded-xl border border-[color:var(--white)]/10 bg-white/5 p-3">
-    <summary
-      class="inline-flex cursor-pointer list-none items-center gap-2 text-sm font-medium text-[color:var(--white)]/85 select-none"
-    >
-      <span class="inline-flex items-center gap-2">
-        <List class="h-4 w-4 opacity-80" aria-hidden="true" />
-        {title}
+  <details class="toc-card group">
+    <summary class="toc-summary">
+      <span class="toc-summary__icon" aria-hidden="true">
+        <List class="h-[14px] w-[14px]" aria-hidden="true" />
       </span>
-      <span id="toc-count" class="ml-1 text-[color:var(--white)]/60"></span>
-      <ChevronDown
-        class="ml-auto h-4 w-4 opacity-70 transition-transform group-open:rotate-180"
-        aria-hidden="true"
-      />
+      <span class="toc-summary__content">
+        <span class="toc-summary__label">{title}</span>
+        <span id="toc-count" class="toc-summary__count"></span>
+      </span>
+      <span class="toc-summary__action">
+        <span class="toc-summary__hint">Expand</span>
+        <ChevronDown class="toc-summary__chevron" aria-hidden="true" />
+      </span>
     </summary>
-    <ul id="toc-list" class="mt-3 space-y-1.5"></ul>
+    <div class="toc-panel">
+      <ul id="toc-list" class="toc-list"></ul>
+    </div>
   </details>
 </nav>
 
@@ -71,7 +73,7 @@ import { List, ChevronDown } from 'lucide-astro';
     const count = navEl.querySelector('#toc-count');
     if (!list) return;
     list.innerHTML = '';
-    if (count) count.textContent = headings.length ? `(${headings.length})` : '';
+    if (count) count.textContent = headings.length ? `${headings.length} sections` : '';
 
     // Hide ToC entirely if no headings
     if (!headings.length) {
@@ -86,17 +88,16 @@ import { List, ChevronDown } from 'lucide-astro';
       if (!text) return;
       if (!h.id) h.id = slugify(text);
       const li = document.createElement('li');
-      li.className = 'leading-snug';
+      const isH3 = h.tagName === 'H3';
+      li.className = `toc-row${isH3 ? ' toc-row--sub' : ''}`;
       const a = document.createElement('a');
       a.href = `#${h.id}`;
       a.textContent = text;
-      const isH3 = h.tagName === 'H3';
-      a.className = `toc-item flex items-center gap-2 text-sm no-underline hover:underline underline-offset-2 text-[color:var(--white)]/85 hover:text-[color:var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-1 ${isH3 ? 'pl-4 text-[color:var(--white)]/80' : ''}`;
+      a.className = `toc-link${isH3 ? ' toc-link--sub' : ' toc-link--main'}`;
 
       // Icon
       const icon = document.createElement('span');
-      icon.className =
-        'toc-icon inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center opacity-80';
+      icon.className = 'toc-icon';
       if (isH3) {
         icon.innerHTML =
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>';
@@ -108,6 +109,14 @@ import { List, ChevronDown } from 'lucide-astro';
       li.appendChild(a);
       list.appendChild(li);
     });
+
+    const updateHint = () => {
+      const hint = navEl.querySelector('.toc-summary__hint');
+      if (!hint) return;
+      hint.textContent = details.open ? 'Hide' : 'Expand';
+    };
+    updateHint();
+    details.addEventListener('toggle', updateHint);
   };
 
   if (document.readyState === 'loading') {
@@ -118,12 +127,12 @@ import { List, ChevronDown } from 'lucide-astro';
 </script>
 
 <style is:inline>
-  nav[aria-label='Table of contents'] .toc-item svg {
+  .toc-root .toc-icon svg {
     display: block;
   }
   @media (prefers-reduced-motion: reduce) {
-    nav[aria-label='Table of contents'] summary .transition-transform {
-      transition: none;
+    .toc-root .toc-summary__chevron {
+      transition: none !important;
     }
   }
 </style>

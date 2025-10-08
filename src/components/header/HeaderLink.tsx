@@ -24,12 +24,11 @@ const HeaderLinkComponent: FC<HeaderLinkProps> = ({
       aria-label={ariaLabel}
       aria-current={isActive ? 'page' : undefined}
       data-active={isActive ? 'true' : undefined}
-      tabIndex={isActive ? -1 : undefined}
       {...rest}
       className={cn(
         'nav-link-root navlink relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm leading-none font-medium text-[color:var(--white)]/80 transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none',
         isActive
-          ? 'nav-link--active pointer-events-none cursor-default text-[color:var(--white)]'
+          ? 'nav-link--active text-[color:var(--white)]'
           : 'nav-link--idle hover:-translate-y-0.5 hover:text-[color:var(--white)]',
         className
       )}

@@ -20,6 +20,16 @@ export async function openSearch() {
       // ignore if not available
     }
   }
-  const m = await import('./mountSearchModal.tsx');
-  m.mountSearchModal();
+  try {
+    const { mountSearchModal } = await import('./mountSearchModal.tsx');
+    await mountSearchModal();
+  } catch (error) {
+    console.error('Failed to load search modal chunk', error);
+    if (import.meta.env.DEV) {
+      // Vite occasionally needs a hard refresh when optimized deps change mid-session
+      console.info(
+        'Search modal will reload once dependencies settle. Refresh the page if issues persist.'
+      );
+    }
+  }
 }

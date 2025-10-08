@@ -189,6 +189,22 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
           />
         ))}
       </ul>
+      <div className="mt-8 flex justify-center text-sm text-white/70 md:mt-10">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-r from-white/10 via-white/5 to-transparent px-4 py-1.5 text-[11px] font-semibold tracking-[0.38em] text-white/70 uppercase shadow-[0_12px_30px_-18px_rgba(15,23,42,0.9)]">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6ac1ff)] shadow-[0_0_10px_rgba(106,193,255,0.7)]" />
+          Field Notes elsewhere
+        </span>
+      </div>
+      <div className="mt-4 flex flex-col items-center gap-2 text-center text-sm text-white/70 md:flex-row md:justify-center md:gap-3">
+        <span className="text-white/60">Also publishing with the Typhoon team:</span>
+        <a
+          href="https://opentyphoon.ai/blog/en"
+          className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-4 py-2 text-white/90 transition-transform duration-200 hover:scale-[1.02] hover:border-white/25 hover:text-white"
+        >
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/80" />
+          opentyphoon.ai/blog/en
+        </a>
+      </div>
       {totalPages > 1 && (
         <PageControls
           total={sorted.length}

@@ -1,0 +1,96 @@
+---
+interface Props {
+  variant?: 'landing' | 'article';
+}
+
+const { variant = 'landing' } = Astro.props as Props;
+---
+
+<div class="page-backdrop" data-variant={variant} aria-hidden="true">
+  <div class="page-backdrop__gradient"></div>
+  <div class="page-backdrop__particles"></div>
+  <div class="page-backdrop__grid"></div>
+</div>
+
+<style>
+  .page-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    --backdrop-spot-a: rgba(76, 102, 192, 0.22);
+    --backdrop-spot-b: rgba(28, 60, 145, 0.18);
+    --backdrop-base-start: #060b18;
+    --backdrop-base-end: #0b132a;
+    background: linear-gradient(180deg, var(--backdrop-base-start), var(--backdrop-base-end));
+  }
+
+  .page-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1600px circle at 50% 110%, rgba(5, 7, 18, 0.82), transparent 70%),
+      radial-gradient(2200px circle at 50% -20%, rgba(255, 255, 255, 0.05), transparent 75%);
+    mix-blend-mode: soft-light;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .page-backdrop__gradient {
+    position: absolute;
+    inset: -25%;
+    background:
+      radial-gradient(900px circle at 18% 28%, var(--backdrop-spot-a), transparent 70%),
+      radial-gradient(1200px circle at 82% 62%, var(--backdrop-spot-b), transparent 80%);
+    filter: blur(18px);
+    opacity: 0.85;
+  }
+
+  .page-backdrop__particles {
+    position: absolute;
+    inset: -10%;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 255, 255, 0.12), transparent 65%),
+      radial-gradient(1px 1px at 62% 38%, rgba(148, 163, 255, 0.18), transparent 70%),
+      radial-gradient(1.25px 1.25px at 38% 72%, rgba(99, 179, 237, 0.14), transparent 70%),
+      radial-gradient(1.25px 1.25px at 84% 64%, rgba(244, 114, 182, 0.12), transparent 70%);
+    background-size: 28rem 28rem;
+    opacity: 0.4;
+    mix-blend-mode: screen;
+  }
+
+  .page-backdrop__grid {
+    position: absolute;
+    inset: -35%;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 160px 160px;
+    opacity: 0.16;
+    transform: scale3d(1.05, 1.05, 1);
+    mix-blend-mode: screen;
+  }
+
+  .page-backdrop[data-variant='article'] {
+    --backdrop-spot-a: rgba(84, 118, 205, 0.26);
+    --backdrop-spot-b: rgba(35, 70, 158, 0.22);
+    --backdrop-base-start: #050a17;
+    --backdrop-base-end: #0a1227;
+  }
+
+  .page-backdrop[data-variant='article'] .page-backdrop__gradient {
+    filter: blur(24px);
+    opacity: 0.9;
+  }
+
+  .page-backdrop[data-variant='article'] .page-backdrop__particles {
+    opacity: 0.32;
+    background-size: 32rem 32rem;
+  }
+
+  .page-backdrop[data-variant='article'] .page-backdrop__grid {
+    opacity: 0.12;
+    transform: scale3d(1.02, 1.02, 1);
+  }
+</style>

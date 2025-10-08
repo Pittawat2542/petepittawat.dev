@@ -52,9 +52,9 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
 
-  const contentLayout = 'flex flex-col gap-5';
-  const paddingClasses = 'px-6 pt-6 pb-7 md:px-7 md:pt-8 md:pb-9';
-  const barPadding = 'px-6 md:px-7';
+  const contentLayout = 'flex flex-col gap-6';
+  const paddingClasses = 'px-6 pt-6 pb-6 md:px-7 md:pt-7 md:pb-7 lg:px-8 lg:pt-8 lg:pb-8';
+  const barPadding = 'px-6 md:px-7 lg:px-8';
   const accentVar = useMemo(() => 'var(--accent-blog, var(--accent))', []);
   const mergedStyle: CSSProperties = {
     '--card-accent': accentVar,
@@ -78,7 +78,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       >
         <BlogCardOverlays accent={accentVar} />
 
-        <div className="aurora-card__body">
+        <div className="aurora-card__body flex flex-1 flex-col">
           <div className={paddingClasses}>
             <div
               className={`${contentLayout} transition-transform duration-400 ease-out group-hover:translate-y-[-4px]`}

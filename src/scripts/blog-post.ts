@@ -14,24 +14,26 @@ const setupCopyButtons = () => {
     pre.classList.add('has-copy');
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className =
-      'absolute top-1.5 right-2 text-xs leading-none px-2 py-1.5 rounded-md bg-white/8 border border-white/18 text-white/92 cursor-pointer transition-all duration-150 ease-in-out hover:bg-blue-500/16 hover:border-blue-500/40 hover:text-black';
+    btn.className = 'code-copy-button';
     btn.ariaLabel = 'Copy code to clipboard';
     btn.textContent = 'Copy';
     btn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(code.textContent || '');
-        const original = btn.textContent;
+        btn.dataset['state'] = 'copied';
         btn.textContent = 'Copied!';
-        btn.className =
-          'absolute top-1.5 right-2 text-xs leading-none px-2 py-1.5 rounded-md bg-blue-500/26 border border-blue-500/46 text-black cursor-pointer transition-all duration-150 ease-in-out';
         setTimeout(() => {
-          btn.textContent = original;
-          btn.className =
-            'absolute top-1.5 right-2 text-xs leading-none px-2 py-1.5 rounded-md bg-white/8 border border-white/18 text-white/92 cursor-pointer transition-all duration-150 ease-in-out hover:bg-blue-500/16 hover:border-blue-500/40 hover:text-black';
+          delete btn.dataset['state'];
+          btn.textContent = 'Copy';
         }, 1200);
       } catch (err) {
         console.warn('Failed to copy to clipboard:', err);
+        btn.dataset['state'] = 'error';
+        btn.textContent = 'Error';
+        setTimeout(() => {
+          delete btn.dataset['state'];
+          btn.textContent = 'Copy';
+        }, 1200);
       }
     });
     pre.appendChild(btn);
@@ -103,8 +105,7 @@ const setupCopyButtons = () => {
       };
       const langLabel = detectLang(pre, code);
       const badge = document.createElement('span');
-      badge.className =
-        'absolute top-1.5 left-2 text-[0.7rem] leading-none tracking-wider px-1.5 py-1 rounded-md text-white/92 bg-blue-500/16 border border-blue-500/40 select-none pointer-events-none';
+      badge.className = 'code-lang-badge';
       badge.textContent = langLabel;
       pre.appendChild(badge);
     }

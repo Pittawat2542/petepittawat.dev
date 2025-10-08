@@ -10,6 +10,7 @@ import profileImage from '../assets/images/profile.jpg';
 import AboutSection from '../components/sections/AboutSection.astro';
 import StatsSection from '../components/sections/StatsSection.astro';
 import BlogSection from '../components/sections/BlogSection.astro';
+import PageBackdrop from '../components/layout/core/PageBackdrop.astro';
 
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -28,11 +29,7 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <div class="landing-background" aria-hidden="true">
-    <div class="landing-background__gradient"></div>
-    <div class="landing-background__particles"></div>
-    <div class="landing-background__grid"></div>
-  </div>
+  <PageBackdrop variant="landing" />
   {/* Preload likely LCP image for GitHub Pages to shorten the chain */}
   {
     heroW384 && (
@@ -53,101 +50,3 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
   <StatsSection stats={stats} />
   <BlogSection posts={posts} />
 </BaseLayout>
-
-<style>
-  .landing-background {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(30, 43, 82, 0.85), transparent 60%),
-      radial-gradient(circle at 85% 80%, rgba(12, 25, 54, 0.8), transparent 60%),
-      linear-gradient(160deg, rgba(9, 12, 24, 0.94), rgba(9, 10, 22, 0.9));
-  }
-
-  .landing-background__gradient {
-    position: absolute;
-    inset: -20%;
-    background: conic-gradient(
-      from 120deg at 50% 50%,
-      rgba(59, 130, 246, 0.24),
-      rgba(129, 140, 248, 0.18),
-      rgba(236, 72, 153, 0.14),
-      rgba(59, 130, 246, 0.24)
-    );
-    filter: blur(140px);
-    opacity: 0.8;
-    animation: landing-gradient-spin 36s linear infinite;
-  }
-
-  .landing-background__particles {
-    position: absolute;
-    inset: -10% -10% -5% -10%;
-    background-image:
-      radial-gradient(2px 2px at 15% 20%, rgba(255, 255, 255, 0.16), transparent 70%),
-      radial-gradient(1.5px 1.5px at 65% 35%, rgba(125, 211, 252, 0.2), transparent 70%),
-      radial-gradient(1.75px 1.75px at 35% 70%, rgba(129, 140, 248, 0.18), transparent 70%),
-      radial-gradient(1.25px 1.25px at 80% 65%, rgba(244, 114, 182, 0.16), transparent 70%);
-    background-size: 32rem 32rem;
-    mix-blend-mode: screen;
-    opacity: 0.65;
-    animation: landing-particles-move 26s ease-in-out infinite alternate;
-  }
-
-  .landing-background__grid {
-    position: absolute;
-    inset: -30%;
-    background-image:
-      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-    background-size: 140px 140px;
-    mix-blend-mode: overlay;
-    opacity: 0.35;
-    transform: rotate(2deg) scale(1.05);
-    animation: landing-grid-shift 32s linear infinite;
-  }
-
-  @keyframes landing-gradient-spin {
-    from {
-      transform: rotate(0deg) scale(1);
-    }
-    to {
-      transform: rotate(360deg) scale(1.05);
-    }
-  }
-
-  @keyframes landing-particles-move {
-    0% {
-      transform: translate3d(-3%, -3%, 0) scale(1);
-    }
-    50% {
-      transform: translate3d(2%, 4%, 0) scale(1.05);
-    }
-    100% {
-      transform: translate3d(6%, -2%, 0) scale(1.08);
-    }
-  }
-
-  @keyframes landing-grid-shift {
-    0% {
-      transform: rotate(2deg) scale(1.05) translate3d(0, 0, 0);
-    }
-    50% {
-      transform: rotate(1deg) scale(1.04) translate3d(1%, -1%, 0);
-    }
-    100% {
-      transform: rotate(2deg) scale(1.05) translate3d(-1%, 1%, 0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .landing-background__gradient,
-    .landing-background__particles,
-    .landing-background__grid {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transform: none !important;
-    }
-  }
-</style>

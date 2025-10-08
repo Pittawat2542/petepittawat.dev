@@ -1,10 +1,17 @@
 import SearchModal from '../components/layout/SearchModal';
-import { createRoot } from 'react-dom/client';
 
-let root: ReturnType<typeof createRoot> | null = null;
+type CreateRootFn = (typeof import('react-dom/client'))['createRoot'];
+type RootContainer = ReturnType<CreateRootFn>;
+
+let createRootFn: CreateRootFn | null = null;
+let root: RootContainer | null = null;
 let seq = 0;
 
-export function mountSearchModal() {
+export async function mountSearchModal() {
+  if (!createRootFn) {
+    const mod = await import('react-dom/client');
+    createRootFn = mod.createRoot;
+  }
   let container = document.getElementById('search-modal-root');
   if (!container) {
     container = document.createElement('div');
@@ -12,7 +19,7 @@ export function mountSearchModal() {
     document.body.appendChild(container);
   }
   if (!root) {
-    root = createRoot(container);
+    root = createRootFn!(container);
   }
   seq += 1;
   root.render(<SearchModal hideTriggers autoOpen openKey={seq} />);
