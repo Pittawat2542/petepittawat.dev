@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
 
 import type { FC } from 'react';
@@ -16,13 +16,12 @@ interface ProjectsExplorerProps {
 
 type ProjectSort = 'newest' | 'oldest' | 'title-az' | 'title-za';
 
-// Remove unused comparators
-// const comparators: Record<ProjectSort, (a: Project, b: Project) => number> = {
-//   newest: (a, b) => b.year - a.year || a.title.localeCompare(b.title),
-//   oldest: (a, b) => a.year - b.year || a.title.localeCompare(b.title),
-//   'title-az': (a, b) => a.title.localeCompare(b.title),
-//   'title-za': (a, b) => b.title.localeCompare(a.title),
-// };
+const comparators: Record<ProjectSort, (a: Project, b: Project) => number> = {
+  newest: (a, b) => b.year - a.year || a.title.localeCompare(b.title),
+  oldest: (a, b) => a.year - b.year || a.title.localeCompare(b.title),
+  'title-az': (a, b) => a.title.localeCompare(b.title),
+  'title-za': (a, b) => b.title.localeCompare(a.title),
+};
 
 const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
   const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(
@@ -40,17 +39,23 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
   useQueryParamSync('q', q, setQ);
 
   const [sort, setSort] = useState<ProjectSort>('newest');
+  const sorted = useMemo(() => {
+    const list = Array.from(filtered);
+    list.sort(comparators[sort]);
+    return list;
+  }, [filtered, sort]);
 
   // Pagination
   const {
     paginated: paged,
     totalPages,
+    currentPage,
     // hasNextPage,
     // hasPrevPage,
     goToPage,
     setPerPage: setPaginationPerPage,
   } = usePagination({
-    items: [...filtered], // Convert readonly array to mutable array
+    items: sorted,
     perPage: 6,
     initialPage: 1,
   });
@@ -71,7 +76,7 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
         setFilters={setFilters}
         filterOptions={filterOptions}
         placeholder="Search title, summary, collaborators..."
-        filteredCount={filtered.length}
+        filteredCount={sorted.length}
         totalCount={totalCount}
         sortOptions={[
           { value: 'newest', label: 'Newest' },
@@ -97,11 +102,11 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
       </div>
       {totalPages > 1 && (
         <PageControls
-          total={filtered.length}
+          total={sorted.length}
           visible={paged.length}
           perPage={6}
           onPerPageChange={setPaginationPerPage}
-          currentPage={1}
+          currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={goToPage}
         />

@@ -1,9 +1,9 @@
-/* eslint-disable */
-import type { FC, KeyboardEvent } from 'react';
-import { memo, useEffect, useState } from 'react';
+import type { ChangeEvent, FC, KeyboardEvent } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
-import GlassButton from './GlassButton';
+import { cn } from '@/lib/utils';
 import Selector from '../interaction/Selector';
+import GlassButton from './GlassButton';
 
 interface PageControlsProps {
   readonly total: number;
@@ -25,7 +25,7 @@ const PageControlsComponent: FC<PageControlsProps> = ({
   perPage,
   onPerPageChange,
   onLoadMore,
-  className = '',
+  className,
   perPageOptions = [6, 12, 24, 48],
   currentPage = 1,
   totalPages = 1,
@@ -41,49 +41,59 @@ const PageControlsComponent: FC<PageControlsProps> = ({
     }
   }, [currentPage]);
 
-  const handlePageClick = () => {
+  const handlePageClick = useCallback(() => {
     setIsEditingPage(true);
     setTempPage(currentPage?.toString() || '1');
-  };
+  }, [currentPage]);
 
-  const handlePageSubmit = () => {
+  const handlePageSubmit = useCallback(() => {
     const page = parseInt(tempPage, 10);
-    if (!isNaN(page) && page >= 1 && page <= (totalPages || 1) && onPageChange) {
+    if (!Number.isNaN(page) && page >= 1 && page <= (totalPages || 1) && onPageChange) {
       onPageChange(page);
     }
     setIsEditingPage(false);
-  };
+  }, [tempPage, totalPages, onPageChange]);
 
-  const handlePageKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handlePageSubmit();
-    } else if (e.key === 'Escape') {
-      setIsEditingPage(false);
-    }
-  };
+  const handlePageKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        handlePageSubmit();
+      } else if (e.key === 'Escape') {
+        setIsEditingPage(false);
+      }
+    },
+    [handlePageSubmit]
+  );
 
-  const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePageChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Only allow numeric input
     if (value === '' || /^\d+$/.test(value)) {
       setTempPage(value);
     }
-  };
+  }, []);
 
-  const handlePrevPage = () => {
+  const handlePrevPage = useCallback(() => {
     if (currentPage && currentPage > 1 && onPageChange) {
       onPageChange(currentPage - 1);
     }
-  };
+  }, [currentPage, onPageChange]);
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback(() => {
     if (currentPage && currentPage < (totalPages || 1) && onPageChange) {
       onPageChange(currentPage + 1);
     }
-  };
+  }, [currentPage, totalPages, onPageChange]);
+
+  const perPageSelectorOptions = useMemo(
+    () => perPageOptions.map(n => ({ value: String(n), label: String(n) })),
+    [perPageOptions]
+  );
+
+  const canLoadMore = Boolean(onLoadMore) && visible < total;
 
   return (
-    <div className={`flex items-center justify-between gap-3 ${className}`}>
+    <div className={cn('flex items-center justify-between gap-3', className)}>
       <div className="text-muted-foreground text-sm">
         Showing <span className="text-foreground font-medium">{visible}</span> of{' '}
         <span className="text-foreground font-medium">{total}</span>
@@ -95,10 +105,10 @@ const PageControlsComponent: FC<PageControlsProps> = ({
             label="Items per page"
             value={String(perPage)}
             onChange={v => onPerPageChange(Number(v))}
-            options={perPageOptions.map(n => ({ value: String(n), label: String(n) }))}
+            options={perPageSelectorOptions}
           />
         </div>
-        {onLoadMore && visible < total && (
+        {canLoadMore && onLoadMore && (
           <GlassButton size="sm" onClick={onLoadMore}>
             Load more
           </GlassButton>
@@ -113,7 +123,7 @@ const PageControlsComponent: FC<PageControlsProps> = ({
               onClick={handlePrevPage}
               disabled={currentPage <= 1}
               aria-label="Go to previous page"
-              className={currentPage <= 1 ? 'cursor-not-allowed opacity-50' : ''}
+              className={cn({ 'cursor-not-allowed opacity-50': currentPage <= 1 })}
             />
             {isEditingPage ? (
               <div className="relative">
@@ -148,7 +158,7 @@ const PageControlsComponent: FC<PageControlsProps> = ({
               onClick={handleNextPage}
               disabled={currentPage >= totalPages}
               aria-label="Go to next page"
-              className={currentPage >= totalPages ? 'cursor-not-allowed opacity-50' : ''}
+              className={cn({ 'cursor-not-allowed opacity-50': currentPage >= totalPages })}
             />
           </div>
         )}

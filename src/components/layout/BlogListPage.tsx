@@ -26,7 +26,6 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<BlogSort>('newest');
   const [filters, setFilters] = useState<Record<string, string>>({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(12);
 
   useQueryParamSync('q', q, setQ);
@@ -119,13 +118,12 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
   const {
     paginated: pagePosts,
     totalPages,
-    // hasNextPage,
-    // hasPrevPage,
+    currentPage,
     goToPage,
     setPerPage: setPaginationPerPage,
   } = usePagination({
-    items: [...filtered], // Convert readonly array to mutable array
-    perPage: 9,
+    items: sorted,
+    perPage,
     initialPage: 1,
   });
 
@@ -213,10 +211,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
           onPerPageChange={handlePerPageChange}
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={page => {
-            goToPage(page);
-            setCurrentPage(page);
-          }}
+          onPageChange={goToPage}
         />
       )}
     </section>

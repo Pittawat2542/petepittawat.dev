@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { memo } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -8,7 +8,7 @@ interface ContainerProps {
   readonly className?: string | undefined;
 }
 
-const ContainerComponent: FC<ContainerProps> = ({ children, className }) => {
+const ContainerComponent = ({ children, className }: ContainerProps) => {
   return <section className={cn('mx-auto max-w-6xl', className)}>{children}</section>;
 };
 

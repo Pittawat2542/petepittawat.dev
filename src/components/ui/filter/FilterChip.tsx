@@ -2,6 +2,25 @@ import type { FC, MouseEvent, ReactNode } from 'react';
 
 import { X } from 'lucide-react';
 import { memo } from 'react';
+import { cn } from '@/lib/utils';
+
+const SIZE_CLASSES = {
+  sm: 'px-2.5 py-1 text-xs h-7',
+  md: 'px-3 py-1.5 text-sm h-8',
+  lg: 'px-4 py-2 text-base h-10',
+} as const;
+
+const BASE_CHIP_CLASSES =
+  'glass-surface rounded-full transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-out backdrop-blur-md border will-change-transform';
+
+const ACTIVE_VARIANT_CLASSES = {
+  default: 'glass-surface-elevated border-ring/30 text-foreground shadow-ring/10',
+  primary: 'bg-primary/30 text-primary-foreground border-primary/40 shadow-primary/20',
+  accent: 'bg-ring/30 text-white border-ring/40 shadow-ring/20',
+} as const;
+
+const INACTIVE_CLASSES =
+  'bg-muted/20 text-muted-foreground border-muted/30 hover:glass-surface-elevated hover:bg-muted/30 hover:text-foreground hover:border-muted/50';
 
 export interface FilterChipProps {
   readonly children: ReactNode;
@@ -15,6 +34,14 @@ export interface FilterChipProps {
   readonly className?: string;
 }
 
+const getVariantClasses = (variant: NonNullable<FilterChipProps['variant']>, active: boolean) => {
+  if (active) {
+    return cn(BASE_CHIP_CLASSES, ACTIVE_VARIANT_CLASSES[variant]);
+  }
+
+  return cn(BASE_CHIP_CLASSES, INACTIVE_CLASSES);
+};
+
 const FilterChipComponent: FC<FilterChipProps> = ({
   children,
   active = false,
@@ -24,32 +51,8 @@ const FilterChipComponent: FC<FilterChipProps> = ({
   variant = 'default',
   size = 'md',
   removable = false,
-  className = '',
+  className,
 }) => {
-  const sizeClasses = {
-    sm: 'px-2.5 py-1 text-xs h-7',
-    md: 'px-3 py-1.5 text-sm h-8',
-    lg: 'px-4 py-2 text-base h-10',
-  };
-
-  const getVariantClasses = (variant: string, active: boolean) => {
-    const baseClasses =
-      'glass-surface rounded-full transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-out backdrop-blur-md border will-change-transform';
-
-    if (active) {
-      switch (variant) {
-        case 'primary':
-          return `${baseClasses} bg-primary/30 text-primary-foreground border-primary/40 shadow-primary/20`;
-        case 'accent':
-          return `${baseClasses} bg-ring/30 text-white border-ring/40 shadow-ring/20`;
-        default:
-          return `${baseClasses} glass-surface-elevated border-ring/30 text-foreground shadow-ring/10`;
-      }
-    } else {
-      return `${baseClasses} bg-muted/20 text-muted-foreground border-muted/30 hover:glass-surface-elevated hover:bg-muted/30 hover:text-foreground hover:border-muted/50`;
-    }
-  };
-
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
     onClick?.();
@@ -63,9 +66,17 @@ const FilterChipComponent: FC<FilterChipProps> = ({
 
   const Component = onClick ? 'button' : 'span';
 
+  const componentClassName = cn(
+    'inline-flex items-center gap-1.5 font-medium whitespace-nowrap focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none',
+    SIZE_CLASSES[size],
+    getVariantClasses(variant, active),
+    onClick ? 'cursor-pointer hover:scale-[1.03] active:scale-95' : 'cursor-default',
+    className
+  );
+
   return (
     <Component
-      className={`inline-flex items-center gap-1.5 font-medium whitespace-nowrap ${sizeClasses[size]} ${getVariantClasses(variant, active)} ${onClick ? 'cursor-pointer' : 'cursor-default'} ${onClick ? 'hover:scale-[1.03] active:scale-95' : ''} focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none ${className} `}
+      className={componentClassName}
       {...(onClick && { onClick: handleClick })}
       {...(onClick && { 'aria-pressed': active })}
       {...(onClick && { role: 'button' })}

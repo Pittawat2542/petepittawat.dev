@@ -3,6 +3,15 @@ import type { FC } from 'react';
 import { memo } from 'react';
 
 import HeaderLink from '@/components/header/HeaderLink';
+import { cn } from '@/lib/utils';
+
+const NAVIGATION_LINKS = [
+  { href: '/blog', label: 'Blog', Icon: BookOpenText },
+  { href: '/projects', label: 'Projects', Icon: FolderKanban },
+  { href: '/publications', label: 'Publications', Icon: FileText },
+  { href: '/talks', label: 'Talks', Icon: Mic2 },
+  { href: '/about', label: 'About', Icon: User2 },
+] as const;
 
 interface NavigationProps {
   readonly currentPath: string;
@@ -10,25 +19,17 @@ interface NavigationProps {
 }
 
 const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) => {
-  const links = [
-    { href: '/blog', label: 'Blog', Icon: BookOpenText },
-    { href: '/projects', label: 'Projects', Icon: FolderKanban },
-    { href: '/publications', label: 'Publications', Icon: FileText },
-    { href: '/talks', label: 'Talks', Icon: Mic2 },
-    { href: '/about', label: 'About', Icon: User2 },
-  ];
-
   const isActive = (href: string) =>
-    currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
+    currentPath === href || (href !== '/' && currentPath.startsWith(`${href}/`));
 
   return (
-    <ul className={`site-nav__links hidden items-center gap-1 sm:flex ${className || ''}`}>
-      {links.map(({ href, label, Icon }) => {
+    <ul className={cn('site-nav__links hidden items-center gap-1 sm:flex', className)}>
+      {NAVIGATION_LINKS.map(({ href, label, Icon }) => {
         const active = isActive(href);
-        const iconClasses = [
+        const iconClasses = cn(
           'nav-link__icon',
-          active ? 'nav-link__icon--active' : 'nav-link__icon--idle',
-        ].join(' ');
+          active ? 'nav-link__icon--active' : 'nav-link__icon--idle'
+        );
 
         return (
           <li key={href}>

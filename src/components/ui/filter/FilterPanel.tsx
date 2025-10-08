@@ -1,14 +1,18 @@
-import { memo, useState } from 'react';
+import type { FC } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 import { ActiveFiltersSummary } from './ActiveFiltersSummary';
-import { DropdownFilters } from './DropdownFilters';
-import type { FC } from 'react';
-// Import extracted components
-import { FilterToggle } from './FilterToggle';
-import { ResultsInfo } from './ResultsInfo';
-import SearchInput from '@/components/ui/interaction/SearchInput';
-import { SortControl } from './SortControl';
-import { TagFilters } from './TagFilters';
+import { FilterPanelBody } from './FilterPanelBody';
+import { FilterPanelHeader } from './FilterPanelHeader';
+
+const EMPTY_FILTERS: Record<string, string> = Object.freeze({});
+const EMPTY_FILTER_OPTIONS: Record<string, readonly string[]> = Object.freeze({});
+const EMPTY_TAGS: readonly string[] = Object.freeze([]);
+const EMPTY_TAG_COUNTS: Record<string, number> = Object.freeze({});
+const EMPTY_SORT_OPTIONS: ReadonlyArray<{ readonly value: string; readonly label: string }> =
+  Object.freeze([]);
 
 interface FilterPanelProps {
   // Search
@@ -30,7 +34,9 @@ interface FilterPanelProps {
   readonly tagCounts?: Record<string, number> | undefined;
 
   // Sort
-  readonly sortOptions?: Array<{ readonly value: string; readonly label: string }> | undefined;
+  readonly sortOptions?:
+    | ReadonlyArray<{ readonly value: string; readonly label: string }>
+    | undefined;
   readonly sortValue?: string | undefined;
   readonly onSortChange?: ((value: string) => void) | undefined;
 
@@ -59,108 +65,121 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
   onSortChange,
   totalResults,
   filteredResults,
-  className = '',
+  className,
   compact = false,
 }) => {
   const [showFilters, setShowFilters] = useState(!compact);
+  const currentFilters = filters ?? EMPTY_FILTERS;
+  const currentFilterOptions = filterOptions ?? EMPTY_FILTER_OPTIONS;
+  const currentAvailableTags = availableTags ?? EMPTY_TAGS;
+  const currentTagCounts = tagCounts ?? EMPTY_TAG_COUNTS;
+  const currentSortOptions = sortOptions ?? EMPTY_SORT_OPTIONS;
+  const currentSelectedTags = selectedTags ?? null;
 
-  const hasDropdownFilters = Object.keys(filterOptions).length > 0;
-  const hasTags = availableTags.length > 0;
-  const hasActiveFilters =
-    Object.values(filters).some(v => v !== 'all' && v !== '') ||
-    (selectedTags && selectedTags.size > 0);
+  const filterStats = useMemo(() => {
+    const activeDropdownEntries = Object.entries(currentFilters).filter(
+      ([, v]) => v !== 'all' && v !== ''
+    );
+    const activeTags = currentSelectedTags ? Array.from(currentSelectedTags) : [];
+    const hasDropdownFilters = Object.keys(currentFilterOptions).length > 0;
+    const hasTags = currentAvailableTags.length > 0;
+    const hasActiveFilters = activeDropdownEntries.length > 0 || Boolean(currentSelectedTags?.size);
 
-  const activeDropdownEntries = Object.entries(filters).filter(([, v]) => v !== 'all' && v !== '');
-  const activeTags = selectedTags ? Array.from(selectedTags) : [];
+    return {
+      hasDropdownFilters,
+      hasTags,
+      hasActiveFilters,
+      activeDropdownEntries,
+      activeTags,
+      activeCount: activeDropdownEntries.length + activeTags.length,
+    };
+  }, [currentFilters, currentSelectedTags, currentFilterOptions, currentAvailableTags]);
 
-  const activeCount = activeDropdownEntries.length + activeTags.length;
+  const {
+    hasDropdownFilters,
+    hasTags,
+    hasActiveFilters,
+    activeDropdownEntries,
+    activeTags,
+    activeCount,
+  } = filterStats;
 
-  const clearAllFilters = () => {
-    if (onFiltersChange) {
-      onFiltersChange(() => ({}));
-    }
-    if (onTagsChange) {
-      onTagsChange(() => new Set());
-    }
+  const clearAllFilters = useCallback(() => {
+    onFiltersChange?.(() => ({}));
+    onTagsChange?.(() => new Set<string>());
     onSearchChange('');
-  };
+  }, [onFiltersChange, onTagsChange, onSearchChange]);
 
-  const removeDropdownFilter = (key: string) => {
-    onFiltersChange?.(f => {
-      const n = { ...f };
-      delete n[key];
-      return n;
-    });
-  };
+  const removeDropdownFilter = useCallback(
+    (key: string) => {
+      onFiltersChange?.(f => {
+        const next = { ...f };
+        delete next[key];
+        return next;
+      });
+    },
+    [onFiltersChange]
+  );
 
-  const removeTag = (tag: string) => {
-    onTagsChange?.(prev => {
-      const next = new Set(prev);
-      next.delete(tag);
-      return next;
-    });
-  };
-
-  const toggleTag = (tag: string) => {
-    if (!onTagsChange || !selectedTags) return;
-
-    if (tag === 'All') {
-      onTagsChange(() => new Set());
-      return;
-    }
-
-    onTagsChange(prev => {
-      const next = new Set(prev);
-      if (next.has(tag)) {
+  const removeTag = useCallback(
+    (tag: string) => {
+      onTagsChange?.((prev: Set<string>) => {
+        const next = new Set(prev);
         next.delete(tag);
-      } else {
-        next.add(tag);
+        return next;
+      });
+    },
+    [onTagsChange]
+  );
+
+  const toggleTag = useCallback(
+    (tag: string) => {
+      if (!onTagsChange || !currentSelectedTags) {
+        return;
       }
-      return next;
-    });
-  };
+
+      if (tag === 'All') {
+        onTagsChange(() => new Set<string>());
+        return;
+      }
+
+      onTagsChange((prev: Set<string>) => {
+        const next = new Set(prev);
+        if (next.has(tag)) {
+          next.delete(tag);
+        } else {
+          next.add(tag);
+        }
+        return next;
+      });
+    },
+    [onTagsChange, currentSelectedTags]
+  );
+
+  const handleToggleFilters = useCallback(() => {
+    setShowFilters(prev => !prev);
+  }, []);
 
   return (
-    <div className={`space-y-4 ${className}`}>
-      {/* Main search and controls row */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-1 items-center gap-3">
-          <SearchInput
-            value={searchValue}
-            onChange={onSearchChange}
-            placeholder={searchPlaceholder}
-            className="flex-1"
-          />
+    <div className={cn('space-y-4', className)}>
+      <FilterPanelHeader
+        searchValue={searchValue}
+        onSearchChange={onSearchChange}
+        searchPlaceholder={searchPlaceholder}
+        compact={compact}
+        hasDropdownFilters={hasDropdownFilters}
+        hasTags={hasTags}
+        showFilters={showFilters}
+        onToggleFilters={handleToggleFilters}
+        activeFiltersCount={activeCount}
+        sortOptions={currentSortOptions}
+        sortValue={sortValue}
+        onSortChange={onSortChange}
+        totalResults={totalResults}
+        filteredResults={filteredResults}
+        hasActiveFilters={hasActiveFilters}
+      />
 
-          {compact && (hasDropdownFilters || hasTags) && (
-            <FilterToggle
-              showFilters={showFilters}
-              onToggle={() => setShowFilters(!showFilters)}
-              activeFiltersCount={activeCount}
-            />
-          )}
-        </div>
-
-        {/* Sort and results info */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-          {onSortChange && (
-            <SortControl
-              sortOptions={sortOptions}
-              sortValue={sortValue}
-              onSortChange={onSortChange}
-            />
-          )}
-
-          <ResultsInfo
-            totalResults={totalResults || 0}
-            filteredResults={filteredResults}
-            searchValue={searchValue}
-            hasActiveFilters={!!hasActiveFilters}
-          />
-        </div>
-      </div>
-
-      {/* Compact active filters summary row (when collapsed) */}
       {compact && !showFilters && hasActiveFilters && (
         <ActiveFiltersSummary
           activeDropdownEntries={activeDropdownEntries}
@@ -171,31 +190,20 @@ const FilterPanelComponent: FC<FilterPanelProps> = ({
         />
       )}
 
-      {/* Expandable filters section */}
-      {showFilters && (hasDropdownFilters || hasTags || hasActiveFilters) && (
-        <div className="glass-card animate-in fade-in-0 slide-in-from-top-2 space-y-4 rounded-2xl p-4 duration-300">
-          {/* Dropdown filters */}
-          {hasDropdownFilters && onFiltersChange && (
-            <DropdownFilters
-              filterOptions={filterOptions}
-              filters={filters}
-              onFiltersChange={onFiltersChange}
-              hasActiveFilters={!!hasActiveFilters}
-              onClearAll={clearAllFilters}
-            />
-          )}
-
-          {/* Tag filters */}
-          {hasTags && selectedTags && (
-            <TagFilters
-              availableTags={availableTags}
-              selectedTags={selectedTags}
-              tagCounts={tagCounts}
-              onToggleTag={toggleTag}
-            />
-          )}
-        </div>
-      )}
+      <FilterPanelBody
+        showFilters={showFilters}
+        hasDropdownFilters={hasDropdownFilters}
+        hasTags={hasTags}
+        hasActiveFilters={hasActiveFilters}
+        filterOptions={currentFilterOptions}
+        filters={currentFilters}
+        onFiltersChange={onFiltersChange}
+        onClearAll={clearAllFilters}
+        availableTags={currentAvailableTags}
+        selectedTags={currentSelectedTags}
+        tagCounts={currentTagCounts}
+        onToggleTag={toggleTag}
+      />
     </div>
   );
 };

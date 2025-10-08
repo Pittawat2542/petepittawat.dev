@@ -1,6 +1,7 @@
 import type { CSSProperties, FC, ReactNode } from 'react';
 import { memo, useEffect, useMemo, useRef } from 'react';
 
+import { cn } from '@/lib/utils';
 import { COMPONENT_CONFIG } from '../../../lib/constants';
 
 interface RevealProps {
@@ -11,7 +12,7 @@ interface RevealProps {
   readonly style?: CSSProperties;
 }
 
-const RevealComponent: FC<RevealProps> = ({ children, className = '', delayMs, id, style }) => {
+const RevealComponent: FC<RevealProps> = ({ children, className, delayMs, id, style }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const mergedStyle = useMemo(
@@ -54,7 +55,7 @@ const RevealComponent: FC<RevealProps> = ({ children, className = '', delayMs, i
   }, []);
 
   return (
-    <div ref={ref} id={id} className={`reveal ${className}`} style={mergedStyle}>
+    <div ref={ref} id={id} className={cn('reveal', className)} style={mergedStyle}>
       {children}
     </div>
   );

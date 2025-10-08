@@ -5,7 +5,7 @@ import Selector from '@/components/ui/interaction/Selector';
 import { memo } from 'react';
 
 interface SortControlProps {
-  readonly sortOptions: Array<{ readonly value: string; readonly label: string }>;
+  readonly sortOptions: ReadonlyArray<{ readonly value: string; readonly label: string }>;
   readonly sortValue: string | undefined;
   readonly onSortChange: (value: string) => void;
 }

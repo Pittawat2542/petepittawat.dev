@@ -1,13 +1,20 @@
 import type { CSSProperties, FC } from 'react';
+import { memo, useMemo } from 'react';
 
 import { BlogCardContent } from '@/components/ui/blog/BlogCardContent';
 import { BlogCardFooter } from '@/components/ui/blog/BlogCardFooter';
 import { BlogCardImage } from '@/components/ui/blog/BlogCardImage';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import type { BlogPost } from '@/types';
-import { memo, useMemo } from 'react';
+import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
 import { useGlassGlow } from '@/lib/hooks';
+
+const CARD_CONTENT_LAYOUT = 'flex flex-col gap-6';
+const CARD_PADDING = 'px-6 pt-6 pb-6 md:px-7 md:pt-7 md:pb-7 lg:px-8 lg:pt-8 lg:pb-8';
+const CARD_BAR_PADDING = 'px-6 md:px-7 lg:px-8';
+const CARD_ANIMATION_CLASS =
+  'transition-transform duration-400 ease-out group-hover:translate-y-[-4px]';
 
 /**
  * Blog post card component properties
@@ -42,7 +49,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   post,
   featured = false,
   allPosts = [],
-  className = '',
+  className,
   style,
 }) => {
   const { isPartOfSeries, partNumber, totalParts, seriesTitle } = useBlogCardSeries(
@@ -52,22 +59,20 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
 
-  const contentLayout = 'flex flex-col gap-6';
-  const paddingClasses = 'px-6 pt-6 pb-6 md:px-7 md:pt-7 md:pb-7 lg:px-8 lg:pt-8 lg:pb-8';
-  const barPadding = 'px-6 md:px-7 lg:px-8';
   const accentVar = useMemo(() => 'var(--accent-blog, var(--accent))', []);
   const mergedStyle: CSSProperties = {
     '--card-accent': accentVar,
     ...style,
   } as CSSProperties;
 
+  const listClassName = cn(
+    'group blog-card aurora-card flex h-full w-full flex-col text-[color:var(--white)] transition-transform duration-300 ease-out',
+    featured && 'aurora-card--featured',
+    className
+  );
+
   return (
-    <li
-      style={mergedStyle}
-      className={`group blog-card aurora-card flex h-full w-full flex-col text-[color:var(--white)] transition-transform duration-300 ease-out ${
-        featured ? 'aurora-card--featured' : ''
-      } ${className}`}
-    >
+    <li style={mergedStyle} className={listClassName}>
       <a
         className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out focus-visible:text-[color:var(--white)]"
         href={`/blog/${String(post.slug)}`}
@@ -79,10 +84,8 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         <BlogCardOverlays accent={accentVar} />
 
         <div className="aurora-card__body flex flex-1 flex-col">
-          <div className={paddingClasses}>
-            <div
-              className={`${contentLayout} transition-transform duration-400 ease-out group-hover:translate-y-[-4px]`}
-            >
+          <div className={CARD_PADDING}>
+            <div className={cn(CARD_CONTENT_LAYOUT, CARD_ANIMATION_CLASS)}>
               <BlogCardImage post={post} />
 
               <div className="flex min-w-0 flex-1 flex-col">
@@ -100,7 +103,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
             </div>
           </div>
 
-          <BlogCardFooter pubDate={post.data.pubDate} barPadding={barPadding} />
+          <BlogCardFooter pubDate={post.data.pubDate} barPadding={CARD_BAR_PADDING} />
         </div>
       </a>
     </li>
