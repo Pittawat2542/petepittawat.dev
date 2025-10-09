@@ -1,3 +1,5 @@
+import '@/styles/components/search.css';
+
 import {
   DialogClose,
   DialogContent,
@@ -6,9 +8,9 @@ import {
 } from '@/components/ui/core/dialog';
 import type { FC, ReactNode } from 'react';
 
+import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 /**
  * Props for the SearchDialogContent component
@@ -48,7 +50,7 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
           Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate
           results.
         </DialogDescription>
-        <div className="aurora-modal aurora-modal--search search-modal">
+        <div className="search-modal">
           <BlogCardOverlays accent="var(--accent)" intensity="subtle" />
           <header className="search-modal__header">
             <div className="search-modal__headline">

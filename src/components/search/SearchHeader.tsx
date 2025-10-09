@@ -1,3 +1,5 @@
+import '@/styles/components/search.css';
+
 import type { SearchItem, SearchItemType } from './types';
 
 import { CornerDownLeft } from 'lucide-react';

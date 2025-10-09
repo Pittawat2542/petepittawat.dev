@@ -1,9 +1,11 @@
-import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
-import type { FC } from 'react';
-import { memo } from 'react';
+import '@/styles/components/navigation.css';
 
+import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
+
+import type { FC } from 'react';
 import HeaderLink from '@/components/header/HeaderLink';
 import { cn } from '@/lib/utils';
+import { memo } from 'react';
 
 const NAVIGATION_LINKS = [
   { href: '/blog', label: 'Blog', Icon: BookOpenText },
@@ -23,7 +25,7 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
     currentPath === href || (href !== '/' && currentPath.startsWith(`${href}/`));
 
   return (
-    <ul className={cn('site-nav__links hidden items-center gap-1 sm:flex', className)}>
+    <ul className={cn('site-nav__links', className)}>
       {NAVIGATION_LINKS.map(({ href, label, Icon }) => {
         const active = isActive(href);
         const iconClasses = cn(
@@ -37,7 +39,7 @@ const NavigationComponent: FC<NavigationProps> = ({ currentPath, className }) =>
               href={href}
               isActive={active}
               ariaLabel={`Navigate to ${label}`}
-              className="nav-link group/nav"
+              className="nav-link"
             >
               <span className="nav-link__content inline-flex items-center gap-2 whitespace-nowrap">
                 <span className={iconClasses} aria-hidden="true">
