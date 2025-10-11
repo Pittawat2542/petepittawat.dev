@@ -44,16 +44,15 @@ export const animationEasings = {
 
 type SpringPreset = keyof typeof SPRING;
 
-interface SpringOverrides extends Partial<Transition> {
+type SpringOverrides = Partial<Transition> & {
   readonly respectReducedMotion?: boolean;
-}
+};
 
 export const createSpringTransition = (
   preset: SpringPreset = 'DEFAULT',
   overrides: SpringOverrides = {}
 ): Transition => {
-  const { respectReducedMotion = true, ...restOverrides } = overrides;
-  const { delay, ...rest } = restOverrides;
+  const { respectReducedMotion = true, delay = 0, ...rest } = overrides;
   const shouldReduce = respectReducedMotion && prefersReducedMotion();
 
   if (shouldReduce) {
