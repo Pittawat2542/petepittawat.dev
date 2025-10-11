@@ -19,12 +19,48 @@ export const SITE_DESCRIPTION = SITE_CONFIG.DESCRIPTION;
 export const FIRST_AUTHOR_TITLE = 'First Author Publications';
 
 // Theme and UI Configuration
+const ANIMATION_DURATIONS = {
+  FAST: 200,
+  NORMAL: 300,
+  SLOW: 400,
+  EMPHASIZED: 550,
+} as const;
+
+const ANIMATION_EASING = {
+  STANDARD: [0.4, 0, 0.2, 1] as const,
+  EMPHASIZED: [0.34, 1.56, 0.64, 1] as const,
+  DECELERATE: [0.05, 0.7, 0.1, 1] as const,
+  ACCELERATE: [0.3, 0, 0.8, 0.15] as const,
+} as const;
+
+const ANIMATION_SPRING = {
+  DEFAULT: {
+    STIFFNESS: 320,
+    DAMPING: 32,
+    MASS: 0.9,
+  },
+  SOFT: {
+    STIFFNESS: 260,
+    DAMPING: 34,
+    MASS: 1.05,
+  },
+} as const;
+
+const ANIMATION_STAGGER = {
+  XS: 0.04,
+  SM: 0.06,
+  MD: 0.1,
+  LG: 0.16,
+} as const;
+
 export const UI_CONFIG = {
-  // Animation durations (in milliseconds)
+  // Animation tokens shared across CSS and motion libraries
   ANIMATION: {
-    FAST: 150,
-    NORMAL: 250,
-    SLOW: 400,
+    ...ANIMATION_DURATIONS,
+    DURATION: ANIMATION_DURATIONS,
+    EASING: ANIMATION_EASING,
+    SPRING: ANIMATION_SPRING,
+    STAGGER: ANIMATION_STAGGER,
   },
 
   // Common sizes used throughout the application

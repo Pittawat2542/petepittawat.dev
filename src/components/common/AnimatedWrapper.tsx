@@ -1,6 +1,8 @@
 import React, { type ReactNode, memo } from 'react';
 import { motion } from 'framer-motion';
 
+import { createSpringTransition } from '@/lib/animation';
+
 interface AnimatedWrapperProps {
   readonly children: ReactNode;
 }
@@ -10,11 +12,7 @@ const AnimatedWrapperComponent: React.FC<AnimatedWrapperProps> = ({ children }) 
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        type: 'spring',
-        stiffness: 500,
-        damping: 30,
-      }}
+      transition={createSpringTransition()}
     >
       {children}
     </motion.div>

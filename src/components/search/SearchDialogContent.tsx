@@ -11,6 +11,7 @@ import type { FC, ReactNode } from 'react';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import { memo } from 'react';
 import { motion } from 'framer-motion';
+import { animationDurationsMs, animationEasings, createTimingTransition } from '@/lib/animation';
 
 /**
  * Props for the SearchDialogContent component
@@ -39,7 +40,10 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.2, ease: 'easeInOut' }}
+      transition={createTimingTransition({
+        duration: animationDurationsMs.normal,
+        easing: animationEasings.standard,
+      })}
     >
       <DialogContent
         className="no-paint-contain top-[12vh] w-[min(72rem,92vw)] max-w-none -translate-y-0 overflow-visible border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:-translate-y-1/2"

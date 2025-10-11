@@ -28,8 +28,8 @@
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
   transition-property: color, transform;
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--motion-duration-normal);
+  transition-timing-function: var(--motion-ease-standard);
 }
 
 .nav-link-root:hover {
@@ -66,8 +66,8 @@
   opacity: 0;
   transform: scale(1.02);
   transition-property: opacity, transform;
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--motion-duration-normal);
+  transition-timing-function: var(--motion-ease-standard);
   pointer-events: none;
 }
 
@@ -95,8 +95,8 @@
   background: rgba(255, 255, 255, 0.08);
   color: rgba(248, 250, 252, 0.75);
   transition-property: all;
-  transition-duration: 280ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--motion-duration-normal);
+  transition-timing-function: var(--motion-ease-standard);
 }
 
 .nav-link__icon--idle {
@@ -128,8 +128,8 @@
   transform: scale(0);
   opacity: 0;
   transition-property: transform, opacity;
-  transition-duration: 240ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--motion-duration-fast);
+  transition-timing-function: var(--motion-ease-standard);
 }
 
 .nav-link[data-active='true'] .nav-link__pulse {

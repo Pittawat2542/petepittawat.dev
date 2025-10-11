@@ -1,214 +1,214 @@
 {
   "3x3-the-life-changing-concepts": {
     "hash": "64624066f16528313ecc90b658b0e77b",
-    "generatedAt": "2025-10-09T15:20:09.912Z"
+    "generatedAt": "2025-10-11T02:47:53.824Z"
   },
   "ai-collaborator": {
     "hash": "7c0afca325ecba57f9e6cf2106cbeafb",
-    "generatedAt": "2025-10-09T15:20:09.913Z"
+    "generatedAt": "2025-10-11T02:47:53.824Z"
   },
   "basic-principles-to-write-good-code": {
     "hash": "c5cc043b4fbd85c2ce045da3efdd0df0",
-    "generatedAt": "2025-10-09T15:20:09.913Z"
+    "generatedAt": "2025-10-11T02:47:53.824Z"
   },
   "casting-vs-coercing": {
     "hash": "c0b9f5c7a69a5223225e25898e822f40",
-    "generatedAt": "2025-10-09T15:20:09.913Z"
+    "generatedAt": "2025-10-11T02:47:53.824Z"
   },
   "clustering": {
     "hash": "725060243c428d3138d0c8503d7b42e2",
-    "generatedAt": "2025-10-09T15:20:09.914Z"
+    "generatedAt": "2025-10-11T02:47:53.825Z"
   },
   "dart-cascade-notation": {
     "hash": "293dcd0bdbe56f5cdd07cdba2c6a3320",
-    "generatedAt": "2025-10-09T15:20:09.914Z"
+    "generatedAt": "2025-10-11T02:47:53.825Z"
   },
   "dart-exception-vs-error": {
     "hash": "f7871607c536f8db01abbf6c49e69ac3",
-    "generatedAt": "2025-10-09T15:20:09.914Z"
+    "generatedAt": "2025-10-11T02:47:53.825Z"
   },
   "dart-extension-methods": {
     "hash": "41398c89b7861c5c751ee562d30ec604",
-    "generatedAt": "2025-10-09T15:20:09.914Z"
+    "generatedAt": "2025-10-11T02:47:53.825Z"
   },
   "dart-sound-null-safety": {
     "hash": "d6a86be8861d3a5adc9169bca75b8e08",
-    "generatedAt": "2025-10-09T15:20:09.914Z"
+    "generatedAt": "2025-10-11T02:47:53.826Z"
   },
   "dart-write-better-code-with-analysis-option-file": {
     "hash": "0f9dd5016e1a2ea041ac61b2f58bb1eb",
-    "generatedAt": "2025-10-09T15:20:09.915Z"
+    "generatedAt": "2025-10-11T02:47:53.826Z"
   },
   "dogfooding": {
     "hash": "198a1ebe12c1a4aede0f611822909b33",
-    "generatedAt": "2025-10-09T15:20:09.915Z"
+    "generatedAt": "2025-10-11T02:47:53.826Z"
   },
   "flutter-app-sizing-tool": {
     "hash": "4bc1271f5b714a984ba5fcd828f3dd4d",
-    "generatedAt": "2025-10-09T15:20:09.915Z"
+    "generatedAt": "2025-10-11T02:47:53.827Z"
   },
   "flutter-bloc-flutter-bloc-v5": {
     "hash": "d415a369d63f8d74052378627a40559d",
-    "generatedAt": "2025-10-09T15:20:09.915Z"
+    "generatedAt": "2025-10-11T02:47:53.827Z"
   },
   "flutter-bloc-flutter-bloc-v6": {
     "hash": "6bd7f3e262cb94e5fff8f3e9f2b29a44",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.827Z"
   },
   "flutter-buildcontext-deep-dive": {
     "hash": "9a42deb6bbf76ccd8fd928381f964b83",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.827Z"
   },
   "flutter-built_value-deserializing-failed-due-to-bad-state-no-element": {
     "hash": "badb2fb6e5370da84a26191be9898473",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.827Z"
   },
   "flutter-built_value-deserializing-failed-due-to-interal-linked-hashed-map": {
     "hash": "ff6234815d48ac50c8ed231eb33247ba",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.827Z"
   },
   "flutter-built_value-unknown-type-on-deserialization-need-either-specifiedtype-or-discriminator-field": {
     "hash": "ba77060bfa18e29207da2150f84352f3",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-const-vs-final": {
     "hash": "22062a4189014af13d529737a5e56dc1",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-dark-mode": {
     "hash": "7a2753770d0970ffcbcb494694775328",
-    "generatedAt": "2025-10-09T15:20:09.916Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-engage-2021-prediction": {
     "hash": "32bcae6f7803ca16f3cb45c4ba61cbb2",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-extract-as-a-widget-vs-extract-as-a-method": {
     "hash": "4525e7f6903a681a0db50d8c871a16de",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-flexible-vs-expanded": {
     "hash": "c7b9f291a72a18c7d8c17b10a00cb3b4",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-hot-reload-vs-hot-restart-vs-full-restart": {
     "hash": "3a42fabe2e961f718d8c815df0e45256",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.828Z"
   },
   "flutter-inkwell": {
     "hash": "1c63f6dda16bfb30f00cee73ae1a1a9e",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-interactiveviewer": {
     "hash": "4e7bbb04e7b2fbc194d3717e25682910",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-ios14": {
     "hash": "4ebccd19dd4f6a6da5685334e8ebf153",
-    "generatedAt": "2025-10-09T15:20:09.917Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-key": {
     "hash": "528db4788ef3c797573a9c91c6ce2a4f",
-    "generatedAt": "2025-10-09T15:20:09.918Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-package-vs-plugin": {
     "hash": "2a6a35337b8156784e69146979c90b76",
-    "generatedAt": "2025-10-09T15:20:09.918Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-pull-to-refresh-list-view": {
     "hash": "fb81be44bfea5b03e6807119630eff1b",
-    "generatedAt": "2025-10-09T15:20:09.918Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-runzoneguarded": {
     "hash": "1ad128eb3c210143ccdd6fa2621d8dbb",
-    "generatedAt": "2025-10-09T15:20:09.918Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-save-scroll-position-listview": {
     "hash": "d8b24357fb6be92ed69c01d3e81df006",
-    "generatedAt": "2025-10-09T15:20:09.918Z"
+    "generatedAt": "2025-10-11T02:47:53.829Z"
   },
   "flutter-semantics": {
     "hash": "1b581aa62c706f790e251bb715ca8a80",
-    "generatedAt": "2025-10-09T15:20:09.919Z"
+    "generatedAt": "2025-10-11T02:47:53.830Z"
   },
   "flutter-textfield-vs-textformfield": {
     "hash": "a4df07c6947a69e1c33fa6ddfa14aee1",
-    "generatedAt": "2025-10-09T15:20:09.919Z"
+    "generatedAt": "2025-10-11T02:47:53.830Z"
   },
   "flutter-triage-label": {
     "hash": "f2e107c489fe5111aa5c85d535553a49",
-    "generatedAt": "2025-10-09T15:20:09.919Z"
+    "generatedAt": "2025-10-11T02:47:53.830Z"
   },
   "flutter-version-number": {
     "hash": "02636c51c53cec5019414b98b7fd7069",
-    "generatedAt": "2025-10-09T15:20:09.919Z"
+    "generatedAt": "2025-10-11T02:47:53.830Z"
   },
   "flutter-whats-new-in-1-17": {
     "hash": "b00c0fb4d1be4562e1f0e85ff7a00445",
-    "generatedAt": "2025-10-09T15:20:09.919Z"
+    "generatedAt": "2025-10-11T02:47:53.830Z"
   },
   "flutter-whats-new-in-1-20": {
     "hash": "a69a1dfab6e44c6f0ef598d434be957b",
-    "generatedAt": "2025-10-09T15:20:09.920Z"
+    "generatedAt": "2025-10-11T02:47:53.830Z"
   },
   "future-of-flutter-may-2021": {
     "hash": "6589c428cb88d6a45d3be60807844f9d",
-    "generatedAt": "2025-10-09T15:20:09.920Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "how-to-split-large-csv-file-pandas": {
     "hash": "894824fe8006e70da423241e21b37fcb",
-    "generatedAt": "2025-10-09T15:20:09.920Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "html-wbr": {
     "hash": "1caf26dfa309b574064edd10b4a2a180",
-    "generatedAt": "2025-10-09T15:20:09.920Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "jit-compiler-vs-aot-compiler": {
     "hash": "44694e43b441b5dfbb8fd20e8ac48e70",
-    "generatedAt": "2025-10-09T15:20:09.920Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "js-event-bubbling-capture": {
     "hash": "e75cf81069eaa82dcf69da0fda77fced",
-    "generatedAt": "2025-10-09T15:20:09.920Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "memory-partitioning": {
     "hash": "b8a64eb495dfe06e29d0f6a680c59b70",
-    "generatedAt": "2025-10-09T15:20:09.921Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "parameter-vs-argument": {
     "hash": "fb5f4c7d61c9df9905f6727977d97ef5",
-    "generatedAt": "2025-10-09T15:20:09.921Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "print-debugging": {
     "hash": "6dc4954427bad993de50574c47e1366c",
-    "generatedAt": "2025-10-09T15:20:09.921Z"
+    "generatedAt": "2025-10-11T02:47:53.831Z"
   },
   "pub-dev-new-version-jul-2020": {
     "hash": "dd1ef0803f38dbc5bc274e4ec4fb92e8",
-    "generatedAt": "2025-10-09T15:20:09.921Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   },
   "python-flask-wtform": {
     "hash": "9aa546f8bd07b541288270b1ea26a93a",
-    "generatedAt": "2025-10-09T15:20:09.921Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   },
   "review-digimon-adventure-last-evolution": {
     "hash": "c0e2a4bfd2a9fbc88c292eabe5da0d00",
-    "generatedAt": "2025-10-09T15:20:09.922Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   },
   "review-harari-books": {
     "hash": "5339634a9db17d22b58d1d22fa806cf5",
-    "generatedAt": "2025-10-09T15:20:09.922Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   },
   "review-inferno": {
     "hash": "5b665a00104f0939a584e4d97ef805f3",
-    "generatedAt": "2025-10-09T15:20:09.922Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   },
   "review-line-developer-day-2020-the-past-and-future-of-machine-learning-research": {
     "hash": "97749726a9d393a8a633faf05f4d3097",
-    "generatedAt": "2025-10-09T15:20:09.922Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   },
   "wisdom": {
     "hash": "a6eaa9ff53568621a640f599d08bb22d",
-    "generatedAt": "2025-10-09T15:20:09.922Z"
+    "generatedAt": "2025-10-11T02:47:53.832Z"
   }
 }

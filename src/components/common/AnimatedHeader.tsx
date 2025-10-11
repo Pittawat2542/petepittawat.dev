@@ -1,5 +1,5 @@
 import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
-import { SITE_TITLE, UI_CONFIG } from '@/lib/constants';
+import { SITE_TITLE } from '@/lib/constants';
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import type { FC } from 'react';
@@ -7,6 +7,7 @@ import { HeaderActions } from '@/components/ui/header/HeaderActions';
 import { MobileMenu } from '@/components/ui/header/MobileMenu';
 import { NavigationLinks } from '@/components/ui/header/NavigationLinks';
 import { motion } from 'framer-motion';
+import { createSpringTransition } from '@/lib/animation';
 
 interface NavLink {
   readonly href: string;
@@ -104,16 +105,11 @@ const AnimatedHeaderComponent: FC = () => {
       style={{ viewTransitionName: 'site-header' }}
       initial={false} // Keep SSR markup visible even if hydration never runs
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        type: 'spring',
-        stiffness: 500,
-        damping: 30,
-        duration: UI_CONFIG.ANIMATION.NORMAL / 1000,
-      }}
+      transition={createSpringTransition()}
     >
       <div
         id="site-nav-wrapper"
-        className={`mx-auto max-w-6xl rounded-3xl border border-transparent transition-[border-color,box-shadow,backdrop-filter,transform] duration-300 ease-out`}
+        className="mx-auto max-w-6xl rounded-3xl border border-transparent transition-[border-color,box-shadow,backdrop-filter,transform] duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]"
         data-scrolled={scrolled ? 'true' : undefined}
       >
         {/* Animated background that expands from center */}
@@ -121,11 +117,7 @@ const AnimatedHeaderComponent: FC = () => {
           className="absolute inset-0 rounded-3xl bg-transparent"
           initial={{ scaleX: 0, originX: 0.5 }}
           animate={{ scaleX: 1 }}
-          transition={{
-            type: 'spring',
-            stiffness: 300,
-            damping: 25,
-          }}
+          transition={createSpringTransition('SOFT')}
           aria-hidden="true"
         />
 

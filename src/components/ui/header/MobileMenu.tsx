@@ -3,6 +3,13 @@ import type { ComponentType, FC } from 'react';
 
 import HeaderLink from '../../header/HeaderLink';
 import { memo } from 'react';
+import {
+  animationDelays,
+  animationDurationsMs,
+  animationEasings,
+  createTimingTransition,
+  getStaggerDelay,
+} from '@/lib/animation';
 
 interface MobileMenuLink {
   readonly href: string;
@@ -31,6 +38,10 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
+            transition={createTimingTransition({
+              duration: animationDurationsMs.slow,
+              easing: animationEasings.decelerate,
+            })}
           />
           <dialog
             id="mobile-nav-panel"
@@ -42,7 +53,10 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
               initial={{ opacity: 0, y: -12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
+              transition={createTimingTransition({
+                duration: animationDurationsMs.normal,
+                easing: animationEasings.decelerate,
+              })}
               className="w-full"
             >
               <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-black/85 via-black/80 to-black/75 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl">
@@ -54,7 +68,11 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                         key={href}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05, duration: 0.2 }}
+                        transition={createTimingTransition({
+                          delay: getStaggerDelay(index, animationDelays.sm),
+                          duration: animationDurationsMs.fast,
+                          easing: animationEasings.decelerate,
+                        })}
                       >
                         <HeaderLink
                           href={href}
@@ -65,7 +83,7 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                         >
                           <span className="relative z-10 flex items-center gap-3">
                             <Icon
-                              className={`h-5 w-5 transition-all duration-300 ${
+                              className={`h-5 w-5 transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-standard)] ${
                                 isCurrentPage
                                   ? 'scale-110 text-blue-400 opacity-100'
                                   : 'opacity-75 group-hover:scale-105 group-hover:opacity-100'
@@ -73,7 +91,7 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                               aria-hidden="true"
                             />
                             <span
-                              className={`transition-all duration-300 ${
+                              className={`transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)] ${
                                 isCurrentPage
                                   ? 'font-semibold text-white'
                                   : 'font-medium group-hover:font-semibold'
@@ -84,7 +102,7 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                           </span>
 
                           {/* Mobile menu item background effect */}
-                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)] group-hover:opacity-100" />
 
                           {/* Active indicator for mobile */}
                           {isCurrentPage && (
