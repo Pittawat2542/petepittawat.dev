@@ -1,16 +1,14 @@
-import * as React from 'react';
-
+import { forwardRef, isValidElement, memo, type InputHTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { memo } from 'react';
 import { useGlassGlow } from '@/lib/hooks';
 
 type InputSize = 'sm' | 'md' | 'lg';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly fieldSize?: InputSize;
   readonly wrapperClassName?: string;
-  readonly leadingIcon?: React.ReactNode;
-  readonly trailingIcon?: React.ReactNode;
+  readonly leadingIcon?: ReactNode;
+  readonly trailingIcon?: ReactNode;
 }
 
 const sizeMap: Record<InputSize, { wrapper: string; input: string; icon: string }> = {
@@ -31,7 +29,7 @@ const sizeMap: Record<InputSize, { wrapper: string; input: string; icon: string 
   },
 };
 
-const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
+const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
@@ -48,10 +46,10 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
     const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLDivElement>();
     const sizeClasses = sizeMap[fieldSize];
 
-    const renderIcon = (icon: React.ReactNode, position: 'leading' | 'trailing') => {
+    const renderIcon = (icon: ReactNode, position: 'leading' | 'trailing') => {
       if (!icon) return null;
       let isInteractive = false;
-      if (React.isValidElement(icon)) {
+      if (isValidElement(icon)) {
         const iconProps = icon.props as Record<string, unknown>;
         const role =
           typeof (iconProps as any)['role'] === 'string'

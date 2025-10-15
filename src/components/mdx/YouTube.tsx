@@ -1,12 +1,11 @@
-import React, { memo } from 'react';
-
+import { memo, type FC } from 'react';
 interface YouTubeProps {
   readonly id?: string;
   readonly url?: string;
   readonly title?: string;
 }
 
-const YouTubeComponent: React.FC<YouTubeProps> = ({ id, url, title = 'YouTube video' }) => {
+const YouTubeComponent: FC<YouTubeProps> = ({ id, url, title = 'YouTube video' }) => {
   const videoId = id ?? (url ? (new URL(url).searchParams.get('v') ?? '') : '');
   const src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
 

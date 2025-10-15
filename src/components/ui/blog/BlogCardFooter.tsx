@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
-import type { FC } from 'react';
-import { memo } from 'react';
+import { memo, type FC } from 'react';
+import { cn } from '@/lib/utils';
 
 interface BlogCardFooterProps {
   readonly pubDate: Date;
@@ -14,7 +14,10 @@ const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({ pubDate, barPadding 
     <div className="relative mt-auto">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent opacity-40 transition-opacity duration-300 group-hover:opacity-80" />
       <div
-        className={`aurora-card__footer ${barPadding} flex items-center justify-between gap-4 py-3 text-sm text-[color:var(--white)]/78 md:py-4`}
+        className={cn(
+          'aurora-card__footer flex items-center justify-between gap-4 py-3 text-sm text-[color:var(--white)]/78 md:py-4',
+          barPadding
+        )}
       >
         <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.28em] text-white/55 uppercase transition-colors duration-300 group-hover:text-white/80">
           {yearLabel}

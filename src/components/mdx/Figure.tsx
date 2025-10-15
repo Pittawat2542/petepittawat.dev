@@ -1,4 +1,4 @@
-import React, { type ReactNode, memo } from 'react';
+import { memo, type FC, type ReactNode } from 'react';
 
 interface FigureProps {
   readonly src: string | { src: string };
@@ -7,7 +7,7 @@ interface FigureProps {
   readonly children?: ReactNode;
 }
 
-const FigureComponent: React.FC<FigureProps> = ({ src, alt = '', caption, children }) => {
+const FigureComponent: FC<FigureProps> = ({ src, alt = '', caption, children }) => {
   // Handle both string sources and Astro image objects
   const imageSrc = typeof src === 'string' ? src : src.src;
 

@@ -1,16 +1,15 @@
-// Import extracted components and utilities
-import { deduplicateArtifacts, typeAccentVar } from './utils';
-import { memo, useEffect, useState } from 'react';
-
+import { memo, useEffect, useState, type CSSProperties, type FC } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { AuthorList } from './AuthorList';
+import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import { Badge } from '@/components/ui/core/badge';
-import type { CSSProperties, FC } from 'react';
 import type { Publication } from '@/types';
+import { AuthorList } from './AuthorList';
 import { PublicationActions } from './PublicationActions';
 import { PublicationMeta } from './PublicationMeta';
 import { PublicationModal } from './PublicationModal';
-import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
+import { deduplicateArtifacts, typeAccentVar } from './utils';
+import { cn } from '@/lib/utils';
 
 interface PublicationCardProps {
   readonly item: Publication;
@@ -44,7 +43,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
     };
   }, [open]);
 
-  function onKeyDown(e: React.KeyboardEvent) {
+  function onKeyDown(e: ReactKeyboardEvent<HTMLElement>) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       setOpen(true);
@@ -57,9 +56,10 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   const cardStyle = { '--card-accent': accent } as CSSProperties;
   return (
     <article
-      className={`aurora-card group publication-card flex cursor-pointer flex-col ${
-        featured ? 'aurora-card--featured' : ''
-      }`}
+      className={cn(
+        'aurora-card group publication-card flex cursor-pointer flex-col',
+        featured && 'aurora-card--featured'
+      )}
       role="button"
       tabIndex={0}
       onClick={onCardClick}

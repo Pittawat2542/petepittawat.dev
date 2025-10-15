@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactNode, memo } from 'react';
+import { memo, type FC, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 interface ProseProps extends HTMLAttributes<HTMLDivElement> {
@@ -6,7 +6,7 @@ interface ProseProps extends HTMLAttributes<HTMLDivElement> {
   readonly className?: string;
 }
 
-const ProseComponent: React.FC<ProseProps> = ({ children, className, ...rest }) => {
+const ProseComponent: FC<ProseProps> = ({ children, className, ...rest }) => {
   return (
     <div {...rest} className={cn('prose prose-invert md:prose-lg my-4 max-w-none', className)}>
       {children}

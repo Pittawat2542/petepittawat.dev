@@ -1,5 +1,6 @@
-import React, { type ReactNode, memo } from 'react';
+import { memo, type ElementType, type FC, type ReactNode } from 'react';
 import { Info, Lightbulb, AlertTriangle, FileText } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CalloutProps {
   readonly children: ReactNode;
@@ -8,28 +9,22 @@ interface CalloutProps {
   readonly icon?: boolean;
 }
 
-const CalloutComponent: React.FC<CalloutProps> = ({
-  children,
-  type = 'info',
-  title,
-  icon = true,
-}) => {
+const iconMap = {
+  tip: Lightbulb,
+  warn: AlertTriangle,
+  note: FileText,
+  info: Info,
+} satisfies Record<NonNullable<CalloutProps['type']>, ElementType>;
+
+const CalloutComponent: FC<CalloutProps> = ({ children, type = 'info', title, icon = true }) => {
   const headingId = title
     ? `callout-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
     : undefined;
 
-  // Map type to icon component
-  const iconMap = {
-    tip: Lightbulb,
-    warn: AlertTriangle,
-    note: FileText,
-    info: Info,
-  };
-
-  const IconComponent = iconMap[type] || Info;
+  const IconComponent = iconMap[type] ?? Info;
 
   return (
-    <div className={`callout ${type}`} role="note" aria-labelledby={headingId}>
+    <div className={cn('callout', type)} role="note" aria-labelledby={headingId}>
       {title ? (
         <div id={headingId} className="callout-title">
           {icon ? <IconComponent size={16} aria-hidden="true" /> : null}

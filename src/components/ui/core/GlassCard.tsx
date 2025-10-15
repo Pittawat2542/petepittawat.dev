@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactNode, memo } from 'react';
+import { memo, type FC, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlassCardProps extends HTMLAttributes<HTMLElement> {
@@ -8,32 +8,28 @@ interface GlassCardProps extends HTMLAttributes<HTMLElement> {
   readonly animated?: boolean;
 }
 
-const GlassCardComponent: React.FC<GlassCardProps> = ({
+const BASE_CARD_CLASSES =
+  'rounded-2xl text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
+
+const VARIANT_CARD_CLASSES = {
+  default: 'glass-card',
+  elevated: 'glass-surface-elevated',
+  premium: 'glass-surface-premium',
+  glow: 'glass-card glass-glow',
+} as const;
+
+const getVariantClasses = (
+  variant: NonNullable<GlassCardProps['variant']>,
+  animated: NonNullable<GlassCardProps['animated']>
+) => cn(BASE_CARD_CLASSES, VARIANT_CARD_CLASSES[variant], animated && 'glass-border-animated');
+
+const GlassCardComponent: FC<GlassCardProps> = ({
   children,
   className,
   variant = 'default',
   animated = false,
   ...rest
 }) => {
-  const getVariantClasses = (
-    variant: 'default' | 'elevated' | 'premium' | 'glow',
-    animated: boolean
-  ) => {
-    const baseClasses =
-      'rounded-2xl text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
-
-    const variantClasses = {
-      default: 'glass-card',
-      elevated: 'glass-surface-elevated',
-      premium: 'glass-surface-premium',
-      glow: 'glass-card glass-glow',
-    } as const;
-
-    const animatedClass = animated ? 'glass-border-animated' : '';
-
-    return `${baseClasses} ${variantClasses[variant]} ${animatedClass}`;
-  };
-
   return (
     <section {...rest} className={cn(getVariantClasses(variant, animated), className)}>
       {children}

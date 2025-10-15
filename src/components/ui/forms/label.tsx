@@ -1,22 +1,18 @@
-import * as React from 'react';
-
+import { forwardRef, memo, type LabelHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
-import { memo } from 'react';
 
-export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
 
-const LabelComponent = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className, ...props }, ref) => (
-    <label
-      ref={ref}
-      className={cn(
-        'text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-        className
-      )}
-      {...props}
-    />
-  )
-);
+const LabelComponent = forwardRef<HTMLLabelElement, LabelProps>(({ className, ...props }, ref) => (
+  <label
+    ref={ref}
+    className={cn(
+      'text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+      className
+    )}
+    {...props}
+  />
+));
 LabelComponent.displayName = 'LabelComponent';
 
 // Memoize the label component

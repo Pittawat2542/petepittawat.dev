@@ -1,3 +1,5 @@
+import { memo, type FC, type ReactNode } from 'react';
+import { ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,13 +7,9 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '../core/dropdown-menu';
-import type { FC, ReactNode } from 'react';
-
-import { ChevronDown } from 'lucide-react';
 import SelectionItem from './SelectionItem';
-import { cn } from '../../../lib/utils';
-import { memo } from 'react';
-import { useGlassGlow } from '../../../lib/hooks';
+import { cn } from '@/lib/utils';
+import { useGlassGlow } from '@/lib/hooks';
 
 export interface SelectorOption {
   readonly value: string;

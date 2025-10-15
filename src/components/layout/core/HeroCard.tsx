@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import { memo, type FC } from 'react';
+import { cn } from '@/lib/utils';
 
 interface HeroCardProps {
   readonly image: string;
@@ -8,7 +9,7 @@ interface HeroCardProps {
   readonly isReverse?: boolean;
 }
 
-const HeroCardComponent: React.FC<HeroCardProps> = ({
+const HeroCardComponent: FC<HeroCardProps> = ({
   image,
   url,
   title,
@@ -18,7 +19,10 @@ const HeroCardComponent: React.FC<HeroCardProps> = ({
   return (
     <div className="border-border bg-card glass-card text-card-foreground group flex-1 cursor-pointer rounded-2xl border shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform">
       <a
-        className={`pointer flex w-full flex-col gap-8 p-8 lg:p-12 items-center${isReverse ? '2xl:flex-col-reverse' : '2xl:flex-col'}`}
+        className={cn(
+          'pointer flex w-full flex-col items-center gap-8 p-8 lg:p-12',
+          isReverse ? '2xl:flex-col-reverse' : '2xl:flex-col'
+        )}
         href={url}
       >
         <img
@@ -28,11 +32,17 @@ const HeroCardComponent: React.FC<HeroCardProps> = ({
           loading="lazy"
         />
         <div
-          className={`flex w-full flex-3 flex-col items-center 2xl:items-start h-full${isReverse ? '2xl:items-end' : ''}`}
+          className={cn(
+            'flex h-full w-full flex-3 flex-col items-center 2xl:items-start',
+            isReverse && '2xl:items-end'
+          )}
         >
           <h1 className="mb-4 text-2xl font-bold tracking-tight lg:text-3xl">{title}</h1>
           <p
-            className={`text-center text-base break-words text-[color:var(--white)] md:text-lg xl:text-start hyphens-auto${isReverse ? '2xl:text-end' : ''}`}
+            className={cn(
+              'text-center text-base break-words hyphens-auto text-[color:var(--white)] md:text-lg xl:text-start',
+              isReverse && '2xl:text-end'
+            )}
           >
             {description}
           </p>

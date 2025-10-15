@@ -1,4 +1,4 @@
-import React, { type ReactNode, memo } from 'react';
+import { memo, type CSSProperties, type FC, type ReactNode } from 'react';
 
 interface ThemedPageHeroProps {
   readonly title: string;
@@ -14,15 +14,10 @@ const formatPageLabel = (value: string) =>
     .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
     .join(' ');
 
-const ThemedPageHeroComponent: React.FC<ThemedPageHeroProps> = ({
-  title,
-  subtitle,
-  page,
-  children,
-}) => {
+const ThemedPageHeroComponent: FC<ThemedPageHeroProps> = ({ title, subtitle, page, children }) => {
   const heroStyle = {
     '--hero-accent': `var(--accent-${page})`,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   const sectionLabel = formatPageLabel(page) || 'Overview';
 

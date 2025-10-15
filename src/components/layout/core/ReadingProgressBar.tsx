@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, type FC } from 'react';
 
-const ReadingProgressBarComponent: React.FC = () => {
+const ReadingProgressBarComponent: FC = () => {
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

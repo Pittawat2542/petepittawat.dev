@@ -1,5 +1,4 @@
-import React, { memo } from 'react';
-
+import { memo, type FC } from 'react';
 import type { BlogPost } from '@/types';
 import FormattedDate from './FormattedDate';
 
@@ -7,7 +6,7 @@ interface RelatedPostsProps {
   readonly posts: BlogPost[];
 }
 
-const RelatedPostsComponent: React.FC<RelatedPostsProps> = ({ posts }) => {
+const RelatedPostsComponent: FC<RelatedPostsProps> = ({ posts }) => {
   if (!posts.length) return null;
 
   return (

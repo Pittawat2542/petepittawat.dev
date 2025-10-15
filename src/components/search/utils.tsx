@@ -1,6 +1,5 @@
 import type { AugmentedSearchItem, SearchItem, SearchItemType } from './types';
-
-import React from 'react';
+import type { ReactNode } from 'react';
 
 function normalize(value: unknown) {
   return String(value ?? '').toLowerCase();
@@ -99,7 +98,7 @@ export function highlightTitle(title: string, positions?: number[]) {
     ranges.push([start, prev]);
   }
 
-  const nodes: React.ReactNode[] = [];
+  const nodes: ReactNode[] = [];
   let last = 0;
   for (const [s, e] of ranges) {
     if (last < s) nodes.push(title.slice(last, s));

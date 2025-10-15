@@ -1,5 +1,5 @@
-import type { FC, ReactNode } from 'react';
-import React, { memo } from 'react';
+import { memo, useId, type FC, type ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 interface TooltipProps {
   readonly content: ReactNode;
@@ -8,7 +8,7 @@ interface TooltipProps {
 }
 
 const TooltipComponent: FC<TooltipProps> = ({ content, children, side = 'top' }) => {
-  const id = React.useId();
+  const id = useId();
   const position =
     side === 'top'
       ? 'bottom-full mb-2 left-1/2 -translate-x-1/2'
@@ -20,14 +20,14 @@ const TooltipComponent: FC<TooltipProps> = ({ content, children, side = 'top' })
       <span
         role="tooltip"
         id={id}
-        className={[
+        className={cn(
           'pointer-events-none absolute z-[2000] rounded-md px-2 py-1 text-xs whitespace-nowrap',
           'bg-[color:var(--black)] text-[color:var(--white)] shadow-lg ring-1 ring-[color:var(--white)]/10',
           'saturate-150 backdrop-blur-lg md:backdrop-blur-xl',
           'opacity-0 transition-opacity duration-150',
           'group-focus-within/tt:opacity-100 group-hover/tt:opacity-100',
-          position,
-        ].join(' ')}
+          position
+        )}
       >
         {content}
       </span>

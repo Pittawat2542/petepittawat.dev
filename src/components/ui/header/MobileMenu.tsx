@@ -1,8 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import type { ComponentType, FC } from 'react';
-
-import HeaderLink from '../../header/HeaderLink';
 import { memo } from 'react';
+import HeaderLink from '../../header/HeaderLink';
 import {
   animationDelays,
   animationDurationsMs,
@@ -10,6 +9,7 @@ import {
   createTimingTransition,
   getStaggerDelay,
 } from '@/lib/animation';
+import { cn } from '@/lib/utils';
 
 interface MobileMenuLink {
   readonly href: string;
@@ -83,19 +83,21 @@ const MobileMenuComponent: FC<MobileMenuProps> = ({ isOpen, onClose, links, isAc
                         >
                           <span className="relative z-10 flex items-center gap-3">
                             <Icon
-                              className={`h-5 w-5 transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-standard)] ${
+                              className={cn(
+                                'h-5 w-5 transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-standard)]',
                                 isCurrentPage
                                   ? 'scale-110 text-blue-400 opacity-100'
                                   : 'opacity-75 group-hover:scale-105 group-hover:opacity-100'
-                              }`}
+                              )}
                               aria-hidden="true"
                             />
                             <span
-                              className={`transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)] ${
+                              className={cn(
+                                'transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]',
                                 isCurrentPage
                                   ? 'font-semibold text-white'
                                   : 'font-medium group-hover:font-semibold'
-                              }`}
+                              )}
                             >
                               {label}
                             </span>

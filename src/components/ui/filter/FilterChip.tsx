@@ -1,7 +1,5 @@
-import type { FC, MouseEvent, ReactNode } from 'react';
-
+import { memo, type FC, type MouseEvent, type ReactNode } from 'react';
 import { X } from 'lucide-react';
-import { memo } from 'react';
 import { cn } from '@/lib/utils';
 
 const SIZE_CLASSES = {
@@ -21,6 +19,14 @@ const ACTIVE_VARIANT_CLASSES = {
 
 const INACTIVE_CLASSES =
   'bg-muted/20 text-muted-foreground border-muted/30 hover:glass-surface-elevated hover:bg-muted/30 hover:text-foreground hover:border-muted/50';
+
+const ACTIVE_COUNT_CLASSES = {
+  default: 'bg-white/20 font-bold text-white shadow-sm',
+  primary: 'bg-white/20 font-bold text-white shadow-sm',
+  accent: 'bg-white/25 font-bold text-white shadow-sm',
+} as const;
+
+const INACTIVE_COUNT_CLASSES = 'bg-muted/40 text-muted-foreground opacity-70';
 
 export interface FilterChipProps {
   readonly children: ReactNode;
@@ -85,15 +91,10 @@ const FilterChipComponent: FC<FilterChipProps> = ({
 
       {count !== undefined && (
         <span
-          className={`min-w-[1.25rem] rounded-full px-1.5 py-0.5 text-center text-xs font-semibold ${
-            active
-              ? variant === 'accent'
-                ? 'bg-white/25 font-bold text-white shadow-sm'
-                : variant === 'primary'
-                  ? 'bg-white/20 font-bold text-white shadow-sm'
-                  : 'bg-white/20 font-bold text-white shadow-sm'
-              : 'bg-muted/40 text-muted-foreground opacity-70'
-          } transition-[background-color,color,border-color] duration-150`}
+          className={cn(
+            'min-w-[1.25rem] rounded-full px-1.5 py-0.5 text-center text-xs font-semibold transition-[background-color,color,border-color] duration-150',
+            active ? ACTIVE_COUNT_CLASSES[variant] : INACTIVE_COUNT_CLASSES
+          )}
         >
           {count}
         </span>
@@ -103,11 +104,12 @@ const FilterChipComponent: FC<FilterChipProps> = ({
         <button
           type="button"
           onClick={handleRemove}
-          className={`rounded-full p-0.5 transition-[background-color,color] duration-150 ease-out ${
+          className={cn(
+            'focus-visible:ring-ring/40 rounded-full p-0.5 transition-[background-color,color] duration-150 ease-out focus-visible:ring-1 focus-visible:outline-none',
             active
               ? 'text-black/60 hover:bg-black/20 hover:text-black'
-              : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-          } focus-visible:ring-ring/40 focus-visible:ring-1 focus-visible:outline-none`}
+              : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+          )}
           aria-label={`Remove ${children} filter`}
           title="Remove filter"
         >

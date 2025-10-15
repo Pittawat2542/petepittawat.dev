@@ -1,8 +1,6 @@
-import type { FC, ReactNode } from 'react';
-
+import { memo, type FC, type ReactNode } from 'react';
 import Tooltip from '../core/tooltip';
-import { cn } from '../../../lib/utils';
-import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 interface SelectionItemProps {
   readonly label: string;

@@ -1,4 +1,4 @@
-import React, { type ReactNode, memo } from 'react';
+import { memo, type FC, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
 import { createSpringTransition } from '@/lib/animation';
@@ -7,7 +7,7 @@ interface AnimatedWrapperProps {
   readonly children: ReactNode;
 }
 
-const AnimatedWrapperComponent: React.FC<AnimatedWrapperProps> = ({ children }) => {
+const AnimatedWrapperComponent: FC<AnimatedWrapperProps> = ({ children }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}

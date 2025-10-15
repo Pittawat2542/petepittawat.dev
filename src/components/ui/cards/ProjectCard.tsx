@@ -1,10 +1,9 @@
 import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
-import { memo } from 'react';
-
-import { Badge } from '@/components/ui/core/badge';
-import type { Project } from '@/types';
-import type { CSSProperties, FC } from 'react';
+import { memo, type CSSProperties, type FC } from 'react';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
+import { Badge } from '@/components/ui/core/badge';
+import { cn } from '@/lib/utils';
+import type { Project } from '@/types';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -51,7 +50,10 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
   const cardStyle = { '--card-accent': accentColor } as CSSProperties;
   return (
     <article
-      className={`aurora-card group project-card flex h-full flex-col ${featured ? 'aurora-card--featured' : ''}`}
+      className={cn(
+        'aurora-card group project-card flex h-full flex-col',
+        featured && 'aurora-card--featured'
+      )}
       style={cardStyle}
     >
       <BlogCardOverlays accent={accentColor} />

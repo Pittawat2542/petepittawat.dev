@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo, type FC } from 'react';
 
 interface CardProps {
   readonly href: string;
@@ -10,7 +10,7 @@ interface CardProps {
   readonly accentColor: string;
 }
 
-const HomeCardComponent: React.FC<CardProps> = ({
+const HomeCardComponent: FC<CardProps> = ({
   href,
   ariaLabel,
   title,

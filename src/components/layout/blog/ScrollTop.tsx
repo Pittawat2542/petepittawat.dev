@@ -1,8 +1,7 @@
-import React, { memo, useEffect, useRef } from 'react';
-
+import { memo, useEffect, useRef, type FC } from 'react';
 import { ArrowUp } from 'lucide-react';
 
-const ScrollTopComponent: React.FC = () => {
+const ScrollTopComponent: FC = () => {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {

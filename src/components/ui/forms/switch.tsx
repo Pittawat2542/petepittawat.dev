@@ -1,12 +1,10 @@
 import * as RadixSwitch from '@radix-ui/react-switch';
-import * as React from 'react';
-
+import { forwardRef, memo, type ComponentPropsWithoutRef, type ComponentRef } from 'react';
 import { cn } from '@/lib/utils';
-import { memo } from 'react';
 
-export interface SwitchProps extends React.ComponentPropsWithoutRef<typeof RadixSwitch.Root> {}
+export interface SwitchProps extends ComponentPropsWithoutRef<typeof RadixSwitch.Root> {}
 
-const SwitchComponent = React.forwardRef<React.ComponentRef<typeof RadixSwitch.Root>, SwitchProps>(
+const SwitchComponent = forwardRef<ComponentRef<typeof RadixSwitch.Root>, SwitchProps>(
   ({ className, ...props }, ref) => (
     <RadixSwitch.Root
       ref={ref}

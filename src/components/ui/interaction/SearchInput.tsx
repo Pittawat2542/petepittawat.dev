@@ -1,9 +1,7 @@
 import { Search, X } from 'lucide-react';
-import type { FC } from 'react';
-import { memo, useId, useState } from 'react';
-
+import { memo, useId, useState, type FC } from 'react';
 import { cn } from '@/lib/utils';
-import { useGlassGlow } from '../../../lib/hooks';
+import { useGlassGlow } from '@/lib/hooks';
 
 const SIZE_CONFIG = {
   sm: {
