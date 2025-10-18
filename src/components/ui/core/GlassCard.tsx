@@ -9,7 +9,7 @@ interface GlassCardProps extends HTMLAttributes<HTMLElement> {
 }
 
 const BASE_CARD_CLASSES =
-  'rounded-2xl text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
+  'shape-squircle rounded-[1.75rem] text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
 
 const VARIANT_CARD_CLASSES = {
   default: 'glass-card',

@@ -10,9 +10,9 @@ import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
 import { useGlassGlow } from '@/lib/hooks';
 
-const CARD_CONTENT_LAYOUT = 'flex flex-col gap-6';
-const CARD_PADDING = 'px-6 pt-6 pb-6 md:px-7 md:pt-7 md:pb-7 lg:px-8 lg:pt-8 lg:pb-8';
-const CARD_BAR_PADDING = 'px-6 md:px-7 lg:px-8';
+const CARD_CONTENT_LAYOUT = 'flex flex-col gap-5 md:gap-4 lg:gap-6';
+const CARD_PADDING = 'px-5 pt-5 pb-5 md:px-6 md:pt-6 md:pb-6 lg:px-8 lg:pt-8 lg:pb-8';
+const CARD_BAR_PADDING = 'px-5 md:px-6 lg:px-8';
 const CARD_ANIMATION_CLASS =
   'transition-transform duration-400 ease-out group-hover:translate-y-[-4px]';
 
@@ -59,7 +59,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
 
-  const accentVar = useMemo(() => 'var(--accent-blog, var(--accent))', []);
+  const accentVar = useMemo(() => 'var(--page-accent, var(--accent-blog, var(--accent)))', []);
   const mergedStyle: CSSProperties = {
     '--card-accent': accentVar,
     ...style,

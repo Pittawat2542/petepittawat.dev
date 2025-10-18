@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, type CSSProperties, type FC } from 'react';
+import { memo, useEffect, useState, type FC } from 'react';
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
@@ -9,7 +9,7 @@ import { PublicationActions } from './PublicationActions';
 import { PublicationMeta } from './PublicationMeta';
 import { PublicationModal } from './PublicationModal';
 import { deduplicateArtifacts, typeAccentVar } from './utils';
-import { cn } from '@/lib/utils';
+import { cn, createAccentStyle, getAccentColorVar } from '@/lib/utils';
 
 interface PublicationCardProps {
   readonly item: Publication;
@@ -20,7 +20,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   const [open, setOpen] = useState(false);
   const detailsId = `pub-details-${encodeURIComponent(item.title).replace(/%/g, '')}`;
 
-  const accent = typeAccentVar(item.type);
+  const accent = getAccentColorVar(typeAccentVar(item.type));
 
   // Authors are now rendered using the extracted utility function
 
@@ -53,7 +53,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   // Use extracted utility function for artifact deduplication
   const dedupedArtifacts = deduplicateArtifacts(item);
 
-  const cardStyle = { '--card-accent': accent } as CSSProperties;
+  const cardStyle = createAccentStyle(accent);
   return (
     <article
       className={cn(
@@ -70,8 +70,8 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       style={cardStyle}
     >
       <BlogCardOverlays accent={accent} intensity="subtle" />
-      <div className="aurora-card__body flex flex-col gap-4 px-6 py-6 md:px-7 md:py-7">
-        <div className="flex min-w-0 flex-col gap-2 overflow-x-hidden sm:flex-row sm:items-start sm:justify-between">
+      <div className="aurora-card__body flex flex-col gap-3 px-5 py-5 md:gap-4 md:px-6 md:py-6 lg:px-7 lg:py-7">
+        <div className="flex min-w-0 flex-col gap-2 overflow-x-hidden sm:flex-row sm:items-start sm:justify-between md:gap-3">
           <div className="min-w-0">
             <h3 className="text-base leading-snug font-semibold md:text-lg">
               {item.url ? (
@@ -79,7 +79,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[color:var(--accent)] hover:underline"
+                  className="text-[color:var(--card-accent)] hover:underline"
                   onClick={e => {
                     // Prefer expanding details modal on title click
                     e.preventDefault();
@@ -93,7 +93,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                 item.title
               )}
             </h3>
-            <p className="mt-1 text-sm text-[color:var(--white)]/80">
+            <p className="mt-1 text-[13px] text-[color:var(--white)]/80 md:text-sm">
               <AuthorList authors={item.authors} />
             </p>
             <PublicationMeta item={item} accent={accent} />
@@ -104,7 +104,16 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
         {item.tags?.length ? (
           <div className="flex flex-wrap gap-2">
             {item.tags.map(t => (
-              <Badge key={t} className="text-xs" variant="outline">
+              <Badge
+                key={t}
+                className="text-[11px] md:text-xs"
+                variant="outline"
+                style={{
+                  borderColor: 'color-mix(in oklab, var(--card-accent) 30%, transparent)',
+                  color: 'color-mix(in oklab, var(--card-accent) 85%, white)',
+                  background: 'color-mix(in oklab, var(--card-accent) 14%, rgba(15,23,42,0.3))',
+                }}
+              >
                 {t}
               </Badge>
             ))}
@@ -113,16 +122,16 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       </div>
 
       {item.url || dedupedArtifacts.length ? (
-        <div className="aurora-card__footer flex items-center gap-3 text-xs text-white/80">
+        <div className="aurora-card__footer flex items-center gap-2 text-[11px] text-white/80 md:gap-3 md:text-xs">
           <PublicationActions
             item={item}
             dedupedArtifacts={dedupedArtifacts}
             accent={accent}
             onStopPropagation={e => e.stopPropagation()}
           />
-          <span className="ml-auto inline-flex items-center gap-2 text-[11px] tracking-[0.24em] text-white/50 uppercase transition-opacity duration-200 group-hover:text-white/70">
+          <span className="ml-auto inline-flex items-center gap-2 text-[10px] tracking-[0.24em] text-[color:var(--card-accent)]/65 uppercase transition-colors duration-200 group-hover:text-[color:var(--card-accent)] md:text-[11px]">
             More details{` `}
-            <span className="aurora-chip aurora-chip--icon inline-flex h-6 w-6 items-center justify-center text-white/80">
+            <span className="aurora-chip aurora-chip--icon inline-flex h-6 w-6 items-center justify-center bg-[color:var(--card-accent)]/15 text-[color:var(--card-accent)] shadow-[0_8px_18px_rgba(15,23,42,0.2)] transition-colors duration-200 group-hover:bg-[color:var(--card-accent)]/25 md:h-7 md:w-7">
               <ArrowUpRight size={13} aria-hidden="true" />
             </span>
           </span>

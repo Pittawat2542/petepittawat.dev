@@ -124,6 +124,8 @@ const { showTitle = true, class: className } = Astro.props;
     pointer-events: none;
     transform-origin: 50% 50%;
     z-index: 3;
+    animation: logo-orbit 12s linear infinite;
+    animation-delay: var(--spark-delay, 0s);
   }
 
   .site-logo__spark {
@@ -139,6 +141,8 @@ const { showTitle = true, class: className } = Astro.props;
     opacity: 0;
     transform: translateX(var(--orbit-distance));
     will-change: opacity, transform;
+    animation: logo-spark 3.2s ease-in-out infinite;
+    animation-delay: var(--spark-delay, 0s);
   }
 
   .site-logo__mark {
@@ -174,6 +178,32 @@ const { showTitle = true, class: className } = Astro.props;
     .site-logo__mark {
       transition-duration: 0.001ms !important;
       animation: none !important;
+    }
+  }
+
+  @keyframes logo-orbit {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes logo-spark {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateX(var(--orbit-distance)) scale(0.75);
+    }
+    20%,
+    40% {
+      opacity: 1;
+      transform: translateX(var(--orbit-distance)) scale(1);
+    }
+    60% {
+      opacity: 0.6;
+      transform: translateX(var(--orbit-distance)) scale(0.85);
     }
   }
 </style>

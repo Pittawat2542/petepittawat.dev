@@ -55,7 +55,7 @@ const GlassButtonComponent: FC<GlassButtonProps> = ({
     size: 'sm' | 'md' | 'lg'
   ) => {
     const baseClasses =
-      'glass-button rounded-full font-medium transition-[transform,box-shadow,background-color,color,border-color] duration-150 ease-out will-change-transform active:scale-[0.98] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
+      'glass-button shape-squircle-sm rounded-[calc(1.1rem+0.25rem*var(--lift-scale,1))] font-medium transition-[transform,box-shadow,background-color,color,border-color] duration-150 ease-out will-change-transform active:scale-[0.98] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 relative overflow-hidden group';
 
     const sizeClasses = {
       sm: iconOnly ? 'h-8 w-8 text-sm' : 'px-3 py-2 text-sm h-8',

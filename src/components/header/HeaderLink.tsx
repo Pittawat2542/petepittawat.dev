@@ -26,14 +26,14 @@ const HeaderLinkComponent: FC<HeaderLinkProps> = ({
       data-active={isActive ? 'true' : undefined}
       {...rest}
       className={cn(
-        'nav-link-root relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white/80 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:outline-none',
+        'nav-link-root shape-squircle-sm relative inline-flex items-center gap-2 rounded-[1.2rem] px-3.5 py-2 text-sm font-medium text-white/80 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:outline-none lg:px-4 lg:py-2.5',
         isActive && 'nav-link--active text-white',
         className
       )}
     >
       <span className="relative z-10 flex items-center gap-2">{children}</span>
       <span
-        className="nav-link__overlay pointer-events-none absolute inset-0 rounded-full opacity-0 transition-transform duration-300 ease-out"
+        className="nav-link__overlay shape-squircle-sm pointer-events-none absolute inset-0 rounded-[1.2rem] opacity-0 transition-transform duration-300 ease-out"
         aria-hidden="true"
       ></span>
     </a>

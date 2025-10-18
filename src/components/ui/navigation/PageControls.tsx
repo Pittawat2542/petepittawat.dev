@@ -136,12 +136,12 @@ const PageControlsComponent: FC<PageControlsProps> = ({
                   autoFocus
                   aria-label="Enter page number"
                   placeholder="Page"
-                  className="bg-muted/30 border-muted/50 focus:ring-ring w-20 rounded-full border px-3 py-1.5 text-center text-sm focus:ring-2 focus:outline-none"
+                  className="bg-muted/30 border-muted/50 focus:ring-ring shape-squircle-sm w-20 rounded-[1.1rem] border px-3 py-1.5 text-center text-sm focus:ring-2 focus:outline-none"
                 />
               </div>
             ) : (
               <span
-                className="bg-muted/30 hover:bg-muted/50 flex min-w-[80px] cursor-pointer items-center justify-center rounded-full px-3 py-1.5 text-sm transition-colors"
+                className="bg-muted/30 hover:bg-muted/50 shape-squircle-sm flex min-w-[80px] cursor-pointer items-center justify-center rounded-[1.1rem] px-3 py-1.5 text-sm transition-colors"
                 onClick={handlePageClick}
                 aria-label="Click to enter page number directly"
               >

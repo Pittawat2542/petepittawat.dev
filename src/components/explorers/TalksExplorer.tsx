@@ -94,7 +94,7 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
         sortValue={sort}
         onSortChange={v => setSort(v as typeof sort)}
       />
-      <div className="grid gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5">
         {paged.map((item, i) => (
           <Reveal
             id={`talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`}

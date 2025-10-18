@@ -46,8 +46,8 @@ const SelectorComponent: FC<SelectorProps> = ({
         <button
           type="button"
           className={cn(
-            'glass-input group relative w-full min-w-0 appearance-none text-left text-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out sm:w-auto',
-            'rounded-full px-4 py-2 sm:max-w-[18rem] sm:min-w-[12rem]',
+            'glass-input shape-squircle-sm group relative w-full min-w-0 appearance-none text-left text-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out sm:w-auto',
+            'rounded-[1.15rem] px-4 py-2 sm:max-w-[18rem] sm:min-w-[12rem]',
             className
           )}
           aria-label={label}

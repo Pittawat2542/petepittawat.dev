@@ -31,7 +31,7 @@ const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
 
   return (
     <section className="mt-10">
-      <div className="glass-card rounded-2xl p-5 md:p-6">
+      <div className="glass-card shape-squircle rounded-2xl p-5 md:p-6">
         <header className="mb-4 md:mb-6">
           <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight md:text-2xl">
             <Building2 size={18} aria-hidden="true" />
@@ -58,7 +58,7 @@ const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
                         href={item.url || '#'}
                         target={item.url ? '_blank' : undefined}
                         rel={item.url ? 'noreferrer' : undefined}
-                        className="group glass-surface inline-flex w-full items-center justify-between rounded-xl px-3 py-2 ring-1 ring-[color:var(--white)]/10 transition-[transform,box-shadow,border-color,background-color] duration-150 ease-out will-change-transform hover:-translate-y-0.5 hover:ring-[color:var(--accent-publications)]/50"
+                        className="group glass-surface shape-squircle-sm inline-flex w-full items-center justify-between rounded-xl px-3 py-2 ring-1 ring-[color:var(--white)]/10 transition-[transform,box-shadow,border-color,background-color] duration-150 ease-out will-change-transform hover:-translate-y-0.5 hover:ring-[color:var(--accent-publications)]/50"
                         style={{
                           color: 'var(--white)',
                           background:
@@ -67,7 +67,7 @@ const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
                         aria-label={`${item.venue} ${yearDisplay}${item.url ? ' (opens in new tab)' : ''}`}
                       >
                         <div className="flex min-w-0 items-center gap-2">
-                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[color:var(--accent-publications)]/20 text-[color:var(--accent-publications)] ring-1 ring-[color:var(--accent-publications)]/30">
+                          <span className="shape-squircle-sm inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[color:var(--accent-publications)]/20 text-[color:var(--accent-publications)] ring-1 ring-[color:var(--accent-publications)]/30">
                             <Building2 size={14} aria-hidden="true" />
                           </span>
                           <span className="truncate font-medium">{item.venue}</span>

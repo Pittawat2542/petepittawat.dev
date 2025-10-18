@@ -6,12 +6,9 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/components/ui/core/dialog';
-import type { FC, ReactNode } from 'react';
-
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
-import { memo } from 'react';
-import { motion } from 'framer-motion';
-import { animationDurationsMs, animationEasings, createTimingTransition } from '@/lib/animation';
+import { cn } from '@/lib/utils';
+import { memo, useEffect, useState, type FC, type ReactNode } from 'react';
 
 /**
  * Props for the SearchDialogContent component
@@ -22,28 +19,32 @@ interface SearchDialogContentProps {
 }
 
 /**
- * A dialog content wrapper for the search modal with smooth animations.
+ * A dialog content wrapper for the search modal with smooth transitions.
  *
  * This component provides:
- * - Smooth entry/exit animations using Framer Motion
+ * - Smooth entry/exit transitions handled with CSS
  * - Proper dialog accessibility with ARIA labels
  * - Responsive sizing and positioning
  * - Glass morphism styling for the close button
  * - Screen reader support with hidden titles and descriptions
  *
  * @param props - The component props
- * @returns A dialog content wrapper with animation support
+ * @returns A dialog content wrapper with transition support
  */
 const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      transition={createTimingTransition({
-        duration: animationDurationsMs.normal,
-        easing: animationEasings.standard,
-      })}
+    <div
+      className={cn(
+        'ease-[var(--motion-ease-decelerate, ease-out)] transform-gpu transition-[opacity,transform] duration-300',
+        mounted ? 'scale-100 opacity-100' : 'scale-[0.98] opacity-0'
+      )}
     >
       <DialogContent
         className="no-paint-contain top-[12vh] w-[min(72rem,92vw)] max-w-none -translate-y-0 overflow-visible border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:-translate-y-1/2"
@@ -54,7 +55,7 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
           Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate
           results.
         </DialogDescription>
-        <div className="search-modal">
+        <div className="search-modal shape-squircle">
           <BlogCardOverlays accent="var(--accent)" intensity="subtle" />
           <header className="search-modal__header">
             <div className="search-modal__headline">
@@ -86,7 +87,7 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
           <div className="search-modal__body">{children}</div>
         </div>
       </DialogContent>
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,13 +1,12 @@
 import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
 import { SITE_TITLE } from '@/lib/constants';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { FC } from 'react';
 import { HeaderActions } from '@/components/ui/header/HeaderActions';
 import { MobileMenu } from '@/components/ui/header/MobileMenu';
 import { NavigationLinks } from '@/components/ui/header/NavigationLinks';
-import { motion } from 'framer-motion';
-import { createSpringTransition } from '@/lib/animation';
+import { cn } from '@/lib/utils';
 
 interface NavLink {
   readonly href: string;
@@ -27,6 +26,7 @@ const AnimatedHeaderComponent: FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activePath, setActivePath] = useState('/');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +51,10 @@ const AnimatedHeaderComponent: FC = () => {
     if (typeof window === 'undefined') return;
     setActivePath(normalizePath(window.location.pathname));
   }, [normalizePath]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -99,31 +103,39 @@ const AnimatedHeaderComponent: FC = () => {
     setMobileOpen(false);
   }, []);
 
+  const headerClasses = useMemo(
+    () =>
+      cn(
+        'fixed inset-x-0 top-4 z-50 px-4 md:px-6 lg:px-8 transition-[opacity,transform] duration-500 ease-[var(--motion-ease-decelerate, ease-out)]',
+        mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
+      ),
+    [mounted]
+  );
+
   return (
-    <motion.header
-      className="fixed inset-x-0 top-4 z-50 px-4 md:px-6 lg:px-8"
+    <header
+      className={headerClasses}
       style={{ viewTransitionName: 'site-header' }}
-      initial={false} // Keep SSR markup visible even if hydration never runs
-      animate={{ opacity: 1, y: 0 }}
-      transition={createSpringTransition()}
+      data-mounted={mounted || undefined}
     >
       <div
         id="site-nav-wrapper"
-        className="mx-auto max-w-6xl rounded-3xl border border-transparent transition-[border-color,box-shadow,backdrop-filter,transform] duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]"
+        className="shape-squircle mx-auto max-w-6xl rounded-3xl border border-transparent transition-[border-color,box-shadow,backdrop-filter,transform] duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]"
         data-scrolled={scrolled ? 'true' : undefined}
       >
         {/* Animated background that expands from center */}
-        <motion.div
-          className="absolute inset-0 rounded-3xl bg-transparent"
-          initial={{ scaleX: 0, originX: 0.5 }}
-          animate={{ scaleX: 1 }}
-          transition={createSpringTransition('SOFT')}
+        <div
+          className="shape-squircle absolute inset-0 rounded-3xl bg-transparent transition-transform duration-700 ease-[var(--motion-ease-decelerate)]"
+          style={{
+            transform: mounted ? 'scaleX(1)' : 'scaleX(0.6)',
+            transformOrigin: '50% 50%',
+          }}
           aria-hidden="true"
         />
 
         <nav
           id="site-nav"
-          className="relative flex items-center gap-6 px-4 py-3 sm:px-6 sm:py-4"
+          className="relative flex items-center gap-6 px-4 py-3 sm:px-6 sm:py-4 md:gap-4 md:px-5 lg:gap-6"
           data-scrolled={scrolled ? 'true' : undefined}
           role="navigation"
           aria-label="Main navigation"
@@ -132,7 +144,7 @@ const AnimatedHeaderComponent: FC = () => {
           <a
             href="/"
             aria-label="Go to homepage"
-            className="relative flex items-center gap-3 rounded-full px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 focus-visible:outline-none"
+            className="shape-squircle-sm relative flex items-center gap-3 rounded-[1.2rem] px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 focus-visible:outline-none"
           >
             <span data-brand className="relative flex h-9 w-9 items-center justify-center">
               <span className="brand-shape absolute inset-0 rounded-full" aria-hidden="true" />
@@ -151,7 +163,7 @@ const AnimatedHeaderComponent: FC = () => {
                 </svg>
               </span>
             </span>
-            <span className="hidden text-base font-medium tracking-tight text-white sm:block">
+            <span className="hidden text-sm font-medium tracking-tight text-white lg:block lg:text-base">
               {SITE_TITLE}
             </span>
           </a>
@@ -170,7 +182,7 @@ const AnimatedHeaderComponent: FC = () => {
         links={NAVIGATION_LINKS}
         isActive={isActive}
       />
-    </motion.header>
+    </header>
   );
 };
 

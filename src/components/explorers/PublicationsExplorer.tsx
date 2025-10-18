@@ -87,7 +87,7 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
         sortValue={sort}
         onSortChange={v => setSort(v as typeof sort)}
       />
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-7">
         {paged.map((item, i) => (
           <Reveal
             id={`publication-${slugify(item.title)}-${item.year}`}

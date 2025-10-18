@@ -17,7 +17,7 @@ const HeroCardComponent: FC<HeroCardProps> = ({
   isReverse = false,
 }) => {
   return (
-    <div className="border-border bg-card glass-card text-card-foreground group flex-1 cursor-pointer rounded-2xl border shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform">
+    <div className="border-border bg-card glass-card shape-squircle text-card-foreground group flex-1 cursor-pointer rounded-2xl border shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out will-change-transform">
       <a
         className={cn(
           'pointer flex w-full flex-col items-center gap-8 p-8 lg:p-12',
@@ -26,7 +26,7 @@ const HeroCardComponent: FC<HeroCardProps> = ({
         href={url}
       >
         <img
-          className="h-64 w-64 flex-1 rounded-xl object-cover transition-transform duration-200 ease-out will-change-transform group-hover:scale-[1.02] lg:h-72 lg:w-72"
+          className="shape-squircle-sm h-64 w-64 flex-1 rounded-xl object-cover transition-transform duration-200 ease-out will-change-transform group-hover:scale-[1.02] lg:h-72 lg:w-72"
           src={image}
           alt={title}
           loading="lazy"

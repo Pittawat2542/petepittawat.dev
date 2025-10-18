@@ -43,7 +43,6 @@
     "astro-robots-txt": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.23.16",
     "katex": "^0.16.22",
     "lucide-astro": "^0.544.0",
     "lucide-react": "^0.544.0",
@@ -73,5 +72,5 @@
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss-animate": "^1.0.7"
   },
-  "packageManager": "pnpm@10.18.1"
+  "packageManager": "pnpm@10.18.3"
 }

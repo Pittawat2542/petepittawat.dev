@@ -1,4 +1,3 @@
-import { AnimatePresence } from 'framer-motion';
 import { Dialog } from '@/components/ui/core/dialog';
 import type { FC } from 'react';
 import { SearchDialogContent } from '@/components/search/SearchDialogContent';
@@ -58,40 +57,38 @@ const SearchModalComponent: FC<SearchModalProps> = ({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <SearchTriggers hideTriggers={hideTriggers} />
-      <AnimatePresence>
-        {open && (
-          <SearchDialogContent>
-            <SearchHeader
-              query={query}
-              onQueryChange={setQuery}
-              filtered={filtered}
-              typeFilter={typeFilter}
-              countsByType={countsByType}
-              onToggleType={toggleType}
-              onSelectAllTypes={selectAllTypes}
-              showRecent={showRecent}
-              recent={recent}
-              onSelectFromRecent={setQueryFromRecent}
-              onClearRecent={clearRecent}
-            />
-            <div className="search-modal__content" role="presentation">
-              {!loaded && <SearchSkeleton />}
-              {showSuggestions && <SearchSuggestions suggestions={suggestions} />}
-              {showEmpty && <SearchEmptyState suggestions={suggestions} />}
-              {showResults && (
-                <SearchResultList
-                  ref={listRef}
-                  items={filtered}
-                  activeIndex={activeIndex}
-                  getHref={getHref}
-                  onItemClick={handleResultClick}
-                  onActiveIndexChange={setActiveIndex}
-                />
-              )}
-            </div>
-          </SearchDialogContent>
-        )}
-      </AnimatePresence>
+      {open && (
+        <SearchDialogContent>
+          <SearchHeader
+            query={query}
+            onQueryChange={setQuery}
+            filtered={filtered}
+            typeFilter={typeFilter}
+            countsByType={countsByType}
+            onToggleType={toggleType}
+            onSelectAllTypes={selectAllTypes}
+            showRecent={showRecent}
+            recent={recent}
+            onSelectFromRecent={setQueryFromRecent}
+            onClearRecent={clearRecent}
+          />
+          <div className="search-modal__content" role="presentation">
+            {!loaded && <SearchSkeleton />}
+            {showSuggestions && <SearchSuggestions suggestions={suggestions} />}
+            {showEmpty && <SearchEmptyState suggestions={suggestions} />}
+            {showResults && (
+              <SearchResultList
+                ref={listRef}
+                items={filtered}
+                activeIndex={activeIndex}
+                getHref={getHref}
+                onItemClick={handleResultClick}
+                onActiveIndexChange={setActiveIndex}
+              />
+            )}
+          </div>
+        </SearchDialogContent>
+      )}
     </Dialog>
   );
 };

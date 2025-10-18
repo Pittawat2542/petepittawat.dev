@@ -1,6 +1,5 @@
 import { memo, type ComponentType, type FC } from 'react';
 import HeaderLink from '../../header/HeaderLink';
-import { animationDelays, getStaggerDelay } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 
 interface NavigationLink {
@@ -15,18 +14,18 @@ interface NavigationLinksProps {
 }
 
 const NavigationLinksComponent: FC<NavigationLinksProps> = ({ links, isActive }) => {
-  const baseDelay = animationDelays.xs;
+  const baseDelaySeconds = 0.04;
 
   return (
-    <div className="relative hidden flex-1 items-center justify-center md:flex">
+    <div className="relative hidden flex-1 items-center justify-center md:flex md:px-1 lg:px-0">
       <nav role="navigation" aria-label="Main navigation">
         <ul
           id="nav-list"
-          className="relative flex items-center gap-2 text-sm font-medium text-white/75"
+          className="relative flex items-center gap-1.5 text-sm font-medium text-white/75 lg:gap-2"
         >
           {links.map(({ href, label, icon: Icon }, index) => {
             const isCurrentPage = isActive(href);
-            const animationDelay = `${getStaggerDelay(index + 1, baseDelay)}s`;
+            const animationDelay = `${(index + 1) * baseDelaySeconds}s`;
             return (
               <li
                 key={href}
@@ -39,7 +38,7 @@ const NavigationLinksComponent: FC<NavigationLinksProps> = ({ links, isActive })
                   ariaLabel={`Navigate to ${label}`}
                   className="group relative overflow-hidden"
                 >
-                  <span className="relative flex items-center gap-2.5 transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]">
+                  <span className="relative flex items-center gap-2 transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)] lg:gap-2.5">
                     <Icon
                       className={cn(
                         'h-4 w-4 shrink-0 transition-all duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-standard)]',

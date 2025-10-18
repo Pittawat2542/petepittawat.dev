@@ -55,7 +55,7 @@ const isActive = (href: string) =>
     class="mx-auto mt-[max(env(safe-area-inset-top),1rem)] w-[min(96vw,38rem)] -translate-y-4 scale-[0.97] opacity-0 transition-[transform,opacity] duration-300 ease-out"
   >
     <div
-      class="glass-card no-hover-lift no-paint-contain overflow-hidden rounded-3xl border border-[color:var(--white)]/12 bg-[color:var(--black-nav)]/75 shadow-2xl shadow-black/25 backdrop-blur-xl supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55"
+      class="glass-card shape-squircle no-hover-lift no-paint-contain overflow-hidden rounded-3xl border border-[color:var(--white)]/12 bg-[color:var(--black-nav)]/75 shadow-2xl shadow-black/25 backdrop-blur-xl supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55"
     >
       <!-- Quick action: Search -->
       <div class="p-2.5">
@@ -67,7 +67,7 @@ const isActive = (href: string) =>
             <li>
               <a
                 href={href}
-                class={`group group/mobile-nav relative isolate w-full touch-manipulation overflow-hidden rounded-2xl border border-[color:var(--white)]/12 bg-[color:var(--white)]/[0.05] px-5 py-4 text-base font-medium text-[color:var(--white)]/88 transition-[transform,background-color,border-color,color,box-shadow] duration-250 ease-out hover:border-[color:var(--white)]/24 hover:bg-[color:var(--white)]/[0.12] hover:text-[color:var(--white)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 ${isActive(href) ? 'pointer-events-none cursor-default border-[color:var(--accent,#6bc1ff)]/40 bg-[color:var(--accent,#6bc1ff)]/[0.2] text-[color:var(--white)] shadow-[0_24px_48px_-32px_rgba(6,14,30,0.92)]' : ''}`}
+                class={`group group/mobile-nav shape-squircle relative isolate w-full touch-manipulation overflow-hidden rounded-2xl border border-[color:var(--white)]/12 bg-[color:var(--white)]/[0.05] px-5 py-4 text-base font-medium text-[color:var(--white)]/88 transition-[transform,background-color,border-color,color,box-shadow] duration-250 ease-out hover:border-[color:var(--white)]/24 hover:bg-[color:var(--white)]/[0.12] hover:text-[color:var(--white)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 ${isActive(href) ? 'pointer-events-none cursor-default border-[color:var(--accent,#6bc1ff)]/40 bg-[color:var(--accent,#6bc1ff)]/[0.2] text-[color:var(--white)] shadow-[0_24px_48px_-32px_rgba(6,14,30,0.92)]' : ''}`}
                 data-active={isActive(href) ? 'true' : undefined}
                 aria-current={isActive(href) ? 'page' : undefined}
                 tabindex={isActive(href) ? -1 : undefined}
@@ -75,7 +75,7 @@ const isActive = (href: string) =>
                 <span class="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(106,193,255,0.18),rgba(255,255,255,0.06))] opacity-0 transition-opacity duration-300 ease-out group-hover/mobile-nav:opacity-100 group-focus-visible/mobile-nav:opacity-100 group-data-[active=true]/mobile-nav:opacity-100" />
                 <span class="relative flex items-center gap-3">
                   <span
-                    class={`inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[color:var(--white)]/12 bg-[color:var(--white)]/[0.06] text-[color:var(--white)]/80 transition-all duration-300 ease-out group-hover/mobile-nav:border-[color:var(--white)]/26 group-hover/mobile-nav:bg-[color:var(--white)]/[0.14] group-hover/mobile-nav:text-[color:var(--white)] ${isActive(href) ? 'border-[color:var(--accent,#6bc1ff)]/50 bg-[color:var(--accent,#6bc1ff)]/20 text-[color:var(--accent,#6bc1ff)] shadow-[0_0_18px_rgba(106,193,255,0.35)]' : ''}`}
+                    class={`shape-squircle-sm inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[color:var(--white)]/12 bg-[color:var(--white)]/[0.06] text-[color:var(--white)]/80 transition-all duration-300 ease-out group-hover/mobile-nav:border-[color:var(--white)]/26 group-hover/mobile-nav:bg-[color:var(--white)]/[0.14] group-hover/mobile-nav:text-[color:var(--white)] ${isActive(href) ? 'border-[color:var(--accent,#6bc1ff)]/50 bg-[color:var(--accent,#6bc1ff)]/20 text-[color:var(--accent,#6bc1ff)] shadow-[0_0_18px_rgba(106,193,255,0.35)]' : ''}`}
                     aria-hidden="true"
                   >
                     {label === 'Blog' && <BookOpenText class="h-5 w-5" aria-hidden="true" />}

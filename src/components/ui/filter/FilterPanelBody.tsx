@@ -40,7 +40,7 @@ const FilterPanelBodyComponent: FC<FilterPanelBodyProps> = ({
   }
 
   return (
-    <div className="glass-card animate-in fade-in-0 slide-in-from-top-2 space-y-4 rounded-2xl p-4 duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]">
+    <div className="glass-card shape-squircle animate-in fade-in-0 slide-in-from-top-2 space-y-4 rounded-2xl p-4 duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]">
       {hasDropdownFilters && onFiltersChange && (
         <DropdownFilters
           filterOptions={filterOptions}

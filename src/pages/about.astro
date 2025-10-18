@@ -180,7 +180,7 @@ const learningHighlights = [
 ];
 ---
 
-<BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION}>
+<BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION} page="about">
   <div class="about-backdrop" aria-hidden="true">
     <div class="about-backdrop__gradient"></div>
     <div class="about-backdrop__orb"></div>
@@ -195,7 +195,7 @@ const learningHighlights = [
     />
 
     <section id="profile" class="section-canvas">
-      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)]">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)] lg:gap-8">
         <GlassCard variant="premium" className="profile-card overflow-hidden p-0">
           <div class="profile-card__grid">
             <div class="profile-card__media bg-[color:var(--black)]/20">
@@ -309,7 +309,7 @@ const learningHighlights = [
           infrastructure, and storytelling.
         </p>
       </div>
-      <div class="grid gap-5 md:grid-cols-2">
+      <div class="grid gap-5 md:gap-6 lg:grid-cols-2">
         {
           focusAreas.map(area => (
             <GlassCard variant="premium" className="focus-card h-full">
@@ -345,7 +345,7 @@ const learningHighlights = [
           to the tools communities adopt.
         </p>
       </div>
-      <div class="grid gap-5 lg:grid-cols-3">
+      <div class="grid gap-5 md:gap-6 lg:grid-cols-2 xl:grid-cols-3">
         {
           craftStacks.map(stack => (
             <GlassCard variant="elevated" className="craft-card h-full">
@@ -421,7 +421,7 @@ const learningHighlights = [
           moments that shaped my judgment.
         </p>
       </div>
-      <div class="grid gap-5 lg:grid-cols-2">
+      <div class="grid gap-5 md:gap-6 lg:grid-cols-2">
         <GlassCard variant="premium" className="journey-card h-full">
           <h3>Education & Honours</h3>
           <div class="journey-card__group">
@@ -1100,6 +1100,67 @@ const learningHighlights = [
     font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.75);
     line-height: 1.65;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .section-canvas {
+      gap: 1.75rem;
+    }
+
+    .profile-card__content {
+      padding: 1.75rem 1.85rem;
+      gap: 1.25rem;
+    }
+
+    .profile-card__title-group h2 {
+      font-size: 2.2rem;
+    }
+
+    .profile-card__connect {
+      padding: 1rem 1.2rem;
+      gap: 0.8rem;
+    }
+
+    .profile-card__social {
+      gap: 0.6rem;
+    }
+
+    .profile-metrics__inner {
+      padding: 1.75rem 1.8rem;
+      gap: 1.4rem;
+    }
+
+    .profile-metrics__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .profile-metric {
+      padding: 1.15rem;
+    }
+
+    .focus-card__list,
+    .craft-card__list,
+    .journey-card__list {
+      font-size: 0.9rem;
+      gap: 0.6rem;
+    }
+
+    .timeline-card__headline h2 {
+      font-size: 2.15rem;
+    }
+
+    .timeline-card__list {
+      padding: 1.5rem 1.3rem 1.45rem;
+    }
+
+    .timeline-card__list::before {
+      left: 0.95rem;
+    }
+
+    .timeline-item {
+      padding-left: 2.2rem;
+    }
   }
 
   @keyframes about-spin {

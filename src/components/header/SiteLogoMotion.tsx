@@ -1,31 +1,13 @@
-import { motion, type MotionStyle, type TargetAndTransition } from 'framer-motion';
-import { useMemo } from 'react';
-
 import { cn } from '@/lib/utils';
-
-import { SPARKS } from './site-logo-motion/config';
+import type { CSSProperties } from 'react';
 import { useInteractiveTilt } from './site-logo-motion/useInteractiveTilt';
-import {
-  containerVariants,
-  createFieldVariants,
-  createFlareVariants,
-  createGlowVariants,
-  createHaloVariants,
-  createTrailVariants,
-  getOrbitTransition,
-  getSparkAnimation,
-  logoVariants,
-  markVariants,
-  titleVariants,
-} from './site-logo-motion/variants';
+import { SPARKS } from './site-logo-motion/config';
 
 interface SiteLogoMotionProps {
   readonly showTitle?: boolean;
   readonly className?: string;
   readonly siteTitle: string;
 }
-
-const INITIAL_SPARK_STATE: TargetAndTransition = { opacity: 0, scale: 0.5 };
 
 export function SiteLogoMotion({
   showTitle = true,
@@ -35,105 +17,56 @@ export function SiteLogoMotion({
   const { prefersReducedMotion, fieldBackground, handlePointerMove, resetTilt, logoStyle } =
     useInteractiveTilt();
 
-  const glowVariants = useMemo(
-    () => createGlowVariants(prefersReducedMotion),
-    [prefersReducedMotion]
-  );
-  const haloVariants = useMemo(
-    () => createHaloVariants(prefersReducedMotion),
-    [prefersReducedMotion]
-  );
-  const fieldVariants = useMemo(
-    () => createFieldVariants(prefersReducedMotion),
-    [prefersReducedMotion]
-  );
-  const trailVariants = useMemo(
-    () => createTrailVariants(prefersReducedMotion),
-    [prefersReducedMotion]
-  );
-  const flareVariants = useMemo(
-    () => createFlareVariants(prefersReducedMotion),
-    [prefersReducedMotion]
-  );
-
   return (
-    <motion.a
+    <a
       href="/"
       aria-label="Go to homepage"
       className={cn(
-        'site-logo-link group flex min-w-0 snap-start items-center gap-2 rounded-full px-3 py-2 text-[color:var(--white)] transition-colors hover:bg-[color:var(--white)]/8 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none',
+        'site-logo-link shape-squircle-sm group flex min-w-0 snap-start items-center gap-2 rounded-[1.2rem] px-3 py-2 text-[color:var(--white)] transition-colors hover:bg-[color:var(--white)]/8 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none',
         className
       )}
-      variants={containerVariants}
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
-      whileFocus="hover"
-      whileTap="tap"
       onPointerMove={handlePointerMove}
       onPointerLeave={resetTilt}
       onPointerUp={resetTilt}
     >
-      <motion.span className="site-logo" variants={logoVariants} style={logoStyle}>
-        <motion.span className="site-logo__glow" variants={glowVariants} />
-        <motion.span
+      <span className="site-logo" style={logoStyle}>
+        <span className="site-logo__glow" />
+        <span
           className="site-logo__field"
-          style={{ background: fieldBackground }}
-          variants={fieldVariants}
+          style={prefersReducedMotion ? undefined : { background: fieldBackground }}
         />
-        <motion.span className="site-logo__halo" variants={haloVariants} />
-        <motion.span className="site-logo__trail" variants={trailVariants} />
-        <motion.span className="site-logo__flare" variants={flareVariants} />
+        <span className="site-logo__halo" />
+        <span className="site-logo__trail" />
+        <span className="site-logo__flare" />
 
         {SPARKS.map(({ id, delay, distance, size }) => {
-          const orbitTransition = getOrbitTransition(prefersReducedMotion, delay);
-          const sparkAnimation = getSparkAnimation(prefersReducedMotion, delay);
-
+          const sparkStyle = {
+            '--orbit-distance': distance,
+            '--spark-size': size,
+            '--spark-delay': `${delay}s`,
+          } as CSSProperties;
           return (
-            <motion.span
-              key={id}
-              className="site-logo__orbit"
-              animate={prefersReducedMotion ? { rotate: 0 } : { rotate: 360 }}
-              {...(orbitTransition ? { transition: orbitTransition } : {})}
-            >
-              <motion.span
-                className="site-logo__spark"
-                style={
-                  {
-                    '--orbit-distance': distance,
-                    '--spark-size': size,
-                  } as MotionStyle
-                }
-                animate={sparkAnimation}
-                initial={INITIAL_SPARK_STATE}
-              />
-            </motion.span>
+            <span key={id} className="site-logo__orbit" style={sparkStyle} aria-hidden="true">
+              <span className="site-logo__spark" />
+            </span>
           );
         })}
 
-        <motion.svg
-          className="site-logo__mark"
-          viewBox="0 0 512 512"
-          fill="none"
-          variants={markVariants}
-        >
+        <svg className="site-logo__mark" viewBox="0 0 512 512" fill="none">
           <rect x="0" y="0" width="512" height="512" rx="64" fill="#6AC1FF" />
           <g fill="#222831">
             <path d="M82 199.1L291.4 199.1L291.4 298.1C291.4 311.1 288.6 322.3 283 331.7C277.4 341.3 269.5 348.7 259.3 353.9C249.3 359.1 237.7 361.7 224.5 361.7C211.3 361.7 199.7 359.1 189.7 353.9C179.7 348.7 171.8 341.3 166 331.7C160.4 322.3 157.6 311.1 157.6 298.1L157.6 244.7L82 244.7L82 199.1ZM197.2 244.7L197.2 292.7C197.2 297.3 198 301.2 199.6 304.4C201.2 307.6 203.5 310.1 206.5 311.9C209.7 313.7 213.5 314.6 217.9 314.6L231.1 314.6C235.7 314.6 239.5 313.7 242.5 311.9C245.5 310.1 247.8 307.6 249.4 304.4C251 301.2 251.8 297.3 251.8 292.7L251.8 244.7L197.2 244.7Z" />
             <path d="M291 199.1L500.4 199.1L500.4 298.1C500.4 311.1 497.6 322.3 492 331.7C486.4 341.3 478.5 348.7 468.3 353.9C458.3 359.1 446.7 361.7 433.5 361.7C420.3 361.7 408.7 359.1 398.7 353.9C388.7 348.7 380.8 341.3 375 331.7C369.4 322.3 366.6 311.1 366.6 298.1L366.6 244.7L291 244.7L291 199.1ZM406.2 244.7L406.2 292.7C406.2 297.3 407 301.2 408.6 304.4C410.2 307.6 412.5 310.1 415.5 311.9C418.7 313.7 422.5 314.6 426.9 314.6L440.1 314.6C444.7 314.6 448.5 313.7 451.5 311.9C454.5 310.1 456.8 307.6 458.4 304.4C460 301.2 460.8 297.3 460.8 292.7L460.8 244.7L406.2 244.7Z" />
           </g>
-        </motion.svg>
-      </motion.span>
+        </svg>
+      </span>
 
       {showTitle && (
-        <motion.span
-          className="hidden max-w-[40vw] truncate font-medium whitespace-nowrap md:ml-1 md:inline"
-          variants={titleVariants}
-        >
+        <span className="hidden max-w-[40vw] truncate font-medium whitespace-nowrap md:ml-1 md:inline">
           {siteTitle}
-        </motion.span>
+        </span>
       )}
-    </motion.a>
+    </a>
   );
 }
 

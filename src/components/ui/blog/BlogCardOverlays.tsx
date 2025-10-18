@@ -7,7 +7,7 @@ interface BlogCardOverlaysProps {
 }
 
 const BlogCardOverlaysComponent: FC<BlogCardOverlaysProps> = ({
-  accent = 'var(--card-accent, var(--accent))',
+  accent = 'var(--card-accent, var(--page-accent, var(--accent)))',
   intensity = 'default',
 }) => {
   const layers = useMemo(() => {

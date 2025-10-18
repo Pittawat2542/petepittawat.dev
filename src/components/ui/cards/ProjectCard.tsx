@@ -1,8 +1,8 @@
 import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
-import { memo, type CSSProperties, type FC } from 'react';
+import { memo, type FC } from 'react';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import { Badge } from '@/components/ui/core/badge';
-import { cn } from '@/lib/utils';
+import { cn, createAccentStyle, getAccentColorVar } from '@/lib/utils';
 import type { Project } from '@/types';
 
 function toTitleCase(input?: string) {
@@ -44,10 +44,10 @@ interface ProjectCardProps {
 }
 
 const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) => {
-  const accentColor = typeAccentVar(item.type);
+  const accentColor = getAccentColorVar(typeAccentVar(item.type));
   const tint = (intensity: number) =>
-    `color-mix(in oklab, ${accentColor} ${intensity}%, transparent)`;
-  const cardStyle = { '--card-accent': accentColor } as CSSProperties;
+    `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
+  const cardStyle = createAccentStyle(accentColor);
   return (
     <article
       className={cn(
@@ -57,24 +57,24 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       style={cardStyle}
     >
       <BlogCardOverlays accent={accentColor} />
-      <div className="aurora-card__body flex flex-1 flex-col gap-5 px-6 py-6 md:px-7 md:py-7">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <div className="aurora-card__body flex flex-1 flex-col gap-4 px-5 py-5 md:gap-5 md:px-6 md:py-6 lg:px-7 lg:py-7">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between md:gap-3">
           <div className="min-w-0 flex-1">
             <h3 className="text-base leading-snug font-semibold break-words md:text-lg">
               {item.title}
             </h3>
             {item.summary ? (
-              <p className="mt-2 text-sm leading-relaxed text-[color:var(--white)]/82">
+              <p className="mt-2 text-sm leading-relaxed text-[color:var(--white)]/82 lg:text-base">
                 {item.summary}
               </p>
             ) : null}
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[10px] md:text-xs">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] md:text-xs lg:text-sm">
             {item.type ? (
               <Badge
-                className="inline-flex items-center gap-1.5 px-3 py-1 font-medium whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
                 style={{
-                  color: accentColor,
+                  color: 'var(--card-accent)',
                   borderColor: tint(55),
                   background: tint(14),
                 }}
@@ -86,9 +86,9 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
             ) : null}
             {item.year ? (
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:text-xs"
                 style={{
-                  color: accentColor,
+                  color: 'var(--card-accent)',
                   background: tint(12),
                   border: `1px solid ${tint(45)}`,
                 }}
@@ -101,12 +101,12 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
         </div>
 
         {item.role || item.collaborators ? (
-          <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--white)]/75 md:text-sm">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] text-[color:var(--white)]/75 md:text-xs lg:text-sm">
             {item.role ? (
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] md:text-xs"
                 style={{
-                  color: accentColor,
+                  color: 'var(--card-accent)',
                   background: tint(10),
                   border: `1px solid ${tint(35)}`,
                 }}
@@ -117,9 +117,9 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
             ) : null}
             {item.collaborators ? (
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] md:text-xs"
                 style={{
-                  color: accentColor,
+                  color: 'var(--card-accent)',
                   background: tint(10),
                   border: `1px solid ${tint(35)}`,
                 }}
@@ -139,7 +139,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
         {item.tags?.length ? (
           <div className="flex flex-wrap gap-2">
             {item.tags.map(t => (
-              <Badge key={t} className="text-xs" variant="outline">
+              <Badge key={t} className="text-[11px] md:text-xs" variant="outline">
                 {t}
               </Badge>
             ))}
@@ -148,7 +148,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       </div>
 
       {item.links?.length ? (
-        <div className="aurora-card__footer flex flex-wrap items-center gap-2 text-xs text-white/80">
+        <div className="aurora-card__footer flex flex-wrap items-center gap-2 text-[11px] text-white/80 md:text-xs">
           {item.links.map((l, idx) => {
             const isExternal = !l.href.startsWith('/');
             return (
@@ -157,13 +157,13 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                 href={l.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="aurora-chip aurora-chip--pill"
+                className="aurora-chip aurora-chip--pill text-[color:var(--card-accent)]/85 transition-colors duration-150 hover:text-[color:var(--card-accent)]"
                 aria-label={l.label}
               >
                 <span>{l.label}</span>
                 <span
                   title={isExternal ? 'External link' : 'Internal link'}
-                  className="icon-bounce transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="icon-bounce text-[color:var(--card-accent)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 >
                   {isExternal ? (
                     <ExternalLink size={14} aria-hidden="true" />

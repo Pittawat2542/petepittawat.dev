@@ -15,7 +15,7 @@ import PageBackdrop from '../components/layout/core/PageBackdrop.astro';
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const posts = allPosts.slice(0, 3);
+const posts = allPosts.slice(0, 2);
 const stats = {
   posts: allPosts.length,
   publications: publications.length,

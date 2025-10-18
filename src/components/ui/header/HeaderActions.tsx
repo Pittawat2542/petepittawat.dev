@@ -35,14 +35,14 @@ const HeaderActionsComponent: FC<HeaderActionsProps> = ({ mobileOpen, onToggleMo
   }, [prefetchSearchIndex]);
 
   return (
-    <div className="relative ml-auto flex items-center gap-3 md:ml-0 md:flex md:flex-1 md:justify-end">
+    <div className="relative ml-auto flex items-center gap-3 md:ml-0 md:flex md:flex-1 md:justify-end md:gap-3 lg:gap-4">
       {/* Desktop search button */}
       <button
         id="open-search-desktop"
         type="button"
         aria-label="Open search"
         title="Search (⌘/Ctrl + K)"
-        className="relative hidden items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/85 transition-all duration-200 hover:scale-[1.03] hover:border-white/25 hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none active:scale-95 md:inline-flex"
+        className="shape-squircle-sm relative hidden items-center gap-2 rounded-[1.25rem] border border-white/15 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/85 transition-all duration-200 hover:scale-[1.03] hover:border-white/25 hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none active:scale-95 lg:inline-flex"
         onClick={handleSearchClick}
         onMouseEnter={handlePrefetchIntent}
         onFocus={handlePrefetchIntent}
@@ -62,7 +62,7 @@ const HeaderActionsComponent: FC<HeaderActionsProps> = ({ mobileOpen, onToggleMo
         type="button"
         aria-label="Open search"
         title="Search"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/85 transition-all duration-200 hover:scale-105 hover:border-white/25 hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none active:scale-95 md:hidden"
+        className="shape-squircle-sm inline-flex h-10 w-10 items-center justify-center rounded-[1.2rem] border border-white/15 bg-white/10 text-white/85 transition-all duration-200 hover:scale-105 hover:border-white/25 hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none active:scale-95 md:h-11 md:w-11 md:rounded-[1.25rem] lg:hidden"
         onClick={handleSearchClick}
         onMouseEnter={handlePrefetchIntent}
         onFocus={handlePrefetchIntent}
@@ -74,7 +74,7 @@ const HeaderActionsComponent: FC<HeaderActionsProps> = ({ mobileOpen, onToggleMo
       {/* Enhanced mobile menu toggle */}
       <button
         type="button"
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/80 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-white/25 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none active:scale-95 md:hidden"
+        className="shape-squircle-sm flex h-11 w-11 items-center justify-center rounded-[1.3rem] border border-white/15 text-white/80 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-white/25 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none active:scale-95 md:hidden"
         aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
         aria-controls="mobile-nav-panel"
         aria-expanded={mobileOpen ? 'true' : 'false'}

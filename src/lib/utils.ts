@@ -1,9 +1,22 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import type { CSSProperties } from 'react';
 
 // Tailwind class combiner used by shadcn components
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function getAccentColorVar(accent: string): string {
+  const trimmed = accent.trim();
+  if (!trimmed) return 'var(--page-accent, var(--accent))';
+  return trimmed.startsWith('var(') ? trimmed : `var(--${trimmed})`;
+}
+
+export function createAccentStyle(accent: string): CSSProperties {
+  return {
+    '--card-accent': getAccentColorVar(accent),
+  } as CSSProperties;
 }
 
 // Domain helpers used across UI components

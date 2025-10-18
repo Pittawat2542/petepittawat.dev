@@ -14,7 +14,7 @@ const { href, class: className = '', isActive = false, ariaLabel } = Astro.props
   aria-current={isActive ? 'page' : undefined}
   data-active={isActive ? 'true' : undefined}
   tabindex={isActive ? -1 : undefined}
-  class={`nav-pill nav-link group group/nav inline-flex items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-medium leading-none
+  class={`nav-pill nav-link shape-squircle-sm group group/nav inline-flex items-center gap-1.5 rounded-[1.2rem] border border-transparent px-4 py-2 text-sm font-medium leading-none
           text-[color:var(--white)]/72 hover:text-[color:var(--white)] hover:border-[color:var(--white)]/16
           transition-[color,border-color,background-color,box-shadow,transform] duration-250 ease-out
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45

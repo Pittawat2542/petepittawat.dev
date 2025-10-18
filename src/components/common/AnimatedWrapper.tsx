@@ -1,21 +1,26 @@
-import { memo, type FC, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
-
-import { createSpringTransition } from '@/lib/animation';
+import { memo, useEffect, useState, type FC, type ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 interface AnimatedWrapperProps {
   readonly children: ReactNode;
 }
 
 const AnimatedWrapperComponent: FC<AnimatedWrapperProps> = ({ children }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={createSpringTransition()}
+    <div
+      className={cn(
+        'ease-[var(--motion-ease-decelerate, ease-out)] transform-gpu transition-[opacity,transform] duration-500',
+        mounted ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'
+      )}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

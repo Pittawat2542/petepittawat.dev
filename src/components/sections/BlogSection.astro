@@ -38,11 +38,11 @@ const { posts, allPosts } = Astro.props as Props;
   </div>
   {
     posts.length === 0 ? (
-      <div class="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-[color:var(--white)]/70">
+      <div class="shape-squircle rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-[color:var(--white)]/70">
         No posts yet — new writing is on the way.
       </div>
     ) : (
-      <ul class="grid grid-cols-1 gap-5 md:gap-7 xl:grid-cols-3" id="latest-blog">
+      <ul class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:gap-7" id="latest-blog">
         {posts.map(post => (
           <BlogCard post={post} allPosts={allPosts || undefined} />
         ))}

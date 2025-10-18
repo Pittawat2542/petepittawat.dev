@@ -22,7 +22,7 @@ const SearchSuggestionsComponent: FC<SearchSuggestionsProps> = ({ suggestions })
           <a
             key={suggestion.id}
             href={suggestion.url}
-            className="rounded-full border border-white/10 px-3 py-1 transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:outline-none"
+            className="shape-squircle-sm rounded-[1.1rem] border border-white/10 px-3 py-1 transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:outline-none"
           >
             {suggestion.title}
           </a>

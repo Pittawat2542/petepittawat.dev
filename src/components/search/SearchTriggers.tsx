@@ -18,7 +18,7 @@ const SearchTriggersComponent: FC<SearchTriggersProps> = ({ hideTriggers = false
       <DialogTrigger asChild>
         <button
           className={cn(
-            'hidden items-center gap-2 rounded-full px-3 py-2 md:inline-flex',
+            'shape-squircle-sm hidden items-center gap-2 rounded-[1.2rem] px-3 py-2 md:inline-flex',
             'text-sm transition-colors hover:bg-[color:var(--white)]/5',
             'focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30 focus-visible:outline-none'
           )}
@@ -37,7 +37,7 @@ const SearchTriggersComponent: FC<SearchTriggersProps> = ({ hideTriggers = false
       <DialogTrigger asChild>
         <button
           className={cn(
-            'inline-flex items-center justify-center rounded-full p-2 md:hidden',
+            'shape-squircle-sm inline-flex items-center justify-center rounded-[1.2rem] p-2 md:hidden',
             'hover:bg-[color:var(--white)]/10 focus-visible:outline-none',
             'focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30'
           )}

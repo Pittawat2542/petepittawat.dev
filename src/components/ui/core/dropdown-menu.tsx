@@ -24,7 +24,7 @@ const DropdownMenuSubTrigger = forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'glass-menu-item group flex cursor-pointer items-center rounded-full px-2 py-1.5 text-sm text-[color:var(--white,#FFFFFF)]/80 outline-none select-none',
+      'glass-menu-item group shape-squircle-sm flex cursor-pointer items-center rounded-[1.1rem] px-2 py-1.5 text-sm text-[color:var(--white,#FFFFFF)]/80 outline-none select-none',
       inset && 'pl-8',
       className
     )}
@@ -46,7 +46,7 @@ const DropdownMenuSubContent = forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      'glass-card glass-menu-panel text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-2xl border border-white/10 bg-[rgba(6,12,20,0.82)] p-1 shadow-xl',
+      'glass-card glass-menu-panel shape-squircle text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-2xl border border-white/10 bg-[rgba(6,12,20,0.82)] p-1 shadow-xl',
       className
     )}
     {...props}
@@ -79,7 +79,7 @@ const DropdownMenuContent = forwardRef<
         avoidCollisions={avoidCollisions}
         collisionPadding={8}
         className={cn(
-          'glass-card glass-menu-panel text-popover-foreground z-50 w-auto min-w-[10rem] overflow-hidden rounded-2xl border border-white/10 bg-[rgba(6,12,20,0.82)] p-1 shadow-xl',
+          'glass-card glass-menu-panel shape-squircle text-popover-foreground z-50 w-auto min-w-[10rem] overflow-hidden rounded-2xl border border-white/10 bg-[rgba(6,12,20,0.82)] p-1 shadow-xl',
           className
         )}
         style={{
@@ -104,7 +104,7 @@ const DropdownMenuItem = forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'glass-menu-item relative cursor-pointer px-2 py-1.5 text-sm text-[color:var(--white,#FFFFFF)]/80 outline-none select-none',
+      'glass-menu-item shape-squircle-sm relative cursor-pointer rounded-[1.1rem] px-2 py-1.5 text-sm text-[color:var(--white,#FFFFFF)]/80 outline-none select-none',
       inset && 'pl-8',
       className
     )}
@@ -120,7 +120,7 @@ const DropdownMenuCheckboxItem = forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      'glass-menu-item relative flex cursor-pointer items-center rounded-full py-1.5 pr-2 pl-8 text-sm text-[color:var(--white,#FFFFFF)]/85 outline-none select-none',
+      'glass-menu-item shape-squircle-sm relative flex cursor-pointer items-center rounded-[1.1rem] py-1.5 pr-2 pl-8 text-sm text-[color:var(--white,#FFFFFF)]/85 outline-none select-none',
       className
     )}
     checked={checked ?? false}
@@ -141,7 +141,7 @@ const DropdownMenuRadioItem = forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      'glass-menu-item relative w-full cursor-pointer items-center rounded-full px-1 py-1 text-sm text-[color:var(--white,#FFFFFF)]/85 outline-none select-none',
+      'glass-menu-item shape-squircle-sm relative w-full cursor-pointer items-center rounded-[1.1rem] px-1 py-1 text-sm text-[color:var(--white,#FFFFFF)]/85 outline-none select-none',
       className
     )}
     {...props}

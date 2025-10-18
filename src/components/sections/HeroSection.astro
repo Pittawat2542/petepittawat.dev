@@ -114,7 +114,7 @@ const ctaItems = [
         class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15rem] object-cover shadow-lg ring-4 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20rem]"
       />
       <div
-        class="absolute -bottom-12 left-1/2 w-full max-w-[18rem] -translate-x-1/2 rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/75 px-5 py-4 text-left shadow-xl shadow-black/30 backdrop-blur-md sm:px-6 sm:py-5 md:-bottom-16 md:max-w-[20rem]"
+        class="shape-squircle absolute -bottom-12 left-1/2 w-full max-w-[18rem] -translate-x-1/2 rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/75 px-5 py-4 text-left shadow-xl shadow-black/30 backdrop-blur-md sm:px-6 sm:py-5 md:-bottom-16 md:max-w-[20rem]"
       >
         <p class="text-xs font-semibold tracking-[0.25em] text-[color:var(--white)]/60 uppercase">
           Current focus
@@ -127,11 +127,11 @@ const ctaItems = [
   </div>
 
   <div
-    class="order-3 mt-8 grid w-full gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-left shadow-lg shadow-black/20 backdrop-blur-sm sm:gap-4 md:col-span-2 md:mt-0 md:grid-cols-3 md:p-6"
+    class="shape-squircle order-3 mt-8 grid w-full gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-left shadow-lg shadow-black/20 backdrop-blur-sm sm:gap-4 md:col-span-2 md:mt-0 md:grid-cols-3 md:p-6"
   >
     {
       ctaItems.map(({ href, title, description, cta, variant, Icon }) => (
-        <div class="group flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[color:var(--black-nav)]/45 p-4 transition-transform duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--black-nav)]/65 sm:gap-4 sm:p-5">
+        <div class="shape-squircle group flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[color:var(--black-nav)]/45 p-4 transition-transform duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--black-nav)]/65 sm:gap-4 sm:p-5">
           <div class="flex items-start gap-3">
             <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[color:var(--accent)] shadow-inner shadow-black/10">
               <Icon class="h-5 w-5" aria-hidden="true" />
@@ -148,7 +148,7 @@ const ctaItems = [
             variant={variant}
             size="lg"
             icon="arrow-right"
-            className="mt-auto w-full justify-between px-5 py-2.5 text-sm sm:px-6 sm:text-base"
+            className="mt-auto w-full justify-between px-5 py-2.5 text-sm sm:px-6 sm:text-base md:px-5 md:py-2.5 md:text-sm lg:px-6 lg:py-3 lg:text-base"
           >
             {cta}
           </GlassButton>

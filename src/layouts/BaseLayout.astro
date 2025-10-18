@@ -5,16 +5,23 @@ import AnimatedHeader from '../components/common/AnimatedHeader';
 import ScrollTop from '../components/layout/blog/ScrollTop';
 import SearchModal from '../components/layout/SearchModal';
 
-const { title, description, image, type, publishedTime, tags } = Astro.props as {
+const { title, description, image, type, publishedTime, tags, page } = Astro.props as {
   title: string;
   description: string;
   image?: string;
   type?: 'website' | 'article';
   publishedTime?: string;
   tags?: string[];
+  page?: string;
 };
 const ogImagePath = image ?? '/home-og-image.jpeg';
 const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath;
+const pageKey = page?.toLowerCase();
+const pageAccent = pageKey ? `var(--accent-${pageKey}, var(--accent, #6ac1ff))` : undefined;
+const bodyStyle = pageAccent
+  ? `--page-accent:${pageAccent};--card-accent:${pageAccent};`
+  : undefined;
+const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
 ---
 
 <!doctype html>
@@ -53,11 +60,11 @@ const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath
     }
   </head>
 
-  <body>
+  <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
     <AnimatedHeader client:load />
     <main
       id="main-content"
-      class="mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
+      class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
       style="view-transition-name: page;"
     >
       <slot />

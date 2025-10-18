@@ -16,7 +16,7 @@ const { title, description, hero, containerClass } = Astro.props as {
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} page={hero.page}>
   <ThemedPageHero {...hero} />
   <Container className={containerClass || undefined}>
     <slot />

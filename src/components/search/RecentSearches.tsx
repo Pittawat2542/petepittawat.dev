@@ -19,7 +19,7 @@ const RecentSearchesComponent: FC<RecentSearchesProps> = ({ recent, onSelect, on
       {recent.map(entry => (
         <button
           key={entry}
-          className="rounded-full border border-white/10 px-3 py-1 text-xs transition-colors hover:bg-white/5"
+          className="shape-squircle-sm rounded-[1.1rem] border border-white/10 px-3 py-1 text-xs transition-colors hover:bg-white/5"
           onClick={() => onSelect(entry)}
           aria-label={`Use recent search ${entry}`}
         >

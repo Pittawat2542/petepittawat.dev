@@ -67,7 +67,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
       {/* Glass container */}
       <div
         className={cn(
-          'glass-input group relative flex w-full items-center overflow-hidden rounded-full transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
+          'glass-input shape-squircle-sm group relative flex w-full items-center overflow-hidden rounded-[1.2rem] transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
           sizeConfig.wrapper
         )}
         data-size={size}
@@ -79,7 +79,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
         {/* Search icon */}
         <span
           className={cn(
-            'relative z-10 inline-flex shrink-0 items-center justify-center rounded-full bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm transition-[color,opacity,background-color] duration-150 ease-out',
+            'shape-squircle-sm relative z-10 inline-flex shrink-0 items-center justify-center rounded-[1.2rem] bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm transition-[color,opacity,background-color] duration-150 ease-out',
             sizeConfig.iconWrapper
           )}
         >
@@ -109,7 +109,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
             type="button"
             onClick={clearValue}
             className={cn(
-              'focus-visible:ring-ring/50 relative z-10 inline-flex items-center justify-center rounded-full bg-white/6 text-[color:var(--white,#FFFFFF)]/70 transition-all duration-150 ease-out hover:bg-white/14 hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(8,12,22,0.85)] focus-visible:outline-none',
+              'focus-visible:ring-ring/50 shape-squircle-sm relative z-10 inline-flex items-center justify-center rounded-[1.2rem] bg-white/6 text-[color:var(--white,#FFFFFF)]/70 transition-all duration-150 ease-out hover:bg-white/14 hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(8,12,22,0.85)] focus-visible:outline-none',
               sizeConfig.button
             )}
             aria-label="Clear search"
