@@ -59,3 +59,4 @@ export const TagFilters = memo(TagFiltersComponent, (prevProps, nextProps) => {
     prevProps.onToggleTag === nextProps.onToggleTag
   );
 });
+TagFilters.displayName = 'TagFilters';

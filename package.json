@@ -20,7 +20,8 @@
     "clean": "rm -rf dist .astro node_modules/.astro",
     "dev:clean": "npm run clean && npm run dev",
     "generate-favicons": "./scripts/generate-favicons.sh",
-    "prepare": "husky"
+    "prepare": "husky",
+    "update-deps": "node scripts/update-dependencies.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx,astro,json,md,css,js,yml,yaml}": [

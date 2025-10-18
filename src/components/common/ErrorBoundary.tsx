@@ -1,5 +1,6 @@
 import { Component, type ComponentType, type ErrorInfo, type ReactNode } from 'react';
 import { ERROR_MESSAGES } from '@/lib/constants';
+import { handleBoundaryError } from '@/lib/errorLogger';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -39,9 +40,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.setState({ error, errorInfo });
     this.props.onError?.(error, errorInfo);
 
-    if (process.env['NODE_ENV'] === 'development') {
-      console.error('Error Boundary:', error, errorInfo);
-    }
+    // Use the enhanced error logging utility
+    handleBoundaryError(error, errorInfo, this.constructor.name);
   }
 
   private readonly resetErrorBoundary = () => {

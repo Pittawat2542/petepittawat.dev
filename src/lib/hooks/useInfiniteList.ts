@@ -1,19 +1,56 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 
+/**
+ * Result object returned by the useInfiniteList hook
+ */
 export interface InfiniteListResult<T> {
+  /** Items currently visible in the list */
   paged: T[];
+  /** Whether there are more items to load */
   hasMore: boolean;
+  /** Whether more items are currently loading */
   loadingMore: boolean;
+  /** Number of skeleton loaders to show */
   pendingSkeletons: number;
+  /** Ref for the sentinel element used to trigger loading */
   sentinelRef: RefObject<HTMLDivElement | null>;
 }
 
+/**
+ * Options for configuring the useInfiniteList hook
+ */
 export interface InfiniteListOptions<T> {
+  /** Array of items to paginate */
   items: T[];
+  /** Number of items to load per page (default: 12) */
   per?: number;
+  /** Intersection observer root margin (default: '800px 0px') */
   rootMargin?: string;
 }
 
+/**
+ * React hook for implementing infinite scrolling lists
+ *
+ * @template T - Type of items in the list
+ * @param options - Infinite list options
+ * @returns Infinite list result object with paged data and control properties
+ *
+ * @example
+ * ```tsx
+ * const { paged, hasMore, loadingMore, sentinelRef } = useInfiniteList({
+ *   items: allPosts,
+ *   per: 10
+ * });
+ *
+ * return (
+ *   <div>
+ *     {paged.map(item => <Item key={item.id} item={item} />)}
+ *     {loadingMore && <LoadingSpinner />}
+ *     {hasMore && <div ref={sentinelRef} />}
+ *   </div>
+ * );
+ * ```
+ */
 export function useInfiniteList<T>({
   items,
   per = 12,
