@@ -1,6 +1,7 @@
 /**
  * Error logging utility for consistent error handling across the application
  */
+import type React from 'react';
 
 // Add process type declaration
 declare const process: {
@@ -8,12 +9,6 @@ declare const process: {
     NODE_ENV?: string;
   };
 };
-
-declare namespace React {
-  interface ErrorInfo {
-    componentStack: string;
-  }
-}
 
 // Define error severity levels
 export type ErrorLevel = 'info' | 'warn' | 'error' | 'fatal';

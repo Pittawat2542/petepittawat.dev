@@ -190,7 +190,7 @@ const HeroBackdrop: FC = () => {
     window.addEventListener('resize', resizeCanvas);
     if ('addEventListener' in mediaQuery) {
       mediaQuery.addEventListener('change', handleMotionPreference);
-    } else if ('addListener' in mediaQuery) {
+    } else {
       (mediaQuery as unknown as MediaQueryList).addListener(handleMotionPreference);
     }
 
@@ -201,7 +201,7 @@ const HeroBackdrop: FC = () => {
       window.removeEventListener('resize', resizeCanvas);
       if ('removeEventListener' in mediaQuery) {
         mediaQuery.removeEventListener('change', handleMotionPreference);
-      } else if ('removeListener' in mediaQuery) {
+      } else {
         (mediaQuery as unknown as MediaQueryList).removeListener(handleMotionPreference);
       }
       intersectionObserver.disconnect();

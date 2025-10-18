@@ -1,4 +1,4 @@
-import type { Publication } from '../../../types';
+import type { Artifact, Publication } from '../../../types';
 
 export function toTitleCase(input?: string) {
   if (!input) return '';
@@ -54,14 +54,15 @@ export function renderAuthorsBold(authors: string) {
 export function deduplicateArtifacts(item: Publication) {
   const arr = Array.isArray(item.artifacts) ? item.artifacts : [];
   const seen = new Set<string>();
-  const cleaned = [] as NonNullable<typeof item.artifacts>;
+  const cleaned: NonNullable<typeof item.artifacts> = [];
 
   for (const a of arr) {
     if (!a || !a.href) continue;
     if (item.url && a.href === item.url) continue;
     if (seen.has(a.href)) continue;
     seen.add(a.href);
-    cleaned.push(a);
+    // Cast to mutable array type to allow push
+    (cleaned as Artifact[]).push(a);
   }
 
   return cleaned;
