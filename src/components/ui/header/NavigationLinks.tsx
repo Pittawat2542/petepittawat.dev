@@ -1,5 +1,5 @@
 import { memo, type ComponentType, type FC } from 'react';
-import HeaderLink from '../../header/HeaderLink';
+import HeaderLink from '@/components/header/HeaderLink';
 import { cn } from '@/lib/utils';
 
 interface NavigationLink {

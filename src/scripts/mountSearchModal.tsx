@@ -1,4 +1,4 @@
-import SearchModal from '../components/layout/SearchModal';
+import SearchModal from '@/components/layout/SearchModal';
 
 type CreateRootFn = (typeof import('react-dom/client'))['createRoot'];
 type RootContainer = ReturnType<CreateRootFn>;

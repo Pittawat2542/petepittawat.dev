@@ -1,148 +1,87 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import profileImage from '../assets/images/profile.jpg';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { Github, Instagram, Linkedin } from 'lucide-astro';
-import ThemedPageHero from '../components/layout/core/ThemedPageHero';
-import Container from '../components/ui/core/Container';
-import GlassCard from '../components/ui/core/GlassCard';
-import Chip from '../components/ui/core/Chip';
-import Prose from '../components/content/Prose';
-import timeline from '../content/about/timeline.json';
-import publications from '../content/publications/publications.json';
-import projects from '../content/projects/projects.json';
-import talks from '../content/talks/talks.json';
+import profileImage from '@/assets/images/profile.jpg';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import ThemedPageHero from '@/components/layout/core/ThemedPageHero';
+import Container from '@/components/ui/core/Container';
+import GlassCard from '@/components/ui/core/GlassCard';
+import Prose from '@/components/content/Prose';
+import timeline from '@/content/about/timeline.json';
+import publications from '@/content/publications/publications.json';
+import projects from '@/content/projects/projects.json';
+import talks from '@/content/talks/talks.json';
 
 const totalPublications = publications.length;
 const totalProjects = projects.length;
 const totalTalks = talks.length;
-const makeAccentLabel = (accent?: string) =>
-  (accent ?? 'about')
-    .split('-')
-    .map((segment: string) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(' ');
 
-const highlightStats = [
+const quickFacts = [
   {
-    value: '7+',
-    label: 'years in applied AI & creative tech',
-    description: 'From early creative coding experiments to production-grade reasoning systems.',
+    label: 'Current role',
+    value: 'Research Scientist @ Typhoon',
+    hint: 'Building evaluation pipelines and shipping applied LLM products.',
   },
   {
-    value: `${totalPublications}`,
-    label: 'published papers & deep dives',
-    description: 'Exploring creativity, evaluation, and tools that stay reliable in production.',
+    label: 'Strength',
+    value: 'Research-to-product translator',
+    hint: '7+ years across applied AI, creative tech, and product teams.',
   },
   {
-    value: `${totalProjects}`,
-    label: 'shipped projects & open experiments',
-    description: 'Prototyping boldly, then hardening what works for partners and teams.',
-  },
-  {
-    value: `${totalTalks}`,
-    label: 'talks, workshops & keynotes delivered',
-    description: 'Helping communities across APAC build responsible AI workflows.',
+    label: 'Based in',
+    value: 'Bangkok ↔ Tokyo',
+    hint: 'Remote-friendly, partnering with teams across APAC.',
   },
 ];
 
-const focusAreas = [
+const nowFocus = [
+  'Running Typhoon’s evaluation lab so new reasoning models stay dependable.',
+  'Designing prompt architectures and workflows that balance creativity with control.',
+  'Writing about reliable creativity and sharing playbooks for applied teams.',
+];
+
+const currentThemes = [
   {
-    emoji: '💡',
-    title: 'Creative intelligence without collapse',
-    description: 'Testing how large models stay imaginative without drifting away from truth.',
-    bullets: [
-      'When do hallucinations become a useful spark instead of a failure?',
-      'How does model scale shift the boundary between imagination and reliability?',
-      'Which safety rails keep generative systems playful yet grounded?',
-    ],
-  },
-  {
-    emoji: '🧠',
-    title: 'Orchestrating algorithms with LLMs',
-    description: 'Pairing classical computing patterns with neural priors to tackle complex tasks.',
-    bullets: [
-      'Which traditional algorithms resonate—or clash—with probabilistic reasoning?',
-      'How do pipeline topologies change when an LLM becomes a black-box oracle?',
-      'Where should symbolic structure and neural intuition interleave?',
-    ],
-  },
-  {
-    emoji: '📏',
-    title: 'Evaluation without shortcuts',
+    title: 'Reliable creativity',
     description:
-      'Designing resilient evaluation frameworks that keep up with rapidly evolving models.',
-    bullets: [
-      'Can LLMs deliver structured output as tasks grow multi-dimensional?',
-      'How do we observe degradation across scales, prompts, and modalities?',
-      'What automation keeps humans focused on insight rather than grading?',
-    ],
+      'Guardrails that keep generative systems imaginative without drifting from the truth.',
   },
   {
-    emoji: '🪄',
-    title: 'Prompt architectures in practice',
-    description: 'Turning orchestration heuristics into human-centered AI experiences.',
-    bullets: [
-      'Why do prompt engineering patterns actually work?',
-      'What does “exploration” look like when prompts become navigation in latent space?',
-      'How can multimodal LLMs power creative tooling and healthcare support systems?',
-    ],
+    title: 'LLM-enabled workflows',
+    description:
+      'Evaluation rigs, orchestration patterns, and UI loops that ship research-grade tools.',
+  },
+  {
+    title: 'Community amplification',
+    description: 'Mentoring researchers and builders so knowledge compounds across the region.',
   },
 ];
 
-const craftStacks = [
-  {
-    title: 'Applied research engineering',
-    statement:
-      'I build reproducible, resumable evaluation rigs that bridge notebooks, services, and production dashboards.',
-    tools: ['Python', 'TypeScript', 'PyTorch', 'Transformers', 'TensorFlow', 'FastAPI'],
-    bullets: [
-      'Instrument experiments so findings stay auditable, extensible, and easy to reprise.',
-      'Context-switch between numerical computing in MATLAB/R and modern LLM tooling.',
-      'Use numpy, pandas, matplotlib, and seaborn to shorten the insight loop.',
-    ],
-  },
-  {
-    title: 'Full-stack systems & product',
-    statement: 'Ship interfaces and services that stay maintainable as teams grow and stakes rise.',
-    tools: ['React', 'Astro', 'Next.js', 'Node.js', 'Django', 'Go', 'Java'],
-    bullets: [
-      'Production experience across web, microservices, and API design, including LINE Shopping.',
-      'Delivered mobile apps from native Android to React Native and Flutter rebuilds.',
-      'Design background with Figma, Adobe XD, and Photoshop keeps user experience central.',
-    ],
-  },
-  {
-    title: 'Ops, assurance & platforms',
-    statement:
-      'Reliability stays non-negotiable—tests, automation, and observability are part of the canvas.',
-    tools: ['Jest', 'Cypress', 'Playwright', 'Selenium', 'Docker', 'Git', 'Firebase'],
-    bullets: [
-      'Security and networking foundations inform threat models and review practices.',
-      'Support rapid-response teams with structured workflows and clear runbooks.',
-      'Work comfortably with SQL/NoSQL and vector stores—MongoDB, Neo4j, Pinecone, Milvus, Qdrant.',
-    ],
-  },
+const expertiseStats = [
+  { value: totalProjects, label: 'Projects shipped' },
+  { value: totalPublications, label: 'Research & essays published' },
+  { value: totalTalks, label: 'Talks & workshops' },
+];
+
+const spotlightTimeline = timeline.filter(item => item.highlight);
+
+const backgroundNotes = [
+  'I started in interdisciplinary labs collaborating with clinicians, designers, and researchers. Translating between rigor and storytelling shaped how I work.',
+  'Today I lead applied research at Typhoon (SCB 10X R&D), pairing evaluation rigs with product craft so new models become reliable workflows.',
+  'Before that I supported teams at LINE Shopping, national innovation programs, and community initiatives opening tech pathways for Thai students.',
 ];
 
 const educationEntries = [
   {
     title: 'M.Eng., Intelligent Computer Entertainment Lab, Ritsumeikan University',
     period: '2022 — 2024',
-    summary: 'Valedictorian focused on creative AI and evaluation tooling.',
-    bullets: [
-      'Investigated generative creativity and reliability across large language models.',
-      'Delivered Typhoon research contributions on reasoning and applied systems.',
-    ],
+    summary:
+      'Valedictorian focusing on creative AI, evaluation tooling, and dependable reasoning systems.',
   },
   {
     title: 'B.Sc. Computer Science, KMUTT (First-class honours)',
     period: '2017 — 2021',
-    summary: 'Petchra Pra Jom Klao Scholarship recipient and academic distinction awardee.',
-    bullets: [
-      'Earned Jia Ra Nai Petchra Scholarship and Honor Award for program-leading performance.',
-      'Name engraved on KMUTT’s Wall of Honors recognizing the top graduate of the cohort.',
-    ],
+    summary: 'Petchra Pra Jom Klao Scholarship recipient and cohort-topping graduate.',
   },
 ];
 
@@ -150,280 +89,178 @@ const communityHighlights = [
   {
     title: 'Applied research collaborations',
     description:
-      'Early in my journey I joined the Innovative Cognitive Computing Laboratory at KMUTT, partnering closely with clinicians and researchers.',
+      'Led multi-disciplinary projects with KMUTT, Siriraj Hospital, and national innovation programs.',
     bullets: [
-      'Led AR, web, and natural language projects that turned ideas into usable systems.',
-      'Served as tech lead for Siriraj Hospital collaborations, shaping HFMD research tooling.',
+      'Shipped AR, web, and language systems that moved from prototypes to everyday tools.',
+      'Set up evaluation and delivery rituals that kept cross-functional teams aligned.',
     ],
   },
   {
-    title: 'Industry immersion & mentoring',
+    title: 'Industry & mentorship',
     description:
-      'From LINE Thailand to national innovation programs, I thrive in teams that move fast without losing craft.',
+      'Support fast-paced product teams while mentoring the next wave of builders and researchers.',
     bullets: [
-      'Shipped LINE Shopping features and contributed to the Vue 2 → 3 migration across microservices.',
-      'Selected for Young Webmaster Camp and Google Tech Challenge; mentored peers as inaugural Google Developer Student Club lead at KMUTT.',
+      'Contributed to LINE Shopping’s platform evolution and large-scale Vue migrations.',
+      'Founded Google Developer Student Clubs KMUTT and mentor regional programs.',
     ],
   },
 ];
 
 const serviceHighlights = [
-  'Directed an eight-person rapid-response team during the COVID-19 outbreak to build KMUTT’s nationwide donation management platform—300+ shipments, 50+ hospitals supported.',
-  'Spearheaded Junior Programmer Camp XV, delivering admissions and staff tooling that opened computer science pathways for students across Thailand.',
-  'Continue to review for conferences and coach communities because sharing expertise compounds impact.',
+  'Directed an eight-person rapid-response team during COVID-19 to deliver nationwide donations.',
+  'Organised Junior Programmer Camp XV, opening computer science pathways for students across Thailand.',
 ];
 
 const learningHighlights = [
-  'Lifelong learning is ritual: I constantly take online courses, pairing curiosity with deliberate practice.',
-  'Regularly tutor classmates and mentees—teaching is how I stress-test my own understanding.',
-  'Connecting disparate topics keeps me inventive and empathic when designing intelligent systems.',
+  'Learning stays a ritual—pairing online courses with experiments keeps me curious.',
+  'I teach and mentor to stress-test my own understanding and multiply collective progress.',
 ];
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION} page="about">
-  <div class="about-backdrop" aria-hidden="true">
-    <div class="about-backdrop__gradient"></div>
-    <div class="about-backdrop__orb"></div>
-    <div class="about-backdrop__grid"></div>
-  </div>
-
-  <Container className="relative z-10 space-y-16 pb-24">
+  <Container className="space-y-16 pt-10 pb-24 lg:space-y-20">
     <ThemedPageHero
       title="About Pete"
-      subtitle="Research engineer building dependable reasoning systems that balance creativity, reliability, and human delight."
+      subtitle="Research engineer translating creative AI into reliable products people trust."
       page="about"
     />
 
-    <section id="profile" class="section-canvas">
-      <div class="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)] lg:gap-8">
-        <GlassCard variant="premium" className="profile-card overflow-hidden p-0">
-          <div class="profile-card__grid">
-            <div class="profile-card__media bg-[color:var(--black)]/20">
-              <figure class="profile-media">
-                <div class="profile-media__halo" aria-hidden="true"></div>
-                <div class="profile-media__glow" aria-hidden="true"></div>
-                <Image
-                  src={profileImage}
-                  alt="Pete's profile picture"
-                  widths={[160, 200, 260, 320]}
-                  sizes="(min-width: 1024px) 15rem, (min-width: 768px) 13rem, 12rem"
-                  loading="lazy"
-                  decoding="async"
-                  class="profile-media__image"
-                />
-              </figure>
-              <div class="profile-card__media-meta">
-                <span>Bangkok, Thailand</span>
-                <span>Research Scientist @ Typhoon</span>
-              </div>
-            </div>
-            <div class="profile-card__content">
-              <div class="profile-card__heading">
-                <div class="profile-card__title-group">
-                  <span class="profile-card__eyebrow">Research & Systems</span>
-                  <h2>Pittawat Taveekitworachai (Pete)</h2>
-                </div>
-              </div>
-              <p class="profile-card__bio">
-                I explore how large language models reason, create, and assist responsibly. My work
-                spans research, product, and community—turning fragile ideas into dependable systems
-                and sharing the playbooks that help others build with confidence.
-              </p>
-              <div class="profile-card__connect">
-                <span class="profile-card__meta-label">Connect</span>
-                <nav class="profile-card__social" aria-label="Social links">
-                  <a
-                    class="social-link"
-                    href="https://github.com/Pittawat2542"
-                    target="_blank"
-                    aria-label="GitHub"
-                  >
-                    <Github />
-                  </a>
-                  <a
-                    class="social-link"
-                    href="https://www.linkedin.com/in/pittawat-tav/"
-                    target="_blank"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin />
-                  </a>
-                  <a
-                    class="social-link"
-                    href="https://www.instagram.com/pete.pittawat/"
-                    target="_blank"
-                    aria-label="Instagram"
-                  >
-                    <Instagram />
-                  </a>
-                  <a
-                    class="social-link"
-                    href="https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en"
-                    target="_blank"
-                    aria-label="Google Scholar"
-                  >
-                    Scholar
-                  </a>
-                  <a
-                    class="social-link"
-                    href="https://orcid.org/0000-0002-6824-2634"
-                    target="_blank"
-                    aria-label="ORCID"
-                  >
-                    ORCID
-                  </a>
-                </nav>
-              </div>
-            </div>
+    <section id="intro" class="intro-grid">
+      <GlassCard variant="premium" className="profile-card">
+        <div class="profile-card__header">
+          <div class="profile-card__portrait">
+            <Image
+              src={profileImage}
+              alt="Pete's profile picture"
+              widths={[160, 200, 260, 320]}
+              sizes="(min-width: 1024px) 7rem, (min-width: 768px) 6rem, 5.5rem"
+              loading="lazy"
+              decoding="async"
+              class="profile-card__image"
+            />
           </div>
-        </GlassCard>
-
-        <GlassCard variant="glow" className="profile-metrics overflow-hidden">
-          <div class="profile-metrics__backdrop" aria-hidden="true"></div>
-          <div class="profile-metrics__inner">
-            <header class="profile-metrics__header">
-              <span class="profile-metrics__eyebrow">At a glance</span>
-              <p>Data points that anchor how I build, teach, and experiment.</p>
-            </header>
-            <div class="profile-metrics__grid">
-              {
-                highlightStats.map(stat => (
-                  <article class="profile-metric">
-                    <span class="profile-metric__value">{stat.value}</span>
-                    <p class="profile-metric__label">{stat.label}</p>
-                    <p class="profile-metric__description">{stat.description}</p>
-                  </article>
-                ))
-              }
-            </div>
-          </div>
-        </GlassCard>
-      </div>
-    </section>
-
-    <section id="focus" class="section-canvas">
-      <div class="section-heading">
-        <h2>Focus & Current Questions</h2>
-        <p>
-          Each project is a laboratory. Here are the questions that keep me iterating on research,
-          infrastructure, and storytelling.
-        </p>
-      </div>
-      <div class="grid gap-5 md:gap-6 lg:grid-cols-2">
-        {
-          focusAreas.map(area => (
-            <GlassCard variant="premium" className="focus-card h-full">
-              <div class="flex items-start gap-3">
-                <span class="text-3xl md:text-4xl" aria-hidden="true">
-                  {area.emoji}
-                </span>
-                <div>
-                  <h3 class="text-xl font-semibold tracking-tight text-[color:var(--white)] md:text-2xl">
-                    {area.title}
-                  </h3>
-                  <p class="mt-2 text-sm text-[color:var(--white)]/80 md:text-base">
-                    {area.description}
-                  </p>
-                </div>
-              </div>
-              <ul class="focus-card__list">
-                {area.bullets.map(point => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-            </GlassCard>
-          ))
-        }
-      </div>
-    </section>
-
-    <section id="craft" class="section-canvas">
-      <div class="section-heading">
-        <h2>How I Build</h2>
-        <p>
-          Reliability, clarity, and accessibility thread through everything—from research pipelines
-          to the tools communities adopt.
-        </p>
-      </div>
-      <div class="grid gap-5 md:gap-6 lg:grid-cols-2 xl:grid-cols-3">
-        {
-          craftStacks.map(stack => (
-            <GlassCard variant="elevated" className="craft-card h-full">
-              <h3 class="text-lg font-semibold tracking-tight text-[color:var(--white)] md:text-xl">
-                {stack.title}
-              </h3>
-              <p class="mt-2 text-sm text-[color:var(--white)]/80 md:text-base">
-                {stack.statement}
-              </p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                {stack.tools.map(tool => (
-                  <Chip>{tool}</Chip>
-                ))}
-              </div>
-              <ul class="craft-card__list">
-                {stack.bullets.map(point => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-            </GlassCard>
-          ))
-        }
-      </div>
-    </section>
-
-    <section id="timeline" class="section-canvas">
-      <GlassCard variant="glow" className="timeline-card overflow-hidden p-0">
-        <div class="timeline-card__gradient" aria-hidden="true"></div>
-        <div class="timeline-card__body">
-          <header class="timeline-card__header">
-            <div class="timeline-card__headline">
-              <span class="timeline-card__eyebrow">Trajectory</span>
-              <h2>Trajectory Highlights</h2>
-              <p>
-                Research milestones, industry sprints, and community-led missions that inform how I
-                frame the next question.
-              </p>
-            </div>
-          </header>
-          <div class="timeline-card__list">
-            <ol>
-              {
-                timeline.map(item => {
-                  const accentVar = `var(--accent-${item.accent ?? 'about'})`;
-                  return (
-                    <li class={`timeline-item ${item.highlight ? 'timeline-item--highlight' : ''}`}>
-                      <span class="timeline-item__marker" style={{ background: accentVar }} />
-                      <div class="timeline-item__content">
-                        <div class="timeline-item__meta">
-                          <span class="timeline-item__accent" style={{ color: accentVar }}>
-                            {makeAccentLabel(item.accent)}
-                          </span>
-                          {item.highlight && <span class="timeline-item__badge">Spotlight</span>}
-                        </div>
-                        <h3 class="timeline-item__title">{item.title}</h3>
-                        <p class="timeline-item__description">{item.description}</p>
-                      </div>
-                    </li>
-                  );
-                })
-              }
-            </ol>
+          <div class="profile-card__meta">
+            <span class="eyebrow">Bangkok ↔ Tokyo</span>
+            <p class="profile-card__role">Research Scientist @ Typhoon</p>
           </div>
         </div>
+        <div class="profile-card__body">
+          <h2>Hi, I’m Pittawat (Pete).</h2>
+          <p>
+            I help teams ship dependable reasoning systems that feel human, joyful, and safe. My
+            toolkit blends applied research, evaluation rigs, and product craft honed across APAC.
+          </p>
+        </div>
+        <div class="profile-card__links" aria-label="Connect">
+          <a
+            class="profile-card__link"
+            href="https://www.linkedin.com/in/pittawat-tav/"
+            target="_blank"
+          >
+            LinkedIn
+          </a>
+          <a class="profile-card__link" href="https://github.com/Pittawat2542" target="_blank">
+            GitHub
+          </a>
+          <a
+            class="profile-card__link"
+            href="https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en"
+            target="_blank"
+          >
+            Google Scholar
+          </a>
+        </div>
       </GlassCard>
+
+      <div class="intro-grid__aside">
+        <GlassCard variant="glow" className="snapshot-card">
+          <span class="eyebrow">Snapshot</span>
+          <div class="snapshot-grid">
+            {
+              quickFacts.map(item => (
+                <div class="snapshot-item">
+                  <p class="snapshot-item__label">{item.label}</p>
+                  <p class="snapshot-item__value">{item.value}</p>
+                  <p class="snapshot-item__hint">{item.hint}</p>
+                </div>
+              ))
+            }
+          </div>
+        </GlassCard>
+
+        <GlassCard variant="elevated" className="now-card">
+          <span class="eyebrow">Right now</span>
+          <ul>
+            {nowFocus.map(point => <li>{point}</li>)}
+          </ul>
+        </GlassCard>
+
+        <GlassCard variant="elevated" className="stats-card">
+          <span class="eyebrow">Reach so far</span>
+          <div class="stats-grid">
+            {
+              expertiseStats.map(stat => (
+                <div class="stats-item">
+                  <span class="stats-item__value">{stat.value}</span>
+                  <span class="stats-item__label">{stat.label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </GlassCard>
+      </div>
     </section>
 
-    <section id="journey" class="section-canvas">
+    <section id="themes" class="section-block">
       <div class="section-heading">
-        <h2>Journey, Community & Service</h2>
-        <p>
-          Degrees and job titles matter, but the real story lives in the people, places, and service
-          moments that shaped my judgment.
-        </p>
+        <h2>What drives my work</h2>
+        <p>Patterns that guide how I design, evaluate, and share dependable AI systems.</p>
       </div>
-      <div class="grid gap-5 md:gap-6 lg:grid-cols-2">
-        <GlassCard variant="premium" className="journey-card h-full">
-          <h3>Education & Honours</h3>
+      <div class="themes-grid">
+        {
+          currentThemes.map(theme => (
+            <GlassCard variant="premium" className="theme-card">
+              <h3>{theme.title}</h3>
+              <p>{theme.description}</p>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="background" class="section-block">
+      <div class="section-heading">
+        <h2>The short story</h2>
+        <p>Here’s the context people usually want before we partner up.</p>
+      </div>
+      <Prose className="prose-block">
+        {backgroundNotes.map(note => <p>{note}</p>)}
+      </Prose>
+    </section>
+
+    <section id="journey" class="section-block">
+      <div class="section-heading">
+        <h2>Deeper context</h2>
+        <p>Dig in for milestones, partners, and rituals that shape how I work.</p>
+      </div>
+
+      <div class="journey-grid">
+        <GlassCard variant="glow" className="spotlight-card">
+          <span class="eyebrow">Spotlight milestones</span>
+          <ol>
+            {
+              spotlightTimeline.map(item => (
+                <li>
+                  <p class="spotlight-card__title">{item.title}</p>
+                  <p class="spotlight-card__description">{item.description}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </GlassCard>
+
+        <GlassCard variant="premium" className="journey-card">
+          <h3>Education</h3>
           <div class="journey-card__group">
             {
               educationEntries.map(entry => (
@@ -433,26 +270,19 @@ const learningHighlights = [
                     <span>{entry.period}</span>
                   </div>
                   <p class="journey-card__summary">{entry.summary}</p>
-                  <ul class="journey-card__list">
-                    {entry.bullets.map(point => (
-                      <li>{point}</li>
-                    ))}
-                  </ul>
                 </div>
               ))
             }
           </div>
         </GlassCard>
 
-        <GlassCard variant="premium" className="journey-card h-full">
-          <h3>Research & Industry Collaborations</h3>
+        <GlassCard variant="premium" className="journey-card">
+          <h3>Collaborations & community</h3>
           <div class="journey-card__group">
             {
               communityHighlights.map(item => (
                 <div>
-                  <div class="journey-card__header">
-                    <p>{item.title}</p>
-                  </div>
+                  <p class="journey-card__subhead">{item.title}</p>
                   <p class="journey-card__summary">{item.description}</p>
                   <ul class="journey-card__list">
                     {item.bullets.map(point => (
@@ -465,748 +295,427 @@ const learningHighlights = [
           </div>
         </GlassCard>
 
-        <GlassCard variant="premium" className="journey-card h-full">
-          <h3>Service & Volunteer Leadership</h3>
+        <GlassCard variant="premium" className="journey-card">
+          <h3>Service & learning rituals</h3>
           <ul class="journey-card__list">
             {serviceHighlights.map(point => <li>{point}</li>)}
           </ul>
-        </GlassCard>
-
-        <GlassCard variant="premium" className="journey-card h-full">
-          <h3>Lifelong Learning Rituals</h3>
-          <ul class="journey-card__list">
+          <ul class="journey-card__list journey-card__list--muted">
             {learningHighlights.map(point => <li>{point}</li>)}
           </ul>
-          <Prose className="mt-4 text-sm text-[color:var(--white)]/70">
-            <p>
-              Learning is how I stay curious and stay kind. Understanding a topic deeply makes it
-              easier to design with empathy and to uplift the people building alongside me.
-            </p>
-          </Prose>
         </GlassCard>
       </div>
+
+      <details class="timeline-details">
+        <summary>Read the extended timeline</summary>
+        <ol>
+          {
+            timeline.map(item => (
+              <li>
+                <p class="timeline-details__title">{item.title}</p>
+                <p class="timeline-details__description">{item.description}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </details>
     </section>
   </Container>
 </BaseLayout>
 
 <style>
-  .about-backdrop {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: -2;
-    background:
-      radial-gradient(circle at 20% 25%, rgba(63, 94, 251, 0.14), transparent 55%),
-      radial-gradient(circle at 80% 75%, rgba(244, 114, 182, 0.12), transparent 55%),
-      linear-gradient(160deg, rgba(7, 11, 24, 0.96), rgba(9, 13, 28, 0.92));
-  }
-
-  .about-backdrop__gradient,
-  .about-backdrop__orb,
-  .about-backdrop__grid {
-    position: absolute;
-    inset: -20%;
-    pointer-events: none;
-  }
-
-  .about-backdrop__gradient {
-    background: conic-gradient(
-      from 120deg at 50% 50%,
-      rgba(59, 130, 246, 0.25),
-      rgba(129, 140, 248, 0.15),
-      rgba(236, 72, 153, 0.18),
-      rgba(59, 130, 246, 0.25)
-    );
-    filter: blur(160px);
-    opacity: 0.7;
-    animation: about-spin 42s linear infinite;
-  }
-
-  .about-backdrop__orb {
-    background: radial-gradient(circle at 60% 40%, rgba(244, 114, 182, 0.18), transparent 70%);
-    mix-blend-mode: screen;
-    animation: about-drift 32s ease-in-out infinite alternate;
-  }
-
-  .about-backdrop__grid {
-    background-image:
-      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-    background-size: 140px 140px;
-    transform: rotate(2deg) scale(1.05);
-    opacity: 0.4;
-    animation: about-grid 38s linear infinite;
-  }
-
-  .section-canvas {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .section-heading h2 {
-    font-size: clamp(1.75rem, 2vw + 0.5rem, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: color-mix(in oklab, var(--accent-about) 40%, var(--white));
-  }
-
-  .section-heading p {
-    margin-top: 0.75rem;
-    max-width: 48rem;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.6;
-  }
-
-  .hero-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.55rem 1.1rem;
-    font-size: 0.95rem;
-    background: rgba(15, 23, 42, 0.45);
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    color: rgba(255, 255, 255, 0.9);
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  .hero-action svg {
-    flex-shrink: 0;
-  }
-
-  .hero-action:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.4));
-    background: color-mix(in oklab, var(--accent-about) 22%, rgba(15, 23, 42, 0.45));
-  }
-
-  .hero-action--primary {
-    background: linear-gradient(
-      120deg,
-      color-mix(in oklab, var(--accent-about) 65%, rgba(14, 23, 42, 0.9)),
-      rgba(14, 23, 42, 0.85)
-    );
-    border-color: color-mix(in oklab, var(--accent-about) 55%, transparent);
-  }
-
-  .hero-action--primary:hover {
-    background: linear-gradient(
-      120deg,
-      color-mix(in oklab, var(--accent-about) 75%, rgba(14, 23, 42, 0.9)),
-      rgba(14, 23, 42, 0.85)
-    );
-  }
-
-  .profile-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 10% 10%, rgba(129, 140, 248, 0.18), transparent 55%);
-    opacity: 0.7;
-    pointer-events: none;
-  }
-
-  .profile-card__grid {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.4rem, 2vw, 2.6rem);
-  }
-
-  .profile-card__media {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-    justify-content: center;
-    padding: clamp(1.6rem, 1.8vw + 1.3rem, 2.4rem);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
-  }
-
-  .profile-media {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    isolation: isolate;
-    width: 100%;
-    max-width: 15rem;
-    margin: 0;
-  }
-
-  .profile-media__halo {
-    position: absolute;
-    inset: -18%;
-    background: radial-gradient(circle at 45% 20%, rgba(129, 140, 248, 0.35), transparent 65%);
-    filter: blur(45px);
-    opacity: 0.65;
-    z-index: 0;
-  }
-
-  .profile-media__glow {
-    position: absolute;
-    inset: 12% 14% 16% 12%;
-    background: radial-gradient(circle at 60% 35%, rgba(59, 130, 246, 0.38), transparent 62%);
-    filter: blur(55px);
-    opacity: 0.6;
-    border-radius: 36px;
-    z-index: 0;
-  }
-
-  .profile-media__image {
-    position: relative;
-    z-index: 1;
-    width: clamp(11rem, 20vw, 13rem);
-    height: clamp(11rem, 20vw, 13rem);
-    border-radius: 28px;
-    object-fit: cover;
-    box-shadow: 0 20px 45px rgba(12, 25, 54, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-  }
-
-  .profile-card__media-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    text-align: center;
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .profile-card__media-meta span:last-child {
-    font-size: 0.95rem;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.78);
-  }
-
-  .profile-card__content {
-    position: relative;
-    padding: clamp(1.6rem, 2vw + 1.45rem, 2.6rem);
-    display: flex;
-    flex-direction: column;
+  .intro-grid {
+    display: grid;
     gap: 1.5rem;
   }
 
-  .profile-card__heading {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .profile-card__title-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-  }
-
-  .profile-card__title-group h2 {
-    margin: 0;
-    font-size: clamp(2rem, 2.6vw + 1rem, 2.75rem);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: rgba(255, 255, 255, 0.95);
-  }
-
-  .profile-card__eyebrow {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .profile-card__bio {
-    margin: 0;
-    font-size: clamp(1rem, 0.4vw + 0.96rem, 1.1rem);
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.78);
-    max-width: 46ch;
-  }
-
-  .profile-card__connect {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    padding: 1.1rem 1.25rem 1.25rem;
-    border-radius: 1.15rem;
-    background: rgba(13, 22, 38, 0.56);
-    border: 1px solid rgba(148, 163, 184, 0.24);
-    box-shadow: 0 14px 32px rgba(12, 25, 54, 0.28);
-    backdrop-filter: blur(10px);
-  }
-
   @media (min-width: 1024px) {
-    .profile-card__connect {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 1.25rem 1.6rem 1.35rem;
+    .intro-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: stretch;
     }
   }
 
-  .profile-card__meta-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.58);
-  }
-
-  .profile-card__social {
+  .profile-card {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: clamp(1.6rem, 3vw, 2.4rem);
   }
 
-  .cta-link {
-    display: inline-flex;
+  .profile-card__header {
+    display: flex;
     align-items: center;
+    gap: 1.25rem;
+  }
+
+  .profile-card__portrait {
+    position: relative;
+    width: clamp(5rem, 7vw, 6.5rem);
+    height: clamp(5rem, 7vw, 6.5rem);
+    border-radius: 1.6rem;
+    overflow: hidden;
+  }
+
+  .profile-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-card__meta {
+    display: flex;
+    flex-direction: column;
     gap: 0.4rem;
-    padding: 0.5rem 0.9rem;
-    border-radius: 0.75rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.88);
-    background: rgba(15, 23, 42, 0.45);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    transition:
-      transform 0.2s ease,
-      border-color 0.2s ease,
-      background 0.2s ease;
   }
 
-  .cta-link:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.45));
-    background: color-mix(in oklab, var(--accent-about) 25%, rgba(15, 23, 42, 0.45));
-  }
-
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.35rem 0.55rem;
-    border-radius: 9999px;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    transition:
-      transform 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease;
-  }
-
-  .social-link:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.4));
-    color: color-mix(in oklab, var(--accent-about) 45%, var(--white));
-  }
-
-  .profile-metrics {
-    position: relative;
-    border: 1px solid rgba(148, 163, 184, 0.25);
-  }
-
-  .profile-metrics__backdrop {
-    position: absolute;
-    inset: -40%;
-    background: radial-gradient(circle, rgba(129, 140, 248, 0.2), transparent 65%);
-    filter: blur(70px);
-    opacity: 0.85;
-  }
-
-  .profile-metrics__inner {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    padding: clamp(1.8rem, 2vw + 1.6rem, 2.65rem);
-  }
-
-  .profile-metrics__header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    max-width: 28rem;
-  }
-
-  .profile-metrics__eyebrow {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .profile-metrics__header p {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.72);
-    line-height: 1.6;
-    font-size: 0.95rem;
-  }
-
-  .profile-metrics__grid {
-    display: grid;
-    gap: 1.1rem;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-
-  .profile-metric {
-    position: relative;
-    padding: 1.3rem 1.2rem;
-    border-radius: 1.15rem;
-    background: rgba(12, 20, 35, 0.55);
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    backdrop-filter: blur(10px);
-  }
-
-  .profile-metric__value {
-    display: inline-block;
-    font-size: clamp(1.7rem, 2.1vw + 1rem, 2.6rem);
-    font-weight: 700;
-    color: color-mix(in oklab, var(--accent-about) 55%, var(--white));
-  }
-
-  .profile-metric__label {
-    margin-top: 0.4rem;
-    font-size: 0.9rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .profile-metric__description {
-    margin-top: 0.55rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.72);
-    line-height: 1.6;
-  }
-
-  .focus-card__list,
-  .craft-card__list,
-  .journey-card__list {
-    margin-top: 1.25rem;
-    display: grid;
-    gap: 0.65rem;
-    padding-left: 1.15rem;
-    color: rgba(248, 250, 252, 0.78);
-    font-size: 0.95rem;
-    list-style: disc;
-  }
-
-  .focus-card__list li,
-  .craft-card__list li,
-  .journey-card__list li {
-    line-height: 1.6;
-  }
-
-  .craft-card h3 {
-    font-size: 1.1rem;
-  }
-
-  .timeline-card {
-    border: 1px solid rgba(148, 163, 184, 0.25);
-  }
-
-  .timeline-card__gradient {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(129, 140, 248, 0.22), transparent 55%),
-      radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.18), transparent 60%);
-    opacity: 0.8;
-    filter: blur(80px);
-  }
-
-  .timeline-card__body {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .timeline-card__header {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.2rem, 2vw, 1.9rem);
-    padding: clamp(2rem, 2.2vw + 1.6rem, 2.9rem);
-    background: rgba(10, 16, 31, 0.62);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
-  }
-
-  .timeline-card__headline {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    max-width: 36rem;
-  }
-
-  .timeline-card__eyebrow {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .timeline-card__headline h2 {
-    margin: 0;
-    font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.6rem);
-    font-weight: 700;
-    color: color-mix(in oklab, var(--accent-about) 52%, var(--white));
-  }
-
-  .timeline-card__headline p {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.65;
-  }
-
-  .timeline-card__list {
-    position: relative;
-    padding: clamp(1.6rem, 1.8vw + 1.4rem, 2.2rem) clamp(1.4rem, 1.5vw + 1.2rem, 2rem)
-      clamp(1.4rem, 1.4vw + 1.1rem, 1.9rem);
-  }
-
-  .timeline-card__list::before {
-    content: '';
-    position: absolute;
-    top: clamp(1.6rem, 1.8vw + 1.2rem, 2.2rem);
-    bottom: clamp(1.3rem, 1.3vw + 1rem, 1.8rem);
-    left: 1.15rem;
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      rgba(148, 163, 184, 0.1),
-      color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.25)),
-      rgba(148, 163, 184, 0.1)
-    );
-  }
-
-  .timeline-card__list ol {
-    position: relative;
-    display: grid;
-    gap: 1.4rem;
-  }
-
-  .timeline-item {
-    position: relative;
-    padding-left: 2.5rem;
-  }
-
-  .timeline-item__marker {
-    position: absolute;
-    top: 0.6rem;
-    left: 0.25rem;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-radius: 9999px;
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
-  }
-
-  .timeline-item__content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    background: rgba(13, 22, 38, 0.55);
-    border-radius: 1.15rem;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    padding: 1.05rem 1.2rem;
-    transition:
-      transform 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  .timeline-item__meta {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .timeline-item__accent {
-    font-weight: 600;
-  }
-
-  .timeline-item__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.3rem 0.6rem;
-    border-radius: 9999px;
-    background: rgba(129, 140, 248, 0.18);
-    border: 1px solid rgba(129, 140, 248, 0.35);
-    color: rgba(255, 255, 255, 0.75);
-    letter-spacing: 0.1em;
-  }
-
-  .timeline-item__title {
+  .profile-card__role {
     margin: 0;
     font-size: 1.05rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.9);
   }
 
-  .timeline-item__description {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.6;
-    font-size: 0.95rem;
+  .profile-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
-  .timeline-item--highlight .timeline-item__content {
-    border-color: color-mix(in oklab, var(--accent-about) 45%, rgba(148, 163, 184, 0.2));
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(12, 25, 54, 0.35);
+  .profile-card__body h2 {
+    margin: 0;
+    font-size: clamp(1.65rem, 1.6vw + 1.2rem, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .profile-card__body p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.7;
+  }
+
+  .profile-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .profile-card__link {
+    padding: 0.45rem 0.9rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(148, 163, 184, 0.26);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .profile-card__link:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.26));
+  }
+
+  .intro-grid__aside {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .snapshot-card,
+  .now-card,
+  .stats-card {
+    padding: clamp(1.4rem, 2.5vw, 2rem);
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .snapshot-grid {
+    margin-top: 1.2rem;
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  @media (min-width: 640px) {
+    .snapshot-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.35rem;
+    }
+  }
+
+  .snapshot-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .snapshot-item__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .snapshot-item__value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .snapshot-item__hint {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.5;
+  }
+
+  .now-card ul {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    padding-left: 1.1rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .now-card li {
+    line-height: 1.55;
+  }
+
+  .stats-grid {
+    margin-top: 1.2rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 480px) {
+    .stats-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .stats-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+
+  .stats-item__value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.94);
+  }
+
+  .stats-item__label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 1.2vw + 1.3rem, 2rem);
+    color: rgba(255, 255, 255, 0.94);
+  }
+
+  .section-heading p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 60ch;
+  }
+
+  .themes-grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  @media (min-width: 768px) {
+    .themes-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .theme-card {
+    padding: clamp(1.5rem, 2.6vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .theme-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .theme-card p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.6;
+  }
+
+  .prose-block {
+    display: grid;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .journey-grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .journey-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .spotlight-card {
+    padding: clamp(1.6rem, 2.8vw, 2.2rem);
+  }
+
+  .spotlight-card ol {
+    margin-top: 1.1rem;
+    display: grid;
+    gap: 0.9rem;
+    padding-left: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .spotlight-card__title {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .spotlight-card__description {
+    margin: 0.15rem 0 0;
+    line-height: 1.55;
+  }
+
+  .journey-card {
+    padding: clamp(1.5rem, 2.5vw, 2.1rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
   }
 
   .journey-card h3 {
-    font-size: 1.3rem;
+    margin: 0;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: color-mix(in oklab, var(--accent-about) 45%, var(--white));
+    color: rgba(255, 255, 255, 0.92);
   }
 
   .journey-card__group {
-    margin-top: 1.3rem;
     display: grid;
-    gap: 1.8rem;
+    gap: 1rem;
   }
 
   .journey-card__header {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.3rem;
+  }
+
+  @media (min-width: 480px) {
+    .journey-card__header {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+  }
+
+  .journey-card__header p {
+    margin: 0;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.9);
   }
 
   .journey-card__header span {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .journey-card__subhead {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
   }
 
   .journey-card__summary {
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.65;
+    margin: 0.25rem 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.55;
   }
 
-  @media (min-width: 768px) and (max-width: 1023.98px) {
-    .section-canvas {
-      gap: 1.75rem;
-    }
-
-    .profile-card__content {
-      padding: 1.75rem 1.85rem;
-      gap: 1.25rem;
-    }
-
-    .profile-card__title-group h2 {
-      font-size: 2.2rem;
-    }
-
-    .profile-card__connect {
-      padding: 1rem 1.2rem;
-      gap: 0.8rem;
-    }
-
-    .profile-card__social {
-      gap: 0.6rem;
-    }
-
-    .profile-metrics__inner {
-      padding: 1.75rem 1.8rem;
-      gap: 1.4rem;
-    }
-
-    .profile-metrics__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .profile-metric {
-      padding: 1.15rem;
-    }
-
-    .focus-card__list,
-    .craft-card__list,
-    .journey-card__list {
-      font-size: 0.9rem;
-      gap: 0.6rem;
-    }
-
-    .timeline-card__headline h2 {
-      font-size: 2.15rem;
-    }
-
-    .timeline-card__list {
-      padding: 1.5rem 1.3rem 1.45rem;
-    }
-
-    .timeline-card__list::before {
-      left: 0.95rem;
-    }
-
-    .timeline-item {
-      padding-left: 2.2rem;
-    }
+  .journey-card__list {
+    margin: 0.8rem 0 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.65rem;
+    color: rgba(255, 255, 255, 0.74);
   }
 
-  @keyframes about-spin {
-    from {
-      transform: rotate(0deg) scale(1);
-    }
-    to {
-      transform: rotate(360deg) scale(1.05);
-    }
+  .journey-card__list--muted {
+    margin-top: 1.2rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    padding-top: 1rem;
+    color: rgba(255, 255, 255, 0.62);
   }
 
-  @keyframes about-drift {
-    0% {
-      transform: translate3d(-2%, -1%, 0) scale(1.05);
-    }
-    50% {
-      transform: translate3d(2%, 3%, 0) scale(1.08);
-    }
-    100% {
-      transform: translate3d(4%, -2%, 0) scale(1.05);
-    }
+  .timeline-details {
+    margin-top: 1.6rem;
+    padding: 1.2rem 1.4rem;
+    border-radius: 1.1rem;
+    border: 1px dashed rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.45);
   }
 
-  @keyframes about-grid {
-    0% {
-      transform: rotate(2deg) scale(1.05) translate3d(0, 0, 0);
-    }
-    50% {
-      transform: rotate(1deg) scale(1.03) translate3d(1%, -1%, 0);
-    }
-    100% {
-      transform: rotate(2deg) scale(1.05) translate3d(-1%, 1%, 0);
-    }
+  .timeline-details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .about-backdrop__gradient,
-    .about-backdrop__orb,
-    .about-backdrop__grid,
-    .hero-action,
-    .cta-link,
-    .social-link,
-    .timeline-item__content {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transform: none !important;
-    }
+  .timeline-details[open] summary {
+    margin-bottom: 1rem;
+  }
+
+  .timeline-details ol {
+    display: grid;
+    gap: 0.85rem;
+    padding-left: 1.2rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .timeline-details__title {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .timeline-details__description {
+    margin: 0.15rem 0 0;
+    line-height: 1.55;
   }
 </style>

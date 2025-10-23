@@ -1,10 +1,10 @@
 import type { APIContext } from 'astro';
 export const prerender = true;
 import { getCollection } from 'astro:content';
-import projects from '../content/projects/projects.json';
-import publications from '../content/publications/publications.json';
-import talks from '../content/talks/talks.json';
-import { slugify } from '../lib/slug';
+import projects from '@/content/projects/projects.json';
+import publications from '@/content/publications/publications.json';
+import talks from '@/content/talks/talks.json';
+import { slugify } from '@/lib/slug';
 
 type SearchItem = {
   id: string;

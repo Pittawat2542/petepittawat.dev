@@ -7,7 +7,7 @@ coverImage: ./flutter-inkwell/cover.jpeg
 excerpt: ไม่ใช่ทุกปุ่มและการ์ดที่เตรียมมาให้เราใช้งานใน Flutter จะตอบโจทย์การออกแบบได้ทั้งหมด Flutter เองก็ตระหนักถึงความต้องการนี้ดี จึงมี Widget ที่ชื่อว่า GestureDetector มาให้เพื่อมอบ Flexbility ให้มากที่สุดเท่าที่เป็นไปได้กับ Developer ในการรังสรรค์ UI อันสวยงามขึ้นมา แต่อย่างไรก็ตาม GestureDetector แม้ว่าจะมาพร้อมกับความสามารถสารพัด แต่ก็ไม่ตอบโจทย์เสมอไป
 ---
 
-import Callout from '../../components/content/Callout';
+import Callout from '@/components/content/Callout';
 
 ไม่ใช่ทุกปุ่มและการ์ดที่เตรียมมาให้เราใช้งานใน Flutter จะตอบโจทย์การออกแบบได้ทั้งหมด Flutter เองก็ตระหนักถึงความต้องการนี้ดี จึงมี Widget ที่ชื่อว่า `GestureDetector` มาให้เพื่อมอบ Flexbility ให้มากที่สุดเท่าที่เป็นไปได้กับ Developer ในการรังสรรค์ UI อันสวยงามขึ้นมา แต่อย่างไรก็ตาม `GestureDetector` แม้ว่าจะมาพร้อมกับความสามารถสารพัด แต่ก็ไม่ตอบโจทย์เสมอไป เพราะตัว `GestureDetector` เองนั้นสามารถตรวจจับ Gesture ได้เท่านั้น แต่ไม่มี Feedback animation ตอบกลับไปยังผู้ใช้งาน หากเราต้องการ `GestureDetector` ที่มี Feedback เป็น Splash สวย ๆ ตาม Material Design แล้ว ทาง Flutter ก็ได้เตรียม Widget มาไว้ให้เช่นกันในชื่อ InkWell
 

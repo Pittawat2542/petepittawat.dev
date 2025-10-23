@@ -1,5 +1,5 @@
 import { memo, type FC, type ReactNode } from 'react';
-import Tooltip from '../core/tooltip';
+import Tooltip from '@/components/ui/core/tooltip';
 import { cn } from '@/lib/utils';
 
 interface SelectionItemProps {

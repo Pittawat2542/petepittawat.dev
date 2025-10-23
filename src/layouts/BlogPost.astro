@@ -1,13 +1,13 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import FormattedDate from '../components/content/FormattedDate';
-import BaseLayout from './BaseLayout.astro';
-import ReadingProgressBar from '../components/layout/core/ReadingProgressBar';
 import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
 // Simplified layout for focused reading
 import { Calendar, User2, Clock3, Tag as TagIcon } from 'lucide-astro';
-import Toc from '../components/layout/blog/Toc.astro';
-import PageBackdrop from '../components/layout/core/PageBackdrop.astro';
+import FormattedDate from '@/components/content/FormattedDate';
+import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
+import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
+import Toc from '@/components/layout/blog/Toc.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string; readingTimeMin?: number };
 
@@ -1565,5 +1565,5 @@ authorSameAs.push(authorUrl);
 </style>
 
 <script>
-  import '../scripts/blog-post.ts';
+  import '@/scripts/blog-post.ts';
 </script>

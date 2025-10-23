@@ -1,9 +1,9 @@
-import type { ChangeEvent, FC, KeyboardEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import type { ChangeEvent, FC, KeyboardEvent } from 'react';
 
+import Selector from '@/components/ui/interaction/Selector';
+import GlassButton from '@/components/ui/navigation/GlassButton';
 import { cn } from '@/lib/utils';
-import Selector from '../interaction/Selector';
-import GlassButton from './GlassButton';
 
 interface PageControlsProps {
   readonly total: number;

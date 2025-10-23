@@ -26,7 +26,7 @@ export function createSearchController(): SearchController {
 
     const openSearchLazy = async () => {
       try {
-        const module = await import('../../openSearch');
+        const module = await import('@/scripts/openSearch');
         module.openSearch();
       } catch (e) {
         console.warn('Failed to open search modal', e);

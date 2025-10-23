@@ -1,4 +1,4 @@
-import type { Artifact, Publication } from '../../../types';
+import type { Artifact, Publication } from '@/types';
 
 export function toTitleCase(input?: string) {
   if (!input) return '';

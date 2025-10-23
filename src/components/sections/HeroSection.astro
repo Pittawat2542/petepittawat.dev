@@ -1,36 +1,21 @@
 ---
-import Container from '../ui/core/Container';
-import GlassButton from '../ui/navigation/GlassButton';
+import Container from '@/components/ui/core/Container';
+import GlassButton from '@/components/ui/navigation/GlassButton';
+import { HERO_CTA_CONFIG } from '@/data/homepage';
 import { Image } from 'astro:assets';
-import { Rocket, BookOpen, Mic } from 'lucide-astro';
-import profileImage from '../../assets/images/profile.jpg';
+import { BookOpen, Mic, Rocket } from 'lucide-astro';
+import profileImage from '@/assets/images/profile.jpg';
 
-const ctaItems = [
-  {
-    href: '/projects',
-    title: 'Ship-ready builds',
-    description: 'See the evaluation stacks and agent tooling delivered to teams.',
-    cta: 'Explore projects',
-    variant: 'primary' as const,
-    Icon: Rocket,
-  },
-  {
-    href: '/blog',
-    title: 'Research notes',
-    description: 'Read experiments, failure digs, and applied prompting patterns.',
-    cta: 'Dive into the blog',
-    variant: 'secondary' as const,
-    Icon: BookOpen,
-  },
-  {
-    href: '/talks',
-    title: 'Talks & workshops',
-    description: 'Watch practical walkthroughs from conferences and private sessions.',
-    cta: 'Listen to talks',
-    variant: 'ghost' as const,
-    Icon: Mic,
-  },
-];
+const iconMap = {
+  rocket: Rocket,
+  'book-open': BookOpen,
+  mic: Mic,
+} as const;
+
+const ctaItems = HERO_CTA_CONFIG.map(config => ({
+  ...config,
+  Icon: iconMap[config.icon],
+}));
 ---
 
 <Container
@@ -130,7 +115,7 @@ const ctaItems = [
     class="shape-squircle order-3 mt-8 grid w-full gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-left shadow-lg shadow-black/20 backdrop-blur-sm sm:gap-4 md:col-span-2 md:mt-0 md:grid-cols-3 md:p-6"
   >
     {
-      ctaItems.map(({ href, title, description, cta, variant, Icon }) => (
+      ctaItems.map(({ href, title, description, ctaLabel, variant, Icon }) => (
         <div class="shape-squircle group flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-[color:var(--black-nav)]/45 p-4 transition-transform duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--black-nav)]/65 sm:gap-4 sm:p-5">
           <div class="flex items-start gap-3">
             <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[color:var(--accent)] shadow-inner shadow-black/10">
@@ -150,7 +135,7 @@ const ctaItems = [
             icon="arrow-right"
             className="mt-auto w-full justify-between px-5 py-2.5 text-sm sm:px-6 sm:text-base md:px-5 md:py-2.5 md:text-sm lg:px-6 lg:py-3 lg:text-base"
           >
-            {cta}
+            {ctaLabel}
           </GlassButton>
         </div>
       ))

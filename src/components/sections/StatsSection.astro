@@ -1,52 +1,25 @@
 ---
-import Container from '../ui/core/Container';
+import Container from '@/components/ui/core/Container';
+import { HOME_STATS_CONFIG, type HomeStats } from '@/data/homepage';
 import { ArrowRight, BookText, Mic, ScrollText } from 'lucide-astro';
 
 interface Props {
-  stats: {
-    posts: number;
-    publications: number;
-    talks: number;
-  };
+  stats: HomeStats;
 }
 
-const { stats } = Astro.props;
+const { stats } = Astro.props as Props;
 
-const cards = [
-  {
-    href: '/blog',
-    ariaLabel: 'Read the blog',
-    title: 'Blog posts',
-    count: stats.posts,
-    linkText: 'Read the blog',
-    accentColor: 'accent-blog',
-    accentBg: 'var(--accent-blog)',
-    Icon: BookText,
-    description: 'Research breakdowns, playbooks, and engineering notes from the lab.',
-  },
-  {
-    href: '/publications',
-    ariaLabel: 'View publications',
-    title: 'Publications',
-    count: stats.publications,
-    linkText: 'View publications',
-    accentColor: 'accent-publications',
-    accentBg: 'var(--accent-publications)',
-    Icon: ScrollText,
-    description: 'Peer-reviewed work on reasoning, prompting, and evaluation.',
-  },
-  {
-    href: '/talks',
-    ariaLabel: 'See talks',
-    title: 'Talks',
-    count: stats.talks,
-    linkText: 'See talks',
-    accentColor: 'accent-talks',
-    accentBg: 'var(--accent-talks)',
-    Icon: Mic,
-    description: 'Conference keynotes and workshops on applied LLM systems.',
-  },
-];
+const iconMap = {
+  'book-text': BookText,
+  'scroll-text': ScrollText,
+  mic: Mic,
+} as const;
+
+const cards = HOME_STATS_CONFIG.map(config => ({
+  ...config,
+  count: stats[config.key] ?? 0,
+  Icon: iconMap[config.icon],
+}));
 ---
 
 <Container className="reveal glass-section mt-16">
@@ -54,7 +27,9 @@ const cards = [
     <div
       class="flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/60 uppercase md:justify-start"
     >
-      <span class="h-2 w-2 rounded-full bg-[color:var(--accent)]"></span>
+      <span
+        class="h-2 w-2 rounded-full"
+        style={{ backgroundColor: cards[0]?.accentBgColor ?? 'var(--accent)' }}></span>
       Proof of Work
     </div>
     <h2 class="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
@@ -77,7 +52,10 @@ const cards = [
           >
             <div class="flex items-start justify-between gap-4 md:gap-3">
               <div class="flex items-center gap-3">
-                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[color:var(--accent)] shadow-inner shadow-black/15 md:h-10 md:w-10">
+                <div
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 shadow-inner shadow-black/15 md:h-10 md:w-10"
+                  style={{ color: card.accentBgColor }}
+                >
                   <card.Icon class="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div class="space-y-1">
@@ -86,7 +64,7 @@ const cards = [
                   </p>
                   <p
                     class="text-3xl font-extrabold tracking-tight text-[color:var(--white)] md:text-2xl lg:text-3xl"
-                    style={{ color: card.accentBg }}
+                    style={{ color: card.accentBgColor }}
                   >
                     {card.count}
                     {card.count > 0 ? '+' : ''}

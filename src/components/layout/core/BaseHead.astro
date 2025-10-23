@@ -1,21 +1,75 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import '../../../styles/global.css';
-import { SITE_TITLE } from '../../../consts';
+import '@/styles/global.css';
+import { SITE_TITLE } from '@/consts';
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string | undefined;
-	type?: 'website' | 'article' | undefined;
-	publishedTime?: string | undefined;
-	tags?: string[] | undefined;
+  title: string;
+  description: string;
+  image?: string | undefined;
+  type?: 'website' | 'article' | undefined;
+  publishedTime?: string | undefined;
+  tags?: string[] | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/home-og-image.jpeg', type = 'website', publishedTime, tags = [] } = Astro.props as Props;
+const {
+  title,
+  description,
+  image = '/home-og-image.jpeg',
+  type = 'website',
+  publishedTime,
+  tags = [],
+} = Astro.props as Props;
+
+const structuredData: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': type === 'article' ? 'BlogPosting' : 'WebSite',
+  headline: title,
+  description,
+  url: Astro.url.toString(),
+  image: new URL(image, Astro.site ?? Astro.url).toString(),
+  author: {
+    '@type': 'Person',
+    name: 'Pete Pittawat Taveekitworachai',
+    url: 'https://petepittawat.dev',
+    sameAs: [
+      'https://twitter.com/petepittawat',
+      'https://github.com/petepittawat',
+      'https://linkedin.com/in/petepittawat',
+    ],
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Pete Pittawat Taveekitworachai',
+    url: 'https://petepittawat.dev',
+  },
+};
+
+if (type === 'article') {
+  if (publishedTime) {
+    structuredData['datePublished'] = publishedTime;
+    structuredData['dateModified'] = publishedTime;
+  }
+  if (tags.length > 0) {
+    structuredData['keywords'] = tags.join(', ');
+  }
+  structuredData['articleSection'] = 'Technology';
+  structuredData['wordCount'] = '1000';
+}
+
+if (type === 'website') {
+  structuredData['name'] = 'PETEPITTAWAT.DEV';
+  structuredData['potentialAction'] = {
+    '@type': 'SearchAction',
+    target: 'https://petepittawat.dev/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  };
+}
+
+const structuredDataJson = JSON.stringify(structuredData);
 ---
 
 <!-- Global Metadata -->
@@ -64,8 +118,14 @@ const { title, description, image = '/home-og-image.jpeg', type = 'website', pub
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
 
 <!-- Performance optimizations -->
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
+<meta
+  name="robots"
+  content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+/>
+<meta
+  name="googlebot"
+  content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+/>
 <meta name="format-detection" content="telephone=no" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -96,24 +156,31 @@ const { title, description, image = '/home-og-image.jpeg', type = 'website', pub
   />
 </noscript>
 
-
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
 
 <!-- Defer ambient background overlays until after first paint (avoid white-ish overlay on mobile first load) -->
 <script is:inline>
-  (function(){
-    var enable = function(){
-      try { document.documentElement.classList.add('ambient-ready'); } catch {}
+  (function () {
+    var enable = function () {
+      try {
+        document.documentElement.classList.add('ambient-ready');
+      } catch {}
     };
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
       requestAnimationFrame(enable);
     } else {
-      window.addEventListener('DOMContentLoaded', function(){ requestAnimationFrame(enable); }, { once: true });
+      window.addEventListener(
+        'DOMContentLoaded',
+        function () {
+          requestAnimationFrame(enable);
+        },
+        { once: true }
+      );
     }
   })();
-  </script>
+</script>
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -127,16 +194,20 @@ const { title, description, image = '/home-og-image.jpeg', type = 'website', pub
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.site ?? Astro.url)} />
 <meta property="og:site_name" content={SITE_TITLE} />
-{type === 'article' && publishedTime ? (
-  <meta property="article:published_time" content={publishedTime} />
-) : null}
-{type === 'article' && Array.isArray(tags) ? (
-  <>
-    {tags.map((t) => (
-      <meta property="article:tag" content={t} />
-    ))}
-  </>
-) : null}
+{
+  type === 'article' && publishedTime ? (
+    <meta property="article:published_time" content={publishedTime} />
+  ) : null
+}
+{
+  type === 'article' && Array.isArray(tags) ? (
+    <>
+      {tags.map(t => (
+        <meta property="article:tag" content={t} />
+      ))}
+    </>
+  ) : null
+}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -154,54 +225,17 @@ const { title, description, image = '/home-og-image.jpeg', type = 'website', pub
 }
 
 <!-- Structured Data (JSON-LD) -->
-<script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": type === 'article' ? "BlogPosting" : "WebSite",
-    "headline": title,
-    "description": description,
-    "url": Astro.url.toString(),
-    "image": new URL(image, Astro.site ?? Astro.url).toString(),
-    "author": {
-      "@type": "Person",
-      "name": "Pete Pittawat Taveekitworachai",
-      "url": "https://petepittawat.dev",
-      "sameAs": [
-        "https://twitter.com/petepittawat",
-        "https://github.com/petepittawat",
-        "https://linkedin.com/in/petepittawat"
-      ]
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Pete Pittawat Taveekitworachai",
-      "url": "https://petepittawat.dev"
-    },
-    ...(type === 'article' && publishedTime && {
-      "datePublished": publishedTime,
-      "dateModified": publishedTime,
-      "keywords": tags?.join(', ') || '',
-      "articleSection": "Technology",
-      "wordCount": "1000"
-    }),
-    ...(type === 'website' && {
-      "name": "PETEPITTAWAT.DEV",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://petepittawat.dev/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    })
-  }
-</script>
+<script type="application/ld+json" is:inline set:html={structuredDataJson} />
 
 <!-- Service worker: runtime caching tuned for GitHub Pages -->
 <script is:inline>
-  (function(){
+  (function () {
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function(){
-        try { navigator.serviceWorker.register('/sw.js'); } catch {}
+      window.addEventListener('load', function () {
+        try {
+          navigator.serviceWorker.register('/sw.js');
+        } catch {}
       });
     }
   })();
-  </script>
+</script>

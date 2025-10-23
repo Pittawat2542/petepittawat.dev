@@ -1,8 +1,8 @@
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { memo } from 'react';
 import type { CSSProperties, FC, MouseEvent } from 'react';
 
-import type { Publication } from '../../../types';
-import { memo } from 'react';
+import type { Publication } from '@/types';
 
 interface PublicationActionsProps {
   readonly item: Publication;

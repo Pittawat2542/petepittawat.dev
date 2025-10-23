@@ -1,9 +1,9 @@
 ---
-import BaseHead from '../components/layout/core/BaseHead.astro';
-import Footer from '../components/layout/core/Footer.astro';
-import AnimatedHeader from '../components/common/AnimatedHeader';
-import ScrollTop from '../components/layout/blog/ScrollTop';
-import SearchModal from '../components/layout/SearchModal';
+import AnimatedHeader from '@/components/common/AnimatedHeader';
+import BaseHead from '@/components/layout/core/BaseHead.astro';
+import Footer from '@/components/layout/core/Footer.astro';
+import ScrollTop from '@/components/layout/blog/ScrollTop';
+import SearchModal from '@/components/layout/SearchModal';
 
 const { title, description, image, type, publishedTime, tags, page } = Astro.props as {
   title: string;

@@ -1,9 +1,9 @@
 ---
-import SiteLogo from '../../header/SiteLogo.astro';
-import Navigation from '../../header/Navigation.tsx';
-import SearchButton from '../../header/SearchButton.astro';
-import MobileMenu from '../../header/MobileMenu.astro';
-import '../../../styles/components/site-header.css';
+import SiteLogo from '@/components/header/SiteLogo.astro';
+import Navigation from '@/components/header/Navigation.tsx';
+import SearchButton from '@/components/header/SearchButton.astro';
+import MobileMenu from '@/components/header/MobileMenu.astro';
+import '@/styles/components/site-header.css';
 
 // Normalize current path to work with both `build.format: "file"` (e.g. "/talks.html")
 // and directory-style paths (e.g. "/talks/"). This ensures active nav detection works.
@@ -42,5 +42,5 @@ let current =
 </header>
 
 <script>
-  import '../scripts/components/header.ts';
+  import '@/scripts/components/header.ts';
 </script>

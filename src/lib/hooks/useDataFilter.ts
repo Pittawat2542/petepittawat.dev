@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { COMPONENT_CONFIG } from '../constants';
+import { COMPONENT_CONFIG } from '@/lib/constants';
 
 // Type definitions for better type safety
 export interface FilterOptions<T> {

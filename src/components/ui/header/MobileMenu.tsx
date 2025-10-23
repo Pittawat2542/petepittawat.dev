@@ -1,6 +1,6 @@
 import type { ComponentType, FC } from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import HeaderLink from '../../header/HeaderLink';
+import HeaderLink from '@/components/header/HeaderLink';
 import { cn } from '@/lib/utils';
 
 interface MobileMenuLink {

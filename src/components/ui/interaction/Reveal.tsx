@@ -1,8 +1,8 @@
 import type { CSSProperties, FC, ReactNode } from 'react';
 import { memo, useEffect, useMemo, useRef } from 'react';
 
+import { COMPONENT_CONFIG } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import { COMPONENT_CONFIG } from '../../../lib/constants';
 
 interface RevealProps {
   readonly children: ReactNode;

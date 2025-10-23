@@ -82,7 +82,7 @@ async function codemodFile(file) {
   const hopeRes = transformHopeCallout(workingBody);
   if (hopeRes.changed) {
     workingBody = hopeRes.body;
-    importsToAdd.push(`import Callout from '../../components/Callout.astro'`);
+    importsToAdd.push(`import Callout from '@/components/content/Callout'`);
     changed = true;
   }
 
@@ -90,7 +90,7 @@ async function codemodFile(file) {
   const imgRes = transformMarkdownImagesToFigure(workingBody);
   if (imgRes.changed) {
     workingBody = imgRes.body;
-    importsToAdd.push(`import Figure from '../../components/mdx/Figure.astro'`);
+    importsToAdd.push(`import Figure from '@/components/mdx/Figure'`);
     changed = true;
   }
 
@@ -100,7 +100,7 @@ async function codemodFile(file) {
     workingBody = figImportRes.body;
     importsToAdd.push(...figImportRes.imports);
     // ensure Figure import present if we created tags earlier in pipeline
-    importsToAdd.push(`import Figure from '../../components/mdx/Figure.astro'`);
+    importsToAdd.push(`import Figure from '@/components/mdx/Figure'`);
     changed = true;
   }
 

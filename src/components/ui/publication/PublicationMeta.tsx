@@ -1,10 +1,10 @@
 import { Building2, CalendarDays } from 'lucide-react';
-
-import { Badge } from '../core/badge';
-import type { FC } from 'react';
-import type { Publication } from '../../../types';
-import Tooltip from '../core/tooltip';
 import { memo } from 'react';
+import type { FC } from 'react';
+
+import { Badge } from '@/components/ui/core/badge';
+import Tooltip from '@/components/ui/core/tooltip';
+import type { Publication } from '@/types';
 import { toTitleCase } from './utils';
 
 interface PublicationMetaProps {

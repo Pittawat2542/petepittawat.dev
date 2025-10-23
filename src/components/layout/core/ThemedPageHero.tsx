@@ -24,6 +24,11 @@ interface Particle {
   radius: number;
 }
 
+type LegacyMediaQueryList = {
+  addListener: (listener: (event: MediaQueryListEvent) => void) => void;
+  removeListener: (listener: (event: MediaQueryListEvent) => void) => void;
+};
+
 const HeroBackdrop: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
@@ -188,10 +193,15 @@ const HeroBackdrop: FC = () => {
     animationRef.current = window.requestAnimationFrame(step);
     intersectionObserver.observe(canvas);
     window.addEventListener('resize', resizeCanvas);
-    if ('addEventListener' in mediaQuery) {
+    let teardownMotionListener = () => {};
+    if (typeof mediaQuery.addEventListener === 'function') {
       mediaQuery.addEventListener('change', handleMotionPreference);
-    } else {
-      (mediaQuery as unknown as MediaQueryList).addListener(handleMotionPreference);
+      teardownMotionListener = () =>
+        mediaQuery.removeEventListener('change', handleMotionPreference);
+    } else if ('addListener' in mediaQuery) {
+      const legacyMediaQuery = mediaQuery as unknown as LegacyMediaQueryList;
+      legacyMediaQuery.addListener(handleMotionPreference);
+      teardownMotionListener = () => legacyMediaQuery.removeListener(handleMotionPreference);
     }
 
     return () => {
@@ -199,11 +209,7 @@ const HeroBackdrop: FC = () => {
         window.cancelAnimationFrame(animationRef.current);
       }
       window.removeEventListener('resize', resizeCanvas);
-      if ('removeEventListener' in mediaQuery) {
-        mediaQuery.removeEventListener('change', handleMotionPreference);
-      } else {
-        (mediaQuery as unknown as MediaQueryList).removeListener(handleMotionPreference);
-      }
+      teardownMotionListener();
       intersectionObserver.disconnect();
     };
   }, []);

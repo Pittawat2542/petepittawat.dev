@@ -6,7 +6,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from '../core/dropdown-menu';
+} from '@/components/ui/core/dropdown-menu';
 import SelectionItem from './SelectionItem';
 import { cn } from '@/lib/utils';
 import { useGlassGlow } from '@/lib/hooks';
