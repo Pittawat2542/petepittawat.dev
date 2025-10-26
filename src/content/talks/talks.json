@@ -1,5 +1,22 @@
 [
   {
+    "date": "2025-10-23",
+    "title": "Prior Prompt Engineering for Reinforcement Fine-Tuning",
+    "audience": "General audience and SuperAI Engineer Season 5 (SuperAI Exhibition)",
+    "audienceUrl": "https://superai.aiat.or.th/exhibition/",
+    "mode": "on-site",
+    "resources": [
+      { "label": "Slide", "href": "/files/superai_prior_prompt.pdf", "download": true }
+    ],
+    "tags": [
+      "Large Language Models",
+      "Prior Prompt Engineering",
+      "Reinforcement Fine-Tuning",
+      "Prompt Engineering",
+      "Reasoning Model"
+    ]
+  },
+  {
     "date": "2025-07-31",
     "title": "Agentic AI With Context Engineering",
     "audience": "Agentic AI For Healthcare <Hackathon>",

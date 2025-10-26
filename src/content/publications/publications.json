@@ -37,6 +37,24 @@
   {
     "year": 2025,
     "type": "preprint",
+    "title": "Extending Audio Context for Long-Form Understanding in Large Audio-Language Models",
+    "authors": "Yuatyong Chaichana, Pittawat Taveekitworachai (co-advisor), Warit Sirichotedumrong (co-advisor), Potsawee Manakul (co-advisor), and Kunat Pipatanakul (co-advisor)",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2510.15231",
+    "artifacts": [],
+    "tags": [
+      "Large Audio Language Models",
+      "Long Context",
+      "YaRN",
+      "Partial YaRN",
+      "RoPE",
+      "Virtual Long Format"
+    ],
+    "abstract": "Large Audio-Language Models (LALMs) are often constrained by short audio context windows, even when their text backbones support long contexts, limiting long-form audio understanding. Prior work has introduced context-extension methods (e.g. YaRN) on unimodal LLMs, yet their application to LALMs remains unexplored. First, building on RoPE-based context extension, we introduce Partial YaRN, a training-free, audio-only extension method that modifies only audio token positions, leaving text positions intact to preserve the base LLM's text capabilities. Second, we propose Virtual Longform Audio Training (VLAT), a training strategy that extends Partial YaRN into a training-time positional augmentation. VLAT simulates diverse audio lengths during training, enabling generalization to inputs far longer than those seen in training and improving robustness for long-context audio understanding. Our experiments on SALMONN and Qwen2-Audio show that Partial YaRN outperforms the original models across wide range of settings, and VLAT training strategy provides substantial improvement, achieving strong performance on long audio of unseen lengths."
+  },
+  {
+    "year": 2025,
+    "type": "preprint",
     "title": "Single Answer is Not Enough: On Generating Ranked Lists with Medical Reasoning Models",
     "authors": "Pittawat Taveekitworachai (co-first author), Natpatchara Pongjirapat (co-first author), Krittaphas Chaisutyakorn, Piyalitt Ittichaiwong, Tossaporn Saengja (co-advisor), and Kunat Pipatanakul (co-advisor)",
     "venue": "arXiv",
@@ -517,7 +535,7 @@
     "type": "conference",
     "title": "Talk Less, Call Right: Enhancing Role-Play LLM Agents with Automatic Prompt Optimization and Role Prompting",
     "authors": "Saksorn Ruangtanusak, Pittawat Taveekitworachai, Kunat Pipatanakul",
-    "venue": "The 5th Wordplay: When Language Meets Games Workshop, EMNLP 2025",
+    "venue": "The 5th Wordplay: When Language Meets Games Workshop (Spotlight), EMNLP 2025",
     "url": "https://arxiv.org/abs/2509.00482",
     "artifacts": [{ "label": "APO Tool", "href": "https://github.com/scb-10x/apo" }],
     "tags": ["Large Language Models", "Prompt Engineering"],
@@ -528,7 +546,7 @@
     "type": "conference",
     "title": "FinCoT: Grounding Chain-of-Thought in Expert Financial Reasoning",
     "authors": "Natapong Nitarach, Warit Sirichotedumrong, Panop Pitchayarthorn, Pittawat Taveekitworachai, Potsawee Manakul, and Kunat Pipatanakul",
-    "venue": "The 10th Workshop on Financial Technology and Natural Language Processing (FinNLP - ACL SIGFin), EMNLP 2025",
+    "venue": "The 10th Workshop on Financial Technology and Natural Language Processing (FinNLP - ACL SIGFin) (Oral), EMNLP 2025",
     "url": "https://arxiv.org/abs/2506.16123",
     "artifacts": [],
     "tags": ["Large Language Models", "Prompt Engineering", "Reasoning Models"],
