@@ -57,7 +57,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   return (
     <article
       className={cn(
-        'aurora-card group publication-card flex cursor-pointer flex-col',
+        'aurora-card group publication-card flex cursor-pointer flex-col will-change-transform',
         featured && 'aurora-card--featured'
       )}
       role="button"
@@ -69,6 +69,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       aria-controls={detailsId}
       style={cardStyle}
     >
+      <div className="aurora-card__wrapper" />
       <BlogCardOverlays accent={accent} intensity="subtle" />
       <div className="aurora-card__body flex flex-col gap-3 px-5 py-5 md:gap-4 md:px-6 md:py-6 lg:px-7 lg:py-7">
         <div className="flex min-w-0 flex-col gap-2 overflow-x-hidden sm:flex-row sm:items-start sm:justify-between md:gap-3">

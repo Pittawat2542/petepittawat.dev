@@ -73,8 +73,9 @@ const BlogCardComponent: FC<BlogCardProps> = ({
 
   return (
     <li style={mergedStyle} className={listClassName}>
+      <div className="aurora-card__wrapper" />
       <a
-        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out focus-visible:text-[color:var(--white)]"
+        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out will-change-transform focus-visible:text-[color:var(--white)]"
         href={`/blog/${String(post.slug)}`}
         aria-label={`Read blog post: ${post.data.title}`}
         style={glowStyle}

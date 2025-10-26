@@ -14,7 +14,11 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
   const accent = getAccentColorVar('accent-talks');
   const cardStyle = createAccentStyle(accent);
   return (
-    <article className="aurora-card group talk-card flex h-full flex-col" style={cardStyle}>
+    <article
+      className="aurora-card group talk-card flex h-full flex-col will-change-transform"
+      style={cardStyle}
+    >
+      <div className="aurora-card__wrapper" />
       <BlogCardOverlays accent={accent} />
       <div className="aurora-card__body flex flex-col gap-3 px-5 py-5 md:gap-4 md:px-6 md:py-6 lg:px-7 lg:py-7">
         <div className="flex items-center justify-between gap-2 md:gap-3">

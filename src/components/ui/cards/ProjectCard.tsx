@@ -51,11 +51,12 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
   return (
     <article
       className={cn(
-        'aurora-card group project-card flex h-full flex-col',
+        'aurora-card group project-card flex h-full flex-col will-change-transform',
         featured && 'aurora-card--featured'
       )}
       style={cardStyle}
     >
+      <div className="aurora-card__wrapper" />
       <BlogCardOverlays accent={accentColor} />
       <div className="aurora-card__body flex flex-1 flex-col gap-4 px-5 py-5 md:gap-5 md:px-6 md:py-6 lg:px-7 lg:py-7">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between md:gap-3">
