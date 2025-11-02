@@ -24,56 +24,50 @@ export function useBlogListState({ posts, tags, initialTags }: UseBlogListStateP
 
   useQueryParamSync('q', searchValue, setSearchValue);
 
+  // Read URL params on mount
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const urlTags = params.getAll('tag');
-      if (urlTags.length) {
-        setSelectedTags(new Set(urlTags));
-      } else if (initialTags?.length) {
-        setSelectedTags(new Set(initialTags));
-      }
+    const params = new URLSearchParams(window.location.search);
+    const urlTags = params.getAll('tag');
+    if (urlTags.length) {
+      setSelectedTags(new Set(urlTags));
+    } else if (initialTags?.length) {
+      setSelectedTags(new Set(initialTags));
+    }
 
-      const sortParam = params.get('sort');
-      if (sortParam === 'oldest' || sortParam === 'newest') {
-        setSort(sortParam as BlogSort);
-      }
+    const sortParam = params.get('sort');
+    if (sortParam === 'oldest' || sortParam === 'newest') {
+      setSort(sortParam as BlogSort);
+    }
 
-      const yearParam = params.get('year');
-      if (yearParam) {
-        setFilters(prev => ({ ...prev, year: yearParam }));
-      }
+    const yearParam = params.get('year');
+    if (yearParam) {
+      setFilters(prev => ({ ...prev, year: yearParam }));
+    }
 
-      const seriesParam = params.get('series');
-      if (seriesParam) {
-        setFilters(prev => ({ ...prev, series: seriesParam }));
-      }
-    } catch {
-      // noop - defensive against malformed URLs
+    const seriesParam = params.get('series');
+    if (seriesParam) {
+      setFilters(prev => ({ ...prev, series: seriesParam }));
     }
   }, [initialTags]);
 
+  // Update URL params when filters change
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    try {
-      const params = new URLSearchParams();
-      const trimmed = searchValue.trim();
-      if (trimmed) params.set('q', trimmed);
-      if (sort === 'oldest') params.set('sort', 'oldest');
-      if (selectedTags.size) {
-        Array.from(selectedTags)
-          .sort()
-          .forEach(tag => params.append('tag', tag));
-      }
-      const yearFilter = filters['year'];
-      if (yearFilter && yearFilter !== 'all') params.set('year', yearFilter);
-      const query = params.toString();
-      const url = query ? `?${query}` : window.location.pathname;
-      window.history.replaceState({}, '', url);
-    } catch {
-      // noop
+    const params = new URLSearchParams();
+    const trimmed = searchValue.trim();
+    if (trimmed) params.set('q', trimmed);
+    if (sort === 'oldest') params.set('sort', 'oldest');
+    if (selectedTags.size) {
+      Array.from(selectedTags)
+        .sort()
+        .forEach(tag => params.append('tag', tag));
     }
+    const yearFilter = filters['year'];
+    if (yearFilter && yearFilter !== 'all') params.set('year', yearFilter);
+    const query = params.toString();
+    const url = query ? `?${query}` : window.location.pathname;
+    window.history.replaceState({}, '', url);
   }, [filters, searchValue, selectedTags, sort]);
 
   const filteredPosts = useMemo(() => {
@@ -159,9 +153,6 @@ export function useBlogListState({ posts, tags, initialTags }: UseBlogListStateP
     return { year: years } as Record<string, string[]>;
   }, [posts]);
 
-  const availableTags = useMemo(() => Array.from(tags), [tags]);
-  const allPosts = useMemo(() => Array.from(posts), [posts]);
-
   return {
     searchValue,
     setSearchValue,
@@ -178,8 +169,8 @@ export function useBlogListState({ posts, tags, initialTags }: UseBlogListStateP
     pagination,
     tagCounts,
     filterOptions,
-    availableTags,
-    allPosts,
+    availableTags: tags,
+    allPosts: posts,
     totalResults: posts.length,
   };
 }

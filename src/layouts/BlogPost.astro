@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-// Simplified layout for focused reading
 import { Calendar, User2, Clock3, Tag as TagIcon } from 'lucide-astro';
 import FormattedDate from '@/components/content/FormattedDate';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
 import Toc from '@/components/layout/blog/Toc.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { computeBlogPostMetadata, generateBlogPostSchema } from '@/lib/blog-post-schema';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug?: string; readingTimeMin?: number };
 
@@ -23,39 +23,39 @@ const {
   seriesTitle,
   seriesOrder,
 } = Astro.props as Props;
-const maxTagsToShow = 6;
-const visibleTags = (tags ?? []).slice(0, maxTagsToShow);
-const hiddenTagCount = Math.max(0, (tags?.length ?? 0) - maxTagsToShow);
-const authorUrl = Astro.site ? new URL('/about', Astro.site).href : '/about';
-const canonicalUrl = slug
-  ? Astro.site
-    ? new URL(`/blog/${slug}/`, Astro.site).href
-    : `/blog/${slug}/`
-  : Astro.url?.pathname || '/';
-const imageUrl = (() => {
-  const fallback = slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg';
-  const src = coverImage?.src ?? fallback;
-  return Astro.site ? new URL(src, Astro.site).href : src;
-})();
-const coverOrientation =
-  coverImage && typeof coverImage === 'object' && 'width' in coverImage && 'height' in coverImage
-    ? Number(coverImage.width) < Number(coverImage.height)
-      ? 'portrait'
-      : 'landscape'
-    : 'landscape';
-// Touch variables to satisfy TS analyzer in Astro frontmatter
-void canonicalUrl;
-void imageUrl;
-const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
-const authorSameAs: string[] = [];
-if (twitterHandle) {
-  const handle = twitterHandle.startsWith('@') ? twitterHandle.slice(1) : twitterHandle;
-  authorSameAs.push(`https://twitter.com/${handle}`);
-}
-// Always include the site About page as a profile URL
-authorSameAs.push(authorUrl);
 
-// Note: compute JSON-LD URLs inline to avoid unused-variable hints
+const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
+const metadata = computeBlogPostMetadata({
+  slug,
+  coverImage,
+  tags,
+  site: Astro.site,
+  twitterHandle,
+});
+const {
+  canonicalUrl,
+  imageUrl,
+  authorUrl,
+  authorSameAs,
+  coverOrientation,
+  visibleTags,
+  hiddenTagCount,
+} = metadata;
+
+const siteUrl = Astro.site ? Astro.site.href : '/';
+const schema = generateBlogPostSchema({
+  title,
+  excerpt,
+  pubDate,
+  canonicalUrl,
+  imageUrl,
+  authorUrl,
+  authorSameAs,
+  siteUrl,
+  seriesSlug,
+  seriesTitle,
+  seriesOrder,
+});
 ---
 
 <BaseLayout
@@ -70,47 +70,7 @@ authorSameAs.push(authorUrl);
   <PageBackdrop variant="article" />
   <ReadingProgressBar />
   <Fragment slot="head">
-    {
-      (() => {
-        const schema = {
-          '@context': 'https://schema.org',
-          '@type': 'BlogPosting',
-          headline: title,
-          description: excerpt,
-          datePublished: pubDate.toISOString?.() ?? String(pubDate),
-          mainEntityOfPage: canonicalUrl,
-          author: {
-            '@type': 'Person',
-            name: 'Pittawat Taveekitworachai',
-            url: authorUrl,
-            sameAs: authorSameAs,
-          },
-          publisher: {
-            '@type': 'Organization',
-            name: 'PETEPITTAWAT.DEV',
-            url: Astro.site ? new URL('/', Astro.site).href : '/',
-            logo: {
-              '@type': 'ImageObject',
-              url: Astro.site ? new URL('/favicon.svg', Astro.site).href : '/favicon.svg',
-            },
-          },
-          image: imageUrl,
-          url: canonicalUrl,
-          // Add series information if available
-          ...(seriesSlug && seriesTitle
-            ? {
-                isPartOf: {
-                  '@type': 'BlogSeries',
-                  name: seriesTitle,
-                  url: Astro.site ? new URL(`/series/`, Astro.site).href : '/series/',
-                },
-                position: seriesOrder || undefined,
-              }
-            : {}),
-        };
-        return <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />;
-      })()
-    }
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </Fragment>
   <div class="article-container">
     <div class="article-back">

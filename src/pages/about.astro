@@ -8,67 +8,61 @@ import Container from '@/components/ui/core/Container';
 import GlassCard from '@/components/ui/core/GlassCard';
 import Prose from '@/components/content/Prose';
 import timeline from '@/content/about/timeline.json';
-import publications from '@/content/publications/publications.json';
-import projects from '@/content/projects/projects.json';
-import talks from '@/content/talks/talks.json';
-
-const totalPublications = publications.length;
-const totalProjects = projects.length;
-const totalTalks = talks.length;
 
 const quickFacts = [
   {
     label: 'Current role',
     value: 'Research Scientist @ Typhoon',
-    hint: 'Building evaluation pipelines and shipping applied LLM products.',
+    hint: 'Leading fine-tuning programs and agent workflows for Thai reasoning models.',
   },
   {
-    label: 'Strength',
-    value: 'Research-to-product translator',
-    hint: '7+ years across applied AI, creative tech, and product teams.',
+    label: 'Approach',
+    value: 'Research to production',
+    hint: '7+ years turning experiments into tools and writing that teams actually use.',
   },
   {
     label: 'Based in',
     value: 'Bangkok ↔ Tokyo',
-    hint: 'Remote-friendly, partnering with teams across APAC.',
+    hint: 'Remote-friendly, partnering with labs and product teams across APAC.',
   },
 ];
 
 const nowFocus = [
-  'Running Typhoon’s evaluation lab so new reasoning models stay dependable.',
-  'Designing prompt architectures and workflows that balance creativity with control.',
-  'Writing about reliable creativity and sharing playbooks for applied teams.',
+  'Leading SFT and RFT programs for Typhoon reasoning models that work in Thai and English.',
+  'Building evaluation frameworks like BenchING that help teams test what LLMs can actually do.',
+  'Working with medical, game, and driving teams to see if research holds up with real users.',
+  'Writing about prompting techniques, fine-tuning strategies, and what actually works in practice.',
 ];
 
 const currentThemes = [
   {
-    title: 'Reliable creativity',
+    title: 'Fine-tuning strategies',
     description:
-      'Guardrails that keep generative systems imaginative without drifting from the truth.',
+      'Prior Prompt Engineering (EMNLP 2025) shows how different prompting during training leads to different reasoning behaviors. Typhoon T1 demonstrates cost-effective reasoning model development through SFT.',
   },
   {
-    title: 'LLM-enabled workflows',
+    title: 'Prompting techniques',
     description:
-      'Evaluation rigs, orchestration patterns, and UI loops that ship research-grade tools.',
+      'Null-Shot Prompting (EMNLP 2024) uses intentional errors to improve reasoning. FinCoT embeds financial expert blueprints into prompts. These become reusable patterns.',
   },
   {
-    title: 'Community amplification',
-    description: 'Mentoring researchers and builders so knowledge compounds across the region.',
+    title: 'Evaluation tools',
+    description:
+      'BenchING (IEEE ToG 2025) tests structured output format following. ChatGPT4PCG evaluates physics-based generation. Both catch failures early.',
   },
-];
-
-const expertiseStats = [
-  { value: totalProjects, label: 'Projects shipped' },
-  { value: totalPublications, label: 'Research & essays published' },
-  { value: totalTalks, label: 'Talks & workshops' },
+  {
+    title: 'Applied work',
+    description:
+      'Collaborations in medical triage, game narrative generation, and driving assessment test whether research works with real users under real constraints.',
+  },
 ];
 
 const spotlightTimeline = timeline.filter(item => item.highlight);
 
 const backgroundNotes = [
-  'I started in interdisciplinary labs collaborating with clinicians, designers, and researchers. Translating between rigor and storytelling shaped how I work.',
-  'Today I lead applied research at Typhoon (SCB 10X R&D), pairing evaluation rigs with product craft so new models become reliable workflows.',
-  'Before that I supported teams at LINE Shopping, national innovation programs, and community initiatives opening tech pathways for Thai students.',
+  'I started working with clinicians, designers, and engineers early—learning to combine rigorous testing with clear writing.',
+  'Now I lead research at Typhoon (SCB 10X R&D), running fine-tuning programs, building evaluation tools, and figuring out what makes models reliable.',
+  'Before this, I worked with teams at LINE Shopping, national innovation programs, and community projects helping Thai students learn tech.',
 ];
 
 const educationEntries = [
@@ -121,7 +115,7 @@ const learningHighlights = [
   <Container className="space-y-16 pt-10 pb-24 lg:space-y-20">
     <ThemedPageHero
       title="About Pete"
-      subtitle="Research engineer translating creative AI into reliable products people trust."
+      subtitle="I work on making language models reliable—through research, engineering, and writing about what works."
       page="about"
     />
 
@@ -145,11 +139,26 @@ const learningHighlights = [
           </div>
         </div>
         <div class="profile-card__body">
-          <h2>Hi, I’m Pittawat (Pete).</h2>
+          <h2>Hi, I'm Pittawat (Pete).</h2>
           <p>
-            I help teams ship dependable reasoning systems that feel human, joyful, and safe. My
-            toolkit blends applied research, evaluation rigs, and product craft honed across APAC.
+            I teach language models to reason, follow instructions, and behave reliably. I do this
+            through fine-tuning, prompting research, and building tools that help teams understand
+            their models.
           </p>
+        </div>
+        <div class="profile-card__snapshot">
+          <span class="eyebrow">Snapshot</span>
+          <div class="snapshot-grid">
+            {
+              quickFacts.map(item => (
+                <div class="snapshot-item">
+                  <p class="snapshot-item__label">{item.label}</p>
+                  <p class="snapshot-item__value">{item.value}</p>
+                  <p class="snapshot-item__hint">{item.hint}</p>
+                </div>
+              ))
+            }
+          </div>
         </div>
         <div class="profile-card__links" aria-label="Connect">
           <a
@@ -173,40 +182,11 @@ const learningHighlights = [
       </GlassCard>
 
       <div class="intro-grid__aside">
-        <GlassCard variant="glow" className="snapshot-card">
-          <span class="eyebrow">Snapshot</span>
-          <div class="snapshot-grid">
-            {
-              quickFacts.map(item => (
-                <div class="snapshot-item">
-                  <p class="snapshot-item__label">{item.label}</p>
-                  <p class="snapshot-item__value">{item.value}</p>
-                  <p class="snapshot-item__hint">{item.hint}</p>
-                </div>
-              ))
-            }
-          </div>
-        </GlassCard>
-
         <GlassCard variant="elevated" className="now-card">
           <span class="eyebrow">Right now</span>
           <ul>
             {nowFocus.map(point => <li>{point}</li>)}
           </ul>
-        </GlassCard>
-
-        <GlassCard variant="elevated" className="stats-card">
-          <span class="eyebrow">Reach so far</span>
-          <div class="stats-grid">
-            {
-              expertiseStats.map(stat => (
-                <div class="stats-item">
-                  <span class="stats-item__value">{stat.value}</span>
-                  <span class="stats-item__label">{stat.label}</span>
-                </div>
-              ))
-            }
-          </div>
         </GlassCard>
       </div>
     </section>
@@ -214,7 +194,7 @@ const learningHighlights = [
     <section id="themes" class="section-block">
       <div class="section-heading">
         <h2>What drives my work</h2>
-        <p>Patterns that guide how I design, evaluate, and share dependable AI systems.</p>
+        <p>Four themes that connect the research, tools, and writing.</p>
       </div>
       <div class="themes-grid">
         {
@@ -230,8 +210,8 @@ const learningHighlights = [
 
     <section id="background" class="section-block">
       <div class="section-heading">
-        <h2>The short story</h2>
-        <p>Here’s the context people usually want before we partner up.</p>
+        <h2>Background</h2>
+        <p>How I got here and what I'm doing now.</p>
       </div>
       <Prose className="prose-block">
         {backgroundNotes.map(note => <p>{note}</p>)}
@@ -240,8 +220,8 @@ const learningHighlights = [
 
     <section id="journey" class="section-block">
       <div class="section-heading">
-        <h2>Deeper context</h2>
-        <p>Dig in for milestones, partners, and rituals that shape how I work.</p>
+        <h2>Timeline & milestones</h2>
+        <p>Education, collaborations, and the work that shaped how I approach problems.</p>
       </div>
 
       <div class="journey-grid">
@@ -384,16 +364,22 @@ const learningHighlights = [
 
   .profile-card__body h2 {
     margin: 0;
-    font-size: clamp(1.65rem, 1.6vw + 1.2rem, 2rem);
+    font-size: clamp(1.75rem, 1.8vw + 1.2rem, 2.15rem);
     font-weight: 700;
-    letter-spacing: -0.01em;
-    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.015em;
+    color: rgba(255, 255, 255, 0.96);
   }
 
   .profile-card__body p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.78);
-    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.75;
+    font-size: 1.02rem;
+  }
+
+  .profile-card__snapshot {
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
   }
 
   .profile-card__links {
@@ -423,9 +409,7 @@ const learningHighlights = [
     gap: 1.2rem;
   }
 
-  .snapshot-card,
-  .now-card,
-  .stats-card {
+  .now-card {
     padding: clamp(1.4rem, 2.5vw, 2rem);
   }
 
@@ -486,42 +470,10 @@ const learningHighlights = [
     line-height: 1.55;
   }
 
-  .stats-grid {
-    margin-top: 1.2rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  @media (min-width: 480px) {
-    .stats-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  .stats-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    align-items: flex-start;
-  }
-
-  .stats-item__value {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.94);
-  }
-
-  .stats-item__label {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
   .section-block {
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
+    gap: 2rem;
   }
 
   .section-heading {
@@ -532,45 +484,65 @@ const learningHighlights = [
 
   .section-heading h2 {
     margin: 0;
-    font-size: clamp(1.6rem, 1.2vw + 1.3rem, 2rem);
-    color: rgba(255, 255, 255, 0.94);
+    font-size: clamp(1.75rem, 1.4vw + 1.3rem, 2.25rem);
+    color: rgba(255, 255, 255, 0.96);
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   .section-heading p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
-    max-width: 60ch;
+    color: rgba(255, 255, 255, 0.74);
+    max-width: 65ch;
+    font-size: 1.05rem;
+    line-height: 1.6;
   }
 
   .themes-grid {
     display: grid;
-    gap: 1.2rem;
+    gap: 1.5rem;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     .themes-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .themes-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
   .theme-card {
-    padding: clamp(1.5rem, 2.6vw, 2rem);
+    padding: clamp(1.75rem, 3vw, 2.25rem);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .theme-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(148, 163, 184, 0.35);
   }
 
   .theme-card h3 {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.01em;
   }
 
   .theme-card p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.65;
+    font-size: 0.95rem;
   }
 
   .prose-block {
