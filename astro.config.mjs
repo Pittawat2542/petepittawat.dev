@@ -63,9 +63,9 @@ export default defineConfig({
 						if (id.includes('/react/')) return 'vendor-react';
 						if (id.includes('/scheduler/')) return 'vendor-react';
 						if (id.includes('/react-compiler-runtime/')) return 'vendor-react';
-						// Other common groups
-						if (id.includes('/@radix-ui/')) return 'vendor-radix-ui';
-						if (id.includes('/lucide-')) return 'vendor-lucide';
+						// Bundle React dependencies with React to ensure proper load order
+						if (id.includes('/lucide-react/')) return 'vendor-react';
+						if (id.includes('/@radix-ui/')) return 'vendor-react';
 
 						// Extract the actual package name even with pnpm's .pnpm indirection
 						try {
