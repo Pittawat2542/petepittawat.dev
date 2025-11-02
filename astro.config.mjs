@@ -58,10 +58,11 @@ export default defineConfig({
 					// and co-locate React + scheduler to avoid runtime mismatches.
 					manualChunks(id) {
 						if (!id.includes('node_modules')) return;
-						// Keep React stack together
+						// Keep React stack together (including compiler runtime for React 19)
 						if (id.includes('/react-dom/')) return 'vendor-react';
 						if (id.includes('/react/')) return 'vendor-react';
 						if (id.includes('/scheduler/')) return 'vendor-react';
+						if (id.includes('/react-compiler-runtime/')) return 'vendor-react';
 						// Other common groups
 						if (id.includes('/@radix-ui/')) return 'vendor-radix-ui';
 						if (id.includes('/lucide-')) return 'vendor-lucide';
@@ -93,7 +94,7 @@ export default defineConfig({
 			},
 		},
 		optimizeDeps: {
-			include: ['react', 'react-dom', 'lucide-react'],
+			include: ['react', 'react-dom', 'react-compiler-runtime', 'lucide-react'],
 		},
 	},
 	markdown: {
