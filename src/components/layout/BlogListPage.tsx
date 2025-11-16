@@ -1,5 +1,15 @@
-import { memo, useEffect, useMemo, useState } from 'react';
-import { usePagination, useQueryParamSync } from '@/lib/hooks';
+/**
+ * BlogListPage - Blog list display component
+ * Refactored to follow Single Responsibility Principle (SRP)
+ * by extracting filtering, URL sync, and sorting into focused hooks
+ */
+
+import { memo, useMemo, useState } from 'react';
+import { usePagination } from '@/lib/hooks/usePagination';
+import { useQueryParamSync } from '@/lib/hooks/useQueryParamSync';
+import { useBlogFilters, type BlogSort } from '@/lib/hooks/useBlogFilters';
+import { useUrlSync } from '@/lib/hooks/useUrlSync';
+import { useUrlParams } from '@/lib/hooks/useUrlParams';
 
 import { BlogCard } from '@/components/ui/cards/BlogCard';
 import type { BlogPost } from '@/types';
@@ -13,13 +23,12 @@ interface BlogListPageProps {
   readonly initialTags?: readonly string[]; // Optional: preselect tags when mounting (e.g., tag pages)
 }
 
-type BlogSort = 'newest' | 'oldest';
-
-/* eslint-disable */
-const comparators: Record<BlogSort, (a: BlogPost, b: BlogPost) => number> = {
-  newest: (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  oldest: (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
-} as const;
+interface UrlParams {
+  tags: string[];
+  sort: BlogSort;
+  yearFilter: string;
+  seriesFilter: string;
+}
 
 const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags }) => {
   const [q, setQ] = useState('');
@@ -30,89 +39,51 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
 
   useQueryParamSync('q', q, setQ);
 
-  // Initialize from URL ?tag=foo&tag=bar or from initialTags
-  useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
+  // Initialize from URL parameters or initialTags
+  useUrlParams<UrlParams>({
+    parser: params => {
       const urlTags = params.getAll('tag');
-      if (urlTags.length) {
-        setSelectedTags(new Set(urlTags));
-      } else if (initialTags?.length) {
-        setSelectedTags(new Set(initialTags));
-      }
-      const sortParam = params.get('sort');
-      if (sortParam === 'oldest' || sortParam === 'newest') setSort(sortParam as BlogSort);
+      const sortParam = params.get('sort') as BlogSort | null;
       const yearParam = params.get('year');
-      if (yearParam) setFilters(prev => ({ ...prev, year: yearParam }));
       const seriesParam = params.get('series');
-      if (seriesParam) setFilters(prev => ({ ...prev, series: seriesParam }));
-    } catch (error) {
-      // Silently handle errors
-    }
-  }, [initialTags]);
 
-  // Keep URL in sync for shareability
-  useEffect(() => {
-    try {
-      const params = new URLSearchParams();
-      const trimmed = q.trim();
-      if (trimmed) params.set('q', trimmed);
-      if (sort === 'oldest') params.set('sort', 'oldest');
-      if (selectedTags.size) {
-        for (const tag of Array.from(selectedTags).sort()) params.append('tag', tag);
+      return {
+        tags: urlTags.length ? urlTags : initialTags ? Array.from(initialTags) : [],
+        sort: sortParam === 'oldest' || sortParam === 'newest' ? sortParam : 'newest',
+        yearFilter: yearParam || '',
+        seriesFilter: seriesParam || '',
+      };
+    },
+    onParams: params => {
+      if (params.tags.length) {
+        setSelectedTags(new Set(params.tags));
       }
-      if (filters['year'] && filters['year'] !== 'all') params.set('year', filters['year']);
-      const query = params.toString();
-      const url = query ? `?${query}` : window.location.pathname;
-      window.history.replaceState({}, '', url);
-    } catch (error) {
-      // Silently handle errors
-    }
-  }, [filters, q, selectedTags, sort]);
-
-  const filtered = useMemo(() => {
-    const qLower = q.trim().toLowerCase();
-
-    return posts.filter(post => {
-      if (qLower) {
-        const hay = [
-          post.data.title,
-          post.data.excerpt,
-          post.data.tags.join(' '),
-          post.data.seriesTitle || '',
-        ]
-          .join(' ')
-          .toLowerCase();
-        if (!hay.includes(qLower)) return false;
+      setSort(params.sort);
+      if (params.yearFilter) {
+        setFilters(prev => ({ ...prev, year: params.yearFilter }));
       }
-
-      if (selectedTags.size) {
-        const hasAny = post.data.tags.some(tag => selectedTags.has(tag));
-        if (!hasAny) return false;
+      if (params.seriesFilter) {
+        setFilters(prev => ({ ...prev, series: params.seriesFilter }));
       }
+    },
+  });
 
-      if (filters['year'] && filters['year'] !== 'all') {
-        const year = new Date(post.data.pubDate).getFullYear().toString();
-        if (year !== filters['year']) return false;
-      }
+  // Sync state to URL
+  useUrlSync({
+    query: q,
+    sort,
+    selectedTags,
+    filters,
+  });
 
-      if (filters['series'] && filters['series'] !== 'all') {
-        if (filters['series'] === 'standalone') {
-          if (post.data.seriesSlug) return false;
-        } else if (post.data.seriesSlug !== filters['series']) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-  }, [filters, posts, q, selectedTags]);
-
-  const sorted = useMemo(() => {
-    const list = [...filtered];
-    list.sort(comparators[sort]);
-    return list;
-  }, [filtered, sort]);
+  // Apply filters and sorting
+  const { sorted } = useBlogFilters({
+    posts,
+    query: q,
+    selectedTags,
+    filters,
+    sort,
+  });
 
   // Pagination
   const {
