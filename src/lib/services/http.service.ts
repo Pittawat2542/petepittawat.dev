@@ -1,6 +1,29 @@
 /**
  * HTTP Service - Abstracts fetch operations
  * Follows Dependency Inversion Principle (DIP)
+ *
+ * IMPORTANT: Type Safety
+ * This service performs NO runtime validation of response data.
+ * The generic type parameter T is a compile-time hint only.
+ *
+ * Callers MUST handle the possibility of malformed responses by:
+ * 1. Wrapping calls in try/catch blocks
+ * 2. Validating response data structure before use
+ * 3. Using runtime validation libraries (Zod, io-ts) for critical data
+ *
+ * Example safe usage:
+ * ```ts
+ * try {
+ *   const data = await httpService.get<MyType>('/api/data');
+ *   // Validate data structure before using
+ *   if (!data || typeof data.property !== 'string') {
+ *     throw new Error('Invalid response structure');
+ *   }
+ *   // Safe to use data now
+ * } catch (error) {
+ *   // Handle errors appropriately
+ * }
+ * ```
  */
 
 export interface IHttpService {
