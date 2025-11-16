@@ -67,14 +67,19 @@ class FetchHttpService implements IHttpService {
         signal: controller.signal,
       });
 
-      clearTimeout(timeoutId);
-
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error for ${url}: status ${response.status}`);
       }
 
-      return response.json() as Promise<T>;
+      // Keep timeout active during JSON parsing to prevent hanging
+      const data = await response.json();
+
+      // Clear timeout only after entire operation completes
+      clearTimeout(timeoutId);
+
+      return data as T;
     } catch (error) {
+      // Always clear timeout on error to prevent timer leaks
       clearTimeout(timeoutId);
 
       if (error instanceof Error && error.name === 'AbortError') {
@@ -100,14 +105,19 @@ class FetchHttpService implements IHttpService {
         signal: controller.signal,
       });
 
-      clearTimeout(timeoutId);
-
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error for ${url}: status ${response.status}`);
       }
 
-      return response.json() as Promise<T>;
+      // Keep timeout active during JSON parsing to prevent hanging
+      const result = await response.json();
+
+      // Clear timeout only after entire operation completes
+      clearTimeout(timeoutId);
+
+      return result as T;
     } catch (error) {
+      // Always clear timeout on error to prevent timer leaks
       clearTimeout(timeoutId);
 
       if (error instanceof Error && error.name === 'AbortError') {
