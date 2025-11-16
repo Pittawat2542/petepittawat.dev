@@ -11,47 +11,111 @@
  * 2. Validating response data structure before use
  * 3. Using runtime validation libraries (Zod, io-ts) for critical data
  *
+ * IMPORTANT: Timeout Behavior
+ * All requests have a default timeout of 30 seconds to prevent hanging.
+ * Customize timeout per-request via the options parameter.
+ * TimeoutError is thrown when requests exceed the timeout duration.
+ *
  * Example safe usage:
  * ```ts
  * try {
- *   const data = await httpService.get<MyType>('/api/data');
+ *   const data = await httpService.get<MyType>('/api/data', { timeout: 5000 });
  *   // Validate data structure before using
  *   if (!data || typeof data.property !== 'string') {
  *     throw new Error('Invalid response structure');
  *   }
  *   // Safe to use data now
  * } catch (error) {
- *   // Handle errors appropriately
+ *   if (error instanceof TimeoutError) {
+ *     // Handle timeout specifically
+ *   }
+ *   // Handle other errors appropriately
  * }
  * ```
  */
 
+/**
+ * Custom error for request timeouts
+ */
+export class TimeoutError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'TimeoutError';
+  }
+}
+
+export interface HttpRequestOptions {
+  /** Timeout in milliseconds. Default: 30000 (30 seconds) */
+  timeout?: number;
+}
+
 export interface IHttpService {
-  get<T>(url: string): Promise<T>;
-  post<T, D>(url: string, data: D): Promise<T>;
+  get<T>(url: string, options?: HttpRequestOptions): Promise<T>;
+  post<T, D>(url: string, data: D, options?: HttpRequestOptions): Promise<T>;
 }
 
 class FetchHttpService implements IHttpService {
-  async get<T>(url: string): Promise<T> {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  private readonly DEFAULT_TIMEOUT = 30000; // 30 seconds
+
+  async get<T>(url: string, options?: HttpRequestOptions): Promise<T> {
+    const timeout = options?.timeout ?? this.DEFAULT_TIMEOUT;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return response.json() as Promise<T>;
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new TimeoutError(`Request to ${url} timed out after ${timeout}ms`);
+      }
+
+      throw error;
     }
-    return response.json() as Promise<T>;
   }
 
-  async post<T, D>(url: string, data: D): Promise<T> {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  async post<T, D>(url: string, data: D, options?: HttpRequestOptions): Promise<T> {
+    const timeout = options?.timeout ?? this.DEFAULT_TIMEOUT;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return response.json() as Promise<T>;
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new TimeoutError(`Request to ${url} timed out after ${timeout}ms`);
+      }
+
+      throw error;
     }
-    return response.json() as Promise<T>;
   }
 }
 
