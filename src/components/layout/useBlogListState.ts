@@ -89,7 +89,7 @@ export function useBlogListState({ posts, tags, initialTags }: UseBlogListStateP
       }
 
       if (selectedTags.size) {
-        const hasAny = post.data.tags.some(tag => selectedTags.has(tag));
+        const hasAny = post.data.tags.some((tag: string) => selectedTags.has(tag));
         if (!hasAny) return false;
       }
 
