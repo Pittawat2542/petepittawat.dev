@@ -1,5 +1,14 @@
 [
   {
+    "date": "2025-11-08",
+    "title": "After a PhD, what is waiting for us? A discussion and experience from industry, academia, and startups",
+    "audience": "Widening NLP Workshop (EMNLP'25)",
+    "audienceUrl": "https://winlp-workshop.github.io",
+    "mode": "on-site",
+    "resources": [],
+    "tags": ["Career Advice"]
+  },
+  {
     "date": "2025-10-23",
     "title": "Prior Prompt Engineering for Reinforcement Fine-Tuning",
     "audience": "General audience and SuperAI Engineer Season 5 (SuperAI Exhibition)",
