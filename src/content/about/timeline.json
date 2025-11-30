@@ -13,13 +13,13 @@
   },
   {
     "title": "Oct 2024 – Present — Research Scientist, Typhoon team (SCB 10X R&D)",
-    "description": "Large language model research and applications at SCB 10X.",
+    "description": "Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT). Spearheading Typhoon T1 and external collaborations.",
     "accent": "publications",
     "highlight": true
   },
   {
     "title": "Sep 2024 — M.Eng., Ritsumeikan University (Valedictorian)",
-    "description": "Master of Engineering, Intelligent Computer Entertainment Laboratory.",
+    "description": "Valedictorian (4.93/5.00). Thesis on Null-Shot Prompting and Hallucination in LLMs.",
     "accent": "publications",
     "highlight": true
   },
@@ -37,7 +37,7 @@
   },
   {
     "title": "2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)",
-    "description": "Bachelor of Science (Computer Science), Petch Prajom Klao scholarship; multiple academic awards.",
+    "description": "First-Class Honors (3.99/4.00). Senior project on Automatic Mind Map Generation.",
     "accent": "publications",
     "highlight": true
   },

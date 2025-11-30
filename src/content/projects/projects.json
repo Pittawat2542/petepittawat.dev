@@ -46,6 +46,30 @@
     "type": "initiative"
   },
   {
+    "year": 2025,
+    "title": "OpenRLHF (Contributor)",
+    "summary": "Contributed to OpenRLHF, an easy-to-use, scalable, and high-performance RLHF framework.",
+    "tags": ["RLHF", "Open Source", "Framework"],
+    "links": [{ "label": "GitHub", "href": "https://github.com/OpenRLHF/OpenRLHF" }],
+    "type": "open source"
+  },
+  {
+    "year": 2025,
+    "title": "Themis",
+    "summary": "Lightweight evaluation platform for LLM experiments.",
+    "tags": ["LLM Evaluation", "Tooling"],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/themis" }],
+    "type": "open source"
+  },
+  {
+    "year": 2025,
+    "title": "Thoth",
+    "summary": "A GUI program for labeling datasets.",
+    "tags": ["Data Labeling", "GUI", "Tooling"],
+    "links": [{ "label": "GitHub", "href": "https://github.com/Pittawat2542/thoth" }],
+    "type": "open source"
+  },
+  {
     "year": 2024,
     "title": "Multiverse of Greatness: Story Branching with LLMs",
     "summary": "Algorithms and tools for generating and evaluating branching storylines using LLMs, including UI and utilities.",

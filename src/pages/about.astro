@@ -13,56 +13,56 @@ const quickFacts = [
   {
     label: 'Current role',
     value: 'Research Scientist @ Typhoon',
-    hint: 'Leading fine-tuning programs and agent workflows for Thai reasoning models.',
+    hint: 'Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT).',
   },
   {
     label: 'Approach',
     value: 'Research to production',
-    hint: '7+ years turning experiments into tools and writing that teams actually use.',
+    hint: 'Bridging the gap between research, engineering, and model adoption.',
   },
   {
     label: 'Based in',
-    value: 'Bangkok ↔ Tokyo',
-    hint: 'Remote-friendly, partnering with labs and product teams across APAC.',
+    value: 'Bangkok',
+    hint: 'Remote-friendly',
   },
 ];
 
 const nowFocus = [
-  'Leading SFT and RFT programs for Typhoon reasoning models that work in Thai and English.',
-  'Building evaluation frameworks like BenchING that help teams test what LLMs can actually do.',
-  'Working with medical, game, and driving teams to see if research holds up with real users.',
-  'Writing about prompting techniques, fine-tuning strategies, and what actually works in practice.',
+  'Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT).',
+  'Investigating LLM Inference: context engineering, test-time scaling, and agents.',
+  'Leading external research collaborations with academic and industrial partners.',
+  'Bridging research and engineering to translate findings into robust PoCs.',
 ];
 
 const currentThemes = [
   {
-    title: 'Fine-tuning strategies',
+    title: 'Behavior Shaping',
     description:
-      'Prior Prompt Engineering (EMNLP 2025) shows how different prompting during training leads to different reasoning behaviors. Typhoon T1 demonstrates cost-effective reasoning model development through SFT.',
+      'Exploring approaches to align model behavior with human preferences and domain requirements, including context engineering, prompt engineering, and post-training (SFT/RFT).',
   },
   {
-    title: 'Prompting techniques',
+    title: 'Reasoning Models',
     description:
-      'Null-Shot Prompting (EMNLP 2024) uses intentional errors to improve reasoning. FinCoT embeds financial expert blueprints into prompts. These become reusable patterns.',
+      'Developing open reasoning models like Typhoon T1 and investigating medical reasoning models (MRMs) with novel alignment techniques.',
   },
   {
-    title: 'Evaluation tools',
+    title: 'Evaluation & Safety',
     description:
-      'BenchING (IEEE ToG 2025) tests structured output format following. ChatGPT4PCG evaluates physics-based generation. Both catch failures early.',
+      'Understanding and mitigating biases and risks. Building evaluation frameworks like BenchING to test structured output following.',
   },
   {
-    title: 'Applied work',
+    title: 'Applied AI',
     description:
-      'Collaborations in medical triage, game narrative generation, and driving assessment test whether research works with real users under real constraints.',
+      'Showcasing real-world applications (Typhoon Application Week) and collaborating on projects in healthcare and gaming.',
   },
 ];
 
 const spotlightTimeline = timeline.filter(item => item.highlight);
 
 const backgroundNotes = [
-  'I started working with clinicians, designers, and engineers early—learning to combine rigorous testing with clear writing.',
-  'Now I lead research at Typhoon (SCB 10X R&D), running fine-tuning programs, building evaluation tools, and figuring out what makes models reliable.',
-  'Before this, I worked with teams at LINE Shopping, national innovation programs, and community projects helping Thai students learn tech.',
+  'I’m interested in shaping model behavior to align with human preferences, domain-specific requirements (e.g., games and medical), task objectives, and cultural values.',
+  'I’m currently exploring several approaches for behavior shaping, including context engineering, prompt engineering, and post-training (supervised fine-tuning and reinforcement fine-tuning).',
+  'I also care deeply about understanding and mitigating the biases and risks associated with modern AI models.',
 ];
 
 const educationEntries = [
@@ -70,45 +70,48 @@ const educationEntries = [
     title: 'M.Eng., Intelligent Computer Entertainment Lab, Ritsumeikan University',
     period: '2022 — 2024',
     summary:
-      'Valedictorian focusing on creative AI, evaluation tooling, and dependable reasoning systems.',
+      'GPA: 4.93/5.00, Valedictorian. Thesis: Null-Shot Prompting: Rethinking Prompting Large Language Models With Hallucination.',
   },
   {
     title: 'B.Sc. Computer Science, KMUTT (First-class honours)',
-    period: '2017 — 2021',
-    summary: 'Petchra Pra Jom Klao Scholarship recipient and cohort-topping graduate.',
+    period: '2018 — 2022',
+    summary:
+      'GPA: 3.99/4.00. Senior project: COEUS: Automatic English Mind Map Generation From Text.',
   },
 ];
 
 const communityHighlights = [
   {
-    title: 'Applied research collaborations',
+    title: 'Research Collaborations',
     description:
-      'Led multi-disciplinary projects with KMUTT, Siriraj Hospital, and national innovation programs.',
+      'Spearheading external collaborations with top academic and industrial partners (VISTEC, SiData, SCBX).',
     bullets: [
-      'Shipped AR, web, and language systems that moved from prototypes to everyday tools.',
-      'Set up evaluation and delivery rituals that kept cross-functional teams aligned.',
+      'Investigating prior prompt engineering and inference-time strategies.',
+      'Leading research on medical reasoning models and conversational agents.',
     ],
   },
   {
-    title: 'Industry & mentorship',
+    title: 'Leadership & Outreach',
     description:
-      'Support fast-paced product teams while mentoring the next wave of builders and researchers.',
+      'Cultivating technical communities and bridging the gap between frontier research and application.',
     bullets: [
-      'Contributed to LINE Shopping’s platform evolution and large-scale Vue migrations.',
-      'Founded Google Developer Student Clubs KMUTT and mentor regional programs.',
+      'Lead, Google Developer Group on Campus (GDGoC) at KMUTT.',
+      'Partnering with DevRel to disseminate research findings via technical blogs and talks.',
     ],
   },
 ];
 
 const serviceHighlights = [
-  'Directed an eight-person rapid-response team during COVID-19 to deliver nationwide donations.',
-  'Organised Junior Programmer Camp XV, opening computer science pathways for students across Thailand.',
+  'Lead Developer, KMUTT COVID-19 Donation Management Platform.',
+  'Organized Junior Webmaster Camp 8, Junior Programmer Camp XV, and SIT Code 2019.',
 ];
 
 const learningHighlights = [
-  'Learning stays a ritual—pairing online courses with experiments keeps me curious.',
-  'I teach and mentor to stress-test my own understanding and multiply collective progress.',
+  'Actively engaging with the technical community through public speaking and blogging.',
+  'Mentoring research interns and guiding projects from ideation to publication.',
 ];
+
+import { Sparkles, Camera, Flame, History, Milestone } from 'lucide-astro';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION} page="about">
@@ -134,32 +137,20 @@ const learningHighlights = [
             />
           </div>
           <div class="profile-card__meta">
-            <span class="eyebrow">Bangkok ↔ Tokyo</span>
+            <span class="eyebrow">Bangkok</span>
             <p class="profile-card__role">Research Scientist @ Typhoon</p>
           </div>
         </div>
         <div class="profile-card__body">
           <h2>Hi, I'm Pittawat (Pete).</h2>
           <p>
-            I teach language models to reason, follow instructions, and behave reliably. I do this
-            through fine-tuning, prompting research, and building tools that help teams understand
-            their models.
+            I’m interested in shaping model behavior to align with human preferences,
+            domain-specific requirements, task objectives, and cultural values. I’m currently
+            exploring approaches including context engineering, prompt engineering, and
+            post-training (SFT/RFT).
           </p>
         </div>
-        <div class="profile-card__snapshot">
-          <span class="eyebrow">Snapshot</span>
-          <div class="snapshot-grid">
-            {
-              quickFacts.map(item => (
-                <div class="snapshot-item">
-                  <p class="snapshot-item__label">{item.label}</p>
-                  <p class="snapshot-item__value">{item.value}</p>
-                  <p class="snapshot-item__hint">{item.hint}</p>
-                </div>
-              ))
-            }
-          </div>
-        </div>
+
         <div class="profile-card__links" aria-label="Connect">
           <a
             class="profile-card__link"
@@ -182,18 +173,57 @@ const learningHighlights = [
       </GlassCard>
 
       <div class="intro-grid__aside">
-        <GlassCard variant="elevated" className="now-card">
-          <span class="eyebrow">Right now</span>
-          <ul>
-            {nowFocus.map(point => <li>{point}</li>)}
-          </ul>
+        <GlassCard variant="premium" className="now-card relative overflow-hidden">
+          <div
+            class="pointer-events-none absolute -top-6 -right-6 h-32 w-32 rounded-full bg-[color:var(--accent)]/10 blur-2xl"
+          >
+          </div>
+          <div class="relative z-10">
+            <div class="mb-4 flex items-center gap-2">
+              <Sparkles class="h-4 w-4 text-[color:var(--accent)]" />
+              <span class="eyebrow text-[color:var(--accent)]">Right now</span>
+            </div>
+            <ul class="space-y-3">
+              {
+                nowFocus.map(point => (
+                  <li class="flex gap-3 text-sm leading-relaxed text-[color:var(--white)]/80">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/60" />
+                    {point}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </GlassCard>
       </div>
     </section>
 
+    <section id="snapshot" class="section-block">
+      <GlassCard variant="premium" className="snapshot-card">
+        <div class="mb-4 flex items-center gap-2">
+          <Camera class="h-4 w-4 text-[color:var(--accent)]" />
+          <span class="eyebrow text-[color:var(--accent)]">Snapshot</span>
+        </div>
+        <div class="snapshot-grid">
+          {
+            quickFacts.map(item => (
+              <div class="snapshot-item">
+                <p class="snapshot-item__label">{item.label}</p>
+                <p class="snapshot-item__value">{item.value}</p>
+                <p class="snapshot-item__hint">{item.hint}</p>
+              </div>
+            ))
+          }
+        </div>
+      </GlassCard>
+    </section>
+
     <section id="themes" class="section-block">
       <div class="section-heading">
-        <h2>What drives my work</h2>
+        <div class="mb-2 flex items-center gap-2">
+          <Flame class="h-5 w-5 text-[color:var(--accent)]" />
+          <h2>What drives my work</h2>
+        </div>
         <p>Four themes that connect the research, tools, and writing.</p>
       </div>
       <div class="themes-grid">
@@ -208,19 +238,33 @@ const learningHighlights = [
       </div>
     </section>
 
-    <section id="background" class="section-block">
-      <div class="section-heading">
-        <h2>Background</h2>
-        <p>How I got here and what I'm doing now.</p>
+    <section id="background" class="section-block relative">
+      <div
+        class="pointer-events-none absolute top-0 -left-20 h-64 w-64 rounded-full bg-[color:var(--accent-about)]/5 blur-3xl"
+      >
       </div>
-      <Prose className="prose-block">
-        {backgroundNotes.map(note => <p>{note}</p>)}
-      </Prose>
+      <div class="relative z-10">
+        <div class="section-heading mb-8">
+          <div class="mb-2 flex items-center gap-2">
+            <History class="h-5 w-5 text-[color:var(--accent)]" />
+            <h2>Background</h2>
+          </div>
+          <p>How I got here and what I'm doing now.</p>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8">
+          <Prose className="prose-block text-lg leading-relaxed text-[color:var(--white)]/80">
+            {backgroundNotes.map(note => <p>{note}</p>)}
+          </Prose>
+        </div>
+      </div>
     </section>
 
     <section id="journey" class="section-block">
       <div class="section-heading">
-        <h2>Timeline & milestones</h2>
+        <div class="mb-2 flex items-center gap-2">
+          <Milestone class="h-5 w-5 text-[color:var(--accent)]" />
+          <h2>Timeline & milestones</h2>
+        </div>
         <p>Education, collaborations, and the work that shaped how I approach problems.</p>
       </div>
 
@@ -312,7 +356,7 @@ const learningHighlights = [
   @media (min-width: 1024px) {
     .intro-grid {
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      align-items: stretch;
+      align-items: start;
     }
   }
 
