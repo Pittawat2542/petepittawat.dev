@@ -8,6 +8,7 @@ interface ServiceItem {
   readonly year?: number;
   readonly years?: readonly number[];
   readonly url?: string;
+  readonly links?: readonly { readonly year: number; readonly url: string }[];
 }
 
 interface Section {
@@ -21,6 +22,26 @@ interface AcademicServicesProps {
     readonly sections: readonly Section[];
   };
 }
+
+const formatYears = (item: ServiceItem): string => {
+  const years = item.years ?? item.links?.map(link => link.year);
+
+  if (Array.isArray(years) && years.length > 0) {
+    const uniqueYears = Array.from(new Set(years));
+    return uniqueYears.sort((a, b) => a - b).join(' | ');
+  }
+
+  return item.year ? String(item.year) : '';
+};
+
+const getItemUrl = (item: ServiceItem): string | undefined => {
+  if (item.links && item.links.length > 0) {
+    const sortedLinks = [...item.links].sort((a, b) => b.year - a.year);
+    return sortedLinks[0]?.url;
+  }
+
+  return item.url;
+};
 
 const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
   const sections = data.sections || [];
@@ -49,22 +70,24 @@ const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
               </h3>
               <ul className="flex flex-col gap-2">
                 {sec.items.map(item => {
-                  const yearDisplay = item.year ?? (item.years ? item.years.join(' | ') : '');
-                  const itemKey = `${item.venue}-${yearDisplay}`;
+                  const yearDisplay = formatYears(item);
+                  const itemKey = `${item.venue}-${yearDisplay || 'n/a'}`;
+
+                  const href = getItemUrl(item);
 
                   return (
                     <li key={itemKey}>
                       <a
-                        href={item.url || '#'}
-                        target={item.url ? '_blank' : undefined}
-                        rel={item.url ? 'noreferrer' : undefined}
+                        href={href || '#'}
+                        target={href ? '_blank' : undefined}
+                        rel={href ? 'noreferrer' : undefined}
                         className="group glass-surface shape-squircle-sm inline-flex w-full items-center justify-between rounded-xl px-3 py-2 ring-1 ring-[color:var(--white)]/10 transition-[transform,box-shadow,border-color,background-color] duration-150 ease-out will-change-transform hover:-translate-y-0.5 hover:ring-[color:var(--accent-publications)]/50"
                         style={{
                           color: 'var(--white)',
                           background:
                             'color-mix(in oklab, var(--accent-publications) 6%, transparent)',
                         }}
-                        aria-label={`${item.venue} ${yearDisplay}${item.url ? ' (opens in new tab)' : ''}`}
+                        aria-label={`${item.venue} ${yearDisplay}${href ? ' (opens in new tab)' : ''}`}
                       >
                         <div className="flex min-w-0 items-center gap-2">
                           <span className="shape-squircle-sm inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[color:var(--accent-publications)]/20 text-[color:var(--accent-publications)] ring-1 ring-[color:var(--accent-publications)]/30">
