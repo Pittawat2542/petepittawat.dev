@@ -1,5 +1,6 @@
 import type { CSSProperties, FC } from 'react';
 import { memo, useMemo } from 'react';
+import { ExternalLink } from 'lucide-react';
 
 import { BlogCardContent } from '@/components/ui/blog/BlogCardContent';
 import { BlogCardFooter } from '@/components/ui/blog/BlogCardFooter';
@@ -76,13 +77,22 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       <div className="aurora-card__wrapper" />
       <a
         className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out will-change-transform focus-visible:text-[color:var(--white)]"
-        href={`/blog/${String(post.slug)}`}
-        aria-label={`Read blog post: ${post.data.title}`}
+        href={post.data.externalUrl || `/blog/${String(post.slug)}`}
+        target={post.data.externalUrl ? '_blank' : undefined}
+        rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
+        aria-label={`Read ${post.data.externalUrl ? 'external' : ''} blog post: ${post.data.title}`}
         style={glowStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
         <BlogCardOverlays accent={accentVar} />
+
+        {post.data.externalUrl && (
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+            <ExternalLink className="h-3 w-3" />
+            <span>External</span>
+          </div>
+        )}
 
         <div className="aurora-card__body flex flex-1 flex-col">
           <div className={CARD_PADDING}>

@@ -14,6 +14,7 @@ const blog = defineCollection({
       seriesTitle: z.string().optional(),
       seriesOrder: z.number().optional(),
       seriesDescription: z.string().optional(),
+      externalUrl: z.string().url().optional(),
     }),
 });
 // Data collections: validate JSON array shape with Zod
