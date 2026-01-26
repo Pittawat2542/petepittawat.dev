@@ -37,6 +37,20 @@ export default [
         clearInterval: 'readonly',
         localStorage: 'readonly',
         sessionStorage: 'readonly',
+        requestAnimationFrame: 'readonly',
+        cancelAnimationFrame: 'readonly',
+        fetch: 'readonly',
+        IntersectionObserver: 'readonly',
+        MutationObserver: 'readonly',
+        matchMedia: 'readonly',
+        KeyboardEvent: 'readonly',
+        HTMLElement: 'readonly',
+        HTMLAnchorElement: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        ResizeObserver: 'readonly',
+        Event: 'readonly',
       },
     },
     plugins: {
@@ -64,6 +78,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
 
       // General rules
+      'no-unused-vars': 'off', // Use @typescript-eslint/no-unused-vars instead
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',
       'no-var': 'error',
