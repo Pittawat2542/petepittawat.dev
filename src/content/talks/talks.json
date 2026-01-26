@@ -1,5 +1,25 @@
 [
   {
+    "date": "2026-01-23",
+    "title": "ASingle Answer is Not Enough: On Generating Ranked Lists with Medical Reasoning Models",
+    "audience": "SiData+ Conference 2026",
+    "audienceUrl": "https://www.si.mahidol.ac.th/data/events/",
+    "mode": "on-site",
+    "resources": [
+      {
+        "label": "Slide",
+        "href": "/files/sidataplus.pdf",
+        "download": true
+      },
+      {
+        "label": "Model",
+        "href": "https://opentyphoon.ai/model/typhoon-si-med-thinking",
+        "download": false
+      }
+    ],
+    "tags": ["Invited Talk", "Medical Reasoning Model"]
+  },
+  {
     "date": "2025-11-08",
     "title": "After a PhD, what is waiting for us? A discussion and experience from industry, academia, and startups",
     "audience": "Widening NLP Workshop (EMNLP'25)",

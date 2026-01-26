@@ -1,5 +1,19 @@
 [
   {
+    "year": 2026,
+    "title": "Typhoon-Si Med-Thinking 4B",
+    "summary": "A 4B medical reasoning model from Typhoon and SiData+ that generates ranked diagnoses, capturing clinical uncertainty and outperforming larger models on major medical QA benchmarks.",
+    "tags": ["Large Language Models", "Reasoning", "Medical", "Open Source"],
+    "links": [
+      { "label": "Paper", "href": "https://arxiv.org/abs/2509.20866" },
+      {
+        "label": "Model",
+        "href": "https://huggingface.co/typhoon-ai/typhoon-si-med-thinking-4b-research-preview"
+      }
+    ],
+    "type": "research"
+  },
+  {
     "year": 2025,
     "title": "Typhoon T1: Open Thai Reasoning Model",
     "summary": "An open Thai reasoning model (research preview) exploring test-time reasoning strategies and instruction-following for Thai language tasks.",
