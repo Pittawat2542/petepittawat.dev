@@ -40,7 +40,7 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
-    <AnimatedHeader client:load />
+    <AnimatedHeader client:idle />
     <main
       id="main-content"
       class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
@@ -50,7 +50,7 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
     </main>
     <Footer />
     <ScrollTop />
-    <SearchModal hideTriggers client:load />
+    <SearchModal hideTriggers client:idle />
     <script>
       // Performance optimized initialization
       (function () {
