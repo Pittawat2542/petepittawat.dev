@@ -31,7 +31,7 @@ export default defineConfig({
 		// Inline all page CSS to remove render‑blocking stylesheet requests
 		inlineStylesheets: 'always',
 		split: true, // Enable code splitting
-		format: 'file', // Use file format for better caching
+		format: 'directory', // Use directory format for GitHub Pages compatibility
 		concurrency: 4, // Parallel builds for better performance
 	},
 	output: 'static',
