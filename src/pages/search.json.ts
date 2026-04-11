@@ -68,16 +68,16 @@ export async function GET(_context: APIContext) {
 
   // Talks (single page list)
   for (const t of talks) {
-    const year = new Date(t.date).getFullYear();
+    const year = t.date.getFullYear();
     const anchor = `talk-${slugify(t.title)}-${year}`;
     items.push({
-      id: `talk:${t.title}-${t.date}`,
+      id: `talk:${t.title}-${t.date.toISOString()}`,
       type: 'talk',
       title: t.title,
       description: `${t.audience} — ${t.mode}`,
       url: `/talks#${anchor}`,
       tags: t.tags,
-      date: t.date,
+      date: t.date.toISOString(),
     });
   }
 
