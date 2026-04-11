@@ -1,5 +1,50 @@
 [
   {
+    "date": "2026-03-13",
+    "title": "AI Research for Thailand and Beyond",
+    "audience": "SuperAI Engineering Season 5 - Closing Ceremony",
+    "audienceUrl": "https://superai.aiat.or.th",
+    "mode": "on-site",
+    "resources": [],
+    "tags": ["AI Research", "Sovereign AI", "Career Advice"]
+  },
+  {
+    "date": "2026-03-09",
+    "title": "Open Models, Smarter Agents: Practical Lessons from Modern Agentic Workflows",
+    "audience": "FOSSASIA Summit 2026",
+    "audienceUrl": "https://eventyay.com/e/88882f3e/session/10212",
+    "mode": "hybrid",
+    "resources": [
+      { "label": "Slide", "href": "/files/open_models_smarter_agents.pdf", "download": true },
+      { "label": "YouTube Recorded Video", "href": "https://youtu.be/udBGnEZyNtA?t=13517" }
+    ],
+    "tags": ["Large Language Models", "Agentic Workflow", "AI Engineering"]
+  },
+  {
+    "date": "2026-02-26",
+    "title": "Agentic AI with Context Engineering",
+    "audience": "SCB DataX, SCBX (Internal)",
+    "audienceUrl": "https://www.data-x.ai",
+    "mode": "on-site",
+    "resources": [],
+    "tags": ["Agent", "AI Engineering"]
+  },
+  {
+    "date": "2026-02-18",
+    "title": "Global South Research & Posters Showcase: Prior Prompt Engineering for Reinforcement Fine-Tuning",
+    "audience": "Research Symposium on AI and its Impact, India AI Impact Summit 2026",
+    "audienceUrl": "https://impact.indiaai.gov.in/events/research-symposium",
+    "mode": "on-site",
+    "resources": [
+      {
+        "label": "Paper",
+        "href": "https://aclanthology.org/2025.emnlp-main.1590",
+        "download": false
+      }
+    ],
+    "tags": ["Reinforcement Fine-Tuning"]
+  },
+  {
     "date": "2026-01-23",
     "title": "A Single Answer is Not Enough: On Generating Ranked Lists with Medical Reasoning Models",
     "audience": "SiData+ Conference 2026",

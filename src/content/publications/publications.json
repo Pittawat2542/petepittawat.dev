@@ -1,69 +1,14 @@
 [
   {
-    "year": 2026,
-    "type": "preprint",
-    "title": "Typhoon OCR: Open Vision-Language Model For Thai Document Extraction",
-    "authors": "Surapon Nonesung, Natapong Nitarach, Teetouch Jaknamon, Pittawat Taveekitworachai, Kunat Pipatanakul",
-    "venue": "arXiv",
-    "url": "https://arxiv.org/abs/2601.13044",
-    "artifacts": [
-      {
-        "label": "Typhoon OCR 7B",
-        "href": "https://huggingface.co/typhoon-ai/typhoon-ocr-7b"
-      },
-      {
-        "label": "Typhoon OCR 1.5 2B",
-        "href": "https://huggingface.co/typhoon-ai/typhoon-ocr1.5-2b"
-      },
-      {
-        "label": "GitHub",
-        "href": "https://github.com/scb-10x/typhoon-ocr"
-      }
-    ],
-    "tags": [
-      "Optical Character Recognition",
-      "Vision-Language Models",
-      "Document Understanding",
-      "Document Extraction",
-      "Layout Analysis",
-      "Thai Language",
-      "Low-resource Languages",
-      "Multimodal Models"
-    ],
-    "abstract": "Document extraction is a core component of digital workflows, yet existing vision-language models (VLMs) predominantly favor high-resource languages. Thai presents additional challenges due to script complexity from non-latin letters, the absence of explicit word boundaries, and the prevalence of highly unstructured real-world documents, limiting the effectiveness of current open-source models. This paper presents Typhoon OCR, an open VLM for document extraction tailored for Thai and English. The model is fine-tuned from vision-language backbones using a Thai-focused training dataset. The dataset is developed using a multi-stage data construction pipeline that combines traditional OCR, VLM-based restructuring, and curated synthetic data. Typhoon OCR is a unified framework capable of text transcription, layout reconstruction, and document-level structural consistency. The latest iteration of our model, Typhoon OCR V1.5, is a compact and inference-efficient model designed to reduce reliance on metadata and simplify deployment. Comprehensive evaluations across diverse Thai document categories, including financial reports, government forms, books, infographics, and handwritten documents, show that Typhoon OCR achieves performance comparable to or exceeding larger frontier proprietary models, despite substantially lower computational cost. The results demonstrate that open vision-language OCR models can achieve accurate text extraction and layout reconstruction for Thai documents, reaching performance comparable to proprietary systems while remaining lightweight and deployable."
-  },
-  {
-    "year": 2026,
-    "type": "preprint",
-    "title": "Typhoon ASR Real-time: FastConformer-Transducer for Thai Automatic Speech Recognition",
-    "authors": "Warit Sirichotedumrong, Adisai Na-Thalang, Potsawee Manakul, Pittawat Taveekitworachai, Sittipong Sripaisarnmongkol, Kunat Pipatanakul",
-    "venue": "arXiv",
-    "url": "https://arxiv.org/abs/2601.13044",
-    "artifacts": [
-      {
-        "label": "Typhoon ASR Real-Time",
-        "href": "https://huggingface.co/typhoon-ai/typhoon-asr-realtime"
-      },
-      {
-        "label": "Typhoon Isan ASR Real-Time",
-        "href": "https://huggingface.co/typhoon-ai/typhoon-isan-asr-realtime"
-      },
-      {
-        "label": "GitHub",
-        "href": "https://github.com/scb-10x/typhoon-asr"
-      }
-    ],
-    "tags": [
-      "Automatic Speech Recognition",
-      "Streaming ASR",
-      "Low-latency Models",
-      "Thai Language",
-      "Low-resource Speech",
-      "FastConformer",
-      "Transducer Models",
-      "Dialect Adaptation"
-    ],
-    "abstract": "Large encoder-decoder models like Whisper achieve strong offline transcription but remain impractical for streaming applications due to high latency. However, due to the accessibility of pre-trained checkpoints, the open Thai ASR landscape remains dominated by these offline architectures, leaving a critical gap in efficient streaming solutions. We present Typhoon ASR Real-time, a 115M-parameter FastConformer-Transducer model for low-latency Thai speech recognition. We demonstrate that rigorous text normalization can match the impact of model scaling: our compact model achieves a 45x reduction in computational cost compared to Whisper Large-v3 while delivering comparable accuracy. Our normalization pipeline resolves systemic ambiguities in Thai transcription --including context-dependent number verbalization and repetition markers (mai yamok) --creating consistent training targets. We further introduce a two-stage curriculum learning approach for Isan (north-eastern) dialect adaptation that preserves Central Thai performance. To address reproducibility challenges in Thai ASR, we release the Typhoon ASR Benchmark, a gold-standard human-labeled datasets with transcriptions following established Thai linguistic conventions, providing standardized evaluation protocols for the research community."
+    "year": 2023,
+    "type": "journal",
+    "title": "Driving scenarios and environmental settings in simulator-based driving assessment systems for stroke: a systematic review",
+    "authors": "Gunt Chanmas, Pittawat Taveekitworachai, Pujana Paliyawan, Ramita Thawonmas, Ruck Thawonmas, Chakarida Nukoolkit, Piyapat Dajpratham",
+    "venue": "Topics in Stroke Rehabilitation",
+    "url": "https://www.tandfonline.com/doi/10.1080/10749357.2023.2165273",
+    "artifacts": [],
+    "tags": ["Systematic Review", "Simulator-based Driving Assessment"],
+    "abstract": "Background: Driving simulators are effective tools to evaluate the driving abilities of patients with stroke. They can introduce various driving scenarios which will greatly benefit both the assessors and drivers. However, there is still no guidelines by which driving scenarios should be introduced in the driving assessment., Objectives: We conducted a systematic review to examine the utilization of driving scenarios and environments in the simulator-based driving assessment for patients with stroke., Methods: A systematic review was conducted following PRISMA. We searched PubMed, Web of Science, ScienceDirect, ACM Digital Library, and IEEE Xplore Digital Library databases in January and June 2022 to identify eligible articles published since 2010., Results: Our searches identified 1,614 articles. We included 12 studies that applied driving simulators to assess the driving performance of patients with stroke. The driving scenarios were categorized into three categories – vehicle controls scenarios, hazard perception scenarios, and trajectory planning scenarios – based on a certain set of driving abilities. The most common driving scenarios are simple navigation (n = 8) and emergency stop (n = 8). The most frequently used driving area is urban (n = 9), and a variety of roads and traffic conditions were found in the included studies. Only 2 studies applied weather conditions, such as the clear and sunny condition or the windy condition., Conclusion: It is recommended for future research to consider covering scenarios from the aforementioned three categories and further investigate the benefits of introducing complex weather conditions and localized traffic conditions in the driving assessment."
   },
   {
     "year": 2025,
@@ -71,7 +16,7 @@
     "title": "The Role of Large Language Model-Generated Stories in the Narrative Experience of Serious Visual Novel Games",
     "authors": "Mustafa Can Gursesli, Siyuan Chen, Mury Fajar Dewantoro, Xiao You, Ege Anbar, Pittawat Taveekitworachai, Febri Abdullah, Pietro Tarchi, Mirko Duradoni, Antonio Lanata, Andrea Guazzini, and Ruck Thawonmas",
     "venue": "International Journal of Human–Computer Interaction",
-    "url": "https://www.tandfonline.com/doi/full/10.1080/10447318.2025.2528993",
+    "url": "https://www.tandfonline.com/doi/10.1080/10447318.2025.2528993",
     "artifacts": [],
     "tags": [
       "Large Language Models",
@@ -658,5 +603,103 @@
     ],
     "tags": ["Large Language Models", "Low-resource LLMs"],
     "abstract": "This paper presents Dynamic Context Prompting/Programming (DCP/P), a novel framework for interacting with LLMs to generate graph-based content with a dynamic context window history. While there is an existing study utilizing LLMs to generate a visual novel game, the previous study involved a manual process of output extraction and did not provide flexibility in generating a longer, coherent story. We evaluate DCP/P against our baseline, which does not provide context history to an LLM and only relies on the initial story data. Through objective evaluation, we show that simply providing the LLM with a summary leads to a subpar story compared to additionally providing the LLM with the proper context of the story. We also provide an extensive qualitative analysis and discussion. We qualitatively examine the quality of the objectively best-performing generated game from each approach. In addition, we examine biases in word choices and word sentiment of the generated content. We find a consistent observation with previous studies that LLMs are biased towards certain words, even with a different LLM family. Finally, we provide a comprehensive discussion on opportunities for future studies."
+  },
+  {
+    "year": 2026,
+    "type": "preprint",
+    "title": "Formula-One Prompting: Adaptive Reasoning Through Equations For Applied Mathematics",
+    "authors": "Natapong Nitarach, Pittawat Taveekitworachai, Kunat Pipatanakul",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2601.19302",
+    "artifacts": [],
+    "tags": ["Large Language Models", "Prompt Engineering", "Finance"],
+    "abstract": "LLMs encode vast mathematical knowledge including governing equations from pretraining on equation-rich corpora, yet existing prompting methods, including Chain-of-Thought (CoT) and Program-of-Thought (PoT), do not explicitly elicit equation formulation as a reasoning stage. We propose Formula-One Prompting (F-1), a single-call, two-phase approach that fills this equation gap by using mathematical equations as an intermediate representation before solving through natural flow reasoning. F-1 first formulates governing equations from problem descriptions; the model then naturally selects a solving strategy among CoT, PoT, or direct computation based on the formalized equation structure, without explicit routing rules. Results across five models and four benchmarks show F-1 outperforms CoT by +5.76% and PoT by +8.42% on average, winning 53 out of 60 benchmark-model comparisons (88.3%). Gains are largest in applied domains: +13.30% on FinanceMath over CoT, and within OlympiadBench, larger gains on physics (+2.55%) than pure math (+0.44%). Per-problem analysis confirms equation formalization is the primary driver."
+  },
+  {
+    "year": 2026,
+    "type": "preprint",
+    "title": "Typhoon-S: Minimal Open Post-Training for Sovereign Large Language Models",
+    "authors": "Kunat Pipatanakul, Pittawat Taveekitworachai",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2601.18129",
+    "artifacts": [
+      {
+        "label": "Typhoon S",
+        "href": "https://huggingface.co/collections/typhoon-ai/typhoon-s"
+      }
+    ],
+    "tags": [
+      "Large Language Models",
+      "Thai Language",
+      "Low-resource Languages",
+      "Reinforcement Fine-Tuning"
+    ],
+    "abstract": "Large language models (LLMs) have progressed rapidly; however, most state-of-the-art models are trained and evaluated primarily in high-resource languages such as English and Chinese, and are often developed by a small number of organizations with access to large-scale compute and data. This gatekeeping creates a practical barrier for sovereign settings in which a regional- or national-scale institution or domain owner must retain control and understanding of model weights, training data, and deployment while operating under limited resources and strict transparency constraints. To this end, we identify two core requirements: (1) adoptability, the ability to transform a base model into a general-purpose assistant, and (2) sovereign capability, the ability to perform high-stakes, region-specific tasks (e.g., legal reasoning in local languages and cultural knowledge). We investigate whether these requirements can be achieved without scaling massive instruction corpora or relying on complex preference tuning pipelines and large-scale reinforcement fine-tuning (RFT). We present Typhoon S, a minimal and open post-training recipe that combines supervised fine-tuning, on-policy distillation, and small-scale RFT. Using Thai as a representative case study, we demonstrate that our approach transforms both sovereign-adapted and general-purpose base models into instruction-tuned models with strong general performance. We further show that small-scale RFT with InK-GRPO -- an extension of GRPO that augments the GRPO loss with a next-word prediction loss -- improves Thai legal reasoning and Thai-specific knowledge while preserving general capabilities. Our results suggest that a carefully designed post-training strategy can reduce the required scale of instruction data and computation, providing a practical path toward high-quality sovereign LLMs under academic-scale resources."
+  },
+  {
+    "year": 2026,
+    "type": "preprint",
+    "title": "Typhoon OCR: Open Vision-Language Model For Thai Document Extraction",
+    "authors": "Surapon Nonesung, Natapong Nitarach, Teetouch Jaknamon, Pittawat Taveekitworachai, Kunat Pipatanakul",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2601.13044",
+    "artifacts": [
+      {
+        "label": "Typhoon OCR 7B",
+        "href": "https://huggingface.co/typhoon-ai/typhoon-ocr-7b"
+      },
+      {
+        "label": "Typhoon OCR 1.5 2B",
+        "href": "https://huggingface.co/typhoon-ai/typhoon-ocr1.5-2b"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/scb-10x/typhoon-ocr"
+      }
+    ],
+    "tags": [
+      "Optical Character Recognition",
+      "Vision-Language Models",
+      "Document Understanding",
+      "Document Extraction",
+      "Layout Analysis",
+      "Thai Language",
+      "Low-resource Languages",
+      "Multimodal Models"
+    ],
+    "abstract": "Document extraction is a core component of digital workflows, yet existing vision-language models (VLMs) predominantly favor high-resource languages. Thai presents additional challenges due to script complexity from non-latin letters, the absence of explicit word boundaries, and the prevalence of highly unstructured real-world documents, limiting the effectiveness of current open-source models. This paper presents Typhoon OCR, an open VLM for document extraction tailored for Thai and English. The model is fine-tuned from vision-language backbones using a Thai-focused training dataset. The dataset is developed using a multi-stage data construction pipeline that combines traditional OCR, VLM-based restructuring, and curated synthetic data. Typhoon OCR is a unified framework capable of text transcription, layout reconstruction, and document-level structural consistency. The latest iteration of our model, Typhoon OCR V1.5, is a compact and inference-efficient model designed to reduce reliance on metadata and simplify deployment. Comprehensive evaluations across diverse Thai document categories, including financial reports, government forms, books, infographics, and handwritten documents, show that Typhoon OCR achieves performance comparable to or exceeding larger frontier proprietary models, despite substantially lower computational cost. The results demonstrate that open vision-language OCR models can achieve accurate text extraction and layout reconstruction for Thai documents, reaching performance comparable to proprietary systems while remaining lightweight and deployable."
+  },
+  {
+    "year": 2026,
+    "type": "preprint",
+    "title": "Typhoon ASR Real-time: FastConformer-Transducer for Thai Automatic Speech Recognition",
+    "authors": "Warit Sirichotedumrong, Adisai Na-Thalang, Potsawee Manakul, Pittawat Taveekitworachai, Sittipong Sripaisarnmongkol, Kunat Pipatanakul",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2601.13044",
+    "artifacts": [
+      {
+        "label": "Typhoon ASR Real-Time",
+        "href": "https://huggingface.co/typhoon-ai/typhoon-asr-realtime"
+      },
+      {
+        "label": "Typhoon Isan ASR Real-Time",
+        "href": "https://huggingface.co/typhoon-ai/typhoon-isan-asr-realtime"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/scb-10x/typhoon-asr"
+      }
+    ],
+    "tags": [
+      "Automatic Speech Recognition",
+      "Streaming ASR",
+      "Low-latency Models",
+      "Thai Language",
+      "Low-resource Speech",
+      "FastConformer",
+      "Transducer Models",
+      "Dialect Adaptation"
+    ],
+    "abstract": "Large encoder-decoder models like Whisper achieve strong offline transcription but remain impractical for streaming applications due to high latency. However, due to the accessibility of pre-trained checkpoints, the open Thai ASR landscape remains dominated by these offline architectures, leaving a critical gap in efficient streaming solutions. We present Typhoon ASR Real-time, a 115M-parameter FastConformer-Transducer model for low-latency Thai speech recognition. We demonstrate that rigorous text normalization can match the impact of model scaling: our compact model achieves a 45x reduction in computational cost compared to Whisper Large-v3 while delivering comparable accuracy. Our normalization pipeline resolves systemic ambiguities in Thai transcription --including context-dependent number verbalization and repetition markers (mai yamok) --creating consistent training targets. We further introduce a two-stage curriculum learning approach for Isan (north-eastern) dialect adaptation that preserves Central Thai performance. To address reproducibility challenges in Thai ASR, we release the Typhoon ASR Benchmark, a gold-standard human-labeled datasets with transcriptions following established Thai linguistic conventions, providing standardized evaluation protocols for the research community."
   }
 ]

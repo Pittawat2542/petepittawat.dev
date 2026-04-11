@@ -1,5 +1,11 @@
 [
   {
+    "title": "Feb 2026 – Present — Research Scientist, Typhoon team (SCB DataX R&I)",
+    "description": "Collaborate with and advise fellow research scientists on cutting-edge LM research. Foster internal knowledge sharing and provide consultation on agentic AI applications. Support executives by delivering clear, actionable insights to inform AI strategy and decision-making.",
+    "accent": "publications",
+    "highlight": true
+  },
+  {
     "title": "2025 — Typhoon Application Week",
     "description": "Built and shipped 7+ LLM-powered apps.",
     "accent": "about",
@@ -12,7 +18,7 @@
     "highlight": false
   },
   {
-    "title": "Oct 2024 – Present — Research Scientist, Typhoon team (SCB 10X R&D)",
+    "title": "Oct 2024 – Jan 2026 — Research Scientist, Typhoon team (SCB 10X R&D)",
     "description": "Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT). Spearheading Typhoon T1 and external collaborations.",
     "accent": "publications",
     "highlight": true
@@ -36,7 +42,7 @@
     "highlight": true
   },
   {
-    "title": "2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)",
+    "title": "Feb 2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)",
     "description": "First-Class Honors (3.99/4.00). Senior project on Automatic Mind Map Generation.",
     "accent": "publications",
     "highlight": true

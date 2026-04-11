@@ -57,7 +57,31 @@ const currentThemes = [
   },
 ];
 
-const timeline = await getAboutTimeline();
+const rawTimeline = await getAboutTimeline();
+const getTimelineScore = (title: string) => {
+  const match = title.match(/(?:([a-zA-Z]+)\s+)?(\d{4})/);
+  if (!match) return 0;
+  const monthStr = match[1]?.substring(0, 3).toLowerCase();
+  const months = [
+    'jan',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sep',
+    'oct',
+    'nov',
+    'dec',
+  ];
+  const monthIdx = monthStr ? months.indexOf(monthStr) : 11;
+  return parseInt(match[2] || '0', 10) * 100 + (monthIdx >= 0 ? monthIdx : 11);
+};
+const timeline = rawTimeline
+  .slice()
+  .sort((a, b) => getTimelineScore(b.title) - getTimelineScore(a.title));
 const spotlightTimeline = timeline.filter(item => item.highlight);
 
 const backgroundNotes = [
