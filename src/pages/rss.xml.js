@@ -28,7 +28,7 @@ export async function GET(context) {
         title,
         description,
         pubDate: post.data.pubDate,
-        link: `/blog/${post.slug}/`,
+        link: `/blog/${post.id}/`,
         categories,
         // Enrich feed with full content (Markdown/MDX body)
         content: post.body,

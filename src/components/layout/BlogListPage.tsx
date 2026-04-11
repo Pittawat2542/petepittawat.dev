@@ -150,7 +150,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       <ul className="mt-2 grid w-full grid-cols-1 gap-5 py-3 md:mt-4 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">
         {pagePosts.map((post: BlogPost, index: number) => (
           <BlogCard
-            key={post.slug}
+            key={post.id}
             post={post}
             allPosts={Array.from(posts)}
             className="reveal"

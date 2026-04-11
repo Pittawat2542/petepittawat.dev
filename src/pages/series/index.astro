@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { BookOpen, ChevronRight } from 'lucide-astro';
+import { BookOpen, ChevronRight } from '@lucide/astro';
 import FormattedDate from '@/components/content/FormattedDate';
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
 import { getAllSeries } from '@/lib/series';
@@ -93,7 +93,7 @@ allSeries.sort((a, b) => {
 
                           <div class="min-w-0 flex-1">
                             <a
-                              href={`/blog/${String(post.slug)}/`}
+                              href={`/blog/${String(post.id)}/`}
                               class="block transition-colors hover:text-[color:var(--accent)]"
                             >
                               <h3 class="mb-1 text-sm leading-snug font-medium md:text-base">
@@ -112,7 +112,7 @@ allSeries.sort((a, b) => {
 
                     <footer class="flex items-center justify-between">
                       <a
-                        href={firstPost ? `/blog/${String(firstPost.slug)}/` : '#'}
+                        href={firstPost ? `/blog/${String(firstPost.id)}/` : '#'}
                         class="inline-flex items-center gap-2 rounded-lg bg-[color:var(--accent)] px-4 py-2 text-sm font-medium text-[color:var(--bg)] transition-colors duration-200 hover:bg-[color:var(--accent)]/90"
                       >
                         Start reading

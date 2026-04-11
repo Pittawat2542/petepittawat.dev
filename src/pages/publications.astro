@@ -2,9 +2,11 @@
 import PageWithHero from '@/layouts/PageWithHero.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
 import { PublicationsExplorer } from '@/components/explorers';
-import { AcademicServices } from '@/components/sections';
-import publications from '@/content/publications/publications.json';
 import academicServices from '@/data/services/academic.json';
+import AcademicServices from '@/components/sections/AcademicServices';
+import { getPublications } from '@/lib/content';
+
+const publications = await getPublications();
 ---
 
 <PageWithHero
