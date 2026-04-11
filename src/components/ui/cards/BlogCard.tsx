@@ -125,7 +125,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
  * Memoized blog card component for optimal performance.
  *
  * The component is memoized with a custom comparison function that checks:
- * - Post slug (primary identifier)
+ * - Post id (primary identifier)
  * - Featured status
  * - CSS classes and all posts reference
  *
