@@ -1,6 +1,6 @@
 import '@/styles/components/navigation.css';
 
-import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
+import { BookOpenText, CircleUser, FileText, FolderKanban, Mic } from 'lucide-react';
 
 import type { FC } from 'react';
 import HeaderLink from '@/components/header/HeaderLink';
@@ -11,8 +11,8 @@ const NAVIGATION_LINKS = [
   { href: '/blog', label: 'Blog', Icon: BookOpenText },
   { href: '/projects', label: 'Projects', Icon: FolderKanban },
   { href: '/publications', label: 'Publications', Icon: FileText },
-  { href: '/talks', label: 'Talks', Icon: Mic2 },
-  { href: '/about', label: 'About', Icon: User2 },
+  { href: '/talks', label: 'Talks', Icon: Mic },
+  { href: '/about', label: 'About', Icon: CircleUser },
 ] as const;
 
 interface NavigationProps {

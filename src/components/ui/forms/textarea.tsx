@@ -1,4 +1,4 @@
-import { forwardRef, memo, type FormEvent, type TextareaHTMLAttributes } from 'react';
+import { forwardRef, memo, type TextareaHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 import { useGlassGlow } from '@/lib/hooks';
 
@@ -11,7 +11,9 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, wrapperClassName, autoGrow = false, disabled, onInput, ...props }, ref) => {
     const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLDivElement>();
 
-    const handleInput = (event: FormEvent<HTMLTextAreaElement>) => {
+    const handleInput: NonNullable<
+      TextareaHTMLAttributes<HTMLTextAreaElement>['onInput']
+    > = event => {
       if (autoGrow) {
         const element = event.currentTarget;
         element.style.height = 'auto';

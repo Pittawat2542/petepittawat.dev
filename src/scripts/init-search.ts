@@ -9,7 +9,9 @@ function prefetchSearchIndexOnce() {
       // Respect Data Saver
       // @ts-ignore
       if (navigator?.connection?.saveData) return;
-    } catch {}
+    } catch {
+      // Ignore browsers without the Network Information API.
+    }
     fetch('/search.json').catch(() => {});
   };
 }

@@ -44,8 +44,8 @@ const ScrollTopComponent: FC = () => {
         try {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return;
-        } catch (e) {
-          // Fallback
+        } catch {
+          // Fall through to the manual animation fallback.
         }
       }
 

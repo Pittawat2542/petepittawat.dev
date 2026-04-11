@@ -1,6 +1,6 @@
 ---
 import SearchButton from './SearchButton.astro';
-import { BookOpenText, FolderKanban, FileText, Mic2, User2, ChevronRight } from 'lucide-astro';
+import { BookOpenText, FolderKanban, FileText, Mic, CircleUser, ChevronRight } from '@lucide/astro';
 
 export interface Props {
   currentPath: string;
@@ -81,8 +81,8 @@ const isActive = (href: string) =>
                     {label === 'Blog' && <BookOpenText class="h-5 w-5" aria-hidden="true" />}
                     {label === 'Projects' && <FolderKanban class="h-5 w-5" aria-hidden="true" />}
                     {label === 'Publications' && <FileText class="h-5 w-5" aria-hidden="true" />}
-                    {label === 'Talks' && <Mic2 class="h-5 w-5" aria-hidden="true" />}
-                    {label === 'About' && <User2 class="h-5 w-5" aria-hidden="true" />}
+                    {label === 'Talks' && <Mic class="h-5 w-5" aria-hidden="true" />}
+                    {label === 'About' && <CircleUser class="h-5 w-5" aria-hidden="true" />}
                   </span>
                   <span class="relative min-w-0 flex-1 text-left">
                     <span class="block truncate text-base leading-tight font-semibold tracking-[0.01em]">

@@ -38,8 +38,8 @@ export function useUrlParams<T>({ onParams, parser }: UseUrlParamsConfig<T>) {
       const searchParams = navigationService.getCurrentSearch();
       const parsed = parserRef.current(searchParams);
       onParamsRef.current(parsed);
-    } catch (error) {
-      // Silently handle errors
+    } catch {
+      // Ignore malformed URLs and keep the initial state.
     }
     // Only run on mount - refs ensure we use the latest callbacks
     // without triggering re-runs when they change

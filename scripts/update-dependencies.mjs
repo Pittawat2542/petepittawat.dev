@@ -1,37 +1,80 @@
 #!/usr/bin/env node
 
-/**
- * Script to safely update project dependencies
- * This script updates dependencies in a controlled manner with proper validation
- */
+import { execSync } from 'node:child_process';
 
-import { readFileSync, writeFileSync } from 'fs';
+const upgradeGroups = [
+  {
+    name: 'Astro core',
+    packages: [
+      'astro',
+      '@astrojs/check',
+      '@astrojs/mdx',
+      '@astrojs/react',
+      '@astrojs/rss',
+      '@astrojs/sitemap',
+    ],
+  },
+  {
+    name: 'Runtime packages',
+    packages: [
+      '@lucide/astro',
+      'lucide-react',
+      'react',
+      'react-dom',
+      'framer-motion',
+      'katex',
+      'sharp',
+      'tailwindcss',
+      '@tailwindcss/vite',
+      'tailwind-merge',
+    ],
+  },
+  {
+    name: 'Tooling',
+    packages: [
+      'typescript',
+      'eslint',
+      '@eslint/js',
+      '@typescript-eslint/eslint-plugin',
+      '@typescript-eslint/parser',
+      'eslint-plugin-astro',
+      'eslint-plugin-react',
+      'eslint-plugin-react-hooks',
+      '@types/react',
+      '@types/react-dom',
+      '@types/katex',
+      'prettier',
+      'prettier-plugin-tailwindcss',
+      'lint-staged',
+    ],
+  },
+];
 
-import { execSync } from 'child_process';
-
-console.log('🔍 Checking for outdated dependencies...\n');
-
-try {
-  // Get current outdated dependencies
-  const outdatedOutput = execSync('pnpm outdated', { encoding: 'utf8' });
-  console.log(outdatedOutput);
-  
-  // Update all dependencies
-  console.log('🔄 Updating dependencies...\n');
-  execSync('pnpm update', { stdio: 'inherit' });
-  
-  // Run tests to ensure everything still works
-  console.log('🧪 Running tests...\n');
-  execSync('pnpm run lint', { stdio: 'inherit' });
-  execSync('pnpm run type-check', { stdio: 'inherit' });
-  
-  console.log('✅ Dependencies updated successfully!\n');
-  console.log('📋 Next steps:');
-  console.log('1. Review the changes in package.json and pnpm-lock.yaml');
-  console.log('2. Test the application locally with `pnpm dev`');
-  console.log('3. If everything works, commit the changes');
-  
-} catch (error) {
-  console.error('❌ Error updating dependencies:', error.message);
-  process.exit(1);
+function run(command, options = {}) {
+  console.log(`\n$ ${command}`);
+  execSync(command, { stdio: 'inherit', ...options });
 }
+
+function runOptional(command) {
+  try {
+    run(command);
+  } catch (error) {
+    console.warn(`\nSkipping optional step after failure: ${command}`);
+    if (error instanceof Error) {
+      console.warn(error.message);
+    }
+  }
+}
+
+console.log('Checking outdated dependencies...');
+runOptional('pnpm outdated');
+
+for (const group of upgradeGroups) {
+  console.log(`\n=== ${group.name} ===`);
+  run(`pnpm up -L ${group.packages.join(' ')}`);
+  run('pnpm lint');
+  run('pnpm build');
+}
+
+console.log('\nDependency update workflow complete.');
+console.log('Review package.json and pnpm-lock.yaml before committing.');

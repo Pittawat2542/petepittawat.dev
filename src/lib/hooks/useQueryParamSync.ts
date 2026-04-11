@@ -9,7 +9,9 @@ export function useQueryParamSync(param: string, value: string, setValue: (next:
       const params = new URLSearchParams(window.location.search);
       const existing = params.get(param);
       if (existing) setValue(existing);
-    } catch {}
+    } catch {
+      // Ignore malformed URLs and leave the current state unchanged.
+    }
     hydratedRef.current = true;
   }, [param, setValue]);
 
@@ -20,7 +22,9 @@ export function useQueryParamSync(param: string, value: string, setValue: (next:
         const params = new URLSearchParams(window.location.search);
         const next = params.get(param) || '';
         setValue(next);
-      } catch {}
+      } catch {
+        // Ignore malformed URLs and keep the previous query state.
+      }
     };
     window.addEventListener('popstate', handler);
     window.addEventListener('hashchange', handler);
@@ -44,6 +48,8 @@ export function useQueryParamSync(param: string, value: string, setValue: (next:
       const query = params.toString();
       const url = query ? `?${query}` : window.location.pathname;
       window.history.replaceState({}, '', url);
-    } catch {}
+    } catch {
+      // Ignore history update failures.
+    }
   }, [param, value]);
 }

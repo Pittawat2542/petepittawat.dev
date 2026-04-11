@@ -64,3 +64,20 @@ The script generates the following files in the `public/` directory:
 ### HTML Integration
 
 The generated favicons are automatically included in your HTML via the `BaseHead.astro` component, which contains comprehensive `<link>` and `<meta>` tags for all supported formats.
+
+## `update-dependencies.mjs`
+
+Runs dependency upgrades in explicit groups instead of a single blanket update.
+
+### Behavior
+
+- Prints `pnpm outdated` first so you can review available updates
+- Upgrades Astro core, runtime packages, and tooling in separate steps
+- Verifies each step with `pnpm lint` and `pnpm build`
+- Leaves review and commit decisions to the caller after the grouped run completes
+
+### Usage
+
+```bash
+pnpm update-deps
+```
