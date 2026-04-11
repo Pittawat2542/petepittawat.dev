@@ -31,8 +31,8 @@ const parseJsonArray = <T extends Record<string, unknown>>(
   }
 
   return items.map((item, index) => ({
-    id: getId(item, index),
     ...item,
+    id: getId(item, index),
   }));
 };
 
@@ -164,12 +164,16 @@ function getTalkId(item: z.infer<typeof talkSchema>, index: number) {
   return `${dateStr}-${toId(item.title) || index.toString()}`;
 }
 
-function getPublicationId(item: z.infer<typeof publicationSchema>, index: number) {
+function getYearTitleId(item: { year: number; title: string }, index: number) {
   return `${item.year}-${toId(item.title) || index.toString()}`;
 }
 
+function getPublicationId(item: z.infer<typeof publicationSchema>, index: number) {
+  return getYearTitleId(item, index);
+}
+
 function getProjectId(item: z.infer<typeof projectSchema>, index: number) {
-  return `${item.year}-${toId(item.title) || index.toString()}`;
+  return getYearTitleId(item, index);
 }
 
 function getAboutTimelineItemId(item: z.infer<typeof aboutTimelineItemSchema>, index: number) {
