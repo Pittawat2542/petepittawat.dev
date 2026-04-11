@@ -1,9 +1,6 @@
 import type { APIContext } from 'astro';
 export const prerender = true;
-import { getCollection } from 'astro:content';
-import projects from '@/content/projects/projects.json';
-import publications from '@/content/publications/publications.json';
-import talks from '@/content/talks/talks.json';
+import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
 import { slugify } from '@/lib/slug';
 
 type SearchItem = {
@@ -19,16 +16,21 @@ type SearchItem = {
 
 export async function GET(_context: APIContext) {
   const items: SearchItem[] = [];
+  const [blog, projects, publications, talks] = await Promise.all([
+    getBlogPosts(),
+    getProjects(),
+    getPublications(),
+    getTalks(),
+  ]);
 
   // Blog posts
-  const blog = await getCollection('blog');
   for (const entry of blog) {
     items.push({
-      id: `blog:${entry.slug}`,
+      id: `blog:${entry.id}`,
       type: 'blog',
       title: entry.data.title,
       description: entry.data.excerpt,
-      url: `/blog/${entry.slug}`,
+      url: `/blog/${entry.data.slug}/`,
       tags: entry.data.tags,
       date: entry.data.pubDate.toISOString(),
     });

@@ -28,7 +28,7 @@ Personal website and blog of **Pittawat Taveekitworachai** — a modern, fast, a
 
 ### Core Framework
 
-- **[Astro 5.x](https://astro.build)** - Static site generation with islands architecture
+- **[Astro 6.x](https://astro.build)** - Static site generation with islands architecture
 - **[TypeScript](https://typescriptlang.org)** - Type-safe development
 - **[React 19](https://react.dev)** - Interactive islands with React Compiler
 
@@ -55,7 +55,7 @@ Personal website and blog of **Pittawat Taveekitworachai** — a modern, fast, a
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js 18+** (LTS recommended) - [Download here](https://nodejs.org)
+- **Node.js 22.12+** - [Download here](https://nodejs.org)
 - **pnpm** - [Install pnpm](https://pnpm.io/installation)
   ```bash
   npm install -g pnpm
@@ -177,7 +177,7 @@ This site supports multiple content types through Astro's Content Collections:
 
 ### Content Schema
 
-All content is validated using Zod schemas defined in `src/content/config.ts`:
+All content is validated using Astro content-layer schemas defined in `src/content.config.ts`:
 
 ```typescript
 // Blog post frontmatter
@@ -362,12 +362,9 @@ DEV_PORT=4321
 
 This site generates a static build and can be deployed to any static hosting platform:
 
-#### Recommended Platforms
+#### Recommended Platform
 
-- **[Vercel](https://vercel.com)** - Zero-config deployment from Git
-- **[Netlify](https://netlify.com)** - Continuous deployment with edge functions
-- **[Cloudflare Pages](https://pages.cloudflare.com)** - Global CDN with serverless functions
-- **[GitHub Pages](https://pages.github.com)** - Free hosting for public repositories
+- **[GitHub Pages](https://pages.github.com)** - Automated deployment via `.github/workflows/deploy.yml`
 
 #### Deployment Configuration
 
@@ -376,11 +373,15 @@ This site generates a static build and can be deployed to any static hosting pla
 ```bash
 Build Command: pnpm build
 Output Directory: dist/
-Node Version: 18.x or higher
+Node Version: 22.12.0 or higher
 ```
 
-**Environment Variables:**
-Ensure you set your environment variables in your deployment platform's dashboard.
+**Workflow:**
+
+- Push to `main` to trigger `.github/workflows/deploy.yml`
+- The workflow uses `withastro/action@v3`
+- The build runs on Node `22.12.0` with `pnpm@10.18.3`
+- `public/CNAME` preserves the custom domain configuration during deployment
 
 ### Manual Deployment
 

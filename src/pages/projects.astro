@@ -1,8 +1,10 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
 import { ProjectsExplorer } from '@/components/explorers';
-import projects from '@/content/projects/projects.json';
 import PageWithHero from '@/layouts/PageWithHero.astro';
+import { getProjects } from '@/lib/content';
+
+const projects = await getProjects();
 ---
 
 <PageWithHero

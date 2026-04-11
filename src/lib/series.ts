@@ -1,6 +1,4 @@
-import type { CollectionEntry } from 'astro:content';
-
-export type BlogPost = CollectionEntry<'blog'>;
+import type { BlogPost } from '@/lib/content';
 
 export interface SeriesInfo {
   slug: string;
@@ -80,7 +78,7 @@ export function getSeriesNavigation(
     return null;
   }
 
-  const currentIndex = series.posts.findIndex(post => post.slug === currentPost.slug);
+  const currentIndex = series.posts.findIndex(post => post.id === currentPost.id);
   if (currentIndex === -1) {
     return null;
   }
@@ -112,7 +110,7 @@ export function getPostPartNumber(posts: BlogPost[], post: BlogPost): number | n
     return null;
   }
 
-  const index = series.posts.findIndex(p => p.slug === post.slug);
+  const index = series.posts.findIndex(p => p.id === post.id);
   return index !== -1 ? index + 1 : null;
 }
 
@@ -127,7 +125,7 @@ export function isPartOfSeries(post: BlogPost): boolean {
  * Get series progress as a percentage (0-100)
  */
 export function getSeriesProgress(series: SeriesInfo, currentPost: BlogPost): number {
-  const currentIndex = series.posts.findIndex(post => post.slug === currentPost.slug);
+  const currentIndex = series.posts.findIndex(post => post.id === currentPost.id);
   if (currentIndex === -1) return 0;
 
   return Math.round(((currentIndex + 1) / series.totalParts) * 100);

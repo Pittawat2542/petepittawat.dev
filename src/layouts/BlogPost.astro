@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import { Calendar, User2, Clock3, Tag as TagIcon } from 'lucide-astro';
+import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
 import FormattedDate from '@/components/content/FormattedDate';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
@@ -115,7 +115,7 @@ const schema = generateBlogPostSchema({
           <div class="article-meta__divider" aria-hidden="true">·</div>
           <div class="article-meta__item">
             <span class="sr-only">Author</span>
-            <User2 class="article-meta__icon" aria-hidden="true" />
+            <CircleUser class="article-meta__icon" aria-hidden="true" />
             <span class="article-meta__text">Pete</span>
           </div>
           {

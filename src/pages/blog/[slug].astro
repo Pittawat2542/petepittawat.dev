@@ -1,31 +1,31 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
 import RelatedPosts from '@/components/content/RelatedPosts';
 import BlogPost from '@/layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
-    params: { slug: post.slug },
+    params: { slug: post.data.slug },
     props: post,
   }));
 }
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props as Props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 // Rough reading time estimate (~220 wpm)
 const wordCount = (post.body || '').trim().split(/\s+/).length;
 const readingTimeMin = Math.max(1, Math.round(wordCount / 220));
 
 const all = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 const related = all
-  .filter(p => p.slug !== post.slug && p.data.tags.some(t => post.data.tags.includes(t)))
+  .filter(p => p.id !== post.id && p.data.tags.some(t => post.data.tags.includes(t)))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2);
 ---
 
-<BlogPost {...post.data} slug={post.slug} readingTimeMin={readingTimeMin}>
+<BlogPost {...post.data} slug={post.data.slug} readingTimeMin={readingTimeMin}>
   <Content />
 
   <Fragment slot="after">

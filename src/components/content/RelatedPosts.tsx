@@ -33,9 +33,9 @@ const RelatedPostsComponent: FC<RelatedPostsProps> = ({ posts }) => {
                 ? String(dateValue)
                 : undefined;
           return (
-            <li key={p.slug} className="article-related-card">
+            <li key={p.id} className="article-related-card">
               <a
-                href={`/blog/${String(p.slug)}`}
+                href={`/blog/${p.data.slug}/`}
                 className="article-related-link"
                 aria-label={`Read ${p.data.title}`}
               >

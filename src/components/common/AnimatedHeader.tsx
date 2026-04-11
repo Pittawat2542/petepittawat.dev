@@ -1,4 +1,4 @@
-import { BookOpenText, FileText, FolderKanban, Mic2, User2 } from 'lucide-react';
+import { BookOpenText, CircleUser, FileText, FolderKanban, Mic } from 'lucide-react';
 import { SITE_TITLE } from '@/lib/constants';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -18,8 +18,8 @@ const NAVIGATION_LINKS: readonly NavLink[] = [
   { href: '/blog', label: 'Blog', icon: BookOpenText },
   { href: '/projects', label: 'Projects', icon: FolderKanban },
   { href: '/publications', label: 'Publications', icon: FileText },
-  { href: '/talks', label: 'Talks', icon: Mic2 },
-  { href: '/about', label: 'About', icon: User2 },
+  { href: '/talks', label: 'Talks', icon: Mic },
+  { href: '/about', label: 'About', icon: CircleUser },
 ] as const;
 
 const AnimatedHeaderComponent: FC = () => {

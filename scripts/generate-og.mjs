@@ -389,13 +389,19 @@ async function generate() {
 
   for (const file of files) {
     if (!/\.(md|mdx)$/.test(file)) continue;
-    const slug = file.replace(/\.(md|mdx)$/i, '');
+    const fallbackSlug = file.replace(/\.(md|mdx)$/i, '');
     const full = path.join(BLOG_DIR, file);
-    const out = path.join(OUT_DIR, `${slug}.png`);
 
     try {
       const content = await fs.readFile(full, 'utf8');
       const frontmatter = extractFrontmatter(content);
+      const rawSlug = frontmatter.slug || fallbackSlug;
+      let slug = String(rawSlug).replace(/[^a-zA-Z0-9-_]/g, '');
+      if (!slug) slug = String(fallbackSlug).replace(/[^a-zA-Z0-9-_]/g, '');
+      const out = path.join(OUT_DIR, `${slug}.png`);
+      if (!path.resolve(out).startsWith(path.resolve(OUT_DIR))) {
+        throw new Error(`Path traversal detected for slug: ${rawSlug}`);
+      }
       const title = frontmatter.title || slug;
       const pubDate = frontmatter.pubDate;
       const tags = frontmatter.tags;

@@ -7,7 +7,7 @@ import ThemedPageHero from '@/components/layout/core/ThemedPageHero';
 import Container from '@/components/ui/core/Container';
 import GlassCard from '@/components/ui/core/GlassCard';
 import Prose from '@/components/content/Prose';
-import timeline from '@/content/about/timeline.json';
+import { getAboutTimeline } from '@/lib/content';
 
 const quickFacts = [
   {
@@ -57,6 +57,7 @@ const currentThemes = [
   },
 ];
 
+const timeline = await getAboutTimeline();
 const spotlightTimeline = timeline.filter(item => item.highlight);
 
 const backgroundNotes = [
@@ -111,7 +112,7 @@ const learningHighlights = [
   'Mentoring research interns and guiding projects from ideation to publication.',
 ];
 
-import { Sparkles, Camera, Flame, History, Milestone } from 'lucide-astro';
+import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
 ---
 
 <BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION} page="about">

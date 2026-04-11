@@ -37,27 +37,6 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
     />
     <slot name="head" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    {
-      import.meta.env.DEV && (
-        <>
-          <script is:inline>
-            {`
-            try {
-              if (!window.__vite_plugin_react_preamble_installed__) {
-                window.__vite_plugin_react_preamble_installed__ = true;
-                window.$RefreshReg$ = () => {};
-                window.$RefreshSig$ = () => (type) => type;
-              }
-            } catch {}
-            `}
-          </script>
-          <script type="module" is:inline>
-            {`import RefreshRuntime from '/@react-refresh';
-              try { RefreshRuntime.injectIntoGlobalHook(window); } catch {}`}
-          </script>
-        </>
-      )
-    }
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>

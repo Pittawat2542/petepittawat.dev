@@ -21,7 +21,9 @@ const HeaderActionsComponent: FC<HeaderActionsProps> = ({ mobileOpen, onToggleMo
           .connection;
         if (connection?.saveData) return;
       }
-    } catch {}
+    } catch {
+      // Ignore browsers without the Network Information API.
+    }
     fetch('/search.json').catch(() => {});
   }, []);
 

@@ -15,7 +15,7 @@ export function useBlogCardSeries(post: BlogPost, allPosts: readonly BlogPost[])
       const sortedPosts = [...seriesPosts].sort(
         (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
       );
-      partNumber = sortedPosts.findIndex(p => p.slug === post.slug) + 1;
+      partNumber = sortedPosts.findIndex(p => p.id === post.id) + 1;
     }
   }
 

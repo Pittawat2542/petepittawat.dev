@@ -77,7 +77,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       <div className="aurora-card__wrapper" />
       <a
         className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out will-change-transform focus-visible:text-[color:var(--white)]"
-        href={post.data.externalUrl || `/blog/${String(post.slug)}`}
+        href={post.data.externalUrl ?? `/blog/${post.data.slug}/`}
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external' : ''} blog post: ${post.data.title}`}
@@ -125,7 +125,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
  * Memoized blog card component for optimal performance.
  *
  * The component is memoized with a custom comparison function that checks:
- * - Post slug (primary identifier)
+ * - Post id (primary identifier)
  * - Featured status
  * - CSS classes and all posts reference
  *
@@ -135,7 +135,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
 export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
   // Custom comparison for better performance
   return (
-    prevProps.post.slug === nextProps.post.slug &&
+    prevProps.post.id === nextProps.post.id &&
     prevProps.featured === nextProps.featured &&
     prevProps.className === nextProps.className &&
     prevProps.allPosts === nextProps.allPosts

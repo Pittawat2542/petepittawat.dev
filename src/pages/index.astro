@@ -1,17 +1,21 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
-import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import talks from '@/content/talks/talks.json';
-import publications from '@/content/publications/publications.json';
-import { AboutSection, BlogSection, HeroSection, StatsSection } from '@/components/sections';
 import { getImage } from 'astro:assets';
 import profileImage from '@/assets/images/profile.jpg';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
+import AboutSection from '@/components/sections/AboutSection.astro';
+import BlogSection from '@/components/sections/BlogSection.astro';
+import HeroSection from '@/components/sections/HeroSection.astro';
+import StatsSection from '@/components/sections/StatsSection.astro';
+import { getBlogPosts, getPublications, getTalks } from '@/lib/content';
 
-const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const [blogPosts, publications, talks] = await Promise.all([
+  getBlogPosts(),
+  getPublications(),
+  getTalks(),
+]);
+const allPosts = blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const posts = allPosts.slice(0, 2);
 const stats = {
   posts: allPosts.length,
