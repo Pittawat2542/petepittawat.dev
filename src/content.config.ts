@@ -13,11 +13,43 @@ const parseJsonArray = <T extends Record<string, unknown>>(
   fileContent: string,
   getId: (item: T, index: number) => string
 ) => {
-  const items = JSON.parse(fileContent) as T[];
+  const callerName = getId.name || 'anonymous';
+  let items: T[];
+
+  try {
+    items = JSON.parse(fileContent) as T[];
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const preview = fileContent.trim().slice(0, 120).replace(/\s+/g, ' ');
+    throw new Error(
+      `parseJsonArray failed for ${callerName}: could not parse JSON input "${preview}" (${message})`
+    );
+  }
+
+  if (!Array.isArray(items)) {
+    throw new Error(`parseJsonArray failed for ${callerName}: expected a JSON array at the root`);
+  }
+
   return items.map((item, index) => ({
     id: getId(item, index),
     ...item,
   }));
+};
+
+const hasMatchingSeriesMetadata = (
+  value: { seriesSlug?: string | undefined; seriesTitle?: string | undefined },
+  ctx: z.RefinementCtx
+) => {
+  const hasSeriesSlug = Boolean(value.seriesSlug);
+  const hasSeriesTitle = Boolean(value.seriesTitle);
+
+  if (hasSeriesSlug !== hasSeriesTitle) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'seriesSlug and seriesTitle must both be present or both absent.',
+      path: hasSeriesSlug ? ['seriesTitle'] : ['seriesSlug'],
+    });
+  }
 };
 
 const blog = defineCollection({
@@ -26,18 +58,21 @@ const blog = defineCollection({
     base: './src/content/blog',
   }),
   schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      excerpt: z.string(),
-      tags: z.array(z.string()),
-      pubDate: z.coerce.date(),
-      coverImage: image().optional(),
-      seriesSlug: z.string().optional(),
-      seriesTitle: z.string().optional(),
-      seriesOrder: z.number().optional(),
-      seriesDescription: z.string().optional(),
-      externalUrl: z.url().optional(),
-    }),
+    z
+      .object({
+        slug: z.string(),
+        title: z.string(),
+        excerpt: z.string(),
+        tags: z.array(z.string()),
+        pubDate: z.coerce.date(),
+        coverImage: image().optional(),
+        seriesSlug: z.string().optional(),
+        seriesTitle: z.string().optional(),
+        seriesOrder: z.number().optional(),
+        seriesDescription: z.string().optional(),
+        externalUrl: z.url().optional(),
+      })
+      .superRefine(hasMatchingSeriesMetadata),
 });
 
 const talkResourceSchema = z.object({
@@ -47,7 +82,11 @@ const talkResourceSchema = z.object({
 });
 
 const talkSchema = z.object({
-  date: z.string(),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?)?$/, {
+      message: 'Invalid ISO date',
+    }),
   title: z.string(),
   audience: z.string(),
   audienceUrl: z.url().nullable(),
@@ -98,43 +137,47 @@ const aboutTimelineItemSchema = z.object({
 
 const talks = defineCollection({
   loader: file('./src/content/talks/talks.json', {
-    parser: fileContent =>
-      parseJsonArray(fileContent, (item: z.infer<typeof talkSchema>, index) => {
-        return `${item.date}-${toId(item.title) || index.toString()}`;
-      }),
+    parser: fileContent => parseJsonArray(fileContent, getTalkId),
   }),
   schema: talkSchema,
 });
 
 const publications = defineCollection({
   loader: file('./src/content/publications/publications.json', {
-    parser: fileContent =>
-      parseJsonArray(fileContent, (item: z.infer<typeof publicationSchema>, index) => {
-        return `${item.year}-${toId(item.title) || index.toString()}`;
-      }),
+    parser: fileContent => parseJsonArray(fileContent, getPublicationId),
   }),
   schema: publicationSchema,
 });
 
 const projects = defineCollection({
   loader: file('./src/content/projects/projects.json', {
-    parser: fileContent =>
-      parseJsonArray(fileContent, (item: z.infer<typeof projectSchema>, index) => {
-        return `${item.year}-${toId(item.title) || index.toString()}`;
-      }),
+    parser: fileContent => parseJsonArray(fileContent, getProjectId),
   }),
   schema: projectSchema,
 });
 
 const about = defineCollection({
   loader: file('./src/content/about/timeline.json', {
-    parser: fileContent =>
-      parseJsonArray(fileContent, (item: z.infer<typeof aboutTimelineItemSchema>, index) => {
-        return `${toId(item.title) || 'timeline-item'}-${index}`;
-      }),
+    parser: fileContent => parseJsonArray(fileContent, getAboutTimelineItemId),
   }),
   schema: aboutTimelineItemSchema,
 });
+
+function getTalkId(item: z.infer<typeof talkSchema>, index: number) {
+  return `${item.date}-${toId(item.title) || index.toString()}`;
+}
+
+function getPublicationId(item: z.infer<typeof publicationSchema>, index: number) {
+  return `${item.year}-${toId(item.title) || index.toString()}`;
+}
+
+function getProjectId(item: z.infer<typeof projectSchema>, index: number) {
+  return `${item.year}-${toId(item.title) || index.toString()}`;
+}
+
+function getAboutTimelineItemId(item: z.infer<typeof aboutTimelineItemSchema>, index: number) {
+  return `${toId(item.title) || 'timeline-item'}-${index}`;
+}
 
 export const collections = {
   about,

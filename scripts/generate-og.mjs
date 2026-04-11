@@ -389,13 +389,14 @@ async function generate() {
 
   for (const file of files) {
     if (!/\.(md|mdx)$/.test(file)) continue;
-    const slug = file.replace(/\.(md|mdx)$/i, '');
+    const fallbackSlug = file.replace(/\.(md|mdx)$/i, '');
     const full = path.join(BLOG_DIR, file);
-    const out = path.join(OUT_DIR, `${slug}.png`);
 
     try {
       const content = await fs.readFile(full, 'utf8');
       const frontmatter = extractFrontmatter(content);
+      const slug = frontmatter.slug || fallbackSlug;
+      const out = path.join(OUT_DIR, `${slug}.png`);
       const title = frontmatter.title || slug;
       const pubDate = frontmatter.pubDate;
       const tags = frontmatter.tags;

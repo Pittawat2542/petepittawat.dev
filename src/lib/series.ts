@@ -1,6 +1,4 @@
-import type { CollectionEntry } from 'astro:content';
-
-export type BlogPost = CollectionEntry<'blog'>;
+import type { BlogPost } from '@/lib/content';
 
 export interface SeriesInfo {
   slug: string;

@@ -30,7 +30,7 @@ export async function GET(_context: APIContext) {
       type: 'blog',
       title: entry.data.title,
       description: entry.data.excerpt,
-      url: `/blog/${entry.id}`,
+      url: `/blog/${entry.data.slug}/`,
       tags: entry.data.tags,
       date: entry.data.pubDate.toISOString(),
     });
