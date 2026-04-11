@@ -72,9 +72,10 @@ runOptional('pnpm outdated');
 for (const group of upgradeGroups) {
   console.log(`\n=== ${group.name} ===`);
   run(`pnpm up -L ${group.packages.join(' ')}`);
-  run('pnpm lint');
-  run('pnpm build');
 }
+
+run('pnpm lint');
+run('pnpm build');
 
 console.log('\nDependency update workflow complete.');
 console.log('Review package.json and pnpm-lock.yaml before committing.');
