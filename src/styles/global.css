@@ -2814,6 +2814,16 @@
     font-display: swap; /* Prevents invisible text during font load */
   }
 
+  @font-face {
+    font-family: 'Noto Serif Thai';
+    font-display: swap; /* Prevents invisible text during font load */
+  }
+
+  @font-face {
+    font-family: 'Noto Serif';
+    font-display: swap; /* Prevents invisible text during font load */
+  }
+
   /* Prevent CLS by providing fallback dimensions; don't gate above-the-fold images */
   img:not([fetchpriority='high']):not([loading='eager']) {
     content-visibility: auto;
@@ -3134,7 +3144,7 @@
     linear-gradient(180deg, color-mix(in oklab, var(--white) 12%, transparent), transparent)
       padding-box,
     /* faint inner glow for depth */
-      radial-gradient(
+    radial-gradient(
         120% 140% at 100% -20%,
         color-mix(in oklab, var(--white) 10%, transparent),
         transparent 40%

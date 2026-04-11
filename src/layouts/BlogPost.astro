@@ -182,7 +182,7 @@ const schema = generateBlogPostSchema({
       <Toc selector="#post-article" levels={[2, 3]} collapsed={true} />
       <article
         id="post-article"
-        class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-8 prose-headings:mb-3 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-7"
+        class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-8 prose-headings:mb-3 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
       >
         <slot />
       </article>
@@ -529,7 +529,7 @@ const schema = generateBlogPostSchema({
   }
 
   .article-body-card {
-    --article-measure-base: 80ch;
+    --article-measure-base: 105ch;
     --article-measure: min(100%, var(--article-measure-base));
     padding: clamp(2.2rem, 2vw + 1.4rem, 3.2rem);
     border-color: color-mix(in oklab, var(--white) 12%, transparent);
@@ -833,9 +833,10 @@ const schema = generateBlogPostSchema({
 
   .article-body {
     margin-top: clamp(2.2rem, 2vw + 1.4rem, 3rem);
-    max-width: 68ch;
+    max-width: 90ch;
     margin-left: auto;
     margin-right: auto;
+    font-family: 'Noto Serif Thai', 'Noto Serif', serif;
     font-size: clamp(1.08rem, 1.01rem + 0.4vw, 1.22rem);
     line-height: 1.85;
     letter-spacing: 0.01em;
