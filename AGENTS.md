@@ -7,7 +7,7 @@ This guide helps contributors work efficiently in this Astro + TypeScript + Reac
 - `src/pages/`: Route files (e.g., `index.astro`, `blog/`).
 - `src/components/`: Reusable UI components (`*.astro`, `*.tsx`).
 - `src/layouts/`: Page layouts.
-- `src/content/`: Content collections and schema (`config.ts`, `blog/`).
+- `src/content/`: Content collections (`blog/` and data files loaded by `src/content.config.ts`).
 - `src/assets/`: Local images used via Astro assets.
 - `public/`: Static passthrough files.
 - `dist/`: Production build output (generated).
@@ -43,4 +43,4 @@ This guide helps contributors work efficiently in this Astro + TypeScript + Reac
 ## Security & Configuration Tips
 
 - Do not commit secrets. Use `.env` and access via `import.meta.env`.
-- Use Node 18+ for Astro 5.x; use `pnpm` to match the lockfile.
+- Use Node 22.12+ for Astro 6.x; use `pnpm` to match the lockfile.
