@@ -82,11 +82,7 @@ const talkResourceSchema = z.object({
 });
 
 const talkSchema = z.object({
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?)?$/, {
-      message: 'Invalid ISO date',
-    }),
+  date: z.coerce.date(),
   title: z.string(),
   audience: z.string(),
   audienceUrl: z.url().nullable(),
@@ -164,7 +160,8 @@ const about = defineCollection({
 });
 
 function getTalkId(item: z.infer<typeof talkSchema>, index: number) {
-  return `${item.date}-${toId(item.title) || index.toString()}`;
+  const dateStr = item.date instanceof Date ? item.date.toISOString().split('T')[0] : String(item.date).split('T')[0];
+  return `${dateStr}-${toId(item.title) || index.toString()}`;
 }
 
 function getPublicationId(item: z.infer<typeof publicationSchema>, index: number) {
