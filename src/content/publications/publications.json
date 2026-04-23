@@ -547,6 +547,22 @@
     "abstract": "The Krathu-500 contains 574 post titles and a post body with all comments on each post on Pantip.com. The corpus contains a total of 63,293 comments in Thai language that is used in real-life situations, with various contexts and types, in a conversational form. The corpus serves as a good way to improve the capabilities of machine learning techniques that deal with the Thai language. A smaller sentiment-labeled corpus of comments is also provided with 6,306 records. The labeled corpus is a human-annotated dataset with three labels for negative, neutral, and positive comments. Three baseline models were developed for labeled corpus using simple LSTM, CNN, and BERT, respectively. The project also consists of an open-source repository that allows anyone who is interested to modify and built on top of the current source code and dataset."
   },
   {
+    "year": 2026,
+    "type": "conference",
+    "title": "Wait, Do We Need to Wait? Revisiting Budget Forcing for Sequential Test-Time Scaling",
+    "authors": "Pittawat Taveekitworachai and Kunat Pipatanakul",
+    "venue": "The International Conference on Learning Representations (ICLR) 2026, Blog Post Track",
+    "url": "https://iclr-blogposts.github.io/2026/blog/2026/wait-do-we-need-to-wait/",
+    "artifacts": [
+      {
+        "label": "Research artifacts",
+        "href": "https://github.com/scb-10x/test-time-scaling-debunk"
+      }
+    ],
+    "tags": ["Large Language Models", "Test-Time Scaling", "Instruction Following"],
+    "abstract": "This blog revisits budget forcing, a sequential test-time scaling technique for reasoning models by controlling when it continues thinking versus when it must answer. We evaluate how well the method transfers across model types, including non-reasoning models, and whether alternative keywords work. We provide practical guidelines for using the technique."
+  },
+  {
     "year": 2025,
     "type": "conference",
     "title": "Talk Less, Call Right: Enhancing Role-Play LLM Agents with Automatic Prompt Optimization and Role Prompting",
