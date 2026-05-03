@@ -1,132 +1,235 @@
 import type { APIContext } from 'astro';
-export const prerender = true;
 import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
+import { localizePath } from '@/i18n/utils';
 import { slugify } from '@/lib/slug';
+
+export const prerender = true;
+
+type SearchItemType = 'blog' | 'project' | 'publication' | 'talk' | 'page';
+type SearchLocale = 'en' | 'th';
+type SearchItemLocale = SearchLocale | 'neutral';
+type SearchExtra = Record<string, string | number | boolean | null | undefined>;
+
+type SearchItemVariant = {
+  title: string;
+  description?: string | undefined;
+  localizedUrl: string;
+  tags?: string[] | undefined;
+  date?: string | number | undefined;
+  extra?: SearchExtra | undefined;
+};
 
 type SearchItem = {
   id: string;
-  type: 'blog' | 'project' | 'publication' | 'talk' | 'page';
+  type: SearchItemType;
+  locale: SearchItemLocale;
+  translationId?: string | undefined;
+  availableLocales: SearchLocale[];
   title: string;
-  description?: string;
-  url: string;
-  tags?: string[];
-  date?: string | number;
-  extra?: Record<string, string | number | null>;
+  description?: string | undefined;
+  localizedUrl: string;
+  alternateUrl?: string | undefined;
+  tags?: string[] | undefined;
+  date?: string | number | undefined;
+  extra?: SearchExtra | undefined;
+  locales?: Partial<Record<SearchLocale, SearchItemVariant>> | undefined;
 };
+
+function createNeutralItem(
+  item: Omit<SearchItem, 'locale' | 'availableLocales' | 'locales' | 'localizedUrl'> & {
+    path: string;
+  }
+): SearchItem {
+  const enUrl = localizePath(item.path, 'en');
+  const thUrl = localizePath(item.path, 'th');
+  const baseVariant = {
+    title: item.title,
+    description: item.description,
+    tags: item.tags,
+    date: item.date,
+    extra: item.extra,
+  };
+
+  return {
+    id: item.id,
+    type: item.type,
+    locale: 'neutral',
+    availableLocales: ['en', 'th'],
+    title: item.title,
+    description: item.description,
+    localizedUrl: enUrl,
+    alternateUrl: thUrl,
+    tags: item.tags,
+    date: item.date,
+    extra: item.extra,
+    locales: {
+      en: { ...baseVariant, localizedUrl: enUrl },
+      th: { ...baseVariant, localizedUrl: thUrl },
+    },
+  };
+}
 
 export async function GET(_context: APIContext) {
   const items: SearchItem[] = [];
-  const [blog, projects, publications, talks] = await Promise.all([
+  const [blogPosts, projects, publications, talks] = await Promise.all([
     getBlogPosts(),
     getProjects(),
     getPublications(),
     getTalks(),
   ]);
 
-  // Blog posts
-  for (const entry of blog) {
+  const groupedBlogPosts = blogPosts.reduce(
+    (acc, post) => {
+      const key = post.data.translationId || post.data.slug;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(post);
+      return acc;
+    },
+    {} as Record<string, typeof blogPosts>
+  );
+
+  for (const [translationId, group] of Object.entries(groupedBlogPosts)) {
+    const enPost = group.find(post => post.data.lang === 'en');
+    const thPost = group.find(post => post.data.lang === 'th');
+    const canonicalPost = enPost || thPost;
+
+    if (!canonicalPost) continue;
+
+    const locales: Partial<Record<SearchLocale, SearchItemVariant>> = {};
+    if (enPost) {
+      locales.en = {
+        title: enPost.data.title,
+        description: enPost.data.excerpt,
+        localizedUrl: localizePath(`/blog/${enPost.data.slug}/`, 'en'),
+        tags: enPost.data.tags,
+        date: enPost.data.pubDate.toISOString(),
+      };
+    }
+    if (thPost) {
+      locales.th = {
+        title: thPost.data.title,
+        description: thPost.data.excerpt,
+        localizedUrl: localizePath(`/blog/${thPost.data.slug}/`, 'th'),
+        tags: thPost.data.tags,
+        date: thPost.data.pubDate.toISOString(),
+      };
+    }
+
+    const availableLocales = (['en', 'th'] as const).filter(locale => locales[locale]);
+    const canonicalLocale = enPost ? 'en' : 'th';
+    const canonicalVariant = locales[canonicalLocale];
+    const alternateVariant = canonicalLocale === 'en' ? locales.th : locales.en;
+
+    if (!canonicalVariant) continue;
+
     items.push({
-      id: `blog:${entry.id}`,
+      id: `blog:${translationId}`,
       type: 'blog',
-      title: entry.data.title,
-      description: entry.data.excerpt,
-      url: `/blog/${entry.data.slug}/`,
-      tags: entry.data.tags,
-      date: entry.data.pubDate.toISOString(),
+      locale: canonicalLocale,
+      translationId,
+      availableLocales: [...availableLocales],
+      title: canonicalVariant.title,
+      description: canonicalVariant.description,
+      localizedUrl: canonicalVariant.localizedUrl,
+      alternateUrl: alternateVariant?.localizedUrl,
+      tags: canonicalVariant.tags,
+      date: canonicalVariant.date,
+      locales,
     });
   }
 
-  // Projects (single page list)
-  for (const p of projects) {
-    const anchor = `project-${slugify(p.title)}-${p.year}`;
-    items.push({
-      id: `project:${p.title}-${p.year}`,
-      type: 'project',
-      title: p.title,
-      description: p.summary,
-      url: `/projects#${anchor}`,
-      tags: p.tags,
-      date: p.year,
-      extra: {},
-    });
+  for (const project of projects) {
+    const anchor = `project-${slugify(project.title)}-${project.year}`;
+    items.push(
+      createNeutralItem({
+        id: `project:${project.title}-${project.year}`,
+        type: 'project',
+        title: project.title,
+        description: project.summary,
+        path: `/projects#${anchor}`,
+        tags: project.tags,
+        date: project.year,
+        extra: {},
+      })
+    );
   }
 
-  // Publications (single page list)
-  for (const pub of publications) {
-    const anchor = `pub-${slugify(pub.title)}-${pub.year}`;
-    items.push({
-      id: `publication:${pub.title}-${pub.year}`,
-      type: 'publication',
-      title: pub.title,
-      description: `${pub.authors} — ${pub.venue}`,
-      url: `/publications#${anchor}`,
-      tags: pub.tags,
-      date: pub.year,
-      extra: { venue: pub.venue, type: pub.type },
-    });
+  for (const publication of publications) {
+    const anchor = `pub-${slugify(publication.title)}-${publication.year}`;
+    items.push(
+      createNeutralItem({
+        id: `publication:${publication.title}-${publication.year}`,
+        type: 'publication',
+        title: publication.title,
+        description: `${publication.authors} — ${publication.venue}`,
+        path: `/publications#${anchor}`,
+        tags: publication.tags,
+        date: publication.year,
+        extra: { venue: publication.venue, type: publication.type },
+      })
+    );
   }
 
-  // Talks (single page list)
-  for (const t of talks) {
-    const year = t.date.getFullYear();
-    const anchor = `talk-${slugify(t.title)}-${year}`;
-    items.push({
-      id: `talk:${t.title}-${t.date.toISOString()}`,
-      type: 'talk',
-      title: t.title,
-      description: `${t.audience} — ${t.mode}`,
-      url: `/talks#${anchor}`,
-      tags: t.tags,
-      date: t.date.toISOString(),
-    });
+  for (const talk of talks) {
+    const year = talk.date.getFullYear();
+    const anchor = `talk-${slugify(talk.title)}-${year}`;
+    items.push(
+      createNeutralItem({
+        id: `talk:${talk.title}-${talk.date.toISOString()}`,
+        type: 'talk',
+        title: talk.title,
+        description: `${talk.audience} — ${talk.mode}`,
+        path: `/talks#${anchor}`,
+        tags: talk.tags,
+        date: talk.date.toISOString(),
+      })
+    );
   }
 
-  // Top-level pages
-  const pages: SearchItem[] = [
-    {
+  items.push(
+    createNeutralItem({
       id: 'page:home',
       type: 'page',
       title: 'Home',
-      url: '/',
+      path: '/',
       description: 'Welcome and highlights',
-    },
-    {
+    }),
+    createNeutralItem({
       id: 'page:blog',
       type: 'page',
       title: 'Blog',
-      url: '/blog',
+      path: '/blog',
       description: 'Articles and notes',
-    },
-    {
+    }),
+    createNeutralItem({
       id: 'page:projects',
       type: 'page',
       title: 'Projects',
-      url: '/projects',
+      path: '/projects',
       description: 'Selected work and systems',
-    },
-    {
+    }),
+    createNeutralItem({
       id: 'page:publications',
       type: 'page',
       title: 'Publications',
-      url: '/publications',
+      path: '/publications',
       description: 'Research papers and works',
-    },
-    {
+    }),
+    createNeutralItem({
       id: 'page:talks',
       type: 'page',
       title: 'Talks',
-      url: '/talks',
+      path: '/talks',
       description: 'Talks and workshops',
-    },
-    {
+    }),
+    createNeutralItem({
       id: 'page:about',
       type: 'page',
       title: 'About',
-      url: '/about',
+      path: '/about',
       description: 'Bio and timeline',
-    },
-  ];
-  items.push(...pages);
+    })
+  );
 
   return new Response(JSON.stringify({ items }), {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600' },

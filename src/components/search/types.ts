@@ -2,19 +2,41 @@ import type { ComponentType } from 'react';
 import { BookText, FolderKanban, ScrollText, Mic, Home } from 'lucide-react';
 
 export type SearchItemType = 'blog' | 'project' | 'publication' | 'talk' | 'page';
+export type SearchLocale = 'en' | 'th';
+export type SearchItemLocale = SearchLocale | 'neutral';
+
+export type SearchExtra = Record<string, string | number | boolean | null | undefined>;
+
+export type SearchItemVariant = {
+  title: string;
+  description?: string | undefined;
+  localizedUrl: string;
+  tags?: string[] | undefined;
+  date?: string | number | undefined;
+  extra?: SearchExtra | undefined;
+};
 
 export type SearchItem = {
   id: string;
   type: SearchItemType;
+  locale: SearchItemLocale;
+  translationId?: string | undefined;
+  availableLocales: SearchLocale[];
   title: string;
-  description?: string;
-  url: string;
-  tags?: string[];
-  date?: string | number;
-  extra?: Record<string, string | number | boolean | null | undefined>;
+  description?: string | undefined;
+  localizedUrl: string;
+  alternateUrl?: string | undefined;
+  tags?: string[] | undefined;
+  date?: string | number | undefined;
+  extra?: SearchExtra | undefined;
+  locales?: Partial<Record<SearchLocale, SearchItemVariant>> | undefined;
 };
 
-export type AugmentedSearchItem = SearchItem & { __titlePositions?: number[] };
+export type AugmentedSearchItem = SearchItem & {
+  __titlePositions?: number[] | undefined;
+  isFallback?: boolean | undefined;
+  matchedLocale?: SearchItemLocale | undefined;
+};
 
 export type SearchTypeMeta = {
   key: SearchItemType;
