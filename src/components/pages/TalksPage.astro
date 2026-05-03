@@ -1,0 +1,20 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { TalksExplorer } from '@/components/explorers';
+import PageWithHero from '@/layouts/PageWithHero.astro';
+import { getTalks } from '@/lib/content';
+
+const talks = await getTalks();
+---
+
+<PageWithHero
+  title={`${SITE_TITLE} - Talks`}
+  description={SITE_DESCRIPTION}
+  hero={{
+    title: 'Talks',
+    subtitle: "Presentations, lectures, and workshops I've delivered at conferences and events.",
+    page: 'talks',
+  }}
+>
+  <TalksExplorer client:visible items={talks} />
+</PageWithHero>

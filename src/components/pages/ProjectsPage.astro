@@ -1,0 +1,21 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { ProjectsExplorer } from '@/components/explorers';
+import PageWithHero from '@/layouts/PageWithHero.astro';
+import { getProjects } from '@/lib/content';
+
+const projects = await getProjects();
+---
+
+<PageWithHero
+  title={`${SITE_TITLE} - Projects`}
+  description={SITE_DESCRIPTION}
+  hero={{
+    title: 'Projects',
+    subtitle: "Selected research, systems, and prototypes I've built or led.",
+    page: 'projects',
+  }}
+  containerClass="glass-section"
+>
+  <ProjectsExplorer client:visible items={projects} />
+</PageWithHero>

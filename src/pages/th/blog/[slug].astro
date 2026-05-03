@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '@/components/pages/BlogPostPage.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+
+  const groups = allPosts.reduce(
+    (acc, post) => {
+      const key = post.data.translationId || post.data.slug;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(post);
+      return acc;
+    },
+    {} as Record<string, CollectionEntry<'blog'>[]>
+  );
+
+  return Object.values(groups).map(group => {
+    const thPost = group.find(p => p.data.lang === 'th');
+    const enPost = group.find(p => p.data.lang === 'en');
+
+    // The post to display on the Thai route
+    const displayPost = thPost || enPost;
+
+    return {
+      params: { slug: displayPost!.data.slug },
+      props: {
+        post: displayPost!,
+        isTranslationFallback: !thPost && !!enPost,
+        ...(enPost && enPost !== thPost ? { otherLanguageSlug: enPost.data.slug } : {}),
+      },
+    };
+  });
+}
+
+const props = Astro.props;
+---
+
+<Page {...props} />
