@@ -15,6 +15,13 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const lang = Astro.url.pathname.startsWith('/th') ? 'th' : 'en';
+const otherLang = lang === 'th' ? 'en' : 'th';
+const otherPath =
+  lang === 'th'
+    ? Astro.url.pathname.replace(/^\/th/, '') || '/'
+    : `/th${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`;
+const otherUrl = new URL(otherPath, Astro.site);
 
 const {
   title,
@@ -160,8 +167,12 @@ const structuredDataJson = JSON.stringify(structuredData);
   />
 </noscript>
 
-<!-- Canonical URL -->
+<!-- Canonical URL & hreflang -->
 <link rel="canonical" href={canonicalURL} />
+<link rel="alternate" hreflang={lang} href={canonicalURL} />
+<link rel="alternate" hreflang={otherLang} href={otherUrl} />
+<link rel="alternate" hreflang="x-default" href={lang === 'en' ? canonicalURL : otherUrl} />
+
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
 
 <!-- Defer ambient background overlays until after first paint (avoid white-ish overlay on mobile first load) -->

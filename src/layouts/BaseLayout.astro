@@ -4,6 +4,7 @@ import BaseHead from '@/components/layout/core/BaseHead.astro';
 import Footer from '@/components/layout/core/Footer.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
 import SearchModal from '@/components/layout/SearchModal';
+import { getLangFromUrl } from '@/i18n/utils';
 
 const { title, description, image, type, publishedTime, tags, wordCount, page } = Astro.props as {
   title: string;
@@ -23,10 +24,12 @@ const bodyStyle = pageAccent
   ? `--page-accent:${pageAccent};--card-accent:${pageAccent};`
   : undefined;
 const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en" style="background:#111827;color:#F9FAFB;color-scheme: dark;">
+<html lang={lang} style="background:#111827;color:#F9FAFB;color-scheme: dark;">
   <head>
     <BaseHead
       title={title}
@@ -42,7 +45,7 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
-    <AnimatedHeader client:idle />
+    <AnimatedHeader lang={lang} pathname={Astro.url.pathname} client:idle />
     <main
       id="main-content"
       class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
