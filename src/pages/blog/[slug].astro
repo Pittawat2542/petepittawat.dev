@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import RelatedPosts from '@/components/content/RelatedPosts';
 import BlogPost from '@/layouts/BlogPost.astro';
+import { getSuggestedReading } from '@/lib/blog-recommendations';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -19,16 +20,13 @@ const wordCount = (post.body || '').trim().split(/\s+/).length;
 const readingTimeMin = Math.max(1, Math.round(wordCount / 220));
 
 const all = (await getCollection('blog')) as CollectionEntry<'blog'>[];
-const related = all
-  .filter(p => p.id !== post.id && p.data.tags.some(t => post.data.tags.includes(t)))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 2);
+const suggestedReading = getSuggestedReading(all, post);
 ---
 
 <BlogPost {...post.data} slug={post.data.slug} readingTimeMin={readingTimeMin}>
   <Content />
 
   <Fragment slot="after">
-    <RelatedPosts posts={related} />
+    <RelatedPosts suggestions={suggestedReading} />
   </Fragment>
 </BlogPost>
