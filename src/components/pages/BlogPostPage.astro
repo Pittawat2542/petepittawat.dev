@@ -1,9 +1,10 @@
 ---
-import { type CollectionEntry, render } from 'astro:content';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
 import RelatedPosts from '@/components/content/RelatedPosts';
 import BlogPost from '@/layouts/BlogPost.astro';
 import { getSuggestedReading } from '@/lib/blog-recommendations';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { estimateReadingMetrics } from '@/lib/reading-time';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -16,13 +17,8 @@ const { Content } = await render(post);
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Rough reading time estimate (~220 wpm)
-const wordCount = (post.body || '').trim().split(/\s+/).length;
-const readingTimeMin = Math.max(1, Math.round(wordCount / 220));
+const { readingTimeMin } = estimateReadingMetrics(post.body || '');
 
-// Wait, getting all blog posts here might be expensive, but it's static generation so it's ok.
-// However, the original code used it for suggested reading. We should pass 'all' from the page or fetch here.
-import { getCollection } from 'astro:content';
 const all = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 const suggestedReading = getSuggestedReading(all, post);
 

@@ -13,6 +13,9 @@ type Props = CollectionEntry<'blog'>['data'] & {
   slug?: string;
   wordCount?: number;
   readingTimeMin?: number;
+  translationNotice?: string | null;
+  translatedLink?: string | null;
+  translatedLinkLabel?: string | null;
 };
 
 const {
@@ -27,6 +30,9 @@ const {
   seriesSlug,
   seriesTitle,
   seriesOrder,
+  translationNotice,
+  translatedLink,
+  translatedLinkLabel,
 } = Astro.props as Props;
 
 const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
@@ -176,6 +182,25 @@ const schema = generateBlogPostSchema({
     </section>
 
     <div class="article-card article-body-card reveal">
+      {
+        translationNotice ? (
+          <div class="mb-6 rounded-xl border border-yellow-500/20 bg-yellow-500/10 p-4 text-sm text-yellow-200/90 shadow-inner">
+            <p>{translationNotice}</p>
+          </div>
+        ) : null
+      }
+      {
+        translatedLink ? (
+          <div class="mb-6">
+            <a
+              href={translatedLink}
+              class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/10 px-4 py-1.5 text-sm font-medium text-blue-300 transition-colors hover:bg-blue-400/20 hover:text-blue-200"
+            >
+              {translatedLinkLabel}
+            </a>
+          </div>
+        ) : null
+      }
       {
         excerpt ? (
           <section class="article-tldr" aria-labelledby="article-tldr-heading">

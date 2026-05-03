@@ -1,36 +1,40 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import RelatedPosts from '@/components/content/RelatedPosts';
-import { estimateReadingMetrics } from '@/lib/reading-time';
-import BlogPost from '@/layouts/BlogPost.astro';
-import { getSuggestedReading } from '@/lib/blog-recommendations';
+import { getCollection } from 'astro:content';
+import Page from '@/components/pages/BlogPostPage.astro';
+import type { CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
-    params: { slug: post.data.slug },
-    props: post,
-  }));
+  const allPosts = await getCollection('blog');
+
+  const groups = allPosts.reduce(
+    (acc, post) => {
+      const key = post.data.translationId || post.data.slug;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(post);
+      return acc;
+    },
+    {} as Record<string, CollectionEntry<'blog'>[]>
+  );
+
+  return Object.values(groups).map(group => {
+    const enPost = group.find(p => p.data.lang === 'en');
+    const thPost = group.find(p => p.data.lang === 'th');
+
+    // The post to display on the English route
+    const displayPost = enPost || thPost;
+
+    return {
+      params: { slug: displayPost!.data.slug },
+      props: {
+        post: displayPost!,
+        isTranslationFallback: !enPost && !!thPost,
+        ...(thPost && enPost !== thPost ? { otherLanguageSlug: thPost.data.slug } : {}),
+      },
+    };
+  });
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props as Props;
-const { Content } = await render(post);
-const { wordCount, readingTimeMin } = estimateReadingMetrics(post.body || '');
-
-const all = (await getCollection('blog')) as CollectionEntry<'blog'>[];
-const suggestedReading = getSuggestedReading(all, post);
+const props = Astro.props;
 ---
 
-<BlogPost
-  {...post.data}
-  slug={post.data.slug}
-  wordCount={wordCount}
-  readingTimeMin={readingTimeMin}
->
-  <Content />
-
-  <Fragment slot="after">
-    <RelatedPosts suggestions={suggestedReading} />
-  </Fragment>
-</BlogPost>
+<Page {...props} />
