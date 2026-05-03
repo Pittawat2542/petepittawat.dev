@@ -7,55 +7,13 @@ import ThemedPageHero from '@/components/layout/core/ThemedPageHero';
 import Container from '@/components/ui/core/Container';
 import GlassCard from '@/components/ui/core/GlassCard';
 import Prose from '@/components/content/Prose';
+import { getLangFromUrl, getSiteCopy } from '@/i18n/utils';
 import { getAboutTimeline } from '@/lib/content';
 
-const quickFacts = [
-  {
-    label: 'Current role',
-    value: 'Research Scientist @ Typhoon',
-    hint: 'Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT).',
-  },
-  {
-    label: 'Approach',
-    value: 'Research to production',
-    hint: 'Bridging the gap between research, engineering, and model adoption.',
-  },
-  {
-    label: 'Based in',
-    value: 'Bangkok',
-    hint: 'Remote-friendly',
-  },
-];
-
-const nowFocus = [
-  'Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT).',
-  'Investigating LLM Inference: context engineering, test-time scaling, and agents.',
-  'Leading external research collaborations with academic and industrial partners.',
-  'Bridging research and engineering to translate findings into robust PoCs.',
-];
-
-const currentThemes = [
-  {
-    title: 'Behavior Shaping',
-    description:
-      'Exploring approaches to align model behavior with human preferences and domain requirements, including context engineering, prompt engineering, and post-training (SFT/RFT).',
-  },
-  {
-    title: 'Reasoning Models',
-    description:
-      'Developing open reasoning models like Typhoon T1 and investigating medical reasoning models (MRMs) with novel alignment techniques.',
-  },
-  {
-    title: 'Evaluation & Safety',
-    description:
-      'Understanding and mitigating biases and risks. Building evaluation frameworks like BenchING to test structured output following.',
-  },
-  {
-    title: 'Applied AI',
-    description:
-      'Showcasing real-world applications (Typhoon Application Week) and collaborating on projects in healthcare and gaming.',
-  },
-];
+const lang = getLangFromUrl(Astro.url);
+const siteCopy = getSiteCopy(lang);
+const aboutCopy = siteCopy.about;
+const aboutPage = siteCopy.listingPages.about;
 
 const rawTimeline = await getAboutTimeline();
 const getTimelineScore = (title: string) => {
@@ -84,68 +42,16 @@ const timeline = rawTimeline
   .sort((a, b) => getTimelineScore(b.title) - getTimelineScore(a.title));
 const spotlightTimeline = timeline.filter(item => item.highlight);
 
-const backgroundNotes = [
-  'I’m interested in shaping model behavior to align with human preferences, domain-specific requirements (e.g., games and medical), task objectives, and cultural values.',
-  'I’m currently exploring several approaches for behavior shaping, including context engineering, prompt engineering, and post-training (supervised fine-tuning and reinforcement fine-tuning).',
-  'I also care deeply about understanding and mitigating the biases and risks associated with modern AI models.',
-];
-
-const educationEntries = [
-  {
-    title: 'M.Eng., Intelligent Computer Entertainment Lab, Ritsumeikan University',
-    period: '2022 — 2024',
-    summary:
-      'GPA: 4.93/5.00, Valedictorian. Thesis: Null-Shot Prompting: Rethinking Prompting Large Language Models With Hallucination.',
-  },
-  {
-    title: 'B.Sc. Computer Science, KMUTT (First-class honours)',
-    period: '2018 — 2022',
-    summary:
-      'GPA: 3.99/4.00. Senior project: COEUS: Automatic English Mind Map Generation From Text.',
-  },
-];
-
-const communityHighlights = [
-  {
-    title: 'Research Collaborations',
-    description:
-      'Spearheading external collaborations with top academic and industrial partners (VISTEC, SiData, SCBX).',
-    bullets: [
-      'Investigating prior prompt engineering and inference-time strategies.',
-      'Leading research on medical reasoning models and conversational agents.',
-    ],
-  },
-  {
-    title: 'Leadership & Outreach',
-    description:
-      'Cultivating technical communities and bridging the gap between frontier research and application.',
-    bullets: [
-      'Lead, Google Developer Group on Campus (GDGoC) at KMUTT.',
-      'Partnering with DevRel to disseminate research findings via technical blogs and talks.',
-    ],
-  },
-];
-
-const serviceHighlights = [
-  'Lead Developer, KMUTT COVID-19 Donation Management Platform.',
-  'Organized Junior Webmaster Camp 8, Junior Programmer Camp XV, and SIT Code 2019.',
-];
-
-const learningHighlights = [
-  'Actively engaging with the technical community through public speaking and blogging.',
-  'Mentoring research interns and guiding projects from ideation to publication.',
-];
-
 import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
 ---
 
-<BaseLayout title={`${SITE_TITLE} - About`} description={SITE_DESCRIPTION} page="about">
+<BaseLayout
+  title={`${SITE_TITLE} - ${aboutPage.title}`}
+  description={aboutPage.metaDescription || SITE_DESCRIPTION}
+  page="about"
+>
   <Container className="space-y-16 pt-10 pb-24 lg:space-y-20">
-    <ThemedPageHero
-      title="About Pete"
-      subtitle="I work on making language models reliable—through research, engineering, and writing about what works."
-      page="about"
-    />
+    <ThemedPageHero title={aboutPage.heroTitle} subtitle={aboutPage.heroSubtitle} page="about" />
 
     <section id="intro" class="intro-grid">
       <GlassCard variant="premium" className="profile-card">
@@ -162,18 +68,13 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
             />
           </div>
           <div class="profile-card__meta">
-            <span class="eyebrow">Bangkok</span>
-            <p class="profile-card__role">Research Scientist @ Typhoon</p>
+            <span class="eyebrow">{aboutCopy.profile.location}</span>
+            <p class="profile-card__role">{aboutCopy.profile.role}</p>
           </div>
         </div>
         <div class="profile-card__body">
-          <h2>Hi, I'm Pittawat (Pete).</h2>
-          <p>
-            I’m interested in shaping model behavior to align with human preferences,
-            domain-specific requirements, task objectives, and cultural values. I’m currently
-            exploring approaches including context engineering, prompt engineering, and
-            post-training (SFT/RFT).
-          </p>
+          <h2>{aboutCopy.profile.heading}</h2>
+          <p>{aboutCopy.profile.intro}</p>
         </div>
 
         <div class="profile-card__links" aria-label="Connect">
@@ -206,11 +107,11 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
           <div class="relative z-10">
             <div class="mb-4 flex items-center gap-2">
               <Sparkles class="h-4 w-4 text-[color:var(--accent)]" />
-              <span class="eyebrow text-[color:var(--accent)]">Right now</span>
+              <span class="eyebrow text-[color:var(--accent)]">{aboutCopy.now.title}</span>
             </div>
             <ul class="space-y-3">
               {
-                nowFocus.map(point => (
+                aboutCopy.now.items.map(point => (
                   <li class="flex gap-3 text-sm leading-relaxed text-[color:var(--white)]/80">
                     <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/60" />
                     {point}
@@ -227,11 +128,11 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
       <GlassCard variant="premium" className="snapshot-card">
         <div class="mb-4 flex items-center gap-2">
           <Camera class="h-4 w-4 text-[color:var(--accent)]" />
-          <span class="eyebrow text-[color:var(--accent)]">Snapshot</span>
+          <span class="eyebrow text-[color:var(--accent)]">{aboutCopy.snapshot.title}</span>
         </div>
         <div class="snapshot-grid">
           {
-            quickFacts.map(item => (
+            aboutCopy.snapshot.items.map(item => (
               <div class="snapshot-item">
                 <p class="snapshot-item__label">{item.label}</p>
                 <p class="snapshot-item__value">{item.value}</p>
@@ -247,13 +148,13 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
       <div class="section-heading">
         <div class="mb-2 flex items-center gap-2">
           <Flame class="h-5 w-5 text-[color:var(--accent)]" />
-          <h2>What drives my work</h2>
+          <h2>{aboutCopy.themes.title}</h2>
         </div>
-        <p>Four themes that connect the research, tools, and writing.</p>
+        <p>{aboutCopy.themes.description}</p>
       </div>
       <div class="themes-grid">
         {
-          currentThemes.map(theme => (
+          aboutCopy.themes.items.map(theme => (
             <GlassCard variant="premium" className="theme-card">
               <h3>{theme.title}</h3>
               <p>{theme.description}</p>
@@ -272,13 +173,13 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
         <div class="section-heading mb-8">
           <div class="mb-2 flex items-center gap-2">
             <History class="h-5 w-5 text-[color:var(--accent)]" />
-            <h2>Background</h2>
+            <h2>{aboutCopy.background.title}</h2>
           </div>
-          <p>How I got here and what I'm doing now.</p>
+          <p>{aboutCopy.background.description}</p>
         </div>
         <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8">
           <Prose className="prose-block text-lg leading-relaxed text-[color:var(--white)]/80">
-            {backgroundNotes.map(note => <p>{note}</p>)}
+            {aboutCopy.background.notes.map(note => <p>{note}</p>)}
           </Prose>
         </div>
       </div>
@@ -288,14 +189,14 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
       <div class="section-heading">
         <div class="mb-2 flex items-center gap-2">
           <Milestone class="h-5 w-5 text-[color:var(--accent)]" />
-          <h2>Timeline & milestones</h2>
+          <h2>{aboutCopy.journey.title}</h2>
         </div>
-        <p>Education, collaborations, and the work that shaped how I approach problems.</p>
+        <p>{aboutCopy.journey.description}</p>
       </div>
 
       <div class="journey-grid">
         <GlassCard variant="glow" className="spotlight-card">
-          <span class="eyebrow">Spotlight milestones</span>
+          <span class="eyebrow">{aboutCopy.journey.spotlightTitle}</span>
           <ol>
             {
               spotlightTimeline.map(item => (
@@ -309,10 +210,10 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
         </GlassCard>
 
         <GlassCard variant="premium" className="journey-card">
-          <h3>Education</h3>
+          <h3>{aboutCopy.journey.educationTitle}</h3>
           <div class="journey-card__group">
             {
-              educationEntries.map(entry => (
+              aboutCopy.journey.educationEntries.map(entry => (
                 <div>
                   <div class="journey-card__header">
                     <p>{entry.title}</p>
@@ -326,10 +227,10 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
         </GlassCard>
 
         <GlassCard variant="premium" className="journey-card">
-          <h3>Collaborations & community</h3>
+          <h3>{aboutCopy.journey.collaborationsTitle}</h3>
           <div class="journey-card__group">
             {
-              communityHighlights.map(item => (
+              aboutCopy.journey.communityHighlights.map(item => (
                 <div>
                   <p class="journey-card__subhead">{item.title}</p>
                   <p class="journey-card__summary">{item.description}</p>
@@ -345,18 +246,18 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
         </GlassCard>
 
         <GlassCard variant="premium" className="journey-card">
-          <h3>Service & learning rituals</h3>
+          <h3>{aboutCopy.journey.serviceTitle}</h3>
           <ul class="journey-card__list">
-            {serviceHighlights.map(point => <li>{point}</li>)}
+            {aboutCopy.journey.serviceHighlights.map(point => <li>{point}</li>)}
           </ul>
           <ul class="journey-card__list journey-card__list--muted">
-            {learningHighlights.map(point => <li>{point}</li>)}
+            {aboutCopy.journey.learningHighlights.map(point => <li>{point}</li>)}
           </ul>
         </GlassCard>
       </div>
 
       <details class="timeline-details">
-        <summary>Read the extended timeline</summary>
+        <summary>{aboutCopy.journey.extendedTimelineLabel}</summary>
         <ol>
           {
             timeline.map(item => (

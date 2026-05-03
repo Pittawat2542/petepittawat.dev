@@ -21,6 +21,8 @@ interface AcademicServicesProps {
   readonly data: {
     readonly sections: readonly Section[];
   };
+  readonly title?: string;
+  readonly description?: string;
 }
 
 const formatYears = (item: ServiceItem): string => {
@@ -43,7 +45,11 @@ const getItemUrl = (item: ServiceItem): string | undefined => {
   return item.url;
 };
 
-const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
+const AcademicServicesComponent: FC<AcademicServicesProps> = ({
+  data,
+  title = 'Academic services',
+  description = 'Reviewer and service roles across conferences and journals.',
+}) => {
   const sections = data.sections || [];
 
   if (sections.length === 0) {
@@ -56,11 +62,9 @@ const AcademicServicesComponent: FC<AcademicServicesProps> = ({ data }) => {
         <header className="mb-4 md:mb-6">
           <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight md:text-2xl">
             <Building2 size={18} aria-hidden="true" />
-            Academic Services
+            {title}
           </h2>
-          <p className="mt-1 text-sm text-[color:var(--white)]/70">
-            Reviewer and service roles across conferences and journals.
-          </p>
+          <p className="mt-1 text-sm text-[color:var(--white)]/70">{description}</p>
         </header>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {sections.map(sec => (

@@ -2,25 +2,38 @@
 import { BookOpenText, FolderKanban, FileText, Mic, CircleUser, ExternalLink } from '@lucide/astro';
 import BrandIcon from '@/components/ui/icons/BrandIcon.astro';
 import { socialLinks } from './footer-social-links';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, getSiteCopy, localizePath } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const siteCopy = getSiteCopy(lang);
 const year = new Date().getFullYear();
+const navLinks = siteCopy.nav.links;
 const quickLinks = [
-  { href: lang === 'th' ? '/th/blog' : '/blog', label: t('nav.blog'), icon: BookOpenText },
   {
-    href: lang === 'th' ? '/th/projects' : '/projects',
-    label: t('nav.projects'),
+    href: localizePath('/blog', lang),
+    label: navLinks.find(link => link.key === 'blog')?.label ?? 'Blog',
+    icon: BookOpenText,
+  },
+  {
+    href: localizePath('/projects', lang),
+    label: navLinks.find(link => link.key === 'projects')?.label ?? 'Projects',
     icon: FolderKanban,
   },
   {
-    href: lang === 'th' ? '/th/publications' : '/publications',
-    label: t('nav.publications'),
+    href: localizePath('/publications', lang),
+    label: navLinks.find(link => link.key === 'publications')?.label ?? 'Publications',
     icon: FileText,
   },
-  { href: lang === 'th' ? '/th/talks' : '/talks', label: t('nav.talks'), icon: Mic },
-  { href: lang === 'th' ? '/th/about' : '/about', label: t('nav.about'), icon: CircleUser },
+  {
+    href: localizePath('/talks', lang),
+    label: navLinks.find(link => link.key === 'talks')?.label ?? 'Talks',
+    icon: Mic,
+  },
+  {
+    href: localizePath('/about', lang),
+    label: navLinks.find(link => link.key === 'about')?.label ?? 'About',
+    icon: CircleUser,
+  },
 ];
 ---
 
@@ -28,10 +41,9 @@ const quickLinks = [
   <div class="site-footer__container">
     <div class="site-footer__grid">
       <div class="site-footer__brand">
-        <h2 class="site-footer__title">Building AI with purpose.</h2>
+        <h2 class="site-footer__title">{siteCopy.footer.title}</h2>
         <p class="site-footer__summary">
-          Exploring the intersection of language models, reasoning, and practical AI systems.
-          Turning ideas into reliable tools and sharing what I learn along the way.
+          {siteCopy.footer.summary}
         </p>
       </div>
       <div class="site-footer__links">
@@ -99,7 +111,7 @@ const quickLinks = [
             loading="lazy"
             decoding="async"
           />
-          <span class="ml-2">Thai Webring</span>
+          <span class="ml-2">{siteCopy.footer.webringLabel}</span>
           <ExternalLink class="site-footer__icon ml-1" aria-hidden="true" size={14} />
         </a>
       </div>

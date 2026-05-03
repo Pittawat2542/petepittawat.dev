@@ -2,15 +2,19 @@
 import Container from '@/components/ui/core/Container';
 import { BlogCard } from '@/components/ui/cards/BlogCard';
 import GlassButton from '@/components/ui/navigation/GlassButton';
+import { localizePath } from '@/i18n/utils';
 import { ArrowRight } from '@lucide/astro';
 import type { BlogPost } from '@/types';
+import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
   posts: BlogPost[];
   allPosts?: BlogPost[];
+  copy: SiteCopy['home']['blogSection'];
+  lang: 'en' | 'th';
 }
 
-const { posts, allPosts } = Astro.props as Props;
+const { posts, allPosts, copy, lang } = Astro.props as Props;
 ---
 
 <!-- Latest from the Blog -->
@@ -21,25 +25,22 @@ const { posts, allPosts } = Astro.props as Props;
         class="flex items-center gap-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/60 uppercase"
       >
         <span class="h-2 w-2 rounded-full bg-[color:var(--accent-blog)]"></span>
-        Latest Writing
+        {copy.eyebrow}
       </div>
-      <h2 class="text-2xl font-bold tracking-tight md:text-3xl">
-        Fresh experiments and field notes
-      </h2>
+      <h2 class="text-2xl font-bold tracking-tight md:text-3xl">{copy.title}</h2>
       <p class="max-w-xl text-[color:var(--white)]/75">
-        Short reads on evaluation, prompting techniques, and the practical side of running LLM
-        systems in production.
+        {copy.description}
       </p>
     </div>
-    <GlassButton href="/blog" variant="ghost" size="md">
-      Browse all articles
+    <GlassButton href={localizePath('/blog', lang)} variant="ghost" size="md">
+      {copy.browseLabel}
       <ArrowRight class="h-4 w-4" aria-hidden="true" />
     </GlassButton>
   </div>
   {
     posts.length === 0 ? (
       <div class="shape-squircle rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-[color:var(--white)]/70">
-        No posts yet — new writing is on the way.
+        {copy.emptyLabel}
       </div>
     ) : (
       <ul class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:gap-7" id="latest-blog">

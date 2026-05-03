@@ -2,17 +2,21 @@
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 import { TalksExplorer } from '@/components/explorers';
 import PageWithHero from '@/layouts/PageWithHero.astro';
+import { getLangFromUrl, getSiteCopy } from '@/i18n/utils';
 import { getTalks } from '@/lib/content';
 
+const lang = getLangFromUrl(Astro.url);
+const siteCopy = getSiteCopy(lang);
+const pageCopy = siteCopy.listingPages.talks;
 const talks = await getTalks();
 ---
 
 <PageWithHero
-  title={`${SITE_TITLE} - Talks`}
-  description={SITE_DESCRIPTION}
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
   hero={{
-    title: 'Talks',
-    subtitle: "Presentations, lectures, and workshops I've delivered at conferences and events.",
+    title: pageCopy.title,
+    subtitle: pageCopy.heroSubtitle,
     page: 'talks',
   }}
 >

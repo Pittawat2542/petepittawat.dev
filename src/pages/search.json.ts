@@ -1,4 +1,5 @@
 import type { APIContext } from 'astro';
+import { siteCopyEn } from '@/data/site/copy';
 import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
 import { localizePath } from '@/i18n/utils';
 import { slugify } from '@/lib/slug';
@@ -190,44 +191,44 @@ export async function GET(_context: APIContext) {
     createNeutralItem({
       id: 'page:home',
       type: 'page',
-      title: 'Home',
-      path: '/',
-      description: 'Welcome and highlights',
+      title: siteCopyEn.listingPages.home.title,
+      path: siteCopyEn.listingPages.home.path,
+      description: siteCopyEn.listingPages.home.searchDescription,
     }),
     createNeutralItem({
       id: 'page:blog',
       type: 'page',
-      title: 'Blog',
-      path: '/blog',
-      description: 'Articles and notes',
+      title: siteCopyEn.listingPages.blog.title,
+      path: siteCopyEn.listingPages.blog.path,
+      description: siteCopyEn.listingPages.blog.searchDescription,
     }),
     createNeutralItem({
       id: 'page:projects',
       type: 'page',
-      title: 'Projects',
-      path: '/projects',
-      description: 'Selected work and systems',
+      title: siteCopyEn.listingPages.projects.title,
+      path: siteCopyEn.listingPages.projects.path,
+      description: siteCopyEn.listingPages.projects.searchDescription,
     }),
     createNeutralItem({
       id: 'page:publications',
       type: 'page',
-      title: 'Publications',
-      path: '/publications',
-      description: 'Research papers and works',
+      title: siteCopyEn.listingPages.publications.title,
+      path: siteCopyEn.listingPages.publications.path,
+      description: siteCopyEn.listingPages.publications.searchDescription,
     }),
     createNeutralItem({
       id: 'page:talks',
       type: 'page',
-      title: 'Talks',
-      path: '/talks',
-      description: 'Talks and workshops',
+      title: siteCopyEn.listingPages.talks.title,
+      path: siteCopyEn.listingPages.talks.path,
+      description: siteCopyEn.listingPages.talks.searchDescription,
     }),
     createNeutralItem({
       id: 'page:about',
       type: 'page',
-      title: 'About',
-      path: '/about',
-      description: 'Bio and timeline',
+      title: siteCopyEn.listingPages.about.title,
+      path: siteCopyEn.listingPages.about.path,
+      description: siteCopyEn.listingPages.about.searchDescription,
     })
   );
 

@@ -1,4 +1,5 @@
 import { ui, defaultLang } from './ui';
+import { getSiteCopy as getCanonicalSiteCopy } from '@/data/site/copy';
 
 export type AppLocale = keyof typeof ui;
 
@@ -35,4 +36,8 @@ export function useTranslatedPath(lang: AppLocale) {
         ? path
         : `/${l}${path.startsWith('/') ? path : `/${path}`}`;
   };
+}
+
+export function getSiteCopy(lang: AppLocale) {
+  return getCanonicalSiteCopy(lang);
 }

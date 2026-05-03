@@ -2,17 +2,21 @@
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
 import { ProjectsExplorer } from '@/components/explorers';
 import PageWithHero from '@/layouts/PageWithHero.astro';
+import { getLangFromUrl, getSiteCopy } from '@/i18n/utils';
 import { getProjects } from '@/lib/content';
 
+const lang = getLangFromUrl(Astro.url);
+const siteCopy = getSiteCopy(lang);
+const pageCopy = siteCopy.listingPages.projects;
 const projects = await getProjects();
 ---
 
 <PageWithHero
-  title={`${SITE_TITLE} - Projects`}
-  description={SITE_DESCRIPTION}
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
   hero={{
-    title: 'Projects',
-    subtitle: "Selected research, systems, and prototypes I've built or led.",
+    title: pageCopy.title,
+    subtitle: pageCopy.heroSubtitle,
     page: 'projects',
   }}
   containerClass="glass-section"
