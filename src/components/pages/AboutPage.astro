@@ -16,6 +16,18 @@ const aboutCopy = siteCopy.about;
 const aboutPage = siteCopy.listingPages.about;
 
 const rawTimeline = await getAboutTimeline();
+const getTimelineText = (item: (typeof rawTimeline)[number], field: 'title' | 'description') => {
+  if (lang !== 'th') {
+    return item[field];
+  }
+
+  if (field === 'title') {
+    return item.titleTh ?? item.title;
+  }
+
+  return item.descriptionTh ?? item.description;
+};
+
 const getTimelineScore = (title: string) => {
   const match = title.match(/(?:([a-zA-Z]+)\s+)?(\d{4})/);
   if (!match) return 0;
@@ -201,8 +213,8 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
             {
               spotlightTimeline.map(item => (
                 <li>
-                  <p class="spotlight-card__title">{item.title}</p>
-                  <p class="spotlight-card__description">{item.description}</p>
+                  <p class="spotlight-card__title">{getTimelineText(item, 'title')}</p>
+                  <p class="spotlight-card__description">{getTimelineText(item, 'description')}</p>
                 </li>
               ))
             }
@@ -262,8 +274,8 @@ import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
           {
             timeline.map(item => (
               <li>
-                <p class="timeline-details__title">{item.title}</p>
-                <p class="timeline-details__description">{item.description}</p>
+                <p class="timeline-details__title">{getTimelineText(item, 'title')}</p>
+                <p class="timeline-details__description">{getTimelineText(item, 'description')}</p>
               </li>
             ))
           }

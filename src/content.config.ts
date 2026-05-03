@@ -129,6 +129,8 @@ const projectSchema = z.object({
 const aboutTimelineItemSchema = z.object({
   title: z.string(),
   description: z.string(),
+  titleTh: z.string().optional(),
+  descriptionTh: z.string().optional(),
   accent: z.string(),
   highlight: z.boolean().optional(),
 });

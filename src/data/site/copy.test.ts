@@ -11,11 +11,13 @@ test('returns the canonical English site copy for the default locale', () => {
   assert.equal(copy.home.hero.primaryCtas[0]?.href, '/projects');
 });
 
-test('falls back to English copy for untranslated Thai non-blog content', () => {
-  const englishCopy = getSiteCopy('en');
+test('returns translated Thai copy for the Thai locale', () => {
   const thaiCopy = getSiteCopy('th');
 
-  assert.deepEqual(thaiCopy.meta, englishCopy.meta);
-  assert.equal(thaiCopy.home.hero.title, englishCopy.home.hero.title);
-  assert.equal(thaiCopy.footer.summary, englishCopy.footer.summary);
+  assert.equal(thaiCopy.nav.links.find(link => link.key === 'about')?.label, 'เกี่ยวกับ');
+  assert.equal(thaiCopy.home.hero.title, 'สวัสดีครับ ผมพีท');
+  assert.equal(
+    thaiCopy.footer.summary,
+    'ผมทำงานคร่อมระหว่างโมเดลภาษา การประเมินผล และการสร้างระบบ แล้วเผยแพร่เครื่องมือ งานบรรยาย และงานเขียนเชิงเทคนิคเพื่อให้ผู้อื่นนำไปต่อยอดได้ง่ายขึ้น'
+  );
 });
