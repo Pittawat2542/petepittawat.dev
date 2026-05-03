@@ -94,7 +94,6 @@ function scoreSearchContent(content: SearchableContent, query: string) {
 }
 
 function localePriority(locale: SearchItemLocale, activeLocale: SearchLocale, fallback: boolean) {
-  if (locale === 'neutral') return 1_000;
   if (!fallback && locale === activeLocale) return 2_000;
   return 0;
 }
@@ -104,40 +103,29 @@ export function resolveSearchItem(
   activeLocale: SearchLocale,
   viewerLocale: SearchLocale = activeLocale
 ): AugmentedSearchItem {
-  const fallbackLocale = getOtherLocale(activeLocale);
   const activeVariant = item.locales?.[activeLocale];
-  const fallbackVariant = item.locales?.[fallbackLocale];
-  const selectedVariant = activeVariant || fallbackVariant;
-
-  if (!selectedVariant) {
+  if (!activeVariant) {
     return {
       ...item,
       matchedLocale: item.locale,
-      isFallback: item.locale !== 'neutral' && item.locale !== activeLocale,
+      isFallback: item.locale !== viewerLocale,
     };
   }
 
-  const resolvedLocale =
-    item.locale === 'neutral' ? 'neutral' : activeVariant ? activeLocale : fallbackLocale;
-  const alternateVariant =
-    item.locale !== 'neutral' && activeVariant && fallbackVariant
-      ? resolvedLocale === activeLocale
-        ? fallbackVariant
-        : activeVariant
-      : undefined;
+  const alternateVariant = activeLocale === 'en' ? item.locales?.th : item.locales?.en;
 
   return {
     ...item,
-    title: selectedVariant.title,
-    description: selectedVariant.description,
-    localizedUrl: selectedVariant.localizedUrl,
+    title: activeVariant.title,
+    description: activeVariant.description,
+    localizedUrl: activeVariant.localizedUrl,
     alternateUrl: alternateVariant?.localizedUrl,
-    tags: selectedVariant.tags,
-    date: selectedVariant.date ?? item.date,
-    extra: selectedVariant.extra ?? item.extra,
-    locale: resolvedLocale,
-    matchedLocale: resolvedLocale,
-    isFallback: item.locale !== 'neutral' && resolvedLocale !== viewerLocale,
+    tags: activeVariant.tags,
+    date: activeVariant.date ?? item.date,
+    extra: activeVariant.extra ?? item.extra,
+    locale: activeLocale,
+    matchedLocale: activeLocale,
+    isFallback: activeLocale !== viewerLocale,
   };
 }
 
@@ -156,13 +144,13 @@ export function scoreItem(
   const fallbackLocale = getOtherLocale(activeLocale);
   const otherVariant = item.locales?.[fallbackLocale];
 
-  if (item.locale === 'neutral') {
-    const resolved = resolveSearchItem(item, activeLocale);
-    const scored = scoreSearchContent(resolved, query);
+  if (!item.locales) {
+    const scored = scoreSearchContent(item, query);
     if (scored) {
       candidates.push({
-        variant: resolved,
-        score: scored.score + localePriority('neutral', activeLocale, false),
+        variant: resolveSearchItem(item, activeLocale),
+        score:
+          scored.score + localePriority(item.locale, activeLocale, item.locale !== activeLocale),
         titlePositions: scored.titlePositions,
       });
     }
@@ -272,11 +260,10 @@ export function buildHref(item: AugmentedSearchItem, query: string) {
   const path = url.pathname.replace(/\/$/, '');
   const supportsQ =
     preferTitle ||
-    /^\/(?:th\/)?projects$/.test(path) ||
-    /^\/(?:th\/)?publications$/.test(path) ||
-    /^\/(?:th\/)?talks$/.test(path) ||
-    path.startsWith('/tags') ||
-    path.startsWith('/th/tags');
+    /^\/projects$/.test(path) ||
+    /^\/publications$/.test(path) ||
+    /^\/talks$/.test(path) ||
+    path.startsWith('/tags');
 
   if (supportsQ && qValue) {
     url.searchParams.set('q', qValue);

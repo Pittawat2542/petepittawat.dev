@@ -2,7 +2,6 @@
 import Container from '@/components/ui/core/Container';
 import GlassCard from '@/components/ui/core/GlassCard';
 import GlassButton from '@/components/ui/navigation/GlassButton';
-import { localizePath } from '@/i18n/utils';
 import {
   GraduationCap,
   BookOpen,
@@ -17,10 +16,9 @@ import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
   copy: SiteCopy['home']['aboutSection'];
-  lang: 'en' | 'th';
 }
 
-const { copy, lang } = Astro.props as Props;
+const { copy } = Astro.props as Props;
 
 const researchThemeIcons = {
   activity: Activity,
@@ -78,7 +76,7 @@ const highlightIcons = {
 
               return (
                 <div class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10">
-                  <div class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent)]/35 via-transparent to-transparent blur-2xl"></div>
+                  <div class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent)]/35 via-transparent to-transparent blur-2xl" />
                   <div class="relative z-10 space-y-2">
                     <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
                       <Icon class="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
@@ -92,7 +90,7 @@ const highlightIcons = {
           }
         </div>
 
-        <GlassButton href={localizePath('/about', lang)} variant="primary" size="md">
+        <GlassButton href="/about" variant="primary" size="md">
           {copy.ctaLabel}
           <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </GlassButton>

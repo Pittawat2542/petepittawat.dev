@@ -4,37 +4,15 @@ import { getCollection } from 'astro:content';
 import BlogListPage from '@/components/layout/BlogListPage';
 import PageWithHero from '@/layouts/PageWithHero.astro';
 import type { BlogPost } from '@/types';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 ) as BlogPost[];
 
-// Group posts by translationId or fallback to slug
-const postsGrouped = allPosts.reduce(
-  (acc, post) => {
-    const key = post.data.translationId || post.data.slug;
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(post);
-    return acc;
-  },
-  {} as Record<string, BlogPost[]>
+const posts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en').sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-
-// Pick the right translation for the current locale
-const posts = Object.values(postsGrouped)
-  .map(group => {
-    const localizedPost = group.find(p => p.data.lang === lang);
-    const defaultPost = group.find(p => p.data.lang === 'en') || group[0];
-    return (localizedPost || defaultPost) as BlogPost;
-  })
-  .filter(Boolean)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const tags = [
   'All',
@@ -48,14 +26,11 @@ const tags = [
 ---
 
 <PageWithHero
-  title={`${SITE_TITLE} - ${t('nav.blog')}`}
+  title={`${SITE_TITLE} - Blog`}
   description={SITE_DESCRIPTION}
   hero={{
-    title: t('nav.blog'),
-    subtitle:
-      lang === 'th'
-        ? 'สำรวจความคิดเห็น บทช่วยสอน และข้อมูลเชิงลึกเกี่ยวกับเทคโนโลยี การเขียนโปรแกรม และ AI'
-        : 'Explore my thoughts, tutorials, and insights on technology, programming, and AI.',
+    title: 'Blog',
+    subtitle: 'Explore my thoughts, tutorials, and insights on technology, programming, and AI.',
     page: 'blog',
   }}
 >

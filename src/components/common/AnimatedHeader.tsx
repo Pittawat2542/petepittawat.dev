@@ -3,14 +3,13 @@ import { SITE_TITLE } from '@/lib/constants';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { FC } from 'react';
-import { getSiteCopy } from '@/i18n/utils';
+import { siteCopyEn } from '@/data/site/copy';
 import { HeaderActions } from '@/components/ui/header/HeaderActions';
 import { MobileMenu } from '@/components/ui/header/MobileMenu';
 import { NavigationLinks } from '@/components/ui/header/NavigationLinks';
 import { cn } from '@/lib/utils';
 
 interface AnimatedHeaderProps {
-  readonly lang?: string;
   readonly pathname?: string;
 }
 
@@ -28,11 +27,21 @@ const NAVIGATION_LINKS: readonly NavLink[] = [
   { href: '/about', label: 'About', icon: CircleUser },
 ] as const;
 
-const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ lang = 'en', pathname = '/' }) => {
-  const siteCopy = getSiteCopy(lang === 'th' ? 'th' : 'en');
+function normalizeActivePath(path: string) {
+  return (
+    path
+      .replace(/^\/th(?=\/blog(?:\/|$))/, '')
+      .replace(/\/index\.html$/, '/')
+      .replace(/\.html$/, '')
+      .replace(/\/+$/, '') || '/'
+  );
+}
+
+const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ pathname = '/' }) => {
+  const siteCopy = siteCopyEn;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activePath, setActivePath] = useState(pathname);
+  const [activePath, setActivePath] = useState(() => normalizeActivePath(pathname));
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -45,14 +54,7 @@ const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ lang = 'en', pathnam
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const normalizePath = useCallback((path: string) => {
-    return (
-      path
-        .replace(/\/index\.html$/, '/')
-        .replace(/\.html$/, '')
-        .replace(/\/+$/, '') || '/'
-    );
-  }, []);
+  const normalizePath = useCallback((path: string) => normalizeActivePath(path), []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -123,15 +125,14 @@ const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ lang = 'en', pathnam
     () =>
       NAVIGATION_LINKS.map(link => {
         const navCopy = siteCopy.nav.links.find(item => item.key === link.href.slice(1));
-        const href = lang === 'th' ? `/th${link.href}` : link.href;
 
         return {
           ...link,
-          href,
+          href: link.href,
           label: navCopy?.label ?? link.label,
         };
       }),
-    [lang, siteCopy]
+    [siteCopy]
   );
 
   return (
@@ -164,7 +165,7 @@ const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ lang = 'en', pathnam
         >
           {/* Brand */}
           <a
-            href={lang === 'th' ? '/th' : '/'}
+            href="/"
             aria-label={`Go to ${siteCopy.nav.links[0]?.label.toLowerCase() ?? 'homepage'}`}
             className="shape-squircle-sm relative flex items-center gap-3 rounded-[1.2rem] px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 focus-visible:outline-none"
           >
@@ -193,13 +194,8 @@ const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ lang = 'en', pathnam
           {/* Navigation links */}
           <NavigationLinks links={localizedLinks} isActive={isActive} />
 
-          {/* Search button, Language Picker, and mobile menu toggle */}
-          <HeaderActions
-            mobileOpen={mobileOpen}
-            onToggleMobile={handleToggleMobile}
-            lang={lang}
-            pathname={pathname}
-          />
+          {/* Search button and mobile menu toggle */}
+          <HeaderActions mobileOpen={mobileOpen} onToggleMobile={handleToggleMobile} />
         </nav>
       </div>
 

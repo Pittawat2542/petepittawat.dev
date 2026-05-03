@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BlogListPage from '@/components/layout/BlogListPage';
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { createTagSlugMap } from '@/lib/slug';
 import PageWithHero from '@/layouts/PageWithHero.astro';
 import type { BlogPost } from '@/types';
@@ -17,11 +18,12 @@ const params = Astro.params as { tag: string };
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 ) as BlogPost[];
-const allTags = ['All', ...Array.from(new Set(allPosts.flatMap(p => p.data.tags))).sort()];
+const discoveryPosts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en');
+const allTags = ['All', ...Array.from(new Set(discoveryPosts.flatMap(p => p.data.tags))).sort()];
 
 const map = createTagSlugMap(allTags.filter(t => t !== 'All'));
 const selectedTag = map[params.tag] ?? params.tag;
-const filtered = allPosts.filter(p => p.data.tags.includes(selectedTag));
+const filtered = discoveryPosts.filter(p => p.data.tags.includes(selectedTag));
 ---
 
 <PageWithHero

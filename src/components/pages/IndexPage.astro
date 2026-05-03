@@ -8,18 +8,20 @@ import AboutSection from '@/components/sections/AboutSection.astro';
 import BlogSection from '@/components/sections/BlogSection.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
 import StatsSection from '@/components/sections/StatsSection.astro';
-import { getLangFromUrl, getSiteCopy } from '@/i18n/utils';
+import { siteCopyEn } from '@/data/site/copy';
+import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { getBlogPosts, getPublications, getTalks } from '@/lib/content';
 
-const lang = getLangFromUrl(Astro.url);
-const siteCopy = getSiteCopy(lang);
 const [blogPosts, publications, talks] = await Promise.all([
   getBlogPosts(),
   getPublications(),
   getTalks(),
 ]);
 const allPosts = blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const posts = allPosts.slice(0, 2);
+const siteCopy = siteCopyEn;
+const posts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
 const stats = {
   posts: allPosts.length,
   publications: publications.length,
@@ -49,8 +51,8 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
       </Fragment>
     )
   }
-  <HeroSection copy={siteCopy.home.hero} lang={lang} />
-  <AboutSection copy={siteCopy.home.aboutSection} lang={lang} />
-  <StatsSection stats={stats} copy={siteCopy.home.statsSection} lang={lang} />
-  <BlogSection posts={posts} copy={siteCopy.home.blogSection} lang={lang} />
+  <HeroSection copy={siteCopy.home.hero} />
+  <AboutSection copy={siteCopy.home.aboutSection} />
+  <StatsSection stats={stats} copy={siteCopy.home.statsSection} />
+  <BlogSection posts={posts} copy={siteCopy.home.blogSection} />
 </BaseLayout>

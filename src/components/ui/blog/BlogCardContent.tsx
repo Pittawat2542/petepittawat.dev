@@ -7,6 +7,7 @@ interface BlogCardContentProps {
   readonly title: string;
   readonly excerpt: string;
   readonly pubDate: Date;
+  readonly lang: 'en' | 'th';
   readonly isPartOfSeries: boolean;
   readonly seriesTitle?: string;
   readonly partNumber: number;
@@ -18,6 +19,7 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
   title,
   excerpt,
   pubDate,
+  lang,
   isPartOfSeries,
   seriesTitle,
   partNumber,
@@ -41,7 +43,7 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
           {title}
         </h3>
 
-        <BlogCardMeta pubDate={pubDate} />
+        <BlogCardMeta pubDate={pubDate} lang={lang} />
 
         <p className="line-clamp-3 text-left text-sm leading-6 text-[color:var(--white)]/78 transition-colors duration-300 group-hover:text-[color:var(--white,#ffffff)]/92 md:text-base md:leading-7">
           {excerpt}
@@ -57,6 +59,7 @@ export const BlogCardContent = memo(BlogCardContentComponent, (prevProps, nextPr
     prevProps.title === nextProps.title &&
     prevProps.excerpt === nextProps.excerpt &&
     prevProps.pubDate === nextProps.pubDate &&
+    prevProps.lang === nextProps.lang &&
     prevProps.isPartOfSeries === nextProps.isPartOfSeries &&
     prevProps.seriesTitle === nextProps.seriesTitle &&
     prevProps.partNumber === nextProps.partNumber &&

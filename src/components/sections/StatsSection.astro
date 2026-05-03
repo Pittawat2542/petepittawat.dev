@@ -1,18 +1,16 @@
 ---
 import Container from '@/components/ui/core/Container';
-import { localizePath } from '@/i18n/utils';
 import { ArrowRight, BookText, Mic, ScrollText } from '@lucide/astro';
 import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
   stats: HomeStats;
   copy: SiteCopy['home']['statsSection'];
-  lang: 'en' | 'th';
 }
 
 type HomeStats = Record<'posts' | 'publications' | 'talks', number>;
 
-const { stats, copy, lang } = Astro.props as Props;
+const { stats, copy } = Astro.props as Props;
 
 const iconMap = {
   'book-text': BookText,
@@ -22,7 +20,6 @@ const iconMap = {
 
 const cards = copy.cards.map(config => ({
   ...config,
-  href: localizePath(config.href, lang),
   count: stats[config.key] ?? 0,
   Icon: iconMap[config.icon],
 }));

@@ -2,33 +2,24 @@
 import { getCollection } from 'astro:content';
 import Page from '@/components/pages/BlogPostPage.astro';
 import type { CollectionEntry } from 'astro:content';
+import {
+  getAlternateBlogPost,
+  getBlogPostsForLocale,
+  groupBlogPostsByTranslation,
+} from '@/lib/blog-translations';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
+  const groups = groupBlogPostsByTranslation(allPosts as CollectionEntry<'blog'>[]);
 
-  const groups = allPosts.reduce(
-    (acc, post) => {
-      const key = post.data.translationId || post.data.slug;
-      if (!acc[key]) acc[key] = [];
-      acc[key].push(post);
-      return acc;
-    },
-    {} as Record<string, CollectionEntry<'blog'>[]>
-  );
-
-  return Object.values(groups).map(group => {
-    const enPost = group.find(p => p.data.lang === 'en');
-    const thPost = group.find(p => p.data.lang === 'th');
-
-    // The post to display on the English route
-    const displayPost = enPost || thPost;
+  return getBlogPostsForLocale(groups, 'en').map(post => {
+    const alternatePost = getAlternateBlogPost(post, groups);
 
     return {
-      params: { slug: displayPost!.data.slug },
+      params: { slug: post.data.slug },
       props: {
-        post: displayPost!,
-        isTranslationFallback: !enPost && !!thPost,
-        ...(thPost && enPost !== thPost ? { otherLanguageSlug: thPost.data.slug } : {}),
+        post,
+        ...(alternatePost ? { alternatePost } : {}),
       },
     };
   });

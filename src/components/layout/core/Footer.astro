@@ -2,35 +2,34 @@
 import { BookOpenText, FolderKanban, FileText, Mic, CircleUser, ExternalLink } from '@lucide/astro';
 import BrandIcon from '@/components/ui/icons/BrandIcon.astro';
 import { socialLinks } from './footer-social-links';
-import { getLangFromUrl, getSiteCopy, localizePath } from '@/i18n/utils';
+import { siteCopyEn } from '@/data/site/copy';
 
-const lang = getLangFromUrl(Astro.url);
-const siteCopy = getSiteCopy(lang);
+const siteCopy = siteCopyEn;
 const year = new Date().getFullYear();
 const navLinks = siteCopy.nav.links;
 const quickLinks = [
   {
-    href: localizePath('/blog', lang),
+    href: '/blog',
     label: navLinks.find(link => link.key === 'blog')?.label ?? 'Blog',
     icon: BookOpenText,
   },
   {
-    href: localizePath('/projects', lang),
+    href: '/projects',
     label: navLinks.find(link => link.key === 'projects')?.label ?? 'Projects',
     icon: FolderKanban,
   },
   {
-    href: localizePath('/publications', lang),
+    href: '/publications',
     label: navLinks.find(link => link.key === 'publications')?.label ?? 'Publications',
     icon: FileText,
   },
   {
-    href: localizePath('/talks', lang),
+    href: '/talks',
     label: navLinks.find(link => link.key === 'talks')?.label ?? 'Talks',
     icon: Mic,
   },
   {
-    href: localizePath('/about', lang),
+    href: '/about',
     label: navLinks.find(link => link.key === 'about')?.label ?? 'About',
     icon: CircleUser,
   },
@@ -98,14 +97,14 @@ const quickLinks = [
       <div class="flex items-center justify-center md:justify-end">
         <a
           href="https://webring.wonderful.software#petepittawat.dev"
-          title="วงแหวนเว็บ"
-          aria-label="Thai Webring (วงแหวนเว็บ)"
+          title="Thai Webring"
+          aria-label="Thai Webring"
           rel="noopener noreferrer"
           target="_blank"
           class="site-footer__contact-link webring-link"
         >
           <img
-            alt="วงแหวนเว็บ"
+            alt="Thai Webring"
             class="webring-icon h-7 w-7 rounded-full border border-white/10 bg-white/8 p-1"
             src="https://webring.wonderful.software/webring.white.svg"
             loading="lazy"

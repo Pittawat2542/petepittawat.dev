@@ -2,12 +2,10 @@
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
 import { ProjectsExplorer } from '@/components/explorers';
 import PageWithHero from '@/layouts/PageWithHero.astro';
-import { getLangFromUrl, getSiteCopy } from '@/i18n/utils';
+import { siteCopyEn } from '@/data/site/copy';
 import { getProjects } from '@/lib/content';
 
-const lang = getLangFromUrl(Astro.url);
-const siteCopy = getSiteCopy(lang);
-const pageCopy = siteCopy.listingPages.projects;
+const pageCopy = siteCopyEn.listingPages.projects;
 const projects = await getProjects();
 ---
 

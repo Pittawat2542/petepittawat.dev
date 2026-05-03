@@ -3,7 +3,7 @@ import { BookText, FolderKanban, ScrollText, Mic, Home } from 'lucide-react';
 
 export type SearchItemType = 'blog' | 'project' | 'publication' | 'talk' | 'page';
 export type SearchLocale = 'en' | 'th';
-export type SearchItemLocale = SearchLocale | 'neutral';
+export type SearchItemLocale = SearchLocale;
 
 export type SearchExtra = Record<string, string | number | boolean | null | undefined>;
 

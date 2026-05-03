@@ -6,6 +6,7 @@ import { BlogCardContent } from '@/components/ui/blog/BlogCardContent';
 import { BlogCardFooter } from '@/components/ui/blog/BlogCardFooter';
 import { BlogCardImage } from '@/components/ui/blog/BlogCardImage';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
+import { getBlogPostPath } from '@/lib/blog-translations';
 import type { BlogPost } from '@/types';
 import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
@@ -77,7 +78,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       <div className="aurora-card__wrapper" />
       <a
         className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out will-change-transform focus-visible:text-[color:var(--white)]"
-        href={post.data.externalUrl ?? `/blog/${post.data.slug}/`}
+        href={post.data.externalUrl ?? getBlogPostPath(post)}
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external' : ''} blog post: ${post.data.title}`}
@@ -104,6 +105,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
                   title={post.data.title}
                   excerpt={post.data.excerpt}
                   pubDate={post.data.pubDate}
+                  lang={post.data.lang}
                   isPartOfSeries={isPartOfSeries}
                   seriesTitle={seriesTitle || ''}
                   partNumber={partNumber}

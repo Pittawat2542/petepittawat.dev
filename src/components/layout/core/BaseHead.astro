@@ -7,6 +7,8 @@ import { SITE_TITLE } from '@/consts';
 interface Props {
   title: string;
   description: string;
+  lang?: 'en' | 'th';
+  alternateLanguages?: { lang: 'en' | 'th'; href: string }[] | undefined;
   image?: string | undefined;
   type?: 'website' | 'article' | undefined;
   publishedTime?: string | undefined;
@@ -15,17 +17,11 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const lang = Astro.url.pathname.startsWith('/th') ? 'th' : 'en';
-const otherLang = lang === 'th' ? 'en' : 'th';
-const otherPath =
-  lang === 'th'
-    ? Astro.url.pathname.replace(/^\/th/, '') || '/'
-    : `/th${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`;
-const otherUrl = new URL(otherPath, Astro.site);
-
 const {
   title,
   description,
+  lang = 'en',
+  alternateLanguages = [],
   image = '/home-og-image.jpeg',
   type = 'website',
   publishedTime,
@@ -33,12 +29,29 @@ const {
   wordCount,
 } = Astro.props as Props;
 
+const hreflangLinks = alternateLanguages.length
+  ? [
+      { lang, href: canonicalURL.toString() },
+      ...alternateLanguages.map(link => ({
+        lang: link.lang,
+        href: new URL(link.href, Astro.site ?? Astro.url).toString(),
+      })),
+    ].filter(
+      (link, index, links) =>
+        links.findIndex(
+          candidate => candidate.lang === link.lang && candidate.href === link.href
+        ) === index
+    )
+  : [];
+const xDefaultHref =
+  hreflangLinks.find(link => link.lang === 'en')?.href ?? canonicalURL.toString();
+
 const structuredData: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': type === 'article' ? 'BlogPosting' : 'WebSite',
   headline: title,
   description,
-  url: Astro.url.toString(),
+  url: canonicalURL.toString(),
   image: new URL(image, Astro.site ?? Astro.url).toString(),
   author: {
     '@type': 'Person',
@@ -169,9 +182,16 @@ const structuredDataJson = JSON.stringify(structuredData);
 
 <!-- Canonical URL & hreflang -->
 <link rel="canonical" href={canonicalURL} />
-<link rel="alternate" hreflang={lang} href={canonicalURL} />
-<link rel="alternate" hreflang={otherLang} href={otherUrl} />
-<link rel="alternate" hreflang="x-default" href={lang === 'en' ? canonicalURL : otherUrl} />
+{
+  hreflangLinks.length > 0 && (
+    <>
+      {hreflangLinks.map(link => (
+        <link rel="alternate" hreflang={link.lang} href={link.href} />
+      ))}
+      <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+    </>
+  )
+}
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
 

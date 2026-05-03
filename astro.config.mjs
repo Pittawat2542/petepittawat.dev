@@ -8,13 +8,6 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://petepittawat.dev',
-	i18n: {
-		defaultLocale: 'en',
-		locales: ['en', 'th'],
-		routing: {
-			prefixDefaultLocale: false,
-		},
-	},
 	integrations: [
 		mdx(),
 		sitemap({

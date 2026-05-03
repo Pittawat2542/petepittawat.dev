@@ -1,7 +1,6 @@
 ---
 import Container from '@/components/ui/core/Container';
 import GlassButton from '@/components/ui/navigation/GlassButton';
-import { localizePath } from '@/i18n/utils';
 import { Image } from 'astro:assets';
 import { BookOpen, Mic, Rocket } from '@lucide/astro';
 import profileImage from '@/assets/images/profile.jpg';
@@ -9,10 +8,9 @@ import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
   copy: SiteCopy['home']['hero'];
-  lang: 'en' | 'th';
 }
 
-const { copy, lang } = Astro.props as Props;
+const { copy } = Astro.props as Props;
 
 const iconMap = {
   rocket: Rocket,
@@ -22,7 +20,6 @@ const iconMap = {
 
 const ctaItems = copy.primaryCtas.map(config => ({
   ...config,
-  href: localizePath(config.href, lang),
   Icon: iconMap[config.icon],
 }));
 ---

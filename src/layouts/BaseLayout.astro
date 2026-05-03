@@ -4,11 +4,23 @@ import BaseHead from '@/components/layout/core/BaseHead.astro';
 import Footer from '@/components/layout/core/Footer.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
 import SearchModal from '@/components/layout/SearchModal';
-import { getLangFromUrl } from '@/i18n/utils';
 
-const { title, description, image, type, publishedTime, tags, wordCount, page } = Astro.props as {
+const {
+  title,
+  description,
+  lang = 'en',
+  alternateLanguages = [],
+  image,
+  type,
+  publishedTime,
+  tags,
+  wordCount,
+  page,
+} = Astro.props as {
   title: string;
   description: string;
+  lang?: 'en' | 'th';
+  alternateLanguages?: { lang: 'en' | 'th'; href: string }[];
   image?: string;
   type?: 'website' | 'article';
   publishedTime?: string;
@@ -24,8 +36,6 @@ const bodyStyle = pageAccent
   ? `--page-accent:${pageAccent};--card-accent:${pageAccent};`
   : undefined;
 const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
-
-const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
@@ -39,13 +49,15 @@ const lang = getLangFromUrl(Astro.url);
       publishedTime={publishedTime || undefined}
       tags={tags || undefined}
       wordCount={wordCount}
+      lang={lang}
+      alternateLanguages={alternateLanguages}
     />
     <slot name="head" />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
-    <AnimatedHeader lang={lang} pathname={Astro.url.pathname} client:idle />
+    <AnimatedHeader pathname={Astro.url.pathname} client:idle />
     <main
       id="main-content"
       class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"

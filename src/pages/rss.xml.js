@@ -1,9 +1,17 @@
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
+import {
+  getBlogPostPath,
+  getPreferredBlogPosts,
+  groupBlogPostsByTranslation,
+} from '@/lib/blog-translations';
 
 export async function GET(context) {
-  const posts = await getCollection('blog');
+  const posts = getPreferredBlogPosts(
+    groupBlogPostsByTranslation(await getCollection('blog')),
+    'en'
+  );
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -28,7 +36,7 @@ export async function GET(context) {
         title,
         description,
         pubDate: post.data.pubDate,
-        link: `/blog/${post.data.slug}/`,
+        link: getBlogPostPath(post),
         categories,
         // Enrich feed with full content (Markdown/MDX body)
         content: post.body,

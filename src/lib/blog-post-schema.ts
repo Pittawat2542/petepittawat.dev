@@ -2,6 +2,8 @@
  * Generate JSON-LD schema for blog posts
  */
 
+import { getBlogPostPath, type BlogTranslationLocale } from './blog-translations.ts';
+
 interface BlogPostSchemaParams {
   title: string;
   excerpt: string;
@@ -83,19 +85,17 @@ interface BlogPostMetadata {
 
 export function computeBlogPostMetadata(params: {
   slug?: string | undefined;
+  lang?: BlogTranslationLocale | undefined;
   coverImage?: any;
   tags?: string[] | undefined;
   site?: URL | undefined;
   twitterHandle?: string | undefined;
 }): BlogPostMetadata {
-  const { slug, coverImage, tags = [], site, twitterHandle } = params;
+  const { slug, lang = 'en', coverImage, tags = [], site, twitterHandle } = params;
 
   const authorUrl = site ? new URL('/about', site).href : '/about';
-  const canonicalUrl = slug
-    ? site
-      ? new URL(`/blog/${slug}/`, site).href
-      : `/blog/${slug}/`
-    : '/';
+  const blogPostPath = slug ? getBlogPostPath({ data: { slug, lang } }) : '/';
+  const canonicalUrl = slug ? (site ? new URL(blogPostPath, site).href : blogPostPath) : '/';
 
   const fallback = slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg';
   const src = coverImage?.src ?? fallback;
