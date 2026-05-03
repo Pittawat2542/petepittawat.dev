@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img">
+  <title>AI ยืมวิธีมองโลกจากหลายศาสตร์ แล้วแปลงเป็นระบบที่คำนวณได้</title>
+  <desc>แผนภาพแสดงศาสตร์ต่าง ๆ ส่งแนวคิดให้ AI ผ่านชั้นแปลความหมาย ก่อนออกมาเป็นสมการ อัลกอริทึม และระบบ</desc>
+  <defs>
+    <style>
+      .title{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:32px;fill:#F8FAFC;font-weight:700}
+      .label{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:22px;fill:#E5E7EB;font-weight:700}
+      .body{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:18px;fill:#CBD5E1}
+      .small{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:15px;fill:#94A3B8}
+      .stage{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:18px;fill:#93C5FD;font-weight:700}
+      .panel{fill:#0F172A;fill-opacity:.3;stroke:#64748B;stroke-opacity:.36;stroke-width:1.5}
+      .node{fill:#111827;fill-opacity:.64;stroke:#94A3B8;stroke-opacity:.42;stroke-width:1.5}
+      .ai{fill:#312E81;fill-opacity:.5;stroke:#A78BFA;stroke-opacity:.9;stroke-width:2.4}
+      .transform{fill:#064E3B;fill-opacity:.28;stroke:#86EFAC;stroke-opacity:.75;stroke-width:1.8}
+      .cyan{stroke:#22D3EE;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .green{stroke:#86EFAC;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .muted{stroke:#475569;stroke-width:1.4;stroke-dasharray:7 9;fill:none}
+    </style>
+    <marker id="arrow-cyan" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 7 3.5 0 7z" fill="#22D3EE"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 7 3.5 0 7z" fill="#86EFAC"/>
+    </marker>
+  </defs>
+
+  <text x="700" y="38" text-anchor="middle" class="title">AI ยืม “วิธีมองโลก” จากหลายศาสตร์</text>
+  <text x="700" y="86" text-anchor="middle" class="title">แล้วแปลงให้กลายเป็นระบบที่คำนวณได้</text>
+
+  <rect x="72" y="112" width="1256" height="560" rx="34" class="panel"/>
+  <text x="258" y="160" text-anchor="middle" class="stage">วัตถุดิบจากศาสตร์อื่น</text>
+  <text x="700" y="160" text-anchor="middle" class="stage">ชั้นแปลความเข้าใจ</text>
+  <text x="1108" y="160" text-anchor="middle" class="stage">สิ่งที่คอมพิวเตอร์ใช้ทำงาน</text>
+
+  <rect x="116" y="210" width="284" height="72" rx="18" class="node"/>
+  <text x="258" y="238" text-anchor="middle" class="label">ฟิสิกส์</text>
+  <text x="258" y="264" text-anchor="middle" class="small">energy landscape</text>
+
+  <rect x="116" y="314" width="284" height="72" rx="18" class="node"/>
+  <text x="258" y="342" text-anchor="middle" class="label">ชีววิทยา</text>
+  <text x="258" y="368" text-anchor="middle" class="small">neuron · fitness</text>
+
+  <rect x="116" y="418" width="284" height="72" rx="18" class="node"/>
+  <text x="258" y="446" text-anchor="middle" class="label">จิตวิทยา</text>
+  <text x="258" y="472" text-anchor="middle" class="small">attention · memory</text>
+
+  <rect x="116" y="522" width="284" height="72" rx="18" class="node"/>
+  <text x="258" y="550" text-anchor="middle" class="label">เศรษฐศาสตร์ / ปรัชญา</text>
+  <text x="258" y="576" text-anchor="middle" class="small">incentives · agency</text>
+
+  <path d="M400 246C480 260 532 286 594 326" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M400 350C484 356 536 364 588 374" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M400 454C484 442 536 424 588 404" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M400 558C494 526 550 474 600 430" class="cyan" marker-end="url(#arrow-cyan)"/>
+
+  <circle cx="700" cy="382" r="112" class="ai"/>
+  <text x="700" y="360" text-anchor="middle" class="title">AI</text>
+  <text x="700" y="395" text-anchor="middle" class="label">แปลเป็นรูปแบบ</text>
+  <text x="700" y="426" text-anchor="middle" class="body">ที่คำนวณได้</text>
+
+  <path d="M584 296C644 254 756 254 816 296" class="muted"/>
+  <path d="M584 468C644 516 756 516 816 468" class="muted"/>
+
+  <path d="M810 352C870 312 920 284 976 260" class="green" marker-end="url(#arrow-green)"/>
+  <path d="M824 382C884 382 930 382 976 382" class="green" marker-end="url(#arrow-green)"/>
+  <path d="M810 412C870 452 920 480 976 504" class="green" marker-end="url(#arrow-green)"/>
+
+  <rect x="988" y="214" width="282" height="74" rx="18" class="transform"/>
+  <text x="1129" y="244" text-anchor="middle" class="label">สมการ</text>
+  <text x="1129" y="270" text-anchor="middle" class="small">mathematical form</text>
+
+  <rect x="988" y="346" width="282" height="74" rx="18" class="transform"/>
+  <text x="1129" y="376" text-anchor="middle" class="label">อัลกอริทึม</text>
+  <text x="1129" y="402" text-anchor="middle" class="small">procedures / optimization</text>
+
+  <rect x="988" y="478" width="282" height="74" rx="18" class="transform"/>
+  <text x="1129" y="508" text-anchor="middle" class="label">ระบบที่ทำงานได้จริง</text>
+  <text x="1129" y="534" text-anchor="middle" class="small">models · agents · tools</text>
+
+  <text x="700" y="622" text-anchor="middle" class="body">ความหมายเดิมไม่ถูกคัดลอกมาตรง ๆ</text>
+  <text x="700" y="650" text-anchor="middle" class="body">แต่ถูกกลั่นให้กลายเป็นกลไกที่เครื่องคำนวณได้</text>
+</svg>

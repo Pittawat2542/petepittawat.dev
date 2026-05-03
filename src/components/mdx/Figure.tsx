@@ -1,20 +1,21 @@
 import { memo, type FC, type ReactNode } from 'react';
 
 interface FigureProps {
-  readonly src: string | { src: string };
+  readonly src?: string | { src: string };
   readonly alt?: string;
   readonly caption?: string;
+  readonly className?: string;
   readonly children?: ReactNode;
 }
 
-const FigureComponent: FC<FigureProps> = ({ src, alt = '', caption, children }) => {
+const FigureComponent: FC<FigureProps> = ({ src, alt = '', caption, className = '', children }) => {
   // Handle both string sources and Astro image objects
-  const imageSrc = typeof src === 'string' ? src : src.src;
+  const imageSrc = src ? (typeof src === 'string' ? src : src.src) : undefined;
 
   return (
     <>
-      <figure className="mdx-figure">
-        <img src={imageSrc} alt={alt} loading="lazy" decoding="async" />
+      <figure className={`mdx-figure ${className}`.trim()}>
+        {imageSrc && <img src={imageSrc} alt={alt} loading="lazy" decoding="async" />}
         {caption && <figcaption>{caption}</figcaption>}
         {children}
       </figure>

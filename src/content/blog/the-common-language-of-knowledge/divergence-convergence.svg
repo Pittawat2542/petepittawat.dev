@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img">
+  <title>จากปรัชญาธรรมชาติ สู่การแยกศาสตร์ และการกลับมาไหลเข้าหากันผ่าน AI</title>
+  <desc>แผนภาพสามช่วงแสดงความรู้เริ่มจากปรัชญาธรรมชาติ แตกออกเป็นศาสตร์เฉพาะทาง แล้วไหลกลับมาเชื่อมกันผ่าน AI ในฐานะภาษากลาง</desc>
+  <defs>
+    <style>
+      .title{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:32px;fill:#F8FAFC;font-weight:700}
+      .stage{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:18px;fill:#93C5FD;font-weight:700;letter-spacing:.02em}
+      .label{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:24px;fill:#E5E7EB;font-weight:700}
+      .body{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:19px;fill:#CBD5E1}
+      .small{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:16px;fill:#94A3B8}
+      .note{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:17px;fill:#A5B4FC}
+      .panel{fill:#0F172A;fill-opacity:.34;stroke:#64748B;stroke-opacity:.38;stroke-width:1.5}
+      .node{fill:#111827;fill-opacity:.62;stroke:#94A3B8;stroke-opacity:.42;stroke-width:1.5}
+      .source{fill:#083344;fill-opacity:.42;stroke:#22D3EE;stroke-opacity:.82;stroke-width:2}
+      .ai{fill:#312E81;fill-opacity:.42;stroke:#A78BFA;stroke-opacity:.9;stroke-width:2.3}
+      .flow-cyan{stroke:#22D3EE;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .flow-violet{stroke:#A78BFA;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .muted-line{stroke:#475569;stroke-width:1.5;stroke-dasharray:6 8;fill:none;stroke-linecap:round}
+    </style>
+    <marker id="arrow-cyan" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 7 3.5 0 7z" fill="#22D3EE"/>
+    </marker>
+    <marker id="arrow-violet" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 7 3.5 0 7z" fill="#A78BFA"/>
+    </marker>
+  </defs>
+
+  <text x="700" y="58" text-anchor="middle" class="title">ความรู้แยกออกเป็นศาสตร์ แล้วไหลกลับมาหากันผ่าน AI</text>
+
+  <rect x="80" y="112" width="1240" height="560" rx="34" class="panel"/>
+  <path d="M492 142V642M908 142V642" class="muted-line"/>
+
+  <text x="286" y="158" text-anchor="middle" class="stage">1 · จุดตั้งต้นร่วม</text>
+  <text x="700" y="158" text-anchor="middle" class="stage">2 · ความซับซ้อนทำให้ต้องแยกศาสตร์</text>
+  <text x="1114" y="158" text-anchor="middle" class="stage">3 · AI ทำให้แนวคิดไหลกลับมาพบกัน</text>
+
+  <circle cx="286" cy="338" r="104" class="source"/>
+  <text x="286" y="318" text-anchor="middle" class="label">ปรัชญา</text>
+  <text x="286" y="350" text-anchor="middle" class="label">ธรรมชาติ</text>
+  <text x="286" y="384" text-anchor="middle" class="small">natural philosophy</text>
+  <text x="286" y="506" text-anchor="middle" class="body">คำถามใหญ่เรื่องชีวิต</text>
+  <text x="286" y="536" text-anchor="middle" class="body">ธรรมชาติ และจักรวาล</text>
+
+  <path d="M390 314C456 270 502 236 562 232" class="flow-cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M398 340C468 342 506 340 540 338" class="flow-cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M390 366C464 404 538 430 626 446" class="flow-cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M350 400C438 500 502 540 572 552" class="flow-cyan" marker-end="url(#arrow-cyan)"/>
+
+  <rect x="574" y="198" width="252" height="72" rx="18" class="node"/>
+  <text x="700" y="242" text-anchor="middle" class="body">ฟิสิกส์</text>
+  <rect x="552" y="304" width="210" height="72" rx="18" class="node"/>
+  <text x="657" y="348" text-anchor="middle" class="body">เคมี</text>
+  <rect x="638" y="410" width="224" height="72" rx="18" class="node"/>
+  <text x="750" y="454" text-anchor="middle" class="body">ชีววิทยา</text>
+  <rect x="584" y="516" width="292" height="72" rx="18" class="node"/>
+  <text x="730" y="560" text-anchor="middle" class="body">เศรษฐศาสตร์ / สังคม</text>
+
+  <text x="700" y="624" text-anchor="middle" class="small">taxonomy · specialization · jargon</text>
+
+  <path d="M826 234C910 242 970 264 1018 306" class="flow-violet" marker-end="url(#arrow-violet)"/>
+  <path d="M762 340C856 346 936 352 990 362" class="flow-violet" marker-end="url(#arrow-violet)"/>
+  <path d="M862 446C930 430 968 410 990 394" class="flow-violet" marker-end="url(#arrow-violet)"/>
+  <path d="M876 552C948 510 984 462 1000 426" class="flow-violet" marker-end="url(#arrow-violet)"/>
+
+  <circle cx="1114" cy="378" r="118" class="ai"/>
+  <text x="1114" y="352" text-anchor="middle" class="title">AI</text>
+  <text x="1114" y="388" text-anchor="middle" class="label">ภาษากลาง</text>
+  <text x="1114" y="418" text-anchor="middle" class="small">common language</text>
+  <text x="1114" y="442" text-anchor="middle" class="small">of knowledge</text>
+
+  <path d="M1008 520C1058 566 1168 566 1220 520" class="muted-line"/>
+  <text x="1114" y="594" text-anchor="middle" class="note">เส้นแบ่งเดิมยังอยู่ แต่เปลี่ยนจากกำแพงเป็นแผนที่</text>
+</svg>

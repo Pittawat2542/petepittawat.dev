@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img">
+  <title>AI ทำให้ระยะทางระหว่างคำถามกับคำตอบที่ทดลองได้สั้นลง</title>
+  <desc>แผนภาพเปรียบเทียบเส้นทางที่ยาวและไม่แน่นอนก่อนมี AI กับเส้นทาง AI-assisted ที่ช่วยสร้างสมมติฐาน โค้ด จำลอง และออกแบบการทดลอง</desc>
+  <defs>
+    <style>
+      .title{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:32px;fill:#F8FAFC;font-weight:700}
+      .heading{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:23px;fill:#E5E7EB;font-weight:700}
+      .label{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:20px;fill:#CBD5E1;font-weight:700}
+      .small{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:15px;fill:#94A3B8}
+      .note{font-family:Anuphan,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;font-size:17px;fill:#A5B4FC}
+      .panel{fill:#0F172A;fill-opacity:.3;stroke:#64748B;stroke-opacity:.36;stroke-width:1.5}
+      .node{fill:#111827;fill-opacity:.64;stroke:#94A3B8;stroke-opacity:.42;stroke-width:1.5}
+      .question{fill:#083344;fill-opacity:.52;stroke:#22D3EE;stroke-opacity:.85;stroke-width:2.2}
+      .answer{fill:#064E3B;fill-opacity:.45;stroke:#86EFAC;stroke-opacity:.85;stroke-width:2.2}
+      .cyan{stroke:#22D3EE;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .long{stroke:#64748B;stroke-width:2.4;stroke-dasharray:8 10;fill:none;stroke-linecap:round}
+      .blocker{fill:#1E293B;fill-opacity:.82;stroke:#64748B;stroke-opacity:.5;stroke-width:1.2}
+    </style>
+    <marker id="arrow-cyan" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 7 3.5 0 7z" fill="#22D3EE"/>
+    </marker>
+  </defs>
+
+  <text x="700" y="58" text-anchor="middle" class="title">AI ลดระยะทางจาก “คำถาม” ไปสู่ “คำตอบที่ทดลองได้”</text>
+
+  <rect x="82" y="112" width="1236" height="230" rx="30" class="panel"/>
+  <text x="164" y="162" class="heading">ก่อนมี AI</text>
+  <text x="164" y="192" class="small">เส้นทางยาว ต้องข้ามทักษะและทรัพยากรหลายชั้น</text>
+  <circle cx="170" cy="256" r="44" class="node"/>
+  <text x="170" y="264" text-anchor="middle" class="label">Q</text>
+  <path d="M216 256C360 196 448 316 572 246S772 186 900 266 1110 326 1228 252" class="long"/>
+  <circle cx="1230" cy="252" r="58" class="node"/>
+  <text x="1230" y="246" text-anchor="middle" class="label">Testable</text>
+  <text x="1230" y="273" text-anchor="middle" class="small">answer</text>
+  <rect x="384" y="218" width="132" height="44" rx="14" class="blocker"/>
+  <text x="450" y="247" text-anchor="middle" class="small">coding gap</text>
+  <rect x="702" y="280" width="150" height="44" rx="14" class="blocker"/>
+  <text x="777" y="309" text-anchor="middle" class="small">simulation cost</text>
+  <rect x="960" y="210" width="164" height="44" rx="14" class="blocker"/>
+  <text x="1042" y="239" text-anchor="middle" class="small">experiment design</text>
+
+  <rect x="82" y="400" width="1236" height="230" rx="30" class="panel"/>
+  <text x="164" y="450" class="heading">เมื่อมี AI agent / model / tool use</text>
+  <text x="164" y="480" class="small">AI ช่วยลดแรงเสียดทานระหว่างไอเดียกับต้นแบบที่ทดสอบได้</text>
+  <circle cx="168" cy="552" r="46" class="question"/>
+  <text x="168" y="560" text-anchor="middle" class="label">Q</text>
+  <rect x="282" y="508" width="212" height="88" rx="20" class="node"/>
+  <text x="388" y="542" text-anchor="middle" class="label">ตั้งสมมติฐาน</text>
+  <text x="388" y="570" text-anchor="middle" class="small">hypothesis generation</text>
+  <rect x="562" y="508" width="212" height="88" rx="20" class="node"/>
+  <text x="668" y="542" text-anchor="middle" class="label">โค้ด / จำลอง</text>
+  <text x="668" y="570" text-anchor="middle" class="small">code · simulation</text>
+  <rect x="842" y="508" width="212" height="88" rx="20" class="node"/>
+  <text x="948" y="542" text-anchor="middle" class="label">ออกแบบทดลอง</text>
+  <text x="948" y="570" text-anchor="middle" class="small">experiment design</text>
+  <circle cx="1186" cy="552" r="62" class="answer"/>
+  <text x="1186" y="544" text-anchor="middle" class="label">Testable</text>
+  <text x="1186" y="572" text-anchor="middle" class="small">answer</text>
+
+  <path d="M222 552H268" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M500 552H548" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M780 552H828" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M1060 552H1110" class="cyan" marker-end="url(#arrow-cyan)"/>
+
+  <text x="700" y="690" text-anchor="middle" class="note">AI ไม่ได้แทนการทดลองจริง</text>
+  <text x="700" y="716" text-anchor="middle" class="note">แต่ช่วยให้เราไปถึงสิ่งที่ “ทดลองได้” เร็วขึ้น</text>
+</svg>
