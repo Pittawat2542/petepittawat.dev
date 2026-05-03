@@ -11,6 +11,7 @@ interface Props {
   type?: 'website' | 'article' | undefined;
   publishedTime?: string | undefined;
   tags?: string[] | undefined;
+  wordCount?: number | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -22,6 +23,7 @@ const {
   type = 'website',
   publishedTime,
   tags = [],
+  wordCount,
 } = Astro.props as Props;
 
 const structuredData: Record<string, unknown> = {
@@ -57,7 +59,9 @@ if (type === 'article') {
     structuredData['keywords'] = tags.join(', ');
   }
   structuredData['articleSection'] = 'Technology';
-  structuredData['wordCount'] = '1000';
+  if (typeof wordCount === 'number' && wordCount > 0) {
+    structuredData['wordCount'] = wordCount;
+  }
 }
 
 if (type === 'website') {

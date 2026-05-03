@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { BookOpen, ChevronRight } from '@lucide/astro';
 import FormattedDate from '@/components/content/FormattedDate';
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { estimateReadingMetrics } from '@/lib/reading-time';
 import { getAllSeries } from '@/lib/series';
 import PageWithHero from '@/layouts/PageWithHero.astro';
 
@@ -49,8 +50,7 @@ allSeries.sort((a, b) => {
             const firstPost = series.posts[0];
             const lastPost = series.posts[series.posts.length - 1];
             const totalReadingTime = series.posts.reduce((total, post) => {
-              const wordCount = (post.body || '').trim().split(/\s+/).length;
-              return total + Math.max(1, Math.round(wordCount / 220));
+              return total + estimateReadingMetrics(post.body || '').readingTimeMin;
             }, 0);
 
             return (

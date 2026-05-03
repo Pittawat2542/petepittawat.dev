@@ -5,13 +5,14 @@ import Footer from '@/components/layout/core/Footer.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
 import SearchModal from '@/components/layout/SearchModal';
 
-const { title, description, image, type, publishedTime, tags, page } = Astro.props as {
+const { title, description, image, type, publishedTime, tags, wordCount, page } = Astro.props as {
   title: string;
   description: string;
   image?: string;
   type?: 'website' | 'article';
   publishedTime?: string;
   tags?: string[];
+  wordCount?: number;
   page?: string;
 };
 const ogImagePath = image ?? '/home-og-image.jpeg';
@@ -34,6 +35,7 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
       type={type || undefined}
       publishedTime={publishedTime || undefined}
       tags={tags || undefined}
+      wordCount={wordCount}
     />
     <slot name="head" />
     <link rel="sitemap" href="/sitemap-index.xml" />
