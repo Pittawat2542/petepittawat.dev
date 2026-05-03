@@ -6,6 +6,7 @@ interface BlogPostSchemaParams {
   title: string;
   excerpt: string;
   pubDate: Date;
+  wordCount?: number | undefined;
   canonicalUrl: string;
   imageUrl: string;
   authorUrl: string;
@@ -21,6 +22,7 @@ export function generateBlogPostSchema(params: BlogPostSchemaParams) {
     title,
     excerpt,
     pubDate,
+    wordCount,
     canonicalUrl,
     imageUrl,
     authorUrl,
@@ -55,6 +57,7 @@ export function generateBlogPostSchema(params: BlogPostSchemaParams) {
     },
     image: imageUrl,
     url: canonicalUrl,
+    ...(typeof wordCount === 'number' && wordCount > 0 ? { wordCount } : {}),
     ...(seriesSlug && seriesTitle
       ? {
           isPartOf: {
