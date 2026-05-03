@@ -2,14 +2,25 @@
 import { BookOpenText, FolderKanban, FileText, Mic, CircleUser, ExternalLink } from '@lucide/astro';
 import BrandIcon from '@/components/ui/icons/BrandIcon.astro';
 import { socialLinks } from './footer-social-links';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 const quickLinks = [
-  { href: '/blog', label: 'Blog', icon: BookOpenText },
-  { href: '/projects', label: 'Projects', icon: FolderKanban },
-  { href: '/publications', label: 'Publications', icon: FileText },
-  { href: '/talks', label: 'Talks', icon: Mic },
-  { href: '/about', label: 'About', icon: CircleUser },
+  { href: lang === 'th' ? '/th/blog' : '/blog', label: t('nav.blog'), icon: BookOpenText },
+  {
+    href: lang === 'th' ? '/th/projects' : '/projects',
+    label: t('nav.projects'),
+    icon: FolderKanban,
+  },
+  {
+    href: lang === 'th' ? '/th/publications' : '/publications',
+    label: t('nav.publications'),
+    icon: FileText,
+  },
+  { href: lang === 'th' ? '/th/talks' : '/talks', label: t('nav.talks'), icon: Mic },
+  { href: lang === 'th' ? '/th/about' : '/about', label: t('nav.about'), icon: CircleUser },
 ];
 ---
 

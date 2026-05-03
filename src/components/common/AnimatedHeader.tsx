@@ -8,6 +8,11 @@ import { MobileMenu } from '@/components/ui/header/MobileMenu';
 import { NavigationLinks } from '@/components/ui/header/NavigationLinks';
 import { cn } from '@/lib/utils';
 
+interface AnimatedHeaderProps {
+  readonly lang?: string;
+  readonly pathname?: string;
+}
+
 interface NavLink {
   readonly href: string;
   readonly label: string;
@@ -22,10 +27,10 @@ const NAVIGATION_LINKS: readonly NavLink[] = [
   { href: '/about', label: 'About', icon: CircleUser },
 ] as const;
 
-const AnimatedHeaderComponent: FC = () => {
+const AnimatedHeaderComponent: FC<AnimatedHeaderProps> = ({ lang = 'en', pathname = '/' }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activePath, setActivePath] = useState('/');
+  const [activePath, setActivePath] = useState(pathname);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -142,7 +147,7 @@ const AnimatedHeaderComponent: FC = () => {
         >
           {/* Brand */}
           <a
-            href="/"
+            href={lang === 'th' ? '/th' : '/'}
             aria-label="Go to homepage"
             className="shape-squircle-sm relative flex items-center gap-3 rounded-[1.2rem] px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 focus-visible:outline-none"
           >
@@ -169,17 +174,28 @@ const AnimatedHeaderComponent: FC = () => {
           </a>
 
           {/* Navigation links */}
-          <NavigationLinks links={NAVIGATION_LINKS} isActive={isActive} />
+          <NavigationLinks
+            links={NAVIGATION_LINKS.map(l => ({
+              ...l,
+              href: lang === 'th' ? `/th${l.href}` : l.href,
+            }))}
+            isActive={isActive}
+          />
 
-          {/* Search button and mobile menu toggle */}
-          <HeaderActions mobileOpen={mobileOpen} onToggleMobile={handleToggleMobile} />
+          {/* Search button, Language Picker, and mobile menu toggle */}
+          <HeaderActions
+            mobileOpen={mobileOpen}
+            onToggleMobile={handleToggleMobile}
+            lang={lang}
+            pathname={pathname}
+          />
         </nav>
       </div>
 
       <MobileMenu
         isOpen={mobileOpen}
         onClose={handleCloseMobile}
-        links={NAVIGATION_LINKS}
+        links={NAVIGATION_LINKS.map(l => ({ ...l, href: lang === 'th' ? `/th${l.href}` : l.href }))}
         isActive={isActive}
       />
     </header>

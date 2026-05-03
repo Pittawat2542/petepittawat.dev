@@ -7,10 +7,21 @@ import { openSearch } from '@/scripts/openSearch';
 interface HeaderActionsProps {
   readonly mobileOpen: boolean;
   readonly onToggleMobile: () => void;
+  readonly lang?: string;
+  readonly pathname?: string;
 }
 
-const HeaderActionsComponent: FC<HeaderActionsProps> = ({ mobileOpen, onToggleMobile }) => {
+const HeaderActionsComponent: FC<HeaderActionsProps> = ({
+  mobileOpen,
+  onToggleMobile,
+  lang = 'en',
+  pathname = '/',
+}) => {
   const prefetchedRef = useRef(false);
+  const isThai = lang === 'th';
+  const targetPath = isThai
+    ? pathname.replace(/^\/th/, '') || '/'
+    : `/th${pathname === '/' ? '' : pathname}`;
 
   const prefetchSearchIndex = useCallback(() => {
     if (prefetchedRef.current) return;
@@ -38,6 +49,37 @@ const HeaderActionsComponent: FC<HeaderActionsProps> = ({ mobileOpen, onToggleMo
 
   return (
     <div className="relative ml-auto flex items-center gap-3 md:ml-0 md:flex md:flex-1 md:justify-end md:gap-3 lg:gap-4">
+      {/* Language Toggle */}
+      <div className="shape-squircle-sm relative flex items-center rounded-[1.25rem] border border-white/15 bg-white/10 p-1 text-[11px] font-bold tracking-wider sm:text-xs">
+        {isThai ? (
+          <>
+            <a
+              href={targetPath}
+              aria-label="Switch to English"
+              className="flex h-8 items-center justify-center rounded-full px-2.5 text-white/50 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:outline-none sm:px-3"
+            >
+              EN
+            </a>
+            <span className="flex h-8 items-center justify-center rounded-full bg-white/20 px-2.5 text-white shadow-sm sm:px-3">
+              TH
+            </span>
+          </>
+        ) : (
+          <>
+            <span className="flex h-8 items-center justify-center rounded-full bg-white/20 px-2.5 text-white shadow-sm sm:px-3">
+              EN
+            </span>
+            <a
+              href={targetPath}
+              aria-label="Switch to Thai"
+              className="flex h-8 items-center justify-center rounded-full px-2.5 text-white/50 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:outline-none sm:px-3"
+            >
+              TH
+            </a>
+          </>
+        )}
+      </div>
+
       {/* Desktop search button */}
       <button
         id="open-search-desktop"
