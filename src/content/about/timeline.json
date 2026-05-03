@@ -1,91 +1,91 @@
 [
   {
     "title": "Feb 2026 – Present — Research Scientist, Typhoon team (SCB DataX R&I)",
-    "description": "Collaborate with and advise fellow research scientists on cutting-edge LM research. Foster internal knowledge sharing and provide consultation on agentic AI applications. Support executives by delivering clear, actionable insights to inform AI strategy and decision-making.",
+    "description": "Advise fellow research scientists on language model research, support internal knowledge sharing, and help connect agentic AI work to product and strategy decisions.",
     "accent": "publications",
     "highlight": true
   },
   {
     "title": "2025 — Typhoon Application Week",
-    "description": "Built and shipped 7+ LLM-powered apps.",
+    "description": "Built and shipped more than seven LLM-powered applications in a rapid prototyping sprint.",
     "accent": "about",
     "highlight": false
   },
   {
     "title": "2025 — Typhoon T1 (research preview)",
-    "description": "The first Southeast Asia reasoning model.",
+    "description": "Contributed to the research preview of Typhoon T1, the first open reasoning model developed for Southeast Asia.",
     "accent": "about",
     "highlight": false
   },
   {
     "title": "Oct 2024 – Jan 2026 — Research Scientist, Typhoon team (SCB 10X R&D)",
-    "description": "Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT). Spearheading Typhoon T1 and external collaborations.",
+    "description": "Conducted research on LLM reasoning and post-training, led work on Typhoon T1, and helped drive external research collaborations.",
     "accent": "publications",
     "highlight": true
   },
   {
     "title": "Sep 2024 — M.Eng., Ritsumeikan University (Valedictorian)",
-    "description": "Valedictorian (4.93/5.00). Thesis on Null-Shot Prompting and Hallucination in LLMs.",
+    "description": "Graduated as valedictorian (4.93/5.00) with a thesis on null-shot prompting and hallucination in large language models.",
     "accent": "publications",
     "highlight": true
   },
   {
     "title": "2022 — Ethical Hacking Workshop",
-    "description": "5‑day red‑team training by NIA & NBTC.",
+    "description": "Completed a five-day red-team training workshop organized by NIA and NBTC.",
     "accent": "about",
     "highlight": false
   },
   {
     "title": "2022 — Research Associate (IC2, SIT KMUTT)",
-    "description": "Led end‑to‑end ML/AR/web projects; presented Krathu‑500; hosted Kaggle competition.",
+    "description": "Led end-to-end machine learning, AR, and web projects; presented Krathu-500; and organized a Kaggle competition.",
     "accent": "publications",
     "highlight": true
   },
   {
-    "title": "Feb 2022 — B.Sc. (Computer Science), King Mongkut's University of Technology Thonburi (First Class Honour)",
-    "description": "First-Class Honors (3.99/4.00). Senior project on Automatic Mind Map Generation.",
+    "title": "Feb 2022 — B.Sc. Computer Science, King Mongkut's University of Technology Thonburi (First-class honours)",
+    "description": "Graduated with first-class honours (3.99/4.00). Senior project: COEUS, automatic English mind map generation from text.",
     "accent": "publications",
     "highlight": true
   },
   {
     "title": "2021 — LINE Thailand Internship",
-    "description": "Full‑stack work on LINE Shopping; Vue 2→3 migration; microservices.",
+    "description": "Worked on LINE Shopping as a full-stack intern, including Vue 2-to-3 migration work and microservice-related tasks.",
     "accent": "about",
     "highlight": false
   },
   {
-    "title": "2020–2021 — Siriraj Hospital (Mahidol)",
-    "description": "Tech lead & Flutter dev; React Native→Flutter migration; app size/load wins.",
+    "title": "2020–2021 — Siriraj Hospital (Mahidol) — Tech lead and Flutter developer",
+    "description": "Led Flutter development, helped migrate the app from React Native to Flutter, and improved app size and loading performance.",
     "accent": "about",
     "highlight": false
   },
   {
     "title": "2020 — COVID‑19 Support Platform (KMUTT)",
-    "description": "Led 10‑person team; 300+ shipments tracked; 50+ hospitals served.",
+    "description": "Led a 10-person team building a COVID-19 support platform that tracked more than 300 shipments and served more than 50 hospitals.",
     "accent": "about",
     "highlight": false
   },
   {
     "title": "2020 — Huawei ICT APAC (Network Track)",
-    "description": "Participated in regional competition; routing/switching focus.",
+    "description": "Participated in the regional Huawei ICT competition with a focus on routing and switching.",
     "accent": "about",
     "highlight": false
   },
   {
-    "title": "2019–2020 — Siriraj Hospital",
-    "description": "React Native developer; added features and data collection flows.",
+    "title": "2019–2020 — Siriraj Hospital — React Native developer",
+    "description": "Built product features and data collection flows as part of the mobile development team.",
     "accent": "publications",
     "highlight": true
   },
   {
     "title": "2019 — Young Webmaster Camp 17th",
-    "description": "Selected (programming major); built MVP for social impact.",
+    "description": "Selected for the programming track and built an MVP for a social-impact project.",
     "accent": "about",
     "highlight": false
   },
   {
     "title": "2019 — Google Tech Challenge (Bangkok)",
-    "description": "Selected team; coding + non‑coding puzzles.",
+    "description": "Competed as part of a selected team in a challenge spanning both coding and non-coding problem solving.",
     "accent": "about",
     "highlight": false
   }
