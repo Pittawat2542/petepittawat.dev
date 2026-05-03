@@ -1,29 +1,25 @@
 import { memo, type FC } from 'react';
 import type { BlogPost } from '@/types';
+import type { SuggestedReadingResult } from '@/lib/blog-recommendations';
 import FormattedDate from './FormattedDate';
 
 interface RelatedPostsProps {
-  readonly posts: BlogPost[];
+  readonly suggestions: SuggestedReadingResult<BlogPost>;
 }
 
-const RelatedPostsComponent: FC<RelatedPostsProps> = ({ posts }) => {
+const RelatedPostsComponent: FC<RelatedPostsProps> = ({ suggestions }) => {
+  const { mode, posts } = suggestions;
   if (!posts.length) return null;
+
+  const title = mode === 'series-led' ? 'Continue the series' : 'Suggested reading';
 
   return (
     <section className="article-related-section reveal">
       <div className="article-related-header">
-        <div className="article-related-badge">
-          <span className="article-related-badge-dot" aria-hidden="true" />
-          Keep reading
-        </div>
-        <h2 className="article-related-title">Related posts</h2>
-        <p className="article-related-copy">
-          Continue exploring adjacent research, playbooks, and hands-on experiments from the lab.
-        </p>
+        <h2 className="article-related-title">{title}</h2>
       </div>
       <ul className="article-related-list">
-        {posts.map((p, index) => {
-          const position = index + 1;
+        {posts.map(p => {
           const primaryTag = p.data.tags?.[0];
           const dateValue = p.data.pubDate;
           const dateIso =
@@ -39,14 +35,6 @@ const RelatedPostsComponent: FC<RelatedPostsProps> = ({ posts }) => {
                 className="article-related-link"
                 aria-label={`Read ${p.data.title}`}
               >
-                <span className="article-related-node" aria-hidden="true">
-                  <span className="article-related-node__index">
-                    {position.toString().padStart(2, '0')}
-                  </span>
-                  {index < posts.length - 1 ? (
-                    <span className="article-related-node__connector" aria-hidden="true" />
-                  ) : null}
-                </span>
                 <span className="article-related-body">
                   <span className="article-related-meta-row">
                     {primaryTag ? (
@@ -58,12 +46,7 @@ const RelatedPostsComponent: FC<RelatedPostsProps> = ({ posts }) => {
                       </time>
                     ) : null}
                   </span>
-                  <span className="article-related-heading-wrap">
-                    <h3 className="article-related-heading">{p.data.title}</h3>
-                    <span className="article-related-cta">
-                      Continue reading <span aria-hidden="true">→</span>
-                    </span>
-                  </span>
+                  <h3 className="article-related-heading">{p.data.title}</h3>
                   {p.data.excerpt ? (
                     <p className="article-related-excerpt">{p.data.excerpt}</p>
                   ) : null}
