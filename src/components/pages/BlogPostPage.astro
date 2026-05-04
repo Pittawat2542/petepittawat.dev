@@ -7,6 +7,7 @@ import {
   getAlternateBlogPost,
   getBlogPostPath,
   getPreferredBlogPosts,
+  getBlogPostRouteSlug,
   groupBlogPostsByTranslation,
 } from '@/lib/blog-translations';
 import { estimateReadingMetrics } from '@/lib/reading-time';
@@ -38,7 +39,7 @@ const alternateLanguages = siblingPost
 
 <BlogPost
   {...post.data}
-  slug={post.data.slug}
+  slug={getBlogPostRouteSlug(post)}
   lang={post.data.lang}
   readingTimeMin={readingTimeMin}
   translatedLink={translatedLink}

@@ -4,6 +4,7 @@ export type BlogTranslationPostLike = {
   id: string;
   data: {
     slug: string;
+    routeSlug?: string | undefined;
     lang: BlogTranslationLocale;
     translationId?: string | undefined;
   };
@@ -58,6 +59,11 @@ export function getAlternateBlogPost<T extends BlogTranslationPostLike>(
   return group.find(candidate => candidate.data.lang !== post.data.lang);
 }
 
+export function getBlogPostRouteSlug(post: Pick<BlogTranslationPostLike, 'data'>) {
+  return post.data.routeSlug ?? post.data.slug;
+}
+
 export function getBlogPostPath(post: Pick<BlogTranslationPostLike, 'data'>) {
-  return post.data.lang === 'th' ? `/th/blog/${post.data.slug}/` : `/blog/${post.data.slug}/`;
+  const publicSlug = getBlogPostRouteSlug(post);
+  return post.data.lang === 'th' ? `/th/blog/${publicSlug}/` : `/blog/${publicSlug}/`;
 }

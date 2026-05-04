@@ -11,6 +11,21 @@ async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true }).catch(() => {});
 }
 
+async function collectContentFiles(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(
+    entries.map(async entry => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return collectContentFiles(fullPath);
+      }
+      return /\.(md|mdx)$/i.test(entry.name) ? [fullPath] : [];
+    })
+  );
+
+  return files.flat();
+}
+
 function extractFrontmatter(content) {
   const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
   if (!fmMatch) return {};
@@ -378,7 +393,7 @@ async function saveManifest(manifest) {
 
 async function generate() {
   await ensureDir(OUT_DIR);
-  const files = await fs.readdir(BLOG_DIR);
+  const files = await collectContentFiles(BLOG_DIR);
   const logoDataUrl = await readLogoDataUrl();
 
   // Load the manifest to check what we've already generated
@@ -386,57 +401,68 @@ async function generate() {
   const updatedManifest = {};
   let generatedCount = 0;
   let skippedCount = 0;
+  const postsBySlug = new Map();
 
   for (const file of files) {
-    if (!/\.(md|mdx)$/.test(file)) continue;
-    const fallbackSlug = file.replace(/\.(md|mdx)$/i, '');
-    const full = path.join(BLOG_DIR, file);
+    const fallbackSlug = path.basename(file).replace(/\.(md|mdx)$/i, '');
 
     try {
-      const content = await fs.readFile(full, 'utf8');
+      const content = await fs.readFile(file, 'utf8');
       const frontmatter = extractFrontmatter(content);
-      const rawSlug = frontmatter.slug || fallbackSlug;
+      const rawSlug = frontmatter.routeSlug || frontmatter.slug || fallbackSlug;
       let slug = String(rawSlug).replace(/[^a-zA-Z0-9-_]/g, '');
       if (!slug) slug = String(fallbackSlug).replace(/[^a-zA-Z0-9-_]/g, '');
-      const out = path.join(OUT_DIR, `${slug}.png`);
-      if (!path.resolve(out).startsWith(path.resolve(OUT_DIR))) {
-        throw new Error(`Path traversal detected for slug: ${rawSlug}`);
+      const lang = frontmatter.lang || 'en';
+      const existing = postsBySlug.get(slug);
+
+      const candidate = {
+        file,
+        frontmatter,
+        lang,
+        slug,
+      };
+
+      if (!existing || (existing.lang !== 'en' && lang === 'en')) {
+        postsBySlug.set(slug, candidate);
       }
-      const title = frontmatter.title || slug;
-      const pubDate = frontmatter.pubDate;
-      const tags = frontmatter.tags;
+    } catch (e) {
+      console.warn('OG generation failed for', file, e?.message);
+    }
+  }
 
-      // Create a hash of the current post metadata
-      const currentHash = createPostHash(title, pubDate, tags);
+  for (const { file, frontmatter, slug } of postsBySlug.values()) {
+    const out = path.join(OUT_DIR, `${slug}.png`);
+    if (!path.resolve(out).startsWith(path.resolve(OUT_DIR))) {
+      throw new Error(`Path traversal detected for slug: ${slug}`);
+    }
 
-      // Check if we need to regenerate
-      const shouldRegenerate =
-        !manifest[slug] ||
-        manifest[slug].hash !== currentHash ||
-        !(await fs
-          .access(out)
-          .then(() => true)
-          .catch(() => false));
+    const title = frontmatter.title || slug;
+    const pubDate = frontmatter.pubDate;
+    const tags = frontmatter.tags;
+    const currentHash = createPostHash(title, pubDate, tags);
+    const shouldRegenerate =
+      !manifest[slug] ||
+      manifest[slug].hash !== currentHash ||
+      !(await fs
+        .access(out)
+        .then(() => true)
+        .catch(() => false));
 
-      if (shouldRegenerate) {
-        const svg = svgTemplate({ title, logoDataUrl, pubDate, tags });
-        const sharp = (await import('sharp')).default;
-        const img = sharp(Buffer.from(svg));
-        await img.png().toFile(out);
-        console.log('OG generated:', out);
-        generatedCount++;
-      } else {
-        console.log('OG skipped (no changes):', out);
-        skippedCount++;
-      }
-
-      // Update the manifest
+    if (shouldRegenerate) {
+      const svg = svgTemplate({ title, logoDataUrl, pubDate, tags });
+      const sharp = (await import('sharp')).default;
+      const img = sharp(Buffer.from(svg));
+      await img.png().toFile(out);
+      console.log('OG generated:', out);
+      generatedCount++;
       updatedManifest[slug] = {
         hash: currentHash,
         generatedAt: new Date().toISOString(),
       };
-    } catch (e) {
-      console.warn('OG generation failed for', file, e?.message);
+    } else {
+      console.log('OG skipped (no changes):', out);
+      skippedCount++;
+      updatedManifest[slug] = manifest[slug];
     }
   }
 

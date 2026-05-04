@@ -4,6 +4,7 @@ import Page from '@/components/pages/BlogPostPage.astro';
 import type { CollectionEntry } from 'astro:content';
 import {
   getAlternateBlogPost,
+  getBlogPostRouteSlug,
   getBlogPostsForLocale,
   groupBlogPostsByTranslation,
 } from '@/lib/blog-translations';
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
     const alternatePost = getAlternateBlogPost(post, groups);
 
     return {
-      params: { slug: post.data.slug },
+      params: { slug: getBlogPostRouteSlug(post) },
       props: {
         post,
         ...(alternatePost ? { alternatePost } : {}),

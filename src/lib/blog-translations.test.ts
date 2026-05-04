@@ -13,6 +13,7 @@ type BlogPostFixture = {
   id: string;
   data: {
     slug: string;
+    routeSlug?: string | undefined;
     lang: 'en' | 'th';
     translationId?: string | undefined;
   };
@@ -89,4 +90,18 @@ test('builds post URLs from the post language only', () => {
   assert.equal(getBlogPostPath(pairedEn), '/blog/paired-en/');
   assert.equal(getBlogPostPath(pairedTh), '/th/blog/paired-th/');
   assert.equal(getBlogPostPath(thaiOnly), '/th/blog/thai-only/');
+});
+
+test('prefers routeSlug for public URLs when present', () => {
+  const routed: BlogPostFixture = {
+    id: 'routed',
+    data: {
+      slug: 'the-silicon-mind-en',
+      routeSlug: 'the-silicon-mind',
+      lang: 'en',
+      translationId: 'the-silicon-mind',
+    },
+  };
+
+  assert.equal(getBlogPostPath(routed), '/blog/the-silicon-mind/');
 });

@@ -61,6 +61,7 @@ const blog = defineCollection({
     z
       .object({
         slug: z.string(),
+        routeSlug: z.string().optional(),
         title: z.string(),
         excerpt: z.string(),
         tags: z.array(z.string()),

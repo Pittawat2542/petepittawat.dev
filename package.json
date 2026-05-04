@@ -20,6 +20,7 @@
     "clean": "rm -rf dist .astro node_modules/.astro",
     "dev:clean": "npm run clean && npm run dev",
     "generate-favicons": "./scripts/generate-favicons.sh",
+    "translate-blog-post": "node scripts/translate-blog-post.mjs",
     "prepare": "husky",
     "update-deps": "node scripts/update-dependencies.mjs"
   },
