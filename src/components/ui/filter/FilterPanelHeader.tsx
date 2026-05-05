@@ -67,13 +67,17 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
       </div>
 
       <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-        {toolbarAccessory}
-        {canSort && onSortChange && (
-          <SortControl
-            sortOptions={sortOptions}
-            sortValue={sortValue}
-            onSortChange={onSortChange}
-          />
+        {(toolbarAccessory || (canSort && onSortChange)) && (
+          <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start">
+            {toolbarAccessory}
+            {canSort && onSortChange && (
+              <SortControl
+                sortOptions={sortOptions}
+                sortValue={sortValue}
+                onSortChange={onSortChange}
+              />
+            )}
+          </div>
         )}
 
         <ResultsInfo
