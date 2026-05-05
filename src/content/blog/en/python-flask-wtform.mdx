@@ -106,9 +106,7 @@ On the Jinja side, we can access the form for rendering as follows. We've set `n
 ```html
 <!-- ... -->
 <form action="{{ url_for('parks') }}" method="POST" novalidate>
-  {{ form.csrf_token }}
-  {{ form.name.label }}
-  {{ form.name(size=20) }}
+  {{ form.csrf_token }} {{ form.name.label }} {{ form.name(size=20) }}
   <input type="submit" />
 </form>
 <!-- ... -->
@@ -157,9 +155,7 @@ And we can replace this code:
 
 ```html
 <form action="{{ url_for('parks') }}" method="POST" novalidate>
-  {{ form.csrf_token }}
-  {{ form.name.label }}
-  {{ form.name(size=20) }}
+  {{ form.csrf_token }} {{ form.name.label }} {{ form.name(size=20) }}
   <input type="submit" />
 </form>
 ```

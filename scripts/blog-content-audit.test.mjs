@@ -163,7 +163,7 @@ function findBrokenJsxStringProps(content, propName) {
 
 function collectImportedNames(content) {
   const importedNames = new Set();
-  const importPattern = /^import\s+([A-Za-z_][A-Za-z0-9_]*)\b/mg;
+  const importPattern = /^import\s+([A-Za-z_][A-Za-z0-9_]*)\b/gm;
 
   for (const match of content.matchAll(importPattern)) {
     importedNames.add(match[1]);

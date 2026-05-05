@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { ActiveFiltersSummary } from './ActiveFiltersSummary';
 import { FilterPanelBody } from './FilterPanelBody';
@@ -46,6 +46,7 @@ interface FilterPanelProps {
   // Layout
   readonly className?: string | undefined;
   readonly compact?: boolean | undefined;
+  readonly toolbarAccessory?: ReactNode;
 }
 
 const FilterPanelComponent: FC<FilterPanelProps> = props => {
@@ -67,6 +68,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
     filteredResults,
     className,
     compact = false,
+    toolbarAccessory,
   } = props;
 
   const [showFilters, setShowFilters] = useState(!compact);
@@ -144,6 +146,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
         totalResults={totalResults}
         filteredResults={filteredResults}
         hasActiveFilters={hasActiveFilters}
+        toolbarAccessory={toolbarAccessory}
       />
 
       {compact && !showFilters && hasActiveFilters && (

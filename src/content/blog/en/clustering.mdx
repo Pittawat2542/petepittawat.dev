@@ -1,6 +1,6 @@
 ---
 slug: 'clustering-en'
-title: 'K-Means Clustering vs. Hierarchical Clustering: What''s the Difference?'
+title: "K-Means Clustering vs. Hierarchical Clustering: What's the Difference?"
 
 pubDate: '2020-10-31T09:28:06.000Z'
 tags: ['AI', 'Data Science']
@@ -20,7 +20,10 @@ In unsupervised learning, clustering is essential for uncovering natural groupin
 
 ## K-Means Clustering
 
-<Figure src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="" />
+<Figure
+  src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt=""
+/>
 
 K-Means Clustering is a centroid-based approach, where each cluster is represented by a central point. The algorithm seeks to find K centroids that minimize overall error. We can evaluate clustering performance through variance, which comes in two forms: intra-cluster variance and inter-cluster variance.
 
@@ -45,11 +48,17 @@ However, this approach requires us to specify K upfront. If we don't know K or n
 
 ## Hierarchical Clustering
 
-<Figure src="https://images.unsplash.com/photo-1445294211564-3ca59d999abd?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="" />
+<Figure
+  src="https://images.unsplash.com/photo-1445294211564-3ca59d999abd?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt=""
+/>
 
 Hierarchical Clustering organizes data into a tree-like structure called a **dendrogram**. The dendrogram shows which data points are most similar, grouping them together first.
 
-<Figure src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Global-Diversity-of-Sponges-%28Porifera%29-pone.0035105.s008.tif/lossy-page1-2048px-Global-Diversity-of-Sponges-%28Porifera%29-pone.0035105.s008.tif.jpg" alt="Dendrogram" />
+<Figure
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Global-Diversity-of-Sponges-%28Porifera%29-pone.0035105.s008.tif/lossy-page1-2048px-Global-Diversity-of-Sponges-%28Porifera%29-pone.0035105.s008.tif.jpg"
+  alt="Dendrogram"
+/>
 
 This approach offers more flexibility: after the hierarchy is built, we can decide on the number of clusters (K) later by cutting the dendrogram at the desired level.
 
@@ -69,7 +78,10 @@ You might wonder: how do we calculate proximity between subclusters (merged grou
 
 More sophisticated methods exist as well. An important clarification: these four methods determine how proximity between subclusters is calculated. After updating the proximity matrix, the algorithm still selects the pair of subclusters with the highest similarity for merging, just as before.
 
-<Figure src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Hierarchical_clustering_simple_diagram.svg/2560px-Hierarchical_clustering_simple_diagram.svg.png" alt="" />
+<Figure
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Hierarchical_clustering_simple_diagram.svg/2560px-Hierarchical_clustering_simple_diagram.svg.png"
+  alt=""
+/>
 
 To summarize Hierarchical Clustering:
 
@@ -84,7 +96,10 @@ The final result is a dendrogram that can be used for further analysis.
 
 Overall, we can see that K-Means follows a **top-down approach**: we fix the number of clusters first, then find members for each. Hierarchical clustering, by contrast, is more **bottom-up**: it gradually merges similar groups to build increasingly larger clusters.
 
-<Figure src="https://images.unsplash.com/photo-1523287562758-66c7fc58967f?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="Looking Up" />
+<Figure
+  src="https://images.unsplash.com/photo-1523287562758-66c7fc58967f?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt="Looking Up"
+/>
 
 In practice, we typically name each resulting cluster to make the output more actionable. We may also compute various metrics to better understand cluster characteristics.
 

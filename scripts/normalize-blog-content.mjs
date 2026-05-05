@@ -134,9 +134,7 @@ function rewriteRelativePath({ currentPath, targetPath, relativeValue }) {
   const targetDir = path.dirname(targetPath);
   const currentResolution = path.resolve(currentDir, relativeValue);
   const legacyRootResolution = path.resolve(BLOG_ROOT, relativeValue.slice(2));
-  const absoluteTarget = pathMatches(currentResolution)
-    ? currentResolution
-    : legacyRootResolution;
+  const absoluteTarget = pathMatches(currentResolution) ? currentResolution : legacyRootResolution;
   let nextRelative = path.relative(targetDir, absoluteTarget).split(path.sep).join('/');
   if (!nextRelative.startsWith('.')) {
     nextRelative = `./${nextRelative}`;

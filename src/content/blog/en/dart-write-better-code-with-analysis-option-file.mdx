@@ -34,12 +34,14 @@ If you already know what you want, you can configure it yourself by following th
 Using Pedantic or Effective Dart is easy—start by installing the package. Go to your `pubspec.yaml` file and add the following lines.
 
 Pedantic
+
 ```yaml
 dev_dependencies:
   pedantic: ^1.0.0
 ```
 
 Or Effective Dart
+
 ```yaml
 dev_dependencies:
   pedantic: ^1.9.0
@@ -50,11 +52,13 @@ dev_dependencies:
 After adding the package to your file, run the get command as usual (Dart: `pub get` or Flutter: `flutter pub get` or press the button in your IDE) to download the package. Next, add the following lines to your `analysis_options.yaml` file.
 
 Pedantic
+
 ```yaml
 include: package:pedantic/analysis_options.yaml
 ```
 
 Or Effective Dart
+
 ```yaml
 include: package:effective_dart/analysis_options.yaml
 ```
@@ -95,17 +99,22 @@ analyzer:
 ```
 
 Each severity level has the following meanings:
+
 - **`ignore`** — Ignore that particular error
 - **`info`** — Display as an info message but doesn't affect compilation
 - **`warning`** — Display as a warning (more aggressive than info) but doesn't affect compilation
 - **`error`** — Causes compilation to fail
 
 If you want to ignore only certain rules for specific files or parts of code:
+
 - For files, add the following comment to the file you want (files with `.dart` extension)
+
 ```yaml
 // ignore_for_file: <rule_name>
 ```
+
 - For specific lines, add the following comment before the line you want or on the same line (files with `.dart` extension)
+
 ```yaml
 // ignore: <rule_name>
 ```

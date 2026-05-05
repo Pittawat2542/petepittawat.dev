@@ -4,7 +4,7 @@ import RelatedPosts from '@/components/content/RelatedPosts';
 import BlogPost from '@/layouts/BlogPost.astro';
 import { getSuggestedReading } from '@/lib/blog-recommendations';
 import {
-  getAlternateBlogPost,
+  getBlogPostLanguageState,
   getBlogPostPath,
   getPreferredBlogPosts,
   getBlogPostRouteSlug,
@@ -14,10 +14,9 @@ import { estimateReadingMetrics } from '@/lib/reading-time';
 
 interface Props {
   post: CollectionEntry<'blog'>;
-  alternatePost?: CollectionEntry<'blog'> | undefined;
 }
 
-const { post, alternatePost } = Astro.props;
+const { post } = Astro.props as Props;
 const { Content } = await render(post);
 const { readingTimeMin } = estimateReadingMetrics(post.body || '');
 
@@ -27,13 +26,9 @@ const suggestedReading = getSuggestedReading(
   getPreferredBlogPosts(groupedPosts, post.data.lang),
   post
 );
-const siblingPost = alternatePost ?? getAlternateBlogPost(post, groupedPosts);
-const translatedLink = siblingPost ? getBlogPostPath(siblingPost) : null;
-const translatedLinkLabel = siblingPost
-  ? `Read this post in ${siblingPost.data.lang === 'th' ? 'Thai' : 'English'}`
-  : null;
-const alternateLanguages = siblingPost
-  ? [{ lang: siblingPost.data.lang, href: translatedLink! }]
+const languageState = getBlogPostLanguageState(post, groupedPosts);
+const alternateLanguages = languageState.alternate
+  ? [{ lang: languageState.alternate.data.lang, href: getBlogPostPath(languageState.alternate) }]
   : [];
 ---
 
@@ -42,8 +37,7 @@ const alternateLanguages = siblingPost
   slug={getBlogPostRouteSlug(post)}
   lang={post.data.lang}
   readingTimeMin={readingTimeMin}
-  translatedLink={translatedLink}
-  translatedLinkLabel={translatedLinkLabel}
+  languageState={languageState}
   alternateLanguages={alternateLanguages}
 >
   <Content />

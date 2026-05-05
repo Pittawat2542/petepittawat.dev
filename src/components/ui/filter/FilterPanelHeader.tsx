@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import { memo } from 'react';
 
 import SearchInput from '@/components/ui/interaction/SearchInput';
@@ -23,6 +23,7 @@ interface FilterPanelHeaderProps {
   readonly totalResults?: number | undefined;
   readonly filteredResults?: number | undefined;
   readonly hasActiveFilters: boolean;
+  readonly toolbarAccessory?: ReactNode;
 }
 
 const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
@@ -41,6 +42,7 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
   totalResults,
   filteredResults,
   hasActiveFilters,
+  toolbarAccessory,
 }) => {
   const shouldShowToggle = compact && (hasDropdownFilters || hasTags) && onToggleFilters;
   const canSort = Boolean(onSortChange);
@@ -65,6 +67,7 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
       </div>
 
       <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+        {toolbarAccessory}
         {canSort && onSortChange && (
           <SortControl
             sortOptions={sortOptions}
@@ -74,7 +77,7 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
         )}
 
         <ResultsInfo
-          totalResults={totalResults || 0}
+          totalResults={totalResults ?? 0}
           filteredResults={filteredResults}
           searchValue={searchValue}
           hasActiveFilters={hasActiveFilters}

@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import BlogListPage from '@/components/layout/BlogListPage';
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
-import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { createTagSlugMap } from '@/lib/slug';
 import PageWithHero from '@/layouts/PageWithHero.astro';
 import type { BlogPost } from '@/types';
@@ -18,12 +17,10 @@ const params = Astro.params as { tag: string };
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 ) as BlogPost[];
-const discoveryPosts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en');
-const allTags = ['All', ...Array.from(new Set(discoveryPosts.flatMap(p => p.data.tags))).sort()];
+const allTags = ['All', ...Array.from(new Set(allPosts.flatMap(p => p.data.tags))).sort()];
 
 const map = createTagSlugMap(allTags.filter(t => t !== 'All'));
 const selectedTag = map[params.tag] ?? params.tag;
-const filtered = discoveryPosts.filter(p => p.data.tags.includes(selectedTag));
 ---
 
 <PageWithHero
@@ -38,8 +35,8 @@ const filtered = discoveryPosts.filter(p => p.data.tags.includes(selectedTag));
   <div class="mb-4">
     <a href="/tags" class="link-underline">← All tags</a>
   </div>
-  <BlogListPage client:visible posts={filtered} tags={allTags} initialTags={[selectedTag]} />
+  <BlogListPage client:load posts={allPosts} initialTags={[selectedTag]} />
 
   <!-- SR summary for quick context -->
-  <p class="sr-only">{filtered.length} posts found for tag {selectedTag}.</p>
+  <p class="sr-only">Posts tagged with {selectedTag}.</p>
 </PageWithHero>

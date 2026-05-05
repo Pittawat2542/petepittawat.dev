@@ -3,8 +3,11 @@ import test from 'node:test';
 
 import {
   getAlternateBlogPost,
+  getBlogExclusiveLocaleLabel,
+  getBlogPostLanguageState,
   getBlogPostPath,
   getBlogPostsForLocale,
+  getPreferredBlogPostStates,
   getPreferredBlogPosts,
   groupBlogPostsByTranslation,
 } from './blog-translations.ts';
@@ -104,4 +107,53 @@ test('prefers routeSlug for public URLs when present', () => {
   };
 
   assert.equal(getBlogPostPath(routed), '/blog/the-silicon-mind/');
+});
+
+test('builds locale-aware list states with explicit fallback metadata', () => {
+  const grouped = groupBlogPostsByTranslation([pairedEn, pairedTh, thaiOnly, englishOnly]);
+  const preferredStates = getPreferredBlogPostStates(grouped, 'en');
+
+  assert.deepEqual(
+    preferredStates.map(state => ({
+      slug: state.current.data.slug,
+      isFallback: state.isFallback,
+      availableLocales: state.availableLocales,
+    })),
+    [
+      {
+        slug: 'paired-en',
+        isFallback: false,
+        availableLocales: ['en', 'th'],
+      },
+      {
+        slug: 'thai-only',
+        isFallback: true,
+        availableLocales: ['th'],
+      },
+      {
+        slug: 'english-only',
+        isFallback: false,
+        availableLocales: ['en'],
+      },
+    ]
+  );
+});
+
+test('describes per-post language availability for paired and single-language posts', () => {
+  const grouped = groupBlogPostsByTranslation([pairedEn, pairedTh, thaiOnly, englishOnly]);
+
+  const pairedState = getBlogPostLanguageState(pairedEn, grouped);
+  assert.equal(pairedState.availability.en.isCurrent, true);
+  assert.equal(pairedState.availability.th.available, true);
+  assert.equal(pairedState.availability.th.href, '/th/blog/paired-th/');
+
+  const thaiOnlyState = getBlogPostLanguageState(thaiOnly, grouped);
+  assert.equal(thaiOnlyState.availability.th.isCurrent, true);
+  assert.equal(thaiOnlyState.availability.en.available, false);
+  assert.equal(thaiOnlyState.availability.en.href, undefined);
+});
+
+test('returns concise fallback labels for single-language entries', () => {
+  assert.equal(getBlogExclusiveLocaleLabel('en'), 'English only');
+  assert.equal(getBlogExclusiveLocaleLabel('th'), 'Thai only');
 });

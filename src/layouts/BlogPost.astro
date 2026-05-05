@@ -6,16 +6,19 @@ import FormattedDate from '@/components/content/FormattedDate';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
 import Toc from '@/components/layout/blog/Toc.astro';
+import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
+import { languages } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { computeBlogPostMetadata, generateBlogPostSchema } from '@/lib/blog-post-schema';
+import type { BlogPostLanguageState } from '@/lib/blog-translations';
 
 type Props = CollectionEntry<'blog'>['data'] & {
   slug?: string;
   lang?: 'en' | 'th';
   wordCount?: number;
   readingTimeMin?: number;
-  translatedLink?: string | null;
-  translatedLinkLabel?: string | null;
+  languageState: BlogPostLanguageState<CollectionEntry<'blog'>>;
   alternateLanguages?: { lang: 'en' | 'th'; href: string }[];
 };
 
@@ -32,10 +35,16 @@ const {
   seriesSlug,
   seriesTitle,
   seriesOrder,
-  translatedLink,
-  translatedLinkLabel,
+  languageState,
   alternateLanguages = [],
 } = Astro.props as Props;
+
+const t = useTranslations(lang);
+const languageHelperText = !languageState.availability.en.available
+  ? t('blog.onlyInThai')
+  : !languageState.availability.th.available
+    ? t('blog.onlyInEnglish')
+    : undefined;
 
 const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
 const metadata = computeBlogPostMetadata({
@@ -90,6 +99,7 @@ const schema = generateBlogPostSchema({
   <Fragment slot="head">
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </Fragment>
+
   <div class="article-container">
     <div class="article-back">
       <a href="/blog" class="article-back__link">
@@ -99,26 +109,10 @@ const schema = generateBlogPostSchema({
     </div>
 
     <section
-      class="article-card article-hero reveal"
+      class="article-surface article-hero reveal"
       data-has-media={coverImage ? 'true' : undefined}
     >
-      {
-        coverImage && (
-          <div class="article-hero__media" data-orientation={coverOrientation}>
-            <Image
-              class="article-hero__media-img"
-              src={coverImage}
-              alt=""
-              loading="eager"
-              fetchpriority="high"
-              sizes="(min-width: 1280px) 1100px, (min-width: 1024px) 960px, (min-width: 768px) 720px, 100vw"
-              decoding="async"
-              data-orientation={coverOrientation}
-            />
-          </div>
-        )
-      }
-      <div class="article-hero__content">
+      <div class="article-hero__copy">
         <div class="article-hero__badge">
           <span class="article-hero__badge-dot"></span>
           Field Notes
@@ -157,20 +151,20 @@ const schema = generateBlogPostSchema({
             <div class="article-tags">
               <span class="article-tags__icon">
                 <span class="sr-only">Tags</span>
-                <TagIcon class="article-meta__icon" aria-hidden="true" />
+                <TagIcon class="article-tags__symbol" aria-hidden="true" />
               </span>
               <ul class="article-tags__list">
-                {visibleTags.map(t => (
+                {visibleTags.map(tag => (
                   <li>
                     <a
-                      href={`/tags/${t
+                      href={`/tags/${tag
                         .toLowerCase()
                         .trim()
                         .replace(/[^a-z0-9]+/g, '-')
                         .replace(/(^-|-$)/g, '')}`}
                       class="article-tag"
                     >
-                      #{t}
+                      #{tag}
                     </a>
                   </li>
                 ))}
@@ -184,38 +178,82 @@ const schema = generateBlogPostSchema({
           ) : null
         }
       </div>
+
+      {
+        coverImage && (
+          <div class="article-hero__media" data-orientation={coverOrientation}>
+            <Image
+              class="article-hero__media-img"
+              src={coverImage}
+              alt=""
+              loading="eager"
+              fetchpriority="high"
+              sizes="(min-width: 1280px) 420px, (min-width: 1024px) 36vw, (min-width: 768px) 60vw, 100vw"
+              decoding="async"
+              data-orientation={coverOrientation}
+            />
+          </div>
+        )
+      }
     </section>
 
-    <div class="article-card article-body-card reveal">
-      {
-        translatedLink ? (
-          <div class="mb-6">
-            <a
-              href={translatedLink}
-              class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/10 px-4 py-1.5 text-sm font-medium text-blue-300 transition-colors hover:bg-blue-400/20 hover:text-blue-200"
-            >
-              {translatedLinkLabel}
-            </a>
-          </div>
-        ) : null
-      }
-      {
-        excerpt ? (
-          <section class="article-tldr" aria-labelledby="article-tldr-heading">
-            <div class="article-tldr__badge" id="article-tldr-heading">
-              TL;DR
-            </div>
-            <p class="article-tldr__copy">{excerpt}</p>
-          </section>
-        ) : null
-      }
-      <Toc selector="#post-article" levels={[2, 3]} collapsed={true} />
-      <article
-        id="post-article"
-        class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-8 prose-headings:mb-3 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
-      >
-        <slot />
-      </article>
+    <div class="article-main">
+      <aside class="article-surface article-rail reveal">
+        <BlogLanguageSwitcher
+          ariaLabel="Select reading language"
+          label="Reading language"
+          variant="rail"
+          helperText={languageHelperText}
+          options={[
+            {
+              locale: 'en',
+              label: languages.en,
+              shortLabel: 'EN',
+              href: languageState.availability.en.href,
+              available: languageState.availability.en.available,
+              isActive: languageState.availability.en.isCurrent,
+              screenReaderLabel: languageState.availability.en.available
+                ? 'Read this post in English'
+                : 'English translation unavailable',
+            },
+            {
+              locale: 'th',
+              label: languages.th,
+              shortLabel: 'TH',
+              href: languageState.availability.th.href,
+              available: languageState.availability.th.available,
+              isActive: languageState.availability.th.isCurrent,
+              screenReaderLabel: languageState.availability.th.available
+                ? 'Read this post in Thai'
+                : 'Thai translation unavailable',
+            },
+          ]}
+        />
+
+        {
+          excerpt ? (
+            <section class="article-note" aria-labelledby="article-note-heading">
+              <div class="article-note__eyebrow" id="article-note-heading">
+                TL;DR
+              </div>
+              <p class="article-note__copy">{excerpt}</p>
+            </section>
+          ) : null
+        }
+
+        <div class="article-rail__toc">
+          <Toc title="On this page" selector="#post-article" levels={[2, 3]} collapsed={true} />
+        </div>
+      </aside>
+
+      <div class="article-surface article-body-card reveal">
+        <article
+          id="post-article"
+          class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-10 prose-headings:mb-4 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
+        >
+          <slot />
+        </article>
+      </div>
     </div>
   </div>
 
@@ -228,12 +266,41 @@ const schema = generateBlogPostSchema({
   .article-container {
     position: relative;
     margin: 0 auto;
-    max-width: min(68rem, 100%);
-    padding: clamp(1.5rem, 2vw + 0.5rem, 3rem) 0;
+    max-width: min(74rem, 100%);
+    padding: clamp(1.5rem, 2vw + 0.65rem, 3rem) 0;
+  }
+
+  .article-surface {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.9rem;
+    border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
+    background:
+      radial-gradient(
+        150% 150% at 12% 0%,
+        color-mix(in oklab, var(--accent-blog) 18%, transparent),
+        transparent 58%
+      ),
+      linear-gradient(180deg, rgba(8, 13, 27, 0.92), rgba(5, 9, 20, 0.96));
+    box-shadow: 0 30px 80px -64px rgba(4, 10, 24, 0.92);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    isolation: isolate;
+  }
+
+  .article-surface::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 140% at 80% 12%, rgba(126, 165, 255, 0.12), transparent 58%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 28%);
+    opacity: 0.9;
   }
 
   .article-back {
-    margin-bottom: clamp(1.5rem, 2vw + 0.5rem, 2.25rem);
+    margin-bottom: clamp(1.4rem, 1.8vw, 2rem);
   }
 
   .article-back__link {
@@ -242,7 +309,7 @@ const schema = generateBlogPostSchema({
     gap: 0.55rem;
     padding: 0.35rem 0;
     color: color-mix(in oklab, var(--white) 82%, transparent);
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -257,205 +324,62 @@ const schema = generateBlogPostSchema({
   .article-back__link:hover {
     transform: translateX(-2px);
     color: color-mix(in oklab, var(--accent-blog) 80%, var(--white) 30%);
-    border-color: color-mix(in oklab, var(--accent-blog) 52%, transparent);
+    border-color: color-mix(in oklab, var(--accent-blog) 50%, transparent);
   }
 
   .article-back__icon {
     font-size: 1rem;
   }
 
-  .article-card {
-    position: relative;
-    border-radius: 2rem;
-    border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
-    background:
-      radial-gradient(
-        130% 160% at 50% 0%,
-        color-mix(in oklab, var(--accent-blog) 24%, transparent),
-        transparent 68%
-      ),
-      linear-gradient(180deg, rgba(9, 14, 28, 0.9), rgba(6, 10, 22, 0.94));
-    box-shadow: 0 32px 72px -64px rgba(5, 12, 30, 0.85);
-    padding: clamp(1.9rem, 2vw + 1.4rem, 3.1rem);
-    overflow: hidden;
-    isolation: isolate;
-    transition:
-      border-color 220ms ease,
-      box-shadow 220ms ease,
-      background 220ms ease;
-    z-index: 0;
-  }
-
-  .article-card::before {
-    content: '';
-    position: absolute;
-    inset: -40% -40% -22%;
-    background:
-      radial-gradient(
-        120% 120% at 20% 30%,
-        color-mix(in oklab, var(--accent-blog) 18%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(110% 110% at 78% 18%, rgba(120, 180, 255, 0.12), transparent 75%);
-    opacity: 0.32;
-    pointer-events: none;
-    transition: opacity 220ms ease;
-    z-index: -1;
-  }
-
-  .article-card:hover::before {
-    opacity: 0.48;
-  }
-
-  .article-card:hover {
-    border-color: color-mix(in oklab, var(--accent-blog) 32%, transparent);
-    box-shadow: 0 38px 88px -66px rgba(8, 14, 32, 0.92);
-  }
-
-  .article-card + .article-card {
-    margin-top: clamp(1.5rem, 3vw, 2.75rem);
-  }
-
   .article-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.88fr);
+    gap: clamp(1.6rem, 2vw, 2.6rem);
+    padding: clamp(1.5rem, 2vw + 0.7rem, 2.4rem);
+    align-items: stretch;
+  }
+
+  .article-hero__copy {
     position: relative;
-    isolation: isolate;
+    z-index: 1;
     display: flex;
+    min-width: 0;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: clamp(1.2rem, 2vw, 1.85rem);
-    padding: 0;
-  }
-
-  .article-hero[data-has-media='true'] {
-    padding: 0;
-    min-height: clamp(21rem, 48vw, 30rem);
-  }
-
-  .article-hero__content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.1rem, 1.6vw, 1.8rem);
-  }
-
-  .article-hero:not([data-has-media='true']) .article-hero__content {
-    padding: clamp(1.9rem, 2vw + 1.2rem, 2.6rem);
-  }
-
-  .article-hero[data-has-media='true'] .article-hero__content {
-    padding: clamp(2rem, 2.8vw, 3.1rem) clamp(2.2rem, 3vw, 3.3rem) clamp(1.8rem, 2.2vw, 2.45rem);
-    background: linear-gradient(
-      180deg,
-      rgba(5, 9, 20, 0.05) 0%,
-      rgba(5, 9, 20, 0.62) 52%,
-      rgba(6, 10, 22, 0.95) 100%
-    );
-    border-top: 1px solid rgba(148, 163, 184, 0.16);
-    box-shadow:
-      inset 0 1px 0 rgba(148, 163, 184, 0.08),
-      0 -24px 60px -40px rgba(6, 10, 22, 0.85);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-  }
-
-  .article-hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .article-hero__media::before {
-    content: '';
-    position: absolute;
-    left: -6%;
-    right: -6%;
-    bottom: -32%;
-    height: 68%;
-    background: linear-gradient(
-      180deg,
-      rgba(6, 10, 22, 0) 0%,
-      rgba(6, 10, 22, 0.4) 38%,
-      rgba(6, 10, 22, 0.9) 100%
-    );
-    -webkit-backdrop-filter: blur(32px);
-    backdrop-filter: blur(32px);
-    opacity: 0.9;
-    pointer-events: none;
-  }
-
-  .article-hero__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(2, 6, 14, 0) 0%,
-      rgba(2, 6, 14, 0.18) 45%,
-      rgba(4, 7, 16, 0.6) 72%,
-      rgba(6, 10, 22, 0.92) 100%
-    );
-    pointer-events: none;
-  }
-
-  .article-hero__media-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.02);
-    filter: saturate(1.02) contrast(1.05);
-    mask-image: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.95) 70%,
-      rgba(0, 0, 0, 0.3) 90%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.95) 70%,
-      rgba(0, 0, 0, 0.3) 90%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-
-  .article-hero__media[data-orientation='portrait'] .article-hero__media-img {
-    object-position: top center;
-    transform: scale(1.08);
+    justify-content: center;
+    gap: 1.2rem;
   }
 
   .article-hero__badge {
     display: inline-flex;
+    width: fit-content;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.5rem 1rem;
+    padding: 0.52rem 1rem;
     border-radius: 999px;
     border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
     background: color-mix(in oklab, var(--white) 5%, transparent);
     color: color-mix(in oklab, var(--white) 78%, transparent);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.28em;
     text-transform: uppercase;
   }
 
   .article-hero__badge-dot {
-    width: 0.65rem;
-    height: 0.65rem;
+    width: 0.62rem;
+    height: 0.62rem;
     border-radius: 999px;
-    background: color-mix(in oklab, var(--accent-blog) 85%, transparent);
+    background: color-mix(in oklab, var(--accent-blog) 84%, transparent);
     box-shadow: 0 0 14px rgba(129, 140, 248, 0.55);
   }
 
   .article-hero__title {
-    font-size: clamp(2.25rem, 2.2rem + 1.5vw, 3.75rem);
+    margin: 0;
+    max-width: 18ch;
+    font-size: clamp(2.2rem, 2rem + 1.4vw, 4rem);
     font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.015em;
+    line-height: 1.02;
+    letter-spacing: -0.028em;
     text-wrap: balance;
   }
 
@@ -463,9 +387,9 @@ const schema = generateBlogPostSchema({
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.65rem 1.35rem;
+    gap: 0.65rem 1rem;
     font-size: 0.9rem;
-    color: color-mix(in oklab, var(--white) 75%, transparent);
+    color: color-mix(in oklab, var(--white) 74%, transparent);
   }
 
   .article-meta__item {
@@ -475,9 +399,9 @@ const schema = generateBlogPostSchema({
   }
 
   .article-meta__icon {
-    width: 1.05rem;
-    height: 1.05rem;
-    opacity: 0.8;
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.74;
   }
 
   .article-meta__text {
@@ -486,7 +410,7 @@ const schema = generateBlogPostSchema({
   }
 
   .article-meta__divider {
-    opacity: 0.35;
+    opacity: 0.3;
   }
 
   .article-tags {
@@ -505,7 +429,12 @@ const schema = generateBlogPostSchema({
     border-radius: 999px;
     border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
     background: color-mix(in oklab, var(--white) 6%, transparent);
-    color: color-mix(in oklab, var(--accent-blog) 80%, transparent);
+  }
+
+  .article-tags__symbol {
+    width: 1rem;
+    height: 1rem;
+    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
   }
 
   .article-tags__list {
@@ -521,354 +450,278 @@ const schema = generateBlogPostSchema({
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.4rem 0.85rem;
+    padding: 0.42rem 0.82rem;
     border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--accent-blog) 36%, transparent);
-    background: linear-gradient(140deg, rgba(25, 36, 66, 0.78), rgba(17, 27, 52, 0.6));
-    color: color-mix(in oklab, var(--accent-blog) 86%, white 18%);
+    border: 1px solid color-mix(in oklab, var(--accent-blog) 32%, transparent);
+    background: rgba(18, 28, 52, 0.72);
+    color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
     font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.02em;
     transition:
       transform 160ms ease,
       border-color 160ms ease,
-      background 160ms ease;
+      background-color 160ms ease;
   }
 
   .article-tag:hover {
     transform: translateY(-2px);
-    border-color: color-mix(in oklab, var(--accent-blog) 55%, transparent);
-    background: linear-gradient(140deg, rgba(34, 48, 88, 0.85), rgba(22, 34, 70, 0.72));
+    border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
+    background: rgba(26, 38, 69, 0.82);
   }
 
   .article-tag--muted {
-    border-color: rgba(148, 163, 184, 0.2);
-    background: rgba(21, 30, 54, 0.6);
+    border-color: rgba(148, 163, 184, 0.18);
+    background: rgba(18, 26, 46, 0.64);
     color: color-mix(in oklab, var(--white) 72%, transparent);
   }
 
-  .article-cover {
-    padding: clamp(1rem, 1.5vw, 1.5rem);
-  }
-
-  .article-cover__image {
-    display: block;
-    width: 100%;
-    border-radius: calc(1.5rem - 0.5rem);
-    box-shadow: 0 32px 68px -52px rgba(10, 17, 33, 0.9);
-  }
-
-  .article-body-card {
-    --article-measure-base: 105ch;
-    --article-measure: min(100%, var(--article-measure-base));
-    padding: clamp(2.2rem, 2vw + 1.4rem, 3.2rem);
-    border-color: color-mix(in oklab, var(--white) 12%, transparent);
-    background:
-      radial-gradient(140% 160% at 50% 0%, rgba(92, 132, 230, 0.12), transparent 74%),
-      linear-gradient(180deg, rgba(7, 11, 23, 0.9), rgba(6, 9, 20, 0.95));
-    box-shadow: 0 28px 76px -60px rgba(6, 11, 24, 0.9);
-  }
-
-  .article-tldr {
-    --tldr-pad-x: clamp(1.1rem, 1.8vw, 1.4rem);
-    display: grid;
-    gap: 0.75rem;
-    margin: 0 auto clamp(1.6rem, 2vw, 2.1rem);
-    max-width: min(100%, calc(var(--article-measure-base) + 2 * var(--tldr-pad-x)));
-    padding: 1.25rem var(--tldr-pad-x);
-    border-radius: 1.4rem;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background: linear-gradient(170deg, rgba(16, 24, 46, 0.88), rgba(9, 14, 28, 0.94));
-    box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.06);
-  }
-
-  .article-tldr__badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    padding: 0.35rem 0.85rem;
-    border-radius: 999px;
-    background: rgba(79, 112, 207, 0.16);
-    border: 1px solid rgba(129, 140, 248, 0.28);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: color-mix(in oklab, var(--accent-blog) 80%, white 24%);
-  }
-
-  .article-tldr__copy {
-    margin: 0;
-    font-size: clamp(1rem, 0.96rem + 0.35vw, 1.16rem);
-    line-height: 1.72;
-    color: color-mix(in oklab, var(--white) 88%, transparent);
-    text-wrap: pretty;
-  }
-
-  .article-body-card :global(.toc-root) {
-    margin: clamp(1.65rem, 2vw, 2.3rem) auto;
-    width: 100%;
-    max-width: min(100%, calc(var(--article-measure-base) + 2 * clamp(1rem, 1.6vw, 1.25rem)));
-  }
-
-  .article-body-card :global(.toc-card) {
-    --toc-pad-x: clamp(1rem, 1.6vw, 1.25rem);
+  .article-hero__media {
     position: relative;
-    border-radius: 1.4rem;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background: linear-gradient(170deg, rgba(11, 19, 34, 0.92), rgba(8, 13, 26, 0.96));
-    box-shadow:
-      0 24px 60px -42px rgba(9, 14, 30, 0.75),
-      inset 0 0 0 1px rgba(129, 140, 248, 0.05);
+    z-index: 1;
+    min-height: clamp(16rem, 28vw, 24rem);
     overflow: hidden;
-    padding: 0;
-    max-width: min(100%, calc(var(--article-measure-base) + 2 * var(--toc-pad-x)));
-    margin: 0 auto;
+    border-radius: 1.35rem;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background:
+      linear-gradient(180deg, rgba(4, 8, 18, 0.08), rgba(4, 8, 18, 0.4)), rgba(255, 255, 255, 0.04);
+    box-shadow: 0 24px 56px -44px rgba(4, 10, 24, 0.92);
   }
 
-  .article-body-card :global(.toc-card::before) {
+  .article-hero__media::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(90% 140% at 10% 0%, rgba(99, 179, 237, 0.12), transparent 70%);
-    opacity: 0.8;
+    background: linear-gradient(180deg, rgba(4, 8, 18, 0) 30%, rgba(4, 8, 18, 0.26) 100%);
     pointer-events: none;
   }
 
-  .article-body-card :global(.toc-summary) {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.1rem var(--toc-pad-x);
-    cursor: pointer;
-    list-style: none;
-    color: color-mix(in oklab, var(--white) 90%, transparent);
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: none;
+  .article-hero__media-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
-  .article-body-card :global(.toc-summary::-webkit-details-marker) {
+  .article-hero__media[data-orientation='portrait'] .article-hero__media-img {
+    object-position: top center;
+  }
+
+  .article-main {
+    margin-top: clamp(1.5rem, 2vw, 2.25rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.25rem, 1.8vw, 2rem);
+    align-items: start;
+  }
+
+  .article-rail {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .article-note {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.7rem;
+    padding: 1rem 1rem 1.05rem;
+    border-radius: 1.3rem;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: linear-gradient(180deg, rgba(13, 21, 39, 0.88), rgba(8, 13, 26, 0.92));
+  }
+
+  .article-note__eyebrow {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(129, 140, 248, 0.28);
+    background: rgba(79, 112, 207, 0.16);
+    color: color-mix(in oklab, var(--accent-blog) 84%, white 18%);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .article-note__copy {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: color-mix(in oklab, var(--white) 84%, transparent);
+    text-wrap: pretty;
+  }
+
+  .article-rail__toc {
+    position: relative;
+    z-index: 1;
+  }
+
+  .article-body-card {
+    padding: clamp(1.6rem, 1.8vw + 1rem, 2.4rem);
+  }
+
+  .article-rail :global(.toc-root) {
+    width: 100%;
+  }
+
+  .article-rail :global(.toc-card) {
+    border-radius: 1.35rem;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: linear-gradient(180deg, rgba(12, 19, 35, 0.92), rgba(8, 13, 25, 0.96));
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .article-rail :global(.toc-summary) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: center;
+    padding: 1rem 1rem 0.95rem;
+    cursor: pointer;
+    list-style: none;
+    color: color-mix(in oklab, var(--white) 88%, transparent);
+  }
+
+  .article-rail :global(.toc-summary::-webkit-details-marker) {
     display: none;
   }
 
-  .article-body-card :global(.toc-summary__icon) {
+  .article-rail :global(.toc-summary__icon) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 0.85rem;
-    background: rgba(59, 130, 246, 0.15);
-    border: 1px solid rgba(129, 140, 248, 0.25);
-    color: color-mix(in oklab, var(--accent-blog) 85%, white 20%);
+    border: 1px solid rgba(129, 140, 248, 0.2);
+    background: rgba(79, 112, 207, 0.14);
+    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
   }
 
-  .article-body-card :global(.toc-summary__content) {
+  .article-rail :global(.toc-summary__content) {
     display: grid;
     gap: 0.25rem;
-    text-align: left;
   }
 
-  .article-body-card :global(.toc-summary__label) {
-    font-size: 0.85rem;
-    text-transform: uppercase;
+  .article-rail :global(.toc-summary__label) {
+    font-size: 0.76rem;
+    font-weight: 700;
     letter-spacing: 0.26em;
-    color: color-mix(in oklab, var(--white) 80%, transparent);
-  }
-
-  .article-body-card :global(.toc-summary__count) {
-    font-size: 0.82rem;
-    color: color-mix(in oklab, var(--white) 65%, transparent);
-  }
-
-  .article-body-card :global(.toc-summary__action) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.77rem;
-    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+  }
+
+  .article-rail :global(.toc-summary__count) {
+    font-size: 0.8rem;
     color: color-mix(in oklab, var(--white) 58%, transparent);
   }
 
-  .article-body-card :global(.toc-summary__chevron) {
-    width: 1rem;
-    height: 1rem;
-    opacity: 0.7;
+  .article-rail :global(.toc-summary__action) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--white) 54%, transparent);
+  }
+
+  .article-rail :global(.toc-summary__chevron) {
+    width: 0.95rem;
+    height: 0.95rem;
     transition: transform 220ms ease;
   }
 
-  .article-body-card :global(.toc-card[open] .toc-summary__chevron) {
+  .article-rail :global(.toc-card[open] .toc-summary__chevron) {
     transform: rotate(180deg);
   }
 
-  .article-body-card :global(.toc-panel) {
-    position: relative;
-    padding: 0 var(--toc-pad-x) 1.2rem;
+  .article-rail :global(.toc-panel) {
+    padding: 0 1rem 1rem;
   }
 
-  @media (max-width: 640px) {
-    .article-body-card :global(.toc-card) {
-      --toc-pad-x: clamp(0.9rem, 4vw, 1.15rem);
-    }
-
-    .article-body-card :global(.toc-summary) {
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 0.85rem;
-      padding: 0.9rem var(--toc-pad-x);
-      background: rgba(12, 19, 34, 0.82);
-      align-items: center;
-    }
-
-    .article-body-card :global(.toc-summary__icon) {
-      display: none;
-    }
-
-    .article-body-card :global(.toc-summary__content) {
-      gap: 0.15rem;
-    }
-
-    .article-body-card :global(.toc-summary__label) {
-      font-size: 0.78rem;
-      letter-spacing: 0.24em;
-    }
-
-    .article-body-card :global(.toc-summary__count) {
-      font-size: 0.75rem;
-    }
-
-    .article-body-card :global(.toc-summary__action) {
-      gap: 0.35rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-    }
-
-    .article-body-card :global(.toc-summary__chevron) {
-      width: 0.85rem;
-      height: 0.85rem;
-    }
-
-    .article-body-card :global(.toc-panel) {
-      padding: 0 var(--toc-pad-x) 0.95rem;
-    }
-
-    .article-body-card :global(.toc-list) {
-      padding-top: 0.65rem;
-      gap: 0.55rem;
-    }
-
-    .article-body-card :global(.toc-link) {
-      gap: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .article-body-card :global(.toc-link--sub) {
-      font-size: 0.86rem;
-    }
-
-    .article-body-card :global(.toc-row--sub) {
-      margin-left: 0.8rem;
-      padding-left: 0.7rem;
-    }
-
-    .article-body-card :global(.toc-row--sub::before) {
-      left: 0.1rem;
-    }
-  }
-
-  .article-body-card :global(.toc-list) {
-    position: relative;
+  .article-rail :global(.toc-list) {
     margin: 0;
-    padding: 1rem 0 0;
-    border-top: 1px solid rgba(148, 163, 184, 0.16);
+    padding: 0.85rem 0 0;
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
     display: grid;
-    gap: 0.75rem;
+    gap: 0.7rem;
     list-style: none;
   }
 
-  .article-body-card :global(.toc-row) {
+  .article-rail :global(.toc-row) {
     display: block;
     position: relative;
   }
 
-  .article-body-card :global(.toc-row--sub) {
-    margin-left: clamp(0.65rem, 2vw, 1.4rem);
-    padding-left: 0.9rem;
+  .article-rail :global(.toc-row--sub) {
+    margin-left: 0.9rem;
+    padding-left: 0.85rem;
   }
 
-  .article-body-card :global(.toc-row--sub::before) {
+  .article-rail :global(.toc-row--sub::before) {
     content: '';
     position: absolute;
-    left: 0.2rem;
+    left: 0.15rem;
     top: 0.75rem;
     bottom: 0.75rem;
     width: 1px;
-    background: rgba(129, 140, 248, 0.24);
+    background: rgba(129, 140, 248, 0.2);
   }
 
-  .article-body-card :global(.toc-link) {
+  .article-rail :global(.toc-link) {
     display: inline-flex;
+    width: 100%;
     align-items: center;
     gap: 0.6rem;
-    width: 100%;
-    color: color-mix(in oklab, var(--white) 90%, transparent);
-    font-size: 0.92rem;
-    text-decoration: none;
+    color: color-mix(in oklab, var(--white) 88%, transparent);
+    font-size: 0.9rem;
     line-height: 1.4;
+    text-decoration: none;
     transition:
       color 160ms ease,
       transform 160ms ease;
   }
 
-  .article-body-card :global(.toc-link:hover) {
-    color: color-mix(in oklab, var(--accent) 60%, var(--white) 40%);
+  .article-rail :global(.toc-link:hover) {
+    color: color-mix(in oklab, var(--accent) 58%, var(--white) 42%);
     transform: translateX(2px);
   }
 
-  .article-body-card :global(.toc-link:focus-visible) {
+  .article-rail :global(.toc-link:focus-visible) {
     outline: none;
     box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
     border-radius: 999px;
-    padding: 0.15rem 0.35rem;
-    margin: -0.15rem -0.35rem;
+    padding: 0.12rem 0.32rem;
+    margin: -0.12rem -0.32rem;
   }
 
-  .article-body-card :global(.toc-link--sub) {
-    font-size: 0.88rem;
-    color: color-mix(in oklab, var(--white) 72%, transparent);
+  .article-rail :global(.toc-link--sub) {
+    font-size: 0.84rem;
+    color: color-mix(in oklab, var(--white) 70%, transparent);
   }
 
-  .article-body-card :global(.toc-icon) {
+  .article-rail :global(.toc-icon) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.1rem;
-    height: 1.1rem;
+    width: 1rem;
+    height: 1rem;
     border-radius: 999px;
     background: rgba(129, 140, 248, 0.12);
-    color: currentColor;
-    opacity: 0.85;
-  }
-
-  .article-body-card :global(.toc-link--sub .toc-icon) {
-    width: 0.95rem;
-    height: 0.95rem;
   }
 
   .article-body {
-    margin-top: clamp(2.2rem, 2vw + 1.4rem, 3rem);
-    max-width: 90ch;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    max-width: 100%;
     font-family: 'Noto Serif Thai', 'Noto Serif', serif;
-    font-size: clamp(1.08rem, 1.01rem + 0.4vw, 1.22rem);
-    line-height: 1.85;
+    font-size: clamp(1.06rem, 1.02rem + 0.34vw, 1.22rem);
+    line-height: 1.88;
     letter-spacing: 0.01em;
     font-feature-settings: 'kern', 'liga';
     text-rendering: optimizeLegibility;
@@ -903,7 +756,7 @@ const schema = generateBlogPostSchema({
   }
 
   .article-body :global(ol li::marker) {
-    color: color-mix(in oklab, var(--accent) 65%, var(--white) 35%);
+    color: color-mix(in oklab, var(--accent) 64%, var(--white) 36%);
     font-weight: 600;
   }
 
@@ -1170,8 +1023,8 @@ const schema = generateBlogPostSchema({
   }
 
   .article-related {
-    margin: clamp(3.5rem, 5vw, 4.75rem) auto 0;
-    max-width: min(68rem, 100%);
+    margin: clamp(3rem, 4vw, 4.25rem) auto 0;
+    max-width: min(74rem, 100%);
   }
 
   .article-related :global(.article-related-section) {
@@ -1197,7 +1050,7 @@ const schema = generateBlogPostSchema({
 
   .article-related :global(.article-related-title) {
     margin: 0;
-    font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+    font-size: clamp(1.35rem, 1.12rem + 0.9vw, 1.95rem);
     font-weight: 700;
     letter-spacing: -0.01em;
   }
@@ -1297,59 +1150,51 @@ const schema = generateBlogPostSchema({
     color: color-mix(in oklab, var(--white) 68%, transparent);
   }
 
-  @media (max-width: 1024px) {
-    .article-hero[data-has-media='true'] {
-      min-height: clamp(20rem, 60vw, 26rem);
-    }
-
-    .article-hero[data-has-media='true'] .article-hero__content {
-      padding: clamp(1.8rem, 3vw, 2.6rem) clamp(1.6rem, 4vw, 2.8rem) clamp(1.5rem, 2.8vw, 2.05rem);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .article-container {
-      padding: 1.25rem 0 2.25rem;
-    }
-
-    .article-card {
-      border-radius: 1.6rem;
-      padding: 1.6rem;
+  @media (max-width: 1100px) {
+    .article-hero {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .article-hero__title {
-      font-size: clamp(2rem, 8vw, 2.75rem);
+      max-width: 16ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .article-container {
+      padding: 1.2rem 0 2.2rem;
+    }
+
+    .article-surface {
+      border-radius: 1.55rem;
+    }
+
+    .article-hero {
+      padding: 1.35rem;
+      gap: 1.2rem;
+    }
+
+    .article-hero__title {
+      max-width: none;
+      font-size: clamp(2rem, 8vw, 2.8rem);
     }
 
     .article-meta {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
     .article-tag {
       font-size: 0.72rem;
-      padding: 0.35rem 0.75rem;
+      padding: 0.34rem 0.72rem;
     }
 
+    .article-rail,
     .article-body-card {
-      padding: 1.85rem 1.45rem;
+      padding: 1rem;
     }
 
-    .article-tldr {
-      padding: 1.05rem 1.1rem;
-      border-radius: 1.2rem;
-    }
-
-    .article-tldr__badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.28em;
-    }
-
-    .article-hero[data-has-media='true'] {
-      min-height: clamp(18rem, 72vw, 23rem);
-    }
-
-    .article-hero[data-has-media='true'] .article-hero__content {
-      padding: clamp(1.6rem, 5vw, 2.2rem) clamp(1.4rem, 6vw, 2.3rem) clamp(1.35rem, 4.5vw, 1.8rem);
+    .article-body {
+      font-size: clamp(1rem, 0.98rem + 0.28vw, 1.12rem);
     }
 
     .article-body :global(pre) {
@@ -1374,33 +1219,26 @@ const schema = generateBlogPostSchema({
       padding: 0.32rem 0.58rem;
     }
 
-    .article-body-card :global(.toc-summary) {
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 0.75rem;
-      padding: 0.9rem 1rem;
+    .article-rail :global(.toc-summary) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      padding: 0.9rem;
     }
 
-    .article-body-card :global(.toc-summary__action) {
-      justify-self: end;
-      font-size: 0.7rem;
-    }
-
-    .article-body-card :global(.toc-list) {
-      padding-top: 0.65rem;
-      gap: 0.55rem;
+    .article-rail :global(.toc-summary__icon) {
+      display: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .article-back__link,
-    .article-card,
-    .article-tag {
+    .article-tag,
+    .article-rail :global(.toc-summary__chevron) {
       transition-duration: 0.01ms;
     }
 
-    .article-card:hover::before,
+    .article-back__link:hover,
     .article-tag:hover,
-    .article-back__link:hover {
+    .article-rail :global(.toc-link:hover) {
       transform: none;
     }
   }

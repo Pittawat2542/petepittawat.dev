@@ -6,7 +6,11 @@ import { BlogCardContent } from '@/components/ui/blog/BlogCardContent';
 import { BlogCardFooter } from '@/components/ui/blog/BlogCardFooter';
 import { BlogCardImage } from '@/components/ui/blog/BlogCardImage';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
-import { getBlogPostPath } from '@/lib/blog-translations';
+import {
+  getBlogExclusiveLocaleLabel,
+  getBlogPostPath,
+  type BlogPostLanguageState,
+} from '@/lib/blog-translations';
 import type { BlogPost } from '@/types';
 import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
@@ -28,6 +32,8 @@ interface BlogCardProps {
   readonly featured?: boolean | undefined;
   /** Array of all posts used to calculate series information */
   readonly allPosts?: readonly BlogPost[] | undefined;
+  /** Locale-aware translation state for this card */
+  readonly languageState?: BlogPostLanguageState<BlogPost> | undefined;
   /** Additional CSS classes to apply */
   readonly className?: string | undefined;
   /** Inline styles to apply */
@@ -51,6 +57,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   post,
   featured = false,
   allPosts = [],
+  languageState,
   className,
   style,
 }) => {
@@ -106,6 +113,9 @@ const BlogCardComponent: FC<BlogCardProps> = ({
                   excerpt={post.data.excerpt}
                   pubDate={post.data.pubDate}
                   lang={post.data.lang}
+                  {...(languageState?.isFallback
+                    ? { languageBadgeLabel: getBlogExclusiveLocaleLabel(post.data.lang) }
+                    : {})}
                   isPartOfSeries={isPartOfSeries}
                   seriesTitle={seriesTitle || ''}
                   partNumber={partNumber}
@@ -139,6 +149,7 @@ export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
   return (
     prevProps.post.id === nextProps.post.id &&
     prevProps.featured === nextProps.featured &&
+    prevProps.languageState === nextProps.languageState &&
     prevProps.className === nextProps.className &&
     prevProps.allPosts === nextProps.allPosts
   );
