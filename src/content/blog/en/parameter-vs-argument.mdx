@@ -1,0 +1,69 @@
+---
+slug: 'parameter-vs-argument-en'
+title: 'Parameter VS Argument: What''s the Difference!?'
+
+pubDate: '2020-05-27T14:36:46.000Z'
+tags: ['Computer Science']
+coverImage: '../parameter-vs-argument/cover.jpeg'
+excerpt: 'After writing code for a while, most developers inevitably end up creating functions (or methods/procedures in other languages—though I''ll stick with "function" in this article). Whether to reduce repetitive code and make it more reusable, or to encapsulate and hide implementation logic, functions are essential. And of course, many times when we create a function, we need to accept some kind of input into it.'
+lang: 'en'
+translationId: 'parameter-vs-argument'
+routeSlug: 'parameter-vs-argument'
+---
+
+import Callout from '@/components/content/Callout';
+
+## TLDR;
+
+**Parameter** = a function's input at the time of **defining** the function
+
+**Argument** = a function's input at the time of **calling** the function
+
+---
+
+After writing code for a while, most developers inevitably end up creating functions (or methods/procedures in other languages—though I'll stick with "function" in this article). Whether to reduce repetitive code and make it more reusable, or to encapsulate and hide implementation logic, functions are essential. And of course, many times when we create a function, we need to accept some kind of input into it.
+
+For example, here's a function in Dart:
+
+```dart
+String _generateHelloMessage(String peopleName) {
+  return 'Hello $peopleName';
+}
+```
+
+In this example, we want to create a String that starts with "Hello" followed by a name that we pass into the function as input through a variable called `peopleName`, which must be a String. We can also say that `peopleName` is a **Parameter** of this function.
+
+---
+
+## What is a Parameter?
+
+A **Parameter** is the term for a variable that we accept as input to a function when we **define** or **declare** the function (function declaration). In more formal terms, a parameter is the input of a function in its function signature.
+
+---
+
+## What is an Argument?
+
+You can probably guess what an **Argument** is by now. An Argument is the variable (or value) that we pass as input to a function when we **call** that function. For example:
+
+```dart
+String _generateHelloMessage(String peopleName) {
+  return 'Hello $peopleName';
+}
+
+String bobName = 'Bob';
+print(_generateHelloMessage(bobName)); // Output: Hello Bob
+```
+
+In this case, the variable `bobName` is the Argument of the `_generateHelloMessage` function—in other words, it's the actual value we send for the function to use. Additionally, Argument has another name: **Actual parameter**, or the "real" parameter.
+
+---
+
+## Summary
+
+**Parameter** = a function's input at the time of **defining**
+
+**Argument** = a function's input at the time of **calling**
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

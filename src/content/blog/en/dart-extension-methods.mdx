@@ -1,0 +1,107 @@
+---
+slug: 'dart-extension-methods-en'
+title: 'Dart: Extension Methods - Let''s Supercharge Third-party Libraries'
+
+pubDate: '2020-08-04T07:39:05.000Z'
+tags: ['Dart']
+coverImage: '../dart-extension-methods/cover.jpeg'
+excerpt: 'Using third-party libraries is essential in modern development. Yet we often find ourselves thinking, "I wish this library exposed one more helper" or "I wish this API behaved a little differently." When it''s our own code, we can just change it. But what about libraries we don''t control? Dart''s Extension Methods, introduced in version 2.7, offer an elegant solution.'
+lang: 'en'
+translationId: 'dart-extension-methods'
+routeSlug: 'dart-extension-methods'
+---
+
+import Callout from '@/components/content/Callout';
+
+There's no denying that third-party libraries play a vital role in modern software development. They dramatically reduce complexity and help us build systems faster than ever. Yet we often catch ourselves thinking, "I wish this library exposed one more helper" or "I wish this API behaved a little differently." When it's code we own, these are trivial fixes. We simply change the class and move on.
+
+But modifying third-party libraries? That's practically impossible, or at best, a maintenance nightmare waiting to happen. The typical workaround is to extend the class into our own subclass and bolt on the functionality we want. But this approach often introduces unnecessary complexity, makes code harder to follow, increases the risk of bugs, and raises the maintenance burden significantly.
+
+Dart recognized this pain point. Starting from version 2.7, Dart shipped with a feature called **Extension Methods**—a quality-of-life improvement that developers, especially those coming from Swift on iOS, will find immediately familiar.
+
+---
+
+## Extension Methods: Capability Without Subclassing
+
+Extension Methods let you add functionality to any class without extending it into a subclass. Whatever capabilities you add become directly callable on the original class itself. The syntax looks like this:
+
+```dart
+extension <extension name> on <type> {
+  (<member definition>)*
+}
+```
+
+The extension name is technically optional, but Dart strongly recommends naming your extensions. Why? Because you never know when another developer on your team might create an extension method with the same name, leading to conflicts. With a named extension, you can use `show`, `hide`, or `as` on imports to resolve these clashes. If you need both methods, you can wrap them explicitly:
+
+```dart
+<extension name>(<literal value>).<extended method>()
+// For example
+StringExtension('123').parseInt();
+StringExtension2('456').parseInt();
+```
+
+---
+
+## Example: The Candy Factory
+
+Imagine we're using a third-party library that provides a `Candy` class for our factory:
+
+```dart
+class Candy {
+  final List<String> _flavors = [];
+  final int _sweetness;
+
+  Candy(this._sweetness);
+
+  String get detail => 'This candy has degree of sweetness at $_sweetness and has the following flavor(s): $_flavors';
+
+  void addFlavor(String flavor) {
+    _flavors.add(flavor);
+  }
+}
+```
+
+One day, management decides our candies need a new trick to stay competitive: flavors should be removable! But our candy-making machinery is imported (a third-party library), so we can't modify the `Candy` class directly. Then we remember—this is Dart. We can extend functionality without creating a special candy subtype:
+
+```dart
+extension on Candy {
+  void removeFlavor(String flavor) {
+    _flavors.remove(flavor);
+  }
+}
+```
+
+Just like that, `candyInstance.removeFlavor("Mint")` works seamlessly.
+
+One important caveat: as the name implies, Extension Methods cannot add instance variables. If you need those, subclassing via `extends` is the more appropriate path.
+
+---
+
+## Extending Built-in Classes
+
+Extension Methods aren't limited to third-party classes—they work on any class, including Dart's built-in types. Want `String` to return a reversed uppercase version? Easy:
+
+```dart
+extension ExtendedString on String {
+  String get uppercaseReversed => this.toUpperCase().split('').reversed.join();
+}
+```
+
+Now we can simply write:
+
+```dart
+print('Hello, Dart!'.uppercaseReversed);
+// OUTPUT: !TRAD ,OLLEH
+```
+
+---
+
+## Final Thoughts
+
+Extension Methods aren't mandatory learning for Dart beginners (though if you've made it this far, that ship may have sailed). They're not enforced by the language either—just one tool among many, to use or ignore as you see fit.
+
+There are plenty of creative applications beyond the obvious. One pattern common in iOS development is using extensions to organize code into clean, focused sections, with each extension handling a specific slice of logic. All in all, it's a compelling feature that boosts convenience, readability, and overall code quality.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

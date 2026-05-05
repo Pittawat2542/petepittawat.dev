@@ -1,0 +1,170 @@
+---
+slug: 'flutter-inkwell-en'
+title: 'Flutter: Add Material-Style Feedback to Widgets with InkWell'
+
+pubDate: '2020-06-24T08:10:16.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-inkwell/cover.jpeg'
+excerpt: 'Not every button and card that Flutter provides out of the box will cover all our design needs. Flutter recognizes this well, which is why it offers a widget called GestureDetector to give developers as much flexibility as possible in crafting beautiful UIs. However, despite its many capabilities, GestureDetector doesn''t always fit the bill.'
+lang: 'en'
+translationId: 'flutter-inkwell'
+routeSlug: 'flutter-inkwell'
+---
+
+import Callout from '@/components/content/Callout';
+
+Not every button and card that Flutter provides out of the box will cover all our design needs. Flutter recognizes this well, which is why it offers a widget called `GestureDetector` to give developers as much flexibility as possible in crafting beautiful UIs. However, despite its many capabilities, `GestureDetector` doesn't always fit the bill.
+
+The thing is, `GestureDetector` can only detect gestures—it doesn't provide any feedback animation to the user. If we want a `GestureDetector` with beautiful splash feedback following Material Design, Flutter has a widget for that too: InkWell.
+
+That said, `InkWell` is something of a bitter pill for many people. You use it, and yet nothing seems to happen. Today, let's look at how to use `InkWell` correctly.
+
+---
+
+## InkWell
+
+`InkWell` is quite similar to `GestureDetector`, but with the added benefit of beautiful effects that provide user feedback according to Material Design.
+
+However, `InkWell` comes with a limitation: its effect will only be clipped to a rectangular shape. If you want more flexible effects, you'll need to use [InkResponse](https://api.flutter.dev/flutter/material/InkResponse-class.html) instead.
+
+`InkWell` is one of those widgets that's tricky to use if you don't understand it. Wrap it around a `Text` and you get a nice `FlatButton`. But wrap it around a `Container` with a background color, and it vanishes instantly.
+
+One reason for this is that [Material](https://api.flutter.dev/flutter/material/Material-class.html) (yes, that's the actual widget name—it's the foundation for many widgets in the Material family) is used to draw the effect, and it ends up hidden beneath the background color/image.
+
+We can work around this by wrapping `InkWell` with `Material` first, and placing the `Container` on the outside. We can set the `type` of this `Material` to `MaterialType.transparency` so it doesn't affect how our intended widget renders, serving only as a canvas for the effect. Here's an example:
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: MyWidget(),
+    ),
+  );
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: 64,
+          height: 64,
+          color: Colors.blueAccent,
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: () {
+                print('Tapped!');
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+## RoundedRectangle
+
+But the problems don't end there. If we use `InkWell` with a `Container` that has a `borderRadius` set, the `InkWell` won't get clipped along with it.
+
+The fix is to also set a `borderRadius` on the InkWell itself, like so:
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: MyWidget(),
+    ),
+  );
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            color: Colors.blueAccent,
+          ),
+          width: 64,
+          height: 64,
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              onTap: () {
+                print('Tapped!');
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+---
+
+## Circle
+
+What if we want to use `InkWell` with unusual shapes? Like a custom-drawn path?
+
+The widgets that will help us here are the Clip family. If we wrap a Clip around `Material`, we can constrain the effect to be clipped however we want. For example, if the parent widget of `Material` is a circle, we can use `ClipOval` to handle it, as shown here:
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: MyWidget(),
+    ),
+  );
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.blueAccent,
+          ),
+          width: 64,
+          height: 64,
+          child: ClipOval(
+            child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                onTap: () {
+                  print('Tapped!');
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+This same idea can be adapted for other shapes as needed. For unusual shapes, `ClipPath` will be an excellent helper.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

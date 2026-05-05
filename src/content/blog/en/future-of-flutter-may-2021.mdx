@@ -1,0 +1,58 @@
+---
+slug: 'future-of-flutter-may-2021-en'
+title: 'Flutter: Analyzing the Future of Flutter 2.2+'
+
+pubDate: '2021-05-22T14:55:19.000Z'
+coverImage: '../future-of-flutter-may-2021/cover.jpeg'
+excerpt: 'Google I/O, Google''s annual flagship update event, showcases new innovations for everyday users and developers alike. This year (2021) brought several exciting Flutter updates that paint a compelling picture for the framework''s future.'
+
+tags: ['Flutter', 'Dart']
+lang: 'en'
+translationId: 'future-of-flutter-may-2021'
+routeSlug: 'future-of-flutter-may-2021'
+---
+
+import Figure from '@/components/mdx/Figure';
+import Callout from '@/components/content/Callout';
+
+Google I/O, Google's annual flagship update event, showcases new innovations for everyday users and developers alike. This year (2021) brought several exciting Flutter updates that paint a compelling picture for the framework's future.
+
+Flutter is a UI toolkit built on Dart that enables developers to create beautiful, high-performance interfaces. But it doesn't stop there—Flutter also lets you build applications from a single source code project and export them to multiple platforms.
+
+---
+
+## Flutter 2.2: The Latest Step Forward
+
+Flutter 2.2 marks a significant milestone, and this release didn't arrive alone. Dart 2.13 introduced compelling features that hint at where this ecosystem is headed.
+
+Flutter is positioning itself as a universal toolkit—write your app once, then reuse that code across other platforms with minimal friction. That said, we have to acknowledge that different platforms have their own distinct idioms. Applying identical UI, UX, and feature sets everywhere is hardly a winning strategy.
+
+Flutter's latest effort in this space is something called Platform Adaptivity. This isn't simply responsive design in the web development sense, because it goes beyond just UI and UX considerations. Those interested can explore this further.
+
+Another area where Flutter is trying to differentiate itself is its developer ecosystem. Flutter emphasizes that everything developers need—from IDE integration plugins to DevTools—grows alongside the framework itself. Being open source means almost everything, including the Dart language, Flutter itself, DevTools, and the community, benefits from rapid issue discovery and resolution. The Google internal team overseeing Flutter also actively listens to developer feedback. A prime example is the iOS jank issue, which is slated for a fix in the upcoming stable release. This was one of the problems holding many developers back from using Flutter in production—the phenomenon where animations in Flutter-built iOS apps would stutter on first run regardless of how new the hardware was.
+
+<Figure src="https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MnwxMTc3M3wwfDF8c2VhcmNofDJ8fGFncmVlfGVufDB8fHx8MTYyMTY5NTE5Nw&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000" alt="Handshake" />
+
+One thing that's certain: Flutter will inevitably expand its export capabilities to many more platforms, especially smart devices like Wear OS, watchOS, and tvOS, along with other capabilities that native apps currently enjoy but Flutter hasn't yet addressed.
+
+Even today, Flutter attempts to bridge this gap in two ways: by allowing integration into existing native apps to a certain degree, and through plugins on pub.dev that support nearly every platform for common use cases. If you can't find the plugin you need, you can always write your own—connecting to native APIs isn't particularly difficult if you already understand the target platform.
+
+---
+
+## Dart 2.13
+
+On the Dart side, version 2.13 pushes forward with Foreign Function Interface (FFI), enabling straightforward interoperability with C code without complexity (complete with code generation if you already have header files).
+
+This means libraries written in C, or other languages that compile to C (like Go and Rust), can be fully leveraged within the Dart world. Existing libraries built for desktop operating systems, typically written in C, can connect with Dart—potentially with a Dart-side API wrapper that becomes a plugin.
+
+Beyond that, Dart itself is gradually adopting features found in other modern programming languages, including sound null safety and typedefs, making code more organized, maintainable, and enjoyable to write.
+
+---
+
+<Figure src="https://images.unsplash.com/photo-1499793134087-005f63eebec1?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MnwxMTc3M3wwfDF8c2VhcmNofDE2fHxwb2ludGluZ3xlbnwwfHx8fDE2MjE2OTUxMzI&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000" alt="Rancho Santa Fe views" />
+
+All of this raises a fascinating question: which direction will Flutter ultimately grow toward?
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

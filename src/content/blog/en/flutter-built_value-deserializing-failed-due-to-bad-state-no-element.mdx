@@ -1,0 +1,25 @@
+---
+slug: 'flutter-built_value-deserializing-failed-due-to-bad-state-no-element-en'
+title: 'Flutter: Fixing built_value Deserializing failed due to Error: Bad State No element'
+pubDate: '2020-12-31T14:00:27.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-built_value-deserializing-failed-due-to-bad-state-no-element/cover.jpeg'
+excerpt: 'The `built_value` package is powerful, but some of its error messages are far less helpful than they should be. One of the most confusing is `Deserializing failed due to Error: Bad State No element`.'
+lang: 'en'
+translationId: 'flutter-built_value-deserializing-failed-due-to-bad-state-no-element'
+routeSlug: 'flutter-built_value-deserializing-failed-due-to-bad-state-no-element'
+---
+
+import Callout from '@/components/content/Callout';
+
+`built_value` remains one of the most popular source-generation packages in the Flutter ecosystem. It is powerful, but it can also be difficult to work with, especially when the error message does not clearly explain the real problem.
+
+`Deserializing failed due to Error: Bad State No element` is one of those messages. It is vague, and I once spent an entire day debugging it. In practice, this error often comes from incorrect field types in your model class.
+
+In particular, the class may contain a field typed as `dynamic`, either explicitly or implicitly. Common examples are bare `List` and `Map` declarations without concrete type parameters.
+
+The fix is to make the types explicit, for example `List<String>` or `Map<String, String>`. If the field is not needed, removing it is also a valid solution.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

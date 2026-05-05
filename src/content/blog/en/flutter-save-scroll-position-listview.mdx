@@ -1,0 +1,115 @@
+---
+slug: 'flutter-save-scroll-position-listview-en'
+title: 'Flutter: Remembering Scroll Position in ListView with PageStorageKey'
+pubDate: '2020-05-27T15:06:45.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-save-scroll-position-listview/cover.jpeg'
+excerpt: 'Many apps remember where you were in a scrollable list when you switch tabs and come back. In Flutter, one simple way to do that for `ListView` is `PageStorageKey`.'
+lang: 'en'
+translationId: 'flutter-save-scroll-position-listview'
+routeSlug: 'flutter-save-scroll-position-listview'
+---
+
+import Figure from '@/components/mdx/Figure';
+
+import Callout from '@/components/content/Callout';
+
+Most of us have used applications that remember our scroll position when we leave a tab and come back later. Facebook is a classic example.
+
+<Figure
+  src="https://images.unsplash.com/photo-1584824388178-1defc3484ce3?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt=""
+/>
+
+In Flutter, one straightforward way to get that behavior is to use `PageStorageKey`.
+
+---
+
+## The secret is the key
+
+Almost every Flutter widget accepts a `Key`. At a high level, keys help Flutter distinguish one widget instance from another. That matters because Flutter maintains internal trees to track widget state and position during rendering.
+
+In this case, we can attach a `PageStorageKey` to a `ListView` so Flutter remembers how far the user has scrolled. If you want a deeper explanation of keys in general, see [Flutter: Why are Keys important?](/blog/flutter-key/).
+
+---
+
+## `ListView` + `PageStorageKey`
+
+Here is the simplest usage:
+
+```dart
+    // ...
+
+    var data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+    // ...
+
+    @override
+    Widget build(BuildContext context) {
+        return ListView.builder(
+            key: PageStorageKey('key must be unique for each list view'),
+            itemCount: data.length,
+            itemBuilder: (ctx, index) => Padding(
+            	padding: const EdgeInsets.symmetric(
+                	vertical: 32.0,
+                ),
+                child: ListTile(
+            		title: Text(data[index]),
+                ),
+            ),
+        );
+    }
+
+    // ...
+```
+
+One important detail is that each `ListView` should receive its own unique `PageStorageKey`.
+
+If you are using a `ListView` that contains `ExpansionTile`s, each `ExpansionTile` should also get its own unique `PageStorageKey` so Flutter can remember whether that tile is expanded or collapsed:
+
+```dart
+    // ...
+
+    var data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+    // ...
+
+    @override
+    Widget build(BuildContext context) {
+        return ListView.builder(
+            key: PageStorageKey('key must be unique for each list view'),
+            itemCount: data.length,
+            itemBuilder: (ctx, index) => Padding(
+            	padding: const EdgeInsets.symmetric(
+                	vertical: 32.0,
+                ),
+                child: ExpansionTile(
+                	key: PageStorageKey('child key ' + index),
+            		title: Text(data[index]),
+                    children: [
+                    	Container(
+                        	color: Colors.red,
+                        	height: 100,
+                            width: 100,
+                        ),
+                    ],
+                ),
+            ),
+        );
+    }
+
+    // ...
+```
+
+That small addition can make an app feel far more polished.
+
+## Summary
+
+- Add a `PageStorageKey` to the `key` parameter of your `ListView`
+- If you also use `ExpansionTile`, give each tile its own `PageStorageKey` as well
+
+If you want the full sample code, you can find it at [https://github.com/Pittawat2542/flutter_listview_save_scroll_position](https://github.com/Pittawat2542/flutter_listview_save_scroll_position).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

@@ -1,0 +1,159 @@
+---
+slug: 'flutter-textfield-vs-textformfield-en'
+title: 'Flutter: TextField vs TextFormField — Which One Should You Use?'
+pubDate: '2020-06-20T12:54:25.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-textfield-vs-textformfield/cover.jpeg'
+excerpt: 'If you need short text input from users in Flutter, it is easy to wonder whether you should use `TextField` or `TextFormField`. The answer becomes clearer once you look at what each widget is designed for.'
+lang: 'en'
+translationId: 'flutter-textfield-vs-textformfield'
+routeSlug: 'flutter-textfield-vs-textformfield'
+---
+
+import Callout from '@/components/content/Callout';
+
+`TextField` is one of the most important UI elements in application development because it is how users enter information into our apps. Flutter provides several tools for building forms, and there are multiple ways to structure the code depending on the developer's style.
+
+Because of that, many people get confused when they only need a simple text input but see both `TextField` and `TextFormField` available. Which one should you choose?
+
+---
+
+## TL;DR
+
+`TextField` = a plain Material text input
+
+`TextFormField` = a `TextField` wrapped in a `FormField`
+
+---
+
+## `TextField`
+
+`TextField` is the widget Flutter provides for short text or numeric input following Material Design conventions. Because it is a Material widget, it needs at least one ancestor that inherits from `Material`. In practice, that is rarely a problem if you are already building with Material widgets, though it can matter in heavily customized widget trees or Cupertino-based UIs.
+
+One of the strengths of `TextField` is that it works naturally with a `TextEditingController`. A controller gives you more flexibility for observing values, setting initial text, or coordinating input with other parts of the UI. Just remember to dispose the controller when you are done with it.
+
+Example:
+
+```dart
+    import 'package:flutter/material.dart';
+
+    void main() => runApp(MyApp());
+
+    class MyApp extends StatelessWidget {
+
+      @override
+      Widget build(BuildContext context) {
+        return MaterialApp(
+          title: 'Sample',
+          home: HomePage(),
+        );
+      }
+    }
+
+    class HomePage extends StatefulWidget {
+      @override
+      _HomePageState createState() => _HomePageState();
+    }
+
+    class _HomePageState extends State<HomePage> {
+      TextEditingController _controller;
+
+      void initState() {
+        super.initState();
+        _controller = TextEditingController();
+      }
+
+      void dispose() {
+        _controller.dispose();
+        super.dispose();
+      }
+
+      Widget build(BuildContext context) {
+        return Scaffold(
+          body: Center(
+            child: TextField(
+              controller: _controller,
+              onSubmitted: (value) {
+                print(value);
+              },
+            ),
+          ),
+        );
+      }
+    }
+```
+
+---
+
+## `TextFormField`
+
+In real applications, text inputs are often not used in isolation. We usually want validation, coordinated submission, or access to multiple field values as one form. That is why Flutter provides the `Form` widget.
+
+`Form` expects its input widgets to work through `FormField`, which adds conveniences such as validation handling and reduces the amount of boilerplate we would otherwise have to write ourselves.
+
+Since `TextField` is so commonly used inside forms, Flutter bundles that combination into a dedicated widget: `TextFormField`.
+
+Example:
+
+```dart
+    import 'package:flutter/material.dart';
+
+    void main() => runApp(MyApp());
+
+    class MyApp extends StatelessWidget {
+      @override
+      Widget build(BuildContext context) {
+        return MaterialApp(
+          title: 'Sample',
+          home: Scaffold(
+            body: HomePage(),
+          ),
+        );
+      }
+    }
+
+    class HomePage extends StatefulWidget {
+      @override
+      HomePageState createState() {
+        return HomePageState();
+      }
+    }
+
+    class HomePageState extends State<HomePage> {
+      final _formKey = GlobalKey<FormState>();
+
+      @override
+      Widget build(BuildContext context) {
+        return Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                validator: (value) =>
+                    value.isEmpty ? 'Input cannot be empty!' : null,
+              ),
+              MaterialButton(
+                color: Colors.blue,
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    print('Form Complete');
+                  }
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+```
+
+---
+
+## Summary
+
+If you only need a plain input field and do not care about validation or form orchestration, `TextField` is usually enough. But if the field lives inside a form or needs validation behavior, `TextFormField` is the better choice.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

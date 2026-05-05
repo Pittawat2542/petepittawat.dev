@@ -1,0 +1,39 @@
+---
+slug: 'print-debugging-en'
+title: 'Is Print Debugging the Right Way to Go?'
+
+pubDate: '2020-08-07T05:33:24.000Z'
+tags: ['Computer Science']
+coverImage: '../print-debugging/cover.jpeg'
+excerpt: 'Programming and bugs are practically inseparable. Whether we like it or not, bugs come in many shapes and forms. Syntax errors or compile-time errors are relatively easy to fix since the compiler points out exactly where we went wrong and sometimes even suggests a fix. But what about when our program behaves in ways we never intended?'
+lang: 'en'
+translationId: 'print-debugging'
+routeSlug: 'print-debugging'
+---
+
+import Figure from '@/components/mdx/Figure';
+import Callout from '@/components/content/Callout';
+
+Programming and bugs are practically inseparable. Whether we like it or not, bugs come in many shapes and forms. Syntax errors or compile-time errors are relatively easy to fix since the compiler points out exactly where we went wrong and sometimes even suggests a fix.
+
+<Figure src="https://images.unsplash.com/photo-1543285198-3af15c4592ce?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="" />
+
+But often, the bugs we encounter manifest as unexpected program behavior—what we commonly call logic errors. These happen when our code doesn't actually do what we intended (even though we thought it did), causing the program to behave in ways we never planned. Naturally, fixing logic errors is far more difficult than resolving syntax or type errors. Not only does the compiler stay silent about what's wrong, but we often don't even know where to begin looking for the source of the problem.
+
+<Figure src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="Bend man" />
+
+One common approach to analyzing these errors is to observe how variable values change at different points during program execution, checking whether they match our expectations. We typically do this by printing variable names and values at various points throughout the code. The obvious appeal of this method is its simplicity—it feels almost instinctive. However, this approach tends to come with several drawbacks:
+
+1. You have to remember and later clean up all the print statements scattered across your program
+2. If you don't remove them, you might comment them out "just in case," cluttering your code unnecessarily
+3. It becomes even more confusing if your codebase already has proper logging infrastructure in place
+4. In systems where users can easily access print output—websites, for instance—accidentally leaving sensitive data in a print statement can become a serious security issue
+5. In multi-developer environments (which is the norm today), having debug prints slip into version control can confuse other team members about whether that code is actually essential to the program
+
+So if you're going to use this approach, it's really only suitable for tracking a handful of variables in a few specific locations. But the truth is, we have something much better: breakpoints paired with a debugger. Most popular IDEs and code editors come with debuggers built right in, just waiting for us to use them. And in many cases, these debuggers offer additional capabilities that can significantly reduce both the time and the frustration of fixing our code.
+
+Now that you know this, I encourage everyone to learn how to use debuggers and breakpoints to help with debugging instead of relying on print statements—for a better developer life.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

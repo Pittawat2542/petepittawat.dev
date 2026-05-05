@@ -1,0 +1,35 @@
+---
+slug: 'flutter-semantics-en'
+title: 'Flutter: Semantics'
+
+pubDate: '2020-07-07T11:45:12.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-semantics/cover.jpeg'
+excerpt: 'A great application is one that everyone can access and use. Accessibility is an important topic that not only demonstrates our belief in equality, but also represents a business opportunity to expand our customer base. In this article, we''ll explore Semantics, one of the Widgets related to Accessibility, especially for users who rely on screen readers.'
+lang: 'en'
+translationId: 'flutter-semantics'
+routeSlug: 'flutter-semantics'
+---
+
+import Callout from '@/components/content/Callout';
+
+A great application is one that everyone can access and use. Accessibility is an important topic that not only demonstrates our belief in equality, but also represents a business opportunity to expand our customer base. In this article, we'll explore `Semantics`, one of the Widgets related to Accessibility, especially for users who rely on screen readers.
+
+---
+
+Although most Widgets that come with Flutter already have some level of `Semantics` built in, they are often not entirely correct. For example, if the screen we're designing uses Widgets that aren't meaningful in terms of content—merely decoration Widgets—but they still get described, or sometimes when we want to improve the description of our Widgets, what can we do? This is where `Semantics` comes in, which we can use to wrap other Widgets so we can add additional information. `Semantics` has more than 50 Properties that allow us to add information, such as `label` for the text that the screen reader will speak when encountering that Widget, or `selected` to indicate whether that Widget is currently selected, for example:
+
+```dart
+// ...
+Semantics(
+  child: MyImage(),
+  label: "Image of people who wear red shirt"
+),
+// ...
+```
+
+Beyond the use case of enhancing Accessibility for our applications, `Semantics` is also useful when using Flutter for Web, as it can help improve our SEO as well. This is just one example of the thoughtful considerations Flutter has prepared to help us develop applications that reach users as effectively as possible.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

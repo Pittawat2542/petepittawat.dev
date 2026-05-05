@@ -1,0 +1,67 @@
+---
+slug: 'flutter-extract-as-a-widget-vs-extract-as-a-method-en'
+title: 'Flutter: Extract as a Widget vs. Extract as a Method — Which Should You Use?'
+
+pubDate: '2020-08-15T12:57:37.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-extract-as-a-widget-vs-extract-as-a-method/cover.jpeg'
+excerpt: 'The two main approaches we typically use to keep our widget trees organized are extracting code into a widget (Extract as a Widget) and extracting code into a method (Extract as a Method). Both clearly help us achieve reusable code, but which one should you use, and when? What factors deserve consideration? This article will help answer those questions.'
+lang: 'en'
+translationId: 'flutter-extract-as-a-widget-vs-extract-as-a-method'
+routeSlug: 'flutter-extract-as-a-widget-vs-extract-as-a-method'
+---
+
+import Figure from '@/components/mdx/Figure';
+import Callout from '@/components/content/Callout';
+
+It's standard practice in programming to always strive for clean, well-organized code. We employ various techniques to achieve this—whether by creating methods or functions to isolate frequently used and logically separable code, or by splitting files to decouple unrelated code and make searching and management more convenient.
+
+In Flutter, we commonly encounter two primary approaches for organizing our widget trees: extracting code into a widget (Extract as a Widget) and extracting code into a method (Extract as a Method). Both approaches clearly enable code reuse, but which one should you use, and when? What factors deserve consideration? This article will help answer those questions.
+
+---
+
+<Figure src="https://images.unsplash.com/photo-1545987796-200677ee1011?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="" />
+
+## Related States
+
+The first factor to consider is state—whether a particular section of your widget tree involves any state at all. If it does, how closely tied and specific is that state to that particular widget section? If the answer is yes, extracting it into its own widget becomes an appealing option, since you may be able to reuse that widget in other scenarios.
+
+Examples in this case are often general-purpose user interface widgets, such as a Card styled specifically for your app. However, if the related state is heavily intertwined with other states within the parent widget, you might consider extracting it as a method instead. If you need the method to customize certain aspects of the resulting output widget, you can pass attributes into the method to alter the widget's appearance, or add or remove specific widgets from the output.
+
+An interesting consideration after extracting code into either a widget or method is whether to keep it in the same file or move it to a separate file. This decision isn't particularly difficult—consider the dependencies that widget or method has on others, along with the likelihood that the section could be reused elsewhere. If it has few dependencies (is light-dependent) and there's a reasonable chance of reuse in other parts of your codebase, you should extract it into a separate file to make it more accessible. Otherwise, keeping it in the same file is perfectly fine.
+
+Another factor worth weighing is the current length of the file—whether it's grown long enough to make navigation cumbersome. That said, this also depends on your team's internal agreements.
+
+---
+
+<Figure src="https://images.unsplash.com/photo-1574689049868-e94ed5301745?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="NREL Thermochemical Process/ Control Engineer and Research Technician work during a 48 hour Hot Test in Thermochemical User Facility Pilot Plant in the Field Test Laboratory Building (FTLB)." />
+
+## Maintainability
+
+This point concerns how well your current, unrefactored code communicates its intent—specifically, its readability and ease of navigation. One commonly seen approach is extracting sections of code within a single widget into multiple methods with meaningful names. For instance, you might break down a complex Card widget into several methods like `_buildCardHeader` and `_buildCardBody`. You could further decompose `_buildCardHeader` into `_buildCardTitle` and `_buildCardSubtitle`.
+
+How far you break things down should balance the readability benefits against maintaining easy navigation within your code.
+
+---
+
+![More shots like this on my instagram pages - https://instagram.com/motivational.coder - https://instagram.com/grohsfabian](https://images.unsplash.com/photo-1509966756634-9c23dd6e6815?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ)
+
+## Code Structure and State Management
+
+Another important consideration is your code's structure or architecture—what conventions has your team established as foundational principles? This is influenced by your chosen state management approach, since some state management solutions effectively enforce certain code organization patterns. This is another factor worth taking into account.
+
+Some architectures may favor widget extraction over methods; some approaches may not.
+
+---
+
+<Figure src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="Team work, work colleagues, working together" />
+
+## Team Guidelines
+
+The final factor is arguably the most important: what has your team agreed upon regarding code organization? If Team A prefers method extraction, you shouldn't deviate from that practice, so your codebase remains consistent. This naturally applies to legacy code as well.
+
+The most fundamental principle is to follow the existing code's approach, preventing your codebase from becoming a patchwork of different coding styles that becomes increasingly difficult to maintain over time.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

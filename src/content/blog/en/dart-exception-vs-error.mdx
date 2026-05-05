@@ -1,0 +1,60 @@
+---
+slug: 'dart-exception-vs-error-en'
+title: 'Dart: Exception VS Error'
+
+pubDate: '2020-06-07T13:41:45.000Z'
+tags: ['Dart']
+coverImage: '../dart-exception-vs-error/cover.jpeg'
+excerpt: 'Of course, we can''t expect only the happy path when programming. Many times we need to account for situations that don''t go as expected. Naturally, the common ways we handle unexpected events are Errors and Exceptions. But how exactly do these two differ?'
+lang: 'en'
+translationId: 'dart-exception-vs-error'
+routeSlug: 'dart-exception-vs-error'
+---
+
+import Callout from '@/components/content/Callout';
+
+Of course, we can't expect only the happy path when programming. Many times we need to account for situations that don't go as expected. Naturally, the common ways we handle unexpected events are Errors and Exceptions. But how exactly do these two differ?
+
+---
+
+## TLDR;
+
+**Error** is a problem we cannot anticipate.
+
+**Exception** is a problem we can anticipate.
+
+---
+
+## Error
+
+An **Error** is a problem we don't know about in advance and cannot predict. For example, a function we wrote expects input of type `String`, but for some reason the user provided a number instead, causing our function to fail and the program to throw an Error. The best way to handle an Error might be to shut down the program, or to avoid the situation that could lead to that error as much as possible.
+
+Examples of Errors include `NoSuchMethodError`, `TypeError`.
+
+---
+
+## Exception
+
+An **Exception** is a problem we can anticipate, and we should write code to handle such events. For example, when connecting to an external API, we can predict that the data we request might not always come back—the target server might be down, or the user might not be connected to a network. In these cases, the common pattern we use, and one you'll see everywhere to catch various errors, is `try-catch` (`try-except` in some languages).
+
+However, to properly catch an Exception and handle it correctly, we ourselves should throw good Exceptions from the start, so that appropriate follow-up actions can be taken.
+
+Examples of Exceptions include `IntegerDivisionByZeroException`, `TimeoutException`.
+
+---
+
+## Trick
+
+If not necessary, we shouldn't throw Error/Exception from the base class, because that would make it unclear for users (in the case of Error) or for developers ourselves (in the case of Exception) where exactly the problem originated, making it harder to guard against or handle that error properly.
+
+---
+
+## Summary
+
+**Error** is an unexpected problem that we cannot anticipate. Generally, the program will have an Error to tell the user what happened.
+
+**Exception** is a problem we can anticipate, which we usually catch through `try-catch` to handle as we see fit.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

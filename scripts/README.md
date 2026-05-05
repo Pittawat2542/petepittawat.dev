@@ -92,8 +92,10 @@ Translates a blog post MDX source into its English or Thai sibling using NVIDIA 
 - Preserves MDX structure, imports, components, links, images, code fences, and metadata shape.
 - Translates the title, excerpt, and reader-visible prose into the target language.
 - Writes the translated sibling file directly.
+- Skips the translation cleanly when the target file already exists, unless `--overwrite` is passed.
 - Normalizes the source file first when needed by adding explicit `lang` and `translationId` metadata for bilingual pairing.
 - Uses `routeSlug` plus language-specific internal slugs so English and Thai variants can share the same public route slug without Astro content ID collisions.
+- Prints concise progress lines for source resolution, skip/write decisions, model request, and final output path.
 
 ### Requirements
 
@@ -103,6 +105,7 @@ Translates a blog post MDX source into its English or Thai sibling using NVIDIA 
 - Optional:
   - `NVIDIA_NIM_MODEL` to override the default model.
   - `NVIDIA_NIM_API_URL` to override the chat completions endpoint.
+  - `NVIDIA_NIM_TIMEOUT_MS` to override the request timeout in milliseconds.
 
 ### Usage
 
@@ -124,6 +127,7 @@ pnpm translate-blog-post -- src/content/blog/wisdom.mdx th --overwrite
 
 - Endpoint: `https://integrate.api.nvidia.com/v1/chat/completions`
 - Default model: `moonshotai/kimi-k2.6`
+- Default timeout: `1800000` ms
 - The script sends one `system` message with translation rules and one `user` message containing the full MDX source.
 - The model is instructed to return a single JSON object with `title`, `excerpt`, and `bodyMdx`.
 - The script automatically loads `.env` from the repo root before reading these settings.

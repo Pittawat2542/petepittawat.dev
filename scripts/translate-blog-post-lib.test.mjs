@@ -143,8 +143,8 @@ test('builds a NIM chat payload with system and user messages', () => {
   });
 
   assert.equal(payload.model, 'moonshotai/kimi-k2.6');
-  assert.equal(payload.stream, false);
-  assert.equal(payload.max_tokens, 16384);
+  assert.equal(payload.stream, true);
+  assert.equal(payload.max_tokens, 65536);
   assert.equal(payload.messages[0]?.role, 'system');
   assert.equal(payload.messages[0]?.content, 'System instructions');
   assert.equal(payload.messages[1]?.role, 'user');

@@ -1,0 +1,48 @@
+---
+slug: 'flutter-runzoneguarded-en'
+title: 'Flutter: What Is runZonedGuarded For?'
+
+pubDate: '2020-08-22T07:31:19.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-runzoneguarded/cover.jpeg'
+excerpt: 'Separating different types of errors—such as those from external APIs your app connects to versus errors originating from your own application—can be handled with if-else blocks, but wouldn''t it be nicer to have a clean, ready-to-use function instead?'
+lang: 'en'
+translationId: 'flutter-runzoneguarded'
+routeSlug: 'flutter-runzoneguarded'
+---
+
+import Callout from '@/components/content/Callout';
+
+When developing software in any language, errors are simply inevitable. No matter how confident we are in our code quality, debugging remains one of the most critical steps in the development process. Yet even our best efforts can't achieve perfection. In a development environment, tracking and fixing errors is straightforward, but once our application is in users' hands, the situation becomes far more challenging. This is where error monitoring and tracking services like Firebase Crashlytics and Sentry come in—helping us forward errors along with additional context for easier analysis.
+
+Sometimes we even use multiple services to categorize different error types: those originating from external APIs our app depends on versus those coming from our own application logic. While we could write if-else conditions to handle these cases, wouldn't it be cleaner to have an elegant, built-in function ready to use?
+
+In Flutter, when we need to handle such scenarios with `Future`s, we have what's called `runZoned()`. However, this article will focus on `runZonedGuarded()` since `runZoned()` has been deprecated since Dart 2.8.
+
+The syntax for `runZonedGuarded()` looks like this:
+
+```dart
+runZonedGuarded(futureTask(), errorHandler());
+```
+
+`runZonedGuarded()` wraps around operations that return a `Future` or any asynchronous task. It takes one additional parameter: an error handler function. This handler can replace the usual `.catchError()` approach, and `runZonedGuarded()` provides two things in return: a `Map` (typically containing the error that occurred) and a `ZoneSpecification` object, which stores additional zone information and allows us to customize certain zone behaviors.
+
+For example:
+
+```dart
+runZonedGuarded(() {
+  Future(() {
+    throw "asynchronous error";
+  });
+}, (e, s) => print(e) );
+```
+
+In this example, `runZonedGuarded()` wraps a `Future` that simply throws an error. Rather than bubbling up through the call stack and potentially crashing our application, the error gets caught by the error handler instead. Here we're just printing the error, but in practice, we could forward it to one of the monitoring services mentioned earlier—perhaps enriching it with additional context along the way.
+
+Another practical use for `runZonedGuarded()` is isolating certain parts of your program so that errors from one section don't interfere with others.
+
+For those interested in diving deeper, check out the [Flutter API Reference](https://api.flutter.dev/flutter/dart-async/runZonedGuarded.html).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

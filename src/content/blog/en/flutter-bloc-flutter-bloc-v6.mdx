@@ -1,0 +1,44 @@
+---
+slug: 'flutter-bloc-flutter-bloc-v6-en'
+title: 'Flutter: bloc and flutter_bloc v6 Are Here!'
+
+pubDate: '2020-07-27T07:18:30.000Z'
+tags: ['Flutter', 'News']
+coverImage: '../flutter-bloc-flutter-bloc-v6/cover.jpeg'
+excerpt: 'Shortly after bloc v5 and flutter_bloc v5 were released—with the major change of introducing cubit as the foundation for state management and building bloc on top of it—Felix Angelov quickly followed up with bloc and flutter_bloc v6. The key change in this version brings cubit inside bloc itself, rather than having it as a dependency that bloc calls upon. Along with other improvements and bug fixes, let''s dive into what''s new.'
+lang: 'en'
+translationId: 'flutter-bloc-flutter-bloc-v6'
+routeSlug: 'flutter-bloc-flutter-bloc-v6'
+---
+
+import Callout from '@/components/content/Callout';
+
+Shortly after `bloc` v5 and `flutter_bloc` v5 were released—with the major change of introducing `cubit` as the foundation for state management and building `bloc` on top of it—Felix Angelov quickly followed up with `bloc` and `flutter_bloc` v6. The key change in this version brings `cubit` inside `bloc` itself, rather than having it as a dependency that `bloc` calls upon. Along with other improvements and bug fixes, let's dive into what's new.
+
+---
+
+## cubit
+
+As mentioned, in this version `bloc` has fully integrated `cubit` as part of its core. To recap, `cubit` is one of the state management approaches that follows a similar philosophy to BLoC—separating logic from UI to keep the UI as simple as possible. The intermediary (usually called BLoC) evaluates incoming Events and determines what State to transition to, handling any external data requirements along the way.
+
+Using `cubit` is simpler, as it eliminates Events entirely and instead uses function calls for updates. This should feel familiar to developers coming from other languages with similar state management patterns. In this version, Felix has brought `cubit` into `bloc` and discontinued the standalone `cubit` package. Of course, the original `bloc` remains available, now built on top of `cubit` but using Event-based management.
+
+---
+
+## Breaking Changes
+
+The main breaking change affects how Observers subscribe to Blocs. In previous versions, subscribing would immediately yield the current state as the first state. In v6, this no longer happens—subscribers must wait for the next state instead. This adjustment better aligns with Dart Stream behavior.
+
+Other changes include `onError` in `BlocObserver` now accepting `Cubit` as its first parameter, and the addition of initial state emission capabilities for both `bloc` and `cubit`.
+
+For `flutter_bloc`, all widgets that previously accepted a `bloc` parameter have been renamed to use `cubit` instead for greater accuracy. This applies to the following widgets: `BlocBuilder`, `BlocListener`, `BlocConsumer`
+
+---
+
+## Other Changes
+
+Additional changes include adding `onChange` to `BlocObserver`, introducing various Linter rules, and adding the `@visibleForTesting` annotation to `emit` in `Cubit` for testing purposes. General documentation improvements were also made.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

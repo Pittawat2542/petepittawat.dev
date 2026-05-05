@@ -1,0 +1,42 @@
+---
+slug: 'flutter-version-number-en'
+title: 'Flutter: What Do Flutter Version Numbers Mean?'
+
+pubDate: '2020-08-29T08:03:56.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-version-number/cover.jpeg'
+excerpt: 'In early 2020, Flutter revamped its release system and version numbering scheme to make things clearer for developers and easier for contributors to participate in Flutter''s development.'
+lang: 'en'
+translationId: 'flutter-version-number'
+routeSlug: 'flutter-version-number'
+---
+
+import Callout from '@/components/content/Callout';
+
+In early 2020, Flutter revamped its release system and version numbering scheme to make things clearer for developers and easier for contributors to participate in Flutter's development.
+
+Currently, Flutter uses a branching model to manage Stable and Beta releases. At the beginning of each month, a branch is created for the Beta release, which then undergoes further stabilization through cherry-picking important fixes. Every four months, Flutter promotes a Beta branch to a Stable release, after which maintenance continues with hotfixes for the Stable release as needed.
+
+Additionally, Flutter releases are now tied to Dart releases. This means that whenever a new Flutter version is released, a new Dart version is released as well. Likewise, Flutter Beta uses Dart Beta.
+
+As for the meaning of Flutter's version numbers, they follow SemVer with some additional conventions:
+
+For versions built from `master`, where each build sits on the `dev` branch (not Beta), a `.pre` suffix is appended to indicate a pre-release. The version format is `x.y.z-n.m.pre`, where `n` increments with each build from master. For example:
+- `1.18.0–1.0.pre`: First `dev` build after `master` moved to version `1.18`
+- `1.18.0–2.0.pre`: Next `dev` build from the latest point on `master`
+
+For Beta versions, these come from the `dev` branch above through cherry-picking from the full release. With each release, `m` increments by one. For example, if taking version 15 from `dev` (which came from `master` version `1.18`) into `beta`:
+- `1.18.0–15.0.pre`: First `beta` version (same as the selected `dev` version with nothing added)
+- `1.18.0–15.1.pre`: Next `beta` version with some cherry-picked additions
+- `1.18.0–15.2.pre`: Second iteration of this `beta`
+
+Finally, Stable versions use the format `x.y.0`, and with each hotfix release, the patch number is updated: `x.y.1`, `x.y.2`, etc.
+
+Examples:
+- `1.18.0–15.4.pre`: A `beta` version that has been selected but is not yet Stable
+- `1.18.0`: Stable Release, which is essentially the same as `1.18.0–15.4.pre` but with the version number and status changed to Stable
+- `1.18.1`: Hotfix for version `1.18.0`
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

@@ -1,0 +1,40 @@
+---
+slug: 'flutter-interactiveviewer-en'
+title: 'Flutter: InteractiveViewer — Let’s Make Your Widgets Pan and Zoom'
+
+pubDate: '2020-11-07T06:11:02.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-interactiveviewer/cover.jpeg'
+excerpt: 'Often we have content larger than the screen or parent widget, but we don''t want users to lose information they might need. For example, we might have a huge table where the text becomes tiny. We''d need to zoom in to see clearly, but that would cut off data outside the viewport. Wouldn''t it be better if users could pan and scroll to see the off-screen content? That''s exactly what InteractiveViewer is for.'
+lang: 'en'
+translationId: 'flutter-interactiveviewer'
+routeSlug: 'flutter-interactiveviewer'
+---
+
+import Callout from '@/components/content/Callout';
+
+Often we have content larger than the screen or parent widget, but we don't want users to lose information they might need. For example, we might have a huge table where the text becomes tiny. We'd need to zoom in to see clearly, but that would cut off data outside the viewport. Wouldn't it be better if users could pan and scroll to see the off-screen content? That's exactly what `InteractiveViewer` is for.
+
+---
+
+## InteractiveViewer
+
+`InteractiveViewer` is a widget that lets users interact with your widget—whether through panning, zooming, or other gestures you choose to implement. Using it couldn't be simpler: just wrap `InteractiveViewer` around whatever widget you want to make interactive.
+
+```dart
+// ...
+InteractiveViewer(
+  child: WigetWeWantToZoom(),
+),
+// ...
+```
+
+One thing to watch out for when using `InteractiveViewer`: this widget may draw outside the normal area of its child, which can prevent child widgets that need interaction from receiving user input—for example, a touch that falls outside the input area but within where `InteractiveViewer` overdraws. You can fix this by wrapping `InteractiveViewer` in an additional `ClipRect`.
+
+---
+
+Learn more about `InteractiveViewer` in the [API documentation](https://api.flutter.dev/flutter/widgets/InteractiveViewer-class.html).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

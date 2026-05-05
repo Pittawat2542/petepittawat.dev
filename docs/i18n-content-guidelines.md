@@ -20,6 +20,8 @@
 
 ## Recommended structure going forward
 
-- Legacy blog posts can remain where they are today to avoid noisy churn.
-- New bilingual posts may be placed under `src/content/blog/en/` and `src/content/blog/th/` if that becomes useful operationally.
-- If that folder split is introduced later, preserve the same frontmatter contract so routing and search continue to work without another content migration.
+- All blog posts should live under `src/content/blog/en/` or `src/content/blog/th/`.
+- Root-level `src/content/blog/*.mdx` files are considered legacy drift and should be migrated rather than extended.
+- Every bilingual pair should keep the same `translationId` and `routeSlug`.
+- Use locale-specific internal slugs such as `<route-slug>-en` and `<route-slug>-th` to avoid Astro content ID collisions.
+- Local asset references in frontmatter or MDX imports should be written relative to the locale folder, for example `../my-post/cover.jpeg`.

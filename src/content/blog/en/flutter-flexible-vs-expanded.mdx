@@ -1,0 +1,48 @@
+---
+slug: 'flutter-flexible-vs-expanded-en'
+title: 'Flutter: Flexible vs Expanded'
+
+pubDate: '2020-07-03T09:15:38.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-flexible-vs-expanded/cover.jpeg'
+excerpt: 'Sometimes we want our Widget to take up all the remaining space in a Column or Row, or we may want each Widget within a Column/Row to share space equally. The two Widgets commonly used to handle these situations are undoubtedly Flexible and Expanded. So what''s the difference between them?'
+lang: 'en'
+translationId: 'flutter-flexible-vs-expanded'
+routeSlug: 'flutter-flexible-vs-expanded'
+---
+
+import Callout from '@/components/content/Callout';
+
+Sometimes we want our Widget to take up all the remaining space in a `Column`/`Row`, or we may want each Widget within a `Column`/`Row` to share space equally. The two Widgets commonly used to handle these situations are undoubtedly `Flexible` and `Expanded`. So what's the difference between them?
+
+---
+
+## Flexible
+
+`Flexible` is used to make a child Widget expand to fill the remaining space along the main axis (for `Row` this is horizontal; for `Column` it's vertical), but without forcing it. This means we can still set a specific `width`/`height` for that child if desired.
+
+The key property of `Flexible` is `fit`, which controls how the child Widget handles the available space. The `fit` property takes a `FlexFit` value, of which there are two types: `FlexFit.loose` and `FlexFit.tight`. The default is `FlexFit.loose`, which doesn't force the child Widget to use all available space—it can be any size up to the maximum remaining space, or smaller.
+
+On the other hand, `FlexFit.tight` forces the child Widget to use all remaining space.
+
+Additionally, `Flexible` is useful when we want to divide space into different proportions using the `flex` property, which defaults to `1`. We can set this to various numbers to create proportional calculations when used alongside other `Flexible` Widgets.
+
+The `flex` space calculation works by taking the total available space and subtracting the space used by **inflexible** Widgets (those with static sizes, such as directly specified `width`/`height`). The remainder is then divided according to the proportions.
+
+For example, if we have two `Flexible` Widgets—one with `flex: 1` and another with `flex: 2`—plus a `Container` with `width: 50` in the same `Row`, and our total available horizontal space is **350**, the calculation proceeds as follows:
+
+Start with 350, then subtract the main-axis size of the inflexible Widget. Here we have one `Container` with `width: 50`, leaving us with 300 to divide.
+
+Next, we check the total `flex` values: `flex: 1` plus `flex: 2` equals 3. So 300 ÷ 3 = 100, meaning one flex unit equals 100.
+
+We then allocate space proportionally: the `Flexible` with `flex: 1` gets a width of 100, while the `Flexible` with `flex: 2` gets a width of 200.
+
+---
+
+## Expanded
+
+So what about `Expanded`? The answer is: it's simply `Flexible` with `fit: FlexFit.tight`. This means `Expanded` can do everything `Flexible` does, but it forces the child Widget to use all remaining available space.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

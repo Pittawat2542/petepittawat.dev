@@ -1,0 +1,119 @@
+---
+slug: 'dart-write-better-code-with-analysis-option-file-en'
+title: 'Dart: Write Better Code with Analysis Options'
+
+pubDate: '2020-12-26T07:07:30.000Z'
+tags: ['Dart']
+coverImage: '../dart-write-better-code-with-analysis-option-file/cover.jpeg'
+excerpt: 'Software development is not merely a science that requires knowledge, but also an art of weaving words together to command machines to work as we intend. Of course, when developing software alone, you can write code however you like in whatever style—no one will complain. But when working in a team, your coding style might leave others stunned.'
+lang: 'en'
+translationId: 'dart-write-better-code-with-analysis-option-file'
+routeSlug: 'dart-write-better-code-with-analysis-option-file'
+---
+
+import Callout from '@/components/content/Callout';
+
+Software development is not merely a science that requires knowledge, but also an art of weaving words together to command machines to work as we intend. Of course, when developing software alone, you can write code however you like in whatever style—no one will complain. But when working in a team, your coding style might leave others stunned.
+
+Writing good code doesn't just come from experience in software development to the point where you inherently know what's good for maintenance or what facilitates communication with teammates. It also requires continuous learning, especially what's known as Best Practices—development guidelines accepted by the community of developers for that particular language or tool as being good. Naturally, being human makes us lazy, and even if we've read about 108 ways to develop good software, we usually can't remember them all. That's why tools have emerged to help us, such as Linters found in various languages, which not only help spot potential issues before compilation but can also have rules added to identify code that violates established guidelines. For example, we might set a rule that variable names must be `camelCase` only, not `snake_case`. If we accidentally use `snake_case`, the Linter will show a squiggly warning line. In some cases, we can also configure the severity of each rule further—whether it's just a warning or an error. If it's only a warning, we might still be able to compile our code, but if it's an error, compilation will fail.
+
+## Dart Static Analysis
+
+Of course, Dart fundamentally comes with the Dart Analysis Server, which helps analyze potential compilation issues. But we can also configure additional settings to help improve our code to follow better practices. If we want to configure our Linter to help us more, we can do so by setting up Analysis Options.
+
+## Analysis Options
+
+To configure Analysis Options, start by creating a file named `analysis_options.yaml` in the root folder of your project. The contents of this file will be various configurations we want to set. One important caution: this file is YAML type, so whitespace and indentation matter. Dart's recommendation is to use 2 spaces instead of tabs.
+
+Besides setting Analysis Options at the project level, we can also configure them at the package level. This is suitable for projects with multiple packages—create a separate `analysis_options.yaml` file for each package and place it in the package's folder (in the same location as that package's `pubspec.yaml`).
+
+## Pedantic & Effective Dart
+
+If you already know what you want, you can configure it yourself by following the [Guide](https://dart.dev/guides/language/analysis-options). But we recommend 2 development packages that help define rules that many people accept: Pedantic and Effective Dart. Pedantic is a collection of default rules used at Google, while Effective Dart is a collection of rules implemented according to the [Effective Dart](https://dart.dev/guides/language/effective-dart) guide. The recommendation is to choose one or the other, with Pedantic being stricter than Effective Dart. However, whether to follow one guideline or create your own configuration depends on your team's context and discretion.
+
+Using Pedantic or Effective Dart is easy—start by installing the package. Go to your `pubspec.yaml` file and add the following lines.
+
+Pedantic
+```yaml
+dev_dependencies:
+  pedantic: ^1.0.0
+```
+
+Or Effective Dart
+```yaml
+dev_dependencies:
+  pedantic: ^1.9.0
+```
+
+**Note:** Check the latest versions of both packages at [pedantic](https://pub.dev/packages/pedantic) and [effective_dart](https://pub.dev/packages/effective_dart)
+
+After adding the package to your file, run the get command as usual (Dart: `pub get` or Flutter: `flutter pub get` or press the button in your IDE) to download the package. Next, add the following lines to your `analysis_options.yaml` file.
+
+Pedantic
+```yaml
+include: package:pedantic/analysis_options.yaml
+```
+
+Or Effective Dart
+```yaml
+include: package:effective_dart/analysis_options.yaml
+```
+
+That's it—then reload the Analysis Server to re-analyze your files. A small caution, or perhaps a benefit: when using Pedantic or Effective Dart, there may be ongoing updates, which could cause your code to encounter more warnings xD
+
+## Additional Configuration
+
+For those who want to disable certain rules, you can do so by adding the following lines after the `include` line in your `analysis_options.yaml` file.
+
+```yaml
+linter:
+  rules:
+    <rule_name>: [true|false]
+```
+
+Replace `<rule_name>` with the name of the rule you want to disable (value `false` to disable/`true` to enable). You can find rule names with descriptions at [Linter](https://dart-lang.github.io/linter/lints/).
+
+If you want to exclude files, you can do so by adding the following lines to your `analysis_options.yaml` file after the `include` line.
+
+```yaml
+analyzer:
+  exclude:
+    - file_a.dart
+    - lib/folder_a/*.g.dart
+    - test/_data/**
+```
+
+Additionally, we can set the severity level for each rule by adding the following configuration to your `analysis_options.yaml` file.
+
+```yaml
+analyzer:
+  errors:
+    invalid_assignment: warning
+    missing_return: error
+    dead_code: info
+    todo: ignore
+```
+
+Each severity level has the following meanings:
+- **`ignore`** — Ignore that particular error
+- **`info`** — Display as an info message but doesn't affect compilation
+- **`warning`** — Display as a warning (more aggressive than info) but doesn't affect compilation
+- **`error`** — Causes compilation to fail
+
+If you want to ignore only certain rules for specific files or parts of code:
+- For files, add the following comment to the file you want (files with `.dart` extension)
+```yaml
+// ignore_for_file: <rule_name>
+```
+- For specific lines, add the following comment before the line you want or on the same line (files with `.dart` extension)
+```yaml
+// ignore: <rule_name>
+```
+
+---
+
+If you want to learn more about Dart Static Analysis, you can find additional information at the [Official Guide](https://dart.dev/guides/language/analysis-options)
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

@@ -161,10 +161,10 @@ export function buildNimChatPayload({ model, instructions, input }) {
       { role: 'system', content: instructions },
       { role: 'user', content: input },
     ],
-    max_tokens: 16384,
-    temperature: 0.2,
+    max_tokens: 65536,
+    temperature: 0.4,
     top_p: 0.9,
-    stream: false,
+    stream: true,
   };
 }
 

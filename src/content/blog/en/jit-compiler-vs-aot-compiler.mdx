@@ -1,0 +1,54 @@
+---
+slug: 'jit-compiler-vs-aot-compiler-en'
+title: 'JIT Compiler VS AOT Compiler'
+
+pubDate: '2020-06-30T12:38:13.000Z'
+tags: ['Computer Science']
+coverImage: '../jit-compiler-vs-aot-compiler/cover.jpeg'
+excerpt: 'When we write programs in certain languages, we often need a compiler to translate that language into another—for example, TypeScript being compiled into JavaScript, or Java being compiled into Java Bytecode (which then runs on the JVM). The two types of compilers we commonly encounter are JIT Compiler and AOT Compiler. This article will walk you through how they differ.'
+lang: 'en'
+translationId: 'jit-compiler-vs-aot-compiler'
+routeSlug: 'jit-compiler-vs-aot-compiler'
+---
+
+import Callout from '@/components/content/Callout';
+
+When we write programs in certain languages, we often need a compiler to translate that language into another—for example, TypeScript being compiled into JavaScript, or Java being compiled into Java Bytecode (which then runs on the JVM). The two types of compilers we commonly encounter are JIT Compiler and AOT Compiler. This article will walk you through how they differ.
+
+---
+
+## Terms
+
+Before diving into each compiler type, let's get familiar with some key terminology:
+
+- **Compiler** = A program that translates one language into another. For example, Java is compiled into Java Bytecode so that the Java Virtual Machine (JVM) can understand and interpret it.
+- **Interpreter** = A program that executes a language directly. For instance, the Python Interpreter reads Python code and carries out the specified operations.
+- **Time** = In JIT and AOT, "Time" refers to **Runtime**—the moment when a program is actually executed.
+
+---
+
+## Why Do We Need to Compile Programs?
+
+You might wonder: if we use an interpreter, we could run programs directly without translating them into another language first. The reason is that most languages we write in are **High-level Languages**, optimized for human readability rather than computer execution speed. Because of this, compiling programs typically converts High-level Language into **Low-level Language** to make them run faster.
+
+---
+
+## JIT
+
+**J**ust-**I**n-**T**ime compilation compiles code on demand—right when a specific part is requested or used. Generally, a JIT Compiler works alongside an Interpreter so that the instantly translated code can be executed immediately (otherwise, the translation would go unused).
+
+---
+
+## AOT
+
+**A**head-**O**f-**T**ime compilation happens before the program is run. Programs compiled with AOT are typically faster at runtime than JIT because JIT involves two stages during execution: translating the language, then feeding it to an Interpreter. With AOT, since the code is already translated, it can run straight away.
+
+---
+
+## But Wait?
+
+In reality, AOT and JIT aren't two completely separate approaches. Today, we see many technologies combining both to reap the benefits of each—Android, for example, uses both AOT and JIT in appropriate contexts. Similarly, modern language engines often package Compilers and Interpreters together, or employ a **Mixed-mode** approach for maximum benefit. Normally, compilers require compilation time, during which the program can't be used. Mixed-mode solves this by initiating compilation while switching to Interpreter mode to let the program run faster (though not as fast as fully compiled code) while waiting for the compiler to finish. Once compilation is complete, it can switch back to the compiled version immediately.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

@@ -12,84 +12,84 @@
     "generatedAt": "2026-05-03T12:48:22.539Z"
   },
   "basic-principles-to-write-good-code": {
-    "hash": "c5cc043b4fbd85c2ce045da3efdd0df0",
-    "generatedAt": "2026-05-03T12:48:22.539Z"
+    "hash": "16dd492d068f8dedc99b16631584c55a",
+    "generatedAt": "2026-05-05T14:20:38.350Z"
   },
   "casting-vs-coercing": {
     "hash": "c0b9f5c7a69a5223225e25898e822f40",
     "generatedAt": "2026-05-03T12:48:22.539Z"
   },
   "clustering": {
-    "hash": "725060243c428d3138d0c8503d7b42e2",
-    "generatedAt": "2026-05-03T12:48:22.539Z"
+    "hash": "f9849a1dacf68710143516955d06f545",
+    "generatedAt": "2026-05-04T04:42:55.471Z"
   },
   "dart-cascade-notation": {
-    "hash": "293dcd0bdbe56f5cdd07cdba2c6a3320",
-    "generatedAt": "2026-05-03T12:48:22.540Z"
+    "hash": "78458ece5993dee02dc6b1d93f6ebc75",
+    "generatedAt": "2026-05-04T04:42:55.586Z"
   },
   "dart-exception-vs-error": {
     "hash": "f7871607c536f8db01abbf6c49e69ac3",
     "generatedAt": "2026-05-03T12:48:22.540Z"
   },
   "dart-extension-methods": {
-    "hash": "41398c89b7861c5c751ee562d30ec604",
-    "generatedAt": "2026-05-03T12:48:22.540Z"
+    "hash": "d8eadc14fa170dc7ff6c555534bee94c",
+    "generatedAt": "2026-05-04T04:42:55.700Z"
   },
   "dart-sound-null-safety": {
-    "hash": "d6a86be8861d3a5adc9169bca75b8e08",
-    "generatedAt": "2026-05-03T12:48:22.540Z"
+    "hash": "afd6e2b8cefd7e12e3c8291fa8a7512a",
+    "generatedAt": "2026-05-05T14:20:38.445Z"
   },
   "dart-write-better-code-with-analysis-option-file": {
-    "hash": "0f9dd5016e1a2ea041ac61b2f58bb1eb",
-    "generatedAt": "2026-05-03T12:48:22.540Z"
+    "hash": "dd6b0e1dadbd064ffee82a51ea7728b8",
+    "generatedAt": "2026-05-05T14:20:38.564Z"
   },
   "dogfooding": {
-    "hash": "198a1ebe12c1a4aede0f611822909b33",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "47be6796c9c20e4bacb7d56339d1895e",
+    "generatedAt": "2026-05-04T04:42:55.788Z"
   },
   "flutter-app-sizing-tool": {
-    "hash": "4bc1271f5b714a984ba5fcd828f3dd4d",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "1f5faf547cbc691ec0d3cf3585f17af6",
+    "generatedAt": "2026-05-04T04:42:55.883Z"
   },
   "flutter-bloc-flutter-bloc-v5": {
-    "hash": "d415a369d63f8d74052378627a40559d",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "c03f3fb7e2e6719099f6dcbc4d0b66ab",
+    "generatedAt": "2026-05-05T14:20:38.668Z"
   },
   "flutter-bloc-flutter-bloc-v6": {
-    "hash": "6bd7f3e262cb94e5fff8f3e9f2b29a44",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "cc3ed18beb59276e6001a2669f2d68bf",
+    "generatedAt": "2026-05-04T04:42:56.009Z"
   },
   "flutter-buildcontext-deep-dive": {
-    "hash": "9a42deb6bbf76ccd8fd928381f964b83",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "924134b22b53d5ea5c6c35809ab655a8",
+    "generatedAt": "2026-05-04T04:42:56.124Z"
   },
   "flutter-built_value-deserializing-failed-due-to-bad-state-no-element": {
-    "hash": "badb2fb6e5370da84a26191be9898473",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "75df58a0f4f0c69ebf1112284e91adba",
+    "generatedAt": "2026-05-05T14:20:38.780Z"
   },
   "flutter-built_value-deserializing-failed-due-to-interal-linked-hashed-map": {
-    "hash": "ff6234815d48ac50c8ed231eb33247ba",
-    "generatedAt": "2026-05-03T12:48:22.541Z"
+    "hash": "a2154eaaadeba922b2884780ca00e093",
+    "generatedAt": "2026-05-04T04:42:56.221Z"
   },
   "flutter-built_value-unknown-type-on-deserialization-need-either-specifiedtype-or-discriminator-field": {
-    "hash": "ba77060bfa18e29207da2150f84352f3",
-    "generatedAt": "2026-05-03T12:48:22.542Z"
+    "hash": "132f7906895e905fc11c64217d4c0836",
+    "generatedAt": "2026-05-04T04:42:56.344Z"
   },
   "flutter-const-vs-final": {
-    "hash": "22062a4189014af13d529737a5e56dc1",
-    "generatedAt": "2026-05-03T12:48:22.542Z"
+    "hash": "27d8de78a464de9ec0308b8c11c11516",
+    "generatedAt": "2026-05-05T14:20:38.870Z"
   },
   "flutter-dark-mode": {
-    "hash": "7a2753770d0970ffcbcb494694775328",
-    "generatedAt": "2026-05-03T12:48:22.542Z"
+    "hash": "8bceb616c6775b5ac91e43821b0e85cc",
+    "generatedAt": "2026-05-04T04:42:56.431Z"
   },
   "flutter-engage-2021-prediction": {
-    "hash": "32bcae6f7803ca16f3cb45c4ba61cbb2",
-    "generatedAt": "2026-05-03T12:48:22.542Z"
+    "hash": "9492d6d9651199cfbae2200d05a838f4",
+    "generatedAt": "2026-05-04T04:42:56.513Z"
   },
   "flutter-extract-as-a-widget-vs-extract-as-a-method": {
-    "hash": "4525e7f6903a681a0db50d8c871a16de",
-    "generatedAt": "2026-05-03T12:48:22.542Z"
+    "hash": "22666be7f7fe2551f4f659316fafcdb2",
+    "generatedAt": "2026-05-04T04:42:56.632Z"
   },
   "flutter-flexible-vs-expanded": {
     "hash": "c7b9f291a72a18c7d8c17b10a00cb3b4",
@@ -100,72 +100,72 @@
     "generatedAt": "2026-05-03T12:48:22.542Z"
   },
   "flutter-inkwell": {
-    "hash": "1c63f6dda16bfb30f00cee73ae1a1a9e",
-    "generatedAt": "2026-05-03T12:48:22.543Z"
+    "hash": "2af20f9c79d164f1c06f41cc88d57791",
+    "generatedAt": "2026-05-04T04:42:56.701Z"
   },
   "flutter-interactiveviewer": {
-    "hash": "4e7bbb04e7b2fbc194d3717e25682910",
-    "generatedAt": "2026-05-03T12:48:22.543Z"
+    "hash": "877fa903bc6e1bafbc710510c9bcfdd5",
+    "generatedAt": "2026-05-04T04:42:56.836Z"
   },
   "flutter-ios14": {
-    "hash": "4ebccd19dd4f6a6da5685334e8ebf153",
-    "generatedAt": "2026-05-03T12:48:22.543Z"
+    "hash": "e99c3305d49d9c505597da5f88fa1b1e",
+    "generatedAt": "2026-05-05T14:20:38.976Z"
   },
   "flutter-key": {
-    "hash": "528db4788ef3c797573a9c91c6ce2a4f",
-    "generatedAt": "2026-05-03T12:48:22.543Z"
+    "hash": "9d6682f20683fecbae03eeb1f2b93c79",
+    "generatedAt": "2026-05-05T14:20:39.071Z"
   },
   "flutter-package-vs-plugin": {
-    "hash": "2a6a35337b8156784e69146979c90b76",
-    "generatedAt": "2026-05-03T12:48:22.544Z"
+    "hash": "b4688802add6925476ee0146228bd4d9",
+    "generatedAt": "2026-05-04T04:42:56.944Z"
   },
   "flutter-pull-to-refresh-list-view": {
-    "hash": "fb81be44bfea5b03e6807119630eff1b",
-    "generatedAt": "2026-05-03T12:48:22.544Z"
+    "hash": "247e2a71faf036cc8b4852182a565710",
+    "generatedAt": "2026-05-04T04:42:57.012Z"
   },
   "flutter-runzoneguarded": {
-    "hash": "1ad128eb3c210143ccdd6fa2621d8dbb",
-    "generatedAt": "2026-05-03T12:48:22.544Z"
+    "hash": "6b696513a22d022a4e7b4ebc71a483fc",
+    "generatedAt": "2026-05-04T04:42:57.121Z"
   },
   "flutter-save-scroll-position-listview": {
-    "hash": "d8b24357fb6be92ed69c01d3e81df006",
-    "generatedAt": "2026-05-03T12:48:22.544Z"
+    "hash": "1fe1a227101b85b656459b510d355b8d",
+    "generatedAt": "2026-05-05T14:20:39.179Z"
   },
   "flutter-semantics": {
     "hash": "1b581aa62c706f790e251bb715ca8a80",
     "generatedAt": "2026-05-03T12:48:22.544Z"
   },
   "flutter-textfield-vs-textformfield": {
-    "hash": "a4df07c6947a69e1c33fa6ddfa14aee1",
-    "generatedAt": "2026-05-03T12:48:22.544Z"
+    "hash": "d3d0e4a7385bd7acf89502acdd29cbe9",
+    "generatedAt": "2026-05-05T14:20:39.270Z"
   },
   "flutter-triage-label": {
     "hash": "f2e107c489fe5111aa5c85d535553a49",
     "generatedAt": "2026-05-03T12:48:22.545Z"
   },
   "flutter-version-number": {
-    "hash": "02636c51c53cec5019414b98b7fd7069",
-    "generatedAt": "2026-05-03T12:48:22.545Z"
+    "hash": "732a18d22bc3aa7278b78fa9d57b13ef",
+    "generatedAt": "2026-05-04T04:42:57.203Z"
   },
   "flutter-whats-new-in-1-17": {
-    "hash": "b00c0fb4d1be4562e1f0e85ff7a00445",
-    "generatedAt": "2026-05-03T12:48:22.545Z"
+    "hash": "67f255cb9c54e0f98ce3b0d8ac6ee9f9",
+    "generatedAt": "2026-05-04T04:42:57.302Z"
   },
   "flutter-whats-new-in-1-20": {
-    "hash": "a69a1dfab6e44c6f0ef598d434be957b",
-    "generatedAt": "2026-05-03T12:48:22.545Z"
+    "hash": "6223bd8950085da250a0c3a4691d6d9e",
+    "generatedAt": "2026-05-05T14:20:39.370Z"
   },
   "future-of-flutter-may-2021": {
-    "hash": "6589c428cb88d6a45d3be60807844f9d",
-    "generatedAt": "2026-05-03T12:48:22.545Z"
+    "hash": "d131ea0b3be6b194de03df59092d8a7d",
+    "generatedAt": "2026-05-04T04:42:57.409Z"
   },
   "how-to-split-large-csv-file-pandas": {
     "hash": "894824fe8006e70da423241e21b37fcb",
     "generatedAt": "2026-05-03T12:48:22.545Z"
   },
   "html-wbr": {
-    "hash": "1caf26dfa309b574064edd10b4a2a180",
-    "generatedAt": "2026-05-03T12:48:22.545Z"
+    "hash": "6300720546edf39672c3ecd703785e9a",
+    "generatedAt": "2026-05-05T14:20:39.467Z"
   },
   "jit-compiler-vs-aot-compiler": {
     "hash": "44694e43b441b5dfbb8fd20e8ac48e70",
@@ -176,52 +176,52 @@
     "generatedAt": "2026-05-03T12:48:22.546Z"
   },
   "memory-partitioning": {
-    "hash": "b8a64eb495dfe06e29d0f6a680c59b70",
-    "generatedAt": "2026-05-03T12:48:22.546Z"
+    "hash": "1f56725642c20cbf7f0dcbe17656b4c9",
+    "generatedAt": "2026-05-04T04:42:57.497Z"
   },
   "parameter-vs-argument": {
-    "hash": "fb5f4c7d61c9df9905f6727977d97ef5",
-    "generatedAt": "2026-05-03T12:48:22.546Z"
+    "hash": "94eacc6b0827c5de6ef2a5aef220e118",
+    "generatedAt": "2026-05-04T04:42:57.604Z"
   },
   "print-debugging": {
-    "hash": "6dc4954427bad993de50574c47e1366c",
-    "generatedAt": "2026-05-03T12:48:22.546Z"
+    "hash": "95dda6e39262a2b096a5c1633ed6bb6a",
+    "generatedAt": "2026-05-04T04:42:57.707Z"
   },
   "pub-dev-new-version-jul-2020": {
-    "hash": "dd1ef0803f38dbc5bc274e4ec4fb92e8",
-    "generatedAt": "2026-05-03T12:48:22.546Z"
+    "hash": "ea06c3f12b4ea262df7459610188ab97",
+    "generatedAt": "2026-05-04T04:42:57.791Z"
   },
   "python-flask-wtform": {
-    "hash": "9aa546f8bd07b541288270b1ea26a93a",
-    "generatedAt": "2026-05-03T12:48:22.546Z"
+    "hash": "497219255335ec420579d3d1e4d8ef5b",
+    "generatedAt": "2026-05-04T04:42:57.899Z"
   },
   "reasoning-model-landscape": {
     "hash": "5c231c54c4ae1a6a8c7229b548eaf07f",
     "generatedAt": "2026-05-03T12:48:22.547Z"
   },
   "review-digimon-adventure-last-evolution": {
-    "hash": "c0e2a4bfd2a9fbc88c292eabe5da0d00",
-    "generatedAt": "2026-05-03T12:48:22.547Z"
+    "hash": "6468f177748cc3e92bd4861fdd043aad",
+    "generatedAt": "2026-05-04T04:42:58.010Z"
   },
   "review-harari-books": {
-    "hash": "5339634a9db17d22b58d1d22fa806cf5",
-    "generatedAt": "2026-05-03T12:48:22.547Z"
+    "hash": "ae51c56dcd9ca19fe2638b3a6e87e3a5",
+    "generatedAt": "2026-05-05T14:20:39.588Z"
   },
   "review-inferno": {
-    "hash": "5b665a00104f0939a584e4d97ef805f3",
-    "generatedAt": "2026-05-03T12:48:22.547Z"
+    "hash": "3390edc9ab1087dd75afd27fea387086",
+    "generatedAt": "2026-05-04T04:42:58.107Z"
   },
   "review-line-developer-day-2020-the-past-and-future-of-machine-learning-research": {
-    "hash": "97749726a9d393a8a633faf05f4d3097",
-    "generatedAt": "2026-05-03T12:48:22.547Z"
+    "hash": "10825453dfa1df99edcc892523f9e880",
+    "generatedAt": "2026-05-05T14:20:39.702Z"
   },
   "the-common-language-of-knowledge": {
-    "hash": "417ad505cb8d4a12f07d745fa24d429b",
-    "generatedAt": "2026-05-03T12:48:22.547Z"
+    "hash": "19585cf74a3830d1f7d3811c18c808e6",
+    "generatedAt": "2026-05-04T04:42:58.197Z"
   },
   "the-silicon-mind": {
-    "hash": "6d96273f36395808c193e45f2f48a819",
-    "generatedAt": "2026-05-03T12:48:22.547Z"
+    "hash": "3b0f4f89a70fe7e8f542f5f3184ecb0f",
+    "generatedAt": "2026-05-03T22:33:47.624Z"
   },
   "typhoon-mcp-tutorial": {
     "hash": "449f747cb90f1a08ab5f360a99e34215",
@@ -236,7 +236,7 @@
     "generatedAt": "2026-05-03T12:48:22.548Z"
   },
   "wisdom": {
-    "hash": "a6eaa9ff53568621a640f599d08bb22d",
-    "generatedAt": "2026-05-03T12:48:22.548Z"
+    "hash": "aff09257e144762e38428435e2949591",
+    "generatedAt": "2026-05-05T14:20:39.794Z"
   }
 }

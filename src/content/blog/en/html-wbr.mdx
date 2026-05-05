@@ -1,0 +1,35 @@
+---
+slug: 'html-wbr-en'
+title: 'HTML: `<wbr>` — A Small Tag Many People Overlook'
+pubDate: '2020-07-23T08:17:55.000Z'
+tags: ['Web', 'HTML']
+coverImage: '../html-wbr/cover.jpeg'
+excerpt: 'Building a responsive site is not only about layout. Readability matters too, and one of the easiest ways to improve line breaking in difficult phrases is a small HTML tag called `<wbr>`.'
+lang: 'en'
+translationId: 'html-wbr'
+routeSlug: 'html-wbr'
+---
+
+import Callout from '@/components/content/Callout';
+
+Modern web development is not just about making layouts adapt to every screen size. Content also needs to remain readable, elegant, and easy to scan. That is why line breaking matters more than many people realize.
+
+One common responsive-design problem is awkward wrapping. A browser may break a phrase in a way that is technically valid but unpleasant to read. In some cases, the wrong break can even distort the intended meaning. Helping the browser choose a better break point is a small detail, but it makes the experience much better for readers.
+
+That is where the HTML tag `<wbr>` becomes useful. At first glance it looks similar to `<br>`, but it solves a different problem.
+
+`<wbr>` tells the browser that a given point in the sentence is an acceptable place to break a line if the available width is too small. In other words, it marks a word-break opportunity.
+
+```html
+<p>Hello<wbr />world</p>
+```
+
+If the full phrase fits on one line, `<wbr>` has no visible effect. But if the browser needs to wrap the line, it will prefer the position you marked instead of choosing a more awkward split on its own.
+
+That is the key idea: `<wbr>` does not force a new line, but it gives the browser a better option when wrapping becomes necessary.
+
+This tag is supported by all modern browsers, even across fairly old versions, with the notable exception of Internet Explorer. That makes it an easy, low-cost improvement for anyone who cares about polish. It is one of those small touches that helps text feel more natural and easier to read.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>
