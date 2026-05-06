@@ -6,6 +6,13 @@ import { BlogCardContent } from '@/components/ui/blog/BlogCardContent';
 import { BlogCardFooter } from '@/components/ui/blog/BlogCardFooter';
 import { BlogCardImage } from '@/components/ui/blog/BlogCardImage';
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
+import { getBlogCoverCssVariables, resolveBlogCoverSpec } from '@/lib/blog-cover';
+import {
+  getBlogExclusiveLocaleLabel,
+  getBlogPostRouteSlug,
+  getBlogPostPath,
+  type BlogPostLanguageState,
+} from '@/lib/blog-translations';
 import type { BlogPost } from '@/types';
 import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
@@ -27,6 +34,8 @@ interface BlogCardProps {
   readonly featured?: boolean | undefined;
   /** Array of all posts used to calculate series information */
   readonly allPosts?: readonly BlogPost[] | undefined;
+  /** Locale-aware translation state for this card */
+  readonly languageState?: BlogPostLanguageState<BlogPost> | undefined;
   /** Additional CSS classes to apply */
   readonly className?: string | undefined;
   /** Inline styles to apply */
@@ -50,6 +59,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   post,
   featured = false,
   allPosts = [],
+  languageState,
   className,
   style,
 }) => {
@@ -59,10 +69,20 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   );
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLAnchorElement>();
-
-  const accentVar = useMemo(() => 'var(--page-accent, var(--accent-blog, var(--accent)))', []);
+  const coverSpec = useMemo(
+    () =>
+      resolveBlogCoverSpec({
+        title: post.data.title,
+        excerpt: post.data.excerpt,
+        lang: post.data.lang,
+        routeSlug: getBlogPostRouteSlug(post),
+        tags: post.data.tags,
+        pubDate: post.data.pubDate,
+      }),
+    [post]
+  );
   const mergedStyle: CSSProperties = {
-    '--card-accent': accentVar,
+    ...getBlogCoverCssVariables(coverSpec.theme),
     ...style,
   } as CSSProperties;
 
@@ -77,7 +97,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       <div className="aurora-card__wrapper" />
       <a
         className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out will-change-transform focus-visible:text-[color:var(--white)]"
-        href={post.data.externalUrl ?? `/blog/${post.data.slug}/`}
+        href={post.data.externalUrl ?? getBlogPostPath(post)}
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external' : ''} blog post: ${post.data.title}`}
@@ -85,7 +105,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <BlogCardOverlays accent={accentVar} />
+        <BlogCardOverlays />
 
         {post.data.externalUrl && (
           <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
@@ -104,6 +124,10 @@ const BlogCardComponent: FC<BlogCardProps> = ({
                   title={post.data.title}
                   excerpt={post.data.excerpt}
                   pubDate={post.data.pubDate}
+                  lang={post.data.lang}
+                  {...(languageState?.isFallback
+                    ? { languageBadgeLabel: getBlogExclusiveLocaleLabel(post.data.lang) }
+                    : {})}
                   isPartOfSeries={isPartOfSeries}
                   seriesTitle={seriesTitle || ''}
                   partNumber={partNumber}
@@ -137,6 +161,7 @@ export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
   return (
     prevProps.post.id === nextProps.post.id &&
     prevProps.featured === nextProps.featured &&
+    prevProps.languageState === nextProps.languageState &&
     prevProps.className === nextProps.className &&
     prevProps.allPosts === nextProps.allPosts
   );

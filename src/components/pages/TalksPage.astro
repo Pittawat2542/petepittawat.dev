@@ -1,0 +1,22 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { TalksExplorer } from '@/components/explorers';
+import PageWithHero from '@/layouts/PageWithHero.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import { getTalks } from '@/lib/content';
+
+const pageCopy = siteCopyEn.listingPages.talks;
+const talks = await getTalks();
+---
+
+<PageWithHero
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  hero={{
+    title: pageCopy.title,
+    subtitle: pageCopy.heroSubtitle,
+    page: 'talks',
+  }}
+>
+  <TalksExplorer client:visible items={talks} />
+</PageWithHero>

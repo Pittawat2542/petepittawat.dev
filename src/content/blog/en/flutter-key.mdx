@@ -1,0 +1,229 @@
+---
+slug: 'flutter-key-en'
+title: 'Flutter: Why Are Keys Important?'
+pubDate: '2020-05-30T13:36:41.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-key/cover.jpeg'
+excerpt: 'Key is an optional parameter available on many Flutter widgets. Most of the time we can ignore it, but once widget identity and state start moving around in lists, keys become essential.'
+lang: 'en'
+translationId: 'flutter-key'
+routeSlug: 'flutter-key'
+---
+
+import key_explain_3 from '../flutter-key/key-explain-3.jpeg';
+
+import key_explain_2 from '../flutter-key/key-explain-2.jpeg';
+
+import key_explain_1 from '../flutter-key/key-explain-1.jpeg';
+
+import Figure from '@/components/mdx/Figure';
+
+import Callout from '@/components/content/Callout';
+
+`Key` is one of those optional parameters you see on many Flutter widgets. Most of the time, we leave it alone. So when do we actually need it?
+
+In general, you do not want to add keys without a reason. They consume a little extra identity metadata, and in straightforward widget trees they are unnecessary. The moment they become important is when you work with lists whose children can be inserted, removed, or reordered. That is when widget identity stops being obvious, and keys help Flutter preserve the correct state.
+
+---
+
+## How does Flutter know what to update?
+
+Flutter internally maintains several trees. The one that matters most for this discussion is the **Element tree**.
+
+As developers, we primarily write widgets. Those widgets naturally form a tree of parent-child relationships, which we can call the **Widget tree**. When Flutter renders the UI, it creates a parallel **Element tree**, where each element is associated with a widget instance.
+
+```dart
+    class AppContainer extends StatelessWidget {
+      final String text;
+      final Color color;
+
+      const AppContainer({
+        @required this.text,
+        @required this.color,
+        Key key,
+      }) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: color,
+              width: 4.0,
+            ),
+          ),
+          child: Center(child: Text(text)),
+        );
+      }
+    }
+
+
+    AppContainer (Stateless widget)
+        class _MyHomePageState extends State<MyHomePage> {
+          var appContainers = [AppContainer(key: UniqueKey()), AppContainer(key: UniqueKey())];
+
+          @override
+          Widget build(BuildContext context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Flutter Demo Home Page'),
+              ),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppContainer(color: Colors.red, text: 'Box 1'),
+                    AppContainer(color: Colors.blue, text: 'Box 2'),
+                  ]
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.swap_vert),
+                onPressed: () {
+                  setState(() {
+                    appContainers.insert(0, appContainers.removeLast());
+                  });
+                },
+              ),
+            );
+          }
+        }
+```
+
+If we use `AppContainer` like this, the Widget tree and Element tree look roughly like this:
+
+<Figure src={key_explain_1} alt="" />
+
+Flutter does not remember every detail about every widget. In the Element tree, one of the most important pieces of information is the widget's type. If the widget is stateful, there is also a `State` object attached to that element.
+
+```dart
+    class AppContainer extends StatefulWidget {
+      AppContainer({Key key}) : super(key: key);
+
+      @override
+      _AppContainerState createState() => _AppContainerState();
+    }
+
+    class _AppContainerState extends State<AppContainer> {
+      static const colors = [Colors.red, Colors.green, Colors.blue, Colors.yellow];
+
+      var _text = (Random().nextInt(3) + 1).toString();
+      var _color = colors[Random().nextInt(colors.length)];
+
+      @override
+      Widget build(BuildContext context) {
+        return Container(
+          key: widget.key,
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _color,
+              width: 4.0,
+            ),
+          ),
+          child: Center(child: Text(_text)),
+        );
+      }
+    }
+
+
+    AppContainer (Stateful widget)
+        class _MyHomePageState extends State<MyHomePage> {
+          var appContainers = [AppContainer(), AppContainer()];
+
+          @override
+          Widget build(BuildContext context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Flutter Demo Home Page'),
+              ),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: appContainers,
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.swap_vert),
+                onPressed: () {
+                  setState(() {
+                    appContainers.insert(0, appContainers.removeLast());
+                  });
+                },
+              ),
+            );
+          }
+        }
+```
+
+<Figure src={key_explain_2} alt="" />
+
+Here is where things get interesting. If we reorder two widgets of the same type, Flutter sees the same element types in the same structural positions and may reuse the existing elements. When that happens, the `State` objects remain attached to those elements instead of following the conceptual item we thought we had moved.
+
+That is why reordering stateful widgets without keys can make it look like nothing changed, or worse, cause state to stick to the wrong item.
+
+---
+
+## Key to the rescue
+
+Keys solve this by giving Flutter a stronger identity signal than type alone.
+
+When a widget has a key, Flutter attaches that key to the corresponding element. If the widgets are reordered, Flutter can compare keys and move the correct element-state pair instead of reusing the wrong one.
+
+The important rule is to place the key on the highest widget that owns the state you want to protect. Flutter does not do a deep structural comparison, so attaching the key too far down the tree may still produce incorrect behavior.
+
+```dart
+    class _MyHomePageState extends State<MyHomePage> {
+      var appContainers = [AppContainer(key: UniqueKey()), AppContainer(key: UniqueKey())];
+
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Flutter Demo Home Page'),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: appContainers,
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.swap_vert),
+            onPressed: () {
+              setState(() {
+                appContainers.insert(0, appContainers.removeLast());
+              });
+            },
+          ),
+        );
+      }
+    }
+```
+
+Once the widgets have keys, the problem disappears.
+
+<Figure src={key_explain_3} alt="" />
+
+Flutter offers several key types, and each one is useful in a slightly different situation:
+
+- **`ValueKey`** is the simplest option. Use it when you are confident each item already has a unique value.
+- **`ObjectKey`** is useful when the logical identity is an object rather than a single field.
+- **`UniqueKey`** guarantees uniqueness. Just be careful not to create a fresh `UniqueKey` inside `build`, or the identity will change every rebuild.
+- **`PageStorageKey`** is handy for widgets such as scrollable lists that need to preserve UI state like scroll position. See [Flutter: Remembering scroll position in ListView with PageStorageKey](/blog/flutter-save-scroll-position-listview/).
+- **`GlobalKey`** is more powerful and more expensive. It lets state follow a widget even when the widget moves elsewhere in the app.
+
+---
+
+## Summary
+
+Most of the time, you do not need a key. You need one when widget type alone is no longer enough for Flutter to preserve the right identity and the right state.
+
+If you want to explore the full sample code, it is available at [https://github.com/Pittawat2542/flutter_key_example](https://github.com/Pittawat2542/flutter_key_example).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

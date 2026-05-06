@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06181a" />
+      <stop offset="100%" stop-color="#0b2328" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2d30" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0a191c" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(79, 209, 197, 0.32)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(79, 209, 197, 0.32)" fill-opacity="0.28" stroke="none" style="filter:blur(40.56px)" cx="157.82" cy="114.36" rx="112.32" ry="88.45" />
+<ellipse fill="rgba(28, 136, 144, 0.22)" fill-opacity="0.2" stroke="none" style="filter:blur(34.32px)" cx="1041.56" cy="458.73" rx="131.04" ry="98.28" />
+<circle fill="#8ff0e7" fill-opacity="0.22" stroke="none" style="filter:blur(13.56px)" cx="917.55" cy="471.14" r="12.55" />
+<circle fill="rgba(79, 209, 197, 0.32)" fill-opacity="0.17" stroke="none" style="filter:blur(14.2px)" cx="988.68" cy="367.01" r="13.25" />
+<circle fill="#8ff0e7" fill-opacity="0.16" stroke="none" style="filter:blur(16.64px)" cx="850.62" cy="371.71" r="8.51" />
+<circle fill="rgba(79, 209, 197, 0.32)" fill-opacity="0.17" stroke="none" style="filter:blur(16.35px)" cx="832.99" cy="259.08" r="11.75" />
+<rect fill="#8ff0e7" fill-opacity="0.1" stroke="rgba(132, 244, 230, 0.32)" stroke-opacity="0.25" stroke-width="1" style="filter:blur(7.24px)" transform="rotate(5.39 939.78 415.4)" x="932.08" y="410.61" width="15.39" height="9.58" rx="5.07" />
+<circle fill="rgba(79, 209, 197, 0.32)" fill-opacity="0.2" stroke="none" style="filter:blur(11.36px)" cx="1016.82" cy="192.84" r="15.59" />
+<circle fill="#8ff0e7" fill-opacity="0.14" stroke="none" style="filter:blur(13.72px)" cx="1072.71" cy="483.91" r="14.64" />
+<rect fill="rgba(79, 209, 197, 0.32)" fill-opacity="0.12" stroke="rgba(132, 244, 230, 0.32)" stroke-opacity="0.36" stroke-width="1.2" x="717.36" y="99.29" width="298.04" height="235.15" rx="17.16" />
+<rect fill="#8ff0e7" fill-opacity="0.16" stroke="none" x="748.73" y="131.95" width="109.8" height="65.32" rx="12.48" />
+<rect fill="rgba(28, 136, 144, 0.22)" fill-opacity="0.18" stroke="none" x="882.07" y="220.13" width="86.28" height="52.25" rx="10.92" /></g>
+  <g transform="translate(86.4 65.52)">
+    <rect width="124.8" height="44.73" rx="22.37" fill="rgba(16, 61, 64, 0.46)" stroke="rgba(132, 244, 230, 0.32)" />
+    <text x="62.4" y="28.37" text-anchor="middle" fill="#ebfffc" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">DART</text>
+  </g>
+<g transform="translate(224.4 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(16, 61, 64, 0.46)" stroke="rgba(132, 244, 230, 0.32)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#ebfffc" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+  <text x="86.4" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="86.4" y="204.75" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="800" letter-spacing="-0.04em">Dart Extension Methods for Cleaner and More Intentional APIs</text>
+  
+  <line x1="86.4" y1="312.87" x2="734.4" y2="312.87" stroke="rgba(132, 244, 230, 0.32)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="86.4" y="555.66" fill="#8ff0e7" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1113.6" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="0.1em">ENGLISH EDITION</text>
+</svg>

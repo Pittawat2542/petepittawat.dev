@@ -1,0 +1,48 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import RelatedPosts from '@/components/content/RelatedPosts';
+import BlogPost from '@/layouts/BlogPost.astro';
+import { getSuggestedReading } from '@/lib/blog-recommendations';
+import {
+  getBlogPostLanguageState,
+  getBlogPostPath,
+  getPreferredBlogPosts,
+  getBlogPostRouteSlug,
+  groupBlogPostsByTranslation,
+} from '@/lib/blog-translations';
+import { estimateReadingMetrics } from '@/lib/reading-time';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props as Props;
+const { Content } = await render(post);
+const { readingTimeMin } = estimateReadingMetrics(post.body || '');
+
+const all = (await getCollection('blog')) as CollectionEntry<'blog'>[];
+const groupedPosts = groupBlogPostsByTranslation(all);
+const suggestedReading = getSuggestedReading(
+  getPreferredBlogPosts(groupedPosts, post.data.lang),
+  post
+);
+const languageState = getBlogPostLanguageState(post, groupedPosts);
+const alternateLanguages = languageState.alternate
+  ? [{ lang: languageState.alternate.data.lang, href: getBlogPostPath(languageState.alternate) }]
+  : [];
+---
+
+<BlogPost
+  {...post.data}
+  slug={getBlogPostRouteSlug(post)}
+  lang={post.data.lang}
+  readingTimeMin={readingTimeMin}
+  languageState={languageState}
+  alternateLanguages={alternateLanguages}
+>
+  <Content />
+
+  <Fragment slot="after">
+    <RelatedPosts suggestions={suggestedReading} />
+  </Fragment>
+</BlogPost>

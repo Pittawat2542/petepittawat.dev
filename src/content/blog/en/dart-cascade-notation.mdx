@@ -1,0 +1,74 @@
+---
+slug: 'dart-cascade-notation-en'
+title: "Dart: Cascade Notation .. (Two Dots) That Aren't for Fill-in-the-Blanks"
+
+pubDate: '2020-12-20T02:04:10.000Z'
+tags: ['Dart']
+coverImage: '../dart-cascade-notation/cover.jpeg'
+excerpt: "When developing with Dart, especially when using third-party packages or following tutorials, you've probably come across the `..` symbol followed by property or method names. But what exactly does this `..` or Cascade Notation do?"
+lang: 'en'
+translationId: 'dart-cascade-notation'
+routeSlug: 'dart-cascade-notation'
+---
+
+import Callout from '@/components/content/Callout';
+
+When developing with Dart, especially when using third-party packages or following tutorials, you've probably come across the `..` symbol followed by property or method names. But what exactly does this `..` or Cascade Notation do?
+
+## Cascade Notation
+
+Cascade Notation is a form of syntactic sugar—a syntax feature that makes coding more enjoyable and concise. That's why it's called a _notation_, not an _operator_: it's part of Dart's syntax itself. In many cases, it also makes code more readable.
+
+Before diving deeper into how this notation works, let's look at some examples to build our understanding.
+
+Original
+
+```dart
+class Human {
+  double weight;
+  double height;
+  Human({this.weight, this.height});
+  void sayHello() {
+    print("Hello");
+  }
+}
+
+void main() {
+  final mike = Human(weight: 78.0, height: 183.0);
+  mike.height = 176.5;
+  mike.weight = 82.3;
+  mike.sayHello();
+}
+```
+
+Modified using Cascade Notation
+
+```dart
+class Human {
+  double weight;
+  double height;
+  Human({this.weight, this.height});
+  void sayHello() {
+    print("Hello");
+  }
+}
+
+void main() {
+  final mike = Human(weight: 78.0, height: 183.0);
+  mike..height = 176.5
+    ..weight = 82.3
+    ..sayHello(); // print -> Hello
+}
+```
+
+As you can see from the examples, we can eliminate repetitive references to `mike` by using Cascade Notation. The core mechanism behind Cascade Notation is that it always returns a reference to the same instance after performing some operation. For example, in the code above, `mike..height = 176.5` is equivalent to calling `mike.height = 176.5` and then returning `mike` for the next line. This means `..weight = 82.3` effectively becomes `mike.weight = 82.3`.
+
+The primary use case for this feature is initializing properties right after creating a fresh object.
+
+One important caveat when using Cascade Notation: when used with functions that return a value (non-void return types), that returned value will be ignored. So if you need that return value for something, it will be discarded.
+
+Learn more about Cascade Notation in the [Official Guide](https://dart.dev/guides/language/language-tour#cascade-notation-)
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

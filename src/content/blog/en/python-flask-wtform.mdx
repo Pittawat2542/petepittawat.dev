@@ -1,0 +1,187 @@
+---
+slug: 'python-flask-wtform-en'
+title: 'Flask: Simplify Form Handling with Flask-WTF'
+
+pubDate: '2021-01-23T13:35:16.000Z'
+tags: ['Python']
+coverImage: '../python-flask-wtform/cover.jpeg'
+excerpt: 'If you''ve started using Flask with Jinja as your template engine and need to handle forms, you''re probably familiar with `request.form.get("name")` and similar approaches to access data sent from the front-end. Of course, once we receive that data, we need to validate or verify that it matches our expected format before processing it further. At a high level, the workflow looks something like this.'
+lang: 'en'
+translationId: 'python-flask-wtform'
+routeSlug: 'python-flask-wtform'
+---
+
+import Callout from '@/components/content/Callout';
+
+If you've started using [Flask](https://flask.palletsprojects.com/en/1.1.x/) with [Jinja](https://jinja.palletsprojects.com) as your template engine and need to handle forms, you're probably familiar with `request.form.get("name")` and similar approaches to access data sent from the front-end. Of course, once we receive that data, we need to validate or verify that it matches our expected format before processing it further. At a high level, the workflow looks something like this:
+
+1. Create a form on the front-end, for example:
+
+```html
+<!-- ... -->
+<form action="{{ url_for('parks') }}" method="POST">
+  <label for="name">Your name</label>
+  <input name="name" type="text" />
+</form>
+<!-- ... -->
+```
+
+parks.html
+
+2. Create an endpoint in Flask:
+
+```python
+# ...
+@app.route("/parks", methods=["GET", "POST"])
+def parks():
+    if request.method == "POST":
+        name = request.form.get("name")
+        # Process data
+        # ...
+```
+
+main.py
+
+But as you can see, when creating endpoints we often end up repeating the same pattern of validating data before using it. Another common source of errors is using string-based field names to retrieve data. Wouldn't it be better if we could improve on all of this? (I'll let you in on a secret right now—there's a little bonus at the end of this article for those using Bootstrap with Flask.)
+
+---
+
+## Flask-WTF
+
+There's no denying that forms are one of the most headache-inducing, painful aspects of programming. Whether it's repetitive data extraction, managing numerous forms, or handling validation, it's clear why so many programming languages, frameworks, and libraries offer solutions—whether from the core team or the community. Flask is no exception. We have [Flask-WTF](https://flask-wtf.readthedocs.io/en/stable/), which makes form management much easier by letting us create classes that bundle related information together, complete with built-in validators that are simple to use.
+
+The first step is to install it into your project:
+
+```bash
+pip install Flask-WTF
+```
+
+Then import it into your project:
+
+```python
+from flask_wtf import FlaskForm      # 1.
+from wtforms import StringField      # 2.
+from wtforms.validators import DataRequired  # 3.
+```
+
+main.py
+
+1. The first line imports `FlaskForm`, which serves as the base class to extend. This gives your form classes their core functionality.
+2. The second line imports an input field type. There are many types available—see [Fields](https://wtforms.readthedocs.io/en/2.3.x/fields/) for more details.
+3. The third line imports built-in validators from WTForms. You can explore more at [Validators](https://wtforms.readthedocs.io/en/2.3.x/validators/#built-in-validators).
+
+After importing, we need to set a `secret_key` for our Flask application, since Flask-WTF includes built-in CSRF token handling to help us create more secure forms:
+
+```python
+app = Flask(__name__)
+app.secret_key = "your-secret-key-should-not-be-here"
+```
+
+Next, whenever we want to create a form, we'll define a class for it:
+
+```python
+class SimpleForm(FlaskForm):                          # 1.
+    name = StringField(label="Your name", validators=[DataRequired()])  # 2.
+```
+
+main.py
+
+1. Any class that handles form data must extend `FlaskForm`.
+2. Here we're creating an input field stored in the variable `name`, which we'll use to access the data later. `name` is a `StringField` for text input, with a label of `"Your name"` that will be used in the `<label></label>` element, and a validator at position 0 of `DataRequired()`, meaning this field must always contain data.
+
+Once our form class is ready, the next step is to send this form to the front-end for rendering and handle the submitted data. We might write our endpoint like this. Note that our endpoint must support the POST method for form submission:
+
+```python
+@app.route("/parks", methods=["GET", "POST"])
+def parks():
+    simple_form = SimpleForm()
+    # ...
+    return render_template("parks.html", form=simple_form)
+```
+
+main.py
+
+On the Jinja side, we can access the form for rendering as follows. We've set `novalidate` to make Flask-WTF's behavior more visible:
+
+```html
+<!-- ... -->
+<form action="{{ url_for('parks') }}" method="POST" novalidate>
+  {{ form.csrf_token }} {{ form.name.label }} {{ form.name(size=20) }}
+  <input type="submit" />
+</form>
+<!-- ... -->
+```
+
+parks.html
+
+Next, we'll extract the data for use. In the `parks()` function, we can handle the form through the `simple_form` we created:
+
+```python
+@app.route("/parks", methods=["GET", "POST"])
+def parks():
+    simple_form = SimpleForm()
+    # -- ADD --
+    if simple_form.validate_on_submit():
+        name = simple_form.name.data
+        print(name)
+        # Do something with name
+        return redirect(url_for('home'))
+    else:
+        print("Name is required")
+        # OR send some error message to front-end
+    # -- -- --
+    return render_template("parks.html", form=simple_form)
+```
+
+You can see the full example code on [GitHub](https://github.com/Pittawat2542/python-flask-wtform).
+
+---
+
+## Bonus! For Flask-Bootstrap Users
+
+For those using Bootstrap alongside Flask, you may have worked with [Flask-Bootstrap](https://pythonhosted.org/Flask-Bootstrap/). Let me tell you, this package was practically made to work with Flask-WTF.
+
+Of course, even though we now have classes inheriting from `FlaskForm` to help us, life isn't entirely easy. We still need to create input elements manually on the front-end, repeating ourselves over and over, or resort to loops that unnecessarily complicate our code.
+
+In our Jinja template file `parks.html`, we can add an additional import:
+
+```html
+{% import 'bootstrap/wtf.html' as wtf %}
+```
+
+parks.html
+
+And we can replace this code:
+
+```html
+<form action="{{ url_for('parks') }}" method="POST" novalidate>
+  {{ form.csrf_token }} {{ form.name.label }} {{ form.name(size=20) }}
+  <input type="submit" />
+</form>
+```
+
+With just:
+
+```html
+{{ wtf.quick_form(form) }}
+```
+
+One additional note: when using this approach, our submit button will disappear. We can fix this by using `SubmitField`. Start by adding the import:
+
+```python
+from wtforms import StringField, SubmitField
+```
+
+Then add it to our `SimpleForm` class:
+
+```python
+class SimpleForm(FlaskForm):
+    name = StringField(label="Your name", validators=[DataRequired()])
+    submit = SubmitField(label="Submit")
+```
+
+And our submit button will be back. You can see the full code on [GitHub](https://github.com/Pittawat2542/python-flask-wtform/tree/bootstrap).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

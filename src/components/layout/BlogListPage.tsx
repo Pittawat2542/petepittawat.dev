@@ -1,10 +1,16 @@
-/**
- * BlogListPage - Blog list display component
- * Refactored to follow Single Responsibility Principle (SRP)
- * by extracting filtering, URL sync, and sorting into focused hooks
- */
-
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState, type FC } from 'react';
+import { languages } from '@/i18n/ui';
+import {
+  getPreferredBlogPostStates,
+  groupBlogPostsByTranslation,
+  type BlogPostLanguageState,
+  type BlogTranslationLocale,
+} from '@/lib/blog-translations';
+import {
+  getStoredBlogLocalePreference,
+  resolveBlogLocalePreference,
+  setStoredBlogLocalePreference,
+} from '@/lib/blog-locale-preference';
 import { usePagination } from '@/lib/hooks/usePagination';
 import { useQueryParamSync } from '@/lib/hooks/useQueryParamSync';
 import { useBlogFilters, type BlogSort } from '@/lib/hooks/useBlogFilters';
@@ -12,34 +18,70 @@ import { useUrlSync } from '@/lib/hooks/useUrlSync';
 import { useUrlParams } from '@/lib/hooks/useUrlParams';
 
 import { BlogCard } from '@/components/ui/cards/BlogCard';
-import type { BlogPost } from '@/types';
-import type { FC } from 'react';
+import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
 import FilterPanel from '@/components/ui/filter/FilterPanel';
 import PageControls from '@/components/ui/navigation/PageControls';
+import type { BlogPost } from '@/types';
 
 interface BlogListPageProps {
   readonly posts: readonly BlogPost[];
-  readonly tags: readonly string[];
-  readonly initialTags?: readonly string[]; // Optional: preselect tags when mounting (e.g., tag pages)
+  readonly initialLocale?: BlogTranslationLocale | undefined;
+  readonly initialTags?: readonly string[] | undefined;
 }
 
 interface UrlParams {
+  locale: BlogTranslationLocale;
   tags: string[];
   sort: BlogSort;
   yearFilter: string;
   seriesFilter: string;
 }
 
-const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags }) => {
+const BLOG_SORT_OPTIONS = [
+  { value: 'newest', label: 'Newest' },
+  { value: 'oldest', label: 'Oldest' },
+] as const;
+
+function sortPostsDescending<T extends BlogPostLanguageState<BlogPost>>(states: readonly T[]) {
+  return [...states].sort(
+    (a, b) => b.current.data.pubDate.valueOf() - a.current.data.pubDate.valueOf()
+  );
+}
+
+function buildTags(posts: readonly BlogPost[]) {
+  return [
+    'All',
+    ...new Set(
+      posts
+        .flatMap(post => post.data.tags)
+        .flat()
+        .sort()
+    ),
+  ];
+}
+
+const BlogListPageComponent: FC<BlogListPageProps> = ({
+  posts,
+  initialLocale = 'en',
+  initialTags,
+}) => {
   const [q, setQ] = useState('');
+  const [locale, setLocale] = useState<BlogTranslationLocale>(() =>
+    resolveBlogLocalePreference({
+      searchParams: typeof window !== 'undefined' ? window.location.search : undefined,
+      storedLocale: typeof window !== 'undefined' ? getStoredBlogLocalePreference() : undefined,
+      fallbackLocale: initialLocale,
+    })
+  );
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<BlogSort>('newest');
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [perPage, setPerPage] = useState(12);
+  const [isLocaleHydrated, setIsLocaleHydrated] = useState(false);
+  const previousLocaleRef = useRef<BlogTranslationLocale>(initialLocale);
 
   useQueryParamSync('q', q, setQ);
 
-  // Initialize from URL parameters or initialTags
   useUrlParams<UrlParams>({
     parser: params => {
       const urlTags = params.getAll('tag');
@@ -48,13 +90,19 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       const seriesParam = params.get('series');
 
       return {
+        locale: resolveBlogLocalePreference({
+          searchParams: params,
+          storedLocale: getStoredBlogLocalePreference(),
+          fallbackLocale: initialLocale,
+        }),
         tags: urlTags.length ? urlTags : initialTags ? Array.from(initialTags) : [],
         sort: sortParam === 'oldest' || sortParam === 'newest' ? sortParam : 'newest',
-        yearFilter: yearParam || '',
-        seriesFilter: seriesParam || '',
+        yearFilter: yearParam ?? '',
+        seriesFilter: seriesParam ?? '',
       };
     },
     onParams: params => {
+      setLocale(params.locale);
       if (params.tags.length) {
         setSelectedTags(new Set(params.tags));
       }
@@ -65,27 +113,51 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
       if (params.seriesFilter) {
         setFilters(prev => ({ ...prev, series: params.seriesFilter }));
       }
+      setIsLocaleHydrated(true);
     },
   });
 
-  // Sync state to URL
   useUrlSync({
+    enabled: isLocaleHydrated,
     query: q,
     sort,
     selectedTags,
     filters,
+    ...(isLocaleHydrated ? { lang: locale } : {}),
   });
 
-  // Apply filters and sorting
+  useEffect(() => {
+    if (!isLocaleHydrated) return;
+    setStoredBlogLocalePreference(locale);
+  }, [isLocaleHydrated, locale]);
+
+  const groupedPosts = useMemo(() => groupBlogPostsByTranslation(posts as BlogPost[]), [posts]);
+
+  const localizedStates = useMemo(
+    () => sortPostsDescending(getPreferredBlogPostStates(groupedPosts, locale)),
+    [groupedPosts, locale]
+  );
+
+  const localizedPosts = useMemo(
+    () => localizedStates.map(state => state.current),
+    [localizedStates]
+  );
+
+  const localizedStateById = useMemo(
+    () => new Map(localizedStates.map(state => [state.current.id, state])),
+    [localizedStates]
+  );
+
+  const tags = useMemo(() => buildTags(localizedPosts), [localizedPosts]);
+
   const { sorted } = useBlogFilters({
-    posts,
+    posts: localizedPosts,
     query: q,
     selectedTags,
     filters,
     sort,
   });
 
-  // Pagination
   const {
     paginated: pagePosts,
     totalPages,
@@ -98,31 +170,66 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
     initialPage: 1,
   });
 
+  useEffect(() => {
+    if (!isLocaleHydrated) return;
+    if (previousLocaleRef.current !== locale) {
+      goToPage(1);
+      previousLocaleRef.current = locale;
+    }
+  }, [goToPage, isLocaleHydrated, locale]);
+
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     tags.forEach(tag => {
       if (tag === 'All') {
-        counts[tag] = posts.length;
+        counts[tag] = localizedPosts.length;
       } else {
-        counts[tag] = posts.filter(post => post.data.tags.includes(tag)).length;
+        counts[tag] = localizedPosts.filter(post => post.data.tags.includes(tag)).length;
       }
     });
     return counts;
-  }, [posts, tags]);
+  }, [localizedPosts, tags]);
 
   const filterOptions = useMemo(() => {
     const years = Array.from(
-      new Set(posts.map(post => new Date(post.data.pubDate).getFullYear().toString()))
+      new Set(localizedPosts.map(post => new Date(post.data.pubDate).getFullYear().toString()))
     )
       .sort()
       .reverse();
     return { year: years } as Record<string, string[]>;
-  }, [posts]);
+  }, [localizedPosts]);
 
   const handlePerPageChange = (newPerPage: number) => {
     setPerPage(newPerPage);
     setPaginationPerPage(newPerPage);
   };
+
+  const languageSwitcher = (
+    <BlogLanguageSwitcher
+      ariaLabel="Select blog language"
+      label=""
+      variant="toolbar"
+      onSelect={setLocale}
+      options={[
+        {
+          locale: 'en',
+          label: languages.en,
+          shortLabel: 'EN',
+          available: true,
+          isActive: locale === 'en',
+          screenReaderLabel: 'Show English-first blog posts',
+        },
+        {
+          locale: 'th',
+          label: languages.th,
+          shortLabel: 'TH',
+          available: true,
+          isActive: locale === 'th',
+          screenReaderLabel: 'Show Thai-first blog posts',
+        },
+      ]}
+    />
+  );
 
   return (
     <section className="flex w-full flex-col">
@@ -137,22 +244,23 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
         selectedTags={selectedTags}
         onTagsChange={setSelectedTags}
         tagCounts={tagCounts}
-        sortOptions={[
-          { value: 'newest', label: 'Newest' },
-          { value: 'oldest', label: 'Oldest' },
-        ]}
+        sortOptions={BLOG_SORT_OPTIONS}
         sortValue={sort}
-        onSortChange={value => setSort(value as BlogSort)}
+        onSortChange={value => {
+          setSort(value as BlogSort);
+        }}
         filteredResults={sorted.length}
-        totalResults={posts.length}
+        totalResults={localizedPosts.length}
         compact
+        toolbarAccessory={languageSwitcher}
       />
       <ul className="mt-2 grid w-full grid-cols-1 gap-5 py-3 md:mt-4 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">
         {pagePosts.map((post: BlogPost, index: number) => (
           <BlogCard
             key={post.id}
             post={post}
-            allPosts={Array.from(posts)}
+            allPosts={localizedPosts}
+            languageState={localizedStateById.get(post.id)}
             className="reveal"
             style={{ transitionDelay: `${Math.min(index * 50, 400)}ms` }}
           />
@@ -189,11 +297,10 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({ posts, tags, initialTags
   );
 };
 
-// Memoize the component with custom comparison
 export const BlogListPage = memo(BlogListPageComponent, (prevProps, nextProps) => {
   return (
     prevProps.posts === nextProps.posts &&
-    prevProps.tags === nextProps.tags &&
+    prevProps.initialLocale === nextProps.initialLocale &&
     prevProps.initialTags === nextProps.initialTags
   );
 });

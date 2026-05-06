@@ -1,132 +1,191 @@
 import type { APIContext } from 'astro';
-export const prerender = true;
+import { siteCopyEn } from '@/data/site/copy';
+import {
+  getBlogPostPath,
+  getPreferredBlogPosts,
+  groupBlogPostsByTranslation,
+} from '@/lib/blog-translations';
 import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
 import { slugify } from '@/lib/slug';
+import type { SearchItem, SearchItemVariant } from '@/components/search/types';
 
-type SearchItem = {
-  id: string;
-  type: 'blog' | 'project' | 'publication' | 'talk' | 'page';
-  title: string;
-  description?: string;
-  url: string;
-  tags?: string[];
-  date?: string | number;
-  extra?: Record<string, string | number | null>;
-};
+export const prerender = true;
+
+type SearchLocale = 'en' | 'th';
+
+function createEnglishItem(
+  item: Omit<
+    SearchItem,
+    'locale' | 'availableLocales' | 'locales' | 'localizedUrl' | 'alternateUrl'
+  > & {
+    path: string;
+  }
+): SearchItem {
+  return {
+    id: item.id,
+    type: item.type,
+    locale: 'en',
+    availableLocales: ['en'],
+    title: item.title,
+    description: item.description,
+    localizedUrl: item.path,
+    tags: item.tags,
+    date: item.date,
+    extra: item.extra,
+  };
+}
 
 export async function GET(_context: APIContext) {
   const items: SearchItem[] = [];
-  const [blog, projects, publications, talks] = await Promise.all([
+  const [blogPosts, projects, publications, talks] = await Promise.all([
     getBlogPosts(),
     getProjects(),
     getPublications(),
     getTalks(),
   ]);
 
-  // Blog posts
-  for (const entry of blog) {
+  const groupedBlogPosts = groupBlogPostsByTranslation(blogPosts);
+  const canonicalBlogPosts = getPreferredBlogPosts(groupedBlogPosts, 'en');
+
+  for (const canonicalPost of canonicalBlogPosts) {
+    const translationId = canonicalPost.data.translationId || canonicalPost.data.slug;
+    const group = groupedBlogPosts[translationId] ?? [canonicalPost];
+    const enPost = group.find(post => post.data.lang === 'en');
+    const thPost = group.find(post => post.data.lang === 'th');
+    const locales: Partial<Record<SearchLocale, SearchItemVariant>> | undefined =
+      enPost && thPost
+        ? {
+            en: {
+              title: enPost.data.title,
+              description: enPost.data.excerpt,
+              localizedUrl: getBlogPostPath(enPost),
+              tags: enPost.data.tags,
+              date: enPost.data.pubDate.toISOString(),
+            },
+            th: {
+              title: thPost.data.title,
+              description: thPost.data.excerpt,
+              localizedUrl: getBlogPostPath(thPost),
+              tags: thPost.data.tags,
+              date: thPost.data.pubDate.toISOString(),
+            },
+          }
+        : undefined;
+    const alternatePost =
+      canonicalPost.data.lang === 'en'
+        ? thPost
+        : canonicalPost.data.lang === 'th'
+          ? enPost
+          : undefined;
+
     items.push({
-      id: `blog:${entry.id}`,
+      id: `blog:${translationId}`,
       type: 'blog',
-      title: entry.data.title,
-      description: entry.data.excerpt,
-      url: `/blog/${entry.data.slug}/`,
-      tags: entry.data.tags,
-      date: entry.data.pubDate.toISOString(),
+      locale: canonicalPost.data.lang,
+      translationId,
+      availableLocales: locales ? ['en', 'th'] : [canonicalPost.data.lang],
+      title: canonicalPost.data.title,
+      description: canonicalPost.data.excerpt,
+      localizedUrl: getBlogPostPath(canonicalPost),
+      alternateUrl: alternatePost ? getBlogPostPath(alternatePost) : undefined,
+      tags: canonicalPost.data.tags,
+      date: canonicalPost.data.pubDate.toISOString(),
+      locales,
     });
   }
 
-  // Projects (single page list)
-  for (const p of projects) {
-    const anchor = `project-${slugify(p.title)}-${p.year}`;
-    items.push({
-      id: `project:${p.title}-${p.year}`,
-      type: 'project',
-      title: p.title,
-      description: p.summary,
-      url: `/projects#${anchor}`,
-      tags: p.tags,
-      date: p.year,
-      extra: {},
-    });
+  for (const project of projects) {
+    const anchor = `project-${slugify(project.title)}-${project.year}`;
+    items.push(
+      createEnglishItem({
+        id: `project:${project.title}-${project.year}`,
+        type: 'project',
+        title: project.title,
+        description: project.summary,
+        path: `/projects#${anchor}`,
+        tags: project.tags,
+        date: project.year,
+        extra: {},
+      })
+    );
   }
 
-  // Publications (single page list)
-  for (const pub of publications) {
-    const anchor = `pub-${slugify(pub.title)}-${pub.year}`;
-    items.push({
-      id: `publication:${pub.title}-${pub.year}`,
-      type: 'publication',
-      title: pub.title,
-      description: `${pub.authors} — ${pub.venue}`,
-      url: `/publications#${anchor}`,
-      tags: pub.tags,
-      date: pub.year,
-      extra: { venue: pub.venue, type: pub.type },
-    });
+  for (const publication of publications) {
+    const anchor = `pub-${slugify(publication.title)}-${publication.year}`;
+    items.push(
+      createEnglishItem({
+        id: `publication:${publication.title}-${publication.year}`,
+        type: 'publication',
+        title: publication.title,
+        description: `${publication.authors} — ${publication.venue}`,
+        path: `/publications#${anchor}`,
+        tags: publication.tags,
+        date: publication.year,
+        extra: { venue: publication.venue, type: publication.type },
+      })
+    );
   }
 
-  // Talks (single page list)
-  for (const t of talks) {
-    const year = t.date.getFullYear();
-    const anchor = `talk-${slugify(t.title)}-${year}`;
-    items.push({
-      id: `talk:${t.title}-${t.date.toISOString()}`,
-      type: 'talk',
-      title: t.title,
-      description: `${t.audience} — ${t.mode}`,
-      url: `/talks#${anchor}`,
-      tags: t.tags,
-      date: t.date.toISOString(),
-    });
+  for (const talk of talks) {
+    const year = talk.date.getFullYear();
+    const anchor = `talk-${slugify(talk.title)}-${year}`;
+    items.push(
+      createEnglishItem({
+        id: `talk:${talk.title}-${talk.date.toISOString()}`,
+        type: 'talk',
+        title: talk.title,
+        description: `${talk.audience} — ${talk.mode}`,
+        path: `/talks#${anchor}`,
+        tags: talk.tags,
+        date: talk.date.toISOString(),
+      })
+    );
   }
 
-  // Top-level pages
-  const pages: SearchItem[] = [
-    {
+  items.push(
+    createEnglishItem({
       id: 'page:home',
       type: 'page',
-      title: 'Home',
-      url: '/',
-      description: 'Welcome and highlights',
-    },
-    {
+      title: siteCopyEn.listingPages.home.title,
+      path: siteCopyEn.listingPages.home.path,
+      description: siteCopyEn.listingPages.home.searchDescription,
+    }),
+    createEnglishItem({
       id: 'page:blog',
       type: 'page',
-      title: 'Blog',
-      url: '/blog',
-      description: 'Articles and notes',
-    },
-    {
+      title: siteCopyEn.listingPages.blog.title,
+      path: siteCopyEn.listingPages.blog.path,
+      description: siteCopyEn.listingPages.blog.searchDescription,
+    }),
+    createEnglishItem({
       id: 'page:projects',
       type: 'page',
-      title: 'Projects',
-      url: '/projects',
-      description: 'Selected work and systems',
-    },
-    {
+      title: siteCopyEn.listingPages.projects.title,
+      path: siteCopyEn.listingPages.projects.path,
+      description: siteCopyEn.listingPages.projects.searchDescription,
+    }),
+    createEnglishItem({
       id: 'page:publications',
       type: 'page',
-      title: 'Publications',
-      url: '/publications',
-      description: 'Research papers and works',
-    },
-    {
+      title: siteCopyEn.listingPages.publications.title,
+      path: siteCopyEn.listingPages.publications.path,
+      description: siteCopyEn.listingPages.publications.searchDescription,
+    }),
+    createEnglishItem({
       id: 'page:talks',
       type: 'page',
-      title: 'Talks',
-      url: '/talks',
-      description: 'Talks and workshops',
-    },
-    {
+      title: siteCopyEn.listingPages.talks.title,
+      path: siteCopyEn.listingPages.talks.path,
+      description: siteCopyEn.listingPages.talks.searchDescription,
+    }),
+    createEnglishItem({
       id: 'page:about',
       type: 'page',
-      title: 'About',
-      url: '/about',
-      description: 'Bio and timeline',
-    },
-  ];
-  items.push(...pages);
+      title: siteCopyEn.listingPages.about.title,
+      path: siteCopyEn.listingPages.about.path,
+      description: siteCopyEn.listingPages.about.searchDescription,
+    })
+  );
 
   return new Response(JSON.stringify({ items }), {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600' },

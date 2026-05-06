@@ -1,12 +1,17 @@
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
+import {
+  getBlogPostPath,
+  getPreferredBlogPosts,
+  groupBlogPostsByTranslation,
+} from '@/lib/blog-translations';
 
 export async function GET(context) {
-  const posts = (await getCollection('blog')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  );
-
+  const posts = getPreferredBlogPosts(
+    groupBlogPostsByTranslation(await getCollection('blog')),
+    'en'
+  ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -31,9 +36,14 @@ export async function GET(context) {
         title,
         description,
         pubDate: post.data.pubDate,
-        link: post.data.externalUrl ?? `/blog/${post.data.slug}/`,
+        link: post.data.externalUrl ?? getBlogPostPath(post),
         categories,
+        // Enrich feed with full content (Markdown/MDX body)
+        content: post.body,
       };
     }),
+    // Add namespace + extra data
+    customData:
+      '<language>en</language>\n' + '<xmlns:content="http://purl.org/rss/1.0/modules/content/"/>',
   });
 }

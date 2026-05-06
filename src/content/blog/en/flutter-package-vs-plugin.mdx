@@ -1,0 +1,60 @@
+---
+slug: 'flutter-package-vs-plugin-en'
+title: "Flutter: What's the Difference Between a Package and a Plugin?"
+
+pubDate: '2020-06-14T08:56:11.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-package-vs-plugin/cover.jpeg'
+excerpt: "In today's software development landscape, it's rare to find any program that doesn't rely on public dependencies. At the very least, we regularly use utility libraries in our projects—take lodash, the famous Node.js package that many of our dependencies likely pull in even when we don't use it directly."
+lang: 'en'
+translationId: 'flutter-package-vs-plugin'
+routeSlug: 'flutter-package-vs-plugin'
+---
+
+import Callout from '@/components/content/Callout';
+
+In today's software development landscape, it's rare to find any program that doesn't rely on public dependencies. At the very least, we regularly use utility libraries in our projects—take lodash, the famous Node.js package that many of our dependencies likely pull in even when we don't use it directly.
+
+Dart has been working hard to build a better ecosystem, which is why we have [pub.dev](https://pub.dev)—a central hub that collects packages and plugins for both Dart and Flutter. So what exactly sets a package apart from a plugin?
+
+---
+
+## TLDR;
+
+Package = a collection of code
+
+Plugin = a package that uses Platform Channels
+
+---
+
+## Package
+
+A package is a bundle of code made available for other developers to depend on and use in their own projects. In the Flutter world, a package can be anything from a collection of utilities to a set of widgets. For example, the Provider package helps you manage state in your application.
+
+---
+
+## Platform Channel
+
+First, we need to understand what a Platform Channel is. Platform Channel is one of Flutter's capabilities that lets us communicate with native APIs by writing code directly on the native side (Android, iOS). The core mechanism works by sending messages from Flutter to the native layer; when the native side receives a message, it handles it appropriately—such as calling specific functions or methods written in native code. Once the operation is complete, we can send a response back through the channel to Flutter.
+
+---
+
+## Plugin
+
+A plugin is simply a package that uses Platform Channels. In other words, a plugin is a package that incorporates some native code. Even though it involves native code, plugins typically expose a clean, easy-to-use API that lets us work with them through Dart/Flutter without worrying about the underlying platform details. `shared_preferences` is a good example.
+
+---
+
+## Summary
+
+**Package** = A collection of code focused on solving a specific problem, with no use of Platform Channels.
+
+**Plugin** = A package that uses Platform Channels, enabling it to provide capabilities tied to the native APIs of a specific platform.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>
+
+## Author's Note
+
+Personally, I think as a consumer of packages and plugins, you don't necessarily need to worry about this distinction. But if you're on the provider side—creating and maintaining packages or plugins—this distinction becomes much more important so that everyone on your team understands what you're actually building.

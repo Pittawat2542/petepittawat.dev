@@ -1,0 +1,662 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import profileImage from '@/assets/images/profile.jpg';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import ThemedPageHero from '@/components/layout/core/ThemedPageHero';
+import Container from '@/components/ui/core/Container';
+import GlassCard from '@/components/ui/core/GlassCard';
+import Prose from '@/components/content/Prose';
+import { siteCopyEn } from '@/data/site/copy';
+import { getAboutTimeline } from '@/lib/content';
+
+const siteCopy = siteCopyEn;
+const aboutCopy = siteCopy.about;
+const aboutPage = siteCopy.listingPages.about;
+
+const rawTimeline = await getAboutTimeline();
+const getTimelineScore = (title: string) => {
+  const match = title.match(/(?:([a-zA-Z]+)\s+)?(\d{4})/);
+  if (!match) return 0;
+  const monthStr = match[1]?.substring(0, 3).toLowerCase();
+  const months = [
+    'jan',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sep',
+    'oct',
+    'nov',
+    'dec',
+  ];
+  const monthIdx = monthStr ? months.indexOf(monthStr) : 11;
+  return parseInt(match[2] || '0', 10) * 100 + (monthIdx >= 0 ? monthIdx : 11);
+};
+const timeline = rawTimeline
+  .slice()
+  .sort((a, b) => getTimelineScore(b.title) - getTimelineScore(a.title));
+const spotlightTimeline = timeline.filter(item => item.highlight);
+
+import { Sparkles, Camera, Flame, History, Milestone } from '@lucide/astro';
+---
+
+<BaseLayout
+  title={`${SITE_TITLE} - ${aboutPage.title}`}
+  description={aboutPage.metaDescription || SITE_DESCRIPTION}
+  page="about"
+>
+  <Container className="space-y-16 pt-10 pb-24 lg:space-y-20">
+    <ThemedPageHero title={aboutPage.heroTitle} subtitle={aboutPage.heroSubtitle} page="about" />
+
+    <section id="intro" class="intro-grid">
+      <GlassCard variant="premium" className="profile-card">
+        <div class="profile-card__header">
+          <div class="profile-card__portrait">
+            <Image
+              src={profileImage}
+              alt="Pete's profile picture"
+              widths={[160, 200, 260, 320]}
+              sizes="(min-width: 1024px) 7rem, (min-width: 768px) 6rem, 5.5rem"
+              loading="lazy"
+              decoding="async"
+              class="profile-card__image"
+            />
+          </div>
+          <div class="profile-card__meta">
+            <span class="eyebrow">{aboutCopy.profile.location}</span>
+            <p class="profile-card__role">{aboutCopy.profile.role}</p>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          <h2>{aboutCopy.profile.heading}</h2>
+          <p>{aboutCopy.profile.intro}</p>
+        </div>
+
+        <div class="profile-card__links" aria-label="Connect">
+          <a
+            class="profile-card__link"
+            href="https://www.linkedin.com/in/pittawat-tav/"
+            target="_blank"
+          >
+            LinkedIn
+          </a>
+          <a class="profile-card__link" href="https://github.com/Pittawat2542" target="_blank">
+            GitHub
+          </a>
+          <a
+            class="profile-card__link"
+            href="https://scholar.google.co.jp/citations?user=2CFoP9cAAAAJ&hl=en"
+            target="_blank"
+          >
+            Google Scholar
+          </a>
+        </div>
+      </GlassCard>
+
+      <div class="intro-grid__aside">
+        <GlassCard variant="premium" className="now-card relative overflow-hidden">
+          <div
+            class="pointer-events-none absolute -top-6 -right-6 h-32 w-32 rounded-full bg-[color:var(--accent)]/10 blur-2xl"
+          >
+          </div>
+          <div class="relative z-10">
+            <div class="mb-4 flex items-center gap-2">
+              <Sparkles class="h-4 w-4 text-[color:var(--accent)]" />
+              <span class="eyebrow text-[color:var(--accent)]">{aboutCopy.now.title}</span>
+            </div>
+            <ul class="space-y-3">
+              {
+                aboutCopy.now.items.map(point => (
+                  <li class="flex gap-3 text-sm leading-relaxed text-[color:var(--white)]/80">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]/60" />
+                    {point}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </GlassCard>
+      </div>
+    </section>
+
+    <section id="snapshot" class="section-block">
+      <GlassCard variant="premium" className="snapshot-card">
+        <div class="mb-4 flex items-center gap-2">
+          <Camera class="h-4 w-4 text-[color:var(--accent)]" />
+          <span class="eyebrow text-[color:var(--accent)]">{aboutCopy.snapshot.title}</span>
+        </div>
+        <div class="snapshot-grid">
+          {
+            aboutCopy.snapshot.items.map(item => (
+              <div class="snapshot-item">
+                <p class="snapshot-item__label">{item.label}</p>
+                <p class="snapshot-item__value">{item.value}</p>
+                <p class="snapshot-item__hint">{item.hint}</p>
+              </div>
+            ))
+          }
+        </div>
+      </GlassCard>
+    </section>
+
+    <section id="themes" class="section-block">
+      <div class="section-heading">
+        <div class="mb-2 flex items-center gap-2">
+          <Flame class="h-5 w-5 text-[color:var(--accent)]" />
+          <h2>{aboutCopy.themes.title}</h2>
+        </div>
+        <p>{aboutCopy.themes.description}</p>
+      </div>
+      <div class="themes-grid">
+        {
+          aboutCopy.themes.items.map(theme => (
+            <GlassCard variant="premium" className="theme-card">
+              <h3>{theme.title}</h3>
+              <p>{theme.description}</p>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="background" class="section-block relative">
+      <div
+        class="pointer-events-none absolute top-0 -left-20 h-64 w-64 rounded-full bg-[color:var(--accent-about)]/5 blur-3xl"
+      >
+      </div>
+      <div class="relative z-10">
+        <div class="section-heading mb-8">
+          <div class="mb-2 flex items-center gap-2">
+            <History class="h-5 w-5 text-[color:var(--accent)]" />
+            <h2>{aboutCopy.background.title}</h2>
+          </div>
+          <p>{aboutCopy.background.description}</p>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8">
+          <Prose className="prose-block text-lg leading-relaxed text-[color:var(--white)]/80">
+            {aboutCopy.background.notes.map(note => <p>{note}</p>)}
+          </Prose>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey" class="section-block">
+      <div class="section-heading">
+        <div class="mb-2 flex items-center gap-2">
+          <Milestone class="h-5 w-5 text-[color:var(--accent)]" />
+          <h2>{aboutCopy.journey.title}</h2>
+        </div>
+        <p>{aboutCopy.journey.description}</p>
+      </div>
+
+      <div class="journey-grid">
+        <GlassCard variant="glow" className="spotlight-card">
+          <span class="eyebrow">{aboutCopy.journey.spotlightTitle}</span>
+          <ol>
+            {
+              spotlightTimeline.map(item => (
+                <li>
+                  <p class="spotlight-card__title">{item.title}</p>
+                  <p class="spotlight-card__description">{item.description}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </GlassCard>
+
+        <GlassCard variant="premium" className="journey-card">
+          <h3>{aboutCopy.journey.educationTitle}</h3>
+          <div class="journey-card__group">
+            {
+              aboutCopy.journey.educationEntries.map(entry => (
+                <div>
+                  <div class="journey-card__header">
+                    <p>{entry.title}</p>
+                    <span>{entry.period}</span>
+                  </div>
+                  <p class="journey-card__summary">{entry.summary}</p>
+                </div>
+              ))
+            }
+          </div>
+        </GlassCard>
+
+        <GlassCard variant="premium" className="journey-card">
+          <h3>{aboutCopy.journey.collaborationsTitle}</h3>
+          <div class="journey-card__group">
+            {
+              aboutCopy.journey.communityHighlights.map(item => (
+                <div>
+                  <p class="journey-card__subhead">{item.title}</p>
+                  <p class="journey-card__summary">{item.description}</p>
+                  <ul class="journey-card__list">
+                    {item.bullets.map(point => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </GlassCard>
+
+        <GlassCard variant="premium" className="journey-card">
+          <h3>{aboutCopy.journey.serviceTitle}</h3>
+          <ul class="journey-card__list">
+            {aboutCopy.journey.serviceHighlights.map(point => <li>{point}</li>)}
+          </ul>
+          <ul class="journey-card__list journey-card__list--muted">
+            {aboutCopy.journey.learningHighlights.map(point => <li>{point}</li>)}
+          </ul>
+        </GlassCard>
+      </div>
+
+      <details class="timeline-details">
+        <summary>{aboutCopy.journey.extendedTimelineLabel}</summary>
+        <ol>
+          {
+            timeline.map(item => (
+              <li>
+                <p class="timeline-details__title">{item.title}</p>
+                <p class="timeline-details__description">{item.description}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </details>
+    </section>
+  </Container>
+</BaseLayout>
+
+<style>
+  .intro-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .intro-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: start;
+    }
+  }
+
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+  }
+
+  .profile-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .profile-card__portrait {
+    position: relative;
+    width: clamp(5rem, 7vw, 6.5rem);
+    height: clamp(5rem, 7vw, 6.5rem);
+    border-radius: 1.6rem;
+    overflow: hidden;
+  }
+
+  .profile-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .profile-card__role {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .profile-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .profile-card__body h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 1.8vw + 1.2rem, 2.15rem);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: rgba(255, 255, 255, 0.96);
+  }
+
+  .profile-card__body p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.75;
+    font-size: 1.02rem;
+  }
+
+  .profile-card__snapshot {
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .profile-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .profile-card__link {
+    padding: 0.45rem 0.9rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(148, 163, 184, 0.26);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .profile-card__link:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent-about) 40%, rgba(148, 163, 184, 0.26));
+  }
+
+  .intro-grid__aside {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .now-card {
+    padding: clamp(1.4rem, 2.5vw, 2rem);
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .snapshot-grid {
+    margin-top: 1.2rem;
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  @media (min-width: 640px) {
+    .snapshot-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.35rem;
+    }
+  }
+
+  .snapshot-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .snapshot-item__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .snapshot-item__value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .snapshot-item__hint {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.5;
+  }
+
+  .now-card ul {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    padding-left: 1.1rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .now-card li {
+    line-height: 1.55;
+  }
+
+  .section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 1.4vw + 1.3rem, 2.25rem);
+    color: rgba(255, 255, 255, 0.96);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .section-heading p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.74);
+    max-width: 65ch;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .themes-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .themes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .themes-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .theme-card {
+    padding: clamp(1.75rem, 3vw, 2.25rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .theme-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(148, 163, 184, 0.35);
+  }
+
+  .theme-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.01em;
+  }
+
+  .theme-card p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.65;
+    font-size: 0.95rem;
+  }
+
+  .prose-block {
+    display: grid;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .journey-grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .journey-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .spotlight-card {
+    padding: clamp(1.6rem, 2.8vw, 2.2rem);
+  }
+
+  .spotlight-card ol {
+    margin-top: 1.1rem;
+    display: grid;
+    gap: 0.9rem;
+    padding-left: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .spotlight-card__title {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .spotlight-card__description {
+    margin: 0.15rem 0 0;
+    line-height: 1.55;
+  }
+
+  .journey-card {
+    padding: clamp(1.5rem, 2.5vw, 2.1rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .journey-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .journey-card__group {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .journey-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  @media (min-width: 480px) {
+    .journey-card__header {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+  }
+
+  .journey-card__header p {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .journey-card__header span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .journey-card__subhead {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .journey-card__summary {
+    margin: 0.25rem 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.55;
+  }
+
+  .journey-card__list {
+    margin: 0.8rem 0 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.65rem;
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+  .journey-card__list--muted {
+    margin-top: 1.2rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    padding-top: 1rem;
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  .timeline-details {
+    margin-top: 1.6rem;
+    padding: 1.2rem 1.4rem;
+    border-radius: 1.1rem;
+    border: 1px dashed rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.45);
+  }
+
+  .timeline-details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .timeline-details[open] summary {
+    margin-bottom: 1rem;
+  }
+
+  .timeline-details ol {
+    display: grid;
+    gap: 0.85rem;
+    padding-left: 1.2rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .timeline-details__title {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .timeline-details__description {
+    margin: 0.15rem 0 0;
+    line-height: 1.55;
+  }
+</style>

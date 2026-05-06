@@ -28,12 +28,12 @@ const SortControlComponent: FC<SortControlProps> = ({ sortOptions, sortValue, on
   }));
 
   return (
-    <div className="flex w-full items-center gap-2 sm:w-auto">
+    <div className="flex w-auto items-center gap-2">
       <span className="text-muted-foreground text-sm whitespace-nowrap">Sort:</span>
       <Selector
         value={sortValue || ''}
         onChange={onSortChange}
-        className="w-full sm:w-auto"
+        className="w-auto"
         options={optionsWithIcons}
       />
     </div>

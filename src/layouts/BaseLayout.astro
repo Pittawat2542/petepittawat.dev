@@ -4,29 +4,47 @@ import BaseHead from '@/components/layout/core/BaseHead.astro';
 import Footer from '@/components/layout/core/Footer.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
 import SearchModal from '@/components/layout/SearchModal';
+import { serializeCssVariables } from '@/lib/blog-cover';
 
-const { title, description, image, type, publishedTime, tags, wordCount, page } = Astro.props as {
+const {
+  title,
+  description,
+  lang = 'en',
+  alternateLanguages = [],
+  image,
+  type,
+  publishedTime,
+  tags,
+  wordCount,
+  page,
+  themeVariables = {},
+} = Astro.props as {
   title: string;
   description: string;
+  lang?: 'en' | 'th';
+  alternateLanguages?: { lang: 'en' | 'th'; href: string }[];
   image?: string;
   type?: 'website' | 'article';
   publishedTime?: string;
   tags?: string[];
   wordCount?: number;
   page?: string;
+  themeVariables?: Record<string, string>;
 };
 const ogImagePath = image ?? '/home-og-image.jpeg';
 const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath;
 const pageKey = page?.toLowerCase();
 const pageAccent = pageKey ? `var(--accent-${pageKey}, var(--accent, #6ac1ff))` : undefined;
-const bodyStyle = pageAccent
-  ? `--page-accent:${pageAccent};--card-accent:${pageAccent};`
-  : undefined;
+const bodyStyleFragments = [
+  pageAccent ? `--page-accent:${pageAccent};--card-accent:${pageAccent};` : undefined,
+  Object.keys(themeVariables).length > 0 ? serializeCssVariables(themeVariables) : undefined,
+].filter(Boolean);
+const bodyStyle = bodyStyleFragments.length > 0 ? bodyStyleFragments.join(';') : undefined;
 const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
 ---
 
 <!doctype html>
-<html lang="en" style="background:#111827;color:#F9FAFB;color-scheme: dark;">
+<html lang={lang} style="background:#111827;color:#F9FAFB;color-scheme: dark;">
   <head>
     <BaseHead
       title={title}
@@ -36,13 +54,15 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
       publishedTime={publishedTime || undefined}
       tags={tags || undefined}
       wordCount={wordCount}
+      lang={lang}
+      alternateLanguages={alternateLanguages}
     />
     <slot name="head" />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
-    <AnimatedHeader client:idle />
+    <AnimatedHeader pathname={Astro.url.pathname} client:idle />
     <main
       id="main-content"
       class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"

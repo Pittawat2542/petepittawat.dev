@@ -1,0 +1,31 @@
+---
+import PageWithHero from '@/layouts/PageWithHero.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { PublicationsExplorer } from '@/components/explorers';
+import academicServices from '@/data/services/academic.json';
+import AcademicServices from '@/components/sections/AcademicServices';
+import { siteCopyEn } from '@/data/site/copy';
+import { getPublications } from '@/lib/content';
+
+const pageCopy = siteCopyEn.listingPages.publications;
+const publications = await getPublications();
+---
+
+<PageWithHero
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  hero={{
+    title: pageCopy.title,
+    subtitle: pageCopy.heroSubtitle,
+    page: 'publications',
+  }}
+  containerClass="glass-section"
+>
+  <PublicationsExplorer client:visible items={publications} />
+  <AcademicServices
+    client:visible
+    data={academicServices}
+    title={pageCopy.academicServicesTitle}
+    description={pageCopy.academicServicesDescription}
+  />
+</PageWithHero>

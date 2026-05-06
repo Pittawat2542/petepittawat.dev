@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "node scripts/generate-og.mjs",
+    "prebuild": "node --experimental-strip-types scripts/generate-og.ts",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -17,9 +17,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
+    "test:content": "node --test scripts/blog-content-audit.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/blog-post-schema.test.ts",
     "clean": "rm -rf dist .astro node_modules/.astro",
     "dev:clean": "npm run clean && npm run dev",
     "generate-favicons": "./scripts/generate-favicons.sh",
+    "audit:blog-cover": "node --experimental-strip-types scripts/blog-cover-audit.ts",
+    "translate-blog-post": "node scripts/translate-blog-post.mjs",
     "prepare": "husky",
     "update-deps": "node scripts/update-dependencies.mjs"
   },
@@ -29,9 +32,9 @@
     ]
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.8",
-    "@astrojs/mdx": "^5.0.3",
-    "@astrojs/react": "^5.0.3",
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/react": "^5.0.4",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@lucide/astro": "^1.8.0",
@@ -40,7 +43,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-switch": "^1.2.6",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.5",
+    "astro": "^6.2.2",
     "astro-robots-txt": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

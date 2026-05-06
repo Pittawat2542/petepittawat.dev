@@ -1,0 +1,160 @@
+---
+slug: 'how-to-split-large-csv-file-pandas-th'
+title: 'แบ่งไฟล์ CSV ขนาดใหญ่ให้เป็นหลายไฟล์ที่มีจำนวนแถวเท่ากันด้วย Pandas แบบทีละขั้น'
+pubDate: '2023-04-23T11:09:00.000Z'
+tags: ['Python']
+coverImage: '../how-to-split-large-csv-file-pandas/cover.jpeg'
+excerpt: เมื่อเราต้องทำงานกับชุดข้อมูล CSV ขนาดใหญ่ การประมวลผลทีเดียวทั้งไฟล์มักไม่สะดวก วิธีหนึ่งที่ใช้ได้จริงคือแบ่งไฟล์ใหญ่ออกเป็นหลายไฟล์ย่อยที่มีจำนวนแถวเท่ากันด้วย Pandas บทความนี้อธิบายแนวคิดและโค้ดทีละส่วน
+lang: 'th'
+translationId: 'how-to-split-large-csv-file-pandas'
+routeSlug: 'how-to-split-large-csv-file-pandas'
+---
+
+import Callout from '@/components/content/Callout';
+
+## บทนำ
+
+เวลาทำงานกับข้อมูล CSV ขนาดใหญ่ เรามักเจอปัญหาว่าประมวลผลทั้งไฟล์ในครั้งเดียวได้ยาก ทั้งเรื่องหน่วยความจำ เวลา และความสะดวกในการแยกงาน วิธีหนึ่งที่ง่ายและตรงไปตรงมาคือแบ่งไฟล์ใหญ่ออกเป็นไฟล์ย่อยที่มีจำนวนแถวเท่ากันด้วย Pandas
+
+บทความนี้จะอธิบายแนวทางดังกล่าวจากโค้ดตัวอย่างทีละขั้น
+
+## สิ่งที่ควรมีมาก่อน
+
+ก่อนเริ่ม ควรมีสิ่งต่อไปนี้:
+
+- Python 3.x
+- ตัวแก้ไขโค้ดหรือ IDE เช่น PyCharm หรือ Visual Studio Code
+- ความคุ้นเคยพื้นฐานกับ Python และ Pandas
+
+## การแบ่งไฟล์ CSV ด้วย Pandas
+
+โค้ดเต็มมีดังนี้
+
+```python
+def split_large_file_by_n_rows(original_file_name, n_rows = 100, filename = 'data', has_index=True, verbose=True):
+  row_count = 0
+  chunk = pd.DataFrame()
+
+  with open(original_file_name, 'r') as file:
+      header = file.readline()
+      columns = header.strip().split(',')
+      chunk_count = 0
+
+      for _, row in enumerate(file):
+          if has_index:
+            temp_row = [row.strip().split(',')[1:]]
+          else:
+            temp_row = [row.strip().split(',')]
+
+          chunk = chunk.append(pd.DataFrame(temp_row, columns=columns))
+          row_count += 1
+
+          if row_count == n_rows:
+              chunk.to_csv(f'{filename}_{chunk_count}.csv', index=False)
+              if verbose:
+                print(f'Successfully created {filename}_{chunk_count}.csv')
+              row_count = 0
+              chunk = pd.DataFrame()
+              chunk_count += 1
+
+      if row_count > 0:
+          chunk.to_csv(f'{filename}_{chunk_count}.csv', index=False)
+          if verbose:
+            print(f'Successfully created {filename}_{chunk_count}.csv')
+
+if __name__ == '__main__':
+  split_large_file_by_n_rows('relative_path_from_script/file_name.csv', n_rows=1000, filename='path_to_new_file/file_name_without_extension', has_index=True, verbose=True)
+```
+
+ฟังก์ชัน **`split_large_file_by_n_rows`** รับพารามิเตอร์ทั้งหมด 5 ตัว:
+
+1. **`original_file_name`**: path หรือที่อยู่ของไฟล์ CSV ต้นฉบับ
+2. **`n_rows`**: จำนวนแถวที่ต้องการต่อหนึ่งไฟล์
+3. **`filename`**: prefix หรือคำนำหน้าของชื่อไฟล์ปลายทาง
+4. **`has_index`**: ระบุว่าไฟล์ต้นฉบับมีคอลัมน์ index หรือไม่
+5. **`verbose`**: ระบุว่าต้องการพิมพ์ข้อความความคืบหน้าหรือไม่
+
+แนวคิดหลักคืออ่านไฟล์ต้นฉบับทีละแถว สะสมข้อมูลลงใน DataFrame ชั่วคราว และเมื่อครบจำนวน `n_rows` ก็เขียนออกเป็นไฟล์ใหม่หนึ่งไฟล์
+
+## Step 0: import Pandas
+
+เริ่มจากติดตั้งและ import Pandas
+
+```bash
+pip install pandas
+```
+
+```python
+import pandas as pd
+```
+
+การตั้ง alias เป็น `pd` เป็นธรรมเนียมที่ช่วยให้โค้ดสั้นลงและอ่านง่ายขึ้น
+
+## Step 1: อ่านไฟล์ CSV
+
+ขั้นแรกคือเปิดไฟล์ CSV ต้นฉบับและอ่านบรรทัดแรกซึ่งเป็น header จากนั้นแยก header ออกมาเป็นรายชื่อคอลัมน์ แล้วเตรียม DataFrame สำหรับสะสมข้อมูล
+
+```python
+with open(original_file_name, 'r') as file:
+	header = file.readline()
+	columns = header.strip().split(',')
+	chunk = pd.DataFrame()
+```
+
+การใช้ `with` ช่วยให้ไฟล์ถูกปิดอย่างถูกต้องหลังใช้งาน ส่วน `readline()` จะอ่าน header เพียงบรรทัดแรก จากนั้น `strip()` และ `split(',')` จะช่วยแปลงมันเป็นรายชื่อคอลัมน์
+
+## Step 2: ประมวลผลทีละแถว
+
+จากนั้นเราวนอ่านข้อมูลทีละแถว แยกคอลัมน์ แล้วเพิ่มเข้าไปใน DataFrame ชั่วคราว
+
+```python
+for _, row in enumerate(file):
+	if has_index:
+		temp_row = [row.strip().split(',')[1:]]
+	else:
+		temp_row = [row.strip().split(',')]
+		chunk = chunk.append(pd.DataFrame(temp_row, columns=columns))
+```
+
+ถ้าไฟล์มีคอลัมน์ index อยู่ก่อนแล้ว เราก็ข้ามคอลัมน์แรกด้วยการใช้ `[1:]` แต่ถ้าไม่มี เราจะใช้ข้อมูลทุกคอลัมน์ตามปกติ
+
+## Step 3: เขียนไฟล์ย่อย
+
+เมื่อจำนวนแถวสะสมครบ `n_rows` เราจะเขียน DataFrame ออกเป็นไฟล์ CSV ใหม่ จากนั้นรีเซ็ตตัวนับและ DataFrame เพื่อเริ่มสะสมข้อมูลชุดถัดไป
+
+```python
+if row_count == n_rows:
+    chunk.to_csv(f'{filename}_{chunk_count}.csv', index=False)
+    if verbose:
+        print(f'Successfully created {filename}_{chunk_count}.csv')
+    row_count = 0
+    chunk = pd.DataFrame()
+    chunk_count += 1
+
+if row_count > 0:
+    chunk.to_csv(f'{filename}_{chunk_count}.csv', index=False)
+    if verbose:
+        print(f'Successfully created {filename}_{chunk_count}.csv')
+```
+
+บล็อกสุดท้ายมีไว้รองรับกรณีที่ข้อมูลส่วนท้ายเหลือไม่ครบ `n_rows` เพื่อให้แถวที่เหลือยังถูกเขียนออกเป็นไฟล์สุดท้าย ไม่หายไประหว่างทาง
+
+การกำหนด `index=False` ใน `to_csv()` ช่วยให้ไฟล์ปลายทางไม่เพิ่มเลข index ของ DataFrame เข้าไปอีกชั้นโดยไม่จำเป็น
+
+## การเรียกใช้ฟังก์ชัน
+
+ตัวอย่างการเรียกใช้มีดังนี้
+
+```python
+split_large_file_by_n_rows('path/to/large_file.csv', n_rows=1000, filename='path/to/output_file', has_index=True, verbose=True)
+```
+
+คำสั่งนี้จะนำ `large_file.csv` ไปแบ่งเป็นหลายไฟล์ย่อย ไฟล์ละ 1000 แถว โดยไฟล์ผลลัพธ์จะถูกตั้งชื่อเป็น `output_file_0.csv`, `output_file_1.csv`, `output_file_2.csv` ไปเรื่อย ๆ
+
+## สรุป
+
+การแบ่งไฟล์ CSV ขนาดใหญ่เป็นไฟล์ย่อยที่มีจำนวนแถวเท่ากันเป็นเทคนิคง่าย ๆ ที่ช่วยให้จัดการข้อมูลขนาดใหญ่ได้สะดวกขึ้นมาก ไม่ว่าจะเพื่อประมวลผลเป็นรอบ ๆ ส่งงานต่อให้ระบบอื่น หรือแค่ลดภาระในการเปิดไฟล์ทีเดียวทั้งก้อน Pandas ทำให้ขั้นตอนนี้เขียนได้ตรงไปตรงมาและดูแลต่อได้ไม่ยาก
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

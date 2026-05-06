@@ -1,8 +1,19 @@
-import type { AugmentedSearchItem, SearchItem, SearchItemType } from './types';
+import type {
+  AugmentedSearchItem,
+  SearchItem,
+  SearchItemLocale,
+  SearchItemType,
+  SearchLocale,
+} from './types';
 import type { ReactNode } from 'react';
+import { getLangFromPathname } from '@/i18n/utils';
 
 function normalize(value: unknown) {
   return String(value ?? '').toLowerCase();
+}
+
+function getOtherLocale(locale: SearchLocale): SearchLocale {
+  return locale === 'th' ? 'en' : 'th';
 }
 
 type FuzzyMatchResult = { score: number; positions: number[] };
@@ -47,17 +58,24 @@ export function fuzzyMatch(query: string, target: string): FuzzyMatchResult | nu
 }
 
 export type MatchResult = {
-  item: SearchItem;
+  item: AugmentedSearchItem;
   score: number;
   titlePositions: number[] | undefined;
 };
 
-export function scoreItem(item: SearchItem, query: string): MatchResult | null {
+type SearchableContent = {
+  title: string;
+  description?: string | undefined;
+  tags?: string[] | undefined;
+  extra?: SearchItem['extra'];
+};
+
+function scoreSearchContent(content: SearchableContent, query: string) {
   const fields: { text: string; weight: number; key: 'title' | 'desc' | 'tags' | 'extra' }[] = [
-    { text: item.title, weight: 3, key: 'title' },
-    { text: item.description || '', weight: 1.4, key: 'desc' },
-    { text: (item.tags || []).join(' '), weight: 1.2, key: 'tags' },
-    { text: Object.values(item.extra || {}).join(' '), weight: 1, key: 'extra' },
+    { text: content.title, weight: 3, key: 'title' },
+    { text: content.description || '', weight: 1.4, key: 'desc' },
+    { text: (content.tags || []).join(' '), weight: 1.2, key: 'tags' },
+    { text: Object.values(content.extra || {}).join(' '), weight: 1, key: 'extra' },
   ];
 
   let bestScore = 0;
@@ -72,8 +90,123 @@ export function scoreItem(item: SearchItem, query: string): MatchResult | null {
     }
   }
 
-  if (bestScore <= 0) return null;
-  return { item, score: bestScore, titlePositions };
+  return bestScore > 0 ? { score: bestScore, titlePositions } : null;
+}
+
+function localePriority(locale: SearchItemLocale, activeLocale: SearchLocale, fallback: boolean) {
+  if (!fallback && locale === activeLocale) return 2_000;
+  return 0;
+}
+
+export function resolveSearchItem(
+  item: SearchItem,
+  activeLocale: SearchLocale,
+  viewerLocale: SearchLocale = activeLocale
+): AugmentedSearchItem {
+  const activeVariant = item.locales?.[activeLocale];
+  if (!activeVariant) {
+    return {
+      ...item,
+      matchedLocale: item.locale,
+      isFallback: item.locale !== viewerLocale,
+    };
+  }
+
+  const alternateVariant = activeLocale === 'en' ? item.locales?.th : item.locales?.en;
+
+  return {
+    ...item,
+    title: activeVariant.title,
+    description: activeVariant.description,
+    localizedUrl: activeVariant.localizedUrl,
+    alternateUrl: alternateVariant?.localizedUrl,
+    tags: activeVariant.tags,
+    date: activeVariant.date ?? item.date,
+    extra: activeVariant.extra ?? item.extra,
+    locale: activeLocale,
+    matchedLocale: activeLocale,
+    isFallback: activeLocale !== viewerLocale,
+  };
+}
+
+export function scoreItem(
+  item: SearchItem,
+  query: string,
+  activeLocale: SearchLocale
+): MatchResult | null {
+  const candidates: Array<{
+    variant: AugmentedSearchItem;
+    score: number;
+    titlePositions?: number[] | undefined;
+  }> = [];
+
+  const activeVariant = item.locales?.[activeLocale];
+  const fallbackLocale = getOtherLocale(activeLocale);
+  const otherVariant = item.locales?.[fallbackLocale];
+
+  if (!item.locales) {
+    const scored = scoreSearchContent(item, query);
+    if (scored) {
+      candidates.push({
+        variant: resolveSearchItem(item, activeLocale),
+        score:
+          scored.score + localePriority(item.locale, activeLocale, item.locale !== activeLocale),
+        titlePositions: scored.titlePositions,
+      });
+    }
+  } else {
+    if (activeVariant) {
+      const resolved = resolveSearchItem(item, activeLocale);
+      const scored = scoreSearchContent(
+        {
+          title: activeVariant.title,
+          description: activeVariant.description,
+          tags: activeVariant.tags,
+          extra: activeVariant.extra,
+        },
+        query
+      );
+      if (scored) {
+        candidates.push({
+          variant: resolved,
+          score: scored.score + localePriority(activeLocale, activeLocale, false),
+          titlePositions: scored.titlePositions,
+        });
+      }
+    }
+
+    if (otherVariant) {
+      const resolved = resolveSearchItem(item, fallbackLocale, activeLocale);
+      const scored = scoreSearchContent(
+        {
+          title: otherVariant.title,
+          description: otherVariant.description,
+          tags: otherVariant.tags,
+          extra: otherVariant.extra,
+        },
+        query
+      );
+      if (scored) {
+        candidates.push({
+          variant: resolved,
+          score: scored.score + localePriority(fallbackLocale, activeLocale, true),
+          titlePositions: scored.titlePositions,
+        });
+      }
+    }
+  }
+
+  if (!candidates.length) return null;
+
+  candidates.sort((a, b) => b.score - a.score);
+  const best = candidates[0];
+  if (!best) return null;
+
+  return {
+    item: { ...best.variant, __titlePositions: best.titlePositions },
+    score: best.score,
+    titlePositions: best.titlePositions,
+  };
 }
 
 export function highlightTitle(title: string, positions?: number[]) {
@@ -114,8 +247,8 @@ export function highlightTitle(title: string, positions?: number[]) {
 }
 
 export function buildHref(item: AugmentedSearchItem, query: string) {
-  if (typeof window === 'undefined') return item.url;
-  const raw = String(item.url || '');
+  if (typeof window === 'undefined') return item.localizedUrl;
+  const raw = String(item.localizedUrl || '');
   const hashIndex = raw.indexOf('#');
   const hasHash = hashIndex >= 0;
   const base = hasHash ? raw.slice(0, hashIndex) : raw;
@@ -127,9 +260,9 @@ export function buildHref(item: AugmentedSearchItem, query: string) {
   const path = url.pathname.replace(/\/$/, '');
   const supportsQ =
     preferTitle ||
-    path === '/projects' ||
-    path === '/publications' ||
-    path === '/talks' ||
+    /^\/projects$/.test(path) ||
+    /^\/publications$/.test(path) ||
+    /^\/talks$/.test(path) ||
     path.startsWith('/tags');
 
   if (supportsQ && qValue) {
@@ -143,4 +276,9 @@ export function buildHref(item: AugmentedSearchItem, query: string) {
 
 export function ensureAllTypes(): Set<SearchItemType> {
   return new Set<SearchItemType>(['blog', 'project', 'publication', 'talk', 'page']);
+}
+
+export function getActiveSearchLocale() {
+  if (typeof window === 'undefined') return 'en' as const;
+  return getLangFromPathname(window.location.pathname);
 }

@@ -7,7 +7,7 @@
 export const SITE_CONFIG = {
   TITLE: 'PETEPITTAWAT.DEV',
   DESCRIPTION:
-    'Pete (Pittawat Taveekitworachai) — research scientist and full-stack developer exploring large language models, prompt engineering, reasoning, and practical AI systems. Writing, projects, publications, and talks.',
+    'Researcher-builder working on language models, reasoning, evaluation, and AI systems. Writing, projects, publications, and talks by Pittawat Taveekitworachai.',
   AUTHOR: 'Pittawat Taveekitworachai',
 } as const;
 
@@ -63,7 +63,8 @@ export const ERROR_MESSAGES = {
 // SEO defaults
 export const SEO_DEFAULTS = {
   TITLE_SUFFIX: ' | Pittawat Taveekitworachai',
-  DESCRIPTION: 'Personal website and portfolio of Pittawat Taveekitworachai',
+  DESCRIPTION:
+    'Researcher-builder working on language models, reasoning, evaluation, and AI systems.',
   KEYWORDS: ['portfolio', 'academic', 'research', 'publications', 'projects'],
   AUTHOR: 'Pittawat Taveekitworachai',
   TYPE: 'website',

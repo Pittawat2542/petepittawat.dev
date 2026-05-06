@@ -12,6 +12,26 @@ import {
   Globe,
   Layers,
 } from '@lucide/astro';
+import type { SiteCopy } from '@/data/site/copy';
+
+interface Props {
+  copy: SiteCopy['home']['aboutSection'];
+}
+
+const { copy } = Astro.props as Props;
+
+const researchThemeIcons = {
+  activity: Activity,
+  layers: Layers,
+  'shield-check': ShieldCheck,
+  globe: Globe,
+} as const;
+
+const highlightIcons = {
+  'book-open': BookOpen,
+  'graduation-cap': GraduationCap,
+  cpu: Cpu,
+} as const;
 ---
 
 <Container className="reveal mt-16">
@@ -39,108 +59,39 @@ import {
           class="flex items-center gap-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/60 uppercase"
         >
           <span class="h-2 w-2 rounded-full bg-[color:var(--accent)]"></span>
-          Impact in Practice
+          {copy.eyebrow}
         </div>
         <div class="space-y-4">
           <h2 class="text-3xl font-bold tracking-tight text-[color:var(--white)] md:text-4xl">
-            About Me
+            {copy.title}
           </h2>
-          <p class="text-lg text-[color:var(--white)]/85">
-            I'm Pete (Pittawat Taveekitworachai). I’m interested in shaping model behavior to align
-            with human preferences, domain-specific requirements (e.g., games and medical), task
-            objectives, and cultural values.
-          </p>
-          <p class="text-[color:var(--white)]/75">
-            Most recently, I'm a research scientist for Typhoon (Thai open models), publishing at
-            top-tier venues, and building evaluation tools that help teams test what their models
-            can—and can't—do.
-          </p>
+          <p class="text-lg text-[color:var(--white)]/85">{copy.lead}</p>
+          <p class="text-[color:var(--white)]/75">{copy.body}</p>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-2">
-          <div
-            class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10"
-          >
-            <div
-              class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent)]/35 via-transparent to-transparent blur-2xl"
-            >
-            </div>
-            <div class="relative z-10 space-y-2">
-              <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
-                <Activity class="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
-                Behavior Shaping
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                Exploring approaches to align model behavior with human preferences and domain
-                requirements, including context engineering, prompt engineering, and post-training
-                (SFT/RFT).
-              </p>
-            </div>
-          </div>
+          {
+            copy.themes.map(theme => {
+              const Icon = researchThemeIcons[theme.icon];
 
-          <div
-            class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10"
-          >
-            <div
-              class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent-publications)]/35 via-transparent to-transparent blur-2xl"
-            >
-            </div>
-            <div class="relative z-10 space-y-2">
-              <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
-                <Layers
-                  class="h-4 w-4 text-[color:var(--accent-publications)]"
-                  aria-hidden="true"
-                />
-                Reasoning Models
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                Developing open reasoning models like Typhoon T1 and investigating medical reasoning
-                models (MRMs) with novel alignment techniques.
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10"
-          >
-            <div
-              class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent-talks)]/35 via-transparent to-transparent blur-2xl"
-            >
-            </div>
-            <div class="relative z-10 space-y-2">
-              <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
-                <ShieldCheck class="h-4 w-4 text-[color:var(--accent-talks)]" aria-hidden="true" />
-                Evaluation & Safety
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                Understanding and mitigating biases and risks. Building evaluation frameworks like
-                BenchING to test structured output following.
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10"
-          >
-            <div
-              class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent-about)]/35 via-transparent to-transparent blur-2xl"
-            >
-            </div>
-            <div class="relative z-10 space-y-2">
-              <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
-                <Globe class="h-4 w-4 text-[color:var(--accent-about)]" aria-hidden="true" />
-                Applied AI
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                Showcasing real-world applications (Typhoon Application Week) and collaborating on
-                projects in healthcare and gaming.
-              </p>
-            </div>
-          </div>
+              return (
+                <div class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10">
+                  <div class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent)]/35 via-transparent to-transparent blur-2xl" />
+                  <div class="relative z-10 space-y-2">
+                    <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
+                      <Icon class="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+                      {theme.title}
+                    </div>
+                    <p class="text-sm text-[color:var(--white)]/70">{theme.description}</p>
+                  </div>
+                </div>
+              );
+            })
+          }
         </div>
 
         <GlassButton href="/about" variant="primary" size="md">
-          Learn more about me
+          {copy.ctaLabel}
           <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </GlassButton>
       </div>
@@ -162,77 +113,27 @@ import {
           <div class="relative z-10 space-y-5">
             <h3 class="flex items-center gap-2 text-lg font-semibold text-[color:var(--white)]">
               <GraduationCap class="h-5 w-5" aria-hidden="true" />
-              Research Focus
+              {copy.researchFocusTitle}
             </h3>
-            <p class="text-sm text-[color:var(--white)]/70">
-              Where fine-tuning, workflow design, and field deployments currently concentrate.
-            </p>
+            <p class="text-sm text-[color:var(--white)]/70">{copy.researchFocusDescription}</p>
             <ul class="space-y-4">
-              <li
-                class="group shape-squircle-sm relative flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-              >
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent)]/40 to-[color:var(--accent-publications)]/30 text-[color:var(--white)]"
-                >
-                  <Activity class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <div class="space-y-1">
-                  <p class="font-semibold text-[color:var(--white)]">Behavior Shaping</p>
-                  <p class="text-sm text-[color:var(--white)]/70">
-                    Exploring approaches to align model behavior with human preferences and domain
-                    requirements, including context engineering, prompt engineering, and
-                    post-training (SFT/RFT).
-                  </p>
-                </div>
-              </li>
-              <li
-                class="group shape-squircle-sm relative flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-              >
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent-talks)]/40 to-[color:var(--accent-publications)]/30 text-[color:var(--white)]"
-                >
-                  <Layers class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <div class="space-y-1">
-                  <p class="font-semibold text-[color:var(--white)]">Reasoning Models</p>
-                  <p class="text-sm text-[color:var(--white)]/70">
-                    Developing open reasoning models like Typhoon T1 and investigating medical
-                    reasoning models (MRMs) with novel alignment techniques.
-                  </p>
-                </div>
-              </li>
-              <li
-                class="group shape-squircle-sm relative flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-              >
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent-about)]/35 to-[color:var(--accent-talks)]/35 text-[color:var(--white)]"
-                >
-                  <ShieldCheck class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <div class="space-y-1">
-                  <p class="font-semibold text-[color:var(--white)]">Evaluation & Safety</p>
-                  <p class="text-sm text-[color:var(--white)]/70">
-                    Understanding and mitigating biases and risks. Building evaluation frameworks
-                    like BenchING to test structured output following.
-                  </p>
-                </div>
-              </li>
-              <li
-                class="group shape-squircle-sm relative flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-              >
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent-publications)]/30 to-[color:var(--accent)]/35 text-[color:var(--white)]"
-                >
-                  <Globe class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <div class="space-y-1">
-                  <p class="font-semibold text-[color:var(--white)]">Applied AI</p>
-                  <p class="text-sm text-[color:var(--white)]/70">
-                    Showcasing real-world applications (Typhoon Application Week) and collaborating
-                    on projects in healthcare and gaming.
-                  </p>
-                </div>
-              </li>
+              {
+                copy.themes.map(theme => {
+                  const Icon = researchThemeIcons[theme.icon];
+
+                  return (
+                    <li class="group shape-squircle-sm relative flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10">
+                      <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent)]/40 to-[color:var(--accent-publications)]/30 text-[color:var(--white)]">
+                        <Icon class="h-5 w-5" aria-hidden="true" />
+                      </div>
+                      <div class="space-y-1">
+                        <p class="font-semibold text-[color:var(--white)]">{theme.title}</p>
+                        <p class="text-sm text-[color:var(--white)]/70">{theme.description}</p>
+                      </div>
+                    </li>
+                  );
+                })
+              }
             </ul>
           </div>
         </div>
@@ -253,60 +154,27 @@ import {
         <div class="relative z-10 space-y-5">
           <h3 class="flex items-center gap-2 text-lg font-semibold text-[color:var(--white)]">
             <BookOpen class="h-5 w-5" aria-hidden="true" />
-            Professional Highlights
+            {copy.highlightsTitle}
           </h3>
-          <p class="text-sm text-[color:var(--white)]/70">
-            Translating research into community resources, talks, and tooling.
-          </p>
+          <p class="text-sm text-[color:var(--white)]/70">{copy.highlightsDescription}</p>
           <ul class="grid gap-4 md:grid-cols-3">
-            <li
-              class="group shape-squircle-sm relative flex h-full flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-            >
-              <div class="flex items-center gap-3">
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent)]/35 to-[color:var(--accent-publications)]/25 text-[color:var(--white)]"
-                >
-                  <BookOpen class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <p class="font-semibold text-[color:var(--white)]">Publications &amp; writing</p>
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                First-author papers at EMNLP 2024 and 2025 on prompting techniques and fine-tuning
-                strategies. Published in IEEE ToG on LLM evaluation frameworks.
-              </p>
-            </li>
-            <li
-              class="group shape-squircle-sm relative flex h-full flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-            >
-              <div class="flex items-center gap-3">
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent-talks)]/35 to-[color:var(--accent)]/25 text-[color:var(--white)]"
-                >
-                  <GraduationCap class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <p class="font-semibold text-[color:var(--white)]">Talks &amp; workshops</p>
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                Spoke at FOSSASIA Summit, SuperAI Engineer, and CoG on reasoning models,
-                fine-tuning, and prompt engineering.
-              </p>
-            </li>
-            <li
-              class="group shape-squircle-sm relative flex h-full flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
-            >
-              <div class="flex items-center gap-3">
-                <div
-                  class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent-about)]/35 to-[color:var(--accent-publications)]/25 text-[color:var(--white)]"
-                >
-                  <Cpu class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <p class="font-semibold text-[color:var(--white)]">Open-source tooling</p>
-              </div>
-              <p class="text-sm text-[color:var(--white)]/70">
-                Released Typhoon T1, BenchING evaluation tools, and ChatGPT4PCG competition
-                platform—all open source and used by other teams.
-              </p>
-            </li>
+            {
+              copy.highlights.map(item => {
+                const Icon = highlightIcons[item.icon];
+
+                return (
+                  <li class="group shape-squircle-sm relative flex h-full flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10">
+                    <div class="flex items-center gap-3">
+                      <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent)]/35 to-[color:var(--accent-publications)]/25 text-[color:var(--white)]">
+                        <Icon class="h-5 w-5" aria-hidden="true" />
+                      </div>
+                      <p class="font-semibold text-[color:var(--white)]">{item.title}</p>
+                    </div>
+                    <p class="text-sm text-[color:var(--white)]/70">{item.description}</p>
+                  </li>
+                );
+              })
+            }
           </ul>
         </div>
       </div>

@@ -81,3 +81,66 @@ Runs dependency upgrades in explicit groups instead of a single blanket update.
 ```bash
 pnpm update-deps
 ```
+
+## `translate-blog-post.mjs`
+
+Translates a blog post MDX source into its English or Thai sibling using NVIDIA NIM chat completions, then writes the translated file directly into `src/content/blog/en/` or `src/content/blog/th/`.
+
+### Behavior
+
+- Reads the full source MDX file, including frontmatter.
+- Preserves MDX structure, imports, components, links, images, code fences, and metadata shape.
+- Translates the title, excerpt, and reader-visible prose into the target language.
+- Writes the translated sibling file directly.
+- Skips the translation cleanly when the target file already exists, unless `--overwrite` is passed.
+- Normalizes the source file first when needed by adding explicit `lang` and `translationId` metadata for bilingual pairing.
+- Uses `routeSlug` plus language-specific internal slugs so English and Thai variants can share the same public route slug without Astro content ID collisions.
+- Prints concise progress lines for source resolution, skip/write decisions, model request, and final output path.
+
+### Requirements
+
+- Create a `.env` file in the project root. You can start from `.env.example`.
+- Required:
+  - `NVIDIA_NIM_API_KEY`
+- Optional:
+  - `NVIDIA_NIM_MODEL` to override the default model.
+  - `NVIDIA_NIM_API_URL` to override the chat completions endpoint.
+  - `NVIDIA_NIM_TIMEOUT_MS` to override the request timeout in milliseconds.
+
+### Usage
+
+```bash
+# Translate an English post into Thai
+pnpm translate-blog-post -- src/content/blog/wisdom.mdx th
+
+# Translate a Thai post into English
+pnpm translate-blog-post -- src/content/blog/th/the-silicon-mind.mdx en
+
+# Preview generated MDX without writing files
+pnpm translate-blog-post -- src/content/blog/wisdom.mdx th --dry-run
+
+# Replace an existing target translation
+pnpm translate-blog-post -- src/content/blog/wisdom.mdx th --overwrite
+```
+
+### Default transport
+
+- Endpoint: `https://integrate.api.nvidia.com/v1/chat/completions`
+- Default model: `moonshotai/kimi-k2.6`
+- Default timeout: `1800000` ms
+- The script sends one `system` message with translation rules and one `user` message containing the full MDX source.
+- The model is instructed to return a single JSON object with `title`, `excerpt`, and `bodyMdx`.
+- The script automatically loads `.env` from the repo root before reading these settings.
+
+### Output conventions
+
+- Public URLs stay language-scoped:
+  - English: `/blog/<route-slug>/`
+  - Thai: `/th/blog/<route-slug>/`
+- The translated file is stored as:
+  - `src/content/blog/en/<route-slug>.mdx`
+  - `src/content/blog/th/<route-slug>.mdx`
+- The translated frontmatter uses:
+  - `slug: '<route-slug>-en'` or `slug: '<route-slug>-th'`
+  - `routeSlug: '<route-slug>'`
+  - shared `translationId`

@@ -21,7 +21,6 @@ const allTags = ['All', ...Array.from(new Set(allPosts.flatMap(p => p.data.tags)
 
 const map = createTagSlugMap(allTags.filter(t => t !== 'All'));
 const selectedTag = map[params.tag] ?? params.tag;
-const filtered = allPosts.filter(p => p.data.tags.includes(selectedTag));
 ---
 
 <PageWithHero
@@ -36,8 +35,8 @@ const filtered = allPosts.filter(p => p.data.tags.includes(selectedTag));
   <div class="mb-4">
     <a href="/tags" class="link-underline">← All tags</a>
   </div>
-  <BlogListPage client:visible posts={filtered} tags={allTags} initialTags={[selectedTag]} />
+  <BlogListPage client:load posts={allPosts} initialTags={[selectedTag]} />
 
   <!-- SR summary for quick context -->
-  <p class="sr-only">{filtered.length} posts found for tag {selectedTag}.</p>
+  <p class="sr-only">Posts tagged with {selectedTag}.</p>
 </PageWithHero>

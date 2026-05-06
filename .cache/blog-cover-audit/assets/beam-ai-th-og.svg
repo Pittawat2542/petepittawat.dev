@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0d20" />
+      <stop offset="100%" stop-color="#171230" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#261a4a" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#120f24" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(179, 140, 255, 0.32)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.28" stroke="none" style="filter:blur(48.88px)" cx="173.43" cy="95.9" rx="135.36" ry="106.6" />
+<ellipse fill="rgba(120, 87, 233, 0.22)" fill-opacity="0.2" stroke="none" style="filter:blur(41.36px)" cx="1047.32" cy="449.58" rx="157.92" ry="118.44" />
+<circle fill="#d2bcff" fill-opacity="0.15" stroke="none" style="filter:blur(14.67px)" cx="856.36" cy="467.01" r="17.26" />
+<circle fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.15" stroke="none" style="filter:blur(12.55px)" cx="1119.69" cy="136.48" r="18.3" />
+<circle fill="#d2bcff" fill-opacity="0.22" stroke="none" style="filter:blur(19.86px)" cx="891.1" cy="341.53" r="18.86" />
+<circle fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.17" stroke="none" style="filter:blur(16.56px)" cx="924.72" cy="214.13" r="13.49" />
+<circle fill="#d2bcff" fill-opacity="0.16" stroke="none" style="filter:blur(16.89px)" cx="1030.05" cy="429.68" r="8.17" />
+<circle fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.21" stroke="none" style="filter:blur(17.06px)" cx="989.57" cy="213.27" r="12.95" />
+<circle fill="#d2bcff" fill-opacity="0.17" stroke="none" style="filter:blur(12.86px)" cx="757.43" cy="477.31" r="17.38" />
+<circle fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.26" stroke="none" style="filter:blur(15.45px)" cx="956.19" cy="379.77" r="16.13" />
+<rect fill="#b38cff" fill-opacity="0.16" stroke="none" style="filter:blur(16.92px)" transform="rotate(7 801.74 281.74)" x="784.8" y="50.4" width="33.88" height="462.67" rx="999" />
+<rect fill="#d2bcff" fill-opacity="0.21" stroke="none" style="filter:blur(16.92px)" transform="rotate(11 852.17 278.59)" x="835.2" y="56.7" width="33.93" height="443.77" rx="999" />
+<rect fill="#b38cff" fill-opacity="0.26" stroke="none" style="filter:blur(16.92px)" transform="rotate(15 903.46 275.44)" x="885.6" y="63" width="35.71" height="424.87" rx="999" />
+<rect fill="#d2bcff" fill-opacity="0.31" stroke="none" style="filter:blur(16.92px)" transform="rotate(19 950.83 272.29)" x="936" y="69.3" width="29.67" height="405.97" rx="999" />
+<rect fill="#b38cff" fill-opacity="0.36" stroke="none" style="filter:blur(16.92px)" transform="rotate(23 1009.65 269.14)" x="986.4" y="75.6" width="46.5" height="387.07" rx="999" /></g>
+  <g transform="translate(91.2 65.52)">
+    <rect width="141.6" height="44.73" rx="22.37" fill="rgba(58, 37, 105, 0.5)" stroke="rgba(210, 188, 255, 0.34)" />
+    <text x="70.8" y="28.37" text-anchor="middle" fill="#f5efff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.03em">AI</text>
+  </g>
+<g transform="translate(246 65.52)">
+    <rect width="185.01" height="44.73" rx="22.37" fill="rgba(58, 37, 105, 0.5)" stroke="rgba(210, 188, 255, 0.34)" />
+    <text x="92.51" y="28.37" text-anchor="middle" fill="#f5efff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.03em">ฉบับภาษาไทย</text>
+  </g>
+<g transform="translate(444.21 65.52)">
+    <rect width="145.68" height="44.73" rx="22.37" fill="rgba(58, 37, 105, 0.5)" stroke="rgba(210, 188, 255, 0.34)" />
+    <text x="72.84" y="28.37" text-anchor="middle" fill="#f5efff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.03em">3 พ.ค. 2569</text>
+  </g>
+  <text x="91.2" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">บันทึกภาคสนาม</text>
+  <text x="91.2" y="216.09" fill="#F8FBFF" font-family="'Anuphan', 'Thonburi', 'Arial Unicode MS', 'Helvetica Neue', Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-0.01em">ภาษากลางของความรู้ เมื่อ</text>
+<text x="91.2" y="267.09" fill="#F8FBFF" font-family="'Anuphan', 'Thonburi', 'Arial Unicode MS', 'Helvetica Neue', Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-0.01em">AI เชื่อมงานวิจัย วิศวกรรม</text>
+<text x="91.2" y="318.09" fill="#F8FBFF" font-family="'Anuphan', 'Thonburi', 'Arial Unicode MS', 'Helvetica Neue', Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-0.01em">และการนำไปใช้จริงเข้า</text>
+<text x="91.2" y="369.09" fill="#F8FBFF" font-family="'Anuphan', 'Thonburi', 'Arial Unicode MS', 'Helvetica Neue', Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-0.01em">ด้วยกัน</text>
+  <text x="91.2" y="453.41" fill="rgba(236,242,250,0.72)" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="500">Thai long-title AI sample.</text>
+  <line x1="91.2" y1="486.36" x2="739.2" y2="486.36" stroke="rgba(210, 188, 255, 0.34)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="91.2" y="555.66" fill="#d2bcff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1108.8" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="0.1em">BLOG / TH</text>
+</svg>

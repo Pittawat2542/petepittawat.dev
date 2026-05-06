@@ -1,0 +1,45 @@
+---
+slug: 'flutter-buildcontext-deep-dive-en'
+title: 'Flutter: BuildContext Deep Dive — Understanding BuildContext Inside Out'
+
+pubDate: '2020-09-19T12:37:14.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-buildcontext-deep-dive/cover.jpeg'
+excerpt: "BuildContext appears almost everywhere in our code, and it's something Flutter developers simply have to live with. Many times, some people may not understand why we use Context at all, but this isn't a new concept. In many languages, Context appears just the same."
+lang: 'en'
+translationId: 'flutter-buildcontext-deep-dive'
+routeSlug: 'flutter-buildcontext-deep-dive'
+---
+
+import Callout from '@/components/content/Callout';
+
+`BuildContext` appears almost everywhere in our code, and it's something Flutter developers simply have to live with. Many times, some people may not understand why we use Context at all, but this isn't a new concept. In many languages, Context appears just the same.
+
+Context is used to indicate the position of things within things. Seeing it put this way might be confusing. To be more specific about Flutter, `BuildContext` is used to indicate the position of a Widget on the Widget Tree. Therefore, the Context we frequently call upon doesn't always refer to the same one.
+
+Normally, `BuildContext` refers to the particular Widget we're currently in. Inside this Context, it contains numerous methods we can use from when we call `build` on that Widget (and if it's a `StatefulWidget`, we can also use methods that come from `State`).
+
+Generally, we tend to see Context used in two main forms:
+
+1. Passing it as a parameter to method arguments
+2. Using it through `.of`
+
+For the first usage pattern, we're most familiar with using it with things like `showDialog`, which requires it to properly handle showing a Dialog layered on screen and dismissing it correctly.
+
+As for the second pattern, we commonly encounter it through `Navigator.of(context)` and `Theme.of(context)`.
+
+For `Navigator.of(context)`, Context is necessary to properly manage the Stack that keeps track of different screens — knowing which page comes before or after — so navigation back and forth works correctly.
+
+`Theme.of(context)`, on the other hand, is akin to retrieving `ThemeData` that has been provided by `MaterialApp` or `CupertinoApp` and then using it (in reality, it could be other Widgets too, if that Widget is wrapped with a `Theme` Widget).
+
+This shows us that besides being used to indicate which Widget we are and where we sit on the Widget Tree, Context is also sometimes used to store data with a somewhat Global nature.
+
+Another rather tricky aspect of `BuildContext` is that, based on the explanation above, it means the `BuildContext` in a Widget's `build` method is not the same as the `BuildContext` of the Widget returned by `build` (while inside the `build` method, we use the `BuildContext` received from the Widget that owns `build`; when returning a value, a new `BuildContext` must be created to indicate the position on the Widget Tree of the Child).
+
+Furthermore, a Widget's `BuildContext` doesn't necessarily stay in the same place, since that Widget may move around on the Widget Tree. Therefore, values we expect may not always be present.
+
+In fact, `BuildContext` is an Object of type `Element`. However, performing various operations on `Element` through `BuildContext` isn't something that's particularly recommended.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

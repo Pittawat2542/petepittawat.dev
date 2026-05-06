@@ -1,0 +1,93 @@
+---
+slug: 'flutter-pull-to-refresh-list-view-en'
+title: 'Flutter: Adding Pull to Refresh to ListView'
+
+pubDate: '2020-07-15T07:46:26.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-pull-to-refresh-list-view/cover.jpeg'
+excerpt: 'One of the most common user-initiated patterns for loading fresh data—especially on Android and apps following Material Guidelines—is the Swipe to Refresh gesture. Typically, you have a list that you can pull down from the top, release, and see a spinning indicator showing that new data is being downloaded. Once complete, the indicator disappears and the list updates with fresh content.'
+lang: 'en'
+translationId: 'flutter-pull-to-refresh-list-view'
+routeSlug: 'flutter-pull-to-refresh-list-view'
+---
+
+import Callout from '@/components/content/Callout';
+
+One of the most common user-initiated patterns for loading fresh data—especially on Android and apps following Material Guidelines—is the Swipe to Refresh gesture. Typically, you have a list that you can pull down from the top, release, and see a spinning indicator showing that new data is being downloaded. Once complete, the indicator disappears and the list updates with fresh content.
+
+Flutter, with its first-class Material Design support, naturally provides a widget for this purpose: `RefreshIndicator`.
+
+---
+
+## RefreshIndicator
+
+`RefreshIndicator` is a widget that wraps any scrollable widget (`Scrollable`) and adds the behavior of triggering `onRefresh` when an overscroll occurs (scrolling past the available content), along with a smooth animation to let users know the refresh has been triggered.
+
+The `onRefresh` callback expects a function that takes no arguments but returns `Future<void>`—meaning no return value is expected, but the function must exhibit `Future` behavior. This is because refresh actions typically involve network requests or file operations that take considerable time. The simplest approach is to make the function `async` by adding the `async` keyword.
+
+Example code:
+
+```dart
+// ...
+@override
+Widget build(BuildContext context) {
+  Future<void> onPullToRefresh() async {
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {
+      if (colors[0] == colorForSwap1[0]) {
+        colors = colorForSwap2;
+      } else {
+        colors = colorForSwap1;
+      }
+    });
+  }
+
+  return Scaffold(
+    // ...
+    RefreshIndicator(
+      onRefresh: onPullToRefresh,
+      child: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 50,
+            color: colors[index],
+            child: Center(child: Text('$index')),
+          );
+        },
+      ),
+    )
+    // ...
+  );
+}
+// ...
+```
+
+As you can see in the code, `onPullToRefresh` serves as the function for `onRefresh` in `RefreshIndicator`. It uses `Future.delayed(...)` to simulate network fetch time before updating the list data with a new set of values.
+
+---
+
+## Sidenote
+
+If you've implemented `RefreshIndicator` but nothing happens despite passing all required arguments, the scrollable widget inside `RefreshIndicator` might not support overscroll. This can occur when your content doesn't exceed the viewport height. You can fix this by adding the property `physics: const AlwaysScrollableScrollPhysics()` to the child scrollable widget to ensure scrolling is always enabled:
+
+```dart
+// ...
+RefreshIndicator(
+  onRefresh: someFunction,
+  child: ListView(
+    physics: const AlwaysScrollableScrollPhysics(),
+    children: // ...
+  )
+),
+// ...
+```
+
+---
+
+For those who want the complete example, check it out on [GitHub](https://github.com/Pittawat2542/flutter_pull_refresh_example)
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

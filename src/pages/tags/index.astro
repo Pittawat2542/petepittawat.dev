@@ -1,12 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { slugifyTag } from '@/lib/slug';
 import PageWithHero from '@/layouts/PageWithHero.astro';
 
-const posts = (await getCollection('blog')).sort(
+const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const posts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en');
 const tagCounts = new Map<string, number>();
 for (const p of posts) {
   for (const t of p.data.tags) tagCounts.set(t, (tagCounts.get(t) || 0) + 1);

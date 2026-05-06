@@ -1,0 +1,74 @@
+---
+slug: 'flutter-const-vs-final-en'
+title: 'Flutter: When Should You Use const vs final?'
+pubDate: '2020-05-24T13:15:20.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-const-vs-final/cover.jpeg'
+excerpt: "If you spend enough time writing Flutter, you eventually run into one of Dart's quirks: the language gives you both `const` and `final`. They are related, but they are not interchangeable."
+lang: 'en'
+translationId: 'flutter-const-vs-final'
+routeSlug: 'flutter-const-vs-final'
+---
+
+import Callout from '@/components/content/Callout';
+
+If you have been writing Flutter for a while, you have probably run into one of Dart's unusual details: unlike many other languages, Dart gives you both `const` and `final`. So when should you use each one?
+
+---
+
+## `const`
+
+`const` is the keyword for compile-time constants. Use it when the value is known ahead of compilation and will never change. In that sense, `const` is what most people think of as a classic constant.
+
+Also, every `const` value is implicitly `final`, so it cannot be reassigned.
+
+Example:
+
+```dart
+    const pi = 3.14
+```
+
+Another detail worth noticing is naming. In Dart, even constants are usually written in `lowerCamelCase`, which can feel surprising if you come from Java or another language that prefers all-uppercase constant names. Dart's style guide recommends `lowerCamelCase` because:
+
+- all-uppercase names look awkward in several cases, especially around `enum`s
+- constants often evolve into non-constant values, and `lowerCamelCase` avoids a second rename later
+
+---
+
+## `final`
+
+`final` is for runtime constants. You can assign the value only once, but the value may be produced at runtime rather than at compile time.
+
+One important caveat is that collection types are still reference types. A `final` list cannot be reassigned to a different list, but the items inside that list can still be mutated. If you want deep immutability, you may need additional helpers such as `UnmodifiableListView`.
+
+This is different from `const`, where collection contents are also treated as constant.
+
+`final` is also commonly used for instance variables in classes. The main exception is static compile-time constants, where `const` is still the better fit.
+
+One more thing: a `final` variable must always be initialized. If you leave it uninitialized, the Dart analyzer will complain.
+
+---
+
+## Tip
+
+In Flutter, if a widget exposes a `const` constructor, you can also place `const` before the constructor call:
+
+```dart
+    // ...
+    Container(
+      child: const Text('static text'),
+    ),
+    // ...
+```
+
+Why does that matter? Because it tells Flutter that this widget and its subtree are guaranteed not to change when the framework walks the tree after a state update. For common immutable widgets such as `EdgeInsets`, `Color`, `Icon`, or `Text`, this can reduce unnecessary rebuild work and make UI updates cheaper.
+
+---
+
+## Summary
+
+Use `const` when you know the exact value at compile time. Use `final` when the value will be assigned only once, but that assignment happens at runtime.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

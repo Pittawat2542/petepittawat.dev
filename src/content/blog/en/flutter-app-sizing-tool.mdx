@@ -1,0 +1,36 @@
+---
+slug: 'flutter-app-sizing-tool-en'
+title: "Flutter: App Size Tool — Let's See Exactly What's Bloating Your App"
+
+pubDate: '2020-10-10T10:17:36.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-app-sizing-tool/cover.jpeg'
+excerpt: "Even though smartphones today come with increasingly larger storage every year — most now ship with 64–128GB (2020) — developers must always remember that this space isn't reserved solely for our apps. That storage belongs to users: for their photos, videos, and important documents that shape their daily lives. This is precisely why app size matters, and it's something Flutter has consistently prioritized."
+lang: 'en'
+translationId: 'flutter-app-sizing-tool'
+routeSlug: 'flutter-app-sizing-tool'
+---
+
+import Callout from '@/components/content/Callout';
+
+Even though smartphones today come with increasingly larger storage every year — most now ship with 64–128GB (2020) — developers must always remember that this space isn't reserved solely for our apps. That storage belongs to users: for their photos, videos, and important documents that shape their daily lives. This is precisely why app size matters, and it's something Flutter has consistently prioritized. Whether it's introducing tree-shaking — starting with icons so that only the ones you actually need get bundled in release builds, sparing users from unnecessary downloads — or going further in Flutter 1.22 with a brand-new tool to diagnose exactly which parts of your code contribute to the final app size. That tool is the **App Size Tool**, found under the **Analysis** tab in DevTools.
+
+The App Size Tool breaks down your app's size into three categories: **Dart code**, **Native code**, and **non-code components** bundled within your app, such as assets and fonts. The Dart code figure represents the final compiled output when you build in Release or Profile mode. Dart uses AOT (Ahead-of-Time) compilation instead of JIT, with tree-shaking already applied to strip out as much unused code as possible.
+
+## How do I use it?
+
+If DevTools is connected to a running app, you can navigate straight to the **App Size** tab. If DevTools isn't currently connected to an app, you can also access it from the DevTools home screen.
+
+## Analysis Tab
+
+This tab lets you analyze the size of a snapshot you're interested in, displaying the data as both a **treemap** and a **table**. You can drill down for more details — such as why a particular piece of code ended up in your compiled app — using the **Dominator Tree** and **Call Graph**.
+
+## Diff Tab
+
+The **Diff** tab allows you to compare the sizes of two files side by side, typically from two different versions of your app. The comparison is again presented as both a treemap and a table.
+
+For more details about the App Size Tool, visit [https://flutter.dev/docs/development/tools/devtools/app-size](https://flutter.dev/docs/development/tools/devtools/app-size). For additional information about compiled app size, see [https://flutter.dev/docs/perf/app-size#breaking-down-the-size](https://flutter.dev/docs/perf/app-size#breaking-down-the-size).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

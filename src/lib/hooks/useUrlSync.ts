@@ -7,16 +7,20 @@ import { useEffect } from 'react';
 import { navigationService } from '@/lib/services';
 
 interface UrlSyncParams {
+  enabled?: boolean;
   query?: string;
   sort?: string;
   selectedTags?: Set<string>;
   filters?: Record<string, string>;
+  lang?: string;
 }
 
 export function useUrlSync(params: UrlSyncParams) {
-  const { query = '', sort, selectedTags, filters = {} } = params;
+  const { enabled = true, query = '', sort, selectedTags, filters = {}, lang } = params;
 
   useEffect(() => {
+    if (!enabled) return;
+
     const urlParams = new URLSearchParams();
 
     const trimmed = query.trim();
@@ -30,16 +34,20 @@ export function useUrlSync(params: UrlSyncParams) {
       }
     }
 
-    if (filters['year'] && filters['year'] !== 'all') {
+    if (filters['year']?.length && filters['year'] !== 'all') {
       urlParams.set('year', filters['year']);
     }
 
-    if (filters['series'] && filters['series'] !== 'all') {
+    if (filters['series']?.length && filters['series'] !== 'all') {
       urlParams.set('series', filters['series']);
+    }
+
+    if (lang) {
+      urlParams.set('lang', lang);
     }
 
     const queryString = urlParams.toString();
     const url = queryString ? `?${queryString}` : navigationService.getCurrentPathname();
     navigationService.replaceState(url);
-  }, [query, sort, selectedTags, filters]);
+  }, [enabled, filters, lang, query, selectedTags, sort]);
 }

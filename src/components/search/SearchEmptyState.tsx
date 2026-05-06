@@ -4,7 +4,7 @@ import { memo } from 'react';
 interface Suggestion {
   readonly id: string;
   readonly title: string;
-  readonly url: string;
+  readonly localizedUrl: string;
 }
 
 interface SearchEmptyStateProps {
@@ -19,7 +19,7 @@ const SearchEmptyStateComponent: FC<SearchEmptyStateProps> = ({ suggestions }) =
         {suggestions.map(suggestion => (
           <a
             key={suggestion.id}
-            href={suggestion.url}
+            href={suggestion.localizedUrl}
             className="shape-squircle-sm rounded-[1.1rem] border border-white/10 px-3 py-1 transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:outline-none"
           >
             {suggestion.title}

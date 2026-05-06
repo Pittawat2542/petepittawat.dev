@@ -1,24 +1,5 @@
 ---
-import PageWithHero from '@/layouts/PageWithHero.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
-import { PublicationsExplorer } from '@/components/explorers';
-import academicServices from '@/data/services/academic.json';
-import AcademicServices from '@/components/sections/AcademicServices';
-import { getPublications } from '@/lib/content';
-
-const publications = await getPublications();
+import Page from '@/components/pages/PublicationsPage.astro';
 ---
 
-<PageWithHero
-  title={`${SITE_TITLE} - Publications`}
-  description={SITE_DESCRIPTION}
-  hero={{
-    title: 'Publications',
-    subtitle: "Research papers, conference proceedings, and academic works I've contributed to.",
-    page: 'publications',
-  }}
-  containerClass="glass-section"
->
-  <PublicationsExplorer client:visible items={publications} />
-  <AcademicServices client:visible data={academicServices} />
-</PageWithHero>
+<Page />

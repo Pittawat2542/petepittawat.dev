@@ -1,0 +1,84 @@
+---
+slug: 'flutter-bloc-flutter-bloc-v5-en'
+title: 'Flutter: bloc and flutter_bloc v5 Have Arrived'
+pubDate: '2020-07-07T12:09:33.000Z'
+tags: ['Flutter', 'News']
+coverImage: '../flutter-bloc-flutter-bloc-v5/cover.jpeg'
+excerpt: 'If you use BLoC for application state management, chances are you also rely on the `bloc` and `flutter_bloc` packages. Version 5 was a major release, and it came with several API and architectural changes worth knowing about.'
+lang: 'en'
+translationId: 'flutter-bloc-flutter-bloc-v5'
+routeSlug: 'flutter-bloc-flutter-bloc-v5'
+---
+
+import Callout from '@/components/content/Callout';
+
+If you use BLoC as your approach to state management in Flutter, there is a good chance you also depend on the `bloc` and `flutter_bloc` packages to reduce boilerplate. With version 5, `bloc` received a major update. Let's look at what changed.
+
+---
+
+## Hello cubit!
+
+The most important change in this release is that both `bloc` and `flutter_bloc` now build on top of `cubit`, a new lightweight state-management package created by Felix Angelov.
+
+Unlike classic `bloc`, `cubit` removes the `Event` layer and updates state directly through methods. You can think of it as a smaller, simpler state-management core. My impression is that this split made the internals easier to evolve and also lowered the barrier for developers who were hesitant to adopt `bloc` because of its event-driven model.
+
+---
+
+## Goodbye `initialState`
+
+In `bloc` v5, the old `initialState` getter is gone. Instead, you now provide the initial state through the superclass constructor.
+
+```dart
+    class SomeBloc extends Bloc<SomeEvent, SomeState> {
+      SomeBloc() : super(InitialState());
+
+      @override
+      Stream<int> mapEventToState(SomeEvent event) async* {
+
+      }
+    }
+```
+
+As a result, the `initialState` getter that used to come with every `Bloc` subclass disappears as well.
+
+---
+
+## No more `BlocSupervisor`
+
+`BlocSupervisor`, which many people used to install a `BlocDelegate` for logging states and events, is no longer part of the API. At the same time, `BlocDelegate` was renamed to `BlocObserver`, which is a clearer name for what the type actually does.
+
+The new usage is also more direct:
+
+```dart
+    class SomeBlocObserver extends BlocObserver {
+      @override
+      void onTransition(Bloc bloc, Transition transition) {
+        print(transition);
+        super.onTransition(bloc, transition);
+      }
+    }
+
+    void main() {
+    	// ...
+        Bloc.observer = SomeBlocObserver();
+        // ...
+    }
+```
+
+---
+
+## `flutter_bloc`
+
+On the `flutter_bloc` side, some properties were renamed to make their intent clearer:
+
+`condition` in `BlocBuilder` became `buildWhen`
+
+`condition` in `BlocListener` became `listenWhen`
+
+---
+
+Beyond that, the release also included general bug fixes and a refreshed logo. If you want the full details, check the official changelogs for [bloc](https://github.com/felangel/bloc/blob/master/packages/bloc/CHANGELOG.md) and [flutter_bloc](https://github.com/felangel/bloc/blob/master/packages/flutter_bloc/CHANGELOG.md).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

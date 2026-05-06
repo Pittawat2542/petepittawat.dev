@@ -1,0 +1,73 @@
+---
+slug: 'flutter-ios14-en'
+title: 'Flutter: The Future of Flutter with iOS 14'
+
+pubDate: '2020-07-27T08:13:26.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-ios14/cover.jpeg'
+excerpt: "About a month ago, Apple held WWDC2020, where they unveiled new operating system versions for their various products, releasing Beta versions for developers to test whether iOS 14 would cause issues with existing applications. Within the Flutter developer community, several interesting developments have emerged regarding the upcoming iOS 14. Let's take a look at what's in store."
+lang: 'en'
+translationId: 'flutter-ios14'
+routeSlug: 'flutter-ios14'
+---
+
+import Callout from '@/components/content/Callout';
+
+About a month ago, Apple held WWDC2020, where they unveiled new operating system versions for their various products, releasing Beta versions for developers to test whether iOS 14 would cause issues with existing applications. Within the Flutter developer community, several interesting developments have emerged regarding the upcoming iOS 14. Let's take a look at what's in store.
+
+---
+
+## Crash!
+
+One major issue many people encountered when running Flutter-built applications on iOS 14 was crashes. This problem only occurred when building applications in Release Mode (not in Development/Debug Mode). The issue stemmed partly from changed behavior in Xcode 12 (someone tested by copying the iOS 14 SDK to use with Xcode 11.5 and it worked fine). Recently, there has been significant progress. If you look at the [Issues related to Xcode 12](https://github.com/flutter/flutter/issues/60133), you'll find that as of now (July 27, 2020), only non-critical issues remain (warnings and increasing the Lowest iOS Support to 9.0 from the previous 8.0).
+
+Additionally, there were crashes on actual devices running iOS 14 Beta, not just simulators. The Flutter team is aware of this issue and is actively working on a fix, asking everyone to be patient since this is still a Beta release meant to give developers time to adapt their software. Personally, the author believes that by the time iOS 14 nears its Public Stable Release (around September-October), the Flutter team will likely have resolved all these issues.
+
+---
+
+## Clipboard Prompt!
+
+Another feature arriving with iOS 14 is the system notification that pops up every time an application accesses clipboard data. It turns out that Flutter-built applications were experiencing constant clipboard notifications because the Flutter rendering engine was continuously reading clipboard data to display popovers with quick menus like Copy, Paste, and Share. A proposed solution has already been submitted, and we'll have to wait and see when it gets merged into the Core Engine. This issue affects currently released Flutter applications running on devices updated to iOS 14. The workaround is to wait for a fix in Flutter's Core and then rebuild the application with the new version.
+
+---
+
+## Text
+
+Since Flutter owns every pixel on screen, the rendering engine draws all text itself. However, this became problematic as text rendered on iOS 14 appeared squished or compressed. There hasn't been much progress on this issue yet, so we can only hope it gets resolved before iOS 14's official release.
+
+---
+
+## Aesthetic
+
+There are also other matters that aren't necessarily problems but help our applications look better and maintain consistency with other apps on the operating system:
+
+- **SF Symbols 2 fonts**: SF Symbols, which Apple introduced at the previous year's event, has now reached version 2, coming with refined original symbols as well as numerous new ones. These are beautifully designed and help make our applications feel more like genuine iOS apps. Another benefit is that these symbols match those used in other system applications, helping users better intuit how to navigate our apps. However, there may not be much hope for this due to potential licensing issues, so we'll have to wait and see.
+
+- **`ActivityIndicator`**: The spinning indicator shown during lengthy operations has received a new design on iOS 14. We'll have to wait and see if this gets updated. If Flutter doesn't update it themselves, the developer community may create a package adding this widget instead.
+
+- **iPadOS navigation**: This year, Apple redefined application navigation on iPadOS by introducing something called the Sidebar. A proposal has already been submitted for this in widget form, which is quite similar to the `ActivityIndicator` situation—if Flutter doesn't develop it themselves, the community may create and distribute a package.
+
+---
+
+## New Features
+
+iOS 14 also introduces numerous new features:
+
+**Widget**: Widgets provide new ways to interact with applications from the home screen. Currently, there's no information about whether this will be supported. For those wanting to add widgets to their applications now, they may need to write Swift in Xcode to use WidgetKit directly.
+
+**App Clips**: Small application fragments (under 10MB) that users can quickly download for immediate use, such as ordering food at a restaurant. The current situation is similar to Widgets, but may require more code involvement since Flutter doesn't currently support Multiple Targets by default, and App Clips counts as another target.
+
+**Pull-down Menus**: An updated version of Context Menu that shows additional options when long-pressing certain buttons. This one seems promising as it's just a widget, so if Flutter doesn't update soon, the developer community may create a package to support it.
+
+**Scribble**: A new iPadOS capability that lets TextFields accept Apple Pencil handwriting and convert it directly to text. The Flutter team is aware of this and has classified it as Severe: New Feature, so it will likely be one of the major Flutter updates this year.
+
+---
+
+And that's everything about iOS 14 and Flutter. It's worth noting that the Flutter team is working hard to ensure new features are supported when iOS is officially released later this year. For those wanting to follow progress, you can check:
+
+[GitHub: iOS 14](https://github.com/flutter/flutter/issues/61047)
+[GitHub: Xcode 12](https://github.com/flutter/flutter/issues/60133)
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

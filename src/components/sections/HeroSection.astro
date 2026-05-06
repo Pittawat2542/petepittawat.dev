@@ -1,10 +1,16 @@
 ---
 import Container from '@/components/ui/core/Container';
 import GlassButton from '@/components/ui/navigation/GlassButton';
-import { HERO_CTA_CONFIG } from '@/data/homepage';
 import { Image } from 'astro:assets';
 import { BookOpen, Mic, Rocket } from '@lucide/astro';
 import profileImage from '@/assets/images/profile.jpg';
+import type { SiteCopy } from '@/data/site/copy';
+
+interface Props {
+  copy: SiteCopy['home']['hero'];
+}
+
+const { copy } = Astro.props as Props;
 
 const iconMap = {
   rocket: Rocket,
@@ -12,7 +18,7 @@ const iconMap = {
   mic: Mic,
 } as const;
 
-const ctaItems = HERO_CTA_CONFIG.map(config => ({
+const ctaItems = copy.primaryCtas.map(config => ({
   ...config,
   Icon: iconMap[config.icon],
 }));
@@ -29,23 +35,20 @@ const ctaItems = HERO_CTA_CONFIG.map(config => ({
         class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/65 uppercase"
       >
         <span class="h-2 w-2 rounded-full bg-[color:var(--accent)]"></span>
-        Research x Design x Engineering
+        {copy.kicker}
       </div>
       <div class="space-y-3">
         <h1 class="text-4xl leading-tight font-bold md:text-5xl">
-          <span class="hero-text-gradient-blue">Hi, I'm Pete</span>{' '}
+          <span class="hero-text-gradient-blue">{copy.title}</span>{' '}
           <span class="hero-text-gradient-orange">Pittawat Taveekitworachai</span>
         </h1>
         <p class="text-lg text-[color:var(--white)]/80 md:text-xl">
-          I’m interested in shaping model behavior to align with human preferences, domain-specific
-          requirements, task objectives, and cultural values.
+          {copy.intro}
         </p>
       </div>
     </div>
     <p class="text-base text-[color:var(--white)]/70 md:text-lg">
-      My work includes first-author papers at EMNLP 2024 and 2025, leading Typhoon T1—Southeast
-      Asia's first open reasoning model—and investigating medical reasoning models (MRMs) with novel
-      alignment techniques.
+      {copy.summary}
     </p>
   </div>
 
@@ -103,11 +106,10 @@ const ctaItems = HERO_CTA_CONFIG.map(config => ({
         class="shape-squircle absolute -bottom-12 left-1/2 w-full max-w-[18rem] -translate-x-1/2 rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/75 px-5 py-4 text-left shadow-xl shadow-black/30 backdrop-blur-md sm:px-6 sm:py-5 md:-bottom-16 md:max-w-[20rem]"
       >
         <p class="text-xs font-semibold tracking-[0.25em] text-[color:var(--white)]/60 uppercase">
-          Current focus
+          {copy.focusLabel}
         </p>
         <p class="mt-1.5 text-sm text-[color:var(--white)]/85">
-          Conducting frontier research in LLM Reasoning and Post-training (SFT/RFT), and
-          investigating LLM Inference strategies.
+          {copy.focusBody}
         </p>
       </div>
     </div>

@@ -1,0 +1,49 @@
+---
+slug: 'casting-vs-coercing-en'
+title: 'Casting vs Coercing'
+
+pubDate: '2020-07-12T12:59:44.000Z'
+tags: ['Computer Science']
+coverImage: '../casting-vs-coercing/cover.jpeg'
+excerpt: 'Almost every program we write involves changing the type of variables or values (type conversion)—whether to make operations easier or to integrate with third-party libraries. In reality, type conversion falls into two main categories: Casting and Coercing. This article explores how these two approaches differ.'
+lang: 'en'
+translationId: 'casting-vs-coercing'
+routeSlug: 'casting-vs-coercing'
+---
+
+import Callout from '@/components/content/Callout';
+
+Almost every program we write involves changing the type of variables or values (type conversion)—whether to make operations easier or to integrate with third-party libraries. In reality, type conversion falls into two main categories: **Casting** and **Coercing**. This article explores how these two approaches differ.
+
+---
+
+## Casting
+
+Casting is **explicit type conversion**. This means the compiler itself isn't sure whether the conversion will work, but we as developers are confident it will, so we force the change. In most languages, casting uses syntax like `(Type)` before a variable, or the `as` keyword after it.
+
+Common scenarios include creating a method or function that accepts a superclass, then mapping the type within that method to perform additional operations. Another frequent case is receiving data from an API, which typically arrives as a JSON string, requiring us to force a type change to work with the data more easily in our program. A straightforward example would be converting from `double` to `int`.
+
+Because this type of conversion is forced, even if no error occurs at compile time, a **runtime error** may still happen if the variable or value cannot actually be converted to the target type—for instance, trying to convert the string `"Hello World"` to an `int` in some languages. We may also lose some data in the process, such as losing decimal places when converting from `double` to `int`.
+
+Generally, this kind of type conversion goes from a larger or more general type to a smaller or more specific one—for example, from superclass to subclass, or from `double` (64-bit) to `int` (32-bit).
+
+---
+
+## Coercing
+
+Coercing is **implicit type conversion**. The language itself can recognize that the variable type being used in a given context isn't quite right, but can safely convert it without any loss, making it easier to use.
+
+For example, in JavaScript, if you add any number to a string, the result becomes a concatenated string: `"123" + 3` yields `"1233"`. Another case where coercing plays a role is when we create a method or function with a superclass parameter, but pass in a subclass argument.
+
+---
+
+## Summary
+
+- **Casting** — **Explicit** type conversion
+- **Coercing** — **Implicit** type conversion
+
+_However, in most languages, this type of conversion only changes the **value**—the data stored in the variable itself remains unchanged in its original type, unless we explicitly reassign it back._
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

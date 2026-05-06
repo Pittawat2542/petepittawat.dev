@@ -1,0 +1,23 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { ProjectsExplorer } from '@/components/explorers';
+import PageWithHero from '@/layouts/PageWithHero.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import { getProjects } from '@/lib/content';
+
+const pageCopy = siteCopyEn.listingPages.projects;
+const projects = await getProjects();
+---
+
+<PageWithHero
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  hero={{
+    title: pageCopy.title,
+    subtitle: pageCopy.heroSubtitle,
+    page: 'projects',
+  }}
+  containerClass="glass-section"
+>
+  <ProjectsExplorer client:visible items={projects} />
+</PageWithHero>

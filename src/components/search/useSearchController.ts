@@ -5,7 +5,7 @@
  */
 
 import type { SearchItemType } from './types';
-import { ensureAllTypes } from './utils';
+import { ensureAllTypes, getActiveSearchLocale } from './utils';
 import { useCallback, useEffect, useState } from 'react';
 import {
   useSearchData,
@@ -24,6 +24,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   const [open, setOpen] = useState(autoOpen);
   const [query, setQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<Set<SearchItemType>>(ensureAllTypes);
+  const activeLocale = getActiveSearchLocale();
 
   // Initialize auto-open
   useEffect(() => {
@@ -39,7 +40,12 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   // Focused hooks for each responsibility
   const { items, loaded } = useSearchData(open);
   const { recent, saveRecent, clearRecent } = useRecentSearches(open);
-  const { filtered, countsByType, suggestions } = useSearchFiltering(items, query, typeFilter);
+  const { filtered, countsByType, suggestions } = useSearchFiltering(
+    items,
+    query,
+    typeFilter,
+    activeLocale
+  );
 
   // Keyboard shortcut: Cmd/Ctrl+K to open search
   useKeyboardShortcut(

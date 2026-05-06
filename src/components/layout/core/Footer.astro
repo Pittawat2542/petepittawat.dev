@@ -2,14 +2,37 @@
 import { BookOpenText, FolderKanban, FileText, Mic, CircleUser, ExternalLink } from '@lucide/astro';
 import BrandIcon from '@/components/ui/icons/BrandIcon.astro';
 import { socialLinks } from './footer-social-links';
+import { siteCopyEn } from '@/data/site/copy';
 
+const siteCopy = siteCopyEn;
 const year = new Date().getFullYear();
+const navLinks = siteCopy.nav.links;
 const quickLinks = [
-  { href: '/blog', label: 'Blog', icon: BookOpenText },
-  { href: '/projects', label: 'Projects', icon: FolderKanban },
-  { href: '/publications', label: 'Publications', icon: FileText },
-  { href: '/talks', label: 'Talks', icon: Mic },
-  { href: '/about', label: 'About', icon: CircleUser },
+  {
+    href: '/blog',
+    label: navLinks.find(link => link.key === 'blog')?.label ?? 'Blog',
+    icon: BookOpenText,
+  },
+  {
+    href: '/projects',
+    label: navLinks.find(link => link.key === 'projects')?.label ?? 'Projects',
+    icon: FolderKanban,
+  },
+  {
+    href: '/publications',
+    label: navLinks.find(link => link.key === 'publications')?.label ?? 'Publications',
+    icon: FileText,
+  },
+  {
+    href: '/talks',
+    label: navLinks.find(link => link.key === 'talks')?.label ?? 'Talks',
+    icon: Mic,
+  },
+  {
+    href: '/about',
+    label: navLinks.find(link => link.key === 'about')?.label ?? 'About',
+    icon: CircleUser,
+  },
 ];
 ---
 
@@ -17,10 +40,9 @@ const quickLinks = [
   <div class="site-footer__container">
     <div class="site-footer__grid">
       <div class="site-footer__brand">
-        <h2 class="site-footer__title">Building AI with purpose.</h2>
+        <h2 class="site-footer__title">{siteCopy.footer.title}</h2>
         <p class="site-footer__summary">
-          Exploring the intersection of language models, reasoning, and practical AI systems.
-          Turning ideas into reliable tools and sharing what I learn along the way.
+          {siteCopy.footer.summary}
         </p>
       </div>
       <div class="site-footer__links">
@@ -75,20 +97,20 @@ const quickLinks = [
       <div class="flex items-center justify-center md:justify-end">
         <a
           href="https://webring.wonderful.software#petepittawat.dev"
-          title="วงแหวนเว็บ"
-          aria-label="Thai Webring (วงแหวนเว็บ)"
+          title="Thai Webring"
+          aria-label="Thai Webring"
           rel="noopener noreferrer"
           target="_blank"
           class="site-footer__contact-link webring-link"
         >
           <img
-            alt="วงแหวนเว็บ"
+            alt="Thai Webring"
             class="webring-icon h-7 w-7 rounded-full border border-white/10 bg-white/8 p-1"
             src="https://webring.wonderful.software/webring.white.svg"
             loading="lazy"
             decoding="async"
           />
-          <span class="ml-2">Thai Webring</span>
+          <span class="ml-2">{siteCopy.footer.webringLabel}</span>
           <ExternalLink class="site-footer__icon ml-1" aria-hidden="true" size={14} />
         </a>
       </div>

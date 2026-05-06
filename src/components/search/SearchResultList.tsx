@@ -69,6 +69,12 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                   <h3 className="truncate text-sm font-medium">
                     {highlightTitle(item.title, item.__titlePositions)}
                   </h3>
+                  {(item.locale === 'th' ||
+                    (item.isFallback && item.availableLocales.length > 1)) && (
+                    <Badge className="bg-white/10 text-[10px] text-white/75">
+                      {item.locale.toUpperCase()}
+                    </Badge>
+                  )}
                   {item.date && (
                     <span className="text-muted-foreground text-xs">
                       {String(item.date).slice(0, 10)}

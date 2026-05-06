@@ -1,0 +1,196 @@
+---
+slug: 'flutter-whats-new-in-1-20-en'
+title: 'Flutter: A Big Update with Flutter 1.20, Dart 2.9.0, and Dart DevTools 0.9.0'
+pubDate: '2020-08-06T13:52:09.000Z'
+tags: ['Flutter', 'Dart', 'News']
+coverImage: '../flutter-whats-new-in-1-20/cover.jpeg'
+excerpt: 'Flutter 1.20 was one of the largest updates the framework had released at the time, shipping not only framework changes but also Dart 2.9.0, a new DevTools release, and IDE plugin updates.'
+lang: 'en'
+translationId: 'flutter-whats-new-in-1-20'
+routeSlug: 'flutter-whats-new-in-1-20'
+---
+
+import Figure from '@/components/mdx/Figure';
+
+import Callout from '@/components/content/Callout';
+
+On August 5, 2020, the Flutter team released Flutter 1.20, one of the largest updates Flutter had seen up to that point. The release also included Dart 2.9.0, Dart DevTools 0.9.0, and updates to IDE plugins. There was a lot packed into this version, so let's walk through the highlights.
+
+---
+
+Flutter often frames releases around four themes:
+
+- **Fast**: performance work from the rendering engine all the way up to app bundle size
+- **Beautiful**: improved widgets, especially in the Material family
+- **Productive**: better IDE integrations and stronger tooling such as DevTools
+- **Open**: heavy community contribution, with thousands of merged PRs and closed issues
+
+This release followed that pattern closely.
+
+---
+
+## Fast — Performance improvements
+
+Flutter has always emphasized smooth rendering, whether at 60 FPS or higher on capable displays. In 1.20, the team pushed further on both runtime performance and output size.
+
+<Figure
+  src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt=""
+/>
+
+### Icon font tree shaking
+
+Flutter 1.20 introduced icon-font tree shaking so unused icons could be stripped from application bundles. In the Flutter Gallery sample, the team reported savings on the order of 100 KB.
+
+This behavior is enabled by default, which means apps built with Flutter 1.20 can often shrink without any extra work. At the time, the main limitation was that it only supported TrueType fonts (`.ttf`).
+
+<Figure
+  src="https://images.unsplash.com/photo-1530021595331-3fd4e9ae2115?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt=""
+/>
+
+### Warm-up phase for shaders
+
+Another performance topic was first-run animation jank caused by shader compilation. Flutter proposed a warm-up strategy built around Skia's shading pipeline so shaders could be prepared ahead of time during the build process.
+
+This is a more advanced optimization and mainly helps a specific symptom: animations that stutter the first time they run but behave smoothly afterward. If you have seen that exact pattern, shader compilation is often the culprit. The official guide was [Reduce shader compilation jank on mobile](https://flutter.dev/docs/perf/rendering/shader).
+
+<Figure
+  src="https://images.unsplash.com/photo-1581574919402-5b7d733224d6?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt="focus on the target"
+/>
+
+### Refined mouse hit testing
+
+Flutter 1.20 also improved hit testing for desktop and web, especially around mouse interactions. The team reported major speedups in benchmark scenarios and better accuracy. One practical outcome was richer cursor support, for example switching to the I-beam over text fields or the pointer cursor over clickable widgets.
+
+### Dart 2.9
+
+This release also shipped with Dart 2.9, which brought its own performance and tooling improvements.
+
+---
+
+## Beautiful — Autofill, new widgets, updated widgets
+
+Visual polish in Flutter is never just about appearance. It is also about behavior, affordance, and keeping up with Material guidance.
+
+<Figure
+  src="https://images.unsplash.com/photo-1563207153-f403bf289096?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt=""
+/>
+
+### Autofill
+
+One long-awaited addition in this release was autofill support on both iOS and Android. That made Flutter forms much more practical for real-world login and profile flows.
+
+<Figure
+  src="https://images.unsplash.com/photo-1528819622765-d6bcf132f793?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ"
+  alt="Chess"
+/>
+
+### `InteractiveViewer`
+
+Flutter 1.20 also introduced `InteractiveViewer`, a widget for panning, zooming, and richer drag interactions. One especially useful improvement was better access to drop-position details through `DragTarget` via `onAcceptDetails`.
+
+### Updated Material widgets
+
+Several Material widgets were refreshed to better match the latest guidance, including:
+
+- [`Slider`](https://api.flutter.dev/flutter/material/Slider-class.html)
+- [`RangeSlider`](https://api.flutter.dev/flutter/material/RangeSlider-class.html)
+- [`showTimePicker`](https://api.flutter.dev/flutter/material/showTimePicker.html)
+- [`showDatePicker`](https://api.flutter.dev/flutter/material/showDatePicker.html)
+
+### Responsive `AboutDialog`
+
+`AboutDialog`, often used for licenses and app metadata, was updated to behave more responsively and align more closely with modern Material patterns.
+
+---
+
+## Flutter 1.20 — Breaking changes
+
+Flutter tries hard to minimize breaking changes, and this release still kept the list relatively small. Some of the notable items included:
+
+- adding `tabSemanticsLabel` to `CupertinoLocalizations`
+- adding `clipBehavior` to widgets that use `clipRect`
+- a Navigator crash fix affecting `TransitionDelegate` implementations
+- changes around Cupertino tab semantics
+- removal of deprecated `child` behavior in overlapping sliver handling with `NestedScrollView`
+- iOS mid-drag activity indicator support
+
+---
+
+## New in Dart 2.9.0
+
+Dart 2.9 touched both the core libraries and the developer toolchain.
+
+### Core library highlights
+
+- `dart:async` added `Stream.multi`
+- `dart:convert` updated malformed UTF-8 behavior to align with the WHATWG encoding standard
+- `dart:io` changed `exit` to return `Never`, let `OSError` implement `Exception`, and added `InternetAddress.tryParse`
+- `dart:html` changed a few return-value behaviors to better align with null-safety requirements
+- `dart:mirrors` became a compile-time error in web compilers
+
+### Tooling highlights
+
+For `dartfmt`, the release included several formatting fixes and quality-of-life improvements, including changes around cascades, typedef fixes, documentation comments, and null-aware subscript syntax.
+
+The linter was updated to `0.1.117`, bringing new rules such as:
+
+- `do_not_use_environment`
+- `exhaustive_cases`
+- `no_default_cases` (experimental)
+- `sized_box_for_whitespace`
+- `use_is_even_rather_than_modulo`
+
+There were also improvements to several existing lint rules.
+
+### Pub
+
+Pub added better null-safety-related reporting, new upgrade diagnostics, experimental flags, and several fixes around publishing, cache behavior, and Windows support.
+
+### Dart VM
+
+The VM also changed how malformed strings are printed, replacing invalid sequences with replacement characters in the default `print` implementation.
+
+---
+
+## New in Dart DevTools 0.9.0
+
+DevTools received a useful set of upgrades as well:
+
+- timeline flame-chart search
+- socket profiling in the Network view
+- multiple memory snapshots and automatic snapshotting
+- allocation event tracking by class
+- a Treemap view replacing the old heatmap
+- debugger navigation improvements such as `CMD+P`
+
+---
+
+## Final thoughts
+
+Taken together, Flutter 1.20 was a dense release: performance improvements, new widgets, stronger tooling, and a healthier ecosystem story around Dart itself. If you wanted to upgrade, the command remained simple:
+
+```bash
+flutter upgrade
+```
+
+---
+
+## Spoiler alert — the future of Flutter
+
+Two themes were especially exciting at the time.
+
+### Sound null safety
+
+Flutter and Dart had already been teasing sound null safety for a while, and it promised safer, less bug-prone code. For more on that topic, see [Dart: Sound Null Safety Is Coming in Dart 2.9!](/blog/dart-sound-null-safety/).
+
+### Navigator 2.0
+
+Another major direction was Navigator 2.0, which aimed to make navigation stacks easier to control through a more declarative model centered around the `Router` widget. Importantly, this was not framed as a destructive break from the existing Navigator API, but as a more powerful alternative that would remain backward compatible with older code.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

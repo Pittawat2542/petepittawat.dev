@@ -1,0 +1,150 @@
+---
+slug: 'review-line-developer-day-2020-the-past-and-future-of-machine-learning-research-en'
+title: 'Review: LINE Developer Day 2020 — The Past and Future of Machine Learning Research'
+pubDate: '2021-02-04T03:47:49.000Z'
+tags: ['AI', 'Computer Science']
+coverImage: '../review-line-developer-day-2020-the-past-and-future-of-machine-learning-research/cover.jpeg'
+excerpt: "In this session, Masashi Sugiyama discussed three main topics: trends in machine learning research, his group's current work, and where ML research may be heading next."
+lang: 'en'
+translationId: 'review-line-developer-day-2020-the-past-and-future-of-machine-learning-research'
+routeSlug: 'review-line-developer-day-2020-the-past-and-future-of-machine-learning-research'
+---
+
+import Figure from '@/components/mdx/Figure';
+
+import Latex from '@/components/content/Latex.astro';
+import Callout from '@/components/content/Callout';
+
+In this session, Masashi Sugiyama, Director at RIKEN AIP, focused on three topics:
+
+1. Trends in ML research
+2. Our research
+3. Future ML research
+
+---
+
+<Callout type="info" title="TL;DR">
+  A broad shift from model-first breakthroughs toward responsible, domain-accelerating ML is
+  underway, with stronger emphasis on privacy, fairness, robustness, and real-world impact.
+</Callout>
+
+## Trend in ML Research
+
+<Figure
+  src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MXwxMTc3M3wwfDF8c2VhcmNofDR8fGNvbmZlcmVuY2V8ZW58MHx8fA&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000"
+  alt="Allie and Jacob attended KinnektorCon to create new connections within the Fox Valley and spread the word about Startup Wisconsin Week and how the community can get involved."
+/>
+
+Sugiyama began by comparing two major conferences: ICML (International Conference on Machine Learning) and NeurIPS (Neural Information Processing Systems). ICML broadly covers machine learning, while NeurIPS has historically leaned more toward neuro-inspired AI and adjacent cognitive perspectives.
+
+Between 2013 and 2019, both conferences saw dramatic growth in attendance, submissions, accepted papers, and industry sponsorship. The field was clearly expanding, not only academically but also commercially.
+
+<Figure
+  src="https://images.unsplash.com/photo-1495592822108-9e6261896da8?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MXwxMTc3M3wwfDF8c2VhcmNofDN8fG1hY2hpbmUlMjBsZWFybmluZ3xlbnwwfHx8&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000"
+  alt="Play with UV light."
+/>
+
+What changed during that period was not just scale but emphasis. Around 2015, attention centered on ML itself as a breakthrough technology, with milestone applications such as AlphaGo and self-driving cars driving both enthusiasm and expectation. By 2019, the center of gravity had shifted toward social impact: privacy, fairness, responsibility, and the use of AI to accelerate work in fields like chemistry and biology.
+
+Another notable shift was the growing role of Chinese companies alongside US firms. At the same time, the research community remained concentrated in developed countries, which is one reason conferences increasingly invested in supporting underrepresented groups.
+
+---
+
+## Our Research
+
+For the second part, Sugiyama discussed two research themes from his group: **robustness** and **weakly supervised data**.
+
+<Figure
+  src="https://images.unsplash.com/photo-1559734597-deb46a80b958?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MXwxMTc3M3wwfDF8c2VhcmNofDh8fHNvY2lldHl8ZW58MHx8fA&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000"
+  alt=""
+/>
+
+### 1. Robustness
+
+Modern ML depends heavily on data, but real-world data is noisy. Sensor readings contain error, human-labeled datasets contain inconsistency, and distribution shifts show up almost everywhere. So the core question becomes: how do we train models that remain reliable under those conditions?
+
+Bias is part of this problem too. Because privacy constraints can limit the data we collect, training and test sets may end up being both small and unrepresentative. That creates a gap between laboratory performance and real deployment.
+
+Sugiyama highlighted three directions here.
+
+#### 1.1 Noisy label learning
+
+In standard classification, we work with data of the form <Latex formula="\{(x_i, y_i)\}" inline={true} />, where <Latex formula="x" inline={true} /> is the input and <Latex formula="y" inline={true} /> is the label. Training loss can then be written as <Latex formula="\frac{1}{n}\sum_{i=1}^{n}l(y_i, g(x_i))" inline={true} />.
+
+With noisy labels, the data becomes <Latex formula="\{(x_i, \tilde{y_i})\}" inline={true} />, where <Latex formula="\tilde{y_i}" inline={true} /> represents the corrupted label. At that point, simply minimizing training error no longer guarantees a good solution.
+
+Traditional strategies include outlier removal and robust loss design, but both have limitations. Sugiyama then described newer approaches such as:
+
+- **Noise transition matrices** <Latex formula="T" inline={true} />, which model the probability that one label flips into another
+- **Loss correction** via <Latex formula="T^{-1}" inline={true} />
+- **Classifier correction** via <Latex formula="T^{T}" inline={true} />
+
+The main challenge is estimating <Latex formula="T" inline={true} />, which is still an active research problem.
+
+#### 1.2 Co-teaching
+
+For neural networks trained with stochastic gradient descent, one idea is that clean examples are usually easier to fit early, while noisy ones are harder. Co-teaching exploits this by training two networks in parallel. Each model identifies the subset of examples it believes are cleaner, then passes those examples to the other model for learning.
+
+The idea is elegant: each network helps the other avoid overfitting to noise. The tradeoff is that you now have to manage two models whose outputs may diverge, and noisy data can still carry useful signal rather than being purely harmful.
+
+#### 1.3 Flooding
+
+Flooding addresses overfitting from another angle. Instead of letting the training loss fall all the way toward zero, you introduce a **flooding level** that keeps training loss above a fixed floor. The intuition is that pushing training loss too low often worsens generalization; holding it slightly above zero can improve test behavior.
+
+Sugiyama described this as a route toward an epoch-wise **double descent** pattern, where test performance can recover once the model is prevented from overfitting too aggressively.
+
+### 2. Weakly supervised learning
+
+<Figure
+  src="https://images.unsplash.com/photo-1559843788-693858bf7338?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MXwxMTc3M3wwfDF8c2VhcmNofDEwfHxjb25zdHJ1Y3R8ZW58MHx8fA&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000"
+  alt=""
+/>
+
+Supervised learning usually assumes fully labeled input-output pairs. In practice, labels are often scarce or expensive, especially in areas such as medicine. That is where weak supervision becomes valuable.
+
+Sugiyama highlighted two examples:
+
+- **Complementary labels**, where instead of saying which class an example belongs to, you say which class it does _not_ belong to
+- **Partial-label classification**, where an example is known to belong to one of several classes, but not which one exactly
+
+He also noted special cases such as Positive-Unlabeled learning, Positive confidence, and Similar-Dissimilar-Unlabeled setups.
+
+### 3. Bias
+
+Bias enters whenever the training environment differs from the deployment environment. A face-recognition model trained on carefully lit studio photos may perform poorly in unconstrained real-world lighting.
+
+One direction Sugiyama mentioned here is transfer learning, especially unsupervised transfer learning, to better align training and deployment distributions.
+
+---
+
+## Future ML Research
+
+<Figure
+  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MXwxMTc3M3wwfDF8c2VhcmNofDF8fHJvYm90fGVufDB8fHw&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=2000"
+  alt="White robot human features"
+/>
+
+Sugiyama then turned to the future. Today we already see ML succeeding in image recognition, speech recognition, and language translation, sometimes at or beyond human performance. Routine work is increasingly susceptible to automation.
+
+Still, he stressed that AI remains limited. Creativity, low-level practical work, and many forms of human judgment are not going away anytime soon. Rather than obsessing over catastrophic speculation, we should focus on the real and difficult research that remains undone.
+
+He framed the history of AI as moving through several eras:
+
+- **Logical AI**, focused on inference, search, expert systems, and knowledge bases
+- **Neuro-inspired AI**, from single-layer perceptrons to multi-layer perceptrons
+- **Statistical ML**, from frequentist and Bayesian methods toward deep learning
+
+Looking forward, Sugiyama argued for a more human-inclusive AI:
+
+1. **Math-oriented ML**: keep improving the theoretical and algorithmic foundations
+2. **Human learning**: study how humans learn and adapt those insights to AI
+3. **Human assistance**: design AI as a collaborator that augments human knowledge and creativity
+4. **Human society**: ensure AI is built with social, cultural, and ethical context in mind
+
+The future he described was not an apocalyptic human replacement scenario, but something closer to **co-intelligence**: humans and machines learning from one another and working together. In that framing, the most successful AI will be the AI that understands human society well enough to become a constructive part of it.
+
+For the full talk, see [LINE Developer Day](https://linedevday.linecorp.com/2020/en/sessions/6613).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

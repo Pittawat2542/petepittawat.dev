@@ -1,0 +1,64 @@
+---
+slug: 'basic-principles-to-write-good-code-en'
+title: 'Basic Principles for Writing Good Code in Any Language'
+
+pubDate: '2020-07-20T06:42:46.000Z'
+tags: ['Computer Science']
+excerpt: "Every programming language comes with its own best practices and syntax conventions to help us write better code. Of course, making a system work isn't particularly difficult. But writing good code involves many different elements that go far beyond mere functionality."
+coverImage: '../basic-principles-to-write-good-code/cover.jpeg'
+lang: 'en'
+translationId: 'basic-principles-to-write-good-code'
+routeSlug: 'basic-principles-to-write-good-code'
+---
+
+import Callout from '@/components/content/Callout';
+
+Every programming language comes with its own best practices and syntax conventions to help us write better code. Of course, making a system work isn't particularly difficult. But writing good code involves many different elements that go far beyond mere functionality.
+
+Good code doesn't just make a system achieve its intended purpose—it also makes it easier for developers to work with. And quality code isn't limited to meaningful naming; it encompasses many other factors, including conventions and team agreements. This article will walk through fundamental principles that can help us write better code, regardless of which language we use.
+
+---
+
+## Naming
+
+The first and most important topic is naming. Naming is something developers constantly encounter, whether it's variables, classes, folders, files, and so on. Personally, I believe in adhering to two core principles: **Convention** and **Convey meaning**.
+
+**Convention** means following the recommended naming patterns for a given language—for example, snake_case in Python or camelCase in Java. However, convention can also refer to team agreements. In my view, team conventions should take priority, though aligning with the broader community is valuable too, since modern software development relies heavily on third-party libraries.
+
+**Convey meaning** is straightforward: names should clearly communicate intent. These days, we all use code editors or IDEs, so longer names aren't a typing burden—our tools handle that. Still, meaning should be balanced with convention. For instance, functions typically start with verbs, but English has many near-synonyms. Teams should agree on specific terms to maintain consistency and prevent confusion: _fetch_, _get_, _view_, _observe_, _download_.
+
+---
+
+## DRY
+
+**Don't Repeat Yourself** — this principle states that whenever we copy-paste code, or copy-paste with minor tweaks, we should extract that code into a function. That said, it's only a guideline. Some situations don't require it; evaluate case by case. Still, it's a valuable principle that helps cultivate habits for writing adaptable, extensible code.
+
+---
+
+## SRP
+
+**Single-Responsibility Principle** — the idea that a function or class should have only one reason to change, one area of responsibility. If it touches on something else, that should become a separate function or class. For example, a function that fetches data from the network should only fetch data from the network—not also save that data to a database.
+
+This principle not only keeps code more organized but also reduces the chance of errors, and makes debugging easier when issues do arise. Of course, how broadly or narrowly each person defines a "responsibility" depends on individual judgment about when to split things apart.
+
+---
+
+## YAGNI
+
+**You Ain't Gonna Need It** — you probably don't need it. This principle warns against writing code "just in case" for some imagined future need.
+
+Speculative coding has real downsides: it adds unnecessary work that doesn't benefit current goals, and it makes code harder to read by introducing irrelevant complexity. For example, you write a function to convert XML data to objects, but you preemptively add logic for JSON too—adding complexity with no current value. And you might not even need JSON; the future could bring CSV instead.
+
+We should remember that we're generally poor predictors of the future. Code written speculatively often goes unused, or worse, becomes harder to modify than if we'd kept things simple. This behavior also tends to be incremental: once you've added speculative code, adding new capabilities means updating both the actually-used parts and the unused "just in case" parts.
+
+---
+
+## KISS
+
+**Keep It Stupid Simple** — keep things as simple as possible. When solving problems with code, there's rarely only one approach. Each has its trade-offs, but one key consideration is to choose the simplest solution first (appropriately, of course, for the given context).
+
+We often overengineer solutions when a simpler approach would achieve the same result and be easier to extend later. Highly complex functions are typically harder to modify. Beyond that, following KISS also saves time—which means lower costs.
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

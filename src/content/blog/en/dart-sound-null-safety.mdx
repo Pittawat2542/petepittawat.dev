@@ -1,0 +1,80 @@
+---
+slug: 'dart-sound-null-safety-en'
+title: 'Dart: Sound Null Safety Is Coming in Dart 2.9!'
+pubDate: '2020-06-11T10:50:00.000Z'
+tags: ['Dart']
+coverImage: '../dart-sound-null-safety/cover.jpeg'
+excerpt: 'A huge number of runtime errors come from unexpected nulls. Sound null safety changes that by making nullability explicit in the type system so we can catch more problems before the app reaches users.'
+lang: 'en'
+translationId: 'dart-sound-null-safety'
+routeSlug: 'dart-sound-null-safety'
+---
+
+import Callout from '@/components/content/Callout';
+
+## Why is null safety so useful?
+
+Null-related bugs are some of the most frustrating problems in application development. While writing code, we often cannot be certain whether an incoming value will be `null`, and by the time we find out, the program may already have failed at runtime in front of the user. Null safety changes that story.
+
+Starting with Dart 2.9, code like this is treated as non-null by default:
+
+```dart
+    const pi = 3.14;
+    var x = 10;
+    String str = 'This is string';
+```
+
+If we want to tell Dart that a variable is allowed to be `null`, we have to write it explicitly:
+
+```dart
+    const? pi = 3.14;
+    var? x = 10;
+    String? str = 'This is string';
+```
+
+In other words, we add a question mark (`?`) to mark nullable values.
+
+---
+
+## This looks a lot like Swift: Soundness
+
+Dart's null safety follows the same sound model used by languages like Swift. Once a value is declared non-null, the type system guarantees that it cannot quietly become `null` later on.
+
+Why does that matter? One major benefit is optimization. Because the compiler can trust the nullability contract, Dart can generate smaller and faster native code, especially in the AOT (Ahead-of-Time) compiler. The Dart team claimed that, compared with existing code, some workloads could see performance improvements close to 20%.
+
+---
+
+## The limits of flow analysis
+
+Of course, the flow analyzer inside the Dart compiler is not magical. It cannot always infer whether a class field will definitely be non-null, especially in more complex initialization paths. That raises an important question: what should we do in cases where we know a value will be initialized before use, even if the compiler cannot prove it?
+
+This is where the `late` keyword comes in. `late` lets us tell Dart that a value will be initialized before it is read, so it should still be treated as non-null.
+
+```dart
+    class Fish {
+      late double weight;
+      Fish(Scale s) {
+        weight = s.compute();
+      }
+    }
+```
+
+---
+
+## Backward compatibility and migration
+
+The Dart team made it clear that null safety was designed with backward compatibility in mind. When the stable release arrives, Dart also ships migration tooling to help existing projects adopt the new model.
+
+Just as importantly, migration is opt-in. That means you can choose when to move, for example after the packages your project depends on have all been updated to support null safety.
+
+---
+
+## It is still only a tech preview
+
+At the time of writing, null safety is still in Technical Preview and is being released mainly to collect feedback. It is not yet ready for production use. There is still a Beta phase ahead so packages across the ecosystem can adapt, and the stable release is expected later this year.
+
+If you want to try it out right now, Dart already provides a playground at [nullsafety.dartpad.dev](https://nullsafety.dartpad.dev/3d9c1769de7912c654bc5d132aff60ac).
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

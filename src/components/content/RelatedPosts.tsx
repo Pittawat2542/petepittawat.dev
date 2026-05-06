@@ -1,6 +1,7 @@
 import { memo, type FC } from 'react';
 import type { BlogPost } from '@/types';
 import type { SuggestedReadingResult } from '@/lib/blog-recommendations';
+import { getBlogPostPath } from '@/lib/blog-translations';
 import FormattedDate from './FormattedDate';
 
 interface RelatedPostsProps {
@@ -31,7 +32,7 @@ const RelatedPostsComponent: FC<RelatedPostsProps> = ({ suggestions }) => {
           return (
             <li key={p.id} className="article-related-card">
               <a
-                href={`/blog/${p.data.slug}/`}
+                href={getBlogPostPath(p)}
                 className="article-related-link"
                 aria-label={`Read ${p.data.title}`}
               >

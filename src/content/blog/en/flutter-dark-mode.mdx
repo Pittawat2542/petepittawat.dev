@@ -1,0 +1,32 @@
+---
+slug: 'flutter-dark-mode-en'
+title: 'Flutter: Making Your Application Support Dark Mode'
+
+pubDate: '2020-06-10T14:24:58.000Z'
+tags: ['Flutter']
+coverImage: '../flutter-dark-mode/cover.jpeg'
+excerpt: 'Of course, we should respect user preferences. If a user sets their OS to Dark Mode, every app should honor that choice. So how can we achieve this in Flutter?'
+lang: 'en'
+translationId: 'flutter-dark-mode'
+routeSlug: 'flutter-dark-mode'
+---
+
+import Callout from '@/components/content/Callout';
+
+Of course, we should respect user preferences. If a user sets their OS to Dark Mode, every app should honor that choice. So how can we achieve this in Flutter?
+
+```dart
+// ...
+MaterialApp(
+  // ...
+  darkTheme: ThemeData.dark()
+  // ...
+);
+// ...
+```
+
+Simply pass the `ThemeData` you want or have configured into `darkTheme`, which is one of the attributes of `MaterialApp` — and the magic happens!
+
+<Callout type="tip" title="Thanks for reading">
+  📚 Hope you enjoy reading!
+</Callout>

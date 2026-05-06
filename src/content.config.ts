@@ -61,6 +61,7 @@ const blog = defineCollection({
     z
       .object({
         slug: z.string(),
+        routeSlug: z.string().optional(),
         title: z.string(),
         excerpt: z.string(),
         tags: z.array(z.string()),
@@ -71,6 +72,8 @@ const blog = defineCollection({
         seriesOrder: z.number().optional(),
         seriesDescription: z.string().optional(),
         externalUrl: z.url().optional(),
+        lang: z.enum(['en', 'th']).default('en'),
+        translationId: z.string().optional(),
       })
       .superRefine(hasMatchingSeriesMetadata),
 });
@@ -127,6 +130,8 @@ const projectSchema = z.object({
 const aboutTimelineItemSchema = z.object({
   title: z.string(),
   description: z.string(),
+  titleTh: z.string().optional(),
+  descriptionTh: z.string().optional(),
   accent: z.string(),
   highlight: z.boolean().optional(),
 });
@@ -160,7 +165,10 @@ const about = defineCollection({
 });
 
 function getTalkId(item: z.infer<typeof talkSchema>, index: number) {
-  const dateStr = item.date instanceof Date ? item.date.toISOString().split('T')[0] : String(item.date).split('T')[0];
+  const dateStr =
+    item.date instanceof Date
+      ? item.date.toISOString().split('T')[0]
+      : String(item.date).split('T')[0];
   return `${dateStr}-${toId(item.title) || index.toString()}`;
 }
 
