@@ -11,7 +11,7 @@ export async function GET(context) {
   const posts = getPreferredBlogPosts(
     groupBlogPostsByTranslation(await getCollection('blog')),
     'en'
-  );
+  ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -36,7 +36,7 @@ export async function GET(context) {
         title,
         description,
         pubDate: post.data.pubDate,
-        link: getBlogPostPath(post),
+        link: post.data.externalUrl ?? getBlogPostPath(post),
         categories,
         // Enrich feed with full content (Markdown/MDX body)
         content: post.body,
