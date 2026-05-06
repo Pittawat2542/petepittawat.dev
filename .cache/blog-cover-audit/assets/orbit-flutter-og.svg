@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06111f" />
+      <stop offset="100%" stop-color="#0a1930" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d203b" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0a1528" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(106, 193, 255, 0.34)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(106, 193, 255, 0.34)" fill-opacity="0.28" stroke="none" style="filter:blur(48.88px)" cx="156.78" cy="114.69" rx="135.36" ry="106.6" />
+<ellipse fill="#a5ddff" fill-opacity="0.2" stroke="none" style="filter:blur(41.36px)" cx="1041.75" cy="467.87" rx="157.92" ry="118.44" />
+<rect fill="#a5ddff" fill-opacity="0.13" stroke="rgba(146, 211, 255, 0.34)" stroke-opacity="0.24" stroke-width="1" style="filter:blur(14.42px)" transform="rotate(14.24 1057.17 115.4)" x="1046.69" y="105.93" width="20.97" height="18.95" rx="8.3" />
+<circle fill="rgba(106, 193, 255, 0.34)" fill-opacity="0.19" stroke="none" style="filter:blur(14.34px)" cx="769.38" cy="441.97" r="13.57" />
+<circle fill="#a5ddff" fill-opacity="0.21" stroke="none" style="filter:blur(14.33px)" cx="1020.16" cy="358.4" r="12.55" />
+<circle fill="rgba(106, 193, 255, 0.34)" fill-opacity="0.24" stroke="none" style="filter:blur(16.09px)" cx="1107.16" cy="176.36" r="13.54" />
+<circle fill="#a5ddff" fill-opacity="0.18" stroke="none" style="filter:blur(15.57px)" cx="1007.72" cy="126.47" r="18.34" />
+<rect fill="rgba(106, 193, 255, 0.34)" fill-opacity="0.14" stroke="rgba(146, 211, 255, 0.34)" stroke-opacity="0.19" stroke-width="1" style="filter:blur(7.64px)" transform="rotate(-13.24 1039.71 108.44)" x="1019.87" y="95.05" width="39.69" height="26.78" rx="12.29" />
+<rect fill="#a5ddff" fill-opacity="0.12" stroke="rgba(146, 211, 255, 0.34)" stroke-opacity="0.23" stroke-width="1" style="filter:blur(14.29px)" transform="rotate(7.01 1030.99 109.03)" x="1021.95" y="100.39" width="18.08" height="17.28" rx="7.72" />
+<path fill="none" stroke="rgba(146, 211, 255, 0.34)" stroke-opacity="0.56" stroke-width="1.8" stroke-linecap="round" d="M 1151.26 278.03 A 146.64 94.75 0 0 1 877.76 292.34" />
+<path fill="none" stroke="#a5ddff" stroke-opacity="0.42" stroke-width="2" stroke-linecap="round" d="M 824.94 218.55 A 191.76 130.28 0 0 1 1184.38 197.16" />
+<ellipse fill="rgba(106, 193, 255, 0.34)" fill-opacity="0.22" stroke="none" style="filter:blur(22.56px)" cx="992.33" cy="264.44" rx="50.76" ry="41.45" />
+<circle fill="#a5ddff" fill-opacity="0.52" stroke="none" style="filter:blur(5.64px)" cx="836.63" cy="252.04" r="8.06" />
+<circle fill="#6ac1ff" fill-opacity="0.49" stroke="none" cx="886.36" cy="183.19" r="11.4" />
+<circle fill="#a5ddff" fill-opacity="0.46" stroke="none" cx="1051.32" cy="174.14" r="13.46" />
+<circle fill="#6ac1ff" fill-opacity="0.43" stroke="none" style="filter:blur(5.64px)" cx="1009" cy="383.88" r="14.2" />
+<circle fill="#a5ddff" fill-opacity="0.4" stroke="none" cx="1112.88" cy="179.65" r="12.62" />
+<circle fill="#6ac1ff" fill-opacity="0.37" stroke="none" cx="1046.39" cy="113.67" r="10.34" /></g>
+  <g transform="translate(91.2 65.52)">
+    <rect width="124.8" height="44.73" rx="22.37" fill="rgba(19, 52, 95, 0.46)" stroke="rgba(146, 211, 255, 0.34)" />
+    <text x="62.4" y="28.37" text-anchor="middle" fill="#eff7ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">FLUTTER</text>
+  </g>
+<g transform="translate(229.2 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(19, 52, 95, 0.46)" stroke="rgba(146, 211, 255, 0.34)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#eff7ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+<g transform="translate(433.49 65.52)">
+    <rect width="137.76" height="44.73" rx="22.37" fill="rgba(19, 52, 95, 0.46)" stroke="rgba(146, 211, 255, 0.34)" />
+    <text x="68.88" y="28.37" text-anchor="middle" fill="#eff7ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">Jun 14, 2020</text>
+  </g>
+  <text x="91.2" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="91.2" y="216.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="62" font-weight="800" letter-spacing="-0.04em">Flutter: What&apos;s the</text>
+<text x="91.2" y="283.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="62" font-weight="800" letter-spacing="-0.04em">Difference Between a</text>
+<text x="91.2" y="350.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="62" font-weight="800" letter-spacing="-0.04em">Package and a Plugin?</text>
+  <text x="91.2" y="452.41" fill="rgba(236,242,250,0.72)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="500">Flutter/orbit coverage with a denser technical title.</text>
+  <line x1="91.2" y1="486.36" x2="739.2" y2="486.36" stroke="rgba(146, 211, 255, 0.34)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="91.2" y="555.66" fill="#a5ddff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1108.8" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="0.1em">BLOG / EN</text>
+</svg>

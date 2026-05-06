@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#09111f" />
+      <stop offset="100%" stop-color="#0d1729" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#17243b" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0a1222" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(157, 199, 255, 0.26)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.28" stroke="none" style="filter:blur(48.88px)" cx="203.79" cy="109.51" rx="135.36" ry="106.6" />
+<ellipse fill="rgba(95, 141, 221, 0.2)" fill-opacity="0.2" stroke="none" style="filter:blur(41.36px)" cx="993.67" cy="476.95" rx="157.92" ry="118.44" />
+<rect fill="#dcecff" fill-opacity="0.11" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.15" stroke-width="1" style="filter:blur(8.97px)" transform="rotate(-17.04 793.03 307.23)" x="783.09" y="300.03" width="19.89" height="14.4" rx="6.63" />
+<rect fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.17" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.26" stroke-width="1" style="filter:blur(10.63px)" transform="rotate(10.94 910.06 140.44)" x="901.1" y="131.03" width="17.91" height="18.83" rx="8.01" />
+<circle fill="#dcecff" fill-opacity="0.19" stroke="none" style="filter:blur(15.81px)" cx="899.26" cy="434.13" r="8.44" />
+<rect fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.15" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.26" stroke-width="1" style="filter:blur(15.88px)" transform="rotate(3.28 1005.16 221.63)" x="995.05" y="214.13" width="20.23" height="14.99" rx="7.57" />
+<circle fill="#dcecff" fill-opacity="0.16" stroke="none" style="filter:blur(18.61px)" cx="755.98" cy="288.52" r="10.7" />
+<circle fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.24" stroke="none" style="filter:blur(17.35px)" cx="1021.98" cy="118.74" r="8.82" />
+<rect fill="#dcecff" fill-opacity="0.16" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.19" stroke-width="1" style="filter:blur(15.49px)" transform="rotate(9.04 1127.02 490.57)" x="1115.97" y="483.34" width="22.11" height="14.45" rx="8.48" />
+<path fill="none" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.56" stroke-width="1.8" stroke-linecap="round" d="M 1125.48 311 A 146.64 94.75 0 0 1 851.98 325.31" />
+<path fill="none" stroke="#dcecff" stroke-opacity="0.42" stroke-width="2" stroke-linecap="round" d="M 799.15 251.52 A 191.76 130.28 0 0 1 1158.6 230.13" />
+<ellipse fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.22" stroke="none" style="filter:blur(22.56px)" cx="966.55" cy="297.42" rx="50.76" ry="41.45" />
+<circle fill="#dcecff" fill-opacity="0.52" stroke="none" style="filter:blur(5.64px)" cx="832.87" cy="242.98" r="7.31" />
+<circle fill="#9dc7ff" fill-opacity="0.49" stroke="none" cx="1093.45" cy="366.87" r="9.56" />
+<circle fill="#dcecff" fill-opacity="0.46" stroke="none" cx="1082.53" cy="262.09" r="13.34" />
+<circle fill="#9dc7ff" fill-opacity="0.43" stroke="none" style="filter:blur(5.64px)" cx="967.47" cy="366.85" r="11.03" />
+<circle fill="#dcecff" fill-opacity="0.4" stroke="none" cx="983.24" cy="144.72" r="10.93" />
+<circle fill="#9dc7ff" fill-opacity="0.37" stroke="none" cx="1046.53" cy="369.6" r="14.99" /></g>
+  <g transform="translate(91.2 65.52)">
+    <rect width="143.04" height="44.73" rx="22.37" fill="rgba(25, 44, 79, 0.42)" stroke="rgba(176, 209, 255, 0.28)" />
+    <text x="71.52" y="28.37" text-anchor="middle" fill="#f4f9ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">PHILOSOPHY</text>
+  </g>
+<g transform="translate(247.44 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(25, 44, 79, 0.42)" stroke="rgba(176, 209, 255, 0.28)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#f4f9ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+<g transform="translate(451.73 65.52)">
+    <rect width="128.52" height="44.73" rx="22.37" fill="rgba(25, 44, 79, 0.42)" stroke="rgba(176, 209, 255, 0.28)" />
+    <text x="64.26" y="28.37" text-anchor="middle" fill="#f4f9ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">May 3, 2026</text>
+  </g>
+  <text x="91.2" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="91.2" y="216.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-0.04em">The Common Language of</text>
+<text x="91.2" y="276.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-0.04em">Knowledge: Shared</text>
+<text x="91.2" y="336.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-0.04em">Understanding Across Research</text>
+<text x="91.2" y="396.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-0.04em">and AI</text>
+  <text x="91.2" y="492.41" fill="rgba(236,242,250,0.72)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="500">Default/orbit coverage with a calmer composition.</text>
+  <line x1="91.2" y1="486.36" x2="739.2" y2="486.36" stroke="rgba(176, 209, 255, 0.28)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="91.2" y="555.66" fill="#dcecff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1108.8" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="0.1em">BLOG / EN</text>
+</svg>

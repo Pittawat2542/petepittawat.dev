@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog Cover Audit</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07111f;
+        --panel: rgba(255, 255, 255, 0.05);
+        --border: rgba(255, 255, 255, 0.12);
+        --text: rgba(248, 251, 255, 0.96);
+        --muted: rgba(226, 235, 247, 0.66);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(78, 134, 255, 0.16), transparent 32%),
+          radial-gradient(circle at bottom right, rgba(173, 116, 255, 0.16), transparent 28%),
+          var(--bg);
+        color: var(--text);
+      }
+      main {
+        width: min(1400px, calc(100vw - 48px));
+        margin: 0 auto;
+        padding: 40px 0 72px;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+      }
+      p.lead {
+        margin: 0 0 28px;
+        color: var(--muted);
+        max-width: 72ch;
+        line-height: 1.6;
+      }
+      .sample-card {
+        margin: 0 0 28px;
+        padding: 22px;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background: var(--panel);
+        backdrop-filter: blur(20px);
+      }
+      .sample-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        margin: 0 0 18px;
+      }
+      .sample-kicker {
+        margin: 0 0 6px;
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      .sample-meta h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 1.3;
+      }
+      .sample-meta dl {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 8px 18px;
+        margin: 0;
+      }
+      .sample-meta dt {
+        color: var(--muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+      .sample-meta dd {
+        margin: 2px 0 0;
+        font-size: 0.92rem;
+      }
+      .sample-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      figure {
+        margin: 0;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      figcaption {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+      @media (max-width: 960px) {
+        .sample-meta,
+        .sample-meta dl,
+        .sample-grid {
+          grid-template-columns: 1fr;
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Blog Cover Audit</h1>
+      <p class="lead">Deterministic sample coverage across motifs, languages, densities, and variants. Use this gallery to audit variety, readability, safe-area discipline, and parity between OG and on-site cover elements.</p>
+      <section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">ORBIT / arc-cluster</p>
+        <h2>The Common Language of Knowledge: Shared Understanding Across Research and AI</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>default</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>Philosophy</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/orbit-default-calm-og.png" alt="The Common Language of Knowledge: Shared Understanding Across Research and AI og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/orbit-default-calm-hero.png" alt="The Common Language of Knowledge: Shared Understanding Across Research and AI hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/orbit-default-calm-card.png" alt="The Common Language of Knowledge: Shared Understanding Across Research and AI card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">ORBIT / arc-cluster</p>
+        <h2>Flutter: What&#39;s the Difference Between a Package and a Plugin?</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>flutter</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>Flutter</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/orbit-flutter-og.png" alt="Flutter: What&#39;s the Difference Between a Package and a Plugin? og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/orbit-flutter-hero.png" alt="Flutter: What&#39;s the Difference Between a Package and a Plugin? hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/orbit-flutter-card.png" alt="Flutter: What&#39;s the Difference Between a Package and a Plugin? card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">GRID / matrix</p>
+        <h2>Dart Extension Methods for Cleaner and More Intentional APIs</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>dart</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>Dart</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/grid-dart-og.png" alt="Dart Extension Methods for Cleaner and More Intentional APIs og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/grid-dart-hero.png" alt="Dart Extension Methods for Cleaner and More Intentional APIs hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/grid-dart-card.png" alt="Dart Extension Methods for Cleaner and More Intentional APIs card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">BEAM / fan</p>
+        <h2>From Assistant to Collaborator: How Natural Language Agents Shape the World</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>ai</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>AI</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/beam-ai-high-og.png" alt="From Assistant to Collaborator: How Natural Language Agents Shape the World og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/beam-ai-high-hero.png" alt="From Assistant to Collaborator: How Natural Language Agents Shape the World hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/beam-ai-high-card.png" alt="From Assistant to Collaborator: How Natural Language Agents Shape the World card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">BEAM / fan</p>
+        <h2>ภาษากลางของความรู้ เมื่อ AI เชื่อมงานวิจัย วิศวกรรม และการนำไปใช้จริงเข้าด้วยกัน</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>ai</dd></div>
+        <div><dt>Locale</dt><dd>TH</dd></div>
+        <div><dt>Primary tag</dt><dd>AI</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/beam-ai-th-og.png" alt="ภาษากลางของความรู้ เมื่อ AI เชื่อมงานวิจัย วิศวกรรม และการนำไปใช้จริงเข้าด้วยกัน og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/beam-ai-th-hero.png" alt="ภาษากลางของความรู้ เมื่อ AI เชื่อมงานวิจัย วิศวกรรม และการนำไปใช้จริงเข้าด้วยกัน hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/beam-ai-th-card.png" alt="ภาษากลางของความรู้ เมื่อ AI เชื่อมงานวิจัย วิศวกรรม และการนำไปใช้จริงเข้าด้วยกัน card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">WAVE / swell</p>
+        <h2>HTML Line Break Opportunities and Better Long-Form Web Typography</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>web</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>Web</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/wave-web-og.png" alt="HTML Line Break Opportunities and Better Long-Form Web Typography og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/wave-web-hero.png" alt="HTML Line Break Opportunities and Better Long-Form Web Typography hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/wave-web-card.png" alt="HTML Line Break Opportunities and Better Long-Form Web Typography card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">STACK / steps</p>
+        <h2>Memory Partitioning and the Tradeoffs Behind Modern System Boundaries</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>systems</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>Computer Science</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/stack-systems-og.png" alt="Memory Partitioning and the Tradeoffs Behind Modern System Boundaries og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/stack-systems-hero.png" alt="Memory Partitioning and the Tradeoffs Behind Modern System Boundaries hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/stack-systems-card.png" alt="Memory Partitioning and the Tradeoffs Behind Modern System Boundaries card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+<section class="sample-card">
+    <header class="sample-meta">
+      <div>
+        <p class="sample-kicker">HALO / satellite</p>
+        <h2>Review: Digimon Adventure Last Evolution and the Weight of Growing Up</h2>
+      </div>
+      <dl>
+        <div><dt>Theme</dt><dd>review</dd></div>
+        <div><dt>Locale</dt><dd>EN</dd></div>
+        <div><dt>Primary tag</dt><dd>Review</dd></div>
+      </dl>
+    </header>
+    <div class="sample-grid">
+      <figure>
+          <img src="./assets/halo-review-og.png" alt="Review: Digimon Adventure Last Evolution and the Weight of Growing Up og" />
+          <figcaption>OG</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/halo-review-hero.png" alt="Review: Digimon Adventure Last Evolution and the Weight of Growing Up hero" />
+          <figcaption>HERO</figcaption>
+        </figure>
+<figure>
+          <img src="./assets/halo-review-card.png" alt="Review: Digimon Adventure Last Evolution and the Weight of Growing Up card" />
+          <figcaption>CARD</figcaption>
+        </figure>
+    </div>
+  </section>
+    </main>
+  </body>
+</html>

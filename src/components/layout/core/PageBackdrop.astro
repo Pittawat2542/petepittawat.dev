@@ -1,12 +1,13 @@
 ---
 interface Props {
-  variant?: 'landing' | 'article';
+  variant?: 'landing' | 'article' | undefined;
+  style?: string | undefined;
 }
 
-const { variant = 'landing' } = Astro.props as Props;
+const { variant = 'landing', style } = Astro.props as Props;
 ---
 
-<div class="page-backdrop" data-variant={variant} aria-hidden="true">
+<div class="page-backdrop" data-variant={variant} aria-hidden="true" style={style}>
   <div class="page-backdrop__gradient"></div>
   <div class="page-backdrop__particles"></div>
   <div class="page-backdrop__grid"></div>

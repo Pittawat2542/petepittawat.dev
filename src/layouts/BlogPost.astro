@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
+import BlogCover from '@/components/ui/blog/BlogCover';
 import FormattedDate from '@/components/content/FormattedDate';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
@@ -10,6 +10,11 @@ import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
 import { languages } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import {
+  getBlogCoverCssVariables,
+  resolveBlogCoverSpec,
+  serializeCssVariables,
+} from '@/lib/blog-cover';
 import { computeBlogPostMetadata, generateBlogPostSchema } from '@/lib/blog-post-schema';
 import type { BlogPostLanguageState } from '@/lib/blog-translations';
 
@@ -26,7 +31,6 @@ const {
   title,
   excerpt,
   pubDate,
-  coverImage,
   tags,
   slug,
   lang = 'en',
@@ -46,24 +50,32 @@ const languageHelperText = !languageState.availability.en.available
     ? t('blog.onlyInEnglish')
     : undefined;
 
+const coverSpec =
+  slug !== undefined
+    ? resolveBlogCoverSpec({
+        title,
+        excerpt,
+        lang,
+        routeSlug: slug,
+        tags,
+        pubDate,
+      })
+    : undefined;
+const coverThemeVariables = coverSpec ? getBlogCoverCssVariables(coverSpec.theme) : {};
+const coverThemeStyle =
+  Object.keys(coverThemeVariables).length > 0
+    ? serializeCssVariables(coverThemeVariables)
+    : undefined;
+
 const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
 const metadata = computeBlogPostMetadata({
   slug,
   lang,
-  coverImage,
   tags,
   site: Astro.site,
   twitterHandle,
 });
-const {
-  canonicalUrl,
-  imageUrl,
-  authorUrl,
-  authorSameAs,
-  coverOrientation,
-  visibleTags,
-  hiddenTagCount,
-} = metadata;
+const { canonicalUrl, imageUrl, authorUrl, authorSameAs } = metadata;
 
 const siteUrl = Astro.site ? Astro.site.href : '/';
 const schema = generateBlogPostSchema({
@@ -87,14 +99,15 @@ const schema = generateBlogPostSchema({
   description={excerpt}
   lang={lang}
   alternateLanguages={alternateLanguages}
-  image={coverImage?.src ?? (slug ? `/og/blog/${slug}.png` : undefined)}
+  image={coverSpec?.ogImagePath}
   type="article"
   publishedTime={pubDate.toISOString?.() ?? String(pubDate)}
   tags={tags}
   wordCount={wordCount}
   page="blog"
+  themeVariables={coverThemeVariables}
 >
-  <PageBackdrop variant="article" />
+  <PageBackdrop variant="article" style={coverThemeStyle} />
   <ReadingProgressBar />
   <Fragment slot="head">
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
@@ -108,11 +121,22 @@ const schema = generateBlogPostSchema({
       </a>
     </div>
 
-    <section
-      class="article-surface article-hero reveal"
-      data-has-media={coverImage ? 'true' : undefined}
-    >
-      <div class="article-hero__copy">
+    <section class="article-surface article-hero reveal">
+      <div class="article-hero__background" aria-hidden="true">
+        <BlogCover
+          title={title}
+          excerpt={excerpt}
+          lang={lang}
+          routeSlug={slug ?? title}
+          tags={tags}
+          pubDate={pubDate}
+          variant="hero"
+          renderMode="background"
+          className="article-hero__cover"
+        />
+      </div>
+
+      <div class="article-hero__overlay">
         <div class="article-hero__badge">
           <span class="article-hero__badge-dot"></span>
           Field Notes
@@ -147,14 +171,14 @@ const schema = generateBlogPostSchema({
         </div>
 
         {
-          visibleTags.length ? (
+          tags.length ? (
             <div class="article-tags">
               <span class="article-tags__icon">
                 <span class="sr-only">Tags</span>
                 <TagIcon class="article-tags__symbol" aria-hidden="true" />
               </span>
               <ul class="article-tags__list">
-                {visibleTags.map(tag => (
+                {tags.map(tag => (
                   <li>
                     <a
                       href={`/tags/${tag
@@ -168,33 +192,11 @@ const schema = generateBlogPostSchema({
                     </a>
                   </li>
                 ))}
-                {hiddenTagCount > 0 ? (
-                  <li>
-                    <span class="article-tag article-tag--muted">+{hiddenTagCount} more</span>
-                  </li>
-                ) : null}
               </ul>
             </div>
           ) : null
         }
       </div>
-
-      {
-        coverImage && (
-          <div class="article-hero__media" data-orientation={coverOrientation}>
-            <Image
-              class="article-hero__media-img"
-              src={coverImage}
-              alt=""
-              loading="eager"
-              fetchpriority="high"
-              sizes="(min-width: 1280px) 420px, (min-width: 1024px) 36vw, (min-width: 768px) 60vw, 100vw"
-              decoding="async"
-              data-orientation={coverOrientation}
-            />
-          </div>
-        )
-      }
     </section>
 
     <div class="article-main">
@@ -332,21 +334,50 @@ const schema = generateBlogPostSchema({
   }
 
   .article-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.88fr);
-    gap: clamp(1.6rem, 2vw, 2.6rem);
-    padding: clamp(1.5rem, 2vw + 0.7rem, 2.4rem);
-    align-items: stretch;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: clamp(25rem, 52vw, 42rem);
+    align-items: flex-end;
+    overflow: hidden;
+    padding: clamp(1.5rem, 1rem + 1.8vw, 2.5rem);
   }
 
-  .article-hero__copy {
+  .article-hero__background {
+    position: absolute;
+    inset: 0;
+  }
+
+  .article-hero__background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(3, 7, 18, 0.84) 0%,
+        rgba(3, 7, 18, 0.62) 46%,
+        rgba(3, 7, 18, 0.24) 76%,
+        rgba(3, 7, 18, 0.1) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(4, 8, 18, 0.05) 0%,
+        rgba(4, 8, 18, 0.16) 42%,
+        rgba(4, 8, 18, 0.7) 100%
+      );
+    pointer-events: none;
+  }
+
+  .article-hero__overlay {
     position: relative;
     z-index: 1;
     display: flex;
+    width: min(100%, 48rem);
     min-width: 0;
     flex-direction: column;
-    justify-content: center;
-    gap: 1.2rem;
+    justify-content: flex-end;
+    gap: 1.15rem;
   }
 
   .article-hero__badge {
@@ -375,12 +406,13 @@ const schema = generateBlogPostSchema({
 
   .article-hero__title {
     margin: 0;
-    max-width: 18ch;
-    font-size: clamp(2.2rem, 2rem + 1.4vw, 4rem);
+    max-width: 13ch;
+    font-size: clamp(2.35rem, 1.7rem + 3vw, 5.4rem);
     font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.028em;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
     text-wrap: balance;
+    text-shadow: 0 18px 46px rgba(3, 7, 18, 0.42);
   }
 
   .article-meta {
@@ -388,8 +420,8 @@ const schema = generateBlogPostSchema({
     flex-wrap: wrap;
     align-items: center;
     gap: 0.65rem 1rem;
-    font-size: 0.9rem;
-    color: color-mix(in oklab, var(--white) 74%, transparent);
+    font-size: 0.94rem;
+    color: color-mix(in oklab, var(--white) 78%, transparent);
   }
 
   .article-meta__item {
@@ -405,8 +437,8 @@ const schema = generateBlogPostSchema({
   }
 
   .article-meta__text {
-    font-weight: 600;
-    color: color-mix(in oklab, var(--white) 88%, transparent);
+    font-weight: 650;
+    color: color-mix(in oklab, var(--white) 92%, transparent);
   }
 
   .article-meta__divider {
@@ -469,42 +501,11 @@ const schema = generateBlogPostSchema({
     background: rgba(26, 38, 69, 0.82);
   }
 
-  .article-tag--muted {
-    border-color: rgba(148, 163, 184, 0.18);
-    background: rgba(18, 26, 46, 0.64);
-    color: color-mix(in oklab, var(--white) 72%, transparent);
-  }
-
-  .article-hero__media {
-    position: relative;
-    z-index: 1;
-    min-height: clamp(16rem, 28vw, 24rem);
-    overflow: hidden;
-    border-radius: 1.35rem;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    background:
-      linear-gradient(180deg, rgba(4, 8, 18, 0.08), rgba(4, 8, 18, 0.4)), rgba(255, 255, 255, 0.04);
-    box-shadow: 0 24px 56px -44px rgba(4, 10, 24, 0.92);
-  }
-
-  .article-hero__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(4, 8, 18, 0) 30%, rgba(4, 8, 18, 0.26) 100%);
-    pointer-events: none;
-  }
-
-  .article-hero__media-img {
-    display: block;
-    width: 100%;
+  .article-hero__cover {
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .article-hero__media[data-orientation='portrait'] .article-hero__media-img {
-    object-position: top center;
+    min-height: 100%;
+    border: none;
+    box-shadow: none;
   }
 
   .article-main {
@@ -1152,11 +1153,15 @@ const schema = generateBlogPostSchema({
 
   @media (max-width: 1100px) {
     .article-hero {
-      grid-template-columns: minmax(0, 1fr);
+      min-height: clamp(23rem, 66vw, 34rem);
+    }
+
+    .article-hero__overlay {
+      width: min(100%, 40rem);
     }
 
     .article-hero__title {
-      max-width: 16ch;
+      max-width: 14ch;
     }
   }
 
@@ -1171,12 +1176,33 @@ const schema = generateBlogPostSchema({
 
     .article-hero {
       padding: 1.35rem;
-      gap: 1.2rem;
+      min-height: clamp(22rem, 96vw, 31rem);
+    }
+
+    .article-hero__background::after {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(4, 8, 18, 0.16) 0%,
+          rgba(4, 8, 18, 0.42) 44%,
+          rgba(4, 8, 18, 0.86) 100%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(3, 7, 18, 0.54) 0%,
+          rgba(3, 7, 18, 0.22) 72%,
+          rgba(3, 7, 18, 0.08) 100%
+        );
+    }
+
+    .article-hero__overlay {
+      width: 100%;
+      gap: 1rem;
     }
 
     .article-hero__title {
       max-width: none;
-      font-size: clamp(2rem, 8vw, 2.8rem);
+      font-size: clamp(2rem, 8vw, 3rem);
     }
 
     .article-meta {

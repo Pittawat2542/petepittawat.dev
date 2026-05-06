@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a120f" />
+      <stop offset="100%" stop-color="#271812" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b261e" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#190f0b" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(245, 167, 106, 0.28)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(245, 167, 106, 0.28)" fill-opacity="0.28" stroke="none" style="filter:blur(40.56px)" cx="157.19" cy="118.84" rx="112.32" ry="88.45" />
+<ellipse fill="rgba(215, 116, 58, 0.2)" fill-opacity="0.2" stroke="none" style="filter:blur(34.32px)" cx="1035.87" cy="453.8" rx="131.04" ry="98.28" />
+<rect fill="#ffd8b2" fill-opacity="0.14" stroke="rgba(255, 216, 178, 0.28)" stroke-opacity="0.29" stroke-width="1" style="filter:blur(8.32px)" transform="rotate(15.27 1096.19 296.14)" x="1087.68" y="290.06" width="17.01" height="12.15" rx="5.41" />
+<rect fill="rgba(245, 167, 106, 0.28)" fill-opacity="0.12" stroke="rgba(255, 216, 178, 0.28)" stroke-opacity="0.21" stroke-width="1" style="filter:blur(11.77px)" transform="rotate(17.43 935.08 243)" x="924.12" y="237.12" width="21.93" height="11.76" rx="6.64" />
+<circle fill="#ffd8b2" fill-opacity="0.23" stroke="none" style="filter:blur(9.1px)" cx="798.96" cy="479.09" r="13.52" />
+<circle fill="rgba(245, 167, 106, 0.28)" fill-opacity="0.22" stroke="none" style="filter:blur(8.4px)" cx="859.68" cy="325.2" r="14.56" />
+<circle fill="#ffd8b2" fill-opacity="0.21" stroke="none" style="filter:blur(14.54px)" cx="789.4" cy="280.87" r="11.32" />
+<circle fill="rgba(245, 167, 106, 0.28)" fill-opacity="0.18" stroke="none" style="filter:blur(16.41px)" cx="985.96" cy="192.43" r="14.29" />
+<circle fill="#ffd8b2" fill-opacity="0.15" stroke="none" style="filter:blur(12.66px)" cx="1129.41" cy="504.35" r="7.65" />
+<path fill="none" stroke="#ffd8b2" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round" d="M 1085.79 284.13 A 102.96 78.62 0 0 1 908.47 300.57" />
+<path fill="none" stroke="rgba(255, 216, 178, 0.28)" stroke-opacity="0.34" stroke-width="1.6" stroke-linecap="round" d="M 846.17 225.89 A 149.76 108.11 0 0 1 1129.86 213.09" />
+<circle fill="rgba(245, 167, 106, 0.28)" fill-opacity="0.32" stroke="none" style="filter:blur(9.36px)" cx="990.96" cy="253.51" r="26.21" /></g>
+  <g transform="translate(86.4 65.52)">
+    <rect width="124.8" height="44.73" rx="22.37" fill="rgba(95, 53, 33, 0.44)" stroke="rgba(255, 216, 178, 0.28)" />
+    <text x="62.4" y="28.37" text-anchor="middle" fill="#fff7ef" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">REVIEW</text>
+  </g>
+<g transform="translate(224.4 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(95, 53, 33, 0.44)" stroke="rgba(255, 216, 178, 0.28)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#fff7ef" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+  <text x="86.4" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="86.4" y="204.75" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="-0.04em">Review: Digimon Adventure Last Evolution and the Weight of Growing Up</text>
+  
+  <line x1="86.4" y1="310.87" x2="734.4" y2="310.87" stroke="rgba(255, 216, 178, 0.28)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="86.4" y="555.66" fill="#ffd8b2" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1113.6" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="0.1em">ENGLISH EDITION</text>
+</svg>

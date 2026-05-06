@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1426" />
+      <stop offset="100%" stop-color="#101b33" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#172746" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0c162b" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(138, 180, 255, 0.28)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.28" stroke="none" style="filter:blur(40.56px)" cx="144.25" cy="110.06" rx="112.32" ry="88.45" />
+<ellipse fill="rgba(84, 117, 210, 0.2)" fill-opacity="0.2" stroke="none" style="filter:blur(34.32px)" cx="1020.88" cy="482.54" rx="131.04" ry="98.28" />
+<rect fill="#c6dbff" fill-opacity="0.1" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.19" stroke-width="1" style="filter:blur(7.97px)" transform="rotate(-16.66 1006.97 388.53)" x="993.42" y="374.41" width="27.08" height="28.24" rx="11.26" />
+<circle fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.26" stroke="none" style="filter:blur(11.25px)" cx="841.9" cy="218.34" r="14.79" />
+<circle fill="#c6dbff" fill-opacity="0.24" stroke="none" style="filter:blur(17.06px)" cx="1101.77" cy="307.32" r="13.4" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.17" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.21" stroke-width="1" style="filter:blur(9.51px)" transform="rotate(-5.12 1132.07 110.19)" x="1117.49" y="97.7" width="29.15" height="24.97" rx="9.88" />
+<rect fill="#c6dbff" fill-opacity="0.09" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.17" stroke-width="1" style="filter:blur(11.41px)" transform="rotate(-16.27 962.22 387.61)" x="949.94" y="377.55" width="24.56" height="20.12" rx="9.08" />
+<circle fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.27" stroke="none" style="filter:blur(8.03px)" cx="716.2" cy="494.04" r="14.01" />
+<circle fill="#c6dbff" fill-opacity="0.24" stroke="none" style="filter:blur(8.08px)" cx="806.99" cy="154.98" r="9.99" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.15" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.24" stroke-width="1" x="744.72" y="144.65" width="126.36" height="44.23" rx="14.04" />
+<rect fill="#c6dbff" fill-opacity="0.18" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.24" stroke-width="1" x="759.12" y="184.97" width="120.74" height="42.26" rx="14.04" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.2" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.24" stroke-width="1" x="773.52" y="225.29" width="115.13" height="40.29" rx="14.04" />
+<rect fill="#c6dbff" fill-opacity="0.23" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.24" stroke-width="1" x="787.92" y="265.61" width="109.51" height="38.33" rx="14.04" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.25" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.24" stroke-width="1" x="802.32" y="305.93" width="103.9" height="36.36" rx="14.04" /></g>
+  <g transform="translate(86.4 65.52)">
+    <rect width="201.91" height="44.73" rx="22.37" fill="rgba(28, 48, 88, 0.44)" stroke="rgba(180, 205, 255, 0.28)" />
+    <text x="100.96" y="28.37" text-anchor="middle" fill="#eef4ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">COMPUTER SCIENCE</text>
+  </g>
+<g transform="translate(301.51 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(28, 48, 88, 0.44)" stroke="rgba(180, 205, 255, 0.28)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#eef4ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+  <text x="86.4" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="86.4" y="204.75" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.04em">Memory Partitioning and the Tradeoffs Behind Modern System Boundaries</text>
+  
+  <line x1="86.4" y1="308.87" x2="734.4" y2="308.87" stroke="rgba(180, 205, 255, 0.28)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="86.4" y="555.66" fill="#c6dbff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1113.6" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="0.1em">ENGLISH EDITION</text>
+</svg>

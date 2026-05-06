@@ -2,6 +2,7 @@
  * Generate JSON-LD schema for blog posts
  */
 
+import { getBlogOgImagePath } from './blog-cover/index.ts';
 import { getBlogPostPath, type BlogTranslationLocale } from './blog-translations.ts';
 
 interface BlogPostSchemaParams {
@@ -86,27 +87,20 @@ interface BlogPostMetadata {
 export function computeBlogPostMetadata(params: {
   slug?: string | undefined;
   lang?: BlogTranslationLocale | undefined;
-  coverImage?: any;
   tags?: string[] | undefined;
   site?: URL | undefined;
   twitterHandle?: string | undefined;
 }): BlogPostMetadata {
-  const { slug, lang = 'en', coverImage, tags = [], site, twitterHandle } = params;
+  const { slug, lang = 'en', tags = [], site, twitterHandle } = params;
 
   const authorUrl = site ? new URL('/about', site).href : '/about';
   const blogPostPath = slug ? getBlogPostPath({ data: { slug, lang } }) : '/';
   const canonicalUrl = slug ? (site ? new URL(blogPostPath, site).href : blogPostPath) : '/';
 
-  const fallback = slug ? `/og/blog/${slug}.png` : '/home-og-image.jpeg';
-  const src = coverImage?.src ?? fallback;
+  const src = slug ? getBlogOgImagePath({ lang, routeSlug: slug }) : '/home-og-image.jpeg';
   const imageUrl = site ? new URL(src, site).href : src;
 
-  const coverOrientation =
-    coverImage && typeof coverImage === 'object' && 'width' in coverImage && 'height' in coverImage
-      ? Number(coverImage.width) < Number(coverImage.height)
-        ? 'portrait'
-        : 'landscape'
-      : 'landscape';
+  const coverOrientation = 'landscape';
 
   const authorSameAs: string[] = [];
   if (twitterHandle) {

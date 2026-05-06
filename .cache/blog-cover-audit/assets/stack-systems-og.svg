@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1426" />
+      <stop offset="100%" stop-color="#101b33" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#172746" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0c162b" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(138, 180, 255, 0.28)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.28" stroke="none" style="filter:blur(48.88px)" cx="153.39" cy="94.28" rx="135.36" ry="106.6" />
+<ellipse fill="#c6dbff" fill-opacity="0.2" stroke="none" style="filter:blur(41.36px)" cx="1031.51" cy="470.21" rx="157.92" ry="118.44" />
+<rect fill="#c6dbff" fill-opacity="0.1" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.3" stroke-width="1" style="filter:blur(15.44px)" transform="rotate(17.89 898.86 322.48)" x="884.07" y="309.58" width="29.59" height="25.8" rx="12.71" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.16" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.15" stroke-width="1" style="filter:blur(7.48px)" transform="rotate(-20.4 1082.71 77.31)" x="1064.67" y="65.44" width="36.09" height="23.75" rx="11.39" />
+<rect fill="#c6dbff" fill-opacity="0.17" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.29" stroke-width="1" style="filter:blur(8.72px)" transform="rotate(-17.26 817.7 435.18)" x="810.96" y="428.9" width="13.48" height="12.57" rx="5.86" />
+<circle fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.27" stroke="none" style="filter:blur(16.31px)" cx="1080.39" cy="473.3" r="18.77" />
+<circle fill="#c6dbff" fill-opacity="0.23" stroke="none" style="filter:blur(20.19px)" cx="825.64" cy="417.74" r="16.94" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.17" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.2" stroke-width="1" style="filter:blur(6.96px)" transform="rotate(8.95 786.41 80.27)" x="774" y="71.97" width="24.82" height="16.6" rx="7.62" />
+<circle fill="#c6dbff" fill-opacity="0.23" stroke="none" style="filter:blur(13.46px)" cx="1073.69" cy="87.72" r="12.99" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.18" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.22" stroke-width="1.1" x="776.4" y="144.65" width="135.36" height="50.34" rx="16.92" />
+<rect fill="rgba(84, 117, 210, 0.2)" fill-opacity="0.2" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.25" stroke-width="1.1" x="794.4" y="179.3" width="148.9" height="50.34" rx="16.92" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.22" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.28" stroke-width="1.1" x="812.4" y="213.95" width="162.43" height="50.34" rx="16.92" />
+<rect fill="rgba(84, 117, 210, 0.2)" fill-opacity="0.24" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.31" stroke-width="1.1" x="830.4" y="248.6" width="175.97" height="50.34" rx="16.92" />
+<rect fill="rgba(138, 180, 255, 0.28)" fill-opacity="0.26" stroke="rgba(180, 205, 255, 0.28)" stroke-opacity="0.34" stroke-width="1.1" x="848.4" y="283.25" width="189.5" height="50.34" rx="16.92" /></g>
+  <g transform="translate(91.2 65.52)">
+    <rect width="201.91" height="44.73" rx="22.37" fill="rgba(28, 48, 88, 0.44)" stroke="rgba(180, 205, 255, 0.28)" />
+    <text x="100.96" y="28.37" text-anchor="middle" fill="#eef4ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">COMPUTER SCIENCE</text>
+  </g>
+<g transform="translate(306.31 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(28, 48, 88, 0.44)" stroke="rgba(180, 205, 255, 0.28)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#eef4ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+<g transform="translate(510.6 65.52)">
+    <rect width="128.52" height="44.73" rx="22.37" fill="rgba(28, 48, 88, 0.44)" stroke="rgba(180, 205, 255, 0.28)" />
+    <text x="64.26" y="28.37" text-anchor="middle" fill="#eef4ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">Oct 9, 2021</text>
+  </g>
+  <text x="91.2" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="91.2" y="216.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="-0.04em">Memory Partitioning and the</text>
+<text x="91.2" y="279.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="-0.04em">Tradeoffs Behind Modern</text>
+<text x="91.2" y="342.09" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="-0.04em">System Boundaries</text>
+  <text x="91.2" y="440.41" fill="rgba(236,242,250,0.72)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="500">Stack motif systems sample.</text>
+  <line x1="91.2" y1="478.21" x2="739.2" y2="478.21" stroke="rgba(180, 205, 255, 0.28)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="91.2" y="555.66" fill="#c6dbff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1108.8" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="0.1em">BLOG / EN</text>
+</svg>

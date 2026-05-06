@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0d20" />
+      <stop offset="100%" stop-color="#171230" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#261a4a" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#120f24" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(179, 140, 255, 0.32)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.28" stroke="none" style="filter:blur(40.56px)" cx="155.4" cy="110.92" rx="112.32" ry="88.45" />
+<ellipse fill="#d2bcff" fill-opacity="0.2" stroke="none" style="filter:blur(34.32px)" cx="1044.75" cy="485.15" rx="131.04" ry="98.28" />
+<circle fill="#d2bcff" fill-opacity="0.28" stroke="none" style="filter:blur(9.62px)" cx="848.09" cy="415.55" r="12.61" />
+<circle fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.23" stroke="none" style="filter:blur(11.72px)" cx="844.55" cy="110.03" r="11.69" />
+<circle fill="#d2bcff" fill-opacity="0.2" stroke="none" style="filter:blur(13.8px)" cx="835.54" cy="300.27" r="13.54" />
+<circle fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.17" stroke="none" style="filter:blur(11.69px)" cx="746.28" cy="93.7" r="13.34" />
+<rect fill="#d2bcff" fill-opacity="0.09" stroke="rgba(210, 188, 255, 0.34)" stroke-opacity="0.28" stroke-width="1" style="filter:blur(12.93px)" transform="rotate(-20.31 980.29 231)" x="964.56" y="217.71" width="31.45" height="26.58" rx="10.61" />
+<rect fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.08" stroke="rgba(210, 188, 255, 0.34)" stroke-opacity="0.18" stroke-width="1" style="filter:blur(9.89px)" transform="rotate(-11.94 731.08 355.92)" x="723.56" y="347.9" width="15.04" height="16.05" rx="6.22" />
+<circle fill="#d2bcff" fill-opacity="0.16" stroke="none" style="filter:blur(15.53px)" cx="878.81" cy="164.25" r="7.11" />
+<rect fill="rgba(179, 140, 255, 0.32)" fill-opacity="0.16" stroke="rgba(210, 188, 255, 0.34)" stroke-opacity="0.2" stroke-width="1" style="filter:blur(10.81px)" transform="rotate(-1.74 920.16 157.55)" x="913.37" y="150.61" width="13.59" height="13.88" rx="5.48" />
+<rect fill="#b38cff" fill-opacity="0.18" stroke="none" style="filter:blur(17.16px)" transform="rotate(10 768.11 281.74)" x="753.84" y="50.4" width="28.54" height="462.67" rx="999" />
+<rect fill="#d2bcff" fill-opacity="0.23" stroke="none" style="filter:blur(17.16px)" transform="rotate(15 826.25 281.74)" x="807.84" y="63" width="36.81" height="437.47" rx="999" />
+<rect fill="#b38cff" fill-opacity="0.28" stroke="none" style="filter:blur(17.16px)" transform="rotate(20 877.24 281.74)" x="861.84" y="75.6" width="30.79" height="412.27" rx="999" />
+<rect fill="#d2bcff" fill-opacity="0.33" stroke="none" style="filter:blur(17.16px)" transform="rotate(25 935.16 281.74)" x="915.84" y="88.2" width="38.65" height="387.07" rx="999" /></g>
+  <g transform="translate(86.4 65.52)">
+    <rect width="141.6" height="44.73" rx="22.37" fill="rgba(58, 37, 105, 0.5)" stroke="rgba(210, 188, 255, 0.34)" />
+    <text x="70.8" y="28.37" text-anchor="middle" fill="#f5efff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.03em">AI</text>
+  </g>
+<g transform="translate(241.2 65.52)">
+    <rect width="185.01" height="44.73" rx="22.37" fill="rgba(58, 37, 105, 0.5)" stroke="rgba(210, 188, 255, 0.34)" />
+    <text x="92.51" y="28.37" text-anchor="middle" fill="#f5efff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.03em">ฉบับภาษาไทย</text>
+  </g>
+  <text x="86.4" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">บันทึกภาคสนาม</text>
+  <text x="86.4" y="204.75" fill="#F8FBFF" font-family="'Anuphan', 'Thonburi', 'Arial Unicode MS', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="-0.01em">ภาษากลางของความรู้ เมื่อ AI เชื่อมงานวิจัย วิศวกรรม และการนำไปใช้จริงเข้าด้วยกัน</text>
+  
+  <line x1="86.4" y1="300.87" x2="734.4" y2="300.87" stroke="rgba(210, 188, 255, 0.34)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="86.4" y="555.66" fill="#d2bcff" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1113.6" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Anuphan', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="0.1em">ฉบับภาษาไทย</text>
+</svg>

@@ -4,6 +4,7 @@ import BaseHead from '@/components/layout/core/BaseHead.astro';
 import Footer from '@/components/layout/core/Footer.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
 import SearchModal from '@/components/layout/SearchModal';
+import { serializeCssVariables } from '@/lib/blog-cover';
 
 const {
   title,
@@ -16,6 +17,7 @@ const {
   tags,
   wordCount,
   page,
+  themeVariables = {},
 } = Astro.props as {
   title: string;
   description: string;
@@ -27,14 +29,17 @@ const {
   tags?: string[];
   wordCount?: number;
   page?: string;
+  themeVariables?: Record<string, string>;
 };
 const ogImagePath = image ?? '/home-og-image.jpeg';
 const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath;
 const pageKey = page?.toLowerCase();
 const pageAccent = pageKey ? `var(--accent-${pageKey}, var(--accent, #6ac1ff))` : undefined;
-const bodyStyle = pageAccent
-  ? `--page-accent:${pageAccent};--card-accent:${pageAccent};`
-  : undefined;
+const bodyStyleFragments = [
+  pageAccent ? `--page-accent:${pageAccent};--card-accent:${pageAccent};` : undefined,
+  Object.keys(themeVariables).length > 0 ? serializeCssVariables(themeVariables) : undefined,
+].filter(Boolean);
+const bodyStyle = bodyStyleFragments.length > 0 ? bodyStyleFragments.join(';') : undefined;
 const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
 ---
 

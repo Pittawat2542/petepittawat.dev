@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#09111f" />
+      <stop offset="100%" stop-color="#0d1729" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#17243b" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0a1222" stop-opacity="0.84" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="rgba(157, 199, 255, 0.26)" opacity="0.18" />
+  <rect x="48" y="37.8" width="1104" height="554.4" rx="33.6" fill="url(#panel)" stroke="rgba(255,255,255,0.11)" />
+  <rect x="49.5" y="39.3" width="1101" height="551.4" rx="31.2" fill="transparent" stroke="rgba(255,255,255,0.04)" />
+  <g opacity="0.96"><ellipse fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.28" stroke="none" style="filter:blur(40.56px)" cx="153.91" cy="92.93" rx="112.32" ry="88.45" />
+<ellipse fill="rgba(95, 141, 221, 0.2)" fill-opacity="0.2" stroke="none" style="filter:blur(34.32px)" cx="1022.29" cy="457.87" rx="131.04" ry="98.28" />
+<circle fill="#dcecff" fill-opacity="0.23" stroke="none" style="filter:blur(11.89px)" cx="833.83" cy="154.22" r="7.57" />
+<rect fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.12" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.15" stroke-width="1" style="filter:blur(8.53px)" transform="rotate(-19.88 774.01 253.37)" x="767.17" y="247.95" width="13.69" height="10.85" rx="6" />
+<rect fill="#dcecff" fill-opacity="0.15" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.15" stroke-width="1" style="filter:blur(11.89px)" transform="rotate(-5.59 880.21 368.64)" x="865.76" y="358.99" width="28.9" height="19.29" rx="11.31" />
+<circle fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.2" stroke="none" style="filter:blur(13.76px)" cx="842.62" cy="367.01" r="8.11" />
+<circle fill="#dcecff" fill-opacity="0.16" stroke="none" style="filter:blur(11.81px)" cx="900.15" cy="499.47" r="10.42" />
+<rect fill="rgba(157, 199, 255, 0.26)" fill-opacity="0.16" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.22" stroke-width="1" style="filter:blur(8.39px)" transform="rotate(8.38 1039.43 216.15)" x="1026.38" y="203.3" width="26.09" height="25.68" rx="10.99" />
+<circle fill="#dcecff" fill-opacity="0.16" stroke="none" style="filter:blur(14.51px)" cx="770.36" cy="420.22" r="6.85" />
+<ellipse fill="none" stroke="rgba(176, 209, 255, 0.28)" stroke-opacity="0.42" stroke-width="1.4" cx="955.18" cy="264.16" rx="149.76" ry="98.28" />
+<ellipse fill="none" stroke="rgba(194, 217, 255, 0.15)" stroke-opacity="0.24" stroke-width="1.2" cx="979.18" cy="264.16" rx="215.28" ry="132.68" />
+<ellipse fill="#9dc7ff" fill-opacity="0.16" stroke="none" style="filter:blur(24.96px)" cx="1015.18" cy="283.06" rx="74.88" ry="58.97" />
+<circle fill="#dcecff" fill-opacity="0.58" stroke="none" style="filter:blur(4.68px)" cx="837.26" cy="252.57" r="9.07" />
+<circle fill="#9dc7ff" fill-opacity="0.55" stroke="none" cx="1033.26" cy="399.54" r="12.49" />
+<circle fill="#dcecff" fill-opacity="0.52" stroke="none" cx="1086.6" cy="268.19" r="6.59" />
+<circle fill="#9dc7ff" fill-opacity="0.49" stroke="none" style="filter:blur(4.68px)" cx="834.35" cy="305.07" r="12.58" />
+<circle fill="#dcecff" fill-opacity="0.46" stroke="none" cx="906.97" cy="369.68" r="10.77" />
+<circle fill="#9dc7ff" fill-opacity="0.43" stroke="none" cx="872.81" cy="201.85" r="9.22" />
+<circle fill="#dcecff" fill-opacity="0.4" stroke="none" style="filter:blur(4.68px)" cx="1013.14" cy="173.57" r="7.5" />
+<circle fill="#9dc7ff" fill-opacity="0.37" stroke="none" cx="966.5" cy="188.41" r="7.08" /></g>
+  <g transform="translate(86.4 65.52)">
+    <rect width="143.04" height="44.73" rx="22.37" fill="rgba(25, 44, 79, 0.42)" stroke="rgba(176, 209, 255, 0.28)" />
+    <text x="71.52" y="28.37" text-anchor="middle" fill="#f4f9ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">PHILOSOPHY</text>
+  </g>
+<g transform="translate(242.64 65.52)">
+    <rect width="191.09" height="44.73" rx="22.37" fill="rgba(25, 44, 79, 0.42)" stroke="rgba(176, 209, 255, 0.28)" />
+    <text x="95.54" y="28.37" text-anchor="middle" fill="#f4f9ff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.12em">ENGLISH EDITION</text>
+  </g>
+  <text x="86.4" y="145.53" fill="rgba(231,240,255,0.74)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" letter-spacing="0.18em">FIELD NOTES</text>
+  <text x="86.4" y="204.75" fill="#F8FBFF" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="-0.04em">The Common Language of Knowledge: Shared Understanding Across Research and AI</text>
+  
+  <line x1="86.4" y1="306.87" x2="734.4" y2="306.87" stroke="rgba(176, 209, 255, 0.28)" stroke-width="1.5" stroke-linecap="round" />
+  <text x="86.4" y="555.66" fill="#dcecff" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="650" letter-spacing="0.08em">PETEPITTAWAT.DEV</text>
+  <text x="1113.6" y="555.66" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="'Inter', 'Anuphan', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="0.1em">ENGLISH EDITION</text>
+</svg>
