@@ -40,6 +40,8 @@ interface BlogCardProps {
   readonly className?: string | undefined;
   /** Inline styles to apply */
   readonly style?: CSSProperties | undefined;
+  /** Presentational tone for page-specific styling */
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 /**
@@ -62,6 +64,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   languageState,
   className,
   style,
+  tone = 'default',
 }) => {
   const { isPartOfSeries, partNumber, totalParts, seriesTitle } = useBlogCardSeries(
     post,
@@ -87,37 +90,55 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   } as CSSProperties;
 
   const listClassName = cn(
-    'group blog-card aurora-card flex h-full w-full flex-col text-[color:var(--white)] transition-transform duration-300 ease-out',
+    tone === 'editorial'
+      ? 'group blog-card blog-card--editorial flex h-full w-full flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.14),transparent_26%),linear-gradient(180deg,rgba(11,20,38,0.95),rgba(8,15,29,0.97))] text-white shadow-[0_30px_70px_-42px_rgba(3,7,18,0.82)] transition-[transform,box-shadow,border-color] duration-300 ease-out'
+      : 'group blog-card aurora-card flex h-full w-full flex-col text-[color:var(--white)] transition-transform duration-300 ease-out',
     featured && 'aurora-card--featured',
     className
   );
 
   return (
     <li style={mergedStyle} className={listClassName}>
-      <div className="aurora-card__wrapper" />
+      {tone === 'default' && <div className="aurora-card__wrapper" />}
       <a
-        className="relative flex h-full flex-col overflow-hidden rounded-[inherit] text-[color:var(--white)] transition-[transform,box-shadow] duration-400 ease-out will-change-transform focus-visible:text-[color:var(--white)]"
+        className={cn(
+          'relative flex h-full flex-col overflow-hidden rounded-[inherit] transition-[transform,box-shadow] duration-400 ease-out will-change-transform',
+          tone === 'editorial'
+            ? 'text-white focus-visible:text-white'
+            : 'text-[color:var(--white)] focus-visible:text-[color:var(--white)]'
+        )}
         href={post.data.externalUrl ?? getBlogPostPath(post)}
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external' : ''} blog post: ${post.data.title}`}
-        style={glowStyle}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        style={tone === 'editorial' ? undefined : glowStyle}
+        onMouseMove={tone === 'editorial' ? undefined : handleMouseMove}
+        onMouseLeave={tone === 'editorial' ? undefined : handleMouseLeave}
       >
-        <BlogCardOverlays />
+        {tone === 'default' && <BlogCardOverlays />}
 
         {post.data.externalUrl && (
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+          <div
+            className={cn(
+              'absolute top-4 right-4 z-20 flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium',
+              tone === 'editorial'
+                ? 'border border-white/10 bg-[rgba(15,23,42,0.72)] text-white/82 shadow-[0_12px_24px_-20px_rgba(3,7,18,0.72)]'
+                : 'border border-white/10 bg-black/50 text-white backdrop-blur-md'
+            )}
+          >
             <ExternalLink className="h-3 w-3" />
             <span>External</span>
           </div>
         )}
 
-        <div className="aurora-card__body flex flex-1 flex-col">
+        <div
+          className={cn(
+            tone === 'editorial' ? 'flex flex-1 flex-col' : 'aurora-card__body flex flex-1 flex-col'
+          )}
+        >
           <div className={CARD_PADDING}>
             <div className={cn(CARD_CONTENT_LAYOUT, CARD_ANIMATION_CLASS)}>
-              <BlogCardImage post={post} />
+              <BlogCardImage post={post} tone={tone} />
 
               <div className="flex min-w-0 flex-1 flex-col">
                 <BlogCardContent
@@ -125,6 +146,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
                   excerpt={post.data.excerpt}
                   pubDate={post.data.pubDate}
                   lang={post.data.lang}
+                  tone={tone}
                   {...(languageState?.isFallback
                     ? { languageBadgeLabel: getBlogExclusiveLocaleLabel(post.data.lang) }
                     : {})}
@@ -138,7 +160,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
             </div>
           </div>
 
-          <BlogCardFooter pubDate={post.data.pubDate} barPadding={CARD_BAR_PADDING} />
+          <BlogCardFooter pubDate={post.data.pubDate} barPadding={CARD_BAR_PADDING} tone={tone} />
         </div>
       </a>
     </li>
@@ -163,7 +185,8 @@ export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
     prevProps.featured === nextProps.featured &&
     prevProps.languageState === nextProps.languageState &&
     prevProps.className === nextProps.className &&
-    prevProps.allPosts === nextProps.allPosts
+    prevProps.allPosts === nextProps.allPosts &&
+    prevProps.tone === nextProps.tone
   );
 });
 BlogCard.displayName = 'BlogCard';

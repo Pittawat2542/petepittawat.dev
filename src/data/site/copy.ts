@@ -88,21 +88,15 @@ export interface SiteCopy {
     };
   };
   readonly about: {
-    readonly hero: {
+    readonly intro: {
+      readonly eyebrow: string;
       readonly title: string;
       readonly subtitle: string;
-    };
-    readonly profile: {
-      readonly location: string;
       readonly role: string;
-      readonly heading: string;
-      readonly intro: string;
+      readonly location: string;
+      readonly summary: string;
     };
-    readonly now: {
-      readonly title: string;
-      readonly items: readonly string[];
-    };
-    readonly snapshot: {
+    readonly proofPoints: {
       readonly title: string;
       readonly items: readonly {
         readonly label: string;
@@ -110,36 +104,36 @@ export interface SiteCopy {
         readonly hint: string;
       }[];
     };
-    readonly themes: {
+    readonly focusAreas: {
       readonly title: string;
       readonly description: string;
       readonly items: SiteCopy['home']['aboutSection']['themes'];
     };
-    readonly background: {
+    readonly currentWork: {
       readonly title: string;
       readonly description: string;
-      readonly notes: readonly string[];
+      readonly items: readonly string[];
+      readonly collaborationTitle: string;
+      readonly collaborationPoints: readonly string[];
+      readonly communicationTitle: string;
+      readonly communicationPoints: readonly string[];
     };
-    readonly journey: {
+    readonly milestones: {
       readonly title: string;
       readonly description: string;
       readonly spotlightTitle: string;
       readonly educationTitle: string;
-      readonly collaborationsTitle: string;
-      readonly serviceTitle: string;
       readonly extendedTimelineLabel: string;
       readonly educationEntries: readonly {
         readonly title: string;
         readonly period: string;
         readonly summary: string;
       }[];
-      readonly communityHighlights: readonly {
-        readonly title: string;
-        readonly description: string;
-        readonly bullets: readonly string[];
-      }[];
-      readonly serviceHighlights: readonly string[];
-      readonly learningHighlights: readonly string[];
+    };
+    readonly background: {
+      readonly title: string;
+      readonly description: string;
+      readonly paragraphs: readonly string[];
     };
   };
   readonly listingPages: {
@@ -389,29 +383,18 @@ const siteCopyEn: SiteCopy = {
     },
   },
   about: {
-    hero: {
+    intro: {
+      eyebrow: 'Researcher, builder, communicator',
       title: 'About Pete',
       subtitle:
         'I work across language models, evaluation, systems-building, and technical communication.',
-    },
-    profile: {
-      location: 'Bangkok',
       role: 'Research Scientist @ Typhoon',
-      heading: "Hi, I'm Pittawat (Pete).",
-      intro:
+      location: 'Bangkok',
+      summary:
         'I work on making language models more reliable in practice, especially through behavior shaping, reasoning, evaluation, and the engineering work needed to turn research into usable systems.',
     },
-    now: {
-      title: 'Right now',
-      items: [
-        'Studying post-training and reasoning behavior in open language models.',
-        'Investigating inference-time strategies, context engineering, and agentic workflows.',
-        'Working on medical reasoning and robustness in collaboration with domain partners.',
-        'Turning current research into talks, notes, and tooling that other teams can reuse.',
-      ],
-    },
-    snapshot: {
-      title: 'Snapshot',
+    proofPoints: {
+      title: 'At a glance',
       items: [
         {
           label: 'Current role',
@@ -430,28 +413,40 @@ const siteCopyEn: SiteCopy = {
         },
       ],
     },
-    themes: {
+    focusAreas: {
       title: 'What drives my work',
       description: 'The main themes connecting the papers, models, tools, and talks.',
       items: researchThemes,
     },
-    background: {
-      title: 'Background',
-      description: 'How I got here and how the current work took shape.',
-      notes: [
-        'I am interested in how model behavior changes under human preferences, task constraints, domain requirements, and cultural context.',
-        'My recent work concentrates on prompting, context engineering, reasoning, and post-training, especially when these techniques need to hold up outside controlled demos.',
-        'Before focusing full-time on research, I spent years building software across mobile, web, data, and developer tooling. That background still shapes how I evaluate ideas: I care about whether they can be implemented, tested, and explained clearly.',
+    currentWork: {
+      title: 'What I am working on now',
+      description:
+        'The current work mixes language-model research with the engineering and communication needed to make that work useful to other people.',
+      items: [
+        'Studying post-training and reasoning behavior in open language models.',
+        'Investigating inference-time strategies, context engineering, and agentic workflows.',
+        'Working on medical reasoning and robustness in collaboration with domain partners.',
+        'Turning current research into talks, notes, and tooling that other teams can reuse.',
+      ],
+      collaborationTitle: 'How I tend to collaborate',
+      collaborationPoints: [
+        'I work with academic, clinical, and industry partners on reasoning, prompting, and domain-specific applications.',
+        'I like projects that connect research questions to deployable prototypes, datasets, and evaluation workflows.',
+        'My default mode is moving between ideas, experiments, implementation, and communication instead of treating them as separate jobs.',
+      ],
+      communicationTitle: 'How I communicate the work',
+      communicationPoints: [
+        'I treat public explanation as part of the work, not as an afterthought once the work is done.',
+        'I regularly turn experiments into talks, blog posts, internal research sessions, and reusable notes.',
+        'I like writing while I learn because it tests whether an idea is clear enough to teach and robust enough to reuse.',
       ],
     },
-    journey: {
-      title: 'Timeline and milestones',
+    milestones: {
+      title: 'Selected milestones',
       description:
-        'Education, collaborations, and the experiences that shaped how I approach research and engineering.',
+        'A short view of the education, work, and research moments that shaped how I approach language models and systems-building.',
       spotlightTitle: 'Spotlight milestones',
       educationTitle: 'Education',
-      collaborationsTitle: 'Collaborations and community',
-      serviceTitle: 'Service and learning habits',
       extendedTimelineLabel: 'Read the extended timeline',
       educationEntries: [
         {
@@ -467,33 +462,14 @@ const siteCopyEn: SiteCopy = {
             'First-class honours (3.99/4.00). Senior project: COEUS, automatic English mind map generation from text.',
         },
       ],
-      communityHighlights: [
-        {
-          title: 'Research collaborations',
-          description:
-            'Working with academic, clinical, and industry partners on reasoning, prompting, and domain-specific applications.',
-          bullets: [
-            'Collaborations spanning Thai open models, medical reasoning, and applied evaluation.',
-            'Projects that connect research questions to deployable prototypes, datasets, and benchmarks.',
-          ],
-        },
-        {
-          title: 'Technical communication',
-          description:
-            'I treat public explanation as part of the work, not as an afterthought once the work is done.',
-          bullets: [
-            'Sharing ideas through conference talks, meetups, blog posts, and internal research sessions.',
-            'Mentoring collaborators and translating experiments into reusable notes, talks, and tooling.',
-          ],
-        },
-      ],
-      serviceHighlights: [
-        'Previously led software projects and community efforts in healthcare, education, and student developer organizations.',
-        'Regularly support research dissemination through talks, reviews, and technical collaboration.',
-      ],
-      learningHighlights: [
-        'I like writing while I learn. It helps me test whether an idea is clear enough to teach and robust enough to reuse.',
-        'I also value building small systems and tools around research because implementation often exposes the most important questions.',
+    },
+    background: {
+      title: 'Background',
+      description: 'The longer arc behind the current research and engineering work.',
+      paragraphs: [
+        'I am interested in how model behavior changes under human preferences, task constraints, domain requirements, and cultural context.',
+        'My recent work concentrates on prompting, context engineering, reasoning, and post-training, especially when these techniques need to hold up outside controlled demos.',
+        'Before focusing full-time on research, I spent years building software across mobile, web, data, and developer tooling. That background still shapes how I evaluate ideas: I care about whether they can be implemented, tested, and explained clearly.',
       ],
     },
   },
@@ -699,28 +675,17 @@ const siteCopyTh: SiteCopy = {
     },
   },
   about: {
-    hero: {
+    intro: {
+      eyebrow: 'นักวิจัย นักสร้างระบบ และผู้สื่อสารเชิงเทคนิค',
       title: 'เกี่ยวกับพีท',
       subtitle: 'ผมทำงานคร่อมระหว่างโมเดลภาษา การประเมินผล การสร้างระบบ และการสื่อสารเชิงเทคนิค',
-    },
-    profile: {
-      location: 'กรุงเทพฯ',
       role: 'Research Scientist @ Typhoon',
-      heading: 'สวัสดีครับ ผมพิฏฐวัฒน์ (พีท)',
-      intro:
+      location: 'กรุงเทพฯ',
+      summary:
         'ผมทำงานเพื่อให้โมเดลภาษามีความน่าเชื่อถือมากขึ้นในการใช้งานจริง โดยเฉพาะผ่านการกำหนดพฤติกรรมของโมเดล งานด้าน reasoning การประเมินผล และงานวิศวกรรมที่จำเป็นต่อการแปลงงานวิจัยให้กลายเป็นระบบที่ใช้งานได้',
     },
-    now: {
-      title: 'ตอนนี้กำลังทำอะไรอยู่',
-      items: [
-        'ศึกษาพฤติกรรมหลัง post-training และการให้เหตุผลในโมเดลภาษาแบบเปิด',
-        'สำรวจกลยุทธ์ช่วง inference, context engineering และ agentic workflow',
-        'ทำงานด้าน medical reasoning และความทนทานของโมเดลร่วมกับพาร์ตเนอร์ในโดเมน',
-        'เปลี่ยนงานวิจัยปัจจุบันให้กลายเป็นงานบรรยาย บันทึก และเครื่องมือที่ทีมอื่นนำไปใช้ต่อได้',
-      ],
-    },
-    snapshot: {
-      title: 'ภาพรวม',
+    proofPoints: {
+      title: 'ภาพรวมแบบสั้น',
       items: [
         {
           label: 'บทบาทปัจจุบัน',
@@ -739,28 +704,40 @@ const siteCopyTh: SiteCopy = {
         },
       ],
     },
-    themes: {
+    focusAreas: {
       title: 'อะไรคือแรงขับของงานผม',
       description: 'ธีมหลักที่เชื่อมงานตีพิมพ์ โมเดล เครื่องมือ และงานบรรยายเข้าด้วยกัน',
       items: researchThemesTh,
     },
-    background: {
-      title: 'ภูมิหลัง',
-      description: 'เส้นทางที่พาผมมาถึงจุดนี้ และทำให้งานปัจจุบันค่อย ๆ เป็นรูปเป็นร่าง',
-      notes: [
-        'ผมสนใจว่าพฤติกรรมของโมเดลเปลี่ยนไปอย่างไรภายใต้ความต้องการของมนุษย์ ข้อจำกัดของงาน ข้อกำหนดเฉพาะโดเมน และบริบททางวัฒนธรรม',
-        'งานช่วงหลังของผมเน้นไปที่ prompting, context engineering, reasoning และ post-training โดยเฉพาะเมื่อเทคนิคเหล่านี้ต้องใช้งานได้จริงนอกเหนือจากเดโมที่ควบคุมสภาพแวดล้อมไว้',
-        'ก่อนจะมาทำงานวิจัยเต็มตัว ผมใช้เวลาหลายปีสร้างซอฟต์แวร์ทั้งฝั่ง mobile, web, data และ developer tooling พื้นฐานเหล่านี้ยังมีอิทธิพลต่อวิธีคิดของผมเสมอ เพราะผมสนใจว่างานหนึ่ง ๆ จะถูกนำไปสร้าง ทดสอบ และอธิบายต่อได้ดีแค่ไหน',
+    currentWork: {
+      title: 'ตอนนี้กำลังทำอะไรอยู่',
+      description:
+        'งานปัจจุบันของผมผสมทั้งการวิจัยด้าน language model เข้ากับงานวิศวกรรมและการสื่อสารที่ทำให้งานเหล่านั้นมีคุณค่าต่อคนอื่นจริง',
+      items: [
+        'ศึกษาพฤติกรรมหลัง post-training และการให้เหตุผลในโมเดลภาษาแบบเปิด',
+        'สำรวจกลยุทธ์ช่วง inference, context engineering และ agentic workflow',
+        'ทำงานด้าน medical reasoning และความทนทานของโมเดลร่วมกับพาร์ตเนอร์ในโดเมน',
+        'เปลี่ยนงานวิจัยปัจจุบันให้กลายเป็นงานบรรยาย บันทึก และเครื่องมือที่ทีมอื่นนำไปใช้ต่อได้',
+      ],
+      collaborationTitle: 'รูปแบบการทำงานร่วมกับผู้อื่น',
+      collaborationPoints: [
+        'ผมทำงานร่วมกับพาร์ตเนอร์จากภาควิชาการ คลินิก และอุตสาหกรรมในประเด็นด้าน reasoning, prompting และงานประยุกต์เฉพาะโดเมน',
+        'ผมชอบโปรเจกต์ที่เชื่อมคำถามวิจัยเข้ากับต้นแบบ ชุดข้อมูล และ workflow การประเมินผลที่ใช้งานต่อได้จริง',
+        'วิธีทำงานตามธรรมชาติของผมคือขยับไปมาระหว่างไอเดีย การทดลอง การลงมือทำ และการสื่อสาร มากกว่ามองสิ่งเหล่านี้เป็นงานแยกส่วน',
+      ],
+      communicationTitle: 'วิธีที่ผมสื่อสารงาน',
+      communicationPoints: [
+        'สำหรับผม การอธิบายงานสู่สาธารณะเป็นส่วนหนึ่งของงาน ไม่ใช่สิ่งที่ค่อยทำทีหลังเมื่อทุกอย่างเสร็จแล้ว',
+        'ผมมักแปลงผลการทดลองให้กลายเป็นงานบรรยาย บล็อกโพสต์ เซสชันวิจัยภายใน และบันทึกที่ผู้อื่นนำไปใช้ต่อได้',
+        'ผมชอบเขียนไปพร้อมกับการเรียนรู้ เพราะมันช่วยทดสอบว่าไอเดียนั้นชัดพอจะสอนได้หรือยัง และแข็งแรงพอจะนำไปใช้ต่อได้หรือไม่',
       ],
     },
-    journey: {
-      title: 'เส้นทางและหมุดหมาย',
+    milestones: {
+      title: 'หมุดหมายสำคัญ',
       description:
-        'การศึกษา ความร่วมมือ และประสบการณ์ที่หล่อหลอมวิธีคิดของผมต่อทั้งงานวิจัยและงานวิศวกรรม',
+        'มุมมองแบบย่อของช่วงการศึกษา งาน และจุดเปลี่ยนที่หล่อหลอมวิธีคิดของผมต่อภาษาโมเดลและการสร้างระบบ',
       spotlightTitle: 'หมุดหมายสำคัญ',
       educationTitle: 'การศึกษา',
-      collaborationsTitle: 'ความร่วมมือและชุมชน',
-      serviceTitle: 'งานรับใช้วิชาชีพและวิธีเรียนรู้',
       extendedTimelineLabel: 'ดูไทม์ไลน์แบบเต็ม',
       educationEntries: [
         {
@@ -776,33 +753,14 @@ const siteCopyTh: SiteCopy = {
             'จบเกียรตินิยมอันดับหนึ่ง (3.99/4.00) โปรเจกต์จบ: COEUS ระบบสร้าง mind map ภาษาอังกฤษจากข้อความโดยอัตโนมัติ',
         },
       ],
-      communityHighlights: [
-        {
-          title: 'ความร่วมมือด้านวิจัย',
-          description:
-            'ทำงานร่วมกับพาร์ตเนอร์จากภาควิชาการ คลินิก และอุตสาหกรรมในประเด็นด้าน reasoning, prompting และงานประยุกต์เฉพาะโดเมน',
-          bullets: [
-            'ความร่วมมือที่ครอบคลุมทั้งโมเดลเปิดภาษาไทย medical reasoning และการประเมินผลเชิงประยุกต์',
-            'โปรเจกต์ที่เชื่อมคำถามวิจัยเข้ากับต้นแบบ ชุดข้อมูล และ benchmark ที่พร้อมใช้งานต่อ',
-          ],
-        },
-        {
-          title: 'การสื่อสารเชิงเทคนิค',
-          description:
-            'สำหรับผม การอธิบายงานสู่สาธารณะเป็นส่วนหนึ่งของงาน ไม่ใช่สิ่งที่ค่อยทำทีหลังเมื่อทุกอย่างเสร็จแล้ว',
-          bullets: [
-            'แบ่งปันไอเดียผ่านงานประชุม มีตอัป บล็อกโพสต์ และเซสชันวิจัยภายใน',
-            'ช่วยเมนเทอร์ผู้ร่วมงานและแปลงผลการทดลองให้กลายเป็นบันทึก งานบรรยาย และเครื่องมือที่นำไปใช้ต่อได้',
-          ],
-        },
-      ],
-      serviceHighlights: [
-        'เคยนำทีมโปรเจกต์ซอฟต์แวร์และกิจกรรมชุมชนในด้านเฮลท์แคร์ การศึกษา และกลุ่มนักพัฒนานักศึกษา',
-        'มีส่วนช่วยเผยแพร่งานวิจัยอย่างต่อเนื่องผ่านงานบรรยาย การรีวิว และความร่วมมือเชิงเทคนิค',
-      ],
-      learningHighlights: [
-        'ผมชอบเขียนไปพร้อมกับการเรียนรู้ เพราะมันช่วยทดสอบว่าไอเดียนั้นชัดพอจะสอนได้หรือยัง และแข็งแรงพอจะนำไปใช้ต่อได้หรือไม่',
-        'ผมยังให้คุณค่ากับการสร้างระบบและเครื่องมือขนาดเล็กรอบงานวิจัย เพราะการลงมือทำมักเปิดเผยคำถามที่สำคัญที่สุดออกมา',
+    },
+    background: {
+      title: 'ภูมิหลัง',
+      description: 'ภาพรวมระยะยาวที่อยู่เบื้องหลังงานวิจัยและงานวิศวกรรมที่ผมทำในปัจจุบัน',
+      paragraphs: [
+        'ผมสนใจว่าพฤติกรรมของโมเดลเปลี่ยนไปอย่างไรภายใต้ความต้องการของมนุษย์ ข้อจำกัดของงาน ข้อกำหนดเฉพาะโดเมน และบริบททางวัฒนธรรม',
+        'งานช่วงหลังของผมเน้นไปที่ prompting, context engineering, reasoning และ post-training โดยเฉพาะเมื่อเทคนิคเหล่านี้ต้องใช้งานได้จริงนอกเหนือจากเดโมที่ควบคุมสภาพแวดล้อมไว้',
+        'ก่อนจะมาทำงานวิจัยเต็มตัว ผมใช้เวลาหลายปีสร้างซอฟต์แวร์ทั้งฝั่ง mobile, web, data และ developer tooling พื้นฐานเหล่านี้ยังมีอิทธิพลต่อวิธีคิดของผมเสมอ เพราะผมสนใจว่างานหนึ่ง ๆ จะถูกนำไปสร้าง ทดสอบ และอธิบายต่อได้ดีแค่ไหน',
       ],
     },
   },

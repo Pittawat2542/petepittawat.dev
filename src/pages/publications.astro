@@ -1,5 +1,34 @@
 ---
-import Page from '@/components/pages/PublicationsPage.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { PublicationsExplorer } from '@/components/explorers';
+import academicServices from '@/data/services/academic.json';
+import AcademicServices from '@/components/sections/AcademicServices.astro';
+import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/ui/core/Container.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import { getPublications } from '@/lib/content';
+
+const pageCopy = siteCopyEn.listingPages.publications;
+const publications = await getPublications();
 ---
 
-<Page />
+<BaseLayout
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  page="publications"
+>
+  <Container className="space-y-8 md:space-y-10">
+    <EditorialPageHero
+      eyebrow="Research Record"
+      title={pageCopy.title}
+      subtitle={pageCopy.heroSubtitle}
+    />
+    <PublicationsExplorer client:visible items={publications} />
+    <AcademicServices
+      data={academicServices}
+      title={pageCopy.academicServicesTitle}
+      description={pageCopy.academicServicesDescription}
+    />
+  </Container>
+</BaseLayout>

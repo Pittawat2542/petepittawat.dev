@@ -16,6 +16,7 @@ import type { FC } from 'react';
 import GlassButton from '@/components/ui/navigation/GlassButton';
 import Selector from '@/components/ui/interaction/Selector';
 import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 interface DropdownFiltersProps {
   readonly filterOptions: Record<string, readonly string[]>;
@@ -25,6 +26,7 @@ interface DropdownFiltersProps {
   ) => void;
   readonly hasActiveFilters: boolean;
   readonly onClearAll: () => void;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
@@ -33,6 +35,7 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
   onFiltersChange,
   hasActiveFilters,
   onClearAll,
+  tone = 'default',
 }) => {
   if (!Object.keys(filterOptions).length) {
     return null;
@@ -77,9 +80,22 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-muted-foreground text-sm font-medium">Filters</h3>
+        <h3
+          className={cn(
+            'text-muted-foreground text-sm font-medium',
+            tone === 'editorial' &&
+              'text-[0.72rem] font-semibold tracking-[0.22em] text-white/45 uppercase'
+          )}
+        >
+          Filters
+        </h3>
         {hasActiveFilters && (
-          <GlassButton variant="ghost" size="sm" onClick={onClearAll} className="text-xs">
+          <GlassButton
+            variant="ghost"
+            size="sm"
+            onClick={onClearAll}
+            className={cn('text-xs', tone === 'editorial' && 'text-white/50 hover:text-white')}
+          >
             Clear all
           </GlassButton>
         )}
@@ -105,6 +121,7 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
                 value={selectedValue}
                 options={optObjects}
                 onChange={val => onFiltersChange?.(f => ({ ...f, [key]: val }))}
+                tone={tone}
               />
             </div>
           );

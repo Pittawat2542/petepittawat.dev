@@ -1,0 +1,128 @@
+---
+import { Building2, Calendar, ExternalLink } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
+
+interface ServiceLink {
+  readonly year: number;
+  readonly url: string;
+}
+
+interface ServiceItem {
+  readonly venue: string;
+  readonly year?: number;
+  readonly years?: readonly number[];
+  readonly url?: string;
+  readonly links?: readonly ServiceLink[];
+}
+
+interface Section {
+  readonly type: 'conferences' | 'journals' | string;
+  readonly label?: string;
+  readonly items: readonly ServiceItem[];
+}
+
+interface Props {
+  readonly data: {
+    readonly sections: readonly Section[];
+  };
+  readonly title?: string;
+  readonly description?: string;
+}
+
+const {
+  data,
+  title = 'Academic services',
+  description = 'Reviewer and service roles across conferences and journals.',
+} = Astro.props as Props;
+
+const sections = data.sections || [];
+
+const formatYears = (item: ServiceItem): string => {
+  const years = item.years ?? item.links?.map(link => link.year);
+
+  if (Array.isArray(years) && years.length > 0) {
+    const uniqueYears = Array.from(new Set(years));
+    return uniqueYears.sort((a, b) => a - b).join(' | ');
+  }
+
+  return item.year ? String(item.year) : '';
+};
+
+const getItemUrl = (item: ServiceItem): string | undefined => {
+  if (item.links && item.links.length > 0) {
+    const sortedLinks = [...item.links].sort((a, b) => b.year - a.year);
+    return sortedLinks[0]?.url;
+  }
+
+  return item.url;
+};
+---
+
+{
+  sections.length > 0 && (
+    <section class="mt-10">
+      <GlassCard
+        variant="premium"
+        className="space-y-6 rounded-[1.8rem] border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.12),transparent_26%),linear-gradient(180deg,rgba(10,19,36,0.92),rgba(8,15,29,0.94))] shadow-[0_28px_70px_-42px_rgba(3,7,18,0.75)]"
+      >
+        <header class="space-y-2">
+          <h2 class="flex items-center gap-2 text-xl font-bold tracking-tight text-white md:text-2xl">
+            <Building2 size={18} aria-hidden="true" />
+            {title}
+          </h2>
+          <p class="text-sm leading-relaxed text-white/68">{description}</p>
+        </header>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {sections.map(sec => (
+            <div class="space-y-3">
+              <h3 class="text-sm font-semibold tracking-[0.24em] text-white/72 uppercase">
+                {sec.label || sec.type}
+              </h3>
+              <ul class="flex flex-col gap-2">
+                {sec.items.map(item => {
+                  const yearDisplay = formatYears(item);
+                  const href = getItemUrl(item);
+
+                  return (
+                    <li>
+                      <a
+                        href={href || '#'}
+                        target={href ? '_blank' : undefined}
+                        rel={href ? 'noopener noreferrer' : undefined}
+                        class="group inline-flex w-full items-center justify-between rounded-[1.1rem] border border-white/10 bg-white/[0.03] px-3 py-2.5 transition-[transform,box-shadow,border-color,background-color] duration-150 ease-out will-change-transform hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/[0.05] hover:shadow-[0_18px_30px_-26px_rgba(3,7,18,0.75)]"
+                        style={{
+                          color: 'var(--white)',
+                        }}
+                        aria-label={`${item.venue} ${yearDisplay}${href ? ' (opens in new tab)' : ''}`}
+                      >
+                        <div class="flex min-w-0 items-center gap-2">
+                          <span class="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[color:var(--accent)]/16 text-[color:var(--accent)] ring-1 ring-[color:var(--accent)]/24">
+                            <Building2 size={14} aria-hidden="true" />
+                          </span>
+                          <span class="truncate font-medium">{item.venue}</span>
+                        </div>
+                        <div class="ml-3 flex shrink-0 items-center gap-2 text-xs text-[color:var(--white)]/80">
+                          <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5">
+                            <Calendar size={12} aria-hidden="true" />
+                            <span>{yearDisplay}</span>
+                          </span>
+                          {item.url && (
+                            <ExternalLink
+                              size={14}
+                              class="opacity-70 group-hover:opacity-100"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </div>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+    </section>
+  )
+}

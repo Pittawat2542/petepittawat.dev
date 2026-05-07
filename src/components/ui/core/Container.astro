@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/lib/utils';
+
+interface Props extends HTMLAttributes<'section'> {
+  class?: string | undefined;
+  className?: string | undefined;
+}
+
+const { class: className, className: legacyClassName, ...rest } = Astro.props as Props;
+const mergedClassName = cn('mx-auto max-w-6xl', className, legacyClassName);
+---
+
+<section {...rest} class={mergedClassName}>
+  <slot />
+</section>

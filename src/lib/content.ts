@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { sortAboutTimelineItems } from './about-timeline';
 
 export type BlogPost = CollectionEntry<'blog'>;
 export type Talk = CollectionEntry<'talks'>['data'];
@@ -31,5 +32,5 @@ export async function getProjects() {
 
 export async function getAboutTimeline() {
   const items = await getCollection('about');
-  return items.map(entry => entry.data);
+  return sortAboutTimelineItems(items.map(entry => entry.data));
 }

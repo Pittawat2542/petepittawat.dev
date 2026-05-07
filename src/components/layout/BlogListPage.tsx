@@ -19,8 +19,7 @@ import { useUrlParams } from '@/lib/hooks/useUrlParams';
 
 import { BlogCard } from '@/components/ui/cards/BlogCard';
 import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
-import FilterPanel from '@/components/ui/filter/FilterPanel';
-import PageControls from '@/components/ui/navigation/PageControls';
+import EditorialListingShell from '@/components/explorers/EditorialListingShell';
 import type { BlogPost } from '@/types';
 
 interface BlogListPageProps {
@@ -209,6 +208,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
       ariaLabel="Select blog language"
       label=""
       variant="toolbar"
+      tone="editorial"
       onSelect={setLocale}
       options={[
         {
@@ -232,68 +232,68 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
   );
 
   return (
-    <section className="flex w-full flex-col">
-      <FilterPanel
-        searchValue={q}
-        onSearchChange={setQ}
-        searchPlaceholder="Search title, excerpt, series, or tags..."
-        filters={filters}
-        onFiltersChange={setFilters}
-        filterOptions={filterOptions}
-        availableTags={Array.from(tags)}
-        selectedTags={selectedTags}
-        onTagsChange={setSelectedTags}
-        tagCounts={tagCounts}
-        sortOptions={BLOG_SORT_OPTIONS}
-        sortValue={sort}
-        onSortChange={value => {
-          setSort(value as BlogSort);
-        }}
-        filteredResults={sorted.length}
-        totalResults={localizedPosts.length}
-        compact
-        toolbarAccessory={languageSwitcher}
-      />
-      <ul className="mt-2 grid w-full grid-cols-1 gap-5 py-3 md:mt-4 md:grid-cols-2 md:gap-8 md:py-4 2xl:grid-cols-3">
-        {pagePosts.map((post: BlogPost, index: number) => (
-          <BlogCard
-            key={post.id}
-            post={post}
-            allPosts={localizedPosts}
-            languageState={localizedStateById.get(post.id)}
-            className="reveal"
-            style={{ transitionDelay: `${Math.min(index * 50, 400)}ms` }}
-          />
-        ))}
-      </ul>
-      <div className="mt-8 flex justify-center text-sm text-white/70 md:mt-10">
-        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-r from-white/10 via-white/5 to-transparent px-4 py-1.5 text-[11px] font-semibold tracking-[0.38em] text-white/70 uppercase shadow-[0_12px_30px_-18px_rgba(15,23,42,0.9)]">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6ac1ff)] shadow-[0_0_10px_rgba(106,193,255,0.7)]" />
-          Field Notes elsewhere
-        </span>
-      </div>
-      <div className="mt-4 flex flex-col items-center gap-2 text-center text-sm text-white/70 md:flex-row md:justify-center md:gap-3">
-        <span className="text-white/60">Also publishing with the Typhoon team:</span>
-        <a
-          href="https://opentyphoon.ai/blog/en"
-          className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-4 py-2 text-white/90 transition-transform duration-200 hover:scale-[1.02] hover:border-white/25 hover:text-white"
-        >
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/80" />
-          opentyphoon.ai/blog/en
-        </a>
-      </div>
-      {totalPages > 1 && (
-        <PageControls
-          total={sorted.length}
-          visible={pagePosts.length}
-          perPage={perPage}
-          onPerPageChange={handlePerPageChange}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={goToPage}
+    <EditorialListingShell
+      searchValue={q}
+      onSearchChange={setQ}
+      searchPlaceholder="Search title, excerpt, series, or tags..."
+      filters={filters}
+      onFiltersChange={setFilters}
+      filterOptions={filterOptions}
+      availableTags={Array.from(tags)}
+      selectedTags={selectedTags}
+      onTagsChange={setSelectedTags}
+      tagCounts={tagCounts}
+      sortOptions={BLOG_SORT_OPTIONS}
+      sortValue={sort}
+      onSortChange={value => {
+        setSort(value as BlogSort);
+      }}
+      filteredResults={sorted.length}
+      totalResults={localizedPosts.length}
+      toolbarAccessory={languageSwitcher}
+      itemsWrapperElement="ul"
+      footer={
+        <>
+          <div className="mt-8 flex justify-center text-sm text-white/52 md:mt-10">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] font-semibold tracking-[0.32em] text-white/52 uppercase shadow-[0_20px_40px_-30px_rgba(3,7,18,0.82)]">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6ac1ff)] shadow-[0_0_0_5px_rgba(96,165,250,0.18)]" />
+              Field Notes elsewhere
+            </span>
+          </div>
+          <div className="mt-4 flex flex-col items-center gap-2 text-center text-sm text-white/52 md:flex-row md:justify-center md:gap-3">
+            <span className="text-white/48">Also publishing with the Typhoon team:</span>
+            <a
+              href="https://opentyphoon.ai/blog/en"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-white/82 transition-[transform,border-color,color,box-shadow,background-color] duration-200 hover:scale-[1.02] hover:border-white/18 hover:bg-white/[0.07] hover:text-white hover:shadow-[0_18px_30px_-24px_rgba(3,7,18,0.82)]"
+            >
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6ac1ff)]" />
+              opentyphoon.ai/blog/en
+            </a>
+          </div>
+        </>
+      }
+      pagination={{
+        total: sorted.length,
+        visible: pagePosts.length,
+        perPage,
+        onPerPageChange: handlePerPageChange,
+        currentPage,
+        totalPages,
+        onPageChange: goToPage,
+      }}
+    >
+      {pagePosts.map((post: BlogPost, index: number) => (
+        <BlogCard
+          key={post.id}
+          post={post}
+          allPosts={localizedPosts}
+          languageState={localizedStateById.get(post.id)}
+          tone="editorial"
+          className="reveal"
+          style={{ transitionDelay: `${Math.min(index * 50, 400)}ms` }}
         />
-      )}
-    </section>
+      ))}
+    </EditorialListingShell>
   );
 };
 

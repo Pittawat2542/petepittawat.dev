@@ -9,6 +9,7 @@ export interface MenuController {
 
 export function createMenuController(): MenuController {
   let isMenuOpen = false;
+  const desktopBreakpoint = window.matchMedia('(min-width: 960px)');
 
   // DOM element references
   let menu: HTMLElement | null = null;
@@ -23,38 +24,22 @@ export function createMenuController(): MenuController {
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     toggle.dataset['open'] = open ? 'true' : 'false';
 
-    // Toggle menu panel visibility
-    if (open) {
-      menu.classList.remove('opacity-0', 'pointer-events-none');
-      menu.classList.add('opacity-100', 'pointer-events-auto');
-    } else {
-      menu.classList.add('opacity-0', 'pointer-events-none');
-      menu.classList.remove('opacity-100', 'pointer-events-auto');
-    }
+    menu.dataset['open'] = open ? 'true' : 'false';
+    menu.style.opacity = open ? '1' : '0';
+    menu.style.pointerEvents = open ? 'auto' : 'none';
 
-    // Subtle slide for the sheet
     if (sheet) {
-      if (open) {
-        sheet.classList.remove('-translate-y-4', 'scale-[0.97]', 'opacity-0');
-        sheet.classList.add('translate-y-0', 'scale-100', 'opacity-100');
-      } else {
-        sheet.classList.add('-translate-y-4', 'scale-[0.97]', 'opacity-0');
-        sheet.classList.remove('translate-y-0', 'scale-100', 'opacity-100');
-      }
+      sheet.dataset['open'] = open ? 'true' : 'false';
+      sheet.style.opacity = open ? '1' : '0';
+      sheet.style.transform = open ? 'translateY(0) scale(1)' : 'translateY(1.1rem) scale(0.98)';
     }
 
-    // Toggle backdrop
     if (overlay) {
-      if (open) {
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-        overlay.classList.add('opacity-100', 'pointer-events-auto');
-      } else {
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-        overlay.classList.remove('opacity-100', 'pointer-events-auto');
-      }
+      overlay.dataset['open'] = open ? 'true' : 'false';
+      overlay.style.opacity = open ? '1' : '0';
+      overlay.style.pointerEvents = open ? 'auto' : 'none';
     }
 
-    // Lock scroll on open (mobile friendliness)
     const root = document.documentElement;
     if (open) {
       root.style.overflow = 'hidden';
@@ -82,6 +67,21 @@ export function createMenuController(): MenuController {
     setMenuOpen(false);
   };
 
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key !== 'Escape' || !isMenuOpen) return;
+
+    isMenuOpen = false;
+    setMenuOpen(false);
+    toggle?.focus();
+  };
+
+  const handleDesktopBreakpoint = (event: MediaQueryListEvent) => {
+    if (!event.matches || !isMenuOpen) return;
+
+    isMenuOpen = false;
+    setMenuOpen(false);
+  };
+
   const init = () => {
     // Get DOM references
     menu = document.getElementById('mobile-menu');
@@ -101,6 +101,10 @@ export function createMenuController(): MenuController {
     if (overlay) {
       overlay.addEventListener('click', handleBackdropClick);
     }
+
+    setMenuOpen(false);
+    document.addEventListener('keydown', handleKeydown);
+    desktopBreakpoint.addEventListener('change', handleDesktopBreakpoint);
   };
 
   const cleanup = () => {
@@ -116,6 +120,9 @@ export function createMenuController(): MenuController {
     if (overlay) {
       overlay.removeEventListener('click', handleBackdropClick);
     }
+
+    document.removeEventListener('keydown', handleKeydown);
+    desktopBreakpoint.removeEventListener('change', handleDesktopBreakpoint);
 
     // Reset menu state
     if (isMenuOpen) {

@@ -5,25 +5,8 @@ export function toTitleCase(input?: string) {
   return input.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1));
 }
 
-export function typeAccentVar(type?: string) {
-  const key = (type ?? '').toLowerCase();
-  switch (key) {
-    case 'journal':
-      return 'var(--accent-publications)';
-    case 'conference':
-      return 'var(--accent-talks)';
-    case 'workshop':
-      return 'var(--accent-projects)';
-    case 'preprint':
-    case 'arxiv':
-      return 'var(--accent-research)';
-    case 'poster':
-      return 'var(--accent-about)';
-    case 'demo':
-      return 'var(--accent-2)';
-    default:
-      return 'var(--accent-publications)';
-  }
+export function typeAccentVar(_type?: string) {
+  return 'var(--accent)';
 }
 
 export function renderAuthorsBold(authors: string) {

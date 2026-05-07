@@ -19,7 +19,10 @@
 
 /* Search modal header */
 .search-modal__header {
-  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   padding: 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -32,7 +35,9 @@
 
 /* Search modal headline */
 .search-modal__headline {
-  margin-bottom: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
 }
 
 .search-modal__eyebrow {
@@ -53,14 +58,13 @@
 
 /* Search modal close button */
 .search-modal__close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  position: static;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
+  flex-shrink: 0;
   border-radius: var(--shape-squircle-radius-md, 1.25rem);
   clip-path: var(--shape-squircle-clip, none);
   border: 1px solid rgba(255, 255, 255, 0.12);

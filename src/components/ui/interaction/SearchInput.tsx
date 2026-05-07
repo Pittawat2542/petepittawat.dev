@@ -36,6 +36,7 @@ interface SearchInputProps {
   readonly ariaLabel?: string;
   readonly className?: string;
   readonly size?: SearchInputSize;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const SearchInputComponent: FC<SearchInputProps> = ({
@@ -45,6 +46,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
   ariaLabel = 'Search',
   className,
   size = 'md',
+  tone = 'default',
 }) => {
   const id = useId();
   const [isFocused, setIsFocused] = useState(false);
@@ -57,8 +59,12 @@ const SearchInputComponent: FC<SearchInputProps> = ({
   const sizeConfig = SIZE_CONFIG[size] ?? SIZE_CONFIG.md;
 
   const iconStateClass = isFocused
-    ? 'text-[color:var(--accent,#6AC1FF)] opacity-100'
-    : 'text-[color:var(--white,#FFFFFF)]/80 opacity-70';
+    ? tone === 'editorial'
+      ? 'text-[color:var(--accent,#6AC1FF)] opacity-100'
+      : 'text-[color:var(--accent,#6AC1FF)] opacity-100'
+    : tone === 'editorial'
+      ? 'text-white/60 opacity-90'
+      : 'text-[color:var(--white,#FFFFFF)]/80 opacity-70';
 
   return (
     <label className={cn('relative w-full md:max-w-md', className)} htmlFor={id}>
@@ -67,19 +73,25 @@ const SearchInputComponent: FC<SearchInputProps> = ({
       {/* Glass container */}
       <div
         className={cn(
-          'glass-input shape-squircle-sm group relative flex w-full items-center overflow-hidden rounded-[1.2rem] transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
+          'shape-squircle-sm group relative flex w-full items-center overflow-hidden rounded-[1.2rem] transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
+          tone === 'editorial'
+            ? 'border border-white/10 bg-[rgba(15,23,42,0.36)] shadow-[0_18px_34px_-30px_rgba(3,7,18,0.85)] backdrop-blur-xl'
+            : 'glass-input',
           sizeConfig.wrapper
         )}
         data-size={size}
         data-active={isFocused ? 'true' : undefined}
-        style={glowStyle}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        style={tone === 'editorial' ? undefined : glowStyle}
+        onMouseMove={tone === 'editorial' ? undefined : handleMouseMove}
+        onMouseLeave={tone === 'editorial' ? undefined : handleMouseLeave}
       >
         {/* Search icon */}
         <span
           className={cn(
-            'shape-squircle-sm relative z-10 inline-flex shrink-0 items-center justify-center rounded-[1.2rem] bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm transition-[color,opacity,background-color] duration-150 ease-out',
+            'shape-squircle-sm relative z-10 inline-flex shrink-0 items-center justify-center rounded-[1.2rem] transition-[color,opacity,background-color] duration-150 ease-out',
+            tone === 'editorial'
+              ? 'bg-white/[0.06] text-white/60'
+              : 'bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm',
             sizeConfig.iconWrapper
           )}
         >
@@ -98,7 +110,10 @@ const SearchInputComponent: FC<SearchInputProps> = ({
           aria-label={ariaLabel}
           title={ariaLabel}
           className={cn(
-            'text-foreground placeholder:text-muted-foreground relative z-10 w-full flex-1 bg-transparent focus-visible:outline-none',
+            'relative z-10 w-full flex-1 bg-transparent focus-visible:outline-none',
+            tone === 'editorial'
+              ? 'text-white placeholder:text-white/38'
+              : 'text-foreground placeholder:text-muted-foreground',
             sizeConfig.input
           )}
         />
@@ -109,7 +124,10 @@ const SearchInputComponent: FC<SearchInputProps> = ({
             type="button"
             onClick={clearValue}
             className={cn(
-              'focus-visible:ring-ring/50 shape-squircle-sm relative z-10 inline-flex items-center justify-center rounded-[1.2rem] bg-white/6 text-[color:var(--white,#FFFFFF)]/70 transition-all duration-150 ease-out hover:bg-white/14 hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(8,12,22,0.85)] focus-visible:outline-none',
+              'focus-visible:ring-ring/50 shape-squircle-sm relative z-10 inline-flex items-center justify-center rounded-[1.2rem] transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+              tone === 'editorial'
+                ? 'bg-white/[0.06] text-white/52 hover:bg-white/[0.12] hover:text-white focus-visible:ring-offset-[rgba(5,10,20,0.92)]'
+                : 'bg-white/6 text-[color:var(--white,#FFFFFF)]/70 hover:bg-white/14 hover:text-white focus-visible:ring-offset-[rgba(8,12,22,0.85)]',
               sizeConfig.button
             )}
             aria-label="Clear search"
@@ -119,7 +137,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
           </button>
         )}
 
-        <span className="glass-input__sheen" aria-hidden="true" />
+        {tone === 'default' && <span className="glass-input__sheen" aria-hidden="true" />}
       </div>
     </label>
   );
@@ -133,6 +151,7 @@ export const SearchInput = memo(SearchInputComponent, (prevProps, nextProps) => 
     prevProps.ariaLabel === nextProps.ariaLabel &&
     prevProps.className === nextProps.className &&
     prevProps.size === nextProps.size &&
+    prevProps.tone === nextProps.tone &&
     prevProps.onChange === nextProps.onChange
   );
 });

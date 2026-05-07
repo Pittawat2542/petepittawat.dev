@@ -132,6 +132,8 @@ const aboutTimelineItemSchema = z.object({
   description: z.string(),
   titleTh: z.string().optional(),
   descriptionTh: z.string().optional(),
+  startYear: z.number().int(),
+  startMonth: z.number().int().min(1).max(12).optional(),
   accent: z.string(),
   highlight: z.boolean().optional(),
 });

@@ -13,7 +13,6 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { navigationService } from '@/lib/services';
 
 interface UseUrlParamsConfig<T> {
   onParams: (params: T) => void;
@@ -35,7 +34,10 @@ export function useUrlParams<T>({ onParams, parser }: UseUrlParamsConfig<T>) {
   // Run only on mount - uses refs to access current callback versions
   useEffect(() => {
     try {
-      const searchParams = navigationService.getCurrentSearch();
+      const searchParams =
+        typeof window === 'undefined'
+          ? new URLSearchParams()
+          : new URLSearchParams(window.location.search);
       const parsed = parserRef.current(searchParams);
       onParamsRef.current(parsed);
     } catch {

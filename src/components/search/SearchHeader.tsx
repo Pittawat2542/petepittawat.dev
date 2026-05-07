@@ -51,10 +51,10 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
       </div>
 
       <div
-        className="text-muted-foreground mt-3 flex items-center justify-between text-xs"
+        className="text-muted-foreground mt-3 flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between"
         aria-live="polite"
       >
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           <span className="hidden sm:inline">Navigate with</span>
           <kbd className="rounded border px-1 py-0.5">↑</kbd>
           <kbd className="rounded border px-1 py-0.5">↓</kbd>

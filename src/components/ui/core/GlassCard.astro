@@ -1,0 +1,41 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/lib/utils';
+
+interface Props extends HTMLAttributes<'section'> {
+  class?: string | undefined;
+  className?: string | undefined;
+  variant?: 'default' | 'elevated' | 'premium' | 'glow';
+  animated?: boolean;
+}
+
+const {
+  class: className,
+  className: legacyClassName,
+  variant = 'default',
+  animated = false,
+  ...rest
+} = Astro.props as Props;
+
+const BASE_CARD_CLASSES =
+  'shape-squircle rounded-[1.75rem] text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
+
+const VARIANT_CARD_CLASSES = {
+  default: 'glass-card',
+  elevated: 'glass-surface-elevated',
+  premium: 'glass-surface-premium',
+  glow: 'glass-card glass-glow',
+} as const;
+
+const cardClassName = cn(
+  BASE_CARD_CLASSES,
+  VARIANT_CARD_CLASSES[variant],
+  animated && 'glass-border-animated',
+  className,
+  legacyClassName
+);
+---
+
+<section {...rest} class={cardClassName}>
+  <slot />
+</section>

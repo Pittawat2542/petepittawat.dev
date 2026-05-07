@@ -20,16 +20,17 @@ interface BlogLanguageSwitcherProps {
   readonly onSelect?: ((locale: BlogTranslationLocale) => void) | undefined;
   readonly className?: string | undefined;
   readonly variant?: 'toolbar' | 'rail';
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const TRACK_BY_VARIANT = {
   toolbar:
-    'inline-flex min-w-fit items-center gap-1 rounded-[1.25rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-1 shadow-[0_14px_34px_-22px_rgba(4,10,24,0.82)] backdrop-blur-xl',
+    'inline-flex w-full items-center gap-1 rounded-[1.25rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-1 shadow-[0_14px_34px_-22px_rgba(4,10,24,0.82)] backdrop-blur-xl sm:w-auto sm:min-w-fit',
   rail: 'grid grid-cols-2 gap-1 rounded-[1.35rem] border border-white/10 bg-[linear-gradient(145deg,rgba(10,18,34,0.9),rgba(8,14,28,0.7))] p-1 shadow-[0_22px_48px_-32px_rgba(4,10,24,0.92)] backdrop-blur-xl',
 } as const;
 
 const OPTION_BY_VARIANT = {
-  toolbar: 'min-w-[4.5rem] px-3 py-2 text-xs sm:min-w-[5.4rem]',
+  toolbar: 'min-w-0 flex-1 px-3 py-2 text-xs sm:min-w-[5.4rem] sm:flex-none',
   rail: 'min-w-0 px-3 py-2.5 text-sm',
 } as const;
 
@@ -41,6 +42,7 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
   onSelect,
   className,
   variant = 'toolbar',
+  tone = 'default',
 }) => {
   const renderOption = (option: BlogLanguageSwitcherOption) => {
     const optionLabel = option.shortLabel ?? option.label;
@@ -49,10 +51,14 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
       'group/blog-language relative inline-flex items-center justify-center rounded-[1rem] font-semibold tracking-[0.16em] uppercase transition-[transform,color,background-color,border-color,box-shadow,opacity] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--page-accent,var(--accent))]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(4,8,16,0.92)]',
       OPTION_BY_VARIANT[variant],
       option.isActive &&
-        'border border-[color:var(--page-accent,var(--accent))]/35 bg-[linear-gradient(135deg,rgba(232,243,255,0.98),rgba(206,229,255,0.9))] text-slate-950 shadow-[0_16px_28px_-22px_rgba(170,214,255,0.95)]',
+        (tone === 'editorial'
+          ? 'border border-[color:var(--page-accent,var(--accent))]/24 bg-[rgba(148,163,184,0.1)] text-white shadow-[0_18px_36px_-28px_rgba(3,7,18,0.82)]'
+          : 'border border-[color:var(--page-accent,var(--accent))]/35 bg-[linear-gradient(135deg,rgba(232,243,255,0.98),rgba(206,229,255,0.9))] text-slate-950 shadow-[0_16px_28px_-22px_rgba(170,214,255,0.95)]'),
       !option.isActive &&
         option.available &&
-        'border border-transparent text-white/72 hover:-translate-y-0.5 hover:border-white/10 hover:bg-white/8 hover:text-white',
+        (tone === 'editorial'
+          ? 'border border-transparent text-white/58 hover:-translate-y-0.5 hover:border-white/10 hover:bg-white/[0.06] hover:text-white'
+          : 'text-white/72 hover:-translate-y-0.5 hover:border-white/10 hover:bg-white/8 hover:text-white'),
       !option.available && 'cursor-not-allowed text-white/30 opacity-55'
     );
 
@@ -127,7 +133,8 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
       aria-label={ariaLabel}
       className={cn(
         'flex flex-col gap-2',
-        variant === 'toolbar' ? 'min-w-fit' : 'w-full',
+        variant === 'toolbar' ? 'w-full sm:w-auto sm:min-w-fit' : 'w-full',
+        tone === 'editorial' && 'blog-language-switcher--editorial',
         className
       )}
     >
@@ -137,10 +144,25 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
         </span>
       ) : null}
 
-      <div className={TRACK_BY_VARIANT[variant]}>{options.map(renderOption)}</div>
+      <div
+        className={cn(
+          TRACK_BY_VARIANT[variant],
+          tone === 'editorial' &&
+            'border-white/10 bg-[rgba(15,23,42,0.4)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-xl'
+        )}
+      >
+        {options.map(renderOption)}
+      </div>
 
       {helperText ? (
-        <p className="max-w-[24rem] text-sm leading-6 text-white/60">{helperText}</p>
+        <p
+          className={cn(
+            'max-w-[24rem] text-sm leading-6',
+            tone === 'editorial' ? 'text-white/52' : 'text-white/60'
+          )}
+        >
+          {helperText}
+        </p>
       ) : null}
     </nav>
   );

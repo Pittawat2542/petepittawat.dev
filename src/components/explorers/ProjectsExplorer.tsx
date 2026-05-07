@@ -1,12 +1,7 @@
-/**
- * ProjectsExplorer - Projects list display
- * Refactored to use generic DataExplorer component (DRY principle)
- */
-
 import type { FC } from 'react';
 import type { Project } from '@/types';
 import ProjectCard from '@/components/ui/cards/ProjectCard';
-import { DataExplorer } from './DataExplorer';
+import { EditorialExplorer } from './EditorialExplorer';
 import { slugify } from '@/lib/slug';
 
 interface ProjectsExplorerProps {
@@ -24,7 +19,7 @@ const comparators: Record<ProjectSort, (a: Project, b: Project) => number> = {
 
 const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
   return (
-    <DataExplorer<Project, ProjectSort>
+    <EditorialExplorer<Project, ProjectSort>
       items={items}
       searchFields={item => [item.title, item.summary, item.collaborators ?? '', item.role ?? '']}
       filterFields={{

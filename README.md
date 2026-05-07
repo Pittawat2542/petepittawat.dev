@@ -119,6 +119,33 @@ pnpm preview
 | `pnpm clean`             | Clean build artifacts and dependencies         |
 | `pnpm generate-favicons` | Generate favicon variants                      |
 
+## Frontend Workflow
+
+Frontend changes in this repository require rendered verification, not only static checks.
+
+### Frontend Change Checklist
+
+For any visible UI change:
+
+1. Run `pnpm lint`.
+2. Run `pnpm build`.
+3. Open the affected route locally.
+4. Check desktop layout.
+5. Check one narrow/mobile viewport.
+6. Check relevant interaction states such as hover, focus-visible, expanded, collapsed, active, or selected states.
+7. Attach before/after screenshots in the PR.
+
+### Frontend Style Rules
+
+- Default to scoped `<style>` blocks in `.astro` files.
+- Use `:global(...)` only as an intentional escape inside scoped styles.
+- Do not mix `<style is:global>` with `:global(...)` in the same file.
+- Components own their primary visual styling. Layouts control placement and spacing, not the internal look of nested components.
+- Put styles in `src/styles/components/` only when they are genuinely shared across multiple independent surfaces.
+
+See the full architecture guide in [docs/frontend-style-architecture.md](./docs/frontend-style-architecture.md).
+See the current cleanup inventory in [docs/frontend-style-debt-audit.md](./docs/frontend-style-debt-audit.md).
+
 ## 📁 Project Structure
 
 ```
@@ -199,6 +226,8 @@ All content is validated using Astro content-layer schemas defined in `src/conte
 This project uses Husky and lint-staged to automatically format code before commits:
 
 - **pre-commit** - Runs Prettier on staged files to ensure consistent formatting
+
+Git hooks do not replace frontend verification. Visible UI changes still require local route checks and screenshot evidence in the PR.
 
 The hook is automatically installed when you run `pnpm install`. You can manually setup the hooks with `pnpm prepare`.
 

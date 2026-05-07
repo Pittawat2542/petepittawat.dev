@@ -1,0 +1,151 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+}
+
+const { title, subtitle, eyebrow = 'Overview' } = Astro.props as Props;
+---
+
+<section class="editorial-page-hero reveal">
+  <div class="editorial-page-hero__wash" aria-hidden="true"></div>
+  <div class="editorial-page-hero__grid" aria-hidden="true"></div>
+  <div class="editorial-page-hero__inner">
+    <div class="editorial-page-hero__eyebrow">
+      <span class="editorial-page-hero__eyebrow-dot"></span>
+      {eyebrow}
+    </div>
+    <h1 class="editorial-page-hero__title">{title}</h1>
+    {subtitle ? <p class="editorial-page-hero__subtitle">{subtitle}</p> : null}
+    <div class="editorial-page-hero__rule" aria-hidden="true">
+      <span class="editorial-page-hero__rule-accent"></span>
+    </div>
+    <div class="editorial-page-hero__support">
+      <slot name="support" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .editorial-page-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: clamp(1.75rem, 4vw, 2.75rem);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      radial-gradient(circle at 14% 18%, rgba(96, 165, 250, 0.24), transparent 32%),
+      radial-gradient(circle at 82% 0%, rgba(59, 130, 246, 0.2), transparent 28%),
+      linear-gradient(180deg, rgba(11, 21, 40, 0.96), rgba(7, 16, 31, 0.96)),
+      linear-gradient(135deg, rgba(14, 25, 48, 0.85), rgba(8, 15, 30, 0.94));
+    box-shadow:
+      0 28px 70px -40px rgba(15, 23, 42, 0.52),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .editorial-page-hero__wash,
+  .editorial-page-hero__grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .editorial-page-hero__wash {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(147, 197, 253, 0.14), transparent 34%),
+      radial-gradient(circle at 88% 0%, rgba(96, 165, 250, 0.16), transparent 36%);
+  }
+
+  .editorial-page-hero__grid {
+    opacity: 0.38;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), transparent 72%);
+  }
+
+  .editorial-page-hero__inner {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.75rem, 5vw, 3rem);
+  }
+
+  .editorial-page-hero__eyebrow {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.65rem;
+    color: rgba(191, 219, 254, 0.86);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .editorial-page-hero__eyebrow-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--page-accent, var(--accent)) 72%, white);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--page-accent, var(--accent)) 12%, transparent);
+  }
+
+  .editorial-page-hero__title {
+    margin: 0;
+    max-width: 14ch;
+    color: rgba(248, 250, 252, 0.98);
+    font-size: clamp(3rem, 7vw, 5.2rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  .editorial-page-hero__subtitle {
+    margin: 0;
+    max-width: 48rem;
+    color: rgba(191, 219, 254, 0.76);
+    font-size: clamp(1rem, 2.1vw, 1.2rem);
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  .editorial-page-hero__rule {
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    width: min(100%, 28rem);
+    height: 1px;
+    background: linear-gradient(90deg, rgba(148, 163, 184, 0.34), rgba(148, 163, 184, 0.06));
+  }
+
+  .editorial-page-hero__rule-accent {
+    display: block;
+    width: clamp(5rem, 16vw, 9rem);
+    height: 2px;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--page-accent, var(--accent)) 72%, white);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--page-accent, var(--accent)) 26%, transparent);
+  }
+
+  .editorial-page-hero__support {
+    display: contents;
+  }
+
+  @media (max-width: 640px) {
+    .editorial-page-hero__inner {
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .editorial-page-hero__title {
+      max-width: none;
+    }
+
+    .editorial-page-hero__subtitle {
+      line-height: 1.65;
+    }
+  }
+</style>

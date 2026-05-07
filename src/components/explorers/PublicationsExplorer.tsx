@@ -1,12 +1,7 @@
-/**
- * PublicationsExplorer - Publications list display
- * Refactored to use generic DataExplorer component (DRY principle)
- */
-
 import type { FC } from 'react';
 import type { Publication } from '@/types';
 import { PublicationCard } from '@/components/ui/publication';
-import { DataExplorer } from './DataExplorer';
+import { EditorialExplorer } from './EditorialExplorer';
 import { slugify } from '@/lib/slug';
 
 interface PublicationsExplorerProps {
@@ -24,7 +19,7 @@ const comparators: Record<PublicationSort, (a: Publication, b: Publication) => n
 
 const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items }) => {
   return (
-    <DataExplorer<Publication, PublicationSort>
+    <EditorialExplorer<Publication, PublicationSort>
       items={items}
       searchFields={item => [item.title, item.venue, item.authors]}
       filterFields={{

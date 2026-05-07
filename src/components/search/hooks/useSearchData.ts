@@ -4,7 +4,6 @@
  */
 
 import { useEffect, useState } from 'react';
-import { httpService } from '@/lib/services';
 import type { SearchItem } from '../types';
 
 interface SearchDataResponse {
@@ -18,13 +17,21 @@ export function useSearchData(shouldLoad: boolean) {
   useEffect(() => {
     if (!shouldLoad || loaded) return;
 
-    httpService
-      .get<SearchDataResponse>('/search.json')
-      .then(data => {
+    const controller = new AbortController();
+
+    fetch('/search.json', { signal: controller.signal })
+      .then(async response => {
+        if (!response.ok) {
+          throw new Error(`Search index request failed with status ${response.status}`);
+        }
+
+        const data = (await response.json()) as SearchDataResponse;
         setItems(data.items || []);
         setLoaded(true);
       })
       .catch(() => setLoaded(true));
+
+    return () => controller.abort();
   }, [shouldLoad, loaded]);
 
   return { items, loaded };

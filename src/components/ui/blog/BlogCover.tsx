@@ -228,7 +228,6 @@ function renderDecorations(spec: BlogCoverSpec, variant: BlogCoverVariant) {
 
 function renderDecorationLayer(layer: BlogCoverDecorationLayer) {
   const commonProps = {
-    key: layer.id,
     fill: layer.fillTone ? resolveTone(layer.fillTone) : 'none',
     fillOpacity: layer.fillOpacity,
     stroke: layer.strokeTone ? resolveTone(layer.strokeTone) : 'none',
@@ -240,16 +239,35 @@ function renderDecorationLayer(layer: BlogCoverDecorationLayer) {
 
   switch (layer.kind) {
     case 'circle':
-      return <circle {...commonProps} cx={layer.cx} cy={layer.cy} r={layer.r} />;
+      return <circle key={layer.id} {...commonProps} cx={layer.cx} cy={layer.cy} r={layer.r} />;
     case 'ellipse':
-      return <ellipse {...commonProps} cx={layer.cx} cy={layer.cy} rx={layer.rx} ry={layer.ry} />;
+      return (
+        <ellipse
+          key={layer.id}
+          {...commonProps}
+          cx={layer.cx}
+          cy={layer.cy}
+          rx={layer.rx}
+          ry={layer.ry}
+        />
+      );
     case 'line':
-      return <line {...commonProps} x1={layer.x1} y1={layer.y1} x2={layer.x2} y2={layer.y2} />;
+      return (
+        <line
+          key={layer.id}
+          {...commonProps}
+          x1={layer.x1}
+          y1={layer.y1}
+          x2={layer.x2}
+          y2={layer.y2}
+        />
+      );
     case 'path':
-      return <path {...commonProps} d={layer.d} />;
+      return <path key={layer.id} {...commonProps} d={layer.d} />;
     case 'rect':
       return (
         <rect
+          key={layer.id}
           {...commonProps}
           x={layer.x}
           y={layer.y}

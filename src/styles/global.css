@@ -2994,13 +2994,13 @@
     z-index: 1;
   }
 
-  #site-nav {
+  #site-nav-wrapper > #site-nav {
     position: relative;
     z-index: 1;
     background: transparent !important;
   }
 
-  #site-nav[data-scrolled='true'] {
+  #site-nav-wrapper > #site-nav[data-scrolled='true'] {
     background: transparent !important;
     box-shadow: none !important;
   }

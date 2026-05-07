@@ -56,36 +56,32 @@ const quickLinks = [
         }
       </div>
       <div class="site-footer__contact">
-        <div class="flex flex-col gap-3">
-          <div class="flex flex-col gap-2">
-            {
-              socialLinks.map(({ href, label, brandIcon, customIcon }) => (
-                <a
-                  href={href}
-                  title={label}
-                  aria-label={label}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  class="site-footer__contact-link"
+        {
+          socialLinks.map(({ href, label, brandIcon, customIcon }) => (
+            <a
+              href={href}
+              title={label}
+              aria-label={label}
+              rel="noopener noreferrer"
+              target="_blank"
+              class="site-footer__contact-link"
+            >
+              {brandIcon && <BrandIcon icon={brandIcon} class="site-footer__icon" />}
+              {customIcon === 'linkedin' && (
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="site-footer__icon"
+                  aria-hidden="true"
                 >
-                  {brandIcon && <BrandIcon icon={brandIcon} class="site-footer__icon" />}
-                  {customIcon === 'linkedin' && (
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="site-footer__icon"
-                      aria-hidden="true"
-                    >
-                      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.05-1.86-3.05-1.86 0-2.15 1.45-2.15 2.95v5.67H9.32V9h3.42v1.56h.05c.48-.9 1.64-1.86 3.37-1.86 3.61 0 4.28 2.38 4.28 5.47v6.28zM5.3 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.52V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z" />
-                    </svg>
-                  )}
-                  <span>{label}</span>
-                  <ExternalLink class="site-footer__icon" aria-hidden="true" />
-                </a>
-              ))
-            }
-          </div>
-        </div>
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.05-1.86-3.05-1.86 0-2.15 1.45-2.15 2.95v5.67H9.32V9h3.42v1.56h.05c.48-.9 1.64-1.86 3.37-1.86 3.61 0 4.28 2.38 4.28 5.47v6.28zM5.3 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.52V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z" />
+                </svg>
+              )}
+              <span>{label}</span>
+              <ExternalLink class="site-footer__icon" aria-hidden="true" />
+            </a>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -135,24 +131,27 @@ const quickLinks = [
 
   .site-footer__grid {
     display: grid;
-    gap: clamp(1.5rem, 4vw, 2.5rem);
-    grid-template-columns: repeat(auto-fit, minmax(180px, auto));
+    column-gap: clamp(1rem, 4vw, 2rem);
+    row-gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
   }
 
   .site-footer__brand {
-    min-width: 220px;
+    grid-column: 1 / -1;
+    min-width: 0;
   }
 
   .site-footer__title {
     margin: 0 0 0.6rem;
-    font-size: 1.3rem;
+    font-size: clamp(1.1rem, 4.2vw, 1.3rem);
     font-weight: 600;
     color: rgba(255, 255, 255, 0.92);
   }
 
   .site-footer__summary {
     margin: 0;
+    max-width: 36rem;
     font-size: 0.95rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
@@ -163,6 +162,14 @@ const quickLinks = [
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .site-footer__links {
+    justify-self: start;
+  }
+
+  .site-footer__contact {
+    justify-self: start;
   }
 
   .site-footer__link,
@@ -209,10 +216,21 @@ const quickLinks = [
     color: rgba(255, 255, 255, 0.55);
   }
 
+  @media (min-width: 560px) {
+    .site-footer__title {
+      white-space: nowrap;
+    }
+  }
+
   @media (min-width: 768px) {
     .site-footer__grid {
-      grid-template-columns: 2fr 1fr 1fr;
+      column-gap: clamp(2rem, 7vw, 6rem);
     }
+
+    .site-footer__summary {
+      max-width: 46rem;
+    }
+
     .site-footer__bottom {
       text-align: right;
     }

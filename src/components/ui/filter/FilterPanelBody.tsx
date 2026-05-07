@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 import { DropdownFilters } from './DropdownFilters';
 import { TagFilters } from './TagFilters';
@@ -19,6 +20,7 @@ interface FilterPanelBodyProps {
   readonly selectedTags: Set<string> | null;
   readonly tagCounts: Record<string, number>;
   readonly onToggleTag: (tag: string) => void;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const FilterPanelBodyComponent: FC<FilterPanelBodyProps> = ({
@@ -34,13 +36,21 @@ const FilterPanelBodyComponent: FC<FilterPanelBodyProps> = ({
   selectedTags,
   tagCounts,
   onToggleTag,
+  tone = 'default',
 }) => {
   if (!showFilters || (!hasDropdownFilters && !hasTags && !hasActiveFilters)) {
     return null;
   }
 
   return (
-    <div className="glass-card shape-squircle animate-in fade-in-0 slide-in-from-top-2 space-y-4 rounded-2xl p-4 duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]">
+    <div
+      className={cn(
+        'shape-squircle animate-in fade-in-0 slide-in-from-top-2 space-y-4 rounded-2xl p-4 duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]',
+        tone === 'editorial'
+          ? 'border border-white/10 bg-[rgba(7,14,28,0.55)] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl'
+          : 'glass-card'
+      )}
+    >
       {hasDropdownFilters && onFiltersChange && (
         <DropdownFilters
           filterOptions={filterOptions}
@@ -48,6 +58,7 @@ const FilterPanelBodyComponent: FC<FilterPanelBodyProps> = ({
           onFiltersChange={onFiltersChange}
           hasActiveFilters={hasActiveFilters}
           onClearAll={onClearAll}
+          tone={tone}
         />
       )}
 
@@ -57,6 +68,7 @@ const FilterPanelBodyComponent: FC<FilterPanelBodyProps> = ({
           selectedTags={selectedTags}
           tagCounts={tagCounts}
           onToggleTag={onToggleTag}
+          tone={tone}
         />
       )}
     </div>

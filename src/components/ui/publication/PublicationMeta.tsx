@@ -14,14 +14,14 @@ interface PublicationMetaProps {
 
 const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) => {
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[color:var(--white)]/60 md:text-sm">
+    <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-[color:var(--white)]/60 md:text-sm">
       {item.type ? (
         <Badge
-          className="text-xs whitespace-nowrap"
+          className="rounded-full px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
           style={{
             color: accent,
-            borderColor: `color-mix(in oklab, ${accent} 55%, transparent)`,
-            background: `color-mix(in oklab, ${accent} 12%, transparent)`,
+            borderColor: `color-mix(in oklab, ${accent} 52%, transparent)`,
+            background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 14%, transparent), color-mix(in oklab, ${accent} 8%, transparent))`,
           }}
           title={item.type}
         >
@@ -32,25 +32,25 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
       {item.venue ? (
         <Tooltip content={item.venue}>
           <span
-            className="inline-flex max-w-[60vw] items-center gap-1.5 truncate rounded-full px-2.5 py-1 text-[10px] font-medium md:max-w-[22rem] md:text-xs"
+            className="inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:max-w-[22rem] md:text-xs"
             style={{
               color: accent,
-              background: `color-mix(in oklab, ${accent} 10%, transparent)`,
+              background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 12%, transparent), color-mix(in oklab, ${accent} 7%, transparent))`,
               border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
             }}
           >
             <Building2 size={12} aria-hidden="true" className="icon-bounce" />
-            <span className="truncate">{item.venue}</span>
+            <span className="min-w-0 truncate leading-tight">{item.venue}</span>
           </span>
         </Tooltip>
       ) : null}
 
       <Tooltip content={String(item.year)}>
         <span
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium md:text-xs"
+          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:text-xs"
           style={{
             color: accent,
-            background: `color-mix(in oklab, ${accent} 10%, transparent)`,
+            background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 12%, transparent), color-mix(in oklab, ${accent} 7%, transparent))`,
             border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
           }}
         >

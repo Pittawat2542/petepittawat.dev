@@ -49,7 +49,6 @@ export function createSearchController(): SearchController {
     const connectButtons = () => {
       registerButton(document.getElementById('open-search-desktop'));
       registerButton(document.getElementById('open-search-mobile'));
-      registerButton(document.getElementById('open-search-drawer'));
       document
         .querySelectorAll<HTMLButtonElement>('button[aria-label="Open search"]')
         .forEach(registerButton);

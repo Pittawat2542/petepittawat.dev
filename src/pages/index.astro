@@ -1,5 +1,56 @@
 ---
-import Page from '@/components/pages/IndexPage.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getImage } from 'astro:assets';
+import profileImage from '@/assets/images/profile.jpg';
+import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
+import AboutSection from '@/components/sections/AboutSection.astro';
+import BlogSection from '@/components/sections/BlogSection.astro';
+import HeroSection from '@/components/sections/HeroSection.astro';
+import StatsSection from '@/components/sections/StatsSection.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
+import { getBlogPosts, getPublications, getTalks } from '@/lib/content';
+
+const [blogPosts, publications, talks] = await Promise.all([
+  getBlogPosts(),
+  getPublications(),
+  getTalks(),
+]);
+const allPosts = blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const siteCopy = siteCopyEn;
+const posts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+const stats = {
+  posts: allPosts.length,
+  publications: publications.length,
+  talks: talks.length,
+};
+const heroW192 = await getImage({ src: profileImage, width: 192, format: 'webp' });
+const heroW224 = await getImage({ src: profileImage, width: 224, format: 'webp' });
+const heroW384 = await getImage({ src: profileImage, width: 384, format: 'webp' });
+const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' });
 ---
 
-<Page />
+<BaseLayout title={SITE_TITLE} description={siteCopy.meta.description || SITE_DESCRIPTION}>
+  <PageBackdrop variant="landing" />
+  {
+    heroW384 && (
+      <Fragment slot="head">
+        <link
+          rel="preload"
+          as="image"
+          fetchpriority="high"
+          href={heroW384.src}
+          imagesrcset={`${heroW192.src} 192w, ${heroW224.src} 224w, ${heroW384.src} 384w, ${heroW448.src} 448w`}
+          imagesizes="(min-width: 768px) 14rem, 12rem"
+        />
+      </Fragment>
+    )
+  }
+  <HeroSection copy={siteCopy.home.hero} />
+  <AboutSection copy={siteCopy.home.aboutSection} />
+  <StatsSection stats={stats} copy={siteCopy.home.statsSection} />
+  <BlogSection posts={posts} copy={siteCopy.home.blogSection} />
+</BaseLayout>

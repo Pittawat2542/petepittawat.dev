@@ -1,0 +1,78 @@
+---
+import { Activity, Handshake, Mic } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
+
+interface Props {
+  currentWork: {
+    title: string;
+    description: string;
+    items: readonly string[];
+    collaborationTitle: string;
+    collaborationPoints: readonly string[];
+    communicationTitle: string;
+    communicationPoints: readonly string[];
+  };
+}
+
+const { currentWork } = Astro.props as Props;
+---
+
+<section id="current-work" class="section-block">
+  <div class="section-heading">
+    <div class="mb-2 flex items-center gap-2">
+      <Activity class="h-5 w-5 text-[color:var(--accent)]" />
+      <h2>{currentWork.title}</h2>
+    </div>
+    <p>{currentWork.description}</p>
+  </div>
+
+  <div class="current-work-grid">
+    <GlassCard variant="premium" className="current-work-card current-work-card--primary">
+      <span class="eyebrow text-[color:var(--accent)]">Current focus</span>
+      <ul class="current-work-list">
+        {
+          currentWork.items.map(point => (
+            <li>
+              <span class="current-work-list__dot" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </GlassCard>
+
+    <GlassCard variant="premium" className="current-work-card">
+      <div class="current-work-card__title">
+        <Handshake class="h-4 w-4 text-[color:var(--accent)]" />
+        <h3>{currentWork.collaborationTitle}</h3>
+      </div>
+      <ul class="current-work-list current-work-list--compact">
+        {
+          currentWork.collaborationPoints.map(point => (
+            <li>
+              <span class="current-work-list__dot" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </GlassCard>
+
+    <GlassCard variant="premium" className="current-work-card">
+      <div class="current-work-card__title">
+        <Mic class="h-4 w-4 text-[color:var(--accent)]" />
+        <h3>{currentWork.communicationTitle}</h3>
+      </div>
+      <ul class="current-work-list current-work-list--compact">
+        {
+          currentWork.communicationPoints.map(point => (
+            <li>
+              <span class="current-work-list__dot" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </GlassCard>
+  </div>
+</section>

@@ -1,20 +1,20 @@
+type RefreshWindow = Window & {
+  __vite_plugin_react_preamble_installed__?: boolean;
+  $RefreshReg$?: (...args: unknown[]) => void;
+  $RefreshSig$?: () => <T>(type: T) => T;
+};
+
 export async function openSearch() {
   if (import.meta.env.DEV) {
     try {
-      // Ensure React Fast Refresh preamble exists in dev to avoid plugin error
-      // @vitejs/plugin-react expects this to be installed before any React module executes
-      // @ts-ignore
-      if (!window.__vite_plugin_react_preamble_installed__) {
-        // @ts-ignore
+      const refreshWindow = window as RefreshWindow;
+      if (!refreshWindow.__vite_plugin_react_preamble_installed__) {
+        // @ts-expect-error Vite exposes this module only in development.
         const RefreshRuntime = await import('/@react-refresh');
-        // @ts-ignore
         RefreshRuntime.injectIntoGlobalHook(window);
-        // @ts-ignore
-        window.$RefreshReg$ = () => {};
-        // @ts-ignore
-        window.$RefreshSig$ = () => (type: any) => type;
-        // @ts-ignore
-        window.__vite_plugin_react_preamble_installed__ = true;
+        refreshWindow.$RefreshReg$ = () => {};
+        refreshWindow.$RefreshSig$ = () => type => type;
+        refreshWindow.__vite_plugin_react_preamble_installed__ = true;
       }
     } catch {
       // ignore if not available
