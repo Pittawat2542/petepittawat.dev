@@ -85,16 +85,14 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
       <div
         className={cn(
           'flex flex-wrap items-center gap-2 sm:gap-4',
-          tone === 'editorial' &&
-            'grid gap-3 border-t border-white/10 pt-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center'
+          tone === 'editorial' && 'grid items-center gap-3 md:grid-cols-[minmax(0,1fr)_auto]'
         )}
       >
         {hasTools && (
           <div
             className={cn(
               'flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start',
-              tone === 'editorial' &&
-                'flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center md:w-full md:justify-start'
+              tone === 'editorial' && 'flex-wrap items-center gap-3 md:w-full md:justify-start'
             )}
           >
             {toolbarAccessory}

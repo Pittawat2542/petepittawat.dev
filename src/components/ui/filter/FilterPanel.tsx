@@ -135,7 +135,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
       className={cn(
         'space-y-4',
         tone === 'editorial' &&
-          'blog-filter-panel--editorial rounded-[1.75rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.14),transparent_26%),linear-gradient(180deg,rgba(10,19,36,0.94),rgba(7,14,28,0.96))] p-4 shadow-[0_28px_70px_-42px_rgba(3,7,18,0.75)] md:p-5',
+          'blog-filter-panel--editorial space-y-3 rounded-[1.75rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.14),transparent_26%),linear-gradient(180deg,rgba(10,19,36,0.94),rgba(7,14,28,0.96))] p-4 shadow-[0_28px_70px_-42px_rgba(3,7,18,0.75)] md:p-5',
         className
       )}
     >
