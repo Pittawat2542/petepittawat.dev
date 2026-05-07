@@ -11,11 +11,22 @@ interface FigureProps {
 const FigureComponent: FC<FigureProps> = ({ src, alt = '', caption, className = '', children }) => {
   // Handle both string sources and Astro image objects
   const imageSrc = src ? (typeof src === 'string' ? src : src.src) : undefined;
+  const width = typeof src === 'object' && 'width' in src ? (src as any).width : undefined;
+  const height = typeof src === 'object' && 'height' in src ? (src as any).height : undefined;
 
   return (
     <>
       <figure className={`mdx-figure ${className}`.trim()}>
-        {imageSrc && <img src={imageSrc} alt={alt} loading="lazy" decoding="async" />}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={alt}
+            width={width}
+            height={height}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         {caption && <figcaption>{caption}</figcaption>}
         {children}
       </figure>

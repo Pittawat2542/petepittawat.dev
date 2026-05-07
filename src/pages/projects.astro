@@ -22,6 +22,6 @@ const projects = await getProjects();
       title={pageCopy.title}
       subtitle={pageCopy.heroSubtitle}
     />
-    <ProjectsExplorer client:visible items={projects} />
+    <ProjectsExplorer client:idle items={projects} />
   </Container>
 </BaseLayout>

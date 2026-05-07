@@ -1,6 +1,9 @@
 import type { BlogPost } from '@/types';
 
-export function useBlogCardSeries(post: BlogPost, allPosts: readonly BlogPost[]) {
+export function useBlogCardSeries(
+  post: { id: string; collection: 'blog'; data: BlogPost['data'] },
+  allPosts: readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[]
+) {
   const isPartOfSeries = post.data.seriesSlug && post.data.seriesTitle;
   let partNumber = post.data.seriesOrder || 0;
   let totalParts = 0;

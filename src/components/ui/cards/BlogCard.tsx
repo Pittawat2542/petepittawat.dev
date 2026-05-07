@@ -29,13 +29,17 @@ const CARD_ANIMATION_CLASS =
  */
 interface BlogCardProps {
   /** The blog post data to display */
-  readonly post: BlogPost;
+  readonly post: { id: string; collection: 'blog'; data: BlogPost['data'] };
   /** Whether this card should be displayed with featured styling */
   readonly featured?: boolean | undefined;
   /** Array of all posts used to calculate series information */
-  readonly allPosts?: readonly BlogPost[] | undefined;
+  readonly allPosts?:
+    | readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[]
+    | undefined;
   /** Locale-aware translation state for this card */
-  readonly languageState?: BlogPostLanguageState<BlogPost> | undefined;
+  readonly languageState?:
+    | BlogPostLanguageState<{ id: string; collection: 'blog'; data: BlogPost['data'] }>
+    | undefined;
   /** Additional CSS classes to apply */
   readonly className?: string | undefined;
   /** Inline styles to apply */

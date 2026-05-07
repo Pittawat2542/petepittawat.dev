@@ -23,7 +23,7 @@ import EditorialListingShell from '@/components/explorers/EditorialListingShell'
 import type { BlogPost } from '@/types';
 
 interface BlogListPageProps {
-  readonly posts: readonly BlogPost[];
+  readonly posts: readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[];
   readonly initialLocale?: BlogTranslationLocale | undefined;
   readonly initialTags?: readonly string[] | undefined;
 }
@@ -130,7 +130,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
     setStoredBlogLocalePreference(locale);
   }, [isLocaleHydrated, locale]);
 
-  const groupedPosts = useMemo(() => groupBlogPostsByTranslation(posts as BlogPost[]), [posts]);
+  const groupedPosts = useMemo(() => groupBlogPostsByTranslation(posts), [posts]);
 
   const localizedStates = useMemo(
     () => sortPostsDescending(getPreferredBlogPostStates(groupedPosts, locale)),
@@ -252,26 +252,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
       totalResults={localizedPosts.length}
       toolbarAccessory={languageSwitcher}
       itemsWrapperElement="ul"
-      footer={
-        <>
-          <div className="mt-8 flex justify-center text-sm text-white/52 md:mt-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] font-semibold tracking-[0.32em] text-white/52 uppercase shadow-[0_20px_40px_-30px_rgba(3,7,18,0.82)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6ac1ff)] shadow-[0_0_0_5px_rgba(96,165,250,0.18)]" />
-              Field Notes elsewhere
-            </span>
-          </div>
-          <div className="mt-4 flex flex-col items-center gap-2 text-center text-sm text-white/52 md:flex-row md:justify-center md:gap-3">
-            <span className="text-white/48">Also publishing with the Typhoon team:</span>
-            <a
-              href="https://opentyphoon.ai/blog/en"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-white/82 transition-[transform,border-color,color,box-shadow,background-color] duration-200 hover:scale-[1.02] hover:border-white/18 hover:bg-white/[0.07] hover:text-white hover:shadow-[0_18px_30px_-24px_rgba(3,7,18,0.82)]"
-            >
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6ac1ff)]" />
-              opentyphoon.ai/blog/en
-            </a>
-          </div>
-        </>
-      }
+      footer={null}
       pagination={{
         total: sorted.length,
         visible: pagePosts.length,

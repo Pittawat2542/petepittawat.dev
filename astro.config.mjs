@@ -29,7 +29,7 @@ export default defineConfig({
 	},
 	build: {
 		// Inline all page CSS to remove render‑blocking stylesheet requests
-		inlineStylesheets: 'always',
+		// inlineStylesheets: 'always',
 		split: true, // Enable code splitting
 		format: 'directory', // Use directory format for GitHub Pages compatibility
 		concurrency: 4, // Parallel builds for better performance

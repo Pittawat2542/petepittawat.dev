@@ -18,6 +18,6 @@ const talks = await getTalks();
 >
   <Container className="space-y-8 md:space-y-10">
     <EditorialPageHero eyebrow="Speaking" title={pageCopy.title} subtitle={pageCopy.heroSubtitle} />
-    <TalksExplorer client:visible items={talks} />
+    <TalksExplorer client:idle items={talks} />
   </Container>
 </BaseLayout>

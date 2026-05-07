@@ -24,7 +24,7 @@ const publications = await getPublications();
       title={pageCopy.title}
       subtitle={pageCopy.heroSubtitle}
     />
-    <PublicationsExplorer client:visible items={publications} />
+    <PublicationsExplorer client:idle items={publications} />
     <AcademicServices
       data={academicServices}
       title={pageCopy.academicServicesTitle}

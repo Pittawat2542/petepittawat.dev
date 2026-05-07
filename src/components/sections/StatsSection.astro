@@ -20,7 +20,7 @@ const iconMap = {
 
 const cards = copy.cards.map(config => ({
   ...config,
-  count: stats[config.key] ?? 0,
+  count: config.key === 'posts' ? (stats[config.key] ?? 0) / 2 : (stats[config.key] ?? 0),
   Icon: iconMap[config.icon],
 }));
 ---

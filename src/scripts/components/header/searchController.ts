@@ -11,7 +11,7 @@ export function createSearchController(): SearchController {
     let prefetched = false;
     const trackedButtons = new Set<HTMLButtonElement>();
 
-    const prefetchSearchIndex = () => {
+    const prefetchSearchModal = () => {
       if (prefetched) return;
       prefetched = true;
 
@@ -23,7 +23,9 @@ export function createSearchController(): SearchController {
         // Ignore browsers without the Network Information API.
       }
 
+      // Prefetch both index and code
       fetch('/search.json').catch(() => {});
+      import('@/scripts/openSearch').catch(() => {});
     };
 
     const openSearchLazy = async () => {
@@ -41,9 +43,9 @@ export function createSearchController(): SearchController {
       }
       trackedButtons.add(button);
       button.addEventListener('click', openSearchLazy);
-      button.addEventListener('mouseenter', prefetchSearchIndex, { once: true, passive: true });
-      button.addEventListener('focus', prefetchSearchIndex, { once: true });
-      button.addEventListener('touchstart', prefetchSearchIndex, { once: true, passive: true });
+      button.addEventListener('mouseenter', prefetchSearchModal, { once: true, passive: true });
+      button.addEventListener('focus', prefetchSearchModal, { once: true });
+      button.addEventListener('touchstart', prefetchSearchModal, { once: true, passive: true });
     };
 
     const connectButtons = () => {
@@ -63,7 +65,7 @@ export function createSearchController(): SearchController {
     const handleKeydown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        prefetchSearchIndex();
+        prefetchSearchModal();
         openSearchLazy();
       }
     };
@@ -73,9 +75,9 @@ export function createSearchController(): SearchController {
     return () => {
       trackedButtons.forEach(button => {
         button.removeEventListener('click', openSearchLazy);
-        button.removeEventListener('mouseenter', prefetchSearchIndex);
-        button.removeEventListener('focus', prefetchSearchIndex);
-        button.removeEventListener('touchstart', prefetchSearchIndex);
+        button.removeEventListener('mouseenter', prefetchSearchModal);
+        button.removeEventListener('focus', prefetchSearchModal);
+        button.removeEventListener('touchstart', prefetchSearchModal);
       });
       trackedButtons.clear();
       window.removeEventListener('keydown', handleKeydown);
