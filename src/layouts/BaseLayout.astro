@@ -1,9 +1,8 @@
 ---
-import AnimatedHeader from '@/components/common/AnimatedHeader';
 import BaseHead from '@/components/layout/core/BaseHead.astro';
 import Footer from '@/components/layout/core/Footer.astro';
+import Header from '@/components/layout/core/Header.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
-import SearchModal from '@/components/layout/SearchModal';
 import { serializeCssVariables } from '@/lib/blog-cover';
 
 const {
@@ -34,7 +33,7 @@ const {
 const ogImagePath = image ?? '/home-og-image.jpeg';
 const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath;
 const pageKey = page?.toLowerCase();
-const pageAccent = pageKey ? `var(--accent-${pageKey}, var(--accent, #6ac1ff))` : undefined;
+const pageAccent = pageKey ? 'var(--accent, #6ac1ff)' : undefined;
 const bodyStyleFragments = [
   pageAccent ? `--page-accent:${pageAccent};--card-accent:${pageAccent};` : undefined,
   Object.keys(themeVariables).length > 0 ? serializeCssVariables(themeVariables) : undefined,
@@ -62,7 +61,7 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
-    <AnimatedHeader pathname={Astro.url.pathname} client:idle />
+    <Header />
     <main
       id="main-content"
       class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
@@ -72,7 +71,6 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
     </main>
     <Footer />
     <ScrollTop />
-    <SearchModal hideTriggers client:idle />
     <script>
       // Performance optimized initialization
       (function () {
@@ -111,34 +109,16 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
           } catch {}
         };
 
-        // Security: ensure rel for target=_blank links - optimized
-        const fixExternalRel = () => {
-          try {
-            const links = document.querySelectorAll('a[target="_blank"]');
-
-            links.forEach(a => {
-              const current = (a.getAttribute('rel') || '').split(/\s+/).filter(Boolean);
-              if (!current.includes('noopener')) current.push('noopener');
-              if (!current.includes('noreferrer')) current.push('noreferrer');
-              a.setAttribute('rel', current.join(' '));
-            });
-          } catch (e) {
-            console.warn('Failed to fix external link rels:', e);
-          }
-        };
-
         // Optimize initialization timing
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(() => {
               initReveal();
-              fixExternalRel();
             });
           });
         } else {
           requestAnimationFrame(() => {
             initReveal();
-            fixExternalRel();
           });
         }
       })();

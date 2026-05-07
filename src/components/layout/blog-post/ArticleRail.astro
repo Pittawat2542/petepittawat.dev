@@ -1,0 +1,63 @@
+---
+import Toc from '@/components/layout/blog/Toc.astro';
+import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
+import { languages } from '@/i18n/ui';
+import type { BlogPostLanguageState } from '@/lib/blog-translations';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  excerpt: string;
+  languageHelperText?: string | undefined;
+  languageState: BlogPostLanguageState<CollectionEntry<'blog'>>;
+}
+
+const { excerpt, languageHelperText, languageState } = Astro.props as Props;
+---
+
+<aside class="article-surface article-rail">
+  <BlogLanguageSwitcher
+    ariaLabel="Select reading language"
+    label="Reading language"
+    variant="rail"
+    helperText={languageHelperText}
+    options={[
+      {
+        locale: 'en',
+        label: languages.en,
+        shortLabel: 'EN',
+        href: languageState.availability.en.href,
+        available: languageState.availability.en.available,
+        isActive: languageState.availability.en.isCurrent,
+        screenReaderLabel: languageState.availability.en.available
+          ? 'Read this post in English'
+          : 'English translation unavailable',
+      },
+      {
+        locale: 'th',
+        label: languages.th,
+        shortLabel: 'TH',
+        href: languageState.availability.th.href,
+        available: languageState.availability.th.available,
+        isActive: languageState.availability.th.isCurrent,
+        screenReaderLabel: languageState.availability.th.available
+          ? 'Read this post in Thai'
+          : 'Thai translation unavailable',
+      },
+    ]}
+  />
+
+  {
+    excerpt ? (
+      <section class="article-note" aria-labelledby="article-note-heading">
+        <div class="article-note__eyebrow" id="article-note-heading">
+          TL;DR
+        </div>
+        <p class="article-note__copy">{excerpt}</p>
+      </section>
+    ) : null
+  }
+
+  <div class="article-rail__toc">
+    <Toc title="On this page" selector="#post-article" levels={[2, 3]} collapsed={false} />
+  </div>
+</aside>

@@ -1,13 +1,8 @@
-/**
- * TalksExplorer - Talks list display
- * Refactored to use generic DataExplorer component (DRY principle)
- */
-
 import { memo } from 'react';
 import type { FC } from 'react';
 import type { Talk } from '@/types';
 import TalkCard from '@/components/ui/cards/TalkCard';
-import { DataExplorer } from './DataExplorer';
+import { EditorialExplorer } from './EditorialExplorer';
 import { slugify } from '@/lib/slug';
 
 interface TalksExplorerProps {
@@ -25,7 +20,7 @@ const comparators: Record<TalkSort, (a: Talk, b: Talk) => number> = {
 
 const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
   return (
-    <DataExplorer<Talk, TalkSort>
+    <EditorialExplorer<Talk, TalkSort>
       items={items}
       searchFields={item => [item.title, item.audience, item.mode]}
       filterFields={{

@@ -8,6 +8,7 @@ interface SelectionItemProps {
   readonly count?: number | undefined;
   readonly icon?: ReactNode;
   readonly className?: string;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const SelectionItemComponent: FC<SelectionItemProps> = ({
@@ -16,12 +17,19 @@ const SelectionItemComponent: FC<SelectionItemProps> = ({
   count,
   icon,
   className,
+  tone = 'default',
 }) => {
   return (
     <div
       className={cn(
         'relative z-10 flex w-full items-center justify-between gap-3 rounded-full px-3 py-2 transition-[color,background-color] duration-150 ease-out',
-        selected ? 'text-[color:var(--white,#FFFFFF)]' : 'text-[color:var(--white,#FFFFFF)]/80',
+        tone === 'editorial'
+          ? selected
+            ? 'bg-white/[0.06] text-white'
+            : 'text-white/68'
+          : selected
+            ? 'text-[color:var(--white,#FFFFFF)]'
+            : 'text-[color:var(--white,#FFFFFF)]/80',
         className
       )}
       data-selected={selected ? 'true' : undefined}
@@ -31,7 +39,14 @@ const SelectionItemComponent: FC<SelectionItemProps> = ({
           <span className="h-4 w-0.5 rounded-full bg-[color:var(--accent,#6AC1FF)]" aria-hidden />
         ) : null}
         {icon ? (
-          <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/8 text-[color:var(--white,#FFFFFF)]/85">
+          <span
+            className={cn(
+              'inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full',
+              tone === 'editorial'
+                ? 'bg-white/[0.06] text-white/56'
+                : 'bg-white/8 text-[color:var(--white,#FFFFFF)]/85'
+            )}
+          >
             {icon}
           </span>
         ) : null}
@@ -39,7 +54,10 @@ const SelectionItemComponent: FC<SelectionItemProps> = ({
           <span
             className={cn(
               'line-clamp-2 text-sm leading-snug break-words whitespace-normal',
-              selected && 'font-medium text-[color:var(--white,#FFFFFF)]'
+              selected &&
+                (tone === 'editorial'
+                  ? 'font-medium text-white'
+                  : 'text-[color:var(--white,#FFFFFF)]')
             )}
           >
             {label}
@@ -48,7 +66,14 @@ const SelectionItemComponent: FC<SelectionItemProps> = ({
       </div>
       <div className="flex items-center gap-2">
         {typeof count === 'number' && (
-          <span className="shrink-0 rounded-full bg-white/12 px-1.5 py-0.5 text-[10px] text-[color:var(--white,#FFFFFF)]/70 transition-colors duration-150 ease-out">
+          <span
+            className={cn(
+              'shrink-0 rounded-full px-1.5 py-0.5 text-[10px] transition-colors duration-150 ease-out',
+              tone === 'editorial'
+                ? 'bg-white/[0.08] text-white/48'
+                : 'bg-white/12 text-[color:var(--white,#FFFFFF)]/70'
+            )}
+          >
             {count}
           </span>
         )}

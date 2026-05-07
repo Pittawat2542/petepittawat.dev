@@ -1,5 +1,27 @@
 ---
-import Page from '@/components/pages/ProjectsPage.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { ProjectsExplorer } from '@/components/explorers';
+import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/ui/core/Container.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import { getProjects } from '@/lib/content';
+
+const pageCopy = siteCopyEn.listingPages.projects;
+const projects = await getProjects();
 ---
 
-<Page />
+<BaseLayout
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  page="projects"
+>
+  <Container className="space-y-8 md:space-y-10">
+    <EditorialPageHero
+      eyebrow="Selected Work"
+      title={pageCopy.title}
+      subtitle={pageCopy.heroSubtitle}
+    />
+    <ProjectsExplorer client:idle items={projects} />
+  </Container>
+</BaseLayout>

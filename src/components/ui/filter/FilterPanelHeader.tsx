@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from 'react';
 import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 import SearchInput from '@/components/ui/interaction/SearchInput';
 
@@ -24,6 +25,7 @@ interface FilterPanelHeaderProps {
   readonly filteredResults?: number | undefined;
   readonly hasActiveFilters: boolean;
   readonly toolbarAccessory?: ReactNode;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
@@ -43,18 +45,31 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
   filteredResults,
   hasActiveFilters,
   toolbarAccessory,
+  tone = 'default',
 }) => {
   const shouldShowToggle = compact && (hasDropdownFilters || hasTags) && onToggleFilters;
   const canSort = Boolean(onSortChange);
+  const hasTools = Boolean(toolbarAccessory || (canSort && onSortChange));
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      <div className="flex flex-1 items-center gap-3">
+    <div
+      className={cn(
+        'flex flex-col gap-3 md:flex-row md:items-center md:justify-between',
+        tone === 'editorial' && 'gap-4'
+      )}
+    >
+      <div
+        className={cn(
+          'flex flex-1 items-center gap-3',
+          tone === 'editorial' && 'flex-col items-stretch sm:flex-row sm:items-center'
+        )}
+      >
         <SearchInput
           value={searchValue}
           onChange={onSearchChange}
           placeholder={searchPlaceholder}
-          className="flex-1"
+          className="min-w-0 flex-1"
+          tone={tone}
         />
 
         {shouldShowToggle && (
@@ -62,19 +77,31 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
             showFilters={showFilters}
             onToggle={onToggleFilters}
             activeFiltersCount={activeFiltersCount}
+            tone={tone}
           />
         )}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-        {(toolbarAccessory || (canSort && onSortChange)) && (
-          <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start">
+      <div
+        className={cn(
+          'flex flex-wrap items-center gap-2 sm:gap-4',
+          tone === 'editorial' && 'grid items-center gap-3 md:grid-cols-[minmax(0,1fr)_auto]'
+        )}
+      >
+        {hasTools && (
+          <div
+            className={cn(
+              'flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start',
+              tone === 'editorial' && 'flex-wrap items-center gap-3 md:w-full md:justify-start'
+            )}
+          >
             {toolbarAccessory}
             {canSort && onSortChange && (
               <SortControl
                 sortOptions={sortOptions}
                 sortValue={sortValue}
                 onSortChange={onSortChange}
+                tone={tone}
               />
             )}
           </div>
@@ -85,6 +112,7 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
           filteredResults={filteredResults}
           searchValue={searchValue}
           hasActiveFilters={hasActiveFilters}
+          tone={tone}
         />
       </div>
     </div>

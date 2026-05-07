@@ -1,115 +1,359 @@
 ---
-import SearchButton from './SearchButton.astro';
 import { BookOpenText, FolderKanban, FileText, Mic, CircleUser, ChevronRight } from '@lucide/astro';
 
 export interface Props {
   currentPath: string;
   class?: string;
+  renderToggle?: boolean;
+  renderPanel?: boolean;
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, renderToggle = true, renderPanel = true } = Astro.props;
 
 const links = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/publications', label: 'Publications' },
-  { href: '/talks', label: 'Talks' },
-  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog', description: 'Writing, notes, and essays' },
+  { href: '/projects', label: 'Projects', description: 'Current builds and research work' },
+  { href: '/publications', label: 'Publications', description: 'Papers, posters, and reports' },
+  { href: '/talks', label: 'Talks', description: 'Presentations and invited sessions' },
+  { href: '/about', label: 'About', description: 'Background, profile, and journey' },
 ];
 
 const isActive = (href: string) =>
   currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
 ---
 
-<!-- Mobile menu toggle -->
-<button
-  id="menu-toggle"
-  type="button"
-  data-open="false"
-  class="menu-toggle md:hidden"
-  aria-label="Open menu"
-  aria-controls="mobile-menu"
-  aria-expanded="false"
->
-  <span class="menu-toggle__icon" aria-hidden="true">
-    <span></span>
-    <span></span>
-    <span></span>
-  </span>
-</button>
-
-<!-- Backdrop for mobile menu -->
-<div
-  id="mobile-menu-overlay"
-  class="pointer-events-none fixed inset-0 z-30 bg-[color:var(--black-nav,#020617)]/70 opacity-0 backdrop-blur-sm transition-opacity duration-300 ease-out supports-[backdrop-filter]:bg-[color:var(--black-nav,#020617)]/55 md:hidden"
->
-</div>
-
-<!-- Mobile menu panel: full-screen overlay with centered glass sheet -->
-<div
-  id="mobile-menu"
-  class="pointer-events-none fixed inset-0 z-40 flex items-start justify-center px-4 opacity-0 transition-opacity duration-300 ease-out md:hidden"
->
-  <div
-    id="mobile-menu-sheet"
-    class="mx-auto mt-[max(env(safe-area-inset-top),1rem)] w-[min(96vw,38rem)] -translate-y-4 scale-[0.97] opacity-0 transition-[transform,opacity] duration-300 ease-out"
-  >
-    <div
-      class="glass-card shape-squircle no-hover-lift no-paint-contain overflow-hidden rounded-3xl border border-[color:var(--white)]/12 bg-[color:var(--black-nav)]/75 shadow-2xl shadow-black/25 backdrop-blur-xl supports-[backdrop-filter]:bg-[color:var(--black-nav)]/55"
+{
+  renderToggle && (
+    <button
+      id="menu-toggle"
+      type="button"
+      data-open="false"
+      class="menu-toggle min-[960px]:hidden"
+      aria-label="Open menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
     >
-      <!-- Quick action: Search -->
-      <div class="p-2.5">
-        <SearchButton variant="drawer" />
-      </div>
-      <ul class="grid grid-cols-1 gap-3 px-2.5 pb-4">
-        {
-          links.map(({ href, label }) => (
-            <li>
-              <a
-                href={href}
-                class={`group group/mobile-nav shape-squircle relative isolate w-full touch-manipulation overflow-hidden rounded-2xl border border-[color:var(--white)]/12 bg-[color:var(--white)]/[0.05] px-5 py-4 text-base font-medium text-[color:var(--white)]/88 transition-[transform,background-color,border-color,color,box-shadow] duration-250 ease-out hover:border-[color:var(--white)]/24 hover:bg-[color:var(--white)]/[0.12] hover:text-[color:var(--white)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6bc1ff)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--black-nav,#020617)] focus-visible:outline-none active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 ${isActive(href) ? 'pointer-events-none cursor-default border-[color:var(--accent,#6bc1ff)]/40 bg-[color:var(--accent,#6bc1ff)]/[0.2] text-[color:var(--white)] shadow-[0_24px_48px_-32px_rgba(6,14,30,0.92)]' : ''}`}
-                data-active={isActive(href) ? 'true' : undefined}
-                aria-current={isActive(href) ? 'page' : undefined}
-                tabindex={isActive(href) ? -1 : undefined}
-              >
-                <span class="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(106,193,255,0.18),rgba(255,255,255,0.06))] opacity-0 transition-opacity duration-300 ease-out group-hover/mobile-nav:opacity-100 group-focus-visible/mobile-nav:opacity-100 group-data-[active=true]/mobile-nav:opacity-100" />
-                <span class="relative flex items-center gap-3">
-                  <span
-                    class={`shape-squircle-sm inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[color:var(--white)]/12 bg-[color:var(--white)]/[0.06] text-[color:var(--white)]/80 transition-all duration-300 ease-out group-hover/mobile-nav:border-[color:var(--white)]/26 group-hover/mobile-nav:bg-[color:var(--white)]/[0.14] group-hover/mobile-nav:text-[color:var(--white)] ${isActive(href) ? 'border-[color:var(--accent,#6bc1ff)]/50 bg-[color:var(--accent,#6bc1ff)]/20 text-[color:var(--accent,#6bc1ff)] shadow-[0_0_18px_rgba(106,193,255,0.35)]' : ''}`}
-                    aria-hidden="true"
+      <span class="menu-toggle__icon" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </span>
+    </button>
+  )
+}
+
+{
+  renderPanel && (
+    <>
+      <div
+        id="mobile-menu-overlay"
+        data-open="false"
+        aria-hidden="true"
+        class="min-[960px]:hidden"
+        style="top: calc(max(env(safe-area-inset-top), 1rem) + 4rem);"
+      />
+
+      <div
+        id="mobile-menu"
+        data-open="false"
+        class="min-[960px]:hidden"
+        style="top: calc(max(env(safe-area-inset-top), 1rem) + 4rem);"
+      >
+        <div
+          id="mobile-menu-sheet"
+          data-open="false"
+          class="mx-auto w-full max-w-[72rem]"
+          style="max-height: calc(100dvh - (max(env(safe-area-inset-top), 1rem) + 4rem));"
+        >
+          <section class="mobile-menu-panel">
+            <header class="mobile-menu-panel__header">
+              <p class="mobile-menu-panel__eyebrow">Navigation</p>
+              <h2 class="mobile-menu-panel__title">Explore the site</h2>
+              <p class="mobile-menu-panel__copy">
+                Choose a section without leaving the current context behind the header.
+              </p>
+            </header>
+
+            <ul class="mobile-menu-panel__list">
+              {links.map(({ href, label, description }) => (
+                <li>
+                  <a
+                    href={href}
+                    class={`mobile-menu-link ${isActive(href) ? 'mobile-menu-link--active' : ''}`}
+                    data-active={isActive(href) ? 'true' : undefined}
+                    aria-current={isActive(href) ? 'page' : undefined}
+                    tabindex={isActive(href) ? -1 : undefined}
                   >
-                    {label === 'Blog' && <BookOpenText class="h-5 w-5" aria-hidden="true" />}
-                    {label === 'Projects' && <FolderKanban class="h-5 w-5" aria-hidden="true" />}
-                    {label === 'Publications' && <FileText class="h-5 w-5" aria-hidden="true" />}
-                    {label === 'Talks' && <Mic class="h-5 w-5" aria-hidden="true" />}
-                    {label === 'About' && <CircleUser class="h-5 w-5" aria-hidden="true" />}
-                  </span>
-                  <span class="relative min-w-0 flex-1 text-left">
-                    <span class="block truncate text-base leading-tight font-semibold tracking-[0.01em]">
-                      {label}
+                    <span class="mobile-menu-link__icon" aria-hidden="true">
+                      {label === 'Blog' && <BookOpenText class="h-5 w-5" aria-hidden="true" />}
+                      {label === 'Projects' && <FolderKanban class="h-5 w-5" aria-hidden="true" />}
+                      {label === 'Publications' && <FileText class="h-5 w-5" aria-hidden="true" />}
+                      {label === 'Talks' && <Mic class="h-5 w-5" aria-hidden="true" />}
+                      {label === 'About' && <CircleUser class="h-5 w-5" aria-hidden="true" />}
                     </span>
-                    {isActive(href) && (
-                      <span class="mt-1 inline-flex items-center gap-1 text-sm font-medium text-[color:var(--accent,#6bc1ff)]/85">
-                        <span class="h-1.5 w-1.5 rounded-full bg-[color:var(--accent,#6bc1ff)]" />
-                        Currently viewing
+
+                    <span class="mobile-menu-link__body">
+                      <span class="mobile-menu-link__row">
+                        <span class="mobile-menu-link__label">{label}</span>
+                        {isActive(href) && <span class="mobile-menu-link__badge">Current</span>}
                       </span>
-                    )}
-                  </span>
-                  <ChevronRight
-                    class={`h-5 w-5 shrink-0 text-[color:var(--white)]/60 transition-transform duration-250 ease-out group-hover/mobile-nav:translate-x-1 group-focus-visible/mobile-nav:translate-x-1 ${isActive(href) ? 'text-[color:var(--accent,#6bc1ff)]/85' : ''}`}
-                    aria-hidden="true"
-                  />
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </div>
-</div>
+                      <span class="mobile-menu-link__description">{description}</span>
+                    </span>
+
+                    <span class="mobile-menu-link__chevron" aria-hidden="true">
+                      <ChevronRight class="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mobile-menu-panel__footer" aria-hidden="true" />
+          </section>
+        </div>
+      </div>
+    </>
+  )
+}
 
 <style>
+  #mobile-menu-overlay {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 30;
+    opacity: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(4, 10, 24, 0.68), rgba(4, 10, 24, 0.88)),
+      radial-gradient(circle at 20% 0%, rgba(78, 161, 255, 0.16), transparent 42%);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    transition: opacity 260ms ease;
+  }
+
+  #mobile-menu {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    padding: 0.35rem clamp(0.75rem, 3vw, 1.35rem) max(env(safe-area-inset-bottom), 0.75rem);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+  }
+
+  #mobile-menu-sheet {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateY(1.1rem) scale(0.98);
+    transition:
+      transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 240ms ease;
+  }
+
+  .mobile-menu-panel {
+    width: 100%;
+    min-height: 100%;
+    border-radius: 1.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 24%),
+      linear-gradient(180deg, rgba(6, 12, 25, 0.96), rgba(5, 10, 22, 0.98));
+    box-shadow:
+      0 28px 64px -34px rgba(0, 0, 0, 0.88),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 1.2rem 1.2rem max(env(safe-area-inset-bottom), 1.2rem);
+  }
+
+  .mobile-menu-panel__header {
+    padding: 0.2rem 0.2rem 1rem;
+  }
+
+  .mobile-menu-panel__eyebrow {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(125, 211, 252, 0.82);
+  }
+
+  .mobile-menu-panel__title {
+    margin: 0.32rem 0 0;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    font-weight: 600;
+    color: rgba(248, 250, 252, 0.98);
+  }
+
+  .mobile-menu-panel__copy {
+    margin: 0.45rem 0 0;
+    max-width: 28rem;
+    font-size: 0.94rem;
+    line-height: 1.5;
+    color: rgba(191, 203, 220, 0.82);
+    text-wrap: balance;
+  }
+
+  .mobile-menu-panel__list {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mobile-menu-link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    border-radius: 1.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 34%),
+      rgba(255, 255, 255, 0.045);
+    padding: 0.95rem 1rem;
+    color: rgba(240, 245, 255, 0.92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition:
+      transform 200ms ease,
+      border-color 200ms ease,
+      background-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .mobile-menu-link:hover,
+  .mobile-menu-link:focus-visible {
+    border-color: rgba(255, 255, 255, 0.18);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 34%), rgba(255, 255, 255, 0.07);
+    box-shadow:
+      0 18px 40px -32px rgba(0, 0, 0, 0.88),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .mobile-menu-link:active {
+    transform: scale(0.99);
+  }
+
+  .mobile-menu-link--active {
+    pointer-events: none;
+    border-color: color-mix(
+      in oklab,
+      var(--page-accent, var(--accent, #6bc1ff)) 40%,
+      rgba(255, 255, 255, 0.14)
+    );
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 34%),
+      color-mix(in oklab, var(--page-accent, var(--accent, #6bc1ff)) 18%, rgba(255, 255, 255, 0.05));
+    box-shadow:
+      0 22px 44px -34px rgba(0, 0, 0, 0.88),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  }
+
+  .mobile-menu-link__icon,
+  .mobile-menu-link__chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mobile-menu-link__icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(240, 245, 255, 0.86);
+  }
+
+  .mobile-menu-link--active .mobile-menu-link__icon {
+    border-color: color-mix(
+      in oklab,
+      var(--page-accent, var(--accent, #6bc1ff)) 48%,
+      rgba(255, 255, 255, 0.15)
+    );
+    background: color-mix(
+      in oklab,
+      var(--page-accent, var(--accent, #6bc1ff)) 18%,
+      rgba(255, 255, 255, 0.06)
+    );
+    color: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
+
+  .mobile-menu-link__body {
+    min-width: 0;
+  }
+
+  .mobile-menu-link__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+    min-width: 0;
+  }
+
+  .mobile-menu-link__label {
+    display: block;
+    min-width: 0;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    font-weight: 600;
+    color: rgba(248, 250, 252, 0.98);
+  }
+
+  .mobile-menu-link__badge {
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid
+      color-mix(in oklab, var(--page-accent, var(--accent, #6bc1ff)) 44%, transparent);
+    background: color-mix(in oklab, var(--page-accent, var(--accent, #6bc1ff)) 16%, transparent);
+    padding: 0.2rem 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(224, 242, 254, 0.96);
+  }
+
+  .mobile-menu-link__description {
+    display: block;
+    margin-top: 0.28rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgba(185, 198, 216, 0.8);
+  }
+
+  .mobile-menu-link__chevron {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(218, 227, 241, 0.68);
+  }
+
+  .mobile-menu-link--active .mobile-menu-link__chevron {
+    color: rgba(224, 242, 254, 0.92);
+  }
+
+  .mobile-menu-panel__footer {
+    height: max(env(safe-area-inset-bottom), 0.5rem);
+  }
+
   .menu-toggle {
     position: relative;
   }
@@ -117,26 +361,41 @@ const isActive = (href: string) =>
   .menu-toggle__icon {
     position: relative;
     display: inline-flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 1.5rem;
+    width: 1.375rem;
     height: 1.125rem;
   }
 
   .menu-toggle__icon span {
-    display: block;
+    position: absolute;
+    left: 0;
     width: 100%;
     height: 2px;
     border-radius: 999px;
     background: currentColor;
+    transform-origin: center;
     transition:
       transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
       opacity 0.3s ease,
-      width 0.3s ease;
+      top 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+      bottom 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .menu-toggle__icon span:nth-child(1) {
+    top: 0;
+  }
+
+  .menu-toggle__icon span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .menu-toggle__icon span:nth-child(3) {
+    bottom: 0;
   }
 
   .menu-toggle[data-open='true'] .menu-toggle__icon span:nth-child(1) {
-    transform: translateY(0.425rem) rotate(45deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
   }
 
   .menu-toggle[data-open='true'] .menu-toggle__icon span:nth-child(2) {
@@ -145,15 +404,59 @@ const isActive = (href: string) =>
   }
 
   .menu-toggle[data-open='true'] .menu-toggle__icon span:nth-child(3) {
-    transform: translateY(-0.425rem) rotate(-45deg);
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  #mobile-menu-overlay[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #mobile-menu[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #mobile-menu-sheet[data-open='true'] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @media (max-width: 420px) {
+    .mobile-menu-panel {
+      border-radius: 1.35rem;
+      padding: 1rem 0.9rem max(env(safe-area-inset-bottom), 1rem);
+    }
+
+    .mobile-menu-link {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.8rem;
+    }
+
+    .mobile-menu-link__chevron {
+      display: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    #mobile-menu-overlay,
+    #mobile-menu,
+    #mobile-menu-sheet,
+    .mobile-menu-link {
+      transition: none !important;
+    }
+
     .menu-toggle__icon span,
     .menu-toggle[data-open='true'] .menu-toggle__icon span {
       transition-duration: 0s;
       transform: none !important;
       opacity: 1 !important;
+    }
+
+    #mobile-menu-sheet {
+      transform: none !important;
     }
   }
 </style>

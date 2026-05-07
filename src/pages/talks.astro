@@ -1,5 +1,23 @@
 ---
-import Page from '@/components/pages/TalksPage.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { TalksExplorer } from '@/components/explorers';
+import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/ui/core/Container.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import { getTalks } from '@/lib/content';
+
+const pageCopy = siteCopyEn.listingPages.talks;
+const talks = await getTalks();
 ---
 
-<Page />
+<BaseLayout
+  title={`${SITE_TITLE} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  page="talks"
+>
+  <Container className="space-y-8 md:space-y-10">
+    <EditorialPageHero eyebrow="Speaking" title={pageCopy.title} subtitle={pageCopy.heroSubtitle} />
+    <TalksExplorer client:idle items={talks} />
+  </Container>
+</BaseLayout>

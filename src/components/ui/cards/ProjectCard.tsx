@@ -1,8 +1,8 @@
 import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
 import { memo, type FC } from 'react';
-import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import { Badge } from '@/components/ui/core/badge';
-import { cn, createAccentStyle, getAccentColorVar } from '@/lib/utils';
+import AuroraCardShell from './AuroraCardShell';
+import { getAccentColorVar } from '@/lib/utils';
 import type { Project } from '@/types';
 
 function toTitleCase(input?: string) {
@@ -10,32 +10,8 @@ function toTitleCase(input?: string) {
   return input.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1));
 }
 
-function typeAccentVar(type?: string) {
-  const key = (type ?? '').toLowerCase();
-  switch (key) {
-    case 'research':
-      return 'var(--accent-publications)';
-    case 'tutorial':
-      return 'var(--accent-talks)';
-    case 'side project':
-      return 'var(--accent-projects)';
-    case 'initiative':
-      return 'var(--accent)';
-    case 'leadership':
-      return 'var(--accent-about)';
-    case 'class project':
-      return 'var(--accent-blog)';
-    case 'group project':
-      return 'var(--accent)';
-    case 'senior project':
-      return 'var(--accent-about)';
-    case 'freelance':
-      return 'var(--accent-2)';
-    case 'extracurricular':
-      return 'var(--white)';
-    default:
-      return 'var(--accent-projects)';
-  }
+function typeAccentVar(_type?: string) {
+  return 'var(--accent)';
 }
 
 interface ProjectCardProps {
@@ -47,37 +23,69 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
   const accentColor = getAccentColorVar(typeAccentVar(item.type));
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
-  const cardStyle = createAccentStyle(accentColor);
   return (
-    <article
-      className={cn(
-        'aurora-card group project-card flex h-full flex-col will-change-transform',
-        featured && 'aurora-card--featured'
-      )}
-      style={cardStyle}
-    >
-      <div className="aurora-card__wrapper" />
-      <BlogCardOverlays accent={accentColor} />
-      <div className="aurora-card__body flex flex-1 flex-col gap-4 px-5 py-5 md:gap-5 md:px-6 md:py-6 lg:px-7 lg:py-7">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between md:gap-3">
-          <div className="min-w-0 flex-1">
-            <h3 className="text-base leading-snug font-semibold break-words md:text-lg">
-              {item.title}
-            </h3>
-            {item.summary ? (
-              <p className="mt-2 text-sm leading-relaxed text-[color:var(--white)]/82 lg:text-base">
-                {item.summary}
-              </p>
-            ) : null}
+    <AuroraCardShell
+      accent={accentColor}
+      featured={featured}
+      className="project-card h-full"
+      bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
+      footer={
+        item.links?.length ? (
+          <div className="flex flex-wrap gap-2.5 text-[11px] text-white/80 md:text-xs">
+            {item.links.map((l, idx) => {
+              const isExternal = !l.href.startsWith('/');
+              return (
+                <a
+                  key={`${l.href}-${idx}`}
+                  href={l.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="group/link inline-flex min-w-[8.5rem] flex-1 items-center justify-between gap-2 rounded-full border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-[color:var(--card-accent)]"
+                  style={{
+                    borderColor: tint(48),
+                    background: `linear-gradient(180deg, ${tint(12)}, ${tint(6)})`,
+                    boxShadow: `inset 0 1px 0 ${tint(12)}`,
+                  }}
+                  aria-label={l.label}
+                >
+                  <span className="font-medium tracking-[0.01em]">{l.label}</span>
+                  <span
+                    title={isExternal ? 'External link' : 'Internal link'}
+                    className="icon-bounce text-[color:var(--card-accent)] transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                  >
+                    {isExternal ? (
+                      <ExternalLink size={14} aria-hidden="true" />
+                    ) : (
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    )}
+                  </span>
+                </a>
+              );
+            })}
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] md:text-xs lg:text-sm">
+        ) : null
+      }
+    >
+      <div className="flex h-full flex-col">
+        <div className="flex items-start justify-between gap-3">
+          <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
+            <span
+              className="inline-block h-2 w-2 rounded-full"
+              style={{
+                background: 'color-mix(in oklab, var(--card-accent) 72%, white)',
+                boxShadow: `0 0 0 6px ${tint(12)}`,
+              }}
+            />
+            Project
+          </div>
+          <div className="flex flex-wrap items-center justify-end gap-2 text-[11px] md:text-xs">
             {item.type ? (
               <Badge
-                className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
                 style={{
                   color: 'var(--card-accent)',
-                  borderColor: tint(55),
-                  background: tint(14),
+                  borderColor: tint(52),
+                  background: `linear-gradient(180deg, ${tint(14)}, ${tint(8)})`,
                 }}
                 title={item.type}
               >
@@ -90,8 +98,8 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                 className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:text-xs"
                 style={{
                   color: 'var(--card-accent)',
-                  background: tint(12),
-                  border: `1px solid ${tint(45)}`,
+                  background: `linear-gradient(180deg, ${tint(12)}, ${tint(7)})`,
+                  border: `1px solid ${tint(42)}`,
                 }}
               >
                 <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
@@ -101,83 +109,89 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
           </div>
         </div>
 
-        {item.role || item.collaborators ? (
-          <div className="flex flex-wrap items-center gap-2 text-[11px] text-[color:var(--white)]/75 md:text-xs lg:text-sm">
-            {item.role ? (
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] md:text-xs"
-                style={{
-                  color: 'var(--card-accent)',
-                  background: tint(10),
-                  border: `1px solid ${tint(35)}`,
-                }}
-              >
-                <Users size={12} className="icon-bounce" aria-hidden="true" />
-                <span>{item.role}</span>
-              </span>
-            ) : null}
-            {item.collaborators ? (
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] md:text-xs"
-                style={{
-                  color: 'var(--card-accent)',
-                  background: tint(10),
-                  border: `1px solid ${tint(35)}`,
-                }}
-              >
-                <Users size={12} className="icon-bounce" aria-hidden="true" />
-                <span
-                  className="max-w-[14rem] truncate md:max-w-[18rem]"
-                  title={item.collaborators}
-                >
-                  {item.collaborators}
-                </span>
-              </span>
+        <div className="mt-5 flex flex-1 flex-col gap-5">
+          <div className="space-y-3">
+            <h3 className="max-w-[16ch] text-[1.95rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-white">
+              {item.title}
+            </h3>
+            {item.summary ? (
+              <p className="max-w-[30ch] text-[1rem] leading-[1.72] text-[color:var(--white)]/78 md:text-[1.02rem]">
+                {item.summary}
+              </p>
             ) : null}
           </div>
-        ) : null}
 
-        {item.tags?.length ? (
-          <div className="flex flex-wrap gap-2">
-            {item.tags.map(t => (
-              <Badge key={t} className="text-[11px] md:text-xs" variant="outline">
-                {t}
-              </Badge>
-            ))}
+          {item.role || item.collaborators ? (
+            <div
+              className="grid gap-2 rounded-[1.2rem] border px-3 py-3"
+              style={{
+                borderColor: tint(18),
+                background: `linear-gradient(180deg, ${tint(8)}, transparent)`,
+              }}
+            >
+              {item.role ? (
+                <div className="flex items-start gap-3">
+                  <span
+                    className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full"
+                    style={{ background: tint(12), color: 'var(--card-accent)' }}
+                  >
+                    <Star size={13} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                      Role
+                    </p>
+                    <p className="text-sm leading-relaxed text-white/78">{item.role}</p>
+                  </div>
+                </div>
+              ) : null}
+              {item.collaborators ? (
+                <div className="flex items-start gap-3">
+                  <span
+                    className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full"
+                    style={{ background: tint(12), color: 'var(--card-accent)' }}
+                  >
+                    <Users size={13} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                      Collaborators
+                    </p>
+                    <p className="text-sm leading-relaxed text-white/78">{item.collaborators}</p>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div className="mt-auto flex flex-col gap-3">
+            {item.tags?.length ? (
+              <div className="flex flex-wrap gap-2">
+                {item.tags.map(t => (
+                  <Badge
+                    key={t}
+                    className="rounded-full border px-3 py-1 text-[11px] font-medium text-white/70 md:text-xs"
+                    variant="outline"
+                    style={{
+                      borderColor: tint(20),
+                      background: tint(6),
+                    }}
+                  >
+                    {t}
+                  </Badge>
+                ))}
+              </div>
+            ) : null}
+            <div
+              className="h-px w-full"
+              style={{
+                background: `linear-gradient(90deg, ${tint(32)}, transparent 85%)`,
+              }}
+            />
           </div>
-        ) : null}
-      </div>
-
-      {item.links?.length ? (
-        <div className="aurora-card__footer flex flex-wrap items-center gap-2 text-[11px] text-white/80 md:text-xs">
-          {item.links.map((l, idx) => {
-            const isExternal = !l.href.startsWith('/');
-            return (
-              <a
-                key={`${l.href}-${idx}`}
-                href={l.href}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="aurora-chip aurora-chip--pill text-[color:var(--card-accent)]/85 transition-colors duration-150 hover:text-[color:var(--card-accent)]"
-                aria-label={l.label}
-              >
-                <span>{l.label}</span>
-                <span
-                  title={isExternal ? 'External link' : 'Internal link'}
-                  className="icon-bounce text-[color:var(--card-accent)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                >
-                  {isExternal ? (
-                    <ExternalLink size={14} aria-hidden="true" />
-                  ) : (
-                    <ArrowUpRight size={14} aria-hidden="true" />
-                  )}
-                </span>
-              </a>
-            );
-          })}
         </div>
-      ) : null}
-    </article>
+      </div>
+    </AuroraCardShell>
   );
 };
 

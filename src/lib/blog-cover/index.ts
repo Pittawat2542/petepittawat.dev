@@ -403,7 +403,8 @@ function dedupeTags(tags: readonly string[]) {
 }
 
 function stripThemeAliases(theme: ThemeDefinition): BlogCoverTheme {
-  const { aliases: _aliases, ...themeWithoutAliases } = theme;
+  const { aliases, ...themeWithoutAliases } = theme;
+  void aliases;
   return themeWithoutAliases;
 }
 

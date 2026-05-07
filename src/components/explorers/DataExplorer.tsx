@@ -7,7 +7,7 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
 
-import Filter from '@/components/ui/filter/Filter';
+import FilterPanel from '@/components/ui/filter/FilterPanel';
 import PageControls from '@/components/ui/navigation/PageControls';
 import Reveal from '@/components/ui/interaction/Reveal';
 
@@ -99,18 +99,19 @@ export function DataExplorer<TItem, TSort extends string>({
 
   return (
     <div className="flex flex-col gap-4">
-      <Filter
-        q={q}
-        setQ={setQ}
+      <FilterPanel
+        searchValue={q}
+        onSearchChange={setQ}
         filters={filters}
-        setFilters={setFilters}
+        onFiltersChange={setFilters}
         filterOptions={filterOptions}
-        placeholder={searchPlaceholder}
-        filteredCount={sorted.length}
-        totalCount={totalCount}
+        searchPlaceholder={searchPlaceholder}
+        filteredResults={sorted.length}
+        totalResults={totalCount}
         sortOptions={sortOptions}
         sortValue={sort}
-        onSortChange={v => setSort(v as TSort)}
+        onSortChange={value => setSort(value as TSort)}
+        compact={true}
       />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {paged.map((item, i) => (

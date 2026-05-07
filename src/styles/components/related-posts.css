@@ -1,0 +1,274 @@
+.article-related-section {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1.85rem;
+  border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
+  background:
+    radial-gradient(
+      140% 120% at 0% 0%,
+      color-mix(in oklab, var(--accent-blog) 16%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(180deg, rgba(7, 11, 24, 0.92), rgba(5, 9, 20, 0.96));
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+  padding: clamp(1.75rem, 2vw + 1.1rem, 3rem);
+  box-shadow:
+    0 32px 120px -70px rgba(15, 23, 42, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.article-related-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 90% at 100% 0%, rgba(96, 165, 250, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 28%);
+  opacity: 0.9;
+}
+
+.article-related-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: clamp(1.3rem, 1.5vw, 1.75rem);
+}
+
+.article-related-title {
+  margin: 0;
+  color: color-mix(in oklab, var(--white) 96%, transparent);
+  font-size: clamp(1.35rem, 1.12rem + 0.9vw, 1.95rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.article-related-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(1rem, 1.3vw, 1.5rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article-related-list--series {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+}
+
+.article-related-card {
+  position: relative;
+  min-height: clamp(15rem, 22vw, 18rem);
+  border-radius: 1.45rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background:
+    radial-gradient(circle at top right, rgba(96, 165, 250, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(10, 16, 30, 0.94), rgba(7, 12, 23, 0.98));
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+  box-shadow: 0 22px 44px -34px rgba(2, 6, 23, 0.82);
+  overflow: hidden;
+}
+
+.article-related-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 24%);
+  opacity: 0.75;
+}
+
+.article-related-card--primary {
+  border-color: color-mix(in oklab, var(--accent-blog) 28%, rgba(148, 163, 184, 0.16));
+  background:
+    radial-gradient(circle at top right, rgba(96, 165, 250, 0.2), transparent 38%),
+    linear-gradient(180deg, rgba(11, 20, 38, 0.97), rgba(8, 15, 29, 0.99));
+  box-shadow:
+    0 28px 56px -36px rgba(3, 7, 18, 0.88),
+    0 0 0 1px rgba(96, 165, 250, 0.08);
+}
+
+.article-related-card--secondary {
+  background:
+    radial-gradient(circle at top right, rgba(96, 165, 250, 0.08), transparent 30%),
+    linear-gradient(180deg, rgba(9, 15, 27, 0.92), rgba(6, 10, 21, 0.97));
+}
+
+.article-related-link {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100%;
+  padding: clamp(1.2rem, 1.1rem + 0.9vw, 1.8rem);
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+.article-related-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--accent-blog) 34%, transparent);
+  box-shadow:
+    0 30px 54px -36px rgba(3, 7, 18, 0.9),
+    0 0 0 1px rgba(96, 165, 250, 0.1);
+}
+
+.article-related-link:focus-visible {
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(191, 219, 254, 0.52),
+    0 0 0 3px rgba(96, 165, 250, 0.22);
+}
+
+.article-related-body {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.article-related-copy {
+  display: grid;
+  flex: 1;
+  gap: 0.7rem;
+}
+
+.article-related-heading {
+  margin: 0;
+  font-size: clamp(1.08rem, 0.96rem + 0.55vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: color-mix(in oklab, var(--white) 96%, transparent);
+  text-wrap: balance;
+}
+
+.article-related-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.14);
+  border: 1px solid rgba(96, 165, 250, 0.24);
+  color: color-mix(in oklab, var(--accent-blog) 80%, white 18%);
+  font-weight: 600;
+}
+
+.article-related-chip::before {
+  content: '';
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+.article-related-excerpt {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.68;
+  color: color-mix(in oklab, var(--white) 76%, transparent);
+  text-wrap: pretty;
+}
+
+.article-related-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  min-width: 0;
+}
+
+.article-related-meta-group {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.85rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--white) 58%, transparent);
+}
+
+.article-related-kicker {
+  display: inline-flex;
+  align-items: center;
+  color: color-mix(in oklab, var(--white) 60%, transparent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.article-related-date {
+  font-weight: 600;
+  color: color-mix(in oklab, var(--white) 68%, transparent);
+}
+
+.article-related-footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: color-mix(in oklab, var(--white) 88%, transparent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.article-related-cta {
+  color: inherit;
+}
+
+.article-related-arrow {
+  display: inline-flex;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+  opacity: 0.72;
+}
+
+.article-related-card:hover .article-related-arrow,
+.article-related-link:focus-visible .article-related-arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .article-related-section {
+    border-radius: 1.55rem;
+    padding: 1.35rem;
+  }
+
+  .article-related-list,
+  .article-related-list--series {
+    grid-template-columns: 1fr;
+  }
+
+  .article-related-card {
+    min-height: 0;
+  }
+
+  .article-related-link {
+    padding: 1.15rem;
+  }
+
+  .article-related-meta-row {
+    align-items: flex-start;
+  }
+
+  .article-related-kicker {
+    white-space: normal;
+  }
+}

@@ -1,0 +1,37 @@
+---
+import { Flame } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
+
+interface Props {
+  focusAreas: {
+    title: string;
+    description: string;
+    items: ReadonlyArray<{
+      title: string;
+      description: string;
+    }>;
+  };
+}
+
+const { focusAreas } = Astro.props as Props;
+---
+
+<section id="themes" class="section-block">
+  <div class="section-heading">
+    <div class="mb-2 flex items-center gap-2">
+      <Flame class="h-5 w-5 text-[color:var(--accent)]" />
+      <h2>{focusAreas.title}</h2>
+    </div>
+    <p>{focusAreas.description}</p>
+  </div>
+  <div class="themes-grid">
+    {
+      focusAreas.items.map(theme => (
+        <GlassCard variant="premium" className="theme-card">
+          <h3>{theme.title}</h3>
+          <p>{theme.description}</p>
+        </GlassCard>
+      ))
+    }
+  </div>
+</section>

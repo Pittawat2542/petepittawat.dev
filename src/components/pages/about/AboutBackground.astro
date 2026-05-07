@@ -1,0 +1,35 @@
+---
+import { History } from '@lucide/astro';
+import Prose from '@/components/content/Prose';
+
+interface Props {
+  background: {
+    title: string;
+    description: string;
+    paragraphs: readonly string[];
+  };
+}
+
+const { background } = Astro.props as Props;
+---
+
+<section id="background" class="section-block relative">
+  <div
+    class="pointer-events-none absolute top-0 -left-20 h-64 w-64 rounded-full bg-[color:var(--accent-about)]/5 blur-3xl"
+  >
+  </div>
+  <div class="relative z-10">
+    <div class="section-heading mb-8">
+      <div class="mb-2 flex items-center gap-2">
+        <History class="h-5 w-5 text-[color:var(--accent)]" />
+        <h2>{background.title}</h2>
+      </div>
+      <p>{background.description}</p>
+    </div>
+    <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8">
+      <Prose className="prose-block text-lg leading-relaxed text-[color:var(--white)]/80">
+        {background.paragraphs.map(note => <p>{note}</p>)}
+      </Prose>
+    </div>
+  </div>
+</section>

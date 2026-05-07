@@ -17,22 +17,36 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
   accent,
   onStopPropagation,
 }) => {
+  const tint = (intensity: number) =>
+    `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const chipStyle = { '--card-accent': accent } as CSSProperties;
+  const actionClassName =
+    'group/link inline-flex min-w-0 items-start justify-between gap-3 rounded-[1.4rem] border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-[color:var(--card-accent)]';
 
   return (
-    <div className="flex flex-1 flex-wrap items-center gap-2">
+    <div className="grid w-full [grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr))] gap-2.5">
       {item.url ? (
         <a
           href={item.url}
           target="_blank"
           rel="noreferrer"
-          className="aurora-chip aurora-chip--pill"
-          style={chipStyle}
+          className={actionClassName}
+          style={{
+            ...chipStyle,
+            borderColor: tint(48),
+            background: `linear-gradient(180deg, ${tint(12)}, ${tint(6)})`,
+            boxShadow: `inset 0 1px 0 ${tint(12)}`,
+          }}
           onClick={onStopPropagation}
           aria-label="Open paper"
         >
-          <span>Paper</span>
-          <span title="External link">
+          <span className="min-w-0 text-left leading-snug font-medium tracking-[0.01em] break-words">
+            Paper
+          </span>
+          <span
+            title="External link"
+            className="mt-0.5 shrink-0 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+          >
             <ExternalLink size={14} aria-hidden="true" className="icon-bounce" />
           </span>
         </a>
@@ -46,15 +60,22 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
             href={a.href}
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noopener noreferrer' : undefined}
-            className="aurora-chip aurora-chip--pill"
-            style={chipStyle}
+            className={actionClassName}
+            style={{
+              ...chipStyle,
+              borderColor: tint(48),
+              background: `linear-gradient(180deg, ${tint(12)}, ${tint(6)})`,
+              boxShadow: `inset 0 1px 0 ${tint(12)}`,
+            }}
             onClick={onStopPropagation}
             aria-label={a.label}
           >
-            <span>{a.label}</span>
+            <span className="min-w-0 text-left leading-snug font-medium tracking-[0.01em] break-words">
+              {a.label}
+            </span>
             <span
               title={isExternal ? 'External link' : 'Internal link'}
-              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="mt-0.5 shrink-0 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
             >
               {isExternal ? (
                 <ExternalLink size={14} aria-hidden="true" className="icon-bounce" />

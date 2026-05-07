@@ -1,0 +1,144 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+}
+
+const { title, subtitle, eyebrow = 'Blog' } = Astro.props as Props;
+---
+
+<section class="blog-index-hero reveal">
+  <div class="blog-index-hero__wash" aria-hidden="true"></div>
+  <div class="blog-index-hero__grid" aria-hidden="true"></div>
+  <div class="blog-index-hero__inner">
+    <div class="blog-index-hero__eyebrow">
+      <span class="blog-index-hero__eyebrow-dot"></span>
+      {eyebrow}
+    </div>
+    <h1 class="blog-index-hero__title">{title}</h1>
+    {subtitle ? <p class="blog-index-hero__subtitle">{subtitle}</p> : null}
+    <div class="blog-index-hero__rule" aria-hidden="true">
+      <span class="blog-index-hero__rule-accent"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-index-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: clamp(1.75rem, 4vw, 2.75rem);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      radial-gradient(circle at 14% 18%, rgba(96, 165, 250, 0.24), transparent 32%),
+      radial-gradient(circle at 82% 0%, rgba(59, 130, 246, 0.2), transparent 28%),
+      linear-gradient(180deg, rgba(11, 21, 40, 0.96), rgba(7, 16, 31, 0.96)),
+      linear-gradient(135deg, rgba(14, 25, 48, 0.85), rgba(8, 15, 30, 0.94));
+    box-shadow:
+      0 28px 70px -40px rgba(15, 23, 42, 0.52),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .blog-index-hero__wash,
+  .blog-index-hero__grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .blog-index-hero__wash {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(147, 197, 253, 0.14), transparent 34%),
+      radial-gradient(circle at 88% 0%, rgba(96, 165, 250, 0.16), transparent 36%);
+  }
+
+  .blog-index-hero__grid {
+    opacity: 0.38;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), transparent 72%);
+  }
+
+  .blog-index-hero__inner {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.75rem, 5vw, 3rem);
+  }
+
+  .blog-index-hero__eyebrow {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.65rem;
+    color: rgba(191, 219, 254, 0.86);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .blog-index-hero__eyebrow-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--page-accent, var(--accent)) 72%, white);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--page-accent, var(--accent)) 12%, transparent);
+  }
+
+  .blog-index-hero__title {
+    margin: 0;
+    max-width: 12ch;
+    color: rgba(248, 250, 252, 0.98);
+    font-size: clamp(3rem, 7vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  .blog-index-hero__subtitle {
+    margin: 0;
+    max-width: 46rem;
+    color: rgba(191, 219, 254, 0.76);
+    font-size: clamp(1rem, 2.1vw, 1.2rem);
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  .blog-index-hero__rule {
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    width: min(100%, 28rem);
+    height: 1px;
+    background: linear-gradient(90deg, rgba(148, 163, 184, 0.34), rgba(148, 163, 184, 0.06));
+  }
+
+  .blog-index-hero__rule-accent {
+    display: block;
+    width: clamp(5rem, 16vw, 9rem);
+    height: 2px;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--page-accent, var(--accent)) 72%, white);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--page-accent, var(--accent)) 26%, transparent);
+  }
+
+  @media (max-width: 640px) {
+    .blog-index-hero__inner {
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .blog-index-hero__title {
+      max-width: none;
+    }
+
+    .blog-index-hero__subtitle {
+      line-height: 1.65;
+    }
+  }
+</style>

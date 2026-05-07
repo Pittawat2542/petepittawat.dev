@@ -1,0 +1,81 @@
+---
+import { Milestone } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
+import type { AboutTimelineItem } from '@/lib/content';
+
+interface Props {
+  milestones: {
+    title: string;
+    description: string;
+    spotlightTitle: string;
+    educationTitle: string;
+    extendedTimelineLabel: string;
+    educationEntries: ReadonlyArray<{
+      title: string;
+      period: string;
+      summary: string;
+    }>;
+  };
+  spotlightTimeline: readonly AboutTimelineItem[];
+  timeline: readonly AboutTimelineItem[];
+}
+
+const { milestones, spotlightTimeline, timeline } = Astro.props as Props;
+---
+
+<section id="milestones" class="section-block">
+  <div class="section-heading">
+    <div class="mb-2 flex items-center gap-2">
+      <Milestone class="h-5 w-5 text-[color:var(--accent)]" />
+      <h2>{milestones.title}</h2>
+    </div>
+    <p>{milestones.description}</p>
+  </div>
+
+  <div class="milestones-grid">
+    <GlassCard variant="glow" className="spotlight-card">
+      <span class="eyebrow">{milestones.spotlightTitle}</span>
+      <ol class="spotlight-list">
+        {
+          spotlightTimeline.map(item => (
+            <li>
+              <p class="spotlight-card__title">{item.title}</p>
+              <p class="spotlight-card__description">{item.description}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </GlassCard>
+
+    <GlassCard variant="premium" className="journey-card">
+      <h3>{milestones.educationTitle}</h3>
+      <div class="journey-card__group">
+        {
+          milestones.educationEntries.map(entry => (
+            <div>
+              <div class="journey-card__header">
+                <p>{entry.title}</p>
+                <span>{entry.period}</span>
+              </div>
+              <p class="journey-card__summary">{entry.summary}</p>
+            </div>
+          ))
+        }
+      </div>
+    </GlassCard>
+  </div>
+
+  <details class="timeline-details">
+    <summary>{milestones.extendedTimelineLabel}</summary>
+    <ol>
+      {
+        timeline.map(item => (
+          <li>
+            <p class="timeline-details__title">{item.title}</p>
+            <p class="timeline-details__description">{item.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </details>
+</section>

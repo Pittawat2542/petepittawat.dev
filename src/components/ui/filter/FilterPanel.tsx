@@ -47,6 +47,7 @@ interface FilterPanelProps {
   readonly className?: string | undefined;
   readonly compact?: boolean | undefined;
   readonly toolbarAccessory?: ReactNode;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
 const FilterPanelComponent: FC<FilterPanelProps> = props => {
@@ -69,6 +70,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
     className,
     compact = false,
     toolbarAccessory,
+    tone = 'default',
   } = props;
 
   const [showFilters, setShowFilters] = useState(!compact);
@@ -129,7 +131,14 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
   };
 
   return (
-    <div className={cn('space-y-4', className)}>
+    <div
+      className={cn(
+        'space-y-4',
+        tone === 'editorial' &&
+          'blog-filter-panel--editorial space-y-3 rounded-[1.75rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.14),transparent_26%),linear-gradient(180deg,rgba(10,19,36,0.94),rgba(7,14,28,0.96))] p-4 shadow-[0_28px_70px_-42px_rgba(3,7,18,0.75)] md:p-5',
+        className
+      )}
+    >
       <FilterPanelHeader
         searchValue={searchValue}
         onSearchChange={onSearchChange}
@@ -147,6 +156,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
         filteredResults={filteredResults}
         hasActiveFilters={hasActiveFilters}
         toolbarAccessory={toolbarAccessory}
+        tone={tone}
       />
 
       {compact && !showFilters && hasActiveFilters && (
@@ -156,6 +166,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
           onClearAll={clearAllFilters}
           onRemoveDropdownFilter={removeDropdownFilter}
           onRemoveTag={removeTag}
+          tone={tone}
         />
       )}
 
@@ -172,6 +183,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
         selectedTags={currentSelectedTags}
         tagCounts={tagCounts}
         onToggleTag={toggleTag}
+        tone={tone}
       />
     </div>
   );

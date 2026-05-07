@@ -37,18 +37,21 @@ allSeries.sort((a, b) => {
   }}
 >
   <Fragment slot="head"></Fragment>
-  <Fragment slot="after">
-    <!-- Actions under hero -->
-    <div class="-mt-4 mb-8 flex items-center justify-center">
-      <a
-        href="/blog"
-        class="focus-visible:ring-ring inline-flex items-center gap-2 rounded-xl bg-[color:var(--accent)]/[.12] px-4 py-2.5 text-sm font-medium text-[color:var(--accent)] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.18] focus-visible:ring-2 focus-visible:outline-none"
-      >
-        All posts
-        <ChevronRight class="h-4 w-4" />
-      </a>
-    </div>
-  </Fragment>
+  {
+    allSeries.length > 0 && (
+      <Fragment slot="after">
+        <div class="-mt-4 mb-8 flex items-center justify-center">
+          <a
+            href="/blog"
+            class="focus-visible:ring-ring inline-flex items-center gap-2 rounded-xl bg-[color:var(--accent)]/[.12] px-4 py-2.5 text-sm font-medium text-[color:var(--accent)] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.18] focus-visible:ring-2 focus-visible:outline-none"
+          >
+            All posts
+            <ChevronRight class="h-4 w-4" />
+          </a>
+        </div>
+      </Fragment>
+    )
+  }
 
   <div class="mx-auto max-w-4xl">
     {
@@ -118,7 +121,7 @@ allSeries.sort((a, b) => {
                       ))}
                     </div>
 
-                    <footer class="flex items-center justify-between">
+                    <footer class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <a
                         href={firstPost ? getBlogPostPath(firstPost) : '#'}
                         class="inline-flex items-center gap-2 rounded-lg bg-[color:var(--accent)] px-4 py-2 text-sm font-medium text-[color:var(--bg)] transition-colors duration-200 hover:bg-[color:var(--accent)]/90"

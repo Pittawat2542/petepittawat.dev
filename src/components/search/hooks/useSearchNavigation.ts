@@ -4,7 +4,6 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { navigationService } from '@/lib/services';
 import { buildHref } from '../utils';
 import type { AugmentedSearchItem } from '../types';
 
@@ -56,9 +55,12 @@ export function useSearchNavigation(
         onItemSelected(item);
 
         if (event.metaKey || event.ctrlKey) {
-          navigationService.openInNewTab(href);
+          const newWindow = window.open(href, '_blank', 'noopener,noreferrer');
+          if (newWindow) {
+            newWindow.opener = null;
+          }
         } else {
-          navigationService.navigate(href);
+          window.location.assign(href);
         }
       }
     };

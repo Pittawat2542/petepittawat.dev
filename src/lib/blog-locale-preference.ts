@@ -1,6 +1,39 @@
-import type { IStorageService } from './services/storage.service.ts';
-import { storageService } from './services/storage.service.ts';
 import type { BlogTranslationLocale } from './blog-translations.ts';
+
+export interface BlogLocaleStorage {
+  getItem<T>(key: string): T | null;
+  setItem<T>(key: string, value: T): void;
+}
+
+function createBrowserStorage(): BlogLocaleStorage {
+  return {
+    getItem<T>(key: string) {
+      if (typeof window === 'undefined') {
+        return null;
+      }
+
+      try {
+        const raw = window.localStorage.getItem(key);
+        return raw ? (JSON.parse(raw) as T) : null;
+      } catch {
+        return null;
+      }
+    },
+    setItem<T>(key: string, value: T) {
+      if (typeof window === 'undefined') {
+        return;
+      }
+
+      try {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch {
+        // Ignore storage write failures.
+      }
+    },
+  };
+}
+
+const browserStorage = createBrowserStorage();
 
 export const BLOG_LOCALE_STORAGE_KEY = 'blog:preferred-locale';
 
@@ -45,14 +78,14 @@ export function resolveBlogLocalePreference({
 }
 
 export function getStoredBlogLocalePreference(
-  storage: IStorageService = storageService
+  storage: BlogLocaleStorage = browserStorage
 ): BlogTranslationLocale | undefined {
   return normalizeBlogLocale(storage.getItem<string>(BLOG_LOCALE_STORAGE_KEY));
 }
 
 export function setStoredBlogLocalePreference(
   locale: BlogTranslationLocale,
-  storage: IStorageService = storageService
+  storage: BlogLocaleStorage = browserStorage
 ) {
   storage.setItem(BLOG_LOCALE_STORAGE_KEY, locale);
 }

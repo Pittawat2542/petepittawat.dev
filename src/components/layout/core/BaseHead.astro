@@ -2,6 +2,19 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '@/styles/global.css';
+import '@fontsource/anuphan/400.css';
+import '@fontsource/anuphan/600.css';
+import '@fontsource/anuphan/700.css';
+import '@fontsource/krub/300.css';
+import '@fontsource/krub/400.css';
+import '@fontsource/krub/500.css';
+import '@fontsource/krub/600.css';
+import '@fontsource/noto-serif/400.css';
+import '@fontsource/noto-serif/700.css';
+import '@fontsource/noto-serif/400-italic.css';
+import '@fontsource/noto-serif-thai/400.css';
+import '@fontsource/noto-serif-thai/500.css';
+import '@fontsource/noto-serif-thai/700.css';
 import { SITE_TITLE } from '@/consts';
 
 interface Props {
@@ -100,41 +113,10 @@ const structuredDataJson = JSON.stringify(structuredData);
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <!-- Favicons -->
-<!-- Standard favicon -->
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
-<link rel="shortcut icon" href="/favicon.ico" />
-
-<!-- PNG favicons for different sizes -->
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-
-<!-- Apple Touch Icons -->
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png" />
-
-<!-- Android/Chrome icons -->
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
-
-<!-- Web App Manifest -->
 <link rel="manifest" href="/site.webmanifest" />
-
-<!-- Microsoft Tile Configuration -->
-<meta name="msapplication-config" content="/browserconfig.xml" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/mstile-144x144.png" />
-
-<!-- Safari Mask Icon -->
 <link rel="mask-icon" href="/favicon.svg" color="#111827" />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content="#111827" />
@@ -156,29 +138,6 @@ const structuredDataJson = JSON.stringify(structuredData);
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <!-- Hint UA to render dark form controls and UI affordances -->
 <meta name="color-scheme" content="dark" />
-
-<!-- Performance: fonts preconnect -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-<!-- Performance: Optimized Google Fonts loading with subset and display=swap -->
-<link
-  rel="preload"
-  as="style"
-  href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&family=Krub:wght@300;400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Thai:wght@400;500;700&display=swap"
-/>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&family=Krub:wght@300;400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Thai:wght@400;500;700&display=swap"
-  media="print"
-  onload="this.setAttribute('media','all')"
-/>
-<noscript>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&family=Krub:wght@300;400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Thai:wght@400;500;700&display=swap"
-  />
-</noscript>
 
 <!-- Canonical URL & hreflang -->
 <link rel="canonical" href={canonicalURL} />
@@ -251,10 +210,10 @@ const structuredDataJson = JSON.stringify(structuredData);
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.site ?? Astro.url)} />
 {
-  (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] && (
+  import.meta.env.PUBLIC_TWITTER_HANDLE && (
     <>
-      <meta name="twitter:site" content={(import.meta.env as any)['PUBLIC_TWITTER_HANDLE']} />
-      <meta name="twitter:creator" content={(import.meta.env as any)['PUBLIC_TWITTER_HANDLE']} />
+      <meta name="twitter:site" content={import.meta.env.PUBLIC_TWITTER_HANDLE} />
+      <meta name="twitter:creator" content={import.meta.env.PUBLIC_TWITTER_HANDLE} />
     </>
   )
 }
@@ -265,12 +224,47 @@ const structuredDataJson = JSON.stringify(structuredData);
 <!-- Service worker: runtime caching tuned for GitHub Pages -->
 <script is:inline>
   (function () {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        try {
-          navigator.serviceWorker.register('/sw.js');
-        } catch {}
-      });
+    if (!('serviceWorker' in navigator)) {
+      return;
     }
+
+    var hostname = window.location.hostname;
+    var isLocalRuntime =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname === '::1';
+
+    if (isLocalRuntime) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            return Promise.all(
+              registrations.map(function (registration) {
+                return registration.unregister();
+              })
+            );
+          })
+          .then(function () {
+            if (!('caches' in window)) return;
+            return caches.keys().then(function (keys) {
+              return Promise.all(
+                keys.map(function (key) {
+                  return caches.delete(key);
+                })
+              );
+            });
+          })
+          .catch(function () {});
+      });
+      return;
+    }
+
+    window.addEventListener('load', function () {
+      try {
+        navigator.serviceWorker.register('/sw.js');
+      } catch {}
+    });
   })();
 </script>

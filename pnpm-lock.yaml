@@ -23,6 +23,18 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.2
         version: 3.7.2
+      '@fontsource/anuphan':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/krub':
+        specifier: ^5.2.7
+        version: 5.2.7
+      '@fontsource/noto-serif':
+        specifier: ^5.2.9
+        version: 5.2.9
+      '@fontsource/noto-serif-thai':
+        specifier: ^5.2.7
+        version: 5.2.7
       '@lucide/astro':
         specifier: ^1.8.0
         version: 1.8.0(astro@6.2.2(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.46.2)(yaml@2.8.3))
@@ -594,6 +606,18 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource/anuphan@5.2.8':
+    resolution: {integrity: sha512-4z6qFTBKnp96acEmS71ecZA27ADgqQPNIrgd+n51A1rhAJmmms1KPwnRMZhyr/jihm6SoreSc6VVgbbgI9EKNA==}
+
+  '@fontsource/krub@5.2.7':
+    resolution: {integrity: sha512-lYWRGzv9FAw7OeXaLrdMHSFrJl4+mUQdSQJi/4rF2OSQtyiI0Ve8BNfYKMQoVNbLw1ptgCpkq3HaZ0DH5S39WQ==}
+
+  '@fontsource/noto-serif-thai@5.2.7':
+    resolution: {integrity: sha512-GTgj7J1zkfG1rOD+EWCufX7OD++B6/Yqt0pHE6l88yLXSylRo11tlXLweWHLxMw14c379HtrTRDrwv2j9Ip7sA==}
+
+  '@fontsource/noto-serif@5.2.9':
+    resolution: {integrity: sha512-A2b7XBo0dSxxTZg95Ap/HLinXq1pEM8PzSvbBFtPMZM5/1BLKEU1dR+PBnLixvOdcC7mup+/NjmyLryQ1E9WeA==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4602,6 +4626,14 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fontsource/anuphan@5.2.8': {}
+
+  '@fontsource/krub@5.2.7': {}
+
+  '@fontsource/noto-serif-thai@5.2.7': {}
+
+  '@fontsource/noto-serif@5.2.9': {}
 
   '@humanfs/core@0.19.1': {}
 

@@ -1,13 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
-import BlogCover from '@/components/ui/blog/BlogCover';
-import FormattedDate from '@/components/content/FormattedDate';
+import ArticleBody from '@/components/layout/blog-post/ArticleBody.astro';
+import ArticleHero from '@/components/layout/blog-post/ArticleHero.astro';
+import ArticleRail from '@/components/layout/blog-post/ArticleRail.astro';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
-import Toc from '@/components/layout/blog/Toc.astro';
-import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
-import { languages } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import {
@@ -67,7 +64,7 @@ const coverThemeStyle =
     ? serializeCssVariables(coverThemeVariables)
     : undefined;
 
-const twitterHandle = (import.meta.env as any)['PUBLIC_TWITTER_HANDLE'] as string | undefined;
+const twitterHandle = import.meta.env.PUBLIC_TWITTER_HANDLE;
 const metadata = computeBlogPostMetadata({
   slug,
   lang,
@@ -121,141 +118,26 @@ const schema = generateBlogPostSchema({
       </a>
     </div>
 
-    <section class="article-surface article-hero reveal">
-      <div class="article-hero__background" aria-hidden="true">
-        <BlogCover
-          title={title}
-          excerpt={excerpt}
-          lang={lang}
-          routeSlug={slug ?? title}
-          tags={tags}
-          pubDate={pubDate}
-          variant="hero"
-          renderMode="background"
-          className="article-hero__cover"
-        />
-      </div>
-
-      <div class="article-hero__overlay">
-        <div class="article-hero__badge">
-          <span class="article-hero__badge-dot"></span>
-          Field Notes
-        </div>
-        <h1 class="article-hero__title">{title}</h1>
-        <div class="article-meta">
-          <div class="article-meta__item">
-            <span class="sr-only">Published</span>
-            <Calendar class="article-meta__icon" aria-hidden="true" />
-            <span class="article-meta__text"><FormattedDate date={pubDate} /></span>
-          </div>
-          <div class="article-meta__divider" aria-hidden="true">·</div>
-          <div class="article-meta__item">
-            <span class="sr-only">Author</span>
-            <CircleUser class="article-meta__icon" aria-hidden="true" />
-            <span class="article-meta__text">Pete</span>
-          </div>
-          {
-            typeof readingTimeMin === 'number' ? (
-              <>
-                <div class="article-meta__divider" aria-hidden="true">
-                  ·
-                </div>
-                <div class="article-meta__item">
-                  <span class="sr-only">Reading time</span>
-                  <Clock3 class="article-meta__icon" aria-hidden="true" />
-                  <span class="article-meta__text">{readingTimeMin} min read</span>
-                </div>
-              </>
-            ) : null
-          }
-        </div>
-
-        {
-          tags.length ? (
-            <div class="article-tags">
-              <span class="article-tags__icon">
-                <span class="sr-only">Tags</span>
-                <TagIcon class="article-tags__symbol" aria-hidden="true" />
-              </span>
-              <ul class="article-tags__list">
-                {tags.map(tag => (
-                  <li>
-                    <a
-                      href={`/tags/${tag
-                        .toLowerCase()
-                        .trim()
-                        .replace(/[^a-z0-9]+/g, '-')
-                        .replace(/(^-|-$)/g, '')}`}
-                      class="article-tag"
-                    >
-                      #{tag}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null
-        }
-      </div>
-    </section>
+    <ArticleHero
+      title={title}
+      excerpt={excerpt}
+      lang={lang}
+      slug={slug}
+      tags={tags}
+      pubDate={pubDate}
+      readingTimeMin={readingTimeMin}
+    />
 
     <div class="article-main">
-      <aside class="article-surface article-rail reveal">
-        <BlogLanguageSwitcher
-          ariaLabel="Select reading language"
-          label="Reading language"
-          variant="rail"
-          helperText={languageHelperText}
-          options={[
-            {
-              locale: 'en',
-              label: languages.en,
-              shortLabel: 'EN',
-              href: languageState.availability.en.href,
-              available: languageState.availability.en.available,
-              isActive: languageState.availability.en.isCurrent,
-              screenReaderLabel: languageState.availability.en.available
-                ? 'Read this post in English'
-                : 'English translation unavailable',
-            },
-            {
-              locale: 'th',
-              label: languages.th,
-              shortLabel: 'TH',
-              href: languageState.availability.th.href,
-              available: languageState.availability.th.available,
-              isActive: languageState.availability.th.isCurrent,
-              screenReaderLabel: languageState.availability.th.available
-                ? 'Read this post in Thai'
-                : 'Thai translation unavailable',
-            },
-          ]}
-        />
+      <ArticleRail
+        excerpt={excerpt}
+        languageState={languageState}
+        languageHelperText={languageHelperText}
+      />
 
-        {
-          excerpt ? (
-            <section class="article-note" aria-labelledby="article-note-heading">
-              <div class="article-note__eyebrow" id="article-note-heading">
-                TL;DR
-              </div>
-              <p class="article-note__copy">{excerpt}</p>
-            </section>
-          ) : null
-        }
-
-        <div class="article-rail__toc">
-          <Toc title="On this page" selector="#post-article" levels={[2, 3]} collapsed={true} />
-        </div>
-      </aside>
-
-      <div class="article-surface article-body-card reveal">
-        <article
-          id="post-article"
-          class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-10 prose-headings:mb-4 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
-        >
-          <slot />
-        </article>
-      </div>
+      <ArticleBody>
+        <slot />
+      </ArticleBody>
     </div>
   </div>
 
@@ -264,7 +146,7 @@ const schema = generateBlogPostSchema({
   </div>
 </BaseLayout>
 
-<style>
+<style is:global>
   .article-container {
     position: relative;
     margin: 0 auto;
@@ -564,157 +446,6 @@ const schema = generateBlogPostSchema({
 
   .article-body-card {
     padding: clamp(1.6rem, 1.8vw + 1rem, 2.4rem);
-  }
-
-  .article-rail :global(.toc-root) {
-    width: 100%;
-  }
-
-  .article-rail :global(.toc-card) {
-    border-radius: 1.35rem;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    background: linear-gradient(180deg, rgba(12, 19, 35, 0.92), rgba(8, 13, 25, 0.96));
-    overflow: hidden;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  }
-
-  .article-rail :global(.toc-summary) {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 0.85rem;
-    align-items: center;
-    padding: 1rem 1rem 0.95rem;
-    cursor: pointer;
-    list-style: none;
-    color: color-mix(in oklab, var(--white) 88%, transparent);
-  }
-
-  .article-rail :global(.toc-summary::-webkit-details-marker) {
-    display: none;
-  }
-
-  .article-rail :global(.toc-summary__icon) {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.85rem;
-    border: 1px solid rgba(129, 140, 248, 0.2);
-    background: rgba(79, 112, 207, 0.14);
-    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
-  }
-
-  .article-rail :global(.toc-summary__content) {
-    display: grid;
-    gap: 0.25rem;
-  }
-
-  .article-rail :global(.toc-summary__label) {
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-  }
-
-  .article-rail :global(.toc-summary__count) {
-    font-size: 0.8rem;
-    color: color-mix(in oklab, var(--white) 58%, transparent);
-  }
-
-  .article-rail :global(.toc-summary__action) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: color-mix(in oklab, var(--white) 54%, transparent);
-  }
-
-  .article-rail :global(.toc-summary__chevron) {
-    width: 0.95rem;
-    height: 0.95rem;
-    transition: transform 220ms ease;
-  }
-
-  .article-rail :global(.toc-card[open] .toc-summary__chevron) {
-    transform: rotate(180deg);
-  }
-
-  .article-rail :global(.toc-panel) {
-    padding: 0 1rem 1rem;
-  }
-
-  .article-rail :global(.toc-list) {
-    margin: 0;
-    padding: 0.85rem 0 0;
-    border-top: 1px solid rgba(148, 163, 184, 0.12);
-    display: grid;
-    gap: 0.7rem;
-    list-style: none;
-  }
-
-  .article-rail :global(.toc-row) {
-    display: block;
-    position: relative;
-  }
-
-  .article-rail :global(.toc-row--sub) {
-    margin-left: 0.9rem;
-    padding-left: 0.85rem;
-  }
-
-  .article-rail :global(.toc-row--sub::before) {
-    content: '';
-    position: absolute;
-    left: 0.15rem;
-    top: 0.75rem;
-    bottom: 0.75rem;
-    width: 1px;
-    background: rgba(129, 140, 248, 0.2);
-  }
-
-  .article-rail :global(.toc-link) {
-    display: inline-flex;
-    width: 100%;
-    align-items: center;
-    gap: 0.6rem;
-    color: color-mix(in oklab, var(--white) 88%, transparent);
-    font-size: 0.9rem;
-    line-height: 1.4;
-    text-decoration: none;
-    transition:
-      color 160ms ease,
-      transform 160ms ease;
-  }
-
-  .article-rail :global(.toc-link:hover) {
-    color: color-mix(in oklab, var(--accent) 58%, var(--white) 42%);
-    transform: translateX(2px);
-  }
-
-  .article-rail :global(.toc-link:focus-visible) {
-    outline: none;
-    box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
-    border-radius: 999px;
-    padding: 0.12rem 0.32rem;
-    margin: -0.12rem -0.32rem;
-  }
-
-  .article-rail :global(.toc-link--sub) {
-    font-size: 0.84rem;
-    color: color-mix(in oklab, var(--white) 70%, transparent);
-  }
-
-  .article-rail :global(.toc-icon) {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 999px;
-    background: rgba(129, 140, 248, 0.12);
   }
 
   .article-body {
@@ -1028,129 +759,6 @@ const schema = generateBlogPostSchema({
     max-width: min(74rem, 100%);
   }
 
-  .article-related :global(.article-related-section) {
-    position: relative;
-    border-radius: 1.75rem;
-    border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
-    background:
-      linear-gradient(160deg, color-mix(in oklab, var(--white) 6%, transparent), transparent)
-        padding-box,
-      color-mix(in oklab, var(--black-nav) 66%, transparent);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    padding: clamp(1.75rem, 2vw + 1.1rem, 2.9rem);
-    box-shadow:
-      0 32px 120px -70px rgba(15, 23, 42, 0.9),
-      0 18px 48px -32px rgba(15, 23, 42, 0.5);
-    overflow: hidden;
-  }
-
-  .article-related :global(.article-related-header) {
-    margin-bottom: clamp(1.2rem, 1.4vw, 1.6rem);
-  }
-
-  .article-related :global(.article-related-title) {
-    margin: 0;
-    font-size: clamp(1.35rem, 1.12rem + 0.9vw, 1.95rem);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .article-related :global(.article-related-list) {
-    display: grid;
-    gap: clamp(1rem, 1.2vw, 1.5rem);
-    grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr));
-    list-style: none;
-    padding: 0;
-  }
-
-  .article-related :global(.article-related-card) {
-    position: relative;
-    border-radius: 1rem;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    background: rgba(10, 14, 28, 0.76);
-    transition:
-      border-color 220ms ease,
-      background-color 220ms ease,
-      box-shadow 220ms ease;
-    overflow: hidden;
-  }
-
-  .article-related :global(.article-related-link) {
-    position: relative;
-    display: block;
-    padding: clamp(1.2rem, 2vw, 1.5rem);
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .article-related :global(.article-related-card:hover) {
-    border-color: color-mix(in oklab, var(--accent) 34%, transparent);
-    background: rgba(12, 17, 33, 0.88);
-    box-shadow:
-      0 18px 36px -30px rgba(15, 23, 42, 0.8),
-      0 0 0 1px rgba(129, 140, 248, 0.08);
-  }
-
-  .article-related :global(.article-related-body) {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  .article-related :global(.article-related-heading) {
-    margin: 0;
-    font-size: clamp(1.02rem, 0.96rem + 0.4vw, 1.24rem);
-    font-weight: 600;
-    line-height: 1.45;
-    color: color-mix(in oklab, var(--white) 94%, transparent);
-    text-wrap: balance;
-  }
-
-  .article-related :global(.article-related-chip) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.28rem 0.7rem;
-    border-radius: 999px;
-    background: rgba(79, 112, 207, 0.18);
-    border: 1px solid rgba(129, 140, 248, 0.28);
-    color: color-mix(in oklab, var(--accent-blog) 80%, white 18%);
-    font-weight: 600;
-  }
-
-  .article-related :global(.article-related-chip)::before {
-    content: '';
-    width: 0.35rem;
-    height: 0.35rem;
-    border-radius: 999px;
-    background: currentColor;
-    opacity: 0.75;
-  }
-
-  .article-related :global(.article-related-excerpt) {
-    margin: 0;
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: color-mix(in oklab, var(--white) 78%, transparent);
-    text-wrap: pretty;
-  }
-
-  .article-related :global(.article-related-meta-row) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.85rem;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: color-mix(in oklab, var(--white) 58%, transparent);
-  }
-
-  .article-related :global(.article-related-date) {
-    font-weight: 600;
-    color: color-mix(in oklab, var(--white) 68%, transparent);
-  }
-
   @media (max-width: 1100px) {
     .article-hero {
       min-height: clamp(23rem, 66vw, 34rem);
@@ -1244,27 +852,16 @@ const schema = generateBlogPostSchema({
       letter-spacing: 0.12em;
       padding: 0.32rem 0.58rem;
     }
-
-    .article-rail :global(.toc-summary) {
-      grid-template-columns: minmax(0, 1fr) auto;
-      padding: 0.9rem;
-    }
-
-    .article-rail :global(.toc-summary__icon) {
-      display: none;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .article-back__link,
-    .article-tag,
-    .article-rail :global(.toc-summary__chevron) {
+    .article-tag {
       transition-duration: 0.01ms;
     }
 
     .article-back__link:hover,
-    .article-tag:hover,
-    .article-rail :global(.toc-link:hover) {
+    .article-tag:hover {
       transform: none;
     }
   }

@@ -1,0 +1,37 @@
+---
+import { Camera } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
+
+interface Props {
+  snapshot: {
+    title: string;
+    items: ReadonlyArray<{
+      label: string;
+      value: string;
+      hint: string;
+    }>;
+  };
+}
+
+const { snapshot } = Astro.props as Props;
+---
+
+<section id="snapshot" class="section-block">
+  <GlassCard variant="premium" className="snapshot-card">
+    <div class="mb-4 flex items-center gap-2">
+      <Camera class="h-4 w-4 text-[color:var(--accent)]" />
+      <span class="eyebrow text-[color:var(--accent)]">{snapshot.title}</span>
+    </div>
+    <div class="snapshot-grid">
+      {
+        snapshot.items.map(item => (
+          <div class="snapshot-item">
+            <p class="snapshot-item__label">{item.label}</p>
+            <p class="snapshot-item__value">{item.value}</p>
+            <p class="snapshot-item__hint">{item.hint}</p>
+          </div>
+        ))
+      }
+    </div>
+  </GlassCard>
+</section>

@@ -1,0 +1,39 @@
+---
+import { BadgeCheck } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
+
+interface Props {
+  proofPoints: {
+    title: string;
+    items: ReadonlyArray<{
+      label: string;
+      value: string;
+      hint: string;
+    }>;
+  };
+}
+
+const { proofPoints } = Astro.props as Props;
+---
+
+<section id="proof-points" class="section-block">
+  <div class="section-heading">
+    <div class="mb-2 flex items-center gap-2">
+      <BadgeCheck class="h-5 w-5 text-[color:var(--accent)]" />
+      <h2>{proofPoints.title}</h2>
+    </div>
+    <p>The fastest way to understand what I do, how I work, and where I am operating from.</p>
+  </div>
+
+  <div class="proof-grid">
+    {
+      proofPoints.items.map(item => (
+        <GlassCard variant="premium" className="proof-card">
+          <p class="proof-card__label">{item.label}</p>
+          <p class="proof-card__value">{item.value}</p>
+          <p class="proof-card__hint">{item.hint}</p>
+        </GlassCard>
+      ))
+    }
+  </div>
+</section>

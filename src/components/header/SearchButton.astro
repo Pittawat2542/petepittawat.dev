@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import '@/styles/components/search-trigger.css';
 
 export interface Props {
-  variant: 'desktop' | 'mobile' | 'drawer';
+  variant: 'desktop' | 'mobile';
   class?: string;
 }
 
@@ -11,7 +11,7 @@ const VARIANT_CONFIG = {
   desktop: {
     id: 'open-search-desktop',
     baseClass:
-      'search-trigger search-trigger--primary hidden md:inline-flex items-center gap-2 shape-squircle-sm rounded-[1.25rem] px-3.5 py-2 text-sm text-[color:var(--white)]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28',
+      'search-trigger search-trigger--primary hidden min-[960px]:inline-flex items-center gap-2 shape-squircle-sm rounded-[1.25rem] px-3.5 py-2 text-sm text-[color:var(--white)]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28',
     iconSize: 16,
     showText: true,
     showShortcut: true,
@@ -19,17 +19,9 @@ const VARIANT_CONFIG = {
   mobile: {
     id: 'open-search-mobile',
     baseClass:
-      'search-trigger search-trigger--icon md:hidden inline-flex items-center justify-center shape-squircle-sm rounded-[1.2rem] p-2.5 text-[color:var(--white)]/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28',
+      'search-trigger search-trigger--icon inline-flex items-center justify-center rounded-[1.2rem] p-2.5 text-[color:var(--white)]/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28 min-[960px]:hidden',
     iconSize: 18,
     showText: false,
-    showShortcut: false,
-  },
-  drawer: {
-    id: 'open-search-drawer',
-    baseClass:
-      'search-trigger search-trigger--drawer glass-button flex w-full items-center gap-3 shape-squircle-sm rounded-[1.25rem] border border-[color:var(--white)]/15 bg-[color:var(--white)]/[0.06] px-4 py-3 text-base font-medium text-[color:var(--white)]/90 hover:border-[color:var(--white)]/25 hover:bg-[color:var(--white)]/[0.12] hover:text-[color:var(--white)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/30',
-    iconSize: 20,
-    showText: true,
     showShortcut: false,
   },
 } as const;
@@ -38,11 +30,12 @@ const { variant, class: className } = Astro.props;
 const config = VARIANT_CONFIG[variant] ?? VARIANT_CONFIG.desktop;
 const buttonClass = cn(config.baseClass, className);
 const title = variant === 'desktop' ? 'Search (⌘/Ctrl + K)' : 'Search';
+---
 
-const renderSearchIcon = (size: number) => (
+<button id={config.id} class={buttonClass} aria-label="Open search" title={title} type="button">
   <svg
-    width={size}
-    height={size}
+    width={config.iconSize}
+    height={config.iconSize}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -51,14 +44,9 @@ const renderSearchIcon = (size: number) => (
     stroke-linejoin="round"
     aria-hidden="true"
   >
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.3-4.3" />
+    <circle cx="11" cy="11" r="8"></circle>
+    <path d="m21 21-4.3-4.3"></path>
   </svg>
-);
----
-
-<button id={config.id} class={buttonClass} aria-label="Open search" title={title} type="button">
-  {renderSearchIcon(config.iconSize)}
   {config.showText && <span class="opacity-90">Search</span>}
   {
     config.showShortcut && (

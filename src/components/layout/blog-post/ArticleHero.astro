@@ -1,0 +1,95 @@
+---
+import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
+import BlogCover from '@/components/ui/blog/BlogCover';
+import FormattedDate from '@/components/content/FormattedDate';
+
+interface Props {
+  title: string;
+  excerpt: string;
+  lang: 'en' | 'th';
+  slug?: string | undefined;
+  tags: string[];
+  pubDate: Date;
+  readingTimeMin?: number | undefined;
+}
+
+const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.props as Props;
+
+const toTagHref = (tag: string) =>
+  `/tags/${tag
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')}`;
+---
+
+<section class="article-surface article-hero">
+  <div class="article-hero__background" aria-hidden="true">
+    <BlogCover
+      title={title}
+      excerpt={excerpt}
+      lang={lang}
+      routeSlug={slug ?? title}
+      tags={tags}
+      pubDate={pubDate}
+      variant="hero"
+      renderMode="background"
+      className="article-hero__cover"
+    />
+  </div>
+
+  <div class="article-hero__overlay">
+    <div class="article-hero__badge">
+      <span class="article-hero__badge-dot"></span>
+      Field Notes
+    </div>
+    <h1 class="article-hero__title">{title}</h1>
+    <div class="article-meta">
+      <div class="article-meta__item">
+        <span class="sr-only">Published</span>
+        <Calendar class="article-meta__icon" aria-hidden="true" />
+        <span class="article-meta__text"><FormattedDate date={pubDate} /></span>
+      </div>
+      <div class="article-meta__divider" aria-hidden="true">·</div>
+      <div class="article-meta__item">
+        <span class="sr-only">Author</span>
+        <CircleUser class="article-meta__icon" aria-hidden="true" />
+        <span class="article-meta__text">Pete</span>
+      </div>
+      {
+        typeof readingTimeMin === 'number' ? (
+          <>
+            <div class="article-meta__divider" aria-hidden="true">
+              ·
+            </div>
+            <div class="article-meta__item">
+              <span class="sr-only">Reading time</span>
+              <Clock3 class="article-meta__icon" aria-hidden="true" />
+              <span class="article-meta__text">{readingTimeMin} min read</span>
+            </div>
+          </>
+        ) : null
+      }
+    </div>
+
+    {
+      tags.length ? (
+        <div class="article-tags">
+          <span class="article-tags__icon">
+            <span class="sr-only">Tags</span>
+            <TagIcon class="article-tags__symbol" aria-hidden="true" />
+          </span>
+          <ul class="article-tags__list">
+            {tags.map(tag => (
+              <li>
+                <a href={toTagHref(tag)} class="article-tag">
+                  #{tag}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null
+    }
+  </div>
+</section>

@@ -3,14 +3,21 @@ import type { FC, ReactNode } from 'react';
 
 import Selector from '@/components/ui/interaction/Selector';
 import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 interface SortControlProps {
   readonly sortOptions: ReadonlyArray<{ readonly value: string; readonly label: string }>;
   readonly sortValue: string | undefined;
   readonly onSortChange: (value: string) => void;
+  readonly tone?: 'default' | 'editorial' | undefined;
 }
 
-const SortControlComponent: FC<SortControlProps> = ({ sortOptions, sortValue, onSortChange }) => {
+const SortControlComponent: FC<SortControlProps> = ({
+  sortOptions,
+  sortValue,
+  onSortChange,
+  tone = 'default',
+}) => {
   if (!sortOptions || sortOptions.length === 0) return null;
 
   const iconMap: Record<string, ReactNode> = {
@@ -28,13 +35,28 @@ const SortControlComponent: FC<SortControlProps> = ({ sortOptions, sortValue, on
   }));
 
   return (
-    <div className="flex w-auto items-center gap-2">
-      <span className="text-muted-foreground text-sm whitespace-nowrap">Sort:</span>
+    <div
+      className={cn(
+        'flex w-auto items-center gap-2',
+        tone === 'editorial' &&
+          'w-full flex-col items-start gap-1 sm:w-auto sm:flex-row sm:items-center'
+      )}
+    >
+      <span
+        className={cn(
+          'text-muted-foreground text-sm whitespace-nowrap',
+          tone === 'editorial' &&
+            'text-[0.72rem] font-semibold tracking-[0.22em] text-white/45 uppercase'
+        )}
+      >
+        Sort
+      </span>
       <Selector
         value={sortValue || ''}
         onChange={onSortChange}
-        className="w-auto"
+        className={cn(tone === 'editorial' ? 'w-full sm:w-auto' : 'w-auto')}
         options={optionsWithIcons}
+        tone={tone}
       />
     </div>
   );

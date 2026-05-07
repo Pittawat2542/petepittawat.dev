@@ -4,7 +4,6 @@
  */
 
 import { useEffect } from 'react';
-import { navigationService } from '@/lib/services';
 
 interface UrlSyncParams {
   enabled?: boolean;
@@ -19,7 +18,7 @@ export function useUrlSync(params: UrlSyncParams) {
   const { enabled = true, query = '', sort, selectedTags, filters = {}, lang } = params;
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || typeof window === 'undefined') return;
 
     const urlParams = new URLSearchParams();
 
@@ -47,7 +46,7 @@ export function useUrlSync(params: UrlSyncParams) {
     }
 
     const queryString = urlParams.toString();
-    const url = queryString ? `?${queryString}` : navigationService.getCurrentPathname();
-    navigationService.replaceState(url);
+    const url = queryString ? `?${queryString}` : window.location.pathname;
+    window.history.replaceState({}, '', url);
   }, [enabled, filters, lang, query, selectedTags, sort]);
 }

@@ -93,13 +93,18 @@ const PageControlsComponent: FC<PageControlsProps> = ({
   const canLoadMore = Boolean(onLoadMore) && visible < total;
 
   return (
-    <div className={cn('flex items-center justify-between gap-3', className)}>
+    <div
+      className={cn(
+        'flex flex-col items-start gap-3 md:flex-row md:items-center md:justify-between',
+        className
+      )}
+    >
       <div className="text-muted-foreground text-sm">
         Showing <span className="text-foreground font-medium">{visible}</span> of{' '}
         <span className="text-foreground font-medium">{total}</span>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
+      <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center md:w-auto md:justify-end">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="text-muted-foreground text-sm">Per page:</span>
           <Selector
             label="Items per page"
@@ -114,7 +119,7 @@ const PageControlsComponent: FC<PageControlsProps> = ({
           </GlassButton>
         )}
         {onPageChange && totalPages > 1 && (
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-1">
             <GlassButton
               size="sm"
               variant="secondary"
