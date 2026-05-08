@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "node --experimental-strip-types scripts/generate-og.ts",
+    "prebuild": "node --experimental-strip-types scripts/generate-og.ts && node --experimental-strip-types scripts/generate-card-visuals.ts",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -17,7 +17,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "test:content": "node --test scripts/blog-content-audit.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/blog-post-schema.test.ts",
+    "test:content": "node --test scripts/blog-content-audit.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/card-visual/index.test.ts src/lib/blog-post-schema.test.ts",
     "clean": "rm -rf dist .astro node_modules/.astro",
     "dev:clean": "npm run clean && npm run dev",
     "generate-favicons": "./scripts/generate-favicons.sh",

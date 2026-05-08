@@ -14,6 +14,8 @@ import AuroraCardShell from './AuroraCardShell';
 import { getAccentColorVar } from '@/lib/utils';
 import { formatDate } from '@/lib';
 import type { Talk } from '@/types';
+import { resolveCardVisualSpec, toTalkCardVisualInput } from '@/lib/card-visual';
+import CardVisualPanel from './CardVisualPanel';
 
 interface TalkCardProps {
   readonly item: Talk;
@@ -34,6 +36,7 @@ function getTalkResourceKind(label: string) {
 
 const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
   const accent = getAccentColorVar('accent');
+  const visualSpec = resolveCardVisualSpec(toTalkCardVisualInput(item));
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const resources = item.resources ?? [];
@@ -138,6 +141,8 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
       }
     >
       <div className="flex h-full flex-col">
+        <CardVisualPanel spec={visualSpec} />
+
         <div className="flex items-start justify-between gap-3">
           <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
             <span

@@ -3,6 +3,7 @@ import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/core/badge';
 import AuroraCardShell from '@/components/ui/cards/AuroraCardShell';
+import CardVisualPanel from '@/components/ui/cards/CardVisualPanel';
 import type { Publication } from '@/types';
 import { AuthorList } from './AuthorList';
 import { PublicationActions } from './PublicationActions';
@@ -10,6 +11,7 @@ import { PublicationMeta } from './PublicationMeta';
 import { PublicationModal } from './PublicationModal';
 import { deduplicateArtifacts, typeAccentVar } from './utils';
 import { getAccentColorVar } from '@/lib/utils';
+import { resolveCardVisualSpec, toPublicationCardVisualInput } from '@/lib/card-visual';
 
 interface PublicationCardProps {
   readonly item: Publication;
@@ -21,6 +23,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   const detailsId = `pub-details-${encodeURIComponent(item.title).replace(/%/g, '')}`;
 
   const accent = getAccentColorVar(typeAccentVar(item.type));
+  const visualSpec = resolveCardVisualSpec(toPublicationCardVisualInput(item));
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const dedupedArtifacts = deduplicateArtifacts(item);
@@ -98,6 +101,8 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       }
     >
       <div className="flex h-full flex-col">
+        <CardVisualPanel spec={visualSpec} />
+
         <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
           <span
             className="inline-block h-2 w-2 rounded-full"
