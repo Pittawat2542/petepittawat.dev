@@ -1,5 +1,19 @@
 [
   {
+    "date": "2026-05-08",
+    "title": "Where are we in the AI world? From AI adoption to building national capability",
+    "audience": "Artificial Intelligence Association of Thailand",
+    "audienceUrl": "https://www.facebook.com/aiat2015",
+    "mode": "online",
+    "resources": [
+      {
+        "label": "Facebook Recorded Video",
+        "href": "https://www.facebook.com/aiat2015/videos/1273713991545918"
+      }
+    ],
+    "tags": ["AI Adoption", "National Capability", "Sovereign AI", "AI Research", "Software"]
+  },
+  {
     "date": "2026-03-13",
     "title": "AI Research for Thailand and Beyond",
     "audience": "SuperAI Engineering Season 5 - Closing Ceremony",
