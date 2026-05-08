@@ -34,7 +34,7 @@ export default function AuroraCardShell({
       {...rest}
       className={cn(
         tone === 'editorial'
-          ? 'group flex h-full flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.12),transparent_28%),linear-gradient(180deg,rgba(11,20,38,0.95),rgba(8,15,29,0.97))] text-white shadow-[0_30px_70px_-42px_rgba(3,7,18,0.82)] transition-[transform,box-shadow,border-color] duration-300 ease-out will-change-transform'
+          ? 'group flex h-full flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.12),transparent_28%),linear-gradient(180deg,rgba(11,20,38,0.95),rgba(8,15,29,0.97))] text-white shadow-[0_30px_70px_-42px_rgba(3,7,18,0.82)] transition-[transform,box-shadow,border-color] duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] will-change-transform'
           : 'aurora-card group flex flex-col will-change-transform',
         featured && 'aurora-card--featured',
         className

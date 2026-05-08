@@ -27,7 +27,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const dedupedArtifacts = deduplicateArtifacts(item);
-  const hasActions = Boolean(item.url || dedupedArtifacts.length);
+  const hasActions = Boolean(item.url) || dedupedArtifacts.length > 0;
 
   // Authors are now rendered using the extracted utility function
 
@@ -62,7 +62,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       accent={accent}
       featured={featured}
       overlayIntensity="subtle"
-      className="publication-card cursor-pointer"
+      className="publication-card cursor-pointer hover:-translate-y-1 hover:border-[color:var(--card-accent)]/30 hover:shadow-[0_38px_78px_-42px_rgba(3,7,18,0.95)] focus-visible:-translate-y-1 focus-visible:border-[color:var(--card-accent)]/38 focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.94)] focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0"
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -78,16 +78,18 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
               item={item}
               dedupedArtifacts={dedupedArtifacts}
               accent={accent}
-              onStopPropagation={e => e.stopPropagation()}
+              onStopPropagation={e => {
+                e.stopPropagation();
+              }}
             />
           ) : null}
-          <span className="inline-flex items-center justify-between gap-3 text-[10px] tracking-[0.24em] text-[color:var(--card-accent)]/62 uppercase transition-colors duration-200 group-hover:text-[color:var(--card-accent)] md:text-[11px]">
+          <span className="inline-flex items-center justify-between gap-3 text-[10px] tracking-[0.24em] text-[color:var(--card-accent)]/62 uppercase transition-colors duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] group-hover:text-[color:var(--card-accent)] md:text-[11px]">
             <span className="leading-relaxed">
               {hasActions ? 'More details' : 'Abstract, notes, and context'}
             </span>
             <span className="inline-flex items-center gap-2">
               <span
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border text-[color:var(--card-accent)] shadow-[0_8px_18px_rgba(15,23,42,0.2)] transition-[transform,border-color,background-color] duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border text-[color:var(--card-accent)] shadow-[0_8px_18px_rgba(15,23,42,0.2)] transition-[transform,border-color,background-color] duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] will-change-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 style={{
                   borderColor: tint(40),
                   background: `linear-gradient(180deg, ${tint(14)}, ${tint(8)})`,

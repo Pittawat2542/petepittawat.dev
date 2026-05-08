@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState, type FC } from 'react';
+import { memo, useEffect, useMemo, useState, type FC } from 'react';
 import { languages } from '@/i18n/ui';
 import {
   getPreferredBlogPostStates,
@@ -11,7 +11,6 @@ import {
   resolveBlogLocalePreference,
   setStoredBlogLocalePreference,
 } from '@/lib/blog-locale-preference';
-import { usePagination } from '@/lib/hooks/usePagination';
 import { useQueryParamSync } from '@/lib/hooks/useQueryParamSync';
 import { useBlogFilters, type BlogSort } from '@/lib/hooks/useBlogFilters';
 import { useUrlSync } from '@/lib/hooks/useUrlSync';
@@ -75,9 +74,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<BlogSort>('newest');
   const [filters, setFilters] = useState<Record<string, string>>({});
-  const [perPage, setPerPage] = useState(12);
   const [isLocaleHydrated, setIsLocaleHydrated] = useState(false);
-  const previousLocaleRef = useRef<BlogTranslationLocale>(initialLocale);
 
   useQueryParamSync('q', q, setQ);
 
@@ -157,26 +154,6 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
     sort,
   });
 
-  const {
-    paginated: pagePosts,
-    totalPages,
-    currentPage,
-    goToPage,
-    setPerPage: setPaginationPerPage,
-  } = usePagination({
-    items: sorted,
-    perPage,
-    initialPage: 1,
-  });
-
-  useEffect(() => {
-    if (!isLocaleHydrated) return;
-    if (previousLocaleRef.current !== locale) {
-      goToPage(1);
-      previousLocaleRef.current = locale;
-    }
-  }, [goToPage, isLocaleHydrated, locale]);
-
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     tags.forEach(tag => {
@@ -197,11 +174,6 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
       .reverse();
     return { year: years } as Record<string, string[]>;
   }, [localizedPosts]);
-
-  const handlePerPageChange = (newPerPage: number) => {
-    setPerPage(newPerPage);
-    setPaginationPerPage(newPerPage);
-  };
 
   const languageSwitcher = (
     <BlogLanguageSwitcher
@@ -253,25 +225,15 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
       toolbarAccessory={languageSwitcher}
       itemsWrapperElement="ul"
       footer={null}
-      pagination={{
-        total: sorted.length,
-        visible: pagePosts.length,
-        perPage,
-        onPerPageChange: handlePerPageChange,
-        currentPage,
-        totalPages,
-        onPageChange: goToPage,
-      }}
     >
-      {pagePosts.map((post: BlogPost, index: number) => (
+      {sorted.map((post: BlogPost) => (
         <BlogCard
           key={post.id}
           post={post}
           allPosts={localizedPosts}
           languageState={localizedStateById.get(post.id)}
           tone="editorial"
-          className="reveal"
-          style={{ transitionDelay: `${Math.min(index * 50, 400)}ms` }}
+          className="[contain-intrinsic-size:520px] [content-visibility:auto]"
         />
       ))}
     </EditorialListingShell>

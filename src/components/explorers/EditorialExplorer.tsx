@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
-import Reveal from '@/components/ui/interaction/Reveal';
+import { useDataFilter, useHashAction, useQueryParamSync } from '@/lib/hooks';
 import EditorialListingShell from './EditorialListingShell';
 
 export interface EditorialExplorerConfig<TItem, TSort extends string> {
@@ -15,7 +14,6 @@ export interface EditorialExplorerConfig<TItem, TSort extends string> {
   readonly getItemId: (item: TItem) => string;
   readonly searchPlaceholder: string;
   readonly hashPrefix: string;
-  readonly perPage: number;
   readonly emptyMessage?: string;
   readonly toolbarAccessory?: ReactNode;
   readonly footer?: ReactNode;
@@ -34,7 +32,6 @@ export function EditorialExplorer<TItem, TSort extends string>({
   getItemId,
   searchPlaceholder,
   hashPrefix,
-  perPage: initialPerPage,
   emptyMessage = 'No results.',
   toolbarAccessory,
   footer,
@@ -44,14 +41,13 @@ export function EditorialExplorer<TItem, TSort extends string>({
     items,
     {
       searchFields,
-      filterFields: filterFields || {},
+      filterFields: filterFields ?? {},
     }
   );
 
   useQueryParamSync('q', q, setQ);
 
   const [sort, setSort] = useState<TSort>(defaultSort);
-  const [perPage, setPerPageState] = useState(initialPerPage);
 
   const sorted = useMemo(() => {
     const list = Array.from(filtered);
@@ -59,28 +55,11 @@ export function EditorialExplorer<TItem, TSort extends string>({
     return list;
   }, [filtered, sort, sortComparators]);
 
-  const {
-    paginated: paged,
-    totalPages,
-    currentPage,
-    goToPage,
-    setPerPage: setPaginationPerPage,
-  } = usePagination({
-    items: sorted,
-    perPage,
-    initialPage: 1,
-  });
-
   const focusItem = useCallback((hash: string) => {
     const el = document.querySelector(hash);
     if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }, []);
   useHashAction(hashPrefix, focusItem);
-
-  const handlePerPageChange = (newPerPage: number) => {
-    setPerPageState(newPerPage);
-    setPaginationPerPage(newPerPage);
-  };
 
   return (
     <EditorialListingShell
@@ -92,32 +71,24 @@ export function EditorialExplorer<TItem, TSort extends string>({
       filterOptions={filterOptions}
       sortOptions={sortOptions}
       sortValue={sort}
-      onSortChange={value => setSort(value as TSort)}
+      onSortChange={value => {
+        setSort(value as TSort);
+      }}
       filteredResults={sorted.length}
       totalResults={totalCount}
       toolbarAccessory={toolbarAccessory}
       footer={footer}
       emptyState={<p className="mt-5 text-sm text-white/58">{emptyMessage}</p>}
       itemsWrapperClassName={resultsClassName}
-      pagination={{
-        total: sorted.length,
-        visible: paged.length,
-        perPage,
-        onPerPageChange: handlePerPageChange,
-        currentPage,
-        totalPages,
-        onPageChange: goToPage,
-      }}
     >
-      {paged.map((item, index) => (
-        <Reveal
+      {sorted.map(item => (
+        <div
           id={getItemId(item)}
           key={getItemKey(item)}
-          delayMs={Math.min(index * 50, 400)}
-          className="target-highlight h-full"
+          className="target-highlight h-full [contain-intrinsic-size:420px] [content-visibility:auto]"
         >
           {renderItem(item)}
-        </Reveal>
+        </div>
       ))}
     </EditorialListingShell>
   );

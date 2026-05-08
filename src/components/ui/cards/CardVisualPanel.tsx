@@ -29,7 +29,7 @@ const CardVisualPanelComponent: FC<CardVisualPanelProps> = ({ spec, className })
           alt=""
           loading="lazy"
           decoding="async"
-          className="relative z-10 h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.025] group-hover:rotate-[0.18deg]"
+          className="relative z-10 h-full w-full object-cover transition-transform duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] will-change-transform group-hover:scale-[1.025] group-hover:rotate-[0.18deg]"
           onError={() => {
             setShowImage(false);
           }}

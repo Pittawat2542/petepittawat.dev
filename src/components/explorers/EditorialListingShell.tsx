@@ -1,17 +1,6 @@
 import type { FC, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import FilterPanel from '@/components/ui/filter/FilterPanel';
-import PageControls from '@/components/ui/navigation/PageControls';
-
-interface PaginationConfig {
-  readonly total: number;
-  readonly visible: number;
-  readonly perPage: number;
-  readonly onPerPageChange: (value: number) => void;
-  readonly currentPage: number;
-  readonly totalPages: number;
-  readonly onPageChange: (page: number) => void;
-}
 
 interface EditorialListingShellProps {
   readonly searchValue: string;
@@ -35,7 +24,6 @@ interface EditorialListingShellProps {
   readonly children: ReactNode;
   readonly footer?: ReactNode;
   readonly emptyState?: ReactNode;
-  readonly pagination?: PaginationConfig | undefined;
   readonly itemsWrapperElement?: 'div' | 'ul' | 'section' | undefined;
   readonly itemsWrapperClassName?: string | undefined;
   readonly className?: string | undefined;
@@ -61,7 +49,6 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
   children,
   footer,
   emptyState,
-  pagination,
   itemsWrapperElement = 'div',
   itemsWrapperClassName,
   className,
@@ -102,18 +89,6 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
 
       {filteredResults === 0 ? emptyState : null}
       {footer}
-
-      {pagination && pagination.totalPages > 1 ? (
-        <PageControls
-          total={pagination.total}
-          visible={pagination.visible}
-          perPage={pagination.perPage}
-          onPerPageChange={pagination.onPerPageChange}
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          onPageChange={pagination.onPageChange}
-        />
-      ) : null}
     </section>
   );
 };

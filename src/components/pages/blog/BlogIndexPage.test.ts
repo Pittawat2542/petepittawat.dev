@@ -63,3 +63,49 @@ test('editorial listing surface components expose the shared configuration hooks
   assert.match(editorialHero, /eyebrow\?:\s*string/);
   assert.match(editorialHero, /<slot\s+name="support"/);
 });
+
+test('listing surfaces render complete filtered collections without pagination controls', () => {
+  const blogListPage = readProjectFile('src/components/layout/BlogListPage.tsx');
+  const editorialExplorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
+  const dataExplorer = readProjectFile('src/components/explorers/DataExplorer.tsx');
+  const editorialShell = readProjectFile('src/components/explorers/EditorialListingShell.tsx');
+
+  for (const file of [blogListPage, editorialExplorer, dataExplorer, editorialShell]) {
+    assert.doesNotMatch(file, /usePagination/);
+    assert.doesNotMatch(file, /PageControls/);
+  }
+
+  assert.match(blogListPage, /sorted\.map/);
+  assert.doesNotMatch(blogListPage, /pagePosts/);
+  assert.match(editorialExplorer, /sorted\.map/);
+  assert.doesNotMatch(editorialExplorer, /paged/);
+  assert.match(dataExplorer, /sorted\.map/);
+  assert.doesNotMatch(dataExplorer, /paged/);
+  assert.doesNotMatch(editorialShell, /pagination/);
+});
+
+test('listing animations never hide primary content while waiting for reveal JavaScript', () => {
+  const blogListPage = readProjectFile('src/components/layout/BlogListPage.tsx');
+  const editorialExplorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
+  const dataExplorer = readProjectFile('src/components/explorers/DataExplorer.tsx');
+  const interactionExports = readProjectFile('src/components/ui/interaction/index.ts');
+  const globalStyles = readProjectFile('src/styles/global.css');
+
+  for (const file of [blogListPage, editorialExplorer, dataExplorer]) {
+    assert.doesNotMatch(file, /<Reveal/);
+    assert.doesNotMatch(file, /className="[^"]*\breveal\b/);
+  }
+
+  assert.doesNotMatch(interactionExports, /Reveal/);
+  assert.doesNotMatch(globalStyles, /\.reveal\s*\{[^}]*opacity:\s*0\s*;/s);
+  assert.doesNotMatch(globalStyles, /\.section-reveal\s*\{[^}]*opacity:\s*0\s*;/s);
+  assert.match(globalStyles, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*\.reveal/);
+  assert.match(
+    globalStyles,
+    /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*opacity:\s*1\s*!important/
+  );
+  assert.match(
+    globalStyles,
+    /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*transform:\s*none\s*!important/
+  );
+});

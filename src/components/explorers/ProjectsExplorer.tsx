@@ -40,7 +40,6 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
       getItemId={item => `project-${slugify(item.title)}-${item.year}`}
       searchPlaceholder="Search title, summary, collaborators..."
       hashPrefix="project-"
-      perPage={6}
       emptyMessage="No results."
     />
   );

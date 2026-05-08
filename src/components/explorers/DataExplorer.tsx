@@ -5,11 +5,9 @@
  */
 
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import { useDataFilter, useHashAction, usePagination, useQueryParamSync } from '@/lib/hooks';
+import { useDataFilter, useHashAction, useQueryParamSync } from '@/lib/hooks';
 
 import FilterPanel from '@/components/ui/filter/FilterPanel';
-import PageControls from '@/components/ui/navigation/PageControls';
-import Reveal from '@/components/ui/interaction/Reveal';
 
 export interface DataExplorerConfig<TItem, TSort extends string> {
   // Data
@@ -31,9 +29,6 @@ export interface DataExplorerConfig<TItem, TSort extends string> {
   searchPlaceholder: string;
   hashPrefix: string;
 
-  // Pagination
-  perPage: number;
-
   // Optional
   emptyMessage?: string;
 }
@@ -50,21 +45,19 @@ export function DataExplorer<TItem, TSort extends string>({
   getItemId,
   searchPlaceholder,
   hashPrefix,
-  perPage: initialPerPage,
   emptyMessage = 'No results.',
 }: DataExplorerConfig<TItem, TSort>) {
   const { q, setQ, filters, setFilters, filtered, filterOptions, totalCount } = useDataFilter(
     items,
     {
       searchFields,
-      filterFields: filterFields || {},
+      filterFields: filterFields ?? {},
     }
   );
 
   useQueryParamSync('q', q, setQ);
 
   const [sort, setSort] = useState<TSort>(defaultSort);
-  const [perPage, setPerPageState] = useState(initialPerPage);
 
   const sorted = useMemo(() => {
     const list = Array.from(filtered);
@@ -72,30 +65,12 @@ export function DataExplorer<TItem, TSort extends string>({
     return list;
   }, [filtered, sort, sortComparators]);
 
-  // Pagination
-  const {
-    paginated: paged,
-    totalPages,
-    currentPage,
-    goToPage,
-    setPerPage: setPaginationPerPage,
-  } = usePagination({
-    items: sorted,
-    perPage,
-    initialPage: 1,
-  });
-
   // Focus targeted item from hash for better UX
   const focusItem = useCallback((hash: string) => {
     const el = document.querySelector(hash);
     if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }, []);
   useHashAction(hashPrefix, focusItem);
-
-  const handlePerPageChange = (newPerPage: number) => {
-    setPerPageState(newPerPage);
-    setPaginationPerPage(newPerPage);
-  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -110,33 +85,23 @@ export function DataExplorer<TItem, TSort extends string>({
         totalResults={totalCount}
         sortOptions={sortOptions}
         sortValue={sort}
-        onSortChange={value => setSort(value as TSort)}
+        onSortChange={value => {
+          setSort(value as TSort);
+        }}
         compact={true}
       />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {paged.map((item, i) => (
-          <Reveal
+        {sorted.map(item => (
+          <div
             id={getItemId(item)}
             key={getItemKey(item)}
-            delayMs={Math.min(i * 50, 400)}
-            className="target-highlight"
+            className="target-highlight [contain-intrinsic-size:420px] [content-visibility:auto]"
           >
             {renderItem(item)}
-          </Reveal>
+          </div>
         ))}
         {!filtered.length && <p className="text-sm text-[color:var(--white)]/60">{emptyMessage}</p>}
       </div>
-      {totalPages > 1 && (
-        <PageControls
-          total={sorted.length}
-          visible={paged.length}
-          perPage={perPage}
-          onPerPageChange={handlePerPageChange}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={goToPage}
-        />
-      )}
     </div>
   );
 }
