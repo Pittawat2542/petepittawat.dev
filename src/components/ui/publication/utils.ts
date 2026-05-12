@@ -40,7 +40,7 @@ export function deduplicateArtifacts(item: Publication) {
   const cleaned: NonNullable<typeof item.artifacts> = [];
 
   for (const a of arr) {
-    if (!a || !a.href) continue;
+    if (!a?.href) continue;
     if (item.url && a.href === item.url) continue;
     if (seen.has(a.href)) continue;
     seen.add(a.href);

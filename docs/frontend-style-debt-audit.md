@@ -20,30 +20,31 @@ These files should be cleaned up first because they combine broad runtime impact
 
 ### `src/layouts/BlogPost.astro`
 
-Why it is risky:
+Status: first ownership cleanup pass completed.
 
-- it is the largest `.astro` file in the repo at 1400+ lines
-- it uses `<style is:global>`
-- it also contains many `:global(...)` selectors in the same file
-- it styles multiple sub-systems from one place:
-  - article shell
-  - prose treatment
-  - TOC visuals
-  - related-post card visuals
+What changed:
 
-Cleanup target:
+- the layout now keeps article shell placement, the back link, the main grid, and related-section placement
+- hero visuals live with `src/components/layout/blog-post/ArticleHero.astro`
+- rail visuals live with `src/components/layout/blog-post/ArticleRail.astro`
+- prose and code-block visuals live with `src/components/layout/blog-post/ArticleBody.astro`
+- the shared card surface lives in `src/styles/components/article-surface.css`
 
-- keep page shell, section placement, and article-level spacing in the layout
-- move TOC visuals to `src/components/layout/blog/Toc.astro` or a colocated TOC stylesheet
-- move related-post visuals closer to `src/components/content/RelatedPosts.tsx`
-- normalize Astro scoping usage so the file uses one scoping model consistently
+Remaining review target:
+
+- keep the layout from regaining child component visuals
+- keep `article-surface.css` limited to the shared surface shell only
+- verify rendered parity for long posts with TOC, code blocks, tables, related posts, and language switching
 
 ### First cleanup tranche paired files
 
-These files should be cleaned up together with `BlogPost.astro` because they currently participate in split ownership:
+These files participate in the blog-post ownership boundary:
 
 - `src/components/layout/blog/Toc.astro`
 - `src/components/content/RelatedPosts.tsx`
+- `src/components/layout/blog-post/ArticleHero.astro`
+- `src/components/layout/blog-post/ArticleRail.astro`
+- `src/components/layout/blog-post/ArticleBody.astro`
 
 Cleanup target:
 
@@ -63,8 +64,8 @@ Why it is risky:
 
 Cleanup target:
 
-- confirm whether icon styling can stay local to the footer without global escapes
-- document any remaining escape as intentional and component-owned
+- keep the documented `:global(.site-footer__icon)` escape local to the footer class namespace
+- avoid moving footer icon styling into shared/global CSS unless another footer-like surface actually reuses it
 
 ### `src/components/header/MobileMenu.astro`
 
@@ -109,13 +110,13 @@ Cleanup target:
 
 ## Cleanup Order
 
-1. `src/layouts/BlogPost.astro`
-2. `src/components/layout/blog/Toc.astro`
-3. `src/components/content/RelatedPosts.tsx`
-4. `src/components/layout/core/Footer.astro`
-5. `src/components/header/MobileMenu.astro`
-6. `src/components/header/SiteLogo.astro`
-7. `src/styles/components/*`
+1. Keep `src/layouts/BlogPost.astro` from regaining child visuals.
+2. Review `src/components/layout/blog/Toc.astro` for whether its global style block can be scoped in a later focused pass.
+3. Keep `src/components/content/RelatedPosts.tsx` paired with `src/styles/components/related-posts.css`.
+4. Keep the documented footer icon escape local to `src/components/layout/core/Footer.astro`.
+5. Review `src/components/header/MobileMenu.astro` only when adding new menu states or behavior.
+6. Keep `src/components/header/SiteLogo.astro` self-contained.
+7. Review `src/styles/components/*` when a stylesheet gains a second unrelated responsibility.
 
 ## Acceptance Criteria for Each Cleanup PR
 

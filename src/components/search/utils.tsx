@@ -73,9 +73,9 @@ type SearchableContent = {
 function scoreSearchContent(content: SearchableContent, query: string) {
   const fields: { text: string; weight: number; key: 'title' | 'desc' | 'tags' | 'extra' }[] = [
     { text: content.title, weight: 3, key: 'title' },
-    { text: content.description || '', weight: 1.4, key: 'desc' },
-    { text: (content.tags || []).join(' '), weight: 1.2, key: 'tags' },
-    { text: Object.values(content.extra || {}).join(' '), weight: 1, key: 'extra' },
+    { text: content.description ?? '', weight: 1.4, key: 'desc' },
+    { text: (content.tags ?? []).join(' '), weight: 1.2, key: 'tags' },
+    { text: Object.values(content.extra ?? {}).join(' '), weight: 1, key: 'extra' },
   ];
 
   let bestScore = 0;

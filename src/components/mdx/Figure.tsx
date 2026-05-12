@@ -1,7 +1,7 @@
 import { memo, type FC, type ReactNode } from 'react';
 
 interface FigureProps {
-  readonly src?: string | { src: string };
+  readonly src?: string | { src: string; width?: number; height?: number };
   readonly alt?: string;
   readonly caption?: string;
   readonly className?: string;
@@ -11,8 +11,8 @@ interface FigureProps {
 const FigureComponent: FC<FigureProps> = ({ src, alt = '', caption, className = '', children }) => {
   // Handle both string sources and Astro image objects
   const imageSrc = src ? (typeof src === 'string' ? src : src.src) : undefined;
-  const width = typeof src === 'object' && 'width' in src ? (src as any).width : undefined;
-  const height = typeof src === 'object' && 'height' in src ? (src as any).height : undefined;
+  const width = typeof src === 'object' ? src.width : undefined;
+  const height = typeof src === 'object' ? src.height : undefined;
 
   return (
     <>

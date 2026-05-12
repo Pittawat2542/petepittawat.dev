@@ -37,7 +37,7 @@ export function useSearchFiltering(
   const countsByType = useMemo(() => {
     const map = new Map<SearchItemType, number>();
     for (const item of items) {
-      map.set(item.type, (map.get(item.type) || 0) + 1);
+      map.set(item.type, (map.get(item.type) ?? 0) + 1);
     }
     return map;
   }, [items]);

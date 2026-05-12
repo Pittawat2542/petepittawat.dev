@@ -1,3 +1,7 @@
+---
+import '@/styles/components/article-surface.css';
+---
+
 <div class="article-surface article-body-card">
   <article
     id="post-article"
@@ -6,3 +10,344 @@
     <slot />
   </article>
 </div>
+
+<style>
+  .article-body-card {
+    padding: clamp(1.6rem, 1.8vw + 1rem, 2.4rem);
+  }
+
+  .article-body {
+    margin: 0 auto;
+    max-width: 100%;
+    font-family: 'Noto Serif Thai', 'Noto Serif', serif;
+    font-size: clamp(1.06rem, 1.02rem + 0.34vw, 1.22rem);
+    line-height: 1.88;
+    letter-spacing: 0.01em;
+    font-feature-settings: 'kern', 'liga';
+    text-rendering: optimizeLegibility;
+    text-wrap: pretty;
+    color: color-mix(in oklab, var(--white) 94%, transparent);
+  }
+
+  .article-body :global(> *:first-child) {
+    margin-top: 0;
+  }
+
+  .article-body :global(> *:last-child) {
+    margin-bottom: 0;
+  }
+
+  .article-body :global(p) {
+    color: color-mix(in oklab, var(--white) 90%, transparent);
+    margin-top: 1.15em;
+    margin-bottom: 1.15em;
+  }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    padding-left: 1.45em;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    color: color-mix(in oklab, var(--white) 90%, transparent);
+  }
+
+  .article-body :global(ul li::marker) {
+    color: color-mix(in oklab, var(--accent) 55%, var(--white) 40%);
+  }
+
+  .article-body :global(ol li::marker) {
+    color: color-mix(in oklab, var(--accent) 64%, var(--white) 36%);
+    font-weight: 600;
+  }
+
+  .article-body :global(li + li) {
+    margin-top: 0.55em;
+  }
+
+  .article-body :global(blockquote) {
+    position: relative;
+    border-left: 0.2rem solid color-mix(in oklab, var(--accent-blog) 42%, transparent);
+    padding-left: 1.2rem;
+    margin: 2.1em 0;
+    color: color-mix(in oklab, var(--white) 84%, transparent);
+    font-size: 1.02em;
+    font-style: italic;
+    background: linear-gradient(120deg, rgba(18, 27, 49, 0.82), rgba(13, 22, 42, 0.68));
+    border-radius: 1.05rem;
+    padding-block: 1.2rem;
+    padding-right: 1.4rem;
+    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.08);
+  }
+
+  .article-body :global(blockquote)::before {
+    content: '“';
+    position: absolute;
+    font-size: 4rem;
+    line-height: 1;
+    opacity: 0.08;
+    left: 0.6rem;
+    top: -0.8rem;
+    pointer-events: none;
+  }
+
+  .article-body :global(hr) {
+    border: none;
+    height: 1.5px;
+    margin: 3.5rem auto;
+    width: min(60%, 14rem);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--accent-blog) 40%, transparent) 15% 85%,
+      transparent
+    );
+  }
+
+  .article-body :global(table) {
+    width: 100%;
+    margin: clamp(1.6rem, 2vw, 2rem) 0;
+    border-collapse: collapse;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    background: rgba(9, 14, 28, 0.86);
+    box-shadow: 0 24px 60px -46px rgba(7, 12, 26, 0.7);
+  }
+
+  .article-body :global(thead) {
+    background: rgba(12, 20, 38, 0.92);
+  }
+
+  .article-body :global(thead th) {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.78rem;
+    color: color-mix(in oklab, var(--white) 78%, transparent);
+  }
+
+  .article-body :global(thead th),
+  .article-body :global(tbody td) {
+    padding: 0.95rem 1.1rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  }
+
+  .article-body :global(tbody tr:nth-child(odd)) {
+    background: rgba(11, 18, 34, 0.45);
+  }
+
+  .article-body :global(tbody tr:last-child td) {
+    border-bottom: none;
+  }
+
+  .article-body :global(code) {
+    background: rgba(26, 38, 68, 0.72);
+    color: color-mix(in oklab, var(--white) 97%, transparent);
+    padding: 0.12em 0.42em;
+    font-size: 0.95em;
+    box-shadow: 0 0 0 1px rgba(10, 16, 32, 0.2);
+    margin-top: 1em;
+  }
+
+  .article-body :global(pre) {
+    position: relative;
+    margin: clamp(1.8rem, 2.6vw, 2.8rem) 0;
+    padding: clamp(2.35rem, 2vw + 1.45rem, 2.85rem) clamp(1.55rem, 2.1vw, 1.95rem)
+      clamp(1.8rem, 2vw, 2.15rem);
+    border-radius: 1.35rem;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background:
+      radial-gradient(120% 140% at 10% 0%, rgba(129, 140, 248, 0.18), transparent 70%),
+      linear-gradient(175deg, rgba(9, 14, 30, 0.98), rgba(5, 9, 20, 0.94));
+    box-shadow:
+      0 36px 80px -60px rgba(7, 12, 26, 0.9),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .article-body :global(pre.has-copy) {
+    padding-top: clamp(2.8rem, 2.4vw, 3.05rem);
+  }
+
+  .article-body :global(pre)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 160% at 85% -30%, rgba(56, 189, 248, 0.18), transparent 70%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .article-body :global(pre)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.14);
+    opacity: 0.4;
+  }
+
+  .article-body :global(pre code) {
+    display: block;
+    background: transparent;
+    padding: 0;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    color: color-mix(in oklab, var(--white) 97%, transparent);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.32) transparent;
+  }
+
+  .article-body :global(pre code::-webkit-scrollbar) {
+    height: 8px;
+  }
+
+  .article-body :global(pre code::-webkit-scrollbar-track) {
+    background: transparent;
+  }
+
+  .article-body :global(pre code::-webkit-scrollbar-thumb) {
+    background: rgba(148, 163, 184, 0.28);
+    border-radius: 999px;
+  }
+
+  .article-body :global(pre code::-webkit-scrollbar-thumb:hover) {
+    background: rgba(148, 163, 184, 0.38);
+  }
+
+  .article-body :global(.code-lang-badge) {
+    position: absolute;
+    top: clamp(0.75rem, 1vw, 0.95rem);
+    left: clamp(0.95rem, 1.6vw, 1.25rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 0.65rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--white) 90%, transparent);
+    background: rgba(79, 112, 207, 0.18);
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    box-shadow: 0 8px 18px -14px rgba(56, 189, 248, 0.6);
+  }
+
+  .article-body :global(.code-lang-badge)::before {
+    content: '';
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.75;
+  }
+
+  .article-body :global(.code-copy-button) {
+    position: absolute;
+    top: clamp(0.75rem, 1vw, 0.95rem);
+    right: clamp(0.9rem, 1.7vw, 1.35rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: rgba(15, 23, 42, 0.72);
+    color: color-mix(in oklab, var(--white) 90%, transparent);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease,
+      color 160ms ease;
+  }
+
+  .article-body :global(.code-copy-button::after) {
+    content: '';
+    width: 0.8rem;
+    height: 0.8rem;
+    mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><path d="M2 12h20"/></svg>')
+      center / contain no-repeat;
+    background: currentColor;
+    opacity: 0.6;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .article-body :global(.code-copy-button:hover) {
+    transform: translateY(-1px);
+    border-color: rgba(129, 140, 248, 0.4);
+    background: rgba(99, 102, 241, 0.22);
+    color: color-mix(in oklab, var(--white) 96%, transparent);
+  }
+
+  .article-body :global(.code-copy-button:hover::after) {
+    opacity: 0.9;
+    transform: translateX(1px);
+  }
+
+  .article-body :global(.code-copy-button[data-state='copied']) {
+    border-color: rgba(45, 212, 191, 0.55);
+    background: rgba(16, 185, 129, 0.25);
+    color: color-mix(in oklab, var(--white) 98%, transparent);
+  }
+
+  .article-body :global(.code-copy-button[data-state='copied']::after) {
+    mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>')
+      center / contain no-repeat;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .article-body :global(.code-copy-button[data-state='error']) {
+    border-color: rgba(248, 113, 113, 0.6);
+    background: rgba(248, 113, 113, 0.2);
+    color: color-mix(in oklab, var(--white) 96%, transparent);
+  }
+
+  .article-body :global(.code-copy-button[data-state='error']::after) {
+    mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>')
+      center / contain no-repeat;
+    opacity: 0.9;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 720px) {
+    .article-body-card {
+      padding: 1rem;
+    }
+
+    .article-body {
+      font-size: clamp(1rem, 0.98rem + 0.28vw, 1.12rem);
+    }
+
+    .article-body :global(pre) {
+      margin: 1.6rem 0;
+      padding: 2.15rem 1.25rem 1.65rem;
+    }
+
+    .article-body :global(pre.has-copy) {
+      padding-top: 2.45rem;
+    }
+
+    .article-body :global(.code-lang-badge) {
+      top: 0.6rem;
+      left: 0.7rem;
+      letter-spacing: 0.22em;
+    }
+
+    .article-body :global(.code-copy-button) {
+      top: 0.6rem;
+      right: 0.75rem;
+      letter-spacing: 0.12em;
+      padding: 0.32rem 0.58rem;
+    }
+  }
+</style>

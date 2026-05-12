@@ -155,7 +155,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
                     ? { languageBadgeLabel: getBlogExclusiveLocaleLabel(post.data.lang) }
                     : {})}
                   isPartOfSeries={isPartOfSeries}
-                  seriesTitle={seriesTitle || ''}
+                  seriesTitle={seriesTitle ?? ''}
                   partNumber={partNumber}
                   totalParts={totalParts}
                   fallbackTag={fallbackTag}

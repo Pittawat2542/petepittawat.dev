@@ -48,8 +48,12 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                 'flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/5',
                 'focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:outline-none'
               )}
-              onClick={() => onItemClick(item)}
-              onMouseEnter={() => onActiveIndexChange(index)}
+              onClick={() => {
+                onItemClick(item);
+              }}
+              onMouseEnter={() => {
+                onActiveIndexChange(index);
+              }}
             >
               <div className="flex min-w-[7rem] items-center gap-2 pt-0.5">
                 <div

@@ -5,7 +5,7 @@ export function useBlogCardSeries(
   allPosts: readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[]
 ) {
   const isPartOfSeries = post.data.seriesSlug && post.data.seriesTitle;
-  let partNumber = post.data.seriesOrder || 0;
+  let partNumber = post.data.seriesOrder ?? 0;
   let totalParts = 0;
 
   // Calculate total parts in series if allPosts is provided

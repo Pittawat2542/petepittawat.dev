@@ -960,7 +960,6 @@
     opacity: 1;
   }
 }
-/* Removed legacy glass-card styles (migrated to shadcn tokens) */
 
 @layer utilities {
   /*

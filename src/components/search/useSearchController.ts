@@ -89,7 +89,9 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     });
   }, []);
 
-  const selectAllTypes = useCallback(() => setTypeFilter(ensureAllTypes()), []);
+  const selectAllTypes = useCallback(() => {
+    setTypeFilter(ensureAllTypes());
+  }, []);
 
   const handleOpenChange = useCallback((next: boolean) => {
     setOpen(next);

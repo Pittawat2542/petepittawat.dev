@@ -88,7 +88,7 @@ const GlassButtonComponent: FC<GlassButtonProps> = ({
 
   const finalIcon = icon ?? pickAutoIcon();
 
-  const IconComponent = {
+  const iconComponents = {
     external: ExternalLink,
     'arrow-right': ArrowRight,
     'chevron-right': ChevronRight,
@@ -97,7 +97,8 @@ const GlassButtonComponent: FC<GlassButtonProps> = ({
     download: Download,
     plus: Plus,
     mail: Mail,
-  }[finalIcon!];
+  } as const;
+  const IconComponent = finalIcon ? iconComponents[finalIcon] : undefined;
 
   const commonProps = {
     className: cn(getVariantClasses(variant, size), className),

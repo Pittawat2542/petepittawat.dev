@@ -38,11 +38,13 @@ const SearchFilterChipsComponent: FC<SearchFilterChipsProps> = ({
               ? 'border-white/20 bg-white/10'
               : 'border-white/10 hover:bg-white/5'
           )}
-          onClick={() => onToggle(key)}
+          onClick={() => {
+            onToggle(key);
+          }}
           aria-pressed={activeTypes.has(key)}
         >
           <Icon size={12} /> {label}
-          <span className="opacity-70">{counts.get(key) || 0}</span>
+          <span className="opacity-70">{counts.get(key) ?? 0}</span>
         </button>
       ))}
     </div>

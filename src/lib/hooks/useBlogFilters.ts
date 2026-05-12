@@ -38,7 +38,7 @@ export function useBlogFilters({
           post.data.title,
           post.data.excerpt,
           post.data.tags.join(' '),
-          post.data.seriesTitle || '',
+          post.data.seriesTitle ?? '',
         ]
           .join(' ')
           .toLowerCase();

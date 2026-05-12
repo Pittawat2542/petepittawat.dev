@@ -5,6 +5,7 @@ build/
 .astro/
 .next/
 coverage/
+.cache/
 *.min.js
 *.min.css
 public/

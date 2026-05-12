@@ -111,7 +111,9 @@ export function useInfiniteList<T>({
       { rootMargin }
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, [loadNext, rootMargin]);
 
   const pendingSkeletons = hasMore ? Math.min(per, items.length - visibleCount) : 0;

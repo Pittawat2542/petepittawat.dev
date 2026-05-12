@@ -102,9 +102,15 @@ const SearchInputComponent: FC<SearchInputProps> = ({
         <input
           type="search"
           value={value}
-          onChange={e => onChange(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onChange={e => {
+            onChange(e.target.value);
+          }}
+          onFocus={() => {
+            setIsFocused(true);
+          }}
+          onBlur={() => {
+            setIsFocused(false);
+          }}
           placeholder={placeholder}
           id={id}
           aria-label={ariaLabel}

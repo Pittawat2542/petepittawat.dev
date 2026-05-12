@@ -1,0 +1,34 @@
+.article-surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.9rem;
+  border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
+  background:
+    radial-gradient(
+      150% 150% at 12% 0%,
+      color-mix(in oklab, var(--accent-blog) 18%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(180deg, rgba(8, 13, 27, 0.92), rgba(5, 9, 20, 0.96));
+  box-shadow: 0 30px 80px -64px rgba(4, 10, 24, 0.92);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  isolation: isolate;
+}
+
+.article-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 140% at 80% 12%, rgba(126, 165, 255, 0.12), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 28%);
+  opacity: 0.9;
+}
+
+@media (max-width: 720px) {
+  .article-surface {
+    border-radius: 1.55rem;
+  }
+}

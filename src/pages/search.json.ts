@@ -48,7 +48,7 @@ export async function GET(_context: APIContext) {
   const canonicalBlogPosts = getPreferredBlogPosts(groupedBlogPosts, 'en');
 
   for (const canonicalPost of canonicalBlogPosts) {
-    const translationId = canonicalPost.data.translationId || canonicalPost.data.slug;
+    const translationId = canonicalPost.data.translationId ?? canonicalPost.data.slug;
     const group = groupedBlogPosts[translationId] ?? [canonicalPost];
     const enPost = group.find(post => post.data.lang === 'en');
     const thPost = group.find(post => post.data.lang === 'th');

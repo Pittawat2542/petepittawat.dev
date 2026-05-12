@@ -32,6 +32,8 @@ export function useKeyboardShortcut(
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [key, onTrigger, modifiers]);
 }

@@ -5,7 +5,7 @@
 
 // Add copy buttons to code blocks within the article
 function getAttribute(el: Element | null, key: string) {
-  return el?.getAttribute(key) || '';
+  return el?.getAttribute(key) ?? '';
 }
 
 function detectLanguage(preEl: Element, codeEl: HTMLElement) {
@@ -18,10 +18,10 @@ function detectLanguage(preEl: Element, codeEl: HTMLElement) {
   ).toLowerCase();
 
   if (!lang) {
-    const classes = `${codeEl.className || ''} ${preEl.className || ''}`.toLowerCase();
+    const classes = `${codeEl.className ?? ''} ${preEl.className ?? ''}`.toLowerCase();
     const match = classes.match(/(?:language|lang)-([a-z0-9+#\\-]+)/);
     if (match) {
-      lang = match[1] || '';
+      lang = match[1] ?? '';
     }
   }
 

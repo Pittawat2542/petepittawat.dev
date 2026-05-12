@@ -20,7 +20,7 @@ export function useQueryParamSync(param: string, value: string, setValue: (next:
     const handler = () => {
       try {
         const params = new URLSearchParams(window.location.search);
-        const next = params.get(param) || '';
+        const next = params.get(param) ?? '';
         setValue(next);
       } catch {
         // Ignore malformed URLs and keep the previous query state.

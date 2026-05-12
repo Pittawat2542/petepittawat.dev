@@ -49,7 +49,7 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
 }) => {
   const shouldShowToggle = compact && (hasDropdownFilters || hasTags) && onToggleFilters;
   const canSort = Boolean(onSortChange);
-  const hasTools = Boolean(toolbarAccessory || (canSort && onSortChange));
+  const hasTools = Boolean(toolbarAccessory ?? (canSort && onSortChange));
 
   return (
     <div

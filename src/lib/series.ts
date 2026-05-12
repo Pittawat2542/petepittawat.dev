@@ -29,21 +29,24 @@ export function getAllSeries(posts: BlogPost[]): SeriesInfo[] {
         seriesMap.set(seriesSlug, {
           slug: seriesSlug,
           title: seriesTitle,
-          description: seriesDescription || '',
+          description: seriesDescription ?? '',
           posts: [],
           totalParts: 0,
         });
       }
 
-      seriesMap.get(seriesSlug)!.posts.push(post);
+      const series = seriesMap.get(seriesSlug);
+      if (series) {
+        series.posts.push(post);
+      }
     }
   });
 
   // Sort posts within each series by order and update totalParts
   seriesMap.forEach(series => {
     series.posts.sort((a, b) => {
-      const orderA = a.data.seriesOrder || 0;
-      const orderB = b.data.seriesOrder || 0;
+      const orderA = a.data.seriesOrder ?? 0;
+      const orderB = b.data.seriesOrder ?? 0;
       return orderA - orderB;
     });
     series.totalParts = series.posts.length;
@@ -57,7 +60,7 @@ export function getAllSeries(posts: BlogPost[]): SeriesInfo[] {
  */
 export function getSeriesBySlug(posts: BlogPost[], seriesSlug: string): SeriesInfo | null {
   const allSeries = getAllSeries(posts);
-  return allSeries.find(s => s.slug === seriesSlug) || null;
+  return allSeries.find(s => s.slug === seriesSlug) ?? null;
 }
 
 /**

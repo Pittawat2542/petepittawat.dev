@@ -19,8 +19,10 @@ export async function mountSearchModal() {
     container.id = 'search-modal-root';
     document.body.appendChild(container);
   }
+  const createRoot = createRootFn;
   if (!root) {
-    root = createRootFn!(container);
+    if (!createRoot) return;
+    root = createRoot(container);
   }
   seq += 1;
   root.render(<SearchModal hideTriggers autoOpen openKey={seq} />);
