@@ -39,7 +39,7 @@ const SelectorComponent: FC<SelectorProps> = ({
   side = 'bottom',
   tone = 'default',
 }) => {
-  const current = options.find(o => o.value === value) || options[0];
+  const current = options.find(o => o.value === value) ?? options[0];
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLButtonElement>();
 
   return (

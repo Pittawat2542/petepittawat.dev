@@ -59,7 +59,9 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
               key={`${key}-${value}`}
               active
               removable
-              onRemove={() => onRemoveDropdownFilter(key)}
+              onRemove={() => {
+                onRemoveDropdownFilter(key);
+              }}
               variant="default"
               size="sm"
               {...(editorialClassName ? { className: editorialClassName } : {})}
@@ -83,7 +85,9 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
               key={`tag-${tag}`}
               active
               removable
-              onRemove={() => onRemoveTag(tag)}
+              onRemove={() => {
+                onRemoveTag(tag);
+              }}
               variant="accent"
               size="sm"
               {...(editorialClassName ? { className: editorialClassName } : {})}

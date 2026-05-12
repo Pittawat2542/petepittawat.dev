@@ -7,7 +7,7 @@ test('every footer social link has an explicit brand icon source', () => {
   assert.ok(socialLinks.length > 0);
 
   for (const link of socialLinks) {
-    assert.ok(link.brandIcon || link.customIcon, `${link.label} is missing an icon configuration`);
+    assert.ok(link.brandIcon ?? link.customIcon, `${link.label} is missing an icon configuration`);
   }
 });
 

@@ -30,7 +30,11 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({
   accent,
   detailsId,
 }) => {
-  const handleLinkClick = (event: MouseEvent<HTMLAnchorElement>) => event.stopPropagation();
+  const trimmedAbstract = item.abstract?.trim();
+  const abstractText = trimmedAbstract === '' ? undefined : trimmedAbstract;
+  const handleLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.stopPropagation();
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -79,7 +83,7 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({
           <div className="publication-modal__body" role="document">
             <section className="publication-modal__section">
               <h4>Abstract</h4>
-              <p>{item.abstract?.trim() || 'Abstract coming soon.'}</p>
+              <p>{abstractText ?? 'Abstract coming soon.'}</p>
             </section>
 
             {item.url || item.artifacts?.length ? (

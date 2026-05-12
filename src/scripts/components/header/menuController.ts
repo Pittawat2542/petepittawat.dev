@@ -56,7 +56,7 @@ export function createMenuController(): MenuController {
   const handleMenuNavigation = (e: Event) => {
     const target = e.target;
     const element = target instanceof Element ? target.closest('a') : null;
-    if (element && element.tagName === 'A') {
+    if (element?.tagName === 'A') {
       isMenuOpen = false;
       setMenuOpen(false);
     }

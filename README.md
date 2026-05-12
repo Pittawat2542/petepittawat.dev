@@ -145,6 +145,7 @@ For any visible UI change:
 
 See the full architecture guide in [docs/frontend-style-architecture.md](./docs/frontend-style-architecture.md).
 See the current cleanup inventory in [docs/frontend-style-debt-audit.md](./docs/frontend-style-debt-audit.md).
+Use [docs/refactor-parity-checklist.md](./docs/refactor-parity-checklist.md) before and after behavior-preserving modernization passes.
 
 ## 📁 Project Structure
 

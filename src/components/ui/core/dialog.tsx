@@ -20,8 +20,12 @@ const DialogOverlay = forwardRef<
     <DialogPrimitive.Overlay
       ref={ref}
       className={cn('fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm', className)}
-      onClick={e => e.stopPropagation()}
-      onMouseDown={e => e.stopPropagation()}
+      onClick={e => {
+        e.stopPropagation();
+      }}
+      onMouseDown={e => {
+        e.stopPropagation();
+      }}
       {...props}
     />
   </DialogPrimitive.Close>
@@ -44,8 +48,12 @@ const DialogContent = forwardRef<
         'focus-visible:outline-none',
         className
       )}
-      onClick={e => e.stopPropagation()}
-      onMouseDown={e => e.stopPropagation()}
+      onClick={e => {
+        e.stopPropagation();
+      }}
+      onMouseDown={e => {
+        e.stopPropagation();
+      }}
       {...props}
     >
       {children}

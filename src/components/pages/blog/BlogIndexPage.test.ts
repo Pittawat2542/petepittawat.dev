@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
@@ -38,6 +38,7 @@ test('listing explorers use the shared editorial explorer abstraction', () => {
   const projectsExplorer = readProjectFile('src/components/explorers/ProjectsExplorer.tsx');
   const publicationsExplorer = readProjectFile('src/components/explorers/PublicationsExplorer.tsx');
   const talksExplorer = readProjectFile('src/components/explorers/TalksExplorer.tsx');
+  const oldExplorerPath = path.join(projectRoot, 'src/components/explorers/DataExplorer.tsx');
 
   for (const explorer of [projectsExplorer, publicationsExplorer, talksExplorer]) {
     assert.match(
@@ -46,6 +47,8 @@ test('listing explorers use the shared editorial explorer abstraction', () => {
     );
     assert.doesNotMatch(explorer, /DataExplorer/);
   }
+
+  assert.equal(existsSync(oldExplorerPath), false);
 });
 
 test('editorial listing surface components expose the shared configuration hooks', () => {
@@ -62,4 +65,46 @@ test('editorial listing surface components expose the shared configuration hooks
   assert.match(editorialExplorer, /footer\?:\s*ReactNode/);
   assert.match(editorialHero, /eyebrow\?:\s*string/);
   assert.match(editorialHero, /<slot\s+name="support"/);
+});
+
+test('listing surfaces render complete filtered collections without pagination controls', () => {
+  const blogListPage = readProjectFile('src/components/layout/BlogListPage.tsx');
+  const editorialExplorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
+  const editorialShell = readProjectFile('src/components/explorers/EditorialListingShell.tsx');
+
+  for (const file of [blogListPage, editorialExplorer, editorialShell]) {
+    assert.doesNotMatch(file, /usePagination/);
+    assert.doesNotMatch(file, /PageControls/);
+  }
+
+  assert.match(blogListPage, /sorted\.map/);
+  assert.doesNotMatch(blogListPage, /pagePosts/);
+  assert.match(editorialExplorer, /sorted\.map/);
+  assert.doesNotMatch(editorialExplorer, /paged/);
+  assert.doesNotMatch(editorialShell, /pagination/);
+});
+
+test('listing animations never hide primary content while waiting for reveal JavaScript', () => {
+  const blogListPage = readProjectFile('src/components/layout/BlogListPage.tsx');
+  const editorialExplorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
+  const interactionExports = readProjectFile('src/components/ui/interaction/index.ts');
+  const globalStyles = readProjectFile('src/styles/global.css');
+
+  for (const file of [blogListPage, editorialExplorer]) {
+    assert.doesNotMatch(file, /<Reveal/);
+    assert.doesNotMatch(file, /className="[^"]*\breveal\b/);
+  }
+
+  assert.doesNotMatch(interactionExports, /Reveal/);
+  assert.doesNotMatch(globalStyles, /\.reveal\s*\{[^}]*opacity:\s*0\s*;/s);
+  assert.doesNotMatch(globalStyles, /\.section-reveal\s*\{[^}]*opacity:\s*0\s*;/s);
+  assert.match(globalStyles, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*\.reveal/);
+  assert.match(
+    globalStyles,
+    /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*opacity:\s*1\s*!important/
+  );
+  assert.match(
+    globalStyles,
+    /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*transform:\s*none\s*!important/
+  );
 });

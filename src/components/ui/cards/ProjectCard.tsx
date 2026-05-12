@@ -3,7 +3,9 @@ import { memo, type FC } from 'react';
 import { Badge } from '@/components/ui/core/badge';
 import AuroraCardShell from './AuroraCardShell';
 import { getAccentColorVar } from '@/lib/utils';
+import { resolveCardVisualSpec, toProjectCardVisualInput } from '@/lib/card-visual';
 import type { Project } from '@/types';
+import CardVisualPanel from './CardVisualPanel';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -21,6 +23,7 @@ interface ProjectCardProps {
 
 const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) => {
   const accentColor = getAccentColorVar(typeAccentVar(item.type));
+  const visualSpec = resolveCardVisualSpec(toProjectCardVisualInput(item));
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   return (
@@ -67,6 +70,8 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       }
     >
       <div className="flex h-full flex-col">
+        <CardVisualPanel spec={visualSpec} />
+
         <div className="flex items-start justify-between gap-3">
           <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
             <span

@@ -52,7 +52,7 @@ const SortControlComponent: FC<SortControlProps> = ({
         Sort
       </span>
       <Selector
-        value={sortValue || ''}
+        value={sortValue ?? ''}
         onChange={onSortChange}
         className={cn(tone === 'editorial' ? 'w-full sm:w-auto' : 'w-auto')}
         options={optionsWithIcons}

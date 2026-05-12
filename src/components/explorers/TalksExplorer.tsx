@@ -42,7 +42,6 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
       getItemId={item => `talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`}
       searchPlaceholder="Search title, audience..."
       hashPrefix="talk-"
-      perPage={12}
       emptyMessage="No results."
     />
   );

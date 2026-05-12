@@ -189,6 +189,8 @@ const quickLinks = [
     color: rgba(255, 255, 255, 0.92);
   }
 
+  /* Icon Astro/React children do not receive this component's scoped attribute, so this
+     escape stays local to the footer class namespace. */
   :global(.site-footer__icon) {
     width: 0.95rem;
     height: 0.95rem;

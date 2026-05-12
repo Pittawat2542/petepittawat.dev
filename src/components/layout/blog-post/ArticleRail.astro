@@ -4,6 +4,7 @@ import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
 import { languages } from '@/i18n/ui';
 import type { BlogPostLanguageState } from '@/lib/blog-translations';
 import type { CollectionEntry } from 'astro:content';
+import '@/styles/components/article-surface.css';
 
 interface Props {
   excerpt: string;
@@ -61,3 +62,57 @@ const { excerpt, languageHelperText, languageState } = Astro.props as Props;
     <Toc title="On this page" selector="#post-article" levels={[2, 3]} collapsed={false} />
   </div>
 </aside>
+
+<style>
+  .article-rail {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .article-note {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.7rem;
+    padding: 1rem 1rem 1.05rem;
+    border-radius: 1.3rem;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: linear-gradient(180deg, rgba(13, 21, 39, 0.88), rgba(8, 13, 26, 0.92));
+  }
+
+  .article-note__eyebrow {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(129, 140, 248, 0.28);
+    background: rgba(79, 112, 207, 0.16);
+    color: color-mix(in oklab, var(--accent-blog) 84%, white 18%);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .article-note__copy {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: color-mix(in oklab, var(--white) 84%, transparent);
+    text-wrap: pretty;
+  }
+
+  .article-rail__toc {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 720px) {
+    .article-rail {
+      padding: 1rem;
+    }
+  }
+</style>

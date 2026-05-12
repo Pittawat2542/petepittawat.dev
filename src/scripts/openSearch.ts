@@ -27,7 +27,7 @@ export async function openSearch() {
     console.error('Failed to load search modal chunk', error);
     if (import.meta.env.DEV) {
       // Vite occasionally needs a hard refresh when optimized deps change mid-session
-      console.info(
+      console.warn(
         'Search modal will reload once dependencies settle. Refresh the page if issues persist.'
       );
     }

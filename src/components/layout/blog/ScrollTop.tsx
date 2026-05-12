@@ -55,7 +55,7 @@ const ScrollTopComponent: FC = () => {
       let startTime: number | null = null;
 
       function animateScroll(currentTime: number) {
-        if (startTime === null) startTime = currentTime;
+        startTime ??= currentTime;
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
 

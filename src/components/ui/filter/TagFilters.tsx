@@ -53,7 +53,9 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
             <FilterChip
               key={tag}
               active={isSelected}
-              onClick={() => onToggleTag(tag)}
+              onClick={() => {
+                onToggleTag(tag);
+              }}
               {...(count !== undefined && { count })}
               variant={tag === 'All' ? 'primary' : 'default'}
               size="md"

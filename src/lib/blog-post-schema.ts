@@ -68,7 +68,7 @@ export function generateBlogPostSchema(params: BlogPostSchemaParams) {
             name: seriesTitle,
             url: new URL('/series/', siteUrl).href,
           },
-          position: seriesOrder || undefined,
+          position: seriesOrder ?? undefined,
         }
       : {}),
   };

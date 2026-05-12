@@ -16,8 +16,8 @@ Converts the `public/favicon.svg` file to all necessary favicon formats for comp
 # Run the script directly
 ./scripts/generate-favicons.sh
 
-# Or use the npm script
-npm run generate-favicons
+# Or use the pnpm script
+pnpm generate-favicons
 ```
 
 ### Generated Files

@@ -66,7 +66,9 @@ export function useSearchNavigation(
     };
 
     window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    return () => {
+      window.removeEventListener('keydown', handler);
+    };
   }, [isActive, results, activeIndex, query, onItemSelected]);
 
   const getHref = useCallback((item: AugmentedSearchItem) => buildHref(item, query), [query]);

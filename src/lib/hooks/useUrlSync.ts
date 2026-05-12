@@ -27,7 +27,7 @@ export function useUrlSync(params: UrlSyncParams) {
 
     if (sort && sort !== 'newest') urlParams.set('sort', sort);
 
-    if (selectedTags && selectedTags.size) {
+    if (selectedTags?.size) {
       for (const tag of Array.from(selectedTags).sort()) {
         urlParams.append('tag', tag);
       }

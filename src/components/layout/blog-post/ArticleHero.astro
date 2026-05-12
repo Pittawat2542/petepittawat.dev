@@ -2,6 +2,7 @@
 import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
 import BlogCover from '@/components/ui/blog/BlogCover';
 import FormattedDate from '@/components/content/FormattedDate';
+import '@/styles/components/article-surface.css';
 
 interface Props {
   title: string;
@@ -93,3 +94,246 @@ const toTagHref = (tag: string) =>
     }
   </div>
 </section>
+
+<style>
+  .article-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: clamp(25rem, 52vw, 42rem);
+    align-items: flex-end;
+    overflow: hidden;
+    padding: clamp(1.5rem, 1rem + 1.8vw, 2.5rem);
+  }
+
+  .article-hero__background {
+    position: absolute;
+    inset: 0;
+  }
+
+  .article-hero__background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(3, 7, 18, 0.84) 0%,
+        rgba(3, 7, 18, 0.62) 46%,
+        rgba(3, 7, 18, 0.24) 76%,
+        rgba(3, 7, 18, 0.1) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(4, 8, 18, 0.05) 0%,
+        rgba(4, 8, 18, 0.16) 42%,
+        rgba(4, 8, 18, 0.7) 100%
+      );
+    pointer-events: none;
+  }
+
+  .article-hero__overlay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: min(100%, 48rem);
+    min-width: 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1.15rem;
+  }
+
+  .article-hero__badge {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.52rem 1rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
+    background: color-mix(in oklab, var(--white) 5%, transparent);
+    color: color-mix(in oklab, var(--white) 78%, transparent);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .article-hero__badge-dot {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent-blog) 84%, transparent);
+    box-shadow: 0 0 14px rgba(129, 140, 248, 0.55);
+  }
+
+  .article-hero__title {
+    margin: 0;
+    max-width: 13ch;
+    font-size: clamp(2.35rem, 1.7rem + 3vw, 5.4rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+    text-shadow: 0 18px 46px rgba(3, 7, 18, 0.42);
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 1rem;
+    font-size: 0.94rem;
+    color: color-mix(in oklab, var(--white) 78%, transparent);
+  }
+
+  .article-meta__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .article-meta__icon {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.74;
+  }
+
+  .article-meta__text {
+    font-weight: 650;
+    color: color-mix(in oklab, var(--white) 92%, transparent);
+  }
+
+  .article-meta__divider {
+    opacity: 0.3;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .article-tags__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
+    background: color-mix(in oklab, var(--white) 6%, transparent);
+  }
+
+  .article-tags__symbol {
+    width: 1rem;
+    height: 1rem;
+    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
+  }
+
+  .article-tags__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.42rem 0.82rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--accent-blog) 32%, transparent);
+    background: rgba(18, 28, 52, 0.72);
+    color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .article-tag:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
+    background: rgba(26, 38, 69, 0.82);
+  }
+
+  .article-hero :global(.article-hero__cover) {
+    height: 100%;
+    min-height: 100%;
+    border: none;
+    box-shadow: none;
+  }
+
+  @media (max-width: 1100px) {
+    .article-hero {
+      min-height: clamp(23rem, 66vw, 34rem);
+    }
+
+    .article-hero__overlay {
+      width: min(100%, 40rem);
+    }
+
+    .article-hero__title {
+      max-width: 14ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .article-hero {
+      padding: 1.35rem;
+      min-height: clamp(22rem, 96vw, 31rem);
+    }
+
+    .article-hero__background::after {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(4, 8, 18, 0.16) 0%,
+          rgba(4, 8, 18, 0.42) 44%,
+          rgba(4, 8, 18, 0.86) 100%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(3, 7, 18, 0.54) 0%,
+          rgba(3, 7, 18, 0.22) 72%,
+          rgba(3, 7, 18, 0.08) 100%
+        );
+    }
+
+    .article-hero__overlay {
+      width: 100%;
+      gap: 1rem;
+    }
+
+    .article-hero__title {
+      max-width: none;
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .article-meta {
+      font-size: 0.82rem;
+    }
+
+    .article-tag {
+      font-size: 0.72rem;
+      padding: 0.34rem 0.72rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-tag {
+      transition-duration: 0.01ms;
+    }
+
+    .article-tag:hover {
+      transform: none;
+    }
+  }
+</style>

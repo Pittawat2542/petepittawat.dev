@@ -26,8 +26,7 @@ export function logError(
   context?: ErrorContext
 ): void {
   if (process.env['NODE_ENV'] === 'development') {
-    const logMethod =
-      level === 'info' ? console.info : level === 'warn' ? console.warn : console.error;
+    const logMethod = level === 'error' ? console.error : console.warn;
     logMethod(`[${level.toUpperCase()}] ${message}`, {
       error: error?.message,
       context,

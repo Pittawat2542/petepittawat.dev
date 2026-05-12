@@ -103,7 +103,7 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
 
       <div className="flex flex-wrap gap-2">
         {Object.entries(filterOptions).map(([key, options]) => {
-          const selectedValue = filters[key] || 'all';
+          const selectedValue = filters[key] ?? 'all';
           const optObjects = [
             { value: 'all', label: `All ${toTitle(key)}s`, icon: iconFor(key, 'all') },
             ...options.map(o => ({

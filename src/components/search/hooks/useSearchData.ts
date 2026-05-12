@@ -29,9 +29,13 @@ export function useSearchData(shouldLoad: boolean) {
         setItems(data.items || []);
         setLoaded(true);
       })
-      .catch(() => setLoaded(true));
+      .catch(() => {
+        setLoaded(true);
+      });
 
-    return () => controller.abort();
+    return () => {
+      controller.abort();
+    };
   }, [shouldLoad, loaded]);
 
   return { items, loaded };

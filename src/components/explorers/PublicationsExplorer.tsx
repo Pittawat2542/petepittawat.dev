@@ -40,7 +40,6 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
       getItemId={item => `publication-${slugify(item.title)}-${item.year}`}
       searchPlaceholder="Search title, venue, authors..."
       hashPrefix="publication-"
-      perPage={6}
       emptyMessage="No results."
     />
   );

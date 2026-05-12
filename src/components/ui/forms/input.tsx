@@ -29,6 +29,13 @@ const sizeMap: Record<InputSize, { wrapper: string; input: string; icon: string 
   },
 };
 
+type InteractiveIconProps = {
+  readonly role?: unknown;
+  readonly tabIndex?: unknown;
+  readonly onClick?: unknown;
+  readonly href?: unknown;
+};
+
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -50,16 +57,13 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       if (!icon) return null;
       let isInteractive = false;
       if (isValidElement(icon)) {
-        const iconProps = icon.props as Record<string, unknown>;
-        const role =
-          typeof (iconProps as any)['role'] === 'string'
-            ? ((iconProps as any)['role'] as string)
-            : undefined;
-        const tabIndex = (iconProps as any)['tabIndex'];
+        const iconProps = icon.props as InteractiveIconProps;
+        const role = typeof iconProps.role === 'string' ? iconProps.role : undefined;
+        const { tabIndex } = iconProps;
 
         isInteractive =
-          typeof (iconProps as any)['onClick'] === 'function' ||
-          typeof (iconProps as any)['href'] === 'string' ||
+          typeof iconProps.onClick === 'function' ||
+          typeof iconProps.href === 'string' ||
           role === 'button' ||
           typeof tabIndex === 'number';
       }

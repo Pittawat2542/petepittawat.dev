@@ -35,8 +35,12 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(frame);
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (

@@ -45,6 +45,5 @@ export function useUrlParams<T>({ onParams, parser }: UseUrlParamsConfig<T>) {
     }
     // Only run on mount - refs ensure we use the latest callbacks
     // without triggering re-runs when they change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
