@@ -3,10 +3,12 @@ import { SITE_TITLE } from '@/consts';
 
 export interface Props {
   showTitle?: boolean;
+  revealTitle?: boolean;
   class?: string;
 }
 
-const { showTitle = true, class: className } = Astro.props;
+const { showTitle = true, revealTitle = false, class: className } = Astro.props;
+const renderTitle = showTitle || revealTitle;
 ---
 
 <a
@@ -14,6 +16,7 @@ const { showTitle = true, class: className } = Astro.props;
   aria-label="Go to homepage"
   class:list={[
     'site-logo-link shape-squircle-sm relative inline-flex items-center gap-3 rounded-[1.2rem] px-2 py-1 text-white transition-colors hover:text-white/90 focus-visible:ring-2 focus-visible:ring-[color:var(--accent,#6AC1FF)]/60 focus-visible:outline-none',
+    revealTitle && 'site-logo-link--reveal-title',
     className,
   ]}
 >
@@ -37,9 +40,9 @@ const { showTitle = true, class: className } = Astro.props;
     <span class="site-logo__spark site-logo__spark--south"></span>
   </span>
   {
-    showTitle && (
-      <span class="hidden text-sm font-medium tracking-tight text-white lg:block lg:text-base">
-        {SITE_TITLE}
+    renderTitle && (
+      <span class="site-logo__title">
+        <span class="site-logo__title-text">{SITE_TITLE}</span>
       </span>
     )
   }
@@ -57,6 +60,18 @@ const { showTitle = true, class: className } = Astro.props;
       transform 220ms ease,
       background-color 220ms ease;
     --logo-accent: var(--accent, #6ac1ff);
+  }
+
+  .site-logo__title {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    color: currentColor;
+    opacity: 1;
+  }
+
+  .site-logo__title-text {
+    display: inline-block;
   }
 
   .site-logo {

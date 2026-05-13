@@ -50,20 +50,20 @@ const isActive = (href: string) =>
         data-open="false"
         aria-hidden="true"
         class="min-[960px]:hidden"
-        style="top: calc(max(env(safe-area-inset-top), 1rem) + 4rem);"
+        style="top: calc(env(safe-area-inset-top) + var(--nav-height));"
       />
 
       <div
         id="mobile-menu"
         data-open="false"
         class="min-[960px]:hidden"
-        style="top: calc(max(env(safe-area-inset-top), 1rem) + 4rem);"
+        style="top: calc(env(safe-area-inset-top) + var(--nav-height));"
       >
         <div
           id="mobile-menu-sheet"
           data-open="false"
           class="mx-auto w-full max-w-[72rem]"
-          style="max-height: calc(100dvh - (max(env(safe-area-inset-top), 1rem) + 4rem));"
+          style="max-height: calc(100dvh - (env(safe-area-inset-top) + var(--nav-height)));"
         >
           <section class="mobile-menu-panel">
             <header class="mobile-menu-panel__header">

@@ -28,13 +28,15 @@ const isActive = (href: string) =>
 ---
 
 <header
+  id="site-header"
   class="site-header"
-  style="top: max(env(safe-area-inset-top), 1rem); view-transition-name: site-header;"
+  data-scrolled="false"
+  style="top: env(safe-area-inset-top); view-transition-name: site-header;"
 >
   <div class="site-header__container" id="site-nav-shell" data-scrolled="false">
     <nav id="site-nav" aria-label="Primary" data-scrolled="false" class="site-header__nav">
       <div class="site-header__brand">
-        <SiteLogo class="site-header__brand-link" />
+        <SiteLogo showTitle={false} revealTitle class="site-header__brand-link" />
       </div>
 
       <ul id="nav-list" class="site-nav__links">
@@ -48,7 +50,6 @@ const isActive = (href: string) =>
                   aria-label={`Navigate to ${label}`}
                   aria-current={active ? 'page' : undefined}
                   data-active={active ? 'true' : undefined}
-                  tabindex={active ? -1 : undefined}
                   class:list={['site-nav__link', active && 'site-nav__link--active']}
                 >
                   <span>{label}</span>
