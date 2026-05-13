@@ -23,7 +23,6 @@ export interface SiteCopy {
   };
   readonly footer: {
     readonly title: string;
-    readonly summary: string;
     readonly webringLabel: string;
   };
   readonly home: {
@@ -253,8 +252,6 @@ const siteCopyEn: SiteCopy = {
   },
   footer: {
     title: 'Research, engineering, and clear notes from the field.',
-    summary:
-      'I work across language models, evaluation, and systems-building, then publish the tools, talks, and technical writing that make the work easier to reuse.',
     webringLabel: 'Thai Webring',
   },
   home: {
@@ -545,8 +542,6 @@ const siteCopyTh: SiteCopy = {
   },
   footer: {
     title: 'งานวิจัย วิศวกรรม และบันทึกจากภาคสนามที่เล่าให้ชัด',
-    summary:
-      'ผมทำงานคร่อมระหว่างโมเดลภาษา การประเมินผล และการสร้างระบบ แล้วเผยแพร่เครื่องมือ งานบรรยาย และงานเขียนเชิงเทคนิคเพื่อให้ผู้อื่นนำไปต่อยอดได้ง่ายขึ้น',
     webringLabel: 'วงแหวนเว็บไทย',
   },
   home: {

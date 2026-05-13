@@ -119,27 +119,37 @@
   --motion-stagger-sm: 60ms;
   --motion-stagger-md: 100ms;
   --motion-stagger-lg: 160ms;
+  --site-chrome-max-width: 72rem;
+  --site-chrome-padding-x: clamp(1rem, 4vw, 2.5rem);
+  --site-chrome-border: color-mix(in oklab, var(--white, #f9fafb) 9%, transparent);
+  --site-chrome-border-strong: color-mix(in oklab, var(--white, #f9fafb) 14%, transparent);
+  --site-chrome-bg: color-mix(in oklab, var(--black, #111827) 62%, transparent);
+  --site-chrome-bg-strong: color-mix(in oklab, var(--black, #111827) 76%, transparent);
+  --site-chrome-link-color: color-mix(in oklab, var(--white, #f9fafb) 68%, transparent);
+  --site-chrome-link-color-active: color-mix(in oklab, var(--white, #f9fafb) 96%, transparent);
+  --site-chrome-control-size: 2.35rem;
+  --site-chrome-focus-ring:
+    0 0 0 2px color-mix(in oklab, var(--black, #111827) 84%, transparent),
+    0 0 0 4px color-mix(in oklab, var(--accent, #60a5fa) 46%, transparent);
   --nav-height: 3.35rem;
-  --nav-content-max-width: 72rem;
-  --nav-padding-x: clamp(1rem, 4vw, 2.5rem);
+  --nav-content-max-width: var(--site-chrome-max-width);
+  --nav-padding-x: var(--site-chrome-padding-x);
   --nav-logo-size: 2.2rem;
-  --nav-control-size: 2.35rem;
+  --nav-control-size: var(--site-chrome-control-size);
   --nav-blur: 16px;
   --nav-blur-scrolled: 22px;
-  --nav-border: color-mix(in oklab, var(--white, #f9fafb) 9%, transparent);
-  --nav-border-scrolled: color-mix(in oklab, var(--white, #f9fafb) 14%, transparent);
-  --nav-bg: color-mix(in oklab, var(--black, #111827) 62%, transparent);
-  --nav-bg-scrolled: color-mix(in oklab, var(--black, #111827) 76%, transparent);
-  --nav-link-color: color-mix(in oklab, var(--white, #f9fafb) 68%, transparent);
-  --nav-link-color-active: color-mix(in oklab, var(--white, #f9fafb) 96%, transparent);
+  --nav-border: var(--site-chrome-border);
+  --nav-border-scrolled: var(--site-chrome-border-strong);
+  --nav-bg: var(--site-chrome-bg);
+  --nav-bg-scrolled: var(--site-chrome-bg-strong);
+  --nav-link-color: var(--site-chrome-link-color);
+  --nav-link-color-active: var(--site-chrome-link-color-active);
   --nav-hover-rule: color-mix(in oklab, var(--white, #f9fafb) 42%, transparent);
   --nav-active-rule: color-mix(in oklab, var(--accent, #60a5fa) 82%, var(--white, #f9fafb) 12%);
   --nav-active-rule-height: 3px;
   --nav-logo-expanded-blue: #6aa8ff;
   --nav-logo-expanded-radius: 0.56rem;
-  --nav-focus-ring:
-    0 0 0 2px color-mix(in oklab, var(--black, #111827) 84%, transparent),
-    0 0 0 4px color-mix(in oklab, var(--accent, #60a5fa) 46%, transparent);
+  --nav-focus-ring: var(--site-chrome-focus-ring);
   --shape-squircle-clip: path(
     'M0,34% C0,16% 16%,0 34%,0 H66% C84%,0 100%,16% 100%,34% V66% C100%,84% 84%,100% 66%,100% H34% C16%,100% 0,84% 0,66% Z'
   );
