@@ -135,6 +135,8 @@
   --nav-hover-rule: color-mix(in oklab, var(--white, #f9fafb) 42%, transparent);
   --nav-active-rule: color-mix(in oklab, var(--accent, #60a5fa) 82%, var(--white, #f9fafb) 12%);
   --nav-active-rule-height: 3px;
+  --nav-logo-expanded-blue: #6aa8ff;
+  --nav-logo-expanded-radius: 0.56rem;
   --nav-focus-ring:
     0 0 0 2px color-mix(in oklab, var(--black, #111827) 84%, transparent),
     0 0 0 4px color-mix(in oklab, var(--accent, #60a5fa) 46%, transparent);
