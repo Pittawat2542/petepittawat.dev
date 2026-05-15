@@ -3,6 +3,7 @@ export type SiteLocale = 'en' | 'th';
 export type SiteNavLinkKey = 'home' | 'blog' | 'projects' | 'publications' | 'talks' | 'about';
 export type HeroCtaIcon = 'rocket' | 'book-open' | 'mic';
 export type HeroCtaVariant = 'primary' | 'secondary' | 'ghost';
+export type HeroTopicIcon = 'brain' | 'activity' | 'bar-chart-3' | 'network';
 export type HomeStatIcon = 'book-text' | 'scroll-text' | 'mic';
 export type ResearchThemeIcon = 'activity' | 'layers' | 'shield-check' | 'globe';
 export type HomeHighlightIcon = 'book-open' | 'graduation-cap' | 'cpu';
@@ -33,6 +34,10 @@ export interface SiteCopy {
       readonly summary: string;
       readonly focusLabel: string;
       readonly focusBody: string;
+      readonly topics: readonly {
+        readonly label: string;
+        readonly icon: HeroTopicIcon;
+      }[];
       readonly primaryCtas: readonly {
         readonly href: string;
         readonly title: string;
@@ -258,13 +263,17 @@ const siteCopyEn: SiteCopy = {
     hero: {
       kicker: 'Research x Engineering x Design',
       title: "Hi, I'm Pete",
-      intro:
-        'I study how language models behave in practice, from prompting and context engineering to post-training and evaluation.',
-      summary:
-        'My recent work spans open reasoning models, medical reasoning systems, evaluation tooling, and the engineering patterns that make model behavior easier to inspect and improve.',
+      intro: 'I study how language models acquire and express behavior.',
+      summary: 'Focused on reasoning models, post-training, evaluation, and agentic systems.',
       focusLabel: 'Current focus',
       focusBody:
         'Reasoning models, post-training, evaluation, and inference-time strategies for systems that need to be useful beyond demos.',
+      topics: [
+        { label: 'Reasoning Models', icon: 'brain' },
+        { label: 'Post-Training', icon: 'activity' },
+        { label: 'Evaluation', icon: 'bar-chart-3' },
+        { label: 'Agentic Systems', icon: 'network' },
+      ],
       primaryCtas: [
         {
           href: '/projects',
@@ -548,13 +557,17 @@ const siteCopyTh: SiteCopy = {
     hero: {
       kicker: 'วิจัย x วิศวกรรม x ออกแบบ',
       title: 'สวัสดีครับ ผมพีท',
-      intro:
-        'ผมศึกษาว่าโมเดลภาษาทำงานอย่างไรในโลกจริง ตั้งแต่การพรอมป์ตและการออกแบบบริบท ไปจนถึง post-training และการประเมินผล',
-      summary:
-        'งานช่วงหลังของผมครอบคลุมทั้งโมเดลให้เหตุผลแบบเปิด ระบบให้เหตุผลทางการแพทย์ เครื่องมือประเมินผล และแนวทางวิศวกรรมที่ช่วยให้ตรวจสอบและปรับปรุงพฤติกรรมของโมเดลได้ง่ายขึ้น',
+      intro: 'ผมศึกษาว่าโมเดลภาษาเรียนรู้และแสดงพฤติกรรมออกมาอย่างไร',
+      summary: 'โฟกัสที่โมเดลให้เหตุผล post-training การประเมินผล และระบบ agentic',
       focusLabel: 'สิ่งที่กำลังโฟกัส',
       focusBody:
         'โมเดลให้เหตุผล post-training การประเมินผล และกลยุทธ์ช่วง inference สำหรับระบบที่ต้องใช้งานได้จริง ไม่ใช่แค่เดโม',
+      topics: [
+        { label: 'Reasoning Models', icon: 'brain' },
+        { label: 'Post-Training', icon: 'activity' },
+        { label: 'Evaluation', icon: 'bar-chart-3' },
+        { label: 'Agentic Systems', icon: 'network' },
+      ],
       primaryCtas: [
         {
           href: '/projects',

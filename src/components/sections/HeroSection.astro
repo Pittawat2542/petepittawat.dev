@@ -2,7 +2,7 @@
 import Container from '@/components/ui/core/Container.astro';
 import GlassButton from '@/components/ui/navigation/GlassButton';
 import { Image } from 'astro:assets';
-import { BookOpen, Mic, Rocket } from '@lucide/astro';
+import { Activity, BookOpen, BrainCircuit, ChartColumn, Mic, Network, Rocket } from '@lucide/astro';
 import profileImage from '@/assets/images/profile.jpg';
 import type { SiteCopy } from '@/data/site/copy';
 
@@ -18,79 +18,184 @@ const iconMap = {
   mic: Mic,
 } as const;
 
+const topicIconMap = {
+  brain: BrainCircuit,
+  activity: Activity,
+  'bar-chart-3': ChartColumn,
+  network: Network,
+} as const;
+
 const ctaItems = copy.primaryCtas.map(config => ({
   ...config,
   Icon: iconMap[config.icon],
 }));
+
+const topicItems = copy.topics.map(config => ({
+  ...config,
+  Icon: topicIconMap[config.icon],
+}));
+
+const orbitAspects = [
+  {
+    label: 'Research',
+    detail: 'Behavior, reasoning, and evaluation',
+    tone: 'cyan',
+    style:
+      '--x: 14%; --y: 24%; --label-x: -6%; --label-y: -112%; --twinkle-delay: 80ms; --twinkle-duration: 3.8s; --glint-delay: 340ms;',
+  },
+  {
+    label: 'Engineering',
+    detail: 'Systems, tooling, and deployment paths',
+    tone: 'amber',
+    style:
+      '--x: 86%; --y: 34%; --label-x: -76%; --label-y: -116%; --twinkle-delay: 860ms; --twinkle-duration: 4.4s; --glint-delay: 1220ms;',
+  },
+  {
+    label: 'Design',
+    detail: 'Readable interfaces for complex AI behavior',
+    tone: 'violet',
+    style:
+      '--x: 8%; --y: 62%; --label-x: 10%; --label-y: 36%; --twinkle-delay: 1460ms; --twinkle-duration: 4.1s; --glint-delay: 1860ms;',
+  },
+] as const;
+
+const displayName = 'Pittawat Taveekitworachai';
+const [givenName = displayName, ...familyNameParts] = displayName.split(' ');
+const familyName = familyNameParts.join(' ');
+
+const englishIntro = 'I study how language models acquire and express behavior.';
+const thaiIntro = 'ผมศึกษาว่าโมเดลภาษาเรียนรู้และแสดงพฤติกรรมออกมาอย่างไร';
+const introVariant = copy.intro === englishIntro ? 'en' : copy.intro === thaiIntro ? 'th' : 'plain';
 ---
 
 <Container
-  className="relative mt-6 flex flex-col items-center justify-center gap-10 md:mt-14 md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-start md:gap-16"
+  className="relative -mt-2 flex flex-col items-center justify-center gap-9 md:-mt-4 md:grid md:grid-cols-[minmax(0,1.12fr)_minmax(18rem,0.88fr)] md:items-start md:gap-10"
 >
-  <div
-    class="order-1 flex max-w-2xl flex-col gap-6 text-center md:col-span-1 md:max-w-none md:text-left"
-  >
-    <div class="flex flex-col items-center gap-4 md:items-start">
-      <div
-        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-[color:var(--white)]/65 uppercase"
-      >
-        <span class="h-2 w-2 rounded-full bg-[color:var(--accent)]"></span>
-        {copy.kicker}
-      </div>
-      <div class="space-y-3">
-        <h1 class="text-4xl leading-tight font-bold md:text-5xl">
-          <span class="hero-text-gradient-blue">{copy.title}</span>{' '}
-          <span class="hero-text-gradient-orange">Pittawat Taveekitworachai</span>
+  <div class="hero-copy order-1 md:col-span-1">
+    <div class="hero-copy__inner">
+      <div class="hero-statement">
+        <h1 class="hero-name">
+          <span class="hero-name__given">{givenName}</span>
+          {familyName && <span class="hero-name__family">{familyName}</span>}
         </h1>
-        <p class="text-lg text-[color:var(--white)]/80 md:text-xl">
-          {copy.intro}
+
+        <p class="hero-lead">
+          {
+            introVariant === 'en' ? (
+              <>
+                I study how language models <span>acquire</span>
+                <br class="hidden sm:block" /> and <span>express behavior</span>.
+              </>
+            ) : introVariant === 'th' ? (
+              <>
+                ผมศึกษาว่าโมเดลภาษา<span>เรียนรู้</span>
+                <br class="hidden sm:block" /> และ<span>แสดงพฤติกรรม</span>ออกมาอย่างไร
+              </>
+            ) : (
+              copy.intro
+            )
+          }
         </p>
+
+        <p class="hero-summary">{copy.summary}</p>
+      </div>
+
+      <div class="hero-topic-list" aria-label="Research focus areas">
+        {
+          topicItems.map(({ label, Icon }) => (
+            <span class="hero-topic">
+              <Icon class="hero-topic__icon" aria-hidden="true" />
+              <span>{label}</span>
+            </span>
+          ))
+        }
       </div>
     </div>
-    <p class="text-base text-[color:var(--white)]/70 md:text-lg">
-      {copy.summary}
-    </p>
   </div>
 
   <div
-    class="relative order-2 flex w-full max-w-[22rem] flex-col items-center md:ml-auto md:justify-self-end"
+    class="relative order-2 flex w-full max-w-[21rem] flex-col items-center md:ml-auto md:justify-self-center"
   >
     <div
       class="hero-avatar group relative mx-auto w-full max-w-[15rem] overflow-visible md:mx-0 md:max-w-[20rem]"
     >
-      <div class="hero-particles" aria-hidden="true">
+      <div class="hero-galaxy" aria-hidden="true">
+        <span class="hero-galaxy__nebula hero-galaxy__nebula--core"></span>
+        <span class="hero-galaxy__nebula hero-galaxy__nebula--cyan"></span>
+        <span class="hero-galaxy__nebula hero-galaxy__nebula--violet"></span>
+        <span class="hero-galaxy__orbit hero-galaxy__orbit--primary"></span>
+        <span class="hero-galaxy__orbit hero-galaxy__orbit--secondary"></span>
+        <span class="hero-galaxy__orbit hero-galaxy__orbit--tertiary"></span>
         <span
-          class="hero-particle"
-          style="--size: 1rem; --color: rgba(96, 165, 250, 0.9); --start-x: -0.75rem; --start-y: -0.5rem; --end-x: -12rem; --end-y: -8.5rem; --duration: 780ms;"
+          class="hero-galaxy__star"
+          style="--x: 10%; --y: 28%; --size: 0.22rem; --delay: 30ms; --drift-x: -0.8rem; --drift-y: -0.9rem;"
         ></span>
         <span
-          class="hero-particle"
-          style="--size: 0.65rem; --color: rgba(125, 211, 252, 0.85); --start-x: 0.4rem; --start-y: -0.9rem; --end-x: 11rem; --end-y: -8.5rem; --duration: 750ms; --delay: 40ms;"
+          class="hero-galaxy__star"
+          style="--x: 20%; --y: 9%; --size: 0.34rem; --delay: 90ms; --drift-x: -0.35rem; --drift-y: -1.15rem;"
         ></span>
         <span
-          class="hero-particle"
-          style="--size: 0.5rem; --color: rgba(251, 146, 60, 0.88); --start-x: -0.3rem; --start-y: 0.7rem; --end-x: -8.5rem; --end-y: 7.75rem; --duration: 720ms; --delay: 80ms; --blur: 1px;"
+          class="hero-galaxy__star"
+          style="--x: 45%; --y: 2%; --size: 0.18rem; --delay: 140ms; --drift-x: 0rem; --drift-y: -1.2rem;"
         ></span>
         <span
-          class="hero-particle"
-          style="--size: 0.85rem; --color: rgba(45, 212, 191, 0.85); --start-x: 0.9rem; --start-y: 0.45rem; --end-x: 9.5rem; --end-y: 11rem; --duration: 760ms; --delay: 120ms; --blur: 1.5px;"
+          class="hero-galaxy__star"
+          style="--x: 77%; --y: 13%; --size: 0.26rem; --delay: 60ms; --drift-x: 0.8rem; --drift-y: -0.95rem;"
         ></span>
         <span
-          class="hero-particle"
-          style="--size: 0.45rem; --color: rgba(56, 189, 248, 0.85); --start-x: 0rem; --start-y: 0.2rem; --end-x: 7.5rem; --end-y: -5.75rem; --duration: 680ms; --delay: 160ms; --blur: 0.75px;"
+          class="hero-galaxy__star"
+          style="--x: 92%; --y: 39%; --size: 0.2rem; --delay: 170ms; --drift-x: 1.1rem; --drift-y: -0.25rem;"
         ></span>
         <span
-          class="hero-particle"
-          style="--size: 0.55rem; --color: rgba(250, 204, 21, 0.85); --start-x: -0.6rem; --start-y: -0.1rem; --end-x: -9rem; --end-y: 5.5rem; --duration: 750ms; --delay: 200ms;"
+          class="hero-galaxy__star"
+          style="--x: 84%; --y: 70%; --size: 0.32rem; --delay: 120ms; --drift-x: 0.95rem; --drift-y: 0.85rem;"
+        ></span>
+        <span
+          class="hero-galaxy__star"
+          style="--x: 61%; --y: 93%; --size: 0.2rem; --delay: 220ms; --drift-x: 0.35rem; --drift-y: 1.2rem;"
+        ></span>
+        <span
+          class="hero-galaxy__star"
+          style="--x: 28%; --y: 88%; --size: 0.26rem; --delay: 160ms; --drift-x: -0.65rem; --drift-y: 1rem;"
+        ></span>
+        <span
+          class="hero-galaxy__star"
+          style="--x: 4%; --y: 61%; --size: 0.18rem; --delay: 200ms; --drift-x: -1.05rem; --drift-y: 0.42rem;"
+        ></span>
+        <span
+          class="hero-galaxy__star hero-galaxy__star--warm"
+          style="--x: 17%; --y: 72%; --size: 0.24rem; --delay: 260ms; --drift-x: -0.9rem; --drift-y: 0.9rem;"
+        ></span>
+        <span
+          class="hero-galaxy__star hero-galaxy__star--warm"
+          style="--x: 87%; --y: 52%; --size: 0.16rem; --delay: 240ms; --drift-x: 1.15rem; --drift-y: 0.15rem;"
+        ></span>
+        <span
+          class="hero-galaxy__comet hero-galaxy__comet--north"
+          style="--delay: 60ms; --angle: -24deg; --start-x: -1.7rem; --start-y: 0.2rem; --end-x: 1.5rem; --end-y: -0.55rem;"
+        ></span>
+        <span
+          class="hero-galaxy__comet hero-galaxy__comet--south"
+          style="--delay: 180ms; --angle: 152deg; --start-x: 1.5rem; --start-y: -0.2rem; --end-x: -1.4rem; --end-y: 0.5rem;"
         ></span>
       </div>
-      <div
-        class="pointer-events-none absolute -inset-4 animate-pulse rounded-full bg-[color:var(--accent)] opacity-25 blur-2xl md:-inset-6"
-      >
-      </div>
-      <div
-        class="pointer-events-none absolute top-8 -right-12 hidden h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent-publications)]/40 to-transparent blur-3xl md:block"
-      >
+      <div class="hero-aspects" aria-label="Research, engineering, and design orbit">
+        {
+          orbitAspects.map(({ label, detail, tone, style }) => (
+            <span
+              class={`hero-aspect-star hero-aspect-star--${tone}`}
+              style={style}
+              tabindex="0"
+              aria-label={`${label}: ${detail}`}
+            >
+              <span class="hero-aspect-star__spark" aria-hidden="true" />
+              <span class="hero-aspect-star__label">
+                <span>{label}</span>
+                <small>{detail}</small>
+              </span>
+            </span>
+          ))
+        }
       </div>
       <Image
         src={profileImage}
@@ -103,7 +208,7 @@ const ctaItems = copy.primaryCtas.map(config => ({
         class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15rem] object-cover shadow-lg ring-4 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20rem]"
       />
       <div
-        class="shape-squircle absolute -bottom-12 left-1/2 w-full max-w-[18rem] -translate-x-1/2 rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/75 px-5 py-4 text-left shadow-xl shadow-black/30 backdrop-blur-md sm:px-6 sm:py-5 md:-bottom-16 md:max-w-[20rem]"
+        class="hero-focus-card shape-squircle absolute -bottom-12 left-1/2 w-full max-w-[18rem] -translate-x-1/2 rounded-3xl border border-white/10 bg-[color:var(--black-nav)]/75 px-5 py-4 text-left shadow-xl shadow-black/30 backdrop-blur-md sm:px-6 sm:py-5 md:-bottom-16 md:max-w-[20rem]"
       >
         <p class="text-xs font-semibold tracking-[0.25em] text-[color:var(--white)]/60 uppercase">
           {copy.focusLabel}
@@ -148,39 +253,559 @@ const ctaItems = copy.primaryCtas.map(config => ({
 </Container>
 
 <style>
+  .hero-copy {
+    width: 100%;
+    max-width: 42rem;
+    text-align: center;
+  }
+
+  .hero-copy__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.35rem;
+  }
+
+  .hero-statement {
+    display: flex;
+    flex-direction: column;
+    gap: 1.08rem;
+  }
+
+  .hero-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin: 0;
+    font-weight: 800;
+    line-height: 0.98;
+  }
+
+  .hero-name__given,
+  .hero-name__family {
+    display: block;
+  }
+
+  .hero-name__given {
+    color: #facc63;
+    font-size: 3.4rem;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.14),
+      0 18px 42px rgba(250, 204, 99, 0.18);
+  }
+
+  .hero-name__family {
+    color: rgba(255, 255, 255, 0.94);
+    font-size: 2.62rem;
+    text-shadow: 0 18px 46px rgba(148, 163, 184, 0.22);
+  }
+
+  .hero-lead {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.35rem;
+    line-height: 1.45;
+  }
+
+  .hero-lead span {
+    color: #60a5fa;
+    text-shadow: 0 0 24px rgba(96, 165, 250, 0.34);
+  }
+
+  .hero-summary {
+    margin: 0;
+    max-width: 36rem;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  .hero-topic-list {
+    display: grid;
+    width: min(100%, 35rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .hero-topic {
+    display: inline-flex;
+    min-height: 3.05rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 0.85rem;
+    background:
+      linear-gradient(180deg, rgba(30, 41, 59, 0.52), rgba(15, 23, 42, 0.42)),
+      rgba(255, 255, 255, 0.025);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 14px 30px -26px rgba(96, 165, 250, 0.42);
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .hero-topic__icon {
+    width: 1.18rem;
+    height: 1.18rem;
+    flex: 0 0 auto;
+    color: #60a5fa;
+    filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.35));
+  }
+
+  @media (min-width: 640px) {
+    .hero-name__given {
+      font-size: 3.95rem;
+    }
+
+    .hero-name__family {
+      font-size: 3.05rem;
+    }
+
+    .hero-lead {
+      font-size: 1.55rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-copy {
+      max-width: none;
+      text-align: left;
+    }
+
+    .hero-copy__inner {
+      align-items: flex-start;
+      gap: 1.45rem;
+    }
+
+    .hero-name__given {
+      font-size: 4rem;
+    }
+
+    .hero-name__family {
+      font-size: 2.95rem;
+    }
+
+    .hero-summary {
+      max-width: 32rem;
+    }
+
+    .hero-topic-list {
+      width: min(100%, 34rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-copy__inner {
+      gap: 1.5rem;
+    }
+
+    .hero-name__given {
+      font-size: 4.85rem;
+    }
+
+    .hero-name__family {
+      font-size: 3.62rem;
+    }
+
+    .hero-lead {
+      font-size: 1.54rem;
+      line-height: 1.38;
+    }
+
+    .hero-summary {
+      max-width: 29rem;
+      font-size: 1rem;
+    }
+
+    .hero-topic-list {
+      width: 100%;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .hero-topic {
+      min-height: 2.72rem;
+      gap: 0.5rem;
+      border-radius: 0.78rem;
+      font-size: 0.78rem;
+    }
+
+    .hero-topic__icon {
+      width: 1.05rem;
+      height: 1.05rem;
+    }
+  }
+
   .hero-avatar {
     isolation: isolate;
   }
 
-  .hero-particles {
+  .hero-galaxy {
     position: absolute;
-    inset: -2.5rem;
+    inset: -3rem;
     pointer-events: none;
     z-index: -1;
+    border-radius: 999px;
+    transform: translateZ(0);
+    animation: hero-galaxy-enter 900ms var(--motion-ease-decelerate) 90ms backwards;
   }
 
-  .hero-particle {
+  .hero-galaxy__nebula,
+  .hero-galaxy__orbit,
+  .hero-galaxy__star,
+  .hero-galaxy__comet {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: var(--size, 0.75rem);
-    height: var(--size, 0.75rem);
-    border-radius: 999px;
-    background: radial-gradient(
-      circle at 30% 30%,
-      var(--color, rgba(255, 255, 255, 0.8)),
-      transparent 70%
-    );
-    opacity: 0;
-    transform: translate(-50%, -50%) translate3d(var(--start-x, 0px), var(--start-y, 0px), 0)
-      scale(0.35);
-    filter: saturate(120%) blur(var(--blur, 0px));
+    pointer-events: none;
     mix-blend-mode: screen;
   }
 
+  .hero-galaxy__nebula {
+    border-radius: 999px;
+    filter: blur(var(--blur, 20px)) saturate(128%);
+    opacity: var(--opacity, 0.55);
+    transition:
+      opacity 420ms var(--motion-ease-decelerate),
+      transform 520ms var(--motion-ease-decelerate),
+      filter 520ms var(--motion-ease-decelerate);
+    animation: hero-nebula-enter 920ms var(--motion-ease-decelerate) backwards;
+  }
+
+  .hero-galaxy__nebula--core {
+    inset: 7%;
+    --blur: 18px;
+    --opacity: 0.62;
+    animation-delay: 90ms;
+    background:
+      radial-gradient(circle at 52% 42%, rgba(125, 211, 252, 0.24), transparent 34%),
+      radial-gradient(circle at 34% 61%, rgba(96, 165, 250, 0.36), transparent 50%),
+      radial-gradient(circle at 70% 36%, rgba(124, 58, 237, 0.32), transparent 48%);
+  }
+
+  .hero-galaxy__nebula--cyan {
+    top: 12%;
+    left: -10%;
+    width: 54%;
+    aspect-ratio: 1;
+    --blur: 24px;
+    --opacity: 0.58;
+    animation-delay: 180ms;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.48), transparent 64%);
+  }
+
+  .hero-galaxy__nebula--violet {
+    right: -13%;
+    bottom: 2%;
+    width: 58%;
+    aspect-ratio: 1;
+    --blur: 28px;
+    --opacity: 0.48;
+    animation-delay: 230ms;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.44), transparent 66%);
+  }
+
+  .hero-galaxy__orbit {
+    top: 50%;
+    left: 50%;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    border: 1px solid rgba(147, 197, 253, 0.22);
+    box-shadow:
+      inset 0 0 18px rgba(56, 189, 248, 0.08),
+      0 0 24px rgba(59, 130, 246, 0.12);
+    transform: translate(-50%, -50%) rotate(var(--rotate, 0deg));
+    transition:
+      border-color 360ms ease,
+      box-shadow 360ms ease,
+      opacity 360ms ease,
+      transform 720ms var(--motion-ease-decelerate);
+    animation: hero-orbit-enter 980ms var(--motion-ease-decelerate) backwards;
+  }
+
+  .hero-galaxy__orbit--primary {
+    width: 89%;
+    --rotate: -8deg;
+    --orbit-opacity: 0.8;
+    opacity: var(--orbit-opacity);
+    animation-delay: 160ms;
+  }
+
+  .hero-galaxy__orbit--secondary {
+    width: 108%;
+    --rotate: 24deg;
+    --orbit-opacity: 0.55;
+    border-color: rgba(45, 212, 191, 0.2);
+    opacity: var(--orbit-opacity);
+    animation-delay: 240ms;
+  }
+
+  .hero-galaxy__orbit--tertiary {
+    width: 124%;
+    --rotate: -38deg;
+    --orbit-opacity: 0.42;
+    border-color: rgba(196, 181, 253, 0.18);
+    opacity: var(--orbit-opacity);
+    animation-delay: 320ms;
+  }
+
+  .hero-galaxy__star {
+    top: var(--y);
+    left: var(--x);
+    width: var(--size, 0.22rem);
+    height: var(--size, 0.22rem);
+    border-radius: 999px;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.98),
+      rgba(125, 211, 252, 0.85) 42%,
+      transparent 72%
+    );
+    opacity: 0.7;
+    box-shadow:
+      0 0 10px rgba(125, 211, 252, 0.55),
+      0 0 18px rgba(59, 130, 246, 0.3);
+    transform: translate(-50%, -50%) scale(1);
+    transition:
+      opacity 280ms ease var(--delay, 0ms),
+      transform 620ms var(--motion-ease-decelerate) var(--delay, 0ms),
+      filter 320ms ease var(--delay, 0ms);
+    animation: hero-star-enter 760ms var(--motion-ease-decelerate) calc(var(--delay, 0ms) + 380ms)
+      backwards;
+  }
+
+  .hero-galaxy__star--warm {
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.98),
+      rgba(251, 191, 36, 0.84) 44%,
+      transparent 72%
+    );
+    box-shadow:
+      0 0 10px rgba(251, 191, 36, 0.42),
+      0 0 18px rgba(251, 146, 60, 0.22);
+  }
+
+  .hero-galaxy__comet {
+    width: 4.25rem;
+    height: 0.14rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(226, 246, 255, 0.95), transparent);
+    filter: blur(0.2px) drop-shadow(0 0 8px rgba(125, 211, 252, 0.65));
+    opacity: 0;
+    transform-origin: center;
+    animation: hero-comet-enter 860ms var(--motion-ease-decelerate) calc(var(--delay, 0ms) + 520ms)
+      backwards;
+  }
+
+  .hero-galaxy__comet--north {
+    top: 18%;
+    left: 64%;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scaleX(0.45);
+  }
+
+  .hero-galaxy__comet--south {
+    right: 68%;
+    bottom: 12%;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scaleX(0.42);
+    background: linear-gradient(90deg, transparent, rgba(221, 214, 254, 0.9), transparent);
+  }
+
   @media (min-width: 768px) {
-    .hero-particles {
-      inset: -3.5rem;
+    .hero-galaxy {
+      inset: -4rem;
+    }
+  }
+
+  .hero-aspects {
+    position: absolute;
+    inset: -2.55rem;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: 999px;
+    animation: hero-aspects-enter 780ms var(--motion-ease-decelerate) 520ms backwards;
+  }
+
+  .hero-aspect-star {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    display: grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--star-color, #7dd3fc);
+    cursor: default;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    transition:
+      transform 320ms var(--motion-ease-decelerate),
+      filter 320ms ease;
+  }
+
+  .hero-aspect-star__spark {
+    position: relative;
+    display: block;
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 999px;
+    background:
+      radial-gradient(
+        circle at 34% 30%,
+        rgba(255, 255, 255, 0.98),
+        currentColor 42%,
+        transparent 72%
+      ),
+      currentColor;
+    box-shadow:
+      0 0 0 0.24rem color-mix(in srgb, currentColor 13%, transparent),
+      0 0 1rem color-mix(in srgb, currentColor 72%, transparent),
+      0 0 2rem color-mix(in srgb, currentColor 38%, transparent);
+    animation: hero-aspect-twinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0ms)
+      infinite;
+  }
+
+  .hero-aspect-star__spark::before,
+  .hero-aspect-star__spark::after {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    content: '';
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.92), transparent);
+    opacity: 0.86;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+  }
+
+  .hero-aspect-star__spark::before {
+    width: 1.45rem;
+    height: 0.08rem;
+    animation: hero-aspect-glint 5.6s ease-in-out var(--glint-delay, 0ms) infinite;
+  }
+
+  .hero-aspect-star__spark::after {
+    width: 0.08rem;
+    height: 1.45rem;
+    animation: hero-aspect-glint 5.6s ease-in-out calc(var(--glint-delay, 0ms) + 180ms) infinite;
+  }
+
+  .hero-aspect-star__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(11.4rem, 42vw);
+    border: 1px solid color-mix(in srgb, currentColor 34%, rgba(255, 255, 255, 0.1));
+    border-radius: 0.9rem;
+    background:
+      linear-gradient(180deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.82)),
+      rgba(10, 15, 28, 0.78);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 18px 36px -24px color-mix(in srgb, currentColor 72%, transparent),
+      0 16px 34px -28px rgba(0, 0, 0, 0.8);
+    padding: 0.62rem 0.72rem 0.68rem;
+    color: rgba(255, 255, 255, 0.84);
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(var(--label-x), var(--label-y)) scale(0.94);
+    transform-origin: 50% 50%;
+    transition:
+      opacity 220ms ease,
+      transform 320ms var(--motion-ease-decelerate);
+  }
+
+  .hero-aspect-star__label span,
+  .hero-aspect-star__label small {
+    display: block;
+  }
+
+  .hero-aspect-star__label span {
+    color: color-mix(in srgb, currentColor 78%, white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  .hero-aspect-star__label small {
+    margin-top: 0.26rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .hero-aspect-star--cyan {
+    --star-color: #67e8f9;
+  }
+
+  .hero-aspect-star--amber {
+    --star-color: #facc63;
+  }
+
+  .hero-aspect-star--violet {
+    --star-color: #c4b5fd;
+  }
+
+  .hero-aspect-star:hover,
+  .hero-aspect-star:focus-visible {
+    filter: saturate(132%);
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__spark,
+  .hero-aspect-star:focus-visible .hero-aspect-star__spark {
+    animation:
+      hero-aspect-pulse 900ms ease both,
+      hero-aspect-twinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0ms) infinite;
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__spark::before,
+  .hero-aspect-star:focus-visible .hero-aspect-star__spark::before,
+  .hero-aspect-star:hover .hero-aspect-star__spark::after,
+  .hero-aspect-star:focus-visible .hero-aspect-star__spark::after {
+    animation-duration: 1.8s;
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__label,
+  .hero-aspect-star:focus-visible .hero-aspect-star__label {
+    opacity: 1;
+    transform: translate(var(--label-x), var(--label-y)) scale(1);
+  }
+
+  .hero-aspect-star:focus-visible {
+    outline: 2px solid color-mix(in srgb, currentColor 72%, white);
+    outline-offset: 0.24rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-aspects {
+      inset: -3.6rem;
+    }
+
+    .hero-aspect-star {
+      width: 1.55rem;
+      height: 1.55rem;
+    }
+
+    .hero-aspect-star__spark {
+      width: 0.84rem;
+      height: 0.84rem;
+    }
+
+    .hero-aspect-star__spark::before {
+      width: 1.72rem;
+    }
+
+    .hero-aspect-star__spark::after {
+      height: 1.72rem;
     }
   }
 
@@ -188,44 +813,308 @@ const ctaItems = copy.primaryCtas.map(config => ({
     transition-property: transform, box-shadow, filter, border-color;
     transition-duration: 280ms;
     transition-timing-function: cubic-bezier(0.2, 0.65, 0.25, 1);
+    animation: hero-avatar-image-enter 760ms var(--motion-ease-decelerate) 140ms backwards;
   }
 
   .hero-avatar:hover .hero-avatar__image,
   .hero-avatar:focus-within .hero-avatar__image {
-    transform: translate3d(0, -0.6rem, 0) scale(1.04);
+    transform: translate3d(0, -0.72rem, 0) scale(1.045);
     box-shadow:
-      0 24px 60px -28px rgba(59, 130, 246, 0.45),
-      0 16px 32px -24px rgba(14, 28, 56, 0.55);
-    filter: saturate(110%);
+      0 0 0 1px rgba(125, 211, 252, 0.22),
+      0 26px 68px -26px rgba(59, 130, 246, 0.62),
+      0 14px 34px -22px rgba(124, 58, 237, 0.42),
+      0 18px 36px -24px rgba(14, 28, 56, 0.58);
+    filter: saturate(116%) contrast(102%);
   }
 
-  .hero-avatar:hover .hero-particle,
-  .hero-avatar:focus-within .hero-particle {
-    animation: hero-particle-burst var(--duration, 650ms) cubic-bezier(0.21, 0.61, 0.35, 1)
-      var(--delay, 0ms) forwards;
+  .hero-avatar:hover .hero-galaxy__nebula,
+  .hero-avatar:focus-within .hero-galaxy__nebula {
+    opacity: calc(var(--opacity, 0.55) + 0.18);
+    filter: blur(calc(var(--blur, 20px) + 2px)) saturate(148%);
   }
 
-  @keyframes hero-particle-burst {
+  .hero-avatar:hover .hero-galaxy__nebula--core,
+  .hero-avatar:focus-within .hero-galaxy__nebula--core {
+    transform: scale(1.08) rotate(7deg);
+  }
+
+  .hero-avatar:hover .hero-galaxy__nebula--cyan,
+  .hero-avatar:focus-within .hero-galaxy__nebula--cyan {
+    transform: translate3d(-0.35rem, -0.45rem, 0) scale(1.12);
+  }
+
+  .hero-avatar:hover .hero-galaxy__nebula--violet,
+  .hero-avatar:focus-within .hero-galaxy__nebula--violet {
+    transform: translate3d(0.4rem, 0.5rem, 0) scale(1.1);
+  }
+
+  .hero-avatar:hover .hero-galaxy__orbit,
+  .hero-avatar:focus-within .hero-galaxy__orbit {
+    border-color: rgba(191, 219, 254, 0.44);
+    box-shadow:
+      inset 0 0 24px rgba(125, 211, 252, 0.14),
+      0 0 34px rgba(59, 130, 246, 0.18);
+    opacity: 0.95;
+  }
+
+  .hero-avatar:hover .hero-galaxy__orbit--primary,
+  .hero-avatar:focus-within .hero-galaxy__orbit--primary {
+    transform: translate(-50%, -50%) rotate(18deg) scale(1.04);
+  }
+
+  .hero-avatar:hover .hero-galaxy__orbit--secondary,
+  .hero-avatar:focus-within .hero-galaxy__orbit--secondary {
+    transform: translate(-50%, -50%) rotate(-18deg) scale(1.03);
+  }
+
+  .hero-avatar:hover .hero-galaxy__orbit--tertiary,
+  .hero-avatar:focus-within .hero-galaxy__orbit--tertiary {
+    transform: translate(-50%, -50%) rotate(34deg) scale(1.02);
+  }
+
+  .hero-avatar:hover .hero-galaxy__star,
+  .hero-avatar:focus-within .hero-galaxy__star {
+    opacity: 1;
+    filter: saturate(150%);
+    transform: translate(-50%, -50%) translate3d(var(--drift-x, 0), var(--drift-y, 0), 0)
+      scale(1.45);
+  }
+
+  .hero-avatar:hover .hero-galaxy__comet,
+  .hero-avatar:focus-within .hero-galaxy__comet {
+    animation: hero-comet-sweep 880ms var(--motion-ease-decelerate) var(--delay, 0ms) both;
+  }
+
+  .hero-avatar:hover .hero-focus-card,
+  .hero-avatar:focus-within .hero-focus-card {
+    border-color: rgba(125, 211, 252, 0.26);
+    box-shadow:
+      0 24px 60px -30px rgba(59, 130, 246, 0.46),
+      0 16px 32px -24px rgba(14, 28, 56, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-focus-card {
+    z-index: 2;
+    transition:
+      border-color 260ms ease,
+      box-shadow 320ms var(--motion-ease-decelerate);
+    animation: hero-focus-card-enter 720ms var(--motion-ease-decelerate) 360ms backwards;
+    transform-origin: center top;
+  }
+
+  @keyframes hero-galaxy-enter {
     0% {
       opacity: 0;
-      transform: translate(-50%, -50%) translate3d(var(--start-x, 0px), var(--start-y, 0px), 0)
-        scale(0.35);
+      transform: translate3d(0, 0.7rem, 0) scale(0.88);
+      filter: saturate(70%);
     }
-    25% {
-      opacity: 0.95;
+    100% {
+      opacity: 1;
+      transform: translateZ(0) scale(1);
+      filter: saturate(100%);
+    }
+  }
+
+  @keyframes hero-nebula-enter {
+    0% {
+      opacity: 0;
+      transform: scale(0.72);
+      filter: blur(calc(var(--blur, 20px) + 10px)) saturate(70%);
+    }
+    100% {
+      opacity: var(--opacity, 0.55);
+      transform: scale(1);
+      filter: blur(var(--blur, 20px)) saturate(128%);
+    }
+  }
+
+  @keyframes hero-orbit-enter {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) rotate(calc(var(--rotate, 0deg) - 22deg)) scale(0.72);
+    }
+    68% {
+      opacity: 1;
+    }
+    100% {
+      opacity: var(--orbit-opacity, 0.8);
+      transform: translate(-50%, -50%) rotate(var(--rotate, 0deg)) scale(1);
+    }
+  }
+
+  @keyframes hero-star-enter {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.18);
+      filter: blur(2px) saturate(70%);
+    }
+    55% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.7);
+      filter: blur(0) saturate(140%);
+    }
+    100% {
+      opacity: 0.7;
+      transform: translate(-50%, -50%) scale(1);
+      filter: blur(0) saturate(100%);
+    }
+  }
+
+  @keyframes hero-avatar-image-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 1rem, 0) scale(0.94);
+      filter: saturate(82%) contrast(96%);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: saturate(100%) contrast(100%);
+    }
+  }
+
+  @keyframes hero-focus-card-enter {
+    0% {
+      opacity: 0;
+      translate: -50% 0.85rem;
+      scale: 0.96;
+      filter: blur(7px);
+    }
+    100% {
+      opacity: 1;
+      translate: -50% 0;
+      scale: 1;
+      filter: blur(0);
+    }
+  }
+
+  @keyframes hero-comet-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scaleX(0.18);
+    }
+    42% {
+      opacity: 0.72;
     }
     100% {
       opacity: 0;
-      transform: translate(-50%, -50%) translate3d(var(--end-x, 0px), var(--end-y, 0px), 0)
-        scale(1.05);
+      transform: translate3d(var(--end-x), var(--end-y), 0) rotate(var(--angle)) scaleX(0.82);
+    }
+  }
+
+  @keyframes hero-comet-sweep {
+    0% {
+      opacity: 0;
+      transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scaleX(0.32);
+    }
+    34% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(var(--end-x), var(--end-y), 0) rotate(var(--angle)) scaleX(1.05);
+    }
+  }
+
+  @keyframes hero-aspects-enter {
+    0% {
+      opacity: 0;
+      transform: scale(0.9) rotate(-8deg);
+      filter: saturate(60%);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      filter: saturate(100%);
+    }
+  }
+
+  @keyframes hero-aspect-pulse {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 0.24rem color-mix(in srgb, currentColor 13%, transparent),
+        0 0 1rem color-mix(in srgb, currentColor 72%, transparent),
+        0 0 2rem color-mix(in srgb, currentColor 38%, transparent);
+    }
+    45% {
+      box-shadow:
+        0 0 0 0.42rem color-mix(in srgb, currentColor 18%, transparent),
+        0 0 1.35rem color-mix(in srgb, currentColor 88%, transparent),
+        0 0 2.7rem color-mix(in srgb, currentColor 52%, transparent);
+    }
+  }
+
+  @keyframes hero-aspect-twinkle {
+    0%,
+    100% {
+      opacity: 0.74;
+      scale: 0.92;
+      filter: saturate(112%) brightness(0.96);
+      box-shadow:
+        0 0 0 0.2rem color-mix(in srgb, currentColor 10%, transparent),
+        0 0 0.8rem color-mix(in srgb, currentColor 58%, transparent),
+        0 0 1.65rem color-mix(in srgb, currentColor 30%, transparent);
+    }
+    36% {
+      opacity: 1;
+      scale: 1.08;
+      filter: saturate(145%) brightness(1.18);
+      box-shadow:
+        0 0 0 0.3rem color-mix(in srgb, currentColor 18%, transparent),
+        0 0 1.2rem color-mix(in srgb, currentColor 86%, transparent),
+        0 0 2.45rem color-mix(in srgb, currentColor 46%, transparent);
+    }
+    58% {
+      opacity: 0.86;
+      scale: 0.98;
+      filter: saturate(122%) brightness(1.02);
+    }
+  }
+
+  @keyframes hero-aspect-glint {
+    0%,
+    62%,
+    100% {
+      opacity: 0.32;
+      transform: translate(-50%, -50%) rotate(0deg) scaleX(0.76);
+    }
+    70% {
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(22deg) scaleX(1.2);
+    }
+    78% {
+      opacity: 0.48;
+      transform: translate(-50%, -50%) rotate(34deg) scaleX(0.9);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-avatar:hover .hero-particle,
-    .hero-avatar:focus-within .hero-particle {
+    .hero-avatar:hover .hero-galaxy__comet,
+    .hero-avatar:focus-within .hero-galaxy__comet {
       animation: none;
       opacity: 0;
+    }
+
+    .hero-galaxy__nebula,
+    .hero-galaxy__orbit,
+    .hero-galaxy__star,
+    .hero-galaxy__comet,
+    .hero-galaxy,
+    .hero-avatar__image,
+    .hero-focus-card,
+    .hero-aspects,
+    .hero-aspect-star,
+    .hero-aspect-star__spark,
+    .hero-aspect-star__label {
+      animation: none;
+      transition: none;
+    }
+
+    .hero-aspect-star:hover .hero-aspect-star__spark,
+    .hero-aspect-star:focus-visible .hero-aspect-star__spark {
+      animation: none;
     }
 
     .hero-avatar__image {
@@ -238,6 +1127,31 @@ const ctaItems = copy.primaryCtas.map(config => ({
       transform: none;
       box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.45);
       filter: none;
+    }
+
+    .hero-avatar:hover .hero-galaxy__nebula,
+    .hero-avatar:focus-within .hero-galaxy__nebula {
+      transform: none;
+    }
+
+    .hero-avatar:hover .hero-galaxy__orbit--primary,
+    .hero-avatar:focus-within .hero-galaxy__orbit--primary {
+      transform: translate(-50%, -50%) rotate(-8deg);
+    }
+
+    .hero-avatar:hover .hero-galaxy__orbit--secondary,
+    .hero-avatar:focus-within .hero-galaxy__orbit--secondary {
+      transform: translate(-50%, -50%) rotate(24deg);
+    }
+
+    .hero-avatar:hover .hero-galaxy__orbit--tertiary,
+    .hero-avatar:focus-within .hero-galaxy__orbit--tertiary {
+      transform: translate(-50%, -50%) rotate(-38deg);
+    }
+
+    .hero-avatar:hover .hero-galaxy__star,
+    .hero-avatar:focus-within .hero-galaxy__star {
+      transform: translate(-50%, -50%) scale(1);
     }
   }
 </style>
