@@ -1,0 +1,14 @@
+---
+import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data';
+---
+
+<div class="hero-galaxy" aria-hidden="true">
+  <span class="hero-galaxy__nebula hero-galaxy__nebula--core"></span>
+  <span class="hero-galaxy__nebula hero-galaxy__nebula--cyan"></span>
+  <span class="hero-galaxy__nebula hero-galaxy__nebula--violet"></span>
+  <span class="hero-galaxy__orbit hero-galaxy__orbit--primary"></span>
+  <span class="hero-galaxy__orbit hero-galaxy__orbit--secondary"></span>
+  <span class="hero-galaxy__orbit hero-galaxy__orbit--tertiary"></span>
+  {galaxyStars.map(({ className, style }) => <span class={className} style={style} />)}
+  {galaxyComets.map(({ className, style }) => <span class={className} style={style} />)}
+</div>

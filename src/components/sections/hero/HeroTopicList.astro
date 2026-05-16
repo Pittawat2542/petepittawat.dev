@@ -1,0 +1,33 @@
+---
+import { Activity, BrainCircuit, ChartColumn, Network } from '@lucide/astro';
+import type { SiteCopy } from '@/data/site/copy';
+
+interface Props {
+  topics: SiteCopy['home']['hero']['topics'];
+}
+
+const { topics } = Astro.props as Props;
+
+const topicIconMap = {
+  brain: BrainCircuit,
+  activity: Activity,
+  'bar-chart-3': ChartColumn,
+  network: Network,
+} as const;
+
+const topicItems = topics.map(config => ({
+  ...config,
+  Icon: topicIconMap[config.icon],
+}));
+---
+
+<div class="hero-topic-list" aria-label="Research focus areas">
+  {
+    topicItems.map(({ label, Icon }) => (
+      <span class="hero-topic">
+        <Icon class="hero-topic__icon" aria-hidden="true" />
+        <span>{label}</span>
+      </span>
+    ))
+  }
+</div>

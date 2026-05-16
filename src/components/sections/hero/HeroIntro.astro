@@ -1,0 +1,48 @@
+---
+import type { SiteCopy } from '@/data/site/copy';
+import HeroTopicList from '@/components/sections/hero/HeroTopicList.astro';
+import { displayName, getIntroVariant } from '@/components/sections/hero/hero-data';
+
+interface Props {
+  copy: SiteCopy['home']['hero'];
+}
+
+const { copy } = Astro.props as Props;
+
+const [givenName = displayName, ...familyNameParts] = displayName.split(' ');
+const familyName = familyNameParts.join(' ');
+const introVariant = getIntroVariant(copy.intro);
+---
+
+<div class="hero-copy order-1 md:col-span-1">
+  <div class="hero-copy__inner">
+    <div class="hero-statement">
+      <h1 class="hero-name">
+        <span class="hero-name__given">{givenName}</span>
+        {familyName && <span class="hero-name__family">{familyName}</span>}
+      </h1>
+
+      <p class="hero-lead">
+        {
+          introVariant === 'en' ? (
+            <>
+              I study how language models <span>acquire</span>
+              <br class="hidden sm:block" /> and <span>express behavior</span>.
+            </>
+          ) : introVariant === 'th' ? (
+            <>
+              ผมศึกษาว่าโมเดลภาษา<span>เรียนรู้</span>
+              <br class="hidden sm:block" /> และ<span>แสดงพฤติกรรม</span>ออกมาอย่างไร
+            </>
+          ) : (
+            copy.intro
+          )
+        }
+      </p>
+
+      <p class="hero-summary">{copy.summary}</p>
+    </div>
+
+    <HeroTopicList topics={copy.topics} />
+  </div>
+</div>

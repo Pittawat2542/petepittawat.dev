@@ -1,0 +1,24 @@
+---
+import { orbitAspects } from '@/components/sections/hero/hero-data';
+---
+
+<div class="hero-aspects" aria-label="Research, engineering, and design orbit">
+  {
+    orbitAspects.map(({ label, detail, tone, style }) => (
+      <span
+        class={`hero-aspect-star hero-aspect-star--${tone}`}
+        style={style}
+        tabindex="0"
+        aria-label={`${label}: ${detail}`}
+      >
+        <span class="hero-aspect-star__core">
+          <span class="hero-aspect-star__spark" aria-hidden="true" />
+          <span class="hero-aspect-star__label">
+            <span>{label}</span>
+            <small>{detail}</small>
+          </span>
+        </span>
+      </span>
+    ))
+  }
+</div>
