@@ -46,3 +46,134 @@ const introVariant = getIntroVariant(copy.intro);
     <HeroTopicList topics={copy.topics} />
   </div>
 </div>
+
+<style>
+  .hero-copy {
+    width: 100%;
+    max-width: 43rem;
+    text-align: center;
+  }
+
+  .hero-copy__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.15rem, 2.2vw, 1.6rem);
+  }
+
+  .hero-statement {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.88rem, 1.8vw, 1.12rem);
+  }
+
+  .hero-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin: 0;
+    font-weight: 800;
+    line-height: 0.98;
+  }
+
+  .hero-name__given,
+  .hero-name__family {
+    display: block;
+  }
+
+  .hero-name__given {
+    color: #facc63;
+    font-size: 3.16rem;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.14),
+      0 18px 42px rgba(250, 204, 99, 0.18);
+  }
+
+  .hero-name__family {
+    color: rgba(255, 255, 255, 0.94);
+    font-size: 2.43rem;
+    text-shadow: 0 18px 46px rgba(148, 163, 184, 0.22);
+  }
+
+  .hero-lead {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.26rem;
+    line-height: 1.5;
+  }
+
+  .hero-lead span {
+    color: #60a5fa;
+    text-shadow: 0 0 24px rgba(96, 165, 250, 0.34);
+  }
+
+  .hero-summary {
+    margin: 0;
+    max-width: 34rem;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 1.02rem;
+    line-height: 1.68;
+  }
+
+  @media (min-width: 640px) {
+    .hero-name__given {
+      font-size: 3.66rem;
+    }
+
+    .hero-name__family {
+      font-size: 2.82rem;
+    }
+
+    .hero-lead {
+      font-size: 1.43rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-copy {
+      max-width: none;
+      text-align: left;
+    }
+
+    .hero-copy__inner {
+      align-items: flex-start;
+      gap: 1.45rem;
+    }
+
+    .hero-name__given {
+      font-size: 3.7rem;
+    }
+
+    .hero-name__family {
+      font-size: 2.72rem;
+    }
+
+    .hero-summary {
+      max-width: 32rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-copy__inner {
+      gap: 1.58rem;
+    }
+
+    .hero-name__given {
+      font-size: clamp(4.48rem, 5.82vw, 5.36rem);
+    }
+
+    .hero-name__family {
+      font-size: clamp(3.18rem, 4.44vw, 4.34rem);
+    }
+
+    .hero-lead {
+      font-size: clamp(1.31rem, 1.84vw, 1.58rem);
+      line-height: 1.46;
+    }
+
+    .hero-summary {
+      max-width: 31rem;
+      font-size: 1.04rem;
+    }
+  }
+</style>

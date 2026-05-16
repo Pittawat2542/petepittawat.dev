@@ -22,3 +22,319 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
     ))
   }
 </div>
+
+<style>
+  .hero-aspects {
+    position: absolute;
+    inset: -3.55rem;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: 999px;
+    animation: hero-aspects-enter 780ms var(--motion-ease-decelerate) 520ms backwards;
+  }
+
+  .hero-aspect-star {
+    --label-shift-x: var(--label-x, -50%);
+    --label-shift-y: var(--label-y, calc(-100% - 0.875rem));
+    --label-origin-x: 50%;
+    --label-origin-y: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--star-color, #7dd3fc);
+    cursor: default;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) rotate(var(--orbit-start)) translateX(var(--orbit-radius))
+      rotate(var(--orbit-start-inverse));
+    animation: hero-aspect-orbit var(--orbit-duration, 8s) ease-in-out infinite alternate;
+    animation-delay: var(--orbit-delay, 0ms);
+    transition: filter 320ms ease;
+  }
+
+  .hero-aspect-star__core {
+    position: relative;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    transform: scale(1);
+    transition: transform 320ms var(--motion-ease-decelerate);
+  }
+
+  .hero-aspect-star__spark {
+    position: relative;
+    display: block;
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 999px;
+    background:
+      radial-gradient(
+        circle at 34% 30%,
+        rgba(255, 255, 255, 0.98),
+        currentColor 42%,
+        transparent 72%
+      ),
+      currentColor;
+    box-shadow:
+      0 0 0 0.24rem color-mix(in srgb, currentColor 13%, transparent),
+      0 0 1rem color-mix(in srgb, currentColor 72%, transparent),
+      0 0 2rem color-mix(in srgb, currentColor 38%, transparent);
+    animation: hero-aspect-twinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0ms)
+      infinite;
+  }
+
+  .hero-aspect-star__spark::before,
+  .hero-aspect-star__spark::after {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    content: '';
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.92), transparent);
+    opacity: 0.86;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+  }
+
+  .hero-aspect-star__spark::before {
+    width: 1.45rem;
+    height: 0.08rem;
+    animation: hero-aspect-glint 5.6s ease-in-out var(--glint-delay, 0ms) infinite;
+  }
+
+  .hero-aspect-star__spark::after {
+    width: 0.08rem;
+    height: 1.45rem;
+    animation: hero-aspect-glint 5.6s ease-in-out calc(var(--glint-delay, 0ms) + 180ms) infinite;
+  }
+
+  .hero-aspect-star__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(11.4rem, 42vw);
+    border: 1px solid color-mix(in srgb, currentColor 34%, rgba(255, 255, 255, 0.1));
+    border-radius: 0.9rem;
+    background:
+      linear-gradient(180deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.82)),
+      rgba(10, 15, 28, 0.78);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 18px 36px -24px color-mix(in srgb, currentColor 72%, transparent),
+      0 16px 34px -28px rgba(0, 0, 0, 0.8);
+    padding: 0.62rem 0.72rem 0.68rem;
+    color: rgba(255, 255, 255, 0.84);
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(var(--label-shift-x), var(--label-shift-y)) scale(0.94);
+    transform-origin: var(--label-origin-x) var(--label-origin-y);
+    transition:
+      opacity 220ms ease,
+      transform 320ms var(--motion-ease-decelerate);
+  }
+
+  .hero-aspect-star__label span,
+  .hero-aspect-star__label small {
+    display: block;
+  }
+
+  .hero-aspect-star__label span {
+    color: color-mix(in srgb, currentColor 78%, white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  .hero-aspect-star__label small {
+    margin-top: 0.26rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .hero-aspect-star--cyan {
+    --star-color: #67e8f9;
+  }
+
+  .hero-aspect-star--amber {
+    --star-color: #facc63;
+  }
+
+  .hero-aspect-star--violet {
+    --star-color: #c4b5fd;
+  }
+
+  .hero-aspect-star:hover,
+  .hero-aspect-star:focus-visible {
+    filter: saturate(132%);
+  }
+
+  :global(.hero-avatar:hover) .hero-aspect-star,
+  :global(.hero-avatar:focus-within) .hero-aspect-star {
+    animation-play-state: paused;
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__core,
+  .hero-aspect-star:focus-visible .hero-aspect-star__core {
+    transform: scale(1.18);
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__spark,
+  .hero-aspect-star:focus-visible .hero-aspect-star__spark {
+    animation:
+      hero-aspect-pulse 900ms ease both,
+      hero-aspect-twinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0ms) infinite;
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__spark::before,
+  .hero-aspect-star:focus-visible .hero-aspect-star__spark::before,
+  .hero-aspect-star:hover .hero-aspect-star__spark::after,
+  .hero-aspect-star:focus-visible .hero-aspect-star__spark::after {
+    animation-duration: 1.8s;
+  }
+
+  .hero-aspect-star:hover .hero-aspect-star__label,
+  .hero-aspect-star:focus-visible .hero-aspect-star__label {
+    opacity: 1;
+    transform: translate(var(--label-shift-x), var(--label-shift-y)) scale(1);
+  }
+
+  .hero-aspect-star:focus-visible {
+    outline: 2px solid color-mix(in srgb, currentColor 72%, white);
+    outline-offset: 0.24rem;
+  }
+
+  @keyframes hero-aspects-enter {
+    0% {
+      opacity: 0;
+      transform: scale(0.9) rotate(-8deg);
+      filter: saturate(60%);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      filter: saturate(100%);
+    }
+  }
+
+  @keyframes hero-aspect-orbit {
+    0% {
+      transform: translate(-50%, -50%) rotate(var(--orbit-start)) translateX(var(--orbit-radius))
+        rotate(var(--orbit-start-inverse));
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(var(--orbit-end)) translateX(var(--orbit-radius))
+        rotate(var(--orbit-end-inverse));
+    }
+  }
+
+  @keyframes hero-aspect-pulse {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 0.24rem color-mix(in srgb, currentColor 13%, transparent),
+        0 0 1rem color-mix(in srgb, currentColor 72%, transparent),
+        0 0 2rem color-mix(in srgb, currentColor 38%, transparent);
+    }
+    45% {
+      box-shadow:
+        0 0 0 0.42rem color-mix(in srgb, currentColor 18%, transparent),
+        0 0 1.35rem color-mix(in srgb, currentColor 88%, transparent),
+        0 0 2.7rem color-mix(in srgb, currentColor 52%, transparent);
+    }
+  }
+
+  @keyframes hero-aspect-twinkle {
+    0%,
+    100% {
+      opacity: 0.74;
+      scale: 0.92;
+      filter: saturate(112%) brightness(0.96);
+      box-shadow:
+        0 0 0 0.2rem color-mix(in srgb, currentColor 10%, transparent),
+        0 0 0.8rem color-mix(in srgb, currentColor 58%, transparent),
+        0 0 1.65rem color-mix(in srgb, currentColor 30%, transparent);
+    }
+    36% {
+      opacity: 1;
+      scale: 1.08;
+      filter: saturate(145%) brightness(1.18);
+      box-shadow:
+        0 0 0 0.3rem color-mix(in srgb, currentColor 18%, transparent),
+        0 0 1.2rem color-mix(in srgb, currentColor 86%, transparent),
+        0 0 2.45rem color-mix(in srgb, currentColor 46%, transparent);
+    }
+    58% {
+      opacity: 0.86;
+      scale: 0.98;
+      filter: saturate(122%) brightness(1.02);
+    }
+  }
+
+  @keyframes hero-aspect-glint {
+    0%,
+    62%,
+    100% {
+      opacity: 0.32;
+      transform: translate(-50%, -50%) rotate(0deg) scaleX(0.76);
+    }
+    70% {
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(22deg) scaleX(1.2);
+    }
+    78% {
+      opacity: 0.48;
+      transform: translate(-50%, -50%) rotate(34deg) scaleX(0.9);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-aspects {
+      inset: -5rem;
+    }
+
+    .hero-aspect-star {
+      width: 1.55rem;
+      height: 1.55rem;
+    }
+
+    .hero-aspect-star__spark {
+      width: 0.84rem;
+      height: 0.84rem;
+    }
+
+    .hero-aspect-star__spark::before {
+      width: 1.72rem;
+    }
+
+    .hero-aspect-star__spark::after {
+      height: 1.72rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-aspects,
+    .hero-aspect-star,
+    .hero-aspect-star__core,
+    .hero-aspect-star__spark,
+    .hero-aspect-star__label {
+      animation: none;
+      transition: none;
+    }
+
+    .hero-aspect-star:hover .hero-aspect-star__spark,
+    .hero-aspect-star:focus-visible .hero-aspect-star__spark {
+      animation: none;
+    }
+  }
+</style>

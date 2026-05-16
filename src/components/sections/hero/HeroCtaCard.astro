@@ -1,0 +1,311 @@
+---
+import { ArrowRight } from '@lucide/astro';
+
+type CtaIcon = (typeof import('@lucide/astro'))['Rocket'];
+
+interface CtaToken {
+  readonly accent: string;
+  readonly accentMuted: string;
+  readonly glow: string;
+}
+
+interface Props {
+  readonly href: string;
+  readonly title: string;
+  readonly description: string;
+  readonly ctaLabel: string;
+  readonly Icon: CtaIcon;
+  readonly token: CtaToken;
+}
+
+const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props;
+---
+
+<a
+  href={href}
+  class="hero-cta-card shape-squircle"
+  style={{
+    '--hero-cta-accent': token.accent,
+    '--hero-cta-accent-muted': token.accentMuted,
+    '--hero-cta-glow': token.glow,
+  }}
+>
+  <span class="hero-cta-card__shine" aria-hidden="true"></span>
+  <span class="hero-cta-card__icon-shell" aria-hidden="true">
+    <span class="hero-cta-card__orbit hero-cta-card__orbit--outer"></span>
+    <span class="hero-cta-card__orbit hero-cta-card__orbit--inner"></span>
+    <Icon class="hero-cta-card__icon" aria-hidden="true" />
+  </span>
+
+  <span class="hero-cta-card__body">
+    <span class="hero-cta-card__title">{title}</span>
+    <span class="hero-cta-card__description">{description}</span>
+  </span>
+
+  <span class="hero-cta-card__link">
+    <span>{ctaLabel}</span>
+    <ArrowRight class="hero-cta-card__arrow" aria-hidden="true" />
+  </span>
+</a>
+
+<style>
+  .hero-cta-card {
+    --hero-cta-card-radius: 0.92rem;
+    --hero-cta-card-border: color-mix(in oklab, var(--site-chrome-border-strong) 80%, transparent);
+    --hero-cta-card-border-active: color-mix(
+      in oklab,
+      var(--hero-cta-accent) 48%,
+      var(--white) 10%
+    );
+    --hero-cta-card-bg:
+      radial-gradient(
+        circle at 8% 12%,
+        color-mix(in oklab, var(--hero-cta-accent) 12%, transparent),
+        transparent 32%
+      ),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.054), rgba(255, 255, 255, 0.012) 56%),
+      color-mix(in oklab, var(--black-nav) 90%, rgba(5, 10, 24, 0.84));
+    --hero-cta-card-text: rgba(249, 250, 251, 0.94);
+    --hero-cta-card-muted: rgba(226, 232, 240, 0.62);
+    --hero-cta-card-shadow:
+      0 18px 52px -44px var(--hero-cta-glow), 0 14px 32px -31px rgba(0, 0, 0, 0.86),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-content: start;
+    align-items: start;
+    column-gap: clamp(0.78rem, 1.35vw, 0.98rem);
+    row-gap: clamp(0.58rem, 1vw, 0.78rem);
+    min-height: 7.5rem;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--hero-cta-card-border);
+    border-radius: var(--hero-cta-card-radius);
+    background: var(--hero-cta-card-bg);
+    box-shadow: var(--hero-cta-card-shadow);
+    padding: clamp(1.02rem, 1.56vw, 1.18rem) clamp(0.98rem, 1.56vw, 1.16rem);
+    color: var(--hero-cta-card-text);
+    text-decoration: none;
+    transition:
+      border-color var(--motion-duration-normal) var(--motion-ease-decelerate),
+      background var(--motion-duration-normal) var(--motion-ease-decelerate),
+      box-shadow var(--motion-duration-normal) var(--motion-ease-decelerate),
+      transform var(--motion-duration-normal) var(--motion-ease-decelerate);
+  }
+
+  .hero-cta-card::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: '';
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.066), transparent 26%),
+      radial-gradient(circle at 12% 12%, var(--hero-cta-accent-muted), transparent 30%);
+    opacity: 0.58;
+    transition: opacity var(--motion-duration-normal) ease;
+  }
+
+  .hero-cta-card__shine {
+    position: absolute;
+    inset: 0 16% auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--hero-cta-accent), transparent);
+    opacity: 0.3;
+  }
+
+  .hero-cta-card__icon-shell {
+    position: relative;
+    display: grid;
+    width: 3.08rem;
+    height: 3.08rem;
+    grid-row: 1 / span 2;
+    place-items: center;
+    margin: 0.12rem 0 0;
+    border: 1px solid color-mix(in oklab, var(--hero-cta-accent) 34%, rgba(255, 255, 255, 0.12));
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 50% 50%, var(--hero-cta-accent-muted), transparent 64%),
+      rgba(12, 23, 45, 0.54);
+    color: var(--hero-cta-accent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 0 1.34rem -0.5rem var(--hero-cta-glow);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    transition:
+      border-color var(--motion-duration-normal) var(--motion-ease-decelerate),
+      box-shadow var(--motion-duration-normal) var(--motion-ease-decelerate),
+      transform var(--motion-duration-normal) var(--motion-ease-decelerate);
+  }
+
+  .hero-cta-card__icon {
+    width: 1.42rem;
+    height: 1.42rem;
+    filter: drop-shadow(0 0 8px var(--hero-cta-glow));
+    stroke-width: 1.9;
+    transition: transform var(--motion-duration-normal) var(--motion-ease-decelerate);
+  }
+
+  .hero-cta-card__orbit {
+    position: absolute;
+    inset: 50%;
+    pointer-events: none;
+    border: 1px solid color-mix(in oklab, var(--hero-cta-accent) 32%, transparent);
+    border-radius: 999px;
+    opacity: 0.42;
+    transform: translate(-50%, -50%);
+    transition:
+      opacity var(--motion-duration-normal) ease,
+      transform var(--motion-duration-normal) var(--motion-ease-decelerate);
+  }
+
+  .hero-cta-card__orbit--outer {
+    width: 3.58rem;
+    height: 3.58rem;
+  }
+
+  .hero-cta-card__orbit--inner {
+    width: 2.48rem;
+    height: 2.48rem;
+  }
+
+  .hero-cta-card__body,
+  .hero-cta-card__link {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-cta-card__body {
+    display: grid;
+    align-self: start;
+    gap: 0.44rem;
+  }
+
+  .hero-cta-card__title {
+    display: block;
+    font-size: clamp(1.18rem, 1.55vw, 1.44rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  .hero-cta-card__description {
+    display: block;
+    max-width: 36rem;
+    color: var(--hero-cta-card-muted);
+    font-size: clamp(0.84rem, 0.98vw, 0.93rem);
+    line-height: 1.42;
+  }
+
+  .hero-cta-card__link {
+    display: inline-flex;
+    align-items: center;
+    align-self: end;
+    justify-self: start;
+    gap: 0.44rem;
+    grid-column: 2 / -1;
+    margin-top: 0;
+    color: color-mix(in oklab, var(--hero-cta-accent) 82%, white 14%);
+    font-size: clamp(0.86rem, 1vw, 0.94rem);
+    font-weight: 760;
+    line-height: 1.1;
+  }
+
+  .hero-cta-card__arrow {
+    width: 1.18rem;
+    height: 1.18rem;
+    transition: transform var(--motion-duration-fast) var(--motion-ease-decelerate);
+  }
+
+  .hero-cta-card:hover,
+  .hero-cta-card:focus-visible {
+    border-color: var(--hero-cta-card-border-active);
+    box-shadow:
+      0 22px 66px -43px var(--hero-cta-glow),
+      0 16px 36px -33px rgba(0, 0, 0, 0.9),
+      inset 0 1px 0 rgba(255, 255, 255, 0.11);
+    transform: translateY(-0.12rem);
+  }
+
+  .hero-cta-card:hover::before,
+  .hero-cta-card:focus-visible::before {
+    opacity: 1;
+  }
+
+  .hero-cta-card:hover .hero-cta-card__icon-shell,
+  .hero-cta-card:focus-visible .hero-cta-card__icon-shell {
+    border-color: color-mix(in oklab, var(--hero-cta-accent) 54%, rgba(255, 255, 255, 0.18));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 1.7rem -0.45rem var(--hero-cta-glow);
+    transform: translate3d(0.06rem, -0.12rem, 0) rotate(-2deg) scale(1.028);
+  }
+
+  .hero-cta-card:hover .hero-cta-card__icon,
+  .hero-cta-card:focus-visible .hero-cta-card__icon {
+    transform: translate3d(0.03rem, -0.02rem, 0) rotate(4deg) scale(1.045);
+  }
+
+  .hero-cta-card:hover .hero-cta-card__orbit--outer,
+  .hero-cta-card:focus-visible .hero-cta-card__orbit--outer {
+    opacity: 0.78;
+    transform: translate(-50%, -50%) rotate(18deg) scale(1.045);
+  }
+
+  .hero-cta-card:hover .hero-cta-card__orbit--inner,
+  .hero-cta-card:focus-visible .hero-cta-card__orbit--inner {
+    opacity: 0.68;
+    transform: translate(-50%, -50%) rotate(-22deg) scale(0.94);
+  }
+
+  .hero-cta-card:hover .hero-cta-card__arrow,
+  .hero-cta-card:focus-visible .hero-cta-card__arrow {
+    transform: translateX(0.22rem);
+  }
+
+  .hero-cta-card:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--hero-cta-accent) 76%, white 10%);
+    outline-offset: 0.22rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-cta-card {
+      --hero-cta-card-radius: 1rem;
+      min-height: 7.8rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-cta-card {
+      min-height: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-cta-card,
+    .hero-cta-card::before,
+    .hero-cta-card__icon-shell,
+    .hero-cta-card__icon,
+    .hero-cta-card__orbit,
+    .hero-cta-card__arrow {
+      transition: none;
+    }
+
+    .hero-cta-card:hover,
+    .hero-cta-card:focus-visible,
+    .hero-cta-card:hover .hero-cta-card__icon-shell,
+    .hero-cta-card:focus-visible .hero-cta-card__icon-shell,
+    .hero-cta-card:hover .hero-cta-card__icon,
+    .hero-cta-card:focus-visible .hero-cta-card__icon,
+    .hero-cta-card:hover .hero-cta-card__orbit,
+    .hero-cta-card:focus-visible .hero-cta-card__orbit,
+    .hero-cta-card:hover .hero-cta-card__arrow,
+    .hero-cta-card:focus-visible .hero-cta-card__arrow {
+      transform: none;
+    }
+  }
+</style>

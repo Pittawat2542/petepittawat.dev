@@ -1,7 +1,7 @@
 ---
-import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
 import BlogCover from '@/components/ui/blog/BlogCover';
-import FormattedDate from '@/components/content/FormattedDate';
+import ArticleMeta from './ArticleMeta.astro';
+import ArticleTagList from './ArticleTagList.astro';
 import '@/styles/components/article-surface.css';
 
 interface Props {
@@ -15,13 +15,6 @@ interface Props {
 }
 
 const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.props as Props;
-
-const toTagHref = (tag: string) =>
-  `/tags/${tag
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')}`;
 ---
 
 <section class="article-surface article-hero">
@@ -45,53 +38,8 @@ const toTagHref = (tag: string) =>
       Field Notes
     </div>
     <h1 class="article-hero__title">{title}</h1>
-    <div class="article-meta">
-      <div class="article-meta__item">
-        <span class="sr-only">Published</span>
-        <Calendar class="article-meta__icon" aria-hidden="true" />
-        <span class="article-meta__text"><FormattedDate date={pubDate} /></span>
-      </div>
-      <div class="article-meta__divider" aria-hidden="true">·</div>
-      <div class="article-meta__item">
-        <span class="sr-only">Author</span>
-        <CircleUser class="article-meta__icon" aria-hidden="true" />
-        <span class="article-meta__text">Pete</span>
-      </div>
-      {
-        typeof readingTimeMin === 'number' ? (
-          <>
-            <div class="article-meta__divider" aria-hidden="true">
-              ·
-            </div>
-            <div class="article-meta__item">
-              <span class="sr-only">Reading time</span>
-              <Clock3 class="article-meta__icon" aria-hidden="true" />
-              <span class="article-meta__text">{readingTimeMin} min read</span>
-            </div>
-          </>
-        ) : null
-      }
-    </div>
-
-    {
-      tags.length ? (
-        <div class="article-tags">
-          <span class="article-tags__icon">
-            <span class="sr-only">Tags</span>
-            <TagIcon class="article-tags__symbol" aria-hidden="true" />
-          </span>
-          <ul class="article-tags__list">
-            {tags.map(tag => (
-              <li>
-                <a href={toTagHref(tag)} class="article-tag">
-                  #{tag}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null
-    }
+    <ArticleMeta pubDate={pubDate} readingTimeMin={readingTimeMin} />
+    <ArticleTagList tags={tags} />
   </div>
 </section>
 
@@ -178,92 +126,6 @@ const toTagHref = (tag: string) =>
     text-shadow: 0 18px 46px rgba(3, 7, 18, 0.42);
   }
 
-  .article-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem 1rem;
-    font-size: 0.94rem;
-    color: color-mix(in oklab, var(--white) 78%, transparent);
-  }
-
-  .article-meta__item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .article-meta__icon {
-    width: 1rem;
-    height: 1rem;
-    opacity: 0.74;
-  }
-
-  .article-meta__text {
-    font-weight: 650;
-    color: color-mix(in oklab, var(--white) 92%, transparent);
-  }
-
-  .article-meta__divider {
-    opacity: 0.3;
-  }
-
-  .article-tags {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .article-tags__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
-    background: color-mix(in oklab, var(--white) 6%, transparent);
-  }
-
-  .article-tags__symbol {
-    width: 1rem;
-    height: 1rem;
-    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
-  }
-
-  .article-tags__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .article-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.42rem 0.82rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--accent-blog) 32%, transparent);
-    background: rgba(18, 28, 52, 0.72);
-    color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
-    font-size: 0.78rem;
-    font-weight: 600;
-    transition:
-      transform 160ms ease,
-      border-color 160ms ease,
-      background-color 160ms ease;
-  }
-
-  .article-tag:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
-    background: rgba(26, 38, 69, 0.82);
-  }
-
   .article-hero :global(.article-hero__cover) {
     height: 100%;
     min-height: 100%;
@@ -315,25 +177,6 @@ const toTagHref = (tag: string) =>
     .article-hero__title {
       max-width: none;
       font-size: clamp(2rem, 8vw, 3rem);
-    }
-
-    .article-meta {
-      font-size: 0.82rem;
-    }
-
-    .article-tag {
-      font-size: 0.72rem;
-      padding: 0.34rem 0.72rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .article-tag {
-      transition-duration: 0.01ms;
-    }
-
-    .article-tag:hover {
-      transform: none;
     }
   }
 </style>

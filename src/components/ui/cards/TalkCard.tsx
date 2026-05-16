@@ -9,13 +9,13 @@ import {
   Video,
 } from 'lucide-react';
 import { memo, type FC } from 'react';
-import { Badge } from '@/components/ui/core/badge';
 import AuroraCardShell from './AuroraCardShell';
 import { getAccentColorVar } from '@/lib/utils';
 import { formatDate } from '@/lib';
 import type { Talk } from '@/types';
 import { resolveCardVisualSpec, toTalkCardVisualInput } from '@/lib/card-visual';
 import CardVisualPanel from './CardVisualPanel';
+import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from './CardAtoms';
 
 interface TalkCardProps {
   readonly item: Talk;
@@ -123,20 +123,14 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
             })}
           </div>
         ) : (
-          <div
-            className="rounded-[1.3rem] border px-4 py-3"
-            style={{
-              borderColor: tint(18),
-              background: `linear-gradient(180deg, ${tint(8)}, transparent)`,
-            }}
-          >
+          <CardInfoPanel className="rounded-[1.3rem] py-3">
             <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
               Session archive
             </p>
             <p className="mt-2 text-sm leading-relaxed text-white/70">
               No public resources are linked for this talk.
             </p>
-          </div>
+          </CardInfoPanel>
         )
       }
     >
@@ -144,16 +138,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
         <CardVisualPanel spec={visualSpec} />
 
         <div className="flex items-start justify-between gap-3">
-          <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
-            <span
-              className="inline-block h-2 w-2 rounded-full"
-              style={{
-                background: 'color-mix(in oklab, var(--card-accent) 72%, white)',
-                boxShadow: `0 0 0 6px ${tint(12)}`,
-              }}
-            />
-            Talk
-          </div>
+          <CardKicker label="Talk" />
           <div
             className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-medium tracking-[0.2em] text-[color:var(--card-accent)]/70 uppercase md:text-[11px]"
             style={{
@@ -193,13 +178,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
             </h3>
           </div>
 
-          <div
-            className="rounded-[1.2rem] border px-4 py-4"
-            style={{
-              borderColor: tint(18),
-              background: `linear-gradient(180deg, ${tint(8)}, transparent)`,
-            }}
-          >
+          <CardInfoPanel>
             <div className="flex items-start gap-3">
               <span
                 className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full"
@@ -229,33 +208,11 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
                 )}
               </div>
             </div>
-          </div>
+          </CardInfoPanel>
 
           <div className={`${hasResources ? 'mt-auto' : 'mt-6'} flex flex-col gap-3`}>
-            {item.tags?.length ? (
-              <div className="flex flex-wrap gap-2">
-                {item.tags.map(tag => (
-                  <Badge
-                    key={tag}
-                    className="rounded-full border px-3 py-1 text-[11px] font-medium md:text-xs"
-                    variant="outline"
-                    style={{
-                      borderColor: 'color-mix(in oklab, var(--card-accent) 20%, transparent)',
-                      color: 'color-mix(in oklab, var(--card-accent) 74%, white)',
-                      background: 'color-mix(in oklab, var(--card-accent) 8%, rgba(15,23,42,0.35))',
-                    }}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            ) : null}
-            <div
-              className="h-px w-full"
-              style={{
-                background: `linear-gradient(90deg, ${tint(32)}, transparent 85%)`,
-              }}
-            />
+            <CardTagList tags={item.tags} />
+            <CardDivider />
           </div>
         </div>
       </div>

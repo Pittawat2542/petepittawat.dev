@@ -1,0 +1,77 @@
+---
+import { Calendar, CircleUser, Clock3 } from '@lucide/astro';
+import FormattedDate from '@/components/content/FormattedDate';
+
+interface Props {
+  readonly pubDate: Date;
+  readonly readingTimeMin?: number | undefined;
+}
+
+const { pubDate, readingTimeMin } = Astro.props as Props;
+---
+
+<div class="article-meta">
+  <div class="article-meta__item">
+    <span class="sr-only">Published</span>
+    <Calendar class="article-meta__icon" aria-hidden="true" />
+    <span class="article-meta__text"><FormattedDate date={pubDate} /></span>
+  </div>
+  <div class="article-meta__divider" aria-hidden="true">·</div>
+  <div class="article-meta__item">
+    <span class="sr-only">Author</span>
+    <CircleUser class="article-meta__icon" aria-hidden="true" />
+    <span class="article-meta__text">Pete</span>
+  </div>
+  {
+    typeof readingTimeMin === 'number' ? (
+      <>
+        <div class="article-meta__divider" aria-hidden="true">
+          ·
+        </div>
+        <div class="article-meta__item">
+          <span class="sr-only">Reading time</span>
+          <Clock3 class="article-meta__icon" aria-hidden="true" />
+          <span class="article-meta__text">{readingTimeMin} min read</span>
+        </div>
+      </>
+    ) : null
+  }
+</div>
+
+<style>
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 1rem;
+    font-size: 0.94rem;
+    color: color-mix(in oklab, var(--white) 78%, transparent);
+  }
+
+  .article-meta__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .article-meta__icon {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.74;
+  }
+
+  .article-meta__text {
+    font-weight: 650;
+    color: color-mix(in oklab, var(--white) 92%, transparent);
+  }
+
+  .article-meta__divider {
+    opacity: 0.3;
+  }
+
+  @media (max-width: 720px) {
+    .article-meta {
+      font-size: 0.82rem;
+    }
+  }
+</style>

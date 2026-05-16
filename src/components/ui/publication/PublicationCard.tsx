@@ -1,8 +1,8 @@
 import { memo, useEffect, useState, type FC } from 'react';
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { Badge } from '@/components/ui/core/badge';
 import AuroraCardShell from '@/components/ui/cards/AuroraCardShell';
+import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from '@/components/ui/cards';
 import CardVisualPanel from '@/components/ui/cards/CardVisualPanel';
 import type { Publication } from '@/types';
 import { AuthorList } from './AuthorList';
@@ -105,16 +105,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       <div className="flex h-full flex-col">
         <CardVisualPanel spec={visualSpec} />
 
-        <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
-          <span
-            className="inline-block h-2 w-2 rounded-full"
-            style={{
-              background: 'color-mix(in oklab, var(--card-accent) 72%, white)',
-              boxShadow: `0 0 0 6px ${tint(12)}`,
-            }}
-          />
-          Publication
-        </div>
+        <CardKicker label="Publication" />
 
         <div className="mt-5 flex flex-1 flex-col gap-5 overflow-x-hidden">
           <div className="min-w-0">
@@ -145,13 +136,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
           </div>
 
           {item.venue ? (
-            <div
-              className="rounded-[1.2rem] border px-4 py-4"
-              style={{
-                borderColor: tint(18),
-                background: `linear-gradient(180deg, ${tint(8)}, transparent)`,
-              }}
-            >
+            <CardInfoPanel>
               <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
                 Context
               </p>
@@ -160,34 +145,12 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                 <span className="font-medium text-white/88">{item.type}</span> contribution in{' '}
                 <span className="font-medium text-white/88">{item.year}</span>.
               </p>
-            </div>
+            </CardInfoPanel>
           ) : null}
 
           <div className="mt-auto flex flex-col gap-3">
-            {item.tags?.length ? (
-              <div className="flex flex-wrap gap-2">
-                {item.tags.map(t => (
-                  <Badge
-                    key={t}
-                    className="rounded-full border px-3 py-1 text-[11px] font-medium md:text-xs"
-                    variant="outline"
-                    style={{
-                      borderColor: 'color-mix(in oklab, var(--card-accent) 20%, transparent)',
-                      color: 'color-mix(in oklab, var(--card-accent) 74%, white)',
-                      background: 'color-mix(in oklab, var(--card-accent) 8%, rgba(15,23,42,0.3))',
-                    }}
-                  >
-                    {t}
-                  </Badge>
-                ))}
-              </div>
-            ) : null}
-            <div
-              className="h-px w-full"
-              style={{
-                background: `linear-gradient(90deg, ${tint(32)}, transparent 85%)`,
-              }}
-            />
+            <CardTagList tags={item.tags} />
+            <CardDivider />
           </div>
         </div>
       </div>

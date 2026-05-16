@@ -6,6 +6,7 @@ import { getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toProjectCardVisualInput } from '@/lib/card-visual';
 import type { Project } from '@/types';
 import CardVisualPanel from './CardVisualPanel';
+import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from './CardAtoms';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -73,16 +74,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
         <CardVisualPanel spec={visualSpec} />
 
         <div className="flex items-start justify-between gap-3">
-          <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
-            <span
-              className="inline-block h-2 w-2 rounded-full"
-              style={{
-                background: 'color-mix(in oklab, var(--card-accent) 72%, white)',
-                boxShadow: `0 0 0 6px ${tint(12)}`,
-              }}
-            />
-            Project
-          </div>
+          <CardKicker label="Project" />
           <div className="flex flex-wrap items-center justify-end gap-2 text-[11px] md:text-xs">
             {item.type ? (
               <Badge
@@ -127,13 +119,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
           </div>
 
           {item.role || item.collaborators ? (
-            <div
-              className="grid gap-2 rounded-[1.2rem] border px-3 py-3"
-              style={{
-                borderColor: tint(18),
-                background: `linear-gradient(180deg, ${tint(8)}, transparent)`,
-              }}
-            >
+            <CardInfoPanel className="grid gap-2 px-3 py-3">
               {item.role ? (
                 <div className="flex items-start gap-3">
                   <span
@@ -166,33 +152,12 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                   </div>
                 </div>
               ) : null}
-            </div>
+            </CardInfoPanel>
           ) : null}
 
           <div className="mt-auto flex flex-col gap-3">
-            {item.tags?.length ? (
-              <div className="flex flex-wrap gap-2">
-                {item.tags.map(t => (
-                  <Badge
-                    key={t}
-                    className="rounded-full border px-3 py-1 text-[11px] font-medium text-white/70 md:text-xs"
-                    variant="outline"
-                    style={{
-                      borderColor: tint(20),
-                      background: tint(6),
-                    }}
-                  >
-                    {t}
-                  </Badge>
-                ))}
-              </div>
-            ) : null}
-            <div
-              className="h-px w-full"
-              style={{
-                background: `linear-gradient(90deg, ${tint(32)}, transparent 85%)`,
-              }}
-            />
+            <CardTagList tags={item.tags} tone="muted" />
+            <CardDivider />
           </div>
         </div>
       </div>

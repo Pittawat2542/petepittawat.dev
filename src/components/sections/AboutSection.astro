@@ -13,6 +13,9 @@ import {
   Layers,
 } from '@lucide/astro';
 import type { SiteCopy } from '@/data/site/copy';
+import AboutHighlightCard from './about/AboutHighlightCard.astro';
+import AboutThemeFocusItem from './about/AboutThemeFocusItem.astro';
+import AboutThemeSummaryCard from './about/AboutThemeSummaryCard.astro';
 
 interface Props {
   copy: SiteCopy['home']['aboutSection'];
@@ -75,16 +78,11 @@ const highlightIcons = {
               const Icon = researchThemeIcons[theme.icon];
 
               return (
-                <div class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10">
-                  <div class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent)]/35 via-transparent to-transparent blur-2xl" />
-                  <div class="relative z-10 space-y-2">
-                    <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
-                      <Icon class="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
-                      {theme.title}
-                    </div>
-                    <p class="text-sm text-[color:var(--white)]/70">{theme.description}</p>
-                  </div>
-                </div>
+                <AboutThemeSummaryCard
+                  title={theme.title}
+                  description={theme.description}
+                  Icon={Icon}
+                />
               );
             })
           }
@@ -122,15 +120,11 @@ const highlightIcons = {
                   const Icon = researchThemeIcons[theme.icon];
 
                   return (
-                    <li class="group shape-squircle-sm relative flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10">
-                      <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent)]/40 to-[color:var(--accent-publications)]/30 text-[color:var(--white)]">
-                        <Icon class="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <div class="space-y-1">
-                        <p class="font-semibold text-[color:var(--white)]">{theme.title}</p>
-                        <p class="text-sm text-[color:var(--white)]/70">{theme.description}</p>
-                      </div>
-                    </li>
+                    <AboutThemeFocusItem
+                      title={theme.title}
+                      description={theme.description}
+                      Icon={Icon}
+                    />
                   );
                 })
               }
@@ -163,15 +157,11 @@ const highlightIcons = {
                 const Icon = highlightIcons[item.icon];
 
                 return (
-                  <li class="group shape-squircle-sm relative flex h-full flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10">
-                    <div class="flex items-center gap-3">
-                      <div class="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-[color:var(--accent)]/35 to-[color:var(--accent-publications)]/25 text-[color:var(--white)]">
-                        <Icon class="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <p class="font-semibold text-[color:var(--white)]">{item.title}</p>
-                    </div>
-                    <p class="text-sm text-[color:var(--white)]/70">{item.description}</p>
-                  </li>
+                  <AboutHighlightCard
+                    title={item.title}
+                    description={item.description}
+                    Icon={Icon}
+                  />
                 );
               })
             }

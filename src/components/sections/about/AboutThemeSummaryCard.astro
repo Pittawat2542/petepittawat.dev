@@ -1,0 +1,27 @@
+---
+type AboutIcon = (typeof import('@lucide/astro'))['Activity'];
+
+interface Props {
+  readonly title: string;
+  readonly description: string;
+  readonly Icon: AboutIcon;
+}
+
+const { title, description, Icon } = Astro.props as Props;
+---
+
+<div
+  class="group shape-squircle-sm relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur-sm transition hover:border-white/25 hover:bg-white/10"
+>
+  <div
+    class="pointer-events-none absolute -top-10 right-[-30%] h-36 w-36 rounded-full bg-gradient-to-br from-[color:var(--accent)]/35 via-transparent to-transparent blur-2xl"
+  >
+  </div>
+  <div class="relative z-10 space-y-2">
+    <div class="flex items-center gap-3 text-sm font-semibold text-[color:var(--white)]">
+      <Icon class="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+      {title}
+    </div>
+    <p class="text-sm text-[color:var(--white)]/70">{description}</p>
+  </div>
+</div>
