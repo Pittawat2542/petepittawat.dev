@@ -1,6 +1,6 @@
 import { ROUTES } from '@/lib/constants';
 
-export type HeroCtaIcon = 'rocket' | 'book-open' | 'mic';
+export type HeroCtaIcon = 'rocket' | 'book-open' | 'book-text' | 'scroll-text' | 'mic';
 export type HeroCtaVariant = 'primary' | 'secondary' | 'ghost';
 
 export interface HeroCtaConfig {
@@ -14,26 +14,26 @@ export interface HeroCtaConfig {
 
 export const HERO_CTA_CONFIG: readonly HeroCtaConfig[] = [
   {
-    href: ROUTES.PROJECTS,
-    title: 'Ship-ready builds',
-    description: 'See the evaluation stacks and agent tooling delivered to teams.',
-    ctaLabel: 'Explore projects',
+    href: ROUTES.PUBLICATIONS,
+    title: 'Publications',
+    description: 'Peer-reviewed papers, preprints, and research outputs.',
+    ctaLabel: 'View publications',
     variant: 'primary',
-    icon: 'rocket',
+    icon: 'scroll-text',
   },
   {
     href: ROUTES.BLOG,
-    title: 'Research notes',
-    description: 'Read experiments, failure digs, and applied prompting patterns.',
-    ctaLabel: 'Dive into the blog',
+    title: 'Blog',
+    description: 'Posts and technical essays on ideas, experiments, and lessons.',
+    ctaLabel: 'Read blog',
     variant: 'secondary',
-    icon: 'book-open',
+    icon: 'book-text',
   },
   {
     href: ROUTES.TALKS,
-    title: 'Talks & workshops',
-    description: 'Watch practical walkthroughs from conferences and private sessions.',
-    ctaLabel: 'Listen to talks',
+    title: 'Talks & Workshops',
+    description: 'Conference talks, invited sessions, and workshop materials.',
+    ctaLabel: 'Browse talks',
     variant: 'ghost',
     icon: 'mic',
   },

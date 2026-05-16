@@ -1,7 +1,7 @@
 export type SiteLocale = 'en' | 'th';
 
 export type SiteNavLinkKey = 'home' | 'blog' | 'projects' | 'publications' | 'talks' | 'about';
-export type HeroCtaIcon = 'rocket' | 'book-open' | 'mic';
+export type HeroCtaIcon = 'rocket' | 'book-open' | 'book-text' | 'scroll-text' | 'mic';
 export type HeroCtaVariant = 'primary' | 'secondary' | 'ghost';
 export type HeroTopicIcon = 'brain' | 'activity' | 'bar-chart-3' | 'network';
 export type HomeStatIcon = 'book-text' | 'scroll-text' | 'mic';
@@ -32,8 +32,7 @@ export interface SiteCopy {
       readonly title: string;
       readonly intro: string;
       readonly summary: string;
-      readonly focusLabel: string;
-      readonly focusBody: string;
+      readonly ctaHeading: string;
       readonly topics: readonly {
         readonly label: string;
         readonly icon: HeroTopicIcon;
@@ -265,9 +264,7 @@ const siteCopyEn: SiteCopy = {
       title: "Hi, I'm Pete",
       intro: 'I study how language models acquire and express behavior.',
       summary: 'Focused on reasoning models, post-training, evaluation, and agentic systems.',
-      focusLabel: 'Current focus',
-      focusBody:
-        'Reasoning models, post-training, evaluation, and inference-time strategies for systems that need to be useful beyond demos.',
+      ctaHeading: 'Explore my work',
       topics: [
         { label: 'Reasoning Models', icon: 'brain' },
         { label: 'Post-Training', icon: 'activity' },
@@ -276,28 +273,25 @@ const siteCopyEn: SiteCopy = {
       ],
       primaryCtas: [
         {
-          href: '/projects',
-          title: 'Research systems',
-          description:
-            'Selected projects across reasoning models, evaluation tooling, healthcare, and developer-facing prototypes.',
-          ctaLabel: 'Explore projects',
+          href: '/publications',
+          title: 'Publications',
+          description: 'Peer-reviewed papers, preprints, and research outputs.',
+          ctaLabel: 'View publications',
           variant: 'primary',
-          icon: 'rocket',
+          icon: 'scroll-text',
         },
         {
           href: '/blog',
-          title: 'Working notes',
-          description:
-            'Essays and technical notes on prompting, agentic workflows, model behavior, and software practice.',
-          ctaLabel: 'Read the blog',
+          title: 'Blog',
+          description: 'Posts and technical essays on ideas, experiments, and lessons.',
+          ctaLabel: 'Read blog',
           variant: 'secondary',
-          icon: 'book-open',
+          icon: 'book-text',
         },
         {
           href: '/talks',
-          title: 'Talks and workshops',
-          description:
-            'Conference talks, invited sessions, and practical walkthroughs on reasoning models and AI engineering.',
+          title: 'Talks & Workshops',
+          description: 'Conference talks, invited sessions, and workshop materials.',
           ctaLabel: 'Browse talks',
           variant: 'ghost',
           icon: 'mic',
@@ -559,9 +553,7 @@ const siteCopyTh: SiteCopy = {
       title: 'สวัสดีครับ ผมพีท',
       intro: 'ผมศึกษาว่าโมเดลภาษาเรียนรู้และแสดงพฤติกรรมออกมาอย่างไร',
       summary: 'โฟกัสที่โมเดลให้เหตุผล post-training การประเมินผล และระบบ agentic',
-      focusLabel: 'สิ่งที่กำลังโฟกัส',
-      focusBody:
-        'โมเดลให้เหตุผล post-training การประเมินผล และกลยุทธ์ช่วง inference สำหรับระบบที่ต้องใช้งานได้จริง ไม่ใช่แค่เดโม',
+      ctaHeading: 'สำรวจผลงาน',
       topics: [
         { label: 'Reasoning Models', icon: 'brain' },
         { label: 'Post-Training', icon: 'activity' },
@@ -570,28 +562,25 @@ const siteCopyTh: SiteCopy = {
       ],
       primaryCtas: [
         {
-          href: '/projects',
-          title: 'ระบบวิจัย',
-          description:
-            'รวมโปรเจกต์ด้านโมเดลให้เหตุผล เครื่องมือประเมินผล เฮลท์แคร์ และต้นแบบสำหรับนักพัฒนา',
-          ctaLabel: 'ดูโปรเจกต์',
+          href: '/publications',
+          title: 'ผลงานตีพิมพ์',
+          description: 'บทความวิชาการ พรีพรินต์ และผลงานวิจัย',
+          ctaLabel: 'ดูผลงานตีพิมพ์',
           variant: 'primary',
-          icon: 'rocket',
+          icon: 'scroll-text',
         },
         {
           href: '/blog',
-          title: 'บันทึกการทำงาน',
-          description:
-            'บทความและบันทึกเชิงเทคนิคเกี่ยวกับการพรอมป์ต agentic workflow พฤติกรรมของโมเดล และงานวิศวกรรมซอฟต์แวร์',
+          title: 'บล็อก',
+          description: 'บทความและบันทึกเชิงเทคนิคเกี่ยวกับไอเดีย การทดลอง และบทเรียน',
           ctaLabel: 'อ่านบล็อก',
           variant: 'secondary',
-          icon: 'book-open',
+          icon: 'book-text',
         },
         {
           href: '/talks',
           title: 'งานบรรยายและเวิร์กช็อป',
-          description:
-            'งานบรรยายในงานประชุม เซสชันรับเชิญ และบทสรุปเชิงปฏิบัติเกี่ยวกับโมเดลให้เหตุผลและ AI engineering',
+          description: 'งานบรรยาย เซสชันรับเชิญ และสื่อเวิร์กช็อป',
           ctaLabel: 'ดูงานบรรยาย',
           variant: 'ghost',
           icon: 'mic',
