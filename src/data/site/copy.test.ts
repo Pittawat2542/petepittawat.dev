@@ -10,6 +10,9 @@ test('returns the canonical English site copy for the default locale', () => {
   assert.equal(copy.listingPages.projects.path, '/projects');
   assert.equal(copy.home.hero.ctaHeading, 'Explore my work');
   assert.equal(copy.home.hero.primaryCtas[0]?.href, '/publications');
+  assert.equal(copy.home.researchInPractice.eyebrow, '01 Research focus');
+  assert.equal(copy.home.researchInPractice.pillars.length, 4);
+  assert.equal(copy.home.researchInPractice.ctaHref, '/about');
   assert.equal(copy.about.intro.title, 'About Pete');
   assert.equal(copy.about.proofPoints.items.length, 3);
   assert.equal(copy.about.focusAreas.items.length, 4);
@@ -25,6 +28,8 @@ test('returns translated Thai copy for the Thai locale', () => {
   assert.equal(thaiCopy.footer.title, 'งานวิจัย วิศวกรรม และบันทึกจากภาคสนามที่เล่าให้ชัด');
   assert.equal(thaiCopy.home.hero.ctaHeading, 'สำรวจผลงาน');
   assert.equal(thaiCopy.home.hero.primaryCtas[0]?.href, '/publications');
+  assert.equal(thaiCopy.home.researchInPractice.pillars.length, 4);
+  assert.equal(thaiCopy.home.researchInPractice.ctaHref, '/about');
   assert.equal(thaiCopy.about.intro.title, 'เกี่ยวกับพีท');
   assert.equal(thaiCopy.about.proofPoints.items.length, 3);
   assert.equal(thaiCopy.about.focusAreas.items.length, 4);

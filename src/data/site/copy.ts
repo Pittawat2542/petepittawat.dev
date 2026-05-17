@@ -6,12 +6,24 @@ export type HeroCtaVariant = 'primary' | 'secondary' | 'ghost';
 export type HeroTopicIcon = 'brain' | 'activity' | 'bar-chart-3' | 'network';
 export type HomeStatIcon = 'book-text' | 'scroll-text' | 'mic';
 export type ResearchThemeIcon = 'activity' | 'layers' | 'shield-check' | 'globe';
-export type HomeHighlightIcon = 'book-open' | 'graduation-cap' | 'cpu';
+export type ResearchPillarIcon = 'activity' | 'chart-column' | 'brain-circuit' | 'network';
 
 export interface SiteNavLink {
   readonly key: SiteNavLinkKey;
   readonly href: string;
   readonly label: string;
+}
+
+export interface ResearchTheme {
+  readonly title: string;
+  readonly description: string;
+  readonly icon: ResearchThemeIcon;
+}
+
+export interface ResearchPillar {
+  readonly title: string;
+  readonly description: string;
+  readonly icon: ResearchPillarIcon;
 }
 
 export interface SiteCopy {
@@ -46,26 +58,14 @@ export interface SiteCopy {
         readonly icon: HeroCtaIcon;
       }[];
     };
-    readonly aboutSection: {
+    readonly researchInPractice: {
       readonly eyebrow: string;
       readonly title: string;
-      readonly lead: string;
+      readonly titleAccent: string;
       readonly body: string;
       readonly ctaLabel: string;
-      readonly researchFocusTitle: string;
-      readonly researchFocusDescription: string;
-      readonly themes: readonly {
-        readonly title: string;
-        readonly description: string;
-        readonly icon: ResearchThemeIcon;
-      }[];
-      readonly highlightsTitle: string;
-      readonly highlightsDescription: string;
-      readonly highlights: readonly {
-        readonly title: string;
-        readonly description: string;
-        readonly icon: HomeHighlightIcon;
-      }[];
+      readonly ctaHref: string;
+      readonly pillars: readonly ResearchPillar[];
     };
     readonly statsSection: {
       readonly eyebrow: string;
@@ -110,7 +110,7 @@ export interface SiteCopy {
     readonly focusAreas: {
       readonly title: string;
       readonly description: string;
-      readonly items: SiteCopy['home']['aboutSection']['themes'];
+      readonly items: readonly ResearchTheme[];
     };
     readonly currentWork: {
       readonly title: string;
@@ -184,7 +184,7 @@ export interface SiteCopy {
   };
 }
 
-const researchThemes: SiteCopy['home']['aboutSection']['themes'] = [
+const researchThemes: readonly ResearchTheme[] = [
   {
     title: 'Behavior shaping',
     description:
@@ -211,7 +211,7 @@ const researchThemes: SiteCopy['home']['aboutSection']['themes'] = [
   },
 ] as const;
 
-const researchThemesTh: SiteCopy['home']['aboutSection']['themes'] = [
+const researchThemesTh: readonly ResearchTheme[] = [
   {
     title: 'การกำหนดพฤติกรรมโมเดล',
     description:
@@ -235,6 +235,52 @@ const researchThemesTh: SiteCopy['home']['aboutSection']['themes'] = [
     description:
       'เปลี่ยนงานวิจัยให้กลายเป็นเครื่องมือ การทดลอง และต้นแบบที่ทีมงานและผู้เชี่ยวชาญโดเมนสามารถนำไปใช้ต่อได้',
     icon: 'globe',
+  },
+] as const;
+
+const researchPillars: readonly ResearchPillar[] = [
+  {
+    title: 'Behavior Shaping',
+    description: 'Post-training, prompting, and feedback changing model behavior.',
+    icon: 'activity',
+  },
+  {
+    title: 'Evaluation',
+    description: 'Tests that expose failure modes before real-world use.',
+    icon: 'chart-column',
+  },
+  {
+    title: 'Reasoning Models',
+    description: 'Open models and analyses for Thai, medical, and domain reasoning.',
+    icon: 'brain-circuit',
+  },
+  {
+    title: 'Agentic Systems',
+    description: 'Tools and workflows that turn research into usable systems.',
+    icon: 'network',
+  },
+] as const;
+
+const researchPillarsTh: readonly ResearchPillar[] = [
+  {
+    title: 'การกำหนดพฤติกรรม',
+    description: 'Post-training การพรอมป์ต และ feedback ที่เปลี่ยนพฤติกรรมของโมเดล',
+    icon: 'activity',
+  },
+  {
+    title: 'การประเมินผล',
+    description: 'การทดสอบที่เปิดเผย failure mode ก่อนนำไปใช้งานจริง',
+    icon: 'chart-column',
+  },
+  {
+    title: 'โมเดลให้เหตุผล',
+    description: 'โมเดลแบบเปิดและการวิเคราะห์สำหรับภาษาไทย การแพทย์ และโดเมนเฉพาะ',
+    icon: 'brain-circuit',
+  },
+  {
+    title: 'ระบบ Agentic',
+    description: 'เครื่องมือและ workflow ที่เปลี่ยนงานวิจัยให้เป็นระบบที่ใช้งานได้',
+    icon: 'network',
   },
 ] as const;
 
@@ -298,39 +344,14 @@ const siteCopyEn: SiteCopy = {
         },
       ],
     },
-    aboutSection: {
-      eyebrow: 'Research in practice',
-      title: 'A researcher-builder working across models and systems',
-      lead: 'I am Pittawat Taveekitworachai, a research scientist focused on making language models more reliable, steerable, and useful in real settings.',
-      body: 'My work sits between research and implementation: building reasoning models, designing evaluations, studying post-training behavior, and turning findings into tools, prototypes, and public explanations.',
-      ctaLabel: 'Learn more about my background',
-      researchFocusTitle: 'Current research themes',
-      researchFocusDescription:
-        'The threads connecting my publications, open models, evaluation work, and collaborations.',
-      themes: researchThemes,
-      highlightsTitle: 'Recent ways this work shows up',
-      highlightsDescription:
-        'A mix of papers, public communication, open models, and tooling informed by current projects and collaborations.',
-      highlights: [
-        {
-          title: 'Publications and writing',
-          description:
-            'Publishing on prompting, reasoning, and evaluation, while writing essays that connect research questions to practical engineering decisions.',
-          icon: 'book-open',
-        },
-        {
-          title: 'Talks and workshops',
-          description:
-            'Sharing lessons from reasoning models, context engineering, and applied AI systems through conferences, meetups, and research events.',
-          icon: 'graduation-cap',
-        },
-        {
-          title: 'Open models and tooling',
-          description:
-            'Contributing to open reasoning models, benchmarks, and evaluation tools that other teams can study, test, and extend.',
-          icon: 'cpu',
-        },
-      ],
+    researchInPractice: {
+      eyebrow: '01 Research focus',
+      title: 'Understanding and building',
+      titleAccent: 'reasoning systems.',
+      body: 'My work studies model behavior, evaluation, and systems: how models reason, where they fail, and how we can shape and measure reasoning to build more capable and trustworthy AI.',
+      ctaLabel: 'Learn more about my research',
+      ctaHref: '/about',
+      pillars: researchPillars,
     },
     statsSection: {
       eyebrow: 'Selected output',
@@ -587,39 +608,14 @@ const siteCopyTh: SiteCopy = {
         },
       ],
     },
-    aboutSection: {
-      eyebrow: 'งานวิจัยในภาคปฏิบัติ',
-      title: 'นักวิจัยและนักพัฒนาที่ทำงานคร่อมระหว่างโมเดลกับระบบ',
-      lead: 'ผมคือ Pittawat Taveekitworachai นักวิจัยที่สนใจทำให้โมเดลภาษามีความน่าเชื่อถือ ควบคุมทิศทางได้ และใช้งานได้จริงมากขึ้น',
-      body: 'งานของผมอยู่กึ่งกลางระหว่างงานวิจัยและการลงมือทำ ตั้งแต่การสร้างโมเดลให้เหตุผล ออกแบบการประเมินผล ศึกษาพฤติกรรมหลัง post-training ไปจนถึงแปลงผลลัพธ์ให้เป็นเครื่องมือ ต้นแบบ และคำอธิบายสาธารณะที่นำไปใช้ต่อได้',
-      ctaLabel: 'ดูประวัติและแนวทางการทำงานเพิ่มเติม',
-      researchFocusTitle: 'ธีมวิจัยในปัจจุบัน',
-      researchFocusDescription:
-        'เส้นเรื่องหลักที่เชื่อมงานตีพิมพ์ โมเดลแบบเปิด งานประเมินผล และความร่วมมือต่าง ๆ เข้าด้วยกัน',
-      themes: researchThemesTh,
-      highlightsTitle: 'งานเหล่านี้แสดงออกมาอย่างไรในช่วงหลัง',
-      highlightsDescription:
-        'ส่วนผสมของงานตีพิมพ์ การสื่อสารสาธารณะ โมเดลแบบเปิด และเครื่องมือที่เติบโตมาจากโปรเจกต์และความร่วมมือปัจจุบัน',
-      highlights: [
-        {
-          title: 'ผลงานตีพิมพ์และงานเขียน',
-          description:
-            'ตีพิมพ์งานด้าน prompting reasoning และ evaluation ควบคู่กับการเขียนบทความที่เชื่อมคำถามวิจัยเข้ากับการตัดสินใจเชิงวิศวกรรม',
-          icon: 'book-open',
-        },
-        {
-          title: 'งานบรรยายและเวิร์กช็อป',
-          description:
-            'ถ่ายทอดบทเรียนจากโมเดลให้เหตุผล context engineering และระบบ AI ประยุกต์ผ่านงานประชุม มีตอัป และกิจกรรมวิจัย',
-          icon: 'graduation-cap',
-        },
-        {
-          title: 'โมเดลแบบเปิดและเครื่องมือ',
-          description:
-            'มีส่วนร่วมกับโมเดลให้เหตุผลแบบเปิด benchmark และเครื่องมือประเมินผลที่ทีมอื่นสามารถศึกษา ทดสอบ และต่อยอดได้',
-          icon: 'cpu',
-        },
-      ],
+    researchInPractice: {
+      eyebrow: '01 โฟกัสงานวิจัย',
+      title: 'ทำความเข้าใจและสร้าง',
+      titleAccent: 'ระบบให้เหตุผล',
+      body: 'งานของผมศึกษาพฤติกรรมโมเดล การประเมินผล และระบบ AI ตั้งแต่ว่าโมเดลให้เหตุผลอย่างไร ล้มเหลวตรงไหน ไปจนถึงเราจะกำหนดและวัด reasoning เพื่อสร้าง AI ที่เก่งขึ้นและน่าเชื่อถือขึ้นได้อย่างไร',
+      ctaLabel: 'ดูแนวทางงานวิจัยเพิ่มเติม',
+      ctaHref: '/about',
+      pillars: researchPillarsTh,
     },
     statsSection: {
       eyebrow: 'ผลงานที่เผยแพร่',

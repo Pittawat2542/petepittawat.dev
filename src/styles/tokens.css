@@ -1,0 +1,147 @@
+:root {
+  --motion-duration-fast: 200ms;
+  --motion-duration-normal: 300ms;
+  --motion-duration-slow: 400ms;
+  --motion-duration-emphasized: 550ms;
+  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-emphasized: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-ease-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-ease-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --motion-stagger-xs: 40ms;
+  --motion-stagger-sm: 60ms;
+  --motion-stagger-md: 100ms;
+  --motion-stagger-lg: 160ms;
+
+  --site-chrome-max-width: 72rem;
+  --site-chrome-padding-x: clamp(1rem, 4vw, 2.5rem);
+  --site-chrome-border: color-mix(in oklab, var(--white, #f9fafb) 9%, transparent);
+  --site-chrome-border-strong: color-mix(in oklab, var(--white, #f9fafb) 14%, transparent);
+  --site-chrome-bg: color-mix(in oklab, var(--black, #111827) 62%, transparent);
+  --site-chrome-bg-strong: color-mix(in oklab, var(--black, #111827) 76%, transparent);
+  --site-chrome-link-color: color-mix(in oklab, var(--white, #f9fafb) 68%, transparent);
+  --site-chrome-link-color-active: color-mix(in oklab, var(--white, #f9fafb) 96%, transparent);
+  --site-chrome-control-size: 2.35rem;
+  --site-chrome-focus-ring:
+    0 0 0 2px color-mix(in oklab, var(--black, #111827) 84%, transparent),
+    0 0 0 4px color-mix(in oklab, var(--accent, #60a5fa) 46%, transparent);
+
+  --nav-height: 3.35rem;
+  --nav-content-max-width: var(--site-chrome-max-width);
+  --nav-padding-x: var(--site-chrome-padding-x);
+  --nav-logo-size: 2.2rem;
+  --nav-control-size: var(--site-chrome-control-size);
+  --nav-blur: 16px;
+  --nav-blur-scrolled: 22px;
+  --nav-border: var(--site-chrome-border);
+  --nav-border-scrolled: var(--site-chrome-border-strong);
+  --nav-bg: var(--site-chrome-bg);
+  --nav-bg-scrolled: var(--site-chrome-bg-strong);
+  --nav-link-color: var(--site-chrome-link-color);
+  --nav-link-color-active: var(--site-chrome-link-color-active);
+  --nav-hover-rule: color-mix(in oklab, var(--white, #f9fafb) 42%, transparent);
+  --nav-active-rule: color-mix(in oklab, var(--accent, #60a5fa) 82%, var(--white, #f9fafb) 12%);
+  --nav-active-rule-height: 3px;
+  --nav-logo-expanded-blue: #6aa8ff;
+  --nav-logo-expanded-radius: 0.56rem;
+  --nav-focus-ring: var(--site-chrome-focus-ring);
+
+  --shape-squircle-clip: path(
+    'M0,34% C0,16% 16%,0 34%,0 H66% C84%,0 100%,16% 100%,34% V66% C100%,84% 84%,100% 66%,100% H34% C16%,100% 0,84% 0,66% Z'
+  );
+  --shape-squircle-radius-lg: clamp(1.6rem, 4vw, 2.6rem);
+  --shape-squircle-radius-md: clamp(1.1rem, 3vw, 1.8rem);
+  --shape-squircle-radius-sm: clamp(0.85rem, 2.6vw, 1.3rem);
+
+  --accent: #60a5fa;
+  --accent-blog: #60a5fa;
+  --accent-publications: #10b981;
+  --accent-talks: #f97316;
+  --accent-about: #f59e0b;
+  --accent-projects: #06b6d4;
+  --accent-research: #f472b6;
+  --accent-1: #60a5fa;
+  --accent-2: #fb923c;
+  --white: #f9fafb;
+  --black: #111827;
+  --black-nav: rgba(31, 41, 55, 0.7);
+
+  --glass-bg-primary: rgba(255, 255, 255, 0.03);
+  --glass-bg-secondary: rgba(255, 255, 255, 0.06);
+  --glass-bg-tertiary: rgba(255, 255, 255, 0.09);
+  --glass-border-primary: rgba(255, 255, 255, 0.08);
+  --glass-border-secondary: rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(255, 255, 255, 0.16);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --glass-shadow-hover: rgba(0, 0, 0, 0.4);
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.18) 0%,
+    rgba(96, 165, 250, 0.14) 48%,
+    rgba(103, 232, 249, 0.12) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    225deg,
+    rgba(16, 185, 129, 0.12) 0%,
+    rgba(245, 158, 11, 0.12) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    rgba(96, 165, 250, 0.24) 0%,
+    rgba(56, 189, 248, 0.18) 55%,
+    rgba(186, 230, 253, 0.14) 100%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  --gradient-border: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+
+  --ambient-glow-primary: radial-gradient(
+    600px circle at 40% 20%,
+    rgba(59, 130, 246, 0.16),
+    transparent 50%
+  );
+  --ambient-glow-secondary: radial-gradient(
+    800px circle at 80% 10%,
+    rgba(125, 211, 252, 0.1),
+    transparent 50%
+  );
+  --ambient-glow-tertiary: radial-gradient(
+    400px circle at 60% 80%,
+    rgba(56, 189, 248, 0.1),
+    transparent 60%
+  );
+
+  --glass-surface-1:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%),
+    radial-gradient(circle at 30% 20%, rgba(96, 165, 250, 0.09), transparent 50%),
+    rgba(31, 41, 55, 0.4);
+  --glass-surface-2:
+    linear-gradient(225deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%),
+    radial-gradient(circle at 70% 30%, rgba(125, 211, 252, 0.07), transparent 50%),
+    rgba(31, 41, 55, 0.5);
+  --glass-surface-3:
+    linear-gradient(315deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.04) 100%),
+    radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.08), transparent 50%),
+    rgba(31, 41, 55, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-fast: 1ms;
+    --motion-duration-normal: 1ms;
+    --motion-duration-slow: 1ms;
+    --motion-duration-emphasized: 1ms;
+    --motion-stagger-xs: 0ms;
+    --motion-stagger-sm: 0ms;
+    --motion-stagger-md: 0ms;
+    --motion-stagger-lg: 0ms;
+  }
+}

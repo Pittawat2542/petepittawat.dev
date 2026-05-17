@@ -4,9 +4,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getImage } from 'astro:assets';
 import profileImage from '@/assets/images/profile.jpg';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
-import AboutSection from '@/components/sections/AboutSection.astro';
 import BlogSection from '@/components/sections/BlogSection.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
+import ResearchInPracticeSection from '@/components/sections/ResearchInPracticeSection.astro';
 import StatsSection from '@/components/sections/StatsSection.astro';
 import { siteCopyEn } from '@/data/site/copy';
 import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
@@ -50,7 +50,7 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     )
   }
   <HeroSection copy={siteCopy.home.hero} />
-  <AboutSection copy={siteCopy.home.aboutSection} />
+  <ResearchInPracticeSection copy={siteCopy.home.researchInPractice} />
   <StatsSection stats={stats} copy={siteCopy.home.statsSection} />
   <BlogSection posts={posts} copy={siteCopy.home.blogSection} />
 </BaseLayout>
