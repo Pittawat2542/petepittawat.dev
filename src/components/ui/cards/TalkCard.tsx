@@ -9,13 +9,13 @@ import {
   Video,
 } from 'lucide-react';
 import { memo, type FC } from 'react';
-import AuroraCardShell from './AuroraCardShell';
 import { getAccentColorVar } from '@/lib/utils';
 import { formatDate } from '@/lib';
 import type { Talk } from '@/types';
 import { resolveCardVisualSpec, toTalkCardVisualInput } from '@/lib/card-visual';
 import CardVisualPanel from './CardVisualPanel';
 import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from './CardAtoms';
+import MediaContentCard from './MediaContentCard';
 
 interface TalkCardProps {
   readonly item: Talk;
@@ -48,10 +48,15 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
     'group/link inline-flex min-w-0 items-start justify-between gap-3 rounded-[1.55rem] border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-[color:var(--card-accent)]';
 
   return (
-    <AuroraCardShell
+    <MediaContentCard
       accent={accent}
       className="talk-card h-full"
-      bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
+      media={
+        <CardVisualPanel
+          spec={visualSpec}
+          className="mb-0 [aspect-ratio:auto] h-full rounded-none border-0 shadow-none"
+        />
+      }
       footer={
         hasResources ? (
           <div className="type-caption grid w-full [grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr))] gap-2.5 text-white/80 md:text-xs">
@@ -135,8 +140,6 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
       }
     >
       <div className="flex h-full flex-col">
-        <CardVisualPanel spec={visualSpec} />
-
         <div className="flex items-start justify-between gap-3">
           <CardKicker label="Talk" />
           <div
@@ -216,7 +219,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
           </div>
         </div>
       </div>
-    </AuroraCardShell>
+    </MediaContentCard>
   );
 };
 

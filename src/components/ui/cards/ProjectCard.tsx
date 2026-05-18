@@ -1,12 +1,12 @@
 import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
 import { memo, type FC } from 'react';
 import { Badge } from '@/components/ui/core/badge';
-import AuroraCardShell from './AuroraCardShell';
 import { getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toProjectCardVisualInput } from '@/lib/card-visual';
 import type { Project } from '@/types';
 import CardVisualPanel from './CardVisualPanel';
 import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from './CardAtoms';
+import MediaContentCard from './MediaContentCard';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -28,11 +28,16 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   return (
-    <AuroraCardShell
+    <MediaContentCard
       accent={accentColor}
       featured={featured}
       className="project-card h-full"
-      bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
+      media={
+        <CardVisualPanel
+          spec={visualSpec}
+          className="mb-0 [aspect-ratio:auto] h-full rounded-none border-0 shadow-none"
+        />
+      }
       footer={
         item.links?.length ? (
           <div className="type-caption flex flex-wrap gap-2.5 text-white/80 md:text-xs">
@@ -71,8 +76,6 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       }
     >
       <div className="flex h-full flex-col">
-        <CardVisualPanel spec={visualSpec} />
-
         <div className="flex items-start justify-between gap-3">
           <CardKicker label="Project" />
           <div className="type-caption flex flex-wrap items-center justify-end gap-2 md:text-xs">
@@ -161,7 +164,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
           </div>
         </div>
       </div>
-    </AuroraCardShell>
+    </MediaContentCard>
   );
 };
 

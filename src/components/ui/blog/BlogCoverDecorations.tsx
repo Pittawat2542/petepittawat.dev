@@ -48,16 +48,24 @@ function renderDecorationLayer(layer: BlogCoverDecorationLayer) {
 
   switch (layer.kind) {
     case 'circle':
-      return <circle key={layer.id} {...commonProps} cx={layer.cx} cy={layer.cy} r={layer.r} />;
+      return (
+        <circle
+          key={layer.id}
+          {...commonProps}
+          cx={svgNumber(layer.cx)}
+          cy={svgNumber(layer.cy)}
+          r={svgNumber(layer.r)}
+        />
+      );
     case 'ellipse':
       return (
         <ellipse
           key={layer.id}
           {...commonProps}
-          cx={layer.cx}
-          cy={layer.cy}
-          rx={layer.rx}
-          ry={layer.ry}
+          cx={svgNumber(layer.cx)}
+          cy={svgNumber(layer.cy)}
+          rx={svgNumber(layer.rx)}
+          ry={svgNumber(layer.ry)}
         />
       );
     case 'line':
@@ -65,10 +73,10 @@ function renderDecorationLayer(layer: BlogCoverDecorationLayer) {
         <line
           key={layer.id}
           {...commonProps}
-          x1={layer.x1}
-          y1={layer.y1}
-          x2={layer.x2}
-          y2={layer.y2}
+          x1={svgNumber(layer.x1)}
+          y1={svgNumber(layer.y1)}
+          x2={svgNumber(layer.x2)}
+          y2={svgNumber(layer.y2)}
         />
       );
     case 'path':
@@ -78,11 +86,11 @@ function renderDecorationLayer(layer: BlogCoverDecorationLayer) {
         <rect
           key={layer.id}
           {...commonProps}
-          x={layer.x}
-          y={layer.y}
-          width={layer.width}
-          height={layer.height}
-          rx={layer.radius}
+          x={svgNumber(layer.x)}
+          y={svgNumber(layer.y)}
+          width={svgNumber(layer.width)}
+          height={svgNumber(layer.height)}
+          rx={svgNumber(layer.radius)}
         />
       );
     default:
@@ -91,7 +99,7 @@ function renderDecorationLayer(layer: BlogCoverDecorationLayer) {
 }
 
 function getLayerStyle(layer: BlogCoverDecorationLayer) {
-  return layer.blur ? ({ filter: `blur(${layer.blur}px)` } as CSSProperties) : undefined;
+  return layer.blur ? ({ filter: `blur(${svgNumber(layer.blur)}px)` } as CSSProperties) : undefined;
 }
 
 function getLayerTransform(layer: BlogCoverDecorationLayer) {
@@ -102,12 +110,16 @@ function getLayerTransform(layer: BlogCoverDecorationLayer) {
   switch (layer.kind) {
     case 'circle':
     case 'ellipse':
-      return `rotate(${layer.rotation} ${layer.cx} ${layer.cy})`;
+      return `rotate(${svgNumber(layer.rotation)} ${svgNumber(layer.cx)} ${svgNumber(layer.cy)})`;
     case 'rect':
-      return `rotate(${layer.rotation} ${layer.x + layer.width / 2} ${layer.y + layer.height / 2})`;
+      return `rotate(${svgNumber(layer.rotation)} ${svgNumber(layer.x + layer.width / 2)} ${svgNumber(layer.y + layer.height / 2)})`;
     default:
       return undefined;
   }
+}
+
+function svgNumber(value: number) {
+  return Number(value.toFixed(4));
 }
 
 function resolveTone(tone: BlogCoverDecorationTone) {

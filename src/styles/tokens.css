@@ -177,6 +177,39 @@
   --output-card-focus-ring:
     0 0 0 2px color-mix(in oklab, var(--black) 82%, transparent),
     0 0 0 4px color-mix(in oklab, var(--accent) 48%, transparent);
+
+  --media-card-radius: clamp(1.18rem, 2.4vw, 1.65rem);
+  --media-card-media-radius: calc(var(--media-card-radius) - 1px);
+  --media-card-surface:
+    radial-gradient(
+      circle at 88% 0%,
+      color-mix(in oklab, var(--card-accent, var(--accent)) 13%, transparent),
+      transparent 30%
+    ),
+    linear-gradient(180deg, rgba(11, 20, 38, 0.95), rgba(7, 14, 28, 0.98));
+  --media-card-border: color-mix(in oklab, var(--white) 10%, transparent);
+  --media-card-hover-border: color-mix(
+    in oklab,
+    var(--card-accent, var(--accent)) 36%,
+    var(--white) 10%
+  );
+  --media-card-shadow:
+    0 30px 70px -44px rgba(3, 7, 18, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  --media-card-shadow-hover:
+    0 40px 84px -46px rgba(3, 7, 18, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.085);
+  --media-card-focus-ring:
+    0 0 0 2px rgba(5, 10, 20, 0.94),
+    0 0 0 4px color-mix(in oklab, var(--card-accent, var(--accent)) 44%, transparent);
+  --media-card-media-aspect: 16 / 7;
+  --media-card-padding: clamp(1.1rem, 2vw, 1.55rem);
+  --media-card-footer-padding-y: clamp(0.8rem, 1.35vw, 1rem);
+  --media-card-footer-surface:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.012)),
+    rgba(8, 14, 28, 0.54);
+  --media-card-muted: color-mix(in oklab, var(--white) 66%, transparent);
+  --media-card-muted-strong: color-mix(in oklab, var(--white) 78%, transparent);
+  --media-card-accent-soft: color-mix(in oklab, var(--card-accent, var(--accent)) 12%, transparent);
+  --media-card-accent-line: color-mix(in oklab, var(--card-accent, var(--accent)) 30%, transparent);
 }
 
 @media (max-width: 640px) {

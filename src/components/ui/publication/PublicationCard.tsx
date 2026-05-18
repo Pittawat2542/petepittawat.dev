@@ -1,9 +1,9 @@
 import { memo, useEffect, useState, type FC } from 'react';
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import AuroraCardShell from '@/components/ui/cards/AuroraCardShell';
 import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from '@/components/ui/cards';
 import CardVisualPanel from '@/components/ui/cards/CardVisualPanel';
+import MediaContentCard from '@/components/ui/cards/MediaContentCard';
 import type { Publication } from '@/types';
 import { AuthorList } from './AuthorList';
 import { PublicationActions } from './PublicationActions';
@@ -58,7 +58,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   }
 
   return (
-    <AuroraCardShell
+    <MediaContentCard
       accent={accent}
       featured={featured}
       overlayIntensity="subtle"
@@ -70,7 +70,12 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       aria-haspopup="dialog"
       aria-expanded={open}
       aria-controls={detailsId}
-      bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
+      media={
+        <CardVisualPanel
+          spec={visualSpec}
+          className="mb-0 [aspect-ratio:auto] h-full rounded-none border-0 shadow-none"
+        />
+      }
       footer={
         <div className="type-caption flex flex-col gap-3 text-white/80 md:text-xs">
           {hasActions ? (
@@ -103,8 +108,6 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       }
     >
       <div className="flex h-full flex-col">
-        <CardVisualPanel spec={visualSpec} />
-
         <CardKicker label="Publication" />
 
         <div className="mt-5 flex flex-1 flex-col gap-5 overflow-x-hidden">
@@ -163,7 +166,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
         accent={accent}
         detailsId={detailsId}
       />
-    </AuroraCardShell>
+    </MediaContentCard>
   );
 };
 

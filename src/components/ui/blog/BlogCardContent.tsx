@@ -14,6 +14,7 @@ interface BlogCardContentProps {
   readonly partNumber: number;
   readonly totalParts: number;
   readonly fallbackTag: string;
+  readonly showTag?: boolean | undefined;
   readonly tone?: 'default' | 'editorial' | undefined;
 }
 
@@ -28,26 +29,29 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
   partNumber,
   totalParts,
   fallbackTag,
+  showTag = true,
   tone = 'default',
 }) => {
   return (
     <div className="flex flex-1 flex-col gap-3 md:gap-4">
-      <div
-        className={
-          tone === 'editorial'
-            ? 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/48 uppercase transition-all duration-300 group-hover:text-white/72 md:gap-2 md:text-xs'
-            : 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/60 uppercase transition-all duration-300 group-hover:text-white/75 md:gap-2 md:text-xs'
-        }
-      >
-        <BlogCardTag
-          isPartOfSeries={isPartOfSeries}
-          {...(seriesTitle && { seriesTitle })}
-          partNumber={partNumber}
-          totalParts={totalParts}
-          fallbackTag={fallbackTag}
-          tone={tone}
-        />
-      </div>
+      {showTag ? (
+        <div
+          className={
+            tone === 'editorial'
+              ? 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/48 uppercase transition-all duration-300 group-hover:text-white/72 md:gap-2 md:text-xs'
+              : 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/60 uppercase transition-all duration-300 group-hover:text-white/75 md:gap-2 md:text-xs'
+          }
+        >
+          <BlogCardTag
+            isPartOfSeries={isPartOfSeries}
+            {...(seriesTitle && { seriesTitle })}
+            partNumber={partNumber}
+            totalParts={totalParts}
+            fallbackTag={fallbackTag}
+            tone={tone}
+          />
+        </div>
+      ) : null}
 
       <div className="space-y-3 md:space-y-4">
         <h3
@@ -94,6 +98,7 @@ export const BlogCardContent = memo(BlogCardContentComponent, (prevProps, nextPr
     prevProps.partNumber === nextProps.partNumber &&
     prevProps.totalParts === nextProps.totalParts &&
     prevProps.fallbackTag === nextProps.fallbackTag &&
+    prevProps.showTag === nextProps.showTag &&
     prevProps.tone === nextProps.tone
   );
 });
