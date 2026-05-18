@@ -5,7 +5,7 @@ import '@/styles/components/article-surface.css';
 <div class="article-surface article-body-card">
   <article
     id="post-article"
-    class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-[0.95em] prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-10 prose-headings:mb-4 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
+    class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-10 prose-headings:mb-4 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
   >
     <slot />
   </article>
@@ -20,7 +20,7 @@ import '@/styles/components/article-surface.css';
     margin: 0 auto;
     max-width: 100%;
     font-family: 'Noto Serif Thai', 'Noto Serif', serif;
-    font-size: clamp(1.06rem, 1.02rem + 0.34vw, 1.22rem);
+    font-size: var(--type-prose);
     line-height: 1.88;
     letter-spacing: 0.01em;
     font-feature-settings: 'kern', 'liga';
@@ -82,7 +82,7 @@ import '@/styles/components/article-surface.css';
   .article-body :global(blockquote)::before {
     content: '“';
     position: absolute;
-    font-size: 4rem;
+    font-size: var(--type-page-title);
     line-height: 1;
     opacity: 0.08;
     left: 0.6rem;
@@ -122,7 +122,7 @@ import '@/styles/components/article-surface.css';
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    font-size: 0.78rem;
+    font-size: var(--type-meta);
     color: color-mix(in oklab, var(--white) 78%, transparent);
   }
 
@@ -193,7 +193,7 @@ import '@/styles/components/article-surface.css';
     background: transparent;
     padding: 0;
     line-height: 1.7;
-    font-size: 0.95rem;
+    font-size: var(--type-body-sm);
     color: color-mix(in oklab, var(--white) 97%, transparent);
     overflow-x: auto;
     scrollbar-width: thin;
@@ -226,7 +226,7 @@ import '@/styles/components/article-surface.css';
     gap: 0.35rem;
     padding: 0.35rem 0.75rem;
     border-radius: 0.65rem;
-    font-size: 0.68rem;
+    font-size: var(--type-caption);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: color-mix(in oklab, var(--white) 90%, transparent);
@@ -256,7 +256,7 @@ import '@/styles/components/article-surface.css';
     border: 1px solid rgba(148, 163, 184, 0.22);
     background: rgba(15, 23, 42, 0.72);
     color: color-mix(in oklab, var(--white) 90%, transparent);
-    font-size: 0.72rem;
+    font-size: var(--type-meta);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 600;
@@ -325,7 +325,7 @@ import '@/styles/components/article-surface.css';
     }
 
     .article-body {
-      font-size: clamp(1rem, 0.98rem + 0.28vw, 1.12rem);
+      font-size: var(--type-prose-compact);
     }
 
     .article-body :global(pre) {

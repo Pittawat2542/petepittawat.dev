@@ -83,7 +83,7 @@ const introVariant = getIntroVariant(copy.intro);
 
   .hero-name__given {
     color: #facc63;
-    font-size: 3.16rem;
+    font-size: var(--type-home-display-compact);
     text-shadow:
       0 1px 0 rgba(255, 255, 255, 0.14),
       0 18px 42px rgba(250, 204, 99, 0.18);
@@ -91,14 +91,14 @@ const introVariant = getIntroVariant(copy.intro);
 
   .hero-name__family {
     color: rgba(255, 255, 255, 0.94);
-    font-size: 2.43rem;
+    font-size: var(--type-home-display-secondary-compact);
     text-shadow: 0 18px 46px rgba(148, 163, 184, 0.22);
   }
 
   .hero-lead {
     margin: 0;
     color: rgba(255, 255, 255, 0.72);
-    font-size: 1.26rem;
+    font-size: var(--type-home-lead-compact);
     line-height: 1.5;
   }
 
@@ -111,21 +111,21 @@ const introVariant = getIntroVariant(copy.intro);
     margin: 0;
     max-width: 34rem;
     color: rgba(255, 255, 255, 0.62);
-    font-size: 1.02rem;
+    font-size: var(--type-body);
     line-height: 1.68;
   }
 
   @media (min-width: 640px) {
     .hero-name__given {
-      font-size: 3.66rem;
+      font-size: var(--type-home-display);
     }
 
     .hero-name__family {
-      font-size: 2.82rem;
+      font-size: var(--type-home-display-secondary);
     }
 
     .hero-lead {
-      font-size: 1.43rem;
+      font-size: var(--type-home-lead);
     }
   }
 
@@ -141,11 +141,11 @@ const introVariant = getIntroVariant(copy.intro);
     }
 
     .hero-name__given {
-      font-size: 3.7rem;
+      font-size: var(--type-home-display);
     }
 
     .hero-name__family {
-      font-size: 2.72rem;
+      font-size: var(--type-home-display-secondary-compact);
     }
 
     .hero-summary {
@@ -159,21 +159,21 @@ const introVariant = getIntroVariant(copy.intro);
     }
 
     .hero-name__given {
-      font-size: clamp(4.48rem, 5.82vw, 5.36rem);
+      font-size: var(--type-home-display);
     }
 
     .hero-name__family {
-      font-size: clamp(3.18rem, 4.44vw, 4.34rem);
+      font-size: var(--type-home-display-secondary);
     }
 
     .hero-lead {
-      font-size: clamp(1.31rem, 1.84vw, 1.58rem);
+      font-size: var(--type-home-lead);
       line-height: 1.46;
     }
 
     .hero-summary {
       max-width: 31rem;
-      font-size: 1.04rem;
+      font-size: var(--type-body);
     }
   }
 </style>

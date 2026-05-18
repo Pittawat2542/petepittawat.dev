@@ -35,8 +35,8 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
       <div
         className={
           tone === 'editorial'
-            ? 'flex items-center gap-1.5 text-[11px] tracking-[0.15em] text-white/48 uppercase transition-all duration-300 group-hover:text-white/72 md:gap-2 md:text-xs'
-            : 'flex items-center gap-1.5 text-[11px] tracking-[0.15em] text-white/60 uppercase transition-all duration-300 group-hover:text-white/75 md:gap-2 md:text-xs'
+            ? 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/48 uppercase transition-all duration-300 group-hover:text-white/72 md:gap-2 md:text-xs'
+            : 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/60 uppercase transition-all duration-300 group-hover:text-white/75 md:gap-2 md:text-xs'
         }
       >
         <BlogCardTag
@@ -53,7 +53,7 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
         <h3
           className={
             tone === 'editorial'
-              ? 'text-xl leading-snug font-semibold tracking-[-0.03em] text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-[1.8rem] md:leading-tight lg:text-[2.15rem]'
+              ? 'md:type-card-title lg:type-featured-card-title text-xl leading-snug font-semibold tracking-[-0.03em] text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:leading-tight'
               : 'text-xl leading-snug font-semibold tracking-tight text-[color:var(--white)] transition-colors duration-300 group-hover:text-white md:text-2xl md:leading-tight lg:text-3xl'
           }
         >

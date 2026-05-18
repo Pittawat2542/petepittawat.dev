@@ -180,7 +180,7 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     display: block;
     min-width: 0;
     color: color-mix(in oklab, var(--white) 97%, transparent);
-    font-size: clamp(1.3rem, 1.58vw, 1.62rem);
+    font-size: var(--type-card-title);
     font-weight: 820;
     line-height: 1.08;
     letter-spacing: 0;
@@ -192,7 +192,7 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     display: block;
     max-width: 38rem;
     color: var(--hero-cta-card-muted);
-    font-size: clamp(0.9rem, 1vw, 0.98rem);
+    font-size: var(--type-body-sm);
     line-height: 1.5;
     text-align: left;
   }
@@ -220,7 +220,7 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     gap: 0.58rem;
     margin-top: 0;
     color: color-mix(in oklab, var(--hero-cta-accent) 82%, white 14%);
-    font-size: clamp(0.94rem, 1.2vw, 1.04rem);
+    font-size: var(--type-body);
     font-weight: 760;
     line-height: 1.1;
     text-align: left;

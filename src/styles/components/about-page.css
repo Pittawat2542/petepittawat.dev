@@ -11,7 +11,7 @@
   border: 1px solid rgba(148, 163, 184, 0.24);
   background: rgba(255, 255, 255, 0.05);
   padding: 0.55rem 0.95rem;
-  font-size: 0.82rem;
+  font-size: var(--type-control);
   letter-spacing: 0.04em;
   color: rgba(226, 232, 240, 0.84);
 }
@@ -91,7 +91,7 @@
 .about-page .eyebrow,
 .about-page .proof-card__label,
 .about-page .snapshot-item__label {
-  font-size: 0.74rem;
+  font-size: var(--type-meta);
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.6);
@@ -99,7 +99,7 @@
 
 .about-page .profile-card__role {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--type-body-lg);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.92);
 }
@@ -110,7 +110,7 @@
   gap: 0.45rem;
   margin: 0;
   color: rgba(191, 219, 254, 0.7);
-  font-size: 0.9rem;
+  font-size: var(--type-body-sm);
 }
 
 .about-page .profile-card__body {
@@ -127,7 +127,7 @@
 }
 
 .about-page .profile-card__body h2 {
-  font-size: clamp(1.95rem, 2vw + 1.2rem, 2.75rem);
+  font-size: var(--type-section-title);
   line-height: 1.05;
 }
 
@@ -156,7 +156,7 @@
   border: 1px solid rgba(148, 163, 184, 0.26);
   background: rgba(255, 255, 255, 0.03);
   padding: 0.55rem 0.95rem;
-  font-size: 0.92rem;
+  font-size: var(--type-body-sm);
   color: rgba(255, 255, 255, 0.88);
   transition:
     transform 0.2s ease,
@@ -191,7 +191,7 @@
 }
 
 .about-page .current-work-list--compact li {
-  font-size: 0.95rem;
+  font-size: var(--type-body-sm);
 }
 
 .about-page .current-work-list__dot {
@@ -220,7 +220,7 @@
 .about-page .journey-card h3,
 .about-page .theme-card h3 {
   margin: 0;
-  font-size: 1.08rem;
+  font-size: var(--type-body-lg);
   color: rgba(248, 250, 252, 0.96);
 }
 
@@ -231,7 +231,7 @@
 }
 
 .about-page .section-heading h2 {
-  font-size: clamp(1.9rem, 1.5vw + 1.25rem, 2.6rem);
+  font-size: var(--type-section-title);
 }
 
 .about-page .proof-card {
@@ -242,7 +242,7 @@
 
 .about-page .proof-card__value {
   margin: 0;
-  font-size: 1.18rem;
+  font-size: var(--type-body-lg);
   line-height: 1.35;
   font-weight: 600;
   color: rgba(248, 250, 252, 0.94);
@@ -308,7 +308,7 @@
 
 .about-page .journey-card__header span {
   color: rgba(191, 219, 254, 0.68);
-  font-size: 0.9rem;
+  font-size: var(--type-body-sm);
 }
 
 .about-page .timeline-details {

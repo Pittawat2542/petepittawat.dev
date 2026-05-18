@@ -12,7 +12,7 @@ interface BlogCoverContentProps {
 const CoverChip: FC<{ label: string; subtle?: boolean | undefined }> = ({ label, subtle }) => (
   <span
     className={cn(
-      'inline-flex items-center rounded-full border px-3 py-1 text-[0.62rem] font-semibold tracking-[0.16em] uppercase',
+      'type-micro inline-flex items-center rounded-full border px-3 py-1 font-semibold tracking-[0.16em] uppercase',
       subtle
         ? 'border-white/12 bg-white/8 text-white/72'
         : 'text-[color:var(--blog-cover-accent-contrast)]'
@@ -45,9 +45,7 @@ export const BlogCoverContent: FC<BlogCoverContentProps> = ({ spec, excerpt, var
         <p
           className={cn(
             'blog-cover-eyebrow m-0 font-semibold tracking-[0.24em] text-white/72 uppercase',
-            variant === 'hero'
-              ? 'text-[0.68rem] md:text-[0.76rem]'
-              : 'text-[0.6rem] md:text-[0.66rem]'
+            variant === 'hero' ? 'type-caption md:type-meta' : 'type-micro md:type-caption'
           )}
         >
           {spec.eyebrowLabel}
@@ -55,9 +53,7 @@ export const BlogCoverContent: FC<BlogCoverContentProps> = ({ spec, excerpt, var
         <div
           className={cn(
             'blog-cover-title m-0 leading-[0.98] font-semibold tracking-[-0.035em] text-balance text-white',
-            variant === 'hero'
-              ? 'text-[clamp(1.7rem,1.2rem+2vw,3.15rem)]'
-              : 'text-[clamp(1.02rem,0.92rem+0.6vw,1.52rem)]'
+            variant === 'hero' ? 'type-page-title' : 'type-card-title'
           )}
         >
           {spec.title}
@@ -65,7 +61,7 @@ export const BlogCoverContent: FC<BlogCoverContentProps> = ({ spec, excerpt, var
       </div>
 
       {variant === 'hero' && excerpt ? (
-        <p className="blog-cover-excerpt m-0 max-w-[52ch] text-sm leading-6 text-white/74 md:text-[0.98rem]">
+        <p className="blog-cover-excerpt m-0 max-w-[52ch] text-sm leading-6 text-white/74 md:text-base">
           {excerpt}
         </p>
       ) : null}
@@ -73,7 +69,7 @@ export const BlogCoverContent: FC<BlogCoverContentProps> = ({ spec, excerpt, var
 
     {variant === 'hero' ? (
       <div className="blog-cover-footer relative z-10 flex items-end justify-between gap-4">
-        <div className="flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.22em] text-white/76 uppercase md:text-[0.76rem]">
+        <div className="type-meta md:type-meta flex items-center gap-2 font-semibold tracking-[0.22em] text-white/76 uppercase">
           <span
             className="inline-block h-2 w-2 rounded-full"
             style={{
@@ -84,7 +80,7 @@ export const BlogCoverContent: FC<BlogCoverContentProps> = ({ spec, excerpt, var
           <span>{SITE_TITLE}</span>
         </div>
         {spec.publishedLabel ? (
-          <span className="blog-cover-date text-[0.78rem] font-medium text-white/58">
+          <span className="blog-cover-date text-xs font-medium text-white/58">
             {spec.publishedLabel}
           </span>
         ) : null}

@@ -72,7 +72,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       aria-controls={detailsId}
       bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
       footer={
-        <div className="flex flex-col gap-3 text-[11px] text-white/80 md:text-xs">
+        <div className="type-caption flex flex-col gap-3 text-white/80 md:text-xs">
           {hasActions ? (
             <PublicationActions
               item={item}
@@ -83,7 +83,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
               }}
             />
           ) : null}
-          <span className="inline-flex items-center justify-between gap-3 text-[10px] tracking-[0.24em] text-[color:var(--card-accent)]/62 uppercase transition-colors duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] group-hover:text-[color:var(--card-accent)] md:text-[11px]">
+          <span className="type-micro md:type-caption inline-flex items-center justify-between gap-3 tracking-[0.24em] text-[color:var(--card-accent)]/62 uppercase transition-colors duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] group-hover:text-[color:var(--card-accent)]">
             <span className="leading-relaxed">
               {hasActions ? 'More details' : 'Abstract, notes, and context'}
             </span>
@@ -109,7 +109,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
 
         <div className="mt-5 flex flex-1 flex-col gap-5 overflow-x-hidden">
           <div className="min-w-0">
-            <h3 className="max-w-[18ch] text-[2rem] leading-[1.03] font-semibold tracking-[-0.045em] text-balance text-[color:var(--card-accent)] md:text-[2.15rem]">
+            <h3 className="type-featured-card-title md:type-featured-card-title max-w-[18ch] leading-[1.03] font-semibold tracking-[-0.045em] text-balance text-[color:var(--card-accent)]">
               {item.url ? (
                 <a
                   href={item.url}
@@ -129,7 +129,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                 item.title
               )}
             </h3>
-            <p className="mt-4 max-w-[34ch] text-[0.98rem] leading-[1.7] text-[color:var(--white)]/76 md:text-[1rem]">
+            <p className="mt-4 max-w-[34ch] text-base leading-[1.7] text-[color:var(--white)]/76 md:text-base">
               <AuthorList authors={item.authors} />
             </p>
             <PublicationMeta item={item} accent={accent} />
@@ -137,7 +137,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
 
           {item.venue ? (
             <CardInfoPanel>
-              <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+              <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
                 Context
               </p>
               <p className="mt-2 text-sm leading-relaxed text-white/78">

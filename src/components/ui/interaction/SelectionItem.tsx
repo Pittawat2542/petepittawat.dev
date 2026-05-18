@@ -68,7 +68,7 @@ const SelectionItemComponent: FC<SelectionItemProps> = ({
         {typeof count === 'number' && (
           <span
             className={cn(
-              'shrink-0 rounded-full px-1.5 py-0.5 text-[10px] transition-colors duration-150 ease-out',
+              'type-micro shrink-0 rounded-full px-1.5 py-0.5 transition-colors duration-150 ease-out',
               tone === 'editorial'
                 ? 'bg-white/[0.08] text-white/48'
                 : 'bg-white/12 text-[color:var(--white,#FFFFFF)]/70'

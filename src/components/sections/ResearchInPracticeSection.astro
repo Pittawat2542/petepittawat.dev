@@ -127,7 +127,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
   .research-practice__eyebrow {
     margin: 0 0 0.85rem;
     color: color-mix(in oklab, var(--research-panel-accent) 72%, var(--white) 24%);
-    font-size: 0.72rem;
+    font-size: var(--type-meta);
     font-weight: 760;
     letter-spacing: 0.2em;
     line-height: 1.2;
@@ -140,7 +140,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
     flex-direction: column;
     margin: 0;
     color: var(--research-panel-strong);
-    font-size: clamp(1.72rem, 3.35vw, 2.35rem);
+    font-size: var(--type-section-title);
     font-weight: 740;
     letter-spacing: 0;
     line-height: 1.08;
@@ -155,7 +155,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
     max-width: 35rem;
     margin: 1.25rem 0 0;
     color: color-mix(in oklab, var(--white) 61%, transparent);
-    font-size: clamp(0.92rem, 1.35vw, 1rem);
+    font-size: var(--type-body);
     line-height: 1.74;
   }
 
@@ -177,7 +177,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
       0 12px 26px -24px rgba(96, 165, 250, 0.44),
       inset 0 1px 0 rgba(255, 255, 255, 0.06);
     color: color-mix(in oklab, var(--research-panel-accent) 82%, var(--white) 18%);
-    font-size: 0.9rem;
+    font-size: var(--type-body-sm);
     font-weight: 700;
     line-height: 1.2;
     padding: 0.3rem 1.05rem 0.3rem 1.15rem;
@@ -281,7 +281,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
   .research-practice__pillar h3 {
     margin: 0;
     color: var(--research-panel-strong);
-    font-size: 0.92rem;
+    font-size: var(--type-body-sm);
     font-weight: 760;
     line-height: 1.25;
   }
@@ -289,7 +289,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
   .research-practice__pillar p {
     margin: 0;
     color: color-mix(in oklab, var(--white) 56%, transparent);
-    font-size: 0.86rem;
+    font-size: var(--type-control);
     line-height: 1.58;
   }
 

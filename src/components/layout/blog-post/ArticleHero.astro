@@ -101,7 +101,7 @@ const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.prop
     border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
     background: color-mix(in oklab, var(--white) 5%, transparent);
     color: color-mix(in oklab, var(--white) 78%, transparent);
-    font-size: 0.72rem;
+    font-size: var(--type-meta);
     font-weight: 600;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -118,7 +118,7 @@ const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.prop
   .article-hero__title {
     margin: 0;
     max-width: 13ch;
-    font-size: clamp(2.35rem, 1.7rem + 3vw, 5.4rem);
+    font-size: var(--type-page-title);
     font-weight: 700;
     line-height: 0.98;
     letter-spacing: -0.04em;
@@ -176,7 +176,7 @@ const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.prop
 
     .article-hero__title {
       max-width: none;
-      font-size: clamp(2rem, 8vw, 3rem);
+      font-size: var(--type-page-title-compact);
     }
   }
 </style>

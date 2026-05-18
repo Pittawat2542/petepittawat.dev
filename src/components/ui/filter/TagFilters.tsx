@@ -28,7 +28,7 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
         className={cn(
           'text-muted-foreground mb-3 text-sm font-medium',
           tone === 'editorial' &&
-            'text-[0.72rem] font-semibold tracking-[0.22em] text-white/45 uppercase'
+            'type-meta font-semibold tracking-[0.22em] text-white/45 uppercase'
         )}
       >
         Tags

@@ -139,7 +139,7 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
       )}
     >
       {label ? (
-        <span className="pl-1 text-[0.68rem] font-semibold tracking-[0.28em] text-white/52 uppercase">
+        <span className="type-caption pl-1 font-semibold tracking-[0.28em] text-white/52 uppercase">
           {label}
         </span>
       ) : null}

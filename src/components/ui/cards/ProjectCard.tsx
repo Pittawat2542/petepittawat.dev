@@ -35,7 +35,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
       footer={
         item.links?.length ? (
-          <div className="flex flex-wrap gap-2.5 text-[11px] text-white/80 md:text-xs">
+          <div className="type-caption flex flex-wrap gap-2.5 text-white/80 md:text-xs">
             {item.links.map((l, idx) => {
               const isExternal = !l.href.startsWith('/');
               return (
@@ -75,10 +75,10 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
 
         <div className="flex items-start justify-between gap-3">
           <CardKicker label="Project" />
-          <div className="flex flex-wrap items-center justify-end gap-2 text-[11px] md:text-xs">
+          <div className="type-caption flex flex-wrap items-center justify-end gap-2 md:text-xs">
             {item.type ? (
               <Badge
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
+                className="type-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium whitespace-nowrap md:text-xs"
                 style={{
                   color: 'var(--card-accent)',
                   borderColor: tint(52),
@@ -92,7 +92,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
             ) : null}
             {item.year ? (
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:text-xs"
+                className="type-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium md:text-xs"
                 style={{
                   color: 'var(--card-accent)',
                   background: `linear-gradient(180deg, ${tint(12)}, ${tint(7)})`,
@@ -108,11 +108,11 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
 
         <div className="mt-5 flex flex-1 flex-col gap-5">
           <div className="space-y-3">
-            <h3 className="max-w-[16ch] text-[1.95rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-white">
+            <h3 className="type-featured-card-title max-w-[16ch] leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-white">
               {item.title}
             </h3>
             {item.summary ? (
-              <p className="max-w-[30ch] text-[1rem] leading-[1.72] text-[color:var(--white)]/78 md:text-[1.02rem]">
+              <p className="max-w-[30ch] text-base leading-[1.72] text-[color:var(--white)]/78 md:text-base">
                 {item.summary}
               </p>
             ) : null}
@@ -129,7 +129,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                     <Star size={13} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                    <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
                       Role
                     </p>
                     <p className="text-sm leading-relaxed text-white/78">{item.role}</p>
@@ -145,7 +145,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                     <Users size={13} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                    <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
                       Collaborators
                     </p>
                     <p className="text-sm leading-relaxed text-white/78">{item.collaborators}</p>

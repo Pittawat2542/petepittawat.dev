@@ -29,7 +29,7 @@ const RecentSearchesComponent: FC<RecentSearchesProps> = ({ recent, onSelect, on
         </button>
       ))}
       <button
-        className="text-muted-foreground hover:text-foreground ml-1 text-[11px] underline decoration-dotted transition-colors"
+        className="text-muted-foreground hover:text-foreground type-caption ml-1 underline decoration-dotted transition-colors"
         onClick={onClear}
         aria-label="Clear recent searches"
       >

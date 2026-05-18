@@ -313,7 +313,7 @@ const siteCopyEn: SiteCopy = {
       title: 'Understanding and building',
       titleAccent: 'reasoning systems.',
       body: 'My work studies model behavior, evaluation, and systems: how models reason, where they fail, and how we can shape and measure reasoning to build more capable and trustworthy AI.',
-      ctaLabel: 'Learn more about my research',
+      ctaLabel: 'Learn more about me',
       ctaHref: '/about',
       pillars: researchPillars,
     },

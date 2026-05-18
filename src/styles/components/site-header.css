@@ -103,7 +103,7 @@
 .site-header__brand-link .site-logo__title {
   max-width: none;
   font-family: 'Anuphan', sans-serif;
-  font-size: 0.9rem;
+  font-size: var(--type-body-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1;
@@ -179,7 +179,7 @@
   height: 100%;
   padding-inline: clamp(0.55rem, 1.15vw, 0.95rem);
   font-family: 'Anuphan', sans-serif;
-  font-size: 0.88rem;
+  font-size: var(--type-control);
   font-weight: 520;
   color: var(--nav-link-color);
   outline: none;
@@ -303,7 +303,7 @@
 
   .site-nav__link {
     padding-inline: 0.58rem;
-    font-size: 0.84rem;
+    font-size: var(--type-control);
   }
 }
 

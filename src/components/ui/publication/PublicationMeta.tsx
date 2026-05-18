@@ -17,7 +17,7 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
     <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-[color:var(--white)]/60 md:text-sm">
       {item.type ? (
         <Badge
-          className="rounded-full px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
+          className="type-caption rounded-full px-3 py-1 font-medium whitespace-nowrap md:text-xs"
           style={{
             color: accent,
             borderColor: `color-mix(in oklab, ${accent} 52%, transparent)`,
@@ -32,7 +32,7 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
       {item.venue ? (
         <Tooltip content={item.venue}>
           <span
-            className="inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:max-w-[22rem] md:text-xs"
+            className="type-caption inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 font-medium md:max-w-[22rem] md:text-xs"
             style={{
               color: accent,
               background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 12%, transparent), color-mix(in oklab, ${accent} 7%, transparent))`,
@@ -47,7 +47,7 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
 
       <Tooltip content={String(item.year)}>
         <span
-          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:text-xs"
+          className="type-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium md:text-xs"
           style={{
             color: accent,
             background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 12%, transparent), color-mix(in oklab, ${accent} 7%, transparent))`,

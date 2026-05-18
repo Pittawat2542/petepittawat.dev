@@ -91,7 +91,7 @@ const { excerpt, languageHelperText, languageState } = Astro.props as Props;
     border: 1px solid rgba(129, 140, 248, 0.28);
     background: rgba(79, 112, 207, 0.16);
     color: color-mix(in oklab, var(--accent-blog) 84%, white 18%);
-    font-size: 0.68rem;
+    font-size: var(--type-caption);
     font-weight: 700;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -99,7 +99,7 @@ const { excerpt, languageHelperText, languageState } = Astro.props as Props;
 
   .article-note__copy {
     margin: 0;
-    font-size: 0.98rem;
+    font-size: var(--type-body);
     line-height: 1.75;
     color: color-mix(in oklab, var(--white) 84%, transparent);
     text-wrap: pretty;

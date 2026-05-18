@@ -54,7 +54,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
       bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
       footer={
         hasResources ? (
-          <div className="grid w-full [grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr))] gap-2.5 text-[11px] text-white/80 md:text-xs">
+          <div className="type-caption grid w-full [grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr))] gap-2.5 text-white/80 md:text-xs">
             {resources.map(resource => {
               const isExternal = /^https?:\/\//i.test(resource.href);
               const label = resource.label || '';
@@ -124,7 +124,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
           </div>
         ) : (
           <CardInfoPanel className="rounded-[1.3rem] py-3">
-            <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+            <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
               Session archive
             </p>
             <p className="mt-2 text-sm leading-relaxed text-white/70">
@@ -140,7 +140,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
         <div className="flex items-start justify-between gap-3">
           <CardKicker label="Talk" />
           <div
-            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-medium tracking-[0.2em] text-[color:var(--card-accent)]/70 uppercase md:text-[11px]"
+            className="type-micro md:type-caption inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-medium tracking-[0.2em] text-[color:var(--card-accent)]/70 uppercase"
             style={{
               borderColor: tint(36),
               background: `linear-gradient(180deg, ${tint(10)}, ${tint(6)})`,
@@ -165,7 +165,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
 
         <div className="mt-5 flex flex-1 flex-col gap-5">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-[color:var(--white)]/68 md:text-[0.95rem]">
+            <div className="md:type-body-sm flex items-center gap-2 text-sm text-[color:var(--white)]/68">
               <Calendar
                 size={15}
                 className="icon-bounce text-[color:var(--card-accent)]/70"
@@ -173,7 +173,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
               />
               <span>{formatDate(item.date)}</span>
             </div>
-            <h3 className="max-w-[17ch] text-[2rem] leading-[1.05] font-semibold tracking-[-0.045em] text-balance text-white md:text-[2.15rem]">
+            <h3 className="type-featured-card-title md:type-featured-card-title max-w-[17ch] leading-[1.05] font-semibold tracking-[-0.045em] text-balance text-white">
               {item.title}
             </h3>
           </div>
@@ -187,7 +187,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
                 <Users size={13} aria-hidden="true" />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
                   Audience
                 </p>
                 {item.audienceUrl && item.audience ? (

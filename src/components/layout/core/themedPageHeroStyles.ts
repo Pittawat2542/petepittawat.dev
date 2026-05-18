@@ -149,7 +149,7 @@ export const THEMED_PAGE_HERO_STYLES = `
     gap: 0.55rem;
     padding: 0.32rem 1rem;
     border-radius: 9999px;
-    font-size: 0.72rem;
+    font-size: var(--type-meta);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: rgba(226, 232, 240, 0.76);
@@ -167,7 +167,7 @@ export const THEMED_PAGE_HERO_STYLES = `
   }
 
   .themed-hero__title {
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-size: var(--type-page-title-compact);
     line-height: 1.08;
     letter-spacing: -0.025em;
     font-weight: 700;
@@ -175,7 +175,7 @@ export const THEMED_PAGE_HERO_STYLES = `
   }
 
   .themed-hero__subtitle {
-    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    font-size: var(--type-body-lg);
     line-height: 1.5;
     color: rgba(226, 232, 240, 0.82);
     max-width: 68ch;

@@ -55,6 +55,21 @@ Cleanup target:
 
 These files are not the highest-risk failures today, but they are shared enough that style ownership should be reviewed deliberately.
 
+### Runtime typography drift
+
+Status: systematized in the typography scale pass.
+
+What changed:
+
+- runtime font sizes now route through `--type-*` tokens or semantic `type-*` utilities
+- Tailwind text utilities are backed by the project scale in `src/styles/global.css`
+- `src/styles/typography.architecture.test.ts` blocks new raw numeric runtime font sizes and numeric arbitrary `text-[...]` utilities
+
+Remaining review target:
+
+- keep exceptions limited to fixed-canvas generation code, embedded article assets, and non-runtime content illustrations
+- prefer semantic utilities for repeated roles instead of adding new component-local token aliases
+
 ### `src/components/layout/core/Footer.astro`
 
 Why it is risky:
@@ -111,12 +126,13 @@ Cleanup target:
 ## Cleanup Order
 
 1. Keep `src/layouts/BlogPost.astro` from regaining child visuals.
-2. Review `src/components/layout/blog/Toc.astro` for whether its global style block can be scoped in a later focused pass.
-3. Keep `src/components/content/RelatedPosts.tsx` paired with `src/styles/components/related-posts.css`.
-4. Keep the documented footer icon escape local to `src/components/layout/core/Footer.astro`.
-5. Review `src/components/header/MobileMenu.astro` only when adding new menu states or behavior.
-6. Keep `src/components/header/SiteLogo.astro` self-contained.
-7. Review `src/styles/components/*` when a stylesheet gains a second unrelated responsibility.
+2. Keep runtime typography on the shared `--type-*` scale and update the architecture test allowlist only for real exceptions.
+3. Review `src/components/layout/blog/Toc.astro` for whether its global style block can be scoped in a later focused pass.
+4. Keep `src/components/content/RelatedPosts.tsx` paired with `src/styles/components/related-posts.css`.
+5. Keep the documented footer icon escape local to `src/components/layout/core/Footer.astro`.
+6. Review `src/components/header/MobileMenu.astro` only when adding new menu states or behavior.
+7. Keep `src/components/header/SiteLogo.astro` self-contained.
+8. Review `src/styles/components/*` when a stylesheet gains a second unrelated responsibility.
 
 ## Acceptance Criteria for Each Cleanup PR
 

@@ -44,7 +44,7 @@ const { pubDate, readingTimeMin } = Astro.props as Props;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.65rem 1rem;
-    font-size: 0.94rem;
+    font-size: var(--type-body-sm);
     color: color-mix(in oklab, var(--white) 78%, transparent);
   }
 
@@ -71,7 +71,7 @@ const { pubDate, readingTimeMin } = Astro.props as Props;
 
   @media (max-width: 720px) {
     .article-meta {
-      font-size: 0.82rem;
+      font-size: var(--type-control);
     }
   }
 </style>

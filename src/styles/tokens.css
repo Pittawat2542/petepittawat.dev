@@ -12,6 +12,37 @@
   --motion-stagger-md: 100ms;
   --motion-stagger-lg: 160ms;
 
+  --type-micro: 0.625rem;
+  --type-caption: 0.6875rem;
+  --type-meta: 0.75rem;
+  --type-control: 0.875rem;
+  --type-body-sm: 0.9375rem;
+  --type-body: 1rem;
+  --type-body-lg: 1.125rem;
+  --type-prose: 1.125rem;
+  --type-prose-compact: 1rem;
+  --type-code: 0.9375rem;
+  --type-code-meta: 0.6875rem;
+  --type-card-title: 1.75rem;
+  --type-featured-card-title: 2rem;
+  --type-card-title-compact: 1.35rem;
+  --type-section-title: 2.25rem;
+  --type-section-title-compact: 1.75rem;
+  --type-page-title: 4.5rem;
+  --type-page-title-compact: 3rem;
+  --type-home-display: 5rem;
+  --type-home-display-compact: 3.25rem;
+  --type-home-display-secondary: 3.75rem;
+  --type-home-display-secondary-compact: 2.5rem;
+  --type-home-lead: 1.5rem;
+  --type-home-lead-compact: 1.25rem;
+
+  --leading-tight: 1.1;
+  --leading-title: 1.16;
+  --leading-body: 1.7;
+  --leading-prose: 1.88;
+  --leading-control: 1.35;
+
   --site-chrome-max-width: 72rem;
   --site-chrome-padding-x: clamp(1rem, 4vw, 2.5rem);
   --site-chrome-border: color-mix(in oklab, var(--white, #f9fafb) 9%, transparent);
@@ -146,6 +177,18 @@
   --output-card-focus-ring:
     0 0 0 2px color-mix(in oklab, var(--black) 82%, transparent),
     0 0 0 4px color-mix(in oklab, var(--accent) 48%, transparent);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --type-card-title: 1.35rem;
+    --type-featured-card-title: 1.6rem;
+    --type-section-title: 1.85rem;
+    --type-page-title: 3rem;
+    --type-home-display: 3.35rem;
+    --type-home-display-secondary: 2.55rem;
+    --type-home-lead: 1.25rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -46,7 +46,7 @@ const SortControlComponent: FC<SortControlProps> = ({
         className={cn(
           'text-muted-foreground text-sm whitespace-nowrap',
           tone === 'editorial' &&
-            'text-[0.72rem] font-semibold tracking-[0.22em] text-white/45 uppercase'
+            'type-meta font-semibold tracking-[0.22em] text-white/45 uppercase'
         )}
       >
         Sort

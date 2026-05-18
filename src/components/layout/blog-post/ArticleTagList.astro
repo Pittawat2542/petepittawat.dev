@@ -72,7 +72,7 @@ const { tags } = Astro.props as Props;
     border: 1px solid color-mix(in oklab, var(--accent-blog) 32%, transparent);
     background: rgba(18, 28, 52, 0.72);
     color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
-    font-size: 0.78rem;
+    font-size: var(--type-meta);
     font-weight: 600;
     transition:
       transform 160ms ease,
@@ -88,7 +88,7 @@ const { tags } = Astro.props as Props;
 
   @media (max-width: 720px) {
     .article-tag {
-      font-size: 0.72rem;
+      font-size: var(--type-meta);
       padding: 0.34rem 0.72rem;
     }
   }

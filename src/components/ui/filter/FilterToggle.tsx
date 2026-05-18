@@ -29,7 +29,7 @@ const FilterToggleComponent: FC<FilterToggleProps> = ({
         <Filter size={17} />
         Filters
         {activeFiltersCount > 0 && (
-          <span className="inline-flex h-[1.35rem] min-w-[1.35rem] items-center justify-center rounded-full bg-[color:var(--page-accent,var(--accent))] px-1.5 text-[10px] leading-none font-semibold text-slate-950">
+          <span className="type-micro inline-flex h-[1.35rem] min-w-[1.35rem] items-center justify-center rounded-full bg-[color:var(--page-accent,var(--accent))] px-1.5 leading-none font-semibold text-slate-950">
             {activeFiltersCount}
           </span>
         )}
@@ -49,7 +49,7 @@ const FilterToggleComponent: FC<FilterToggleProps> = ({
       <Filter size={18} className="mr-2" />
       Filters
       {activeFiltersCount > 0 && (
-        <span className="bg-ring ml-2 inline-flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full px-1 text-[10px] leading-none text-white">
+        <span className="bg-ring type-micro ml-2 inline-flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full px-1 leading-none text-white">
           {activeFiltersCount}
         </span>
       )}

@@ -14,7 +14,7 @@ interface CardKickerProps {
 const CardKickerComponent: FC<CardKickerProps> = ({ label, className }) => (
   <div
     className={cn(
-      'inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase',
+      'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-white/48 uppercase',
       className
     )}
   >
@@ -75,7 +75,7 @@ const CardTagListComponent: FC<CardTagListProps> = ({ tags, tone = 'accent' }) =
         <Badge
           key={tag}
           className={cn(
-            'rounded-full border px-3 py-1 text-[11px] font-medium md:text-xs',
+            'type-caption rounded-full border px-3 py-1 font-medium md:text-xs',
             tone === 'muted' && 'text-white/70'
           )}
           variant="outline"

@@ -75,7 +75,7 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                   </h3>
                   {(item.locale === 'th' ||
                     (item.isFallback && item.availableLocales.length > 1)) && (
-                    <Badge className="bg-white/10 text-[10px] text-white/75">
+                    <Badge className="type-micro bg-white/10 text-white/75">
                       {item.locale.toUpperCase()}
                     </Badge>
                   )}
@@ -91,14 +91,14 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                 {item.tags && item.tags.length > 0 && (
                   <div className="mt-1 flex flex-wrap gap-1">
                     {item.tags.slice(0, 5).map(tag => (
-                      <span key={tag} className="text-muted-foreground/80 text-[10px]">
+                      <span key={tag} className="text-muted-foreground/80 type-micro">
                         #{tag}
                       </span>
                     ))}
                   </div>
                 )}
               </div>
-              <div className="text-muted-foreground mt-1 flex items-center gap-2 text-[11px]">
+              <div className="text-muted-foreground type-caption mt-1 flex items-center gap-2">
                 {index === activeIndex && (
                   <>
                     <span className="hidden items-center gap-1 sm:inline-flex">
