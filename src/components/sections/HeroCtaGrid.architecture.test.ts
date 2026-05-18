@@ -52,7 +52,16 @@ test('hero CTA cards preserve the original visual base while adding selected out
   assert.match(grid, /\.replace\('\{count\}'/);
   assert.match(grid, /toLocaleString\('en-US'\)/);
   assert.doesNotMatch(card, /hero-cta-card__metric/);
+  assert.match(card, /hero-cta-card__header/);
+  assert.match(card, /grid-template-columns:\s*minmax\(0,\s*1fr\)/);
   assert.match(card, /grid-template-rows:\s*auto minmax\(0,\s*1fr\) auto auto/);
+  assert.match(
+    card,
+    /\.hero-cta-card__header,\n\s*\.hero-cta-card__description,\n\s*\.hero-cta-card__divider,\n\s*\.hero-cta-card__link \{\n\s*grid-column: 1 \/ -1/
+  );
+  assert.match(card, /width:\s*clamp\(2\.28rem,\s*3vw,\s*2\.5rem\)/);
+  assert.match(card, /border-radius:\s*0\.86rem/);
+  assert.doesNotMatch(card, /hero-cta-card__icon-shell shape-squircle-sm/);
   assert.match(card, /var\(--output-card-bg\)/);
   assert.equal(
     existsSync(path.join(projectRoot, 'src/components/sections/SelectedOutputSection.astro')),

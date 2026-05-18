@@ -31,16 +31,14 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
   }}
 >
   <span class="hero-cta-card__shine" aria-hidden="true"></span>
-  <span class="hero-cta-card__icon-shell" aria-hidden="true">
-    <span class="hero-cta-card__orbit hero-cta-card__orbit--outer"></span>
-    <span class="hero-cta-card__orbit hero-cta-card__orbit--inner"></span>
-    <Icon class="hero-cta-card__icon" aria-hidden="true" />
+  <span class="hero-cta-card__header">
+    <span class="hero-cta-card__icon-shell" aria-hidden="true">
+      <Icon class="hero-cta-card__icon" aria-hidden="true" />
+    </span>
+    <span class="hero-cta-card__title">{title}</span>
   </span>
 
-  <span class="hero-cta-card__body">
-    <span class="hero-cta-card__title">{title}</span>
-    <span class="hero-cta-card__description">{description}</span>
-  </span>
+  <span class="hero-cta-card__description">{description}</span>
 
   <span class="hero-cta-card__divider" aria-hidden="true"></span>
 
@@ -76,11 +74,10 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     position: relative;
     isolation: isolate;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr) auto auto;
     align-content: stretch;
     align-items: start;
-    column-gap: clamp(1rem, 1.8vw, 1.35rem);
     row-gap: clamp(0.66rem, 1.15vw, 0.88rem);
     min-height: clamp(9.8rem, 12.6vw, 11.4rem);
     height: 100%;
@@ -134,13 +131,12 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
   .hero-cta-card__icon-shell {
     position: relative;
     display: grid;
-    width: clamp(4rem, 5.2vw, 4.72rem);
-    height: clamp(4rem, 5.2vw, 4.72rem);
-    grid-row: 1 / span 2;
+    width: clamp(2.28rem, 3vw, 2.5rem);
+    height: clamp(2.28rem, 3vw, 2.5rem);
+    flex: 0 0 auto;
     place-items: center;
-    margin: 0.04rem 0 0;
     border: 1px solid color-mix(in oklab, var(--hero-cta-accent) 46%, rgba(255, 255, 255, 0.1));
-    border-radius: 999px;
+    border-radius: 0.86rem;
     background:
       radial-gradient(circle at 50% 50%, var(--hero-cta-accent-muted), transparent 64%),
       radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 48%),
@@ -148,7 +144,7 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     color: var(--hero-cta-accent);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.11),
-      0 0 1.65rem -0.42rem var(--hero-cta-glow);
+      0 0 1.34rem -0.48rem var(--hero-cta-glow);
     transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
     transition:
       border-color var(--motion-duration-normal) var(--motion-ease-decelerate),
@@ -157,49 +153,27 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
   }
 
   .hero-cta-card__icon {
-    width: clamp(1.68rem, 2.1vw, 1.96rem);
-    height: clamp(1.68rem, 2.1vw, 1.96rem);
-    filter: drop-shadow(0 0 11px var(--hero-cta-glow));
+    width: clamp(1rem, 1.34vw, 1.2rem);
+    height: clamp(1rem, 1.34vw, 1.2rem);
+    filter: drop-shadow(0 0 8px var(--hero-cta-glow));
     stroke-width: 1.85;
     transition: transform var(--motion-duration-normal) var(--motion-ease-decelerate);
   }
 
-  .hero-cta-card__orbit {
-    position: absolute;
-    inset: 50%;
-    pointer-events: none;
-    border: 1px solid color-mix(in oklab, var(--hero-cta-accent) 32%, transparent);
-    border-radius: 999px;
-    opacity: 0.42;
-    transform: translate(-50%, -50%);
-    transition:
-      opacity var(--motion-duration-normal) ease,
-      transform var(--motion-duration-normal) var(--motion-ease-decelerate);
-  }
-
-  .hero-cta-card__orbit--outer {
-    width: calc(100% + 0.7rem);
-    height: calc(100% + 0.7rem);
-  }
-
-  .hero-cta-card__orbit--inner {
-    width: calc(100% - 0.72rem);
-    height: calc(100% - 0.72rem);
-  }
-
-  .hero-cta-card__body,
+  .hero-cta-card__header,
+  .hero-cta-card__description,
   .hero-cta-card__divider,
   .hero-cta-card__link {
+    grid-column: 1 / -1;
     position: relative;
     z-index: 1;
   }
 
-  .hero-cta-card__body {
-    display: grid;
-    grid-column: 2 / -1;
-    align-self: start;
-    gap: clamp(0.6rem, 1vw, 0.78rem);
-    padding-top: 0.3rem;
+  .hero-cta-card__header {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: clamp(0.68rem, 1.05vw, 0.9rem);
   }
 
   .hero-cta-card__title {
@@ -210,20 +184,21 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     font-weight: 820;
     line-height: 1.08;
     letter-spacing: 0;
+    text-align: left;
     text-wrap: balance;
   }
 
   .hero-cta-card__description {
     display: block;
-    max-width: 34rem;
+    max-width: 38rem;
     color: var(--hero-cta-card-muted);
     font-size: clamp(0.9rem, 1vw, 0.98rem);
     line-height: 1.5;
+    text-align: left;
   }
 
   .hero-cta-card__divider {
     display: block;
-    grid-column: 1 / -1;
     width: 100%;
     height: 1px;
     align-self: end;
@@ -243,12 +218,12 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     align-self: end;
     justify-self: start;
     gap: 0.58rem;
-    grid-column: 1 / -1;
     margin-top: 0;
     color: color-mix(in oklab, var(--hero-cta-accent) 82%, white 14%);
     font-size: clamp(0.94rem, 1.2vw, 1.04rem);
     font-weight: 760;
     line-height: 1.1;
+    text-align: left;
   }
 
   .hero-cta-card__arrow {
@@ -286,18 +261,6 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     transform: translate3d(0.03rem, -0.02rem, 0) rotate(4deg) scale(1.045);
   }
 
-  .hero-cta-card:hover .hero-cta-card__orbit--outer,
-  .hero-cta-card:focus-visible .hero-cta-card__orbit--outer {
-    opacity: 0.78;
-    transform: translate(-50%, -50%) rotate(18deg) scale(1.045);
-  }
-
-  .hero-cta-card:hover .hero-cta-card__orbit--inner,
-  .hero-cta-card:focus-visible .hero-cta-card__orbit--inner {
-    opacity: 0.68;
-    transform: translate(-50%, -50%) rotate(-22deg) scale(0.94);
-  }
-
   .hero-cta-card:hover .hero-cta-card__arrow,
   .hero-cta-card:focus-visible .hero-cta-card__arrow {
     transform: translateX(0.22rem);
@@ -316,18 +279,9 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
 
   @media (max-width: 767px) {
     .hero-cta-card {
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto minmax(0, 1fr) auto auto;
       min-height: auto;
-    }
-
-    .hero-cta-card__body {
-      grid-column: 2 / -1;
-    }
-
-    .hero-cta-card__divider,
-    .hero-cta-card__link {
-      grid-column: 1 / -1;
     }
   }
 
@@ -336,7 +290,6 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     .hero-cta-card::before,
     .hero-cta-card__icon-shell,
     .hero-cta-card__icon,
-    .hero-cta-card__orbit,
     .hero-cta-card__arrow {
       transition: none;
     }
@@ -347,8 +300,6 @@ const { href, title, description, ctaLabel, Icon, token } = Astro.props as Props
     .hero-cta-card:focus-visible .hero-cta-card__icon-shell,
     .hero-cta-card:hover .hero-cta-card__icon,
     .hero-cta-card:focus-visible .hero-cta-card__icon,
-    .hero-cta-card:hover .hero-cta-card__orbit,
-    .hero-cta-card:focus-visible .hero-cta-card__orbit,
     .hero-cta-card:hover .hero-cta-card__arrow,
     .hero-cta-card:focus-visible .hero-cta-card__arrow {
       transform: none;
