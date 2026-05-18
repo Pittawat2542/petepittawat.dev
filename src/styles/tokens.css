@@ -131,6 +131,21 @@
     linear-gradient(315deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.04) 100%),
     radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.08), transparent 50%),
     rgba(31, 41, 55, 0.45);
+
+  --output-card-bg:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.014) 58%),
+    color-mix(in oklab, var(--black-nav) 82%, rgba(5, 10, 24, 0.76));
+  --output-card-border: color-mix(in oklab, var(--white) 10%, transparent);
+  --output-card-hover-border: color-mix(in oklab, var(--accent) 36%, var(--white) 9%);
+  --output-card-text: color-mix(in oklab, var(--white) 94%, transparent);
+  --output-card-muted: color-mix(in oklab, var(--white) 66%, transparent);
+  --output-card-shadow:
+    0 18px 48px -40px rgba(2, 8, 23, 0.86), inset 0 1px 0 rgba(255, 255, 255, 0.064);
+  --output-card-shadow-hover:
+    0 24px 64px -44px rgba(2, 8, 23, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --output-card-focus-ring:
+    0 0 0 2px color-mix(in oklab, var(--black) 82%, transparent),
+    0 0 0 4px color-mix(in oklab, var(--accent) 48%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

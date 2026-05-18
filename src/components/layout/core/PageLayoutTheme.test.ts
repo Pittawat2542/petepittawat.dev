@@ -35,10 +35,11 @@ test('non-blog listing cards derive accents from the single site accent', () => 
 
 test('shared theme tokens retire legacy purple accents in favor of blue-led and warm complementary values', () => {
   const globalCss = readProjectFile('src/styles/global.css');
+  const tokensCss = readProjectFile('src/styles/tokens.css');
 
   assert.doesNotMatch(globalCss, /#8b5cf6|rgba\(139,\s*92,\s*246|#7469b6/);
   assert.doesNotMatch(globalCss, /\.hero-text-gradient-purple/);
-  assert.match(globalCss, /--accent:\s*#60a5fa/);
-  assert.match(globalCss, /--accent-talks:\s*#f97316/);
-  assert.match(globalCss, /--accent-2:\s*#fb923c/);
+  assert.match(tokensCss, /--accent:\s*#60a5fa/);
+  assert.match(tokensCss, /--accent-talks:\s*#f97316/);
+  assert.match(tokensCss, /--accent-2:\s*#fb923c/);
 });

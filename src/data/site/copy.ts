@@ -1,8 +1,6 @@
 export type SiteLocale = 'en' | 'th';
 
 export type SiteNavLinkKey = 'home' | 'blog' | 'projects' | 'publications' | 'talks' | 'about';
-export type HeroCtaIcon = 'rocket' | 'book-open' | 'book-text' | 'scroll-text' | 'mic';
-export type HeroCtaVariant = 'primary' | 'secondary' | 'ghost';
 export type HeroTopicIcon = 'brain' | 'activity' | 'bar-chart-3' | 'network';
 export type HomeStatIcon = 'book-text' | 'scroll-text' | 'mic';
 export type ResearchThemeIcon = 'activity' | 'layers' | 'shield-check' | 'globe';
@@ -49,14 +47,6 @@ export interface SiteCopy {
         readonly label: string;
         readonly icon: HeroTopicIcon;
       }[];
-      readonly primaryCtas: readonly {
-        readonly href: string;
-        readonly title: string;
-        readonly description: string;
-        readonly ctaLabel: string;
-        readonly variant: HeroCtaVariant;
-        readonly icon: HeroCtaIcon;
-      }[];
     };
     readonly researchInPractice: {
       readonly eyebrow: string;
@@ -67,7 +57,7 @@ export interface SiteCopy {
       readonly ctaHref: string;
       readonly pillars: readonly ResearchPillar[];
     };
-    readonly statsSection: {
+    readonly selectedOutput: {
       readonly eyebrow: string;
       readonly title: string;
       readonly description: string;
@@ -317,35 +307,9 @@ const siteCopyEn: SiteCopy = {
         { label: 'Evaluation', icon: 'bar-chart-3' },
         { label: 'Agentic Systems', icon: 'network' },
       ],
-      primaryCtas: [
-        {
-          href: '/publications',
-          title: 'Publications',
-          description: 'Peer-reviewed papers, preprints, and research outputs.',
-          ctaLabel: 'View publications',
-          variant: 'primary',
-          icon: 'scroll-text',
-        },
-        {
-          href: '/blog',
-          title: 'Blog',
-          description: 'Posts and technical essays on ideas, experiments, and lessons.',
-          ctaLabel: 'Read blog',
-          variant: 'secondary',
-          icon: 'book-text',
-        },
-        {
-          href: '/talks',
-          title: 'Talks & Workshops',
-          description: 'Conference talks, invited sessions, and workshop materials.',
-          ctaLabel: 'Browse talks',
-          variant: 'ghost',
-          icon: 'mic',
-        },
-      ],
     },
     researchInPractice: {
-      eyebrow: '01 Research focus',
+      eyebrow: 'Research focus',
       title: 'Understanding and building',
       titleAccent: 'reasoning systems.',
       body: 'My work studies model behavior, evaluation, and systems: how models reason, where they fail, and how we can shape and measure reasoning to build more capable and trustworthy AI.',
@@ -353,7 +317,7 @@ const siteCopyEn: SiteCopy = {
       ctaHref: '/about',
       pillars: researchPillars,
     },
-    statsSection: {
+    selectedOutput: {
       eyebrow: 'Selected output',
       title: 'What I publish, ship, and share',
       description:
@@ -362,9 +326,9 @@ const siteCopyEn: SiteCopy = {
         {
           key: 'posts',
           href: '/blog',
-          ariaLabel: 'Read the blog',
+          ariaLabel: 'Explore blog posts',
           title: 'Blog posts',
-          linkText: 'Read the blog',
+          linkText: 'Explore {count} blog posts',
           accentBgColor: 'var(--accent-blog)',
           description:
             'Essays, technical notes, and field observations on language models, agent workflows, and software practice.',
@@ -373,9 +337,9 @@ const siteCopyEn: SiteCopy = {
         {
           key: 'publications',
           href: '/publications',
-          ariaLabel: 'View publications',
+          ariaLabel: 'Explore publications',
           title: 'Publications',
-          linkText: 'View publications',
+          linkText: 'Explore {count} publications',
           accentBgColor: 'var(--accent-publications)',
           description:
             'Papers on prompting, reasoning, evaluation, game-related LLM work, and applied AI systems.',
@@ -384,9 +348,9 @@ const siteCopyEn: SiteCopy = {
         {
           key: 'talks',
           href: '/talks',
-          ariaLabel: 'See talks',
+          ariaLabel: 'Explore talks',
           title: 'Talks',
-          linkText: 'See talks',
+          linkText: 'Explore {count} talks',
           accentBgColor: 'var(--accent-talks)',
           description:
             'Conference talks, invited lectures, and workshops on reasoning models, evaluation, and AI engineering.',
@@ -581,32 +545,6 @@ const siteCopyTh: SiteCopy = {
         { label: 'Evaluation', icon: 'bar-chart-3' },
         { label: 'Agentic Systems', icon: 'network' },
       ],
-      primaryCtas: [
-        {
-          href: '/publications',
-          title: 'ผลงานตีพิมพ์',
-          description: 'บทความวิชาการ พรีพรินต์ และผลงานวิจัย',
-          ctaLabel: 'ดูผลงานตีพิมพ์',
-          variant: 'primary',
-          icon: 'scroll-text',
-        },
-        {
-          href: '/blog',
-          title: 'บล็อก',
-          description: 'บทความและบันทึกเชิงเทคนิคเกี่ยวกับไอเดีย การทดลอง และบทเรียน',
-          ctaLabel: 'อ่านบล็อก',
-          variant: 'secondary',
-          icon: 'book-text',
-        },
-        {
-          href: '/talks',
-          title: 'งานบรรยายและเวิร์กช็อป',
-          description: 'งานบรรยาย เซสชันรับเชิญ และสื่อเวิร์กช็อป',
-          ctaLabel: 'ดูงานบรรยาย',
-          variant: 'ghost',
-          icon: 'mic',
-        },
-      ],
     },
     researchInPractice: {
       eyebrow: '01 โฟกัสงานวิจัย',
@@ -617,7 +555,7 @@ const siteCopyTh: SiteCopy = {
       ctaHref: '/about',
       pillars: researchPillarsTh,
     },
-    statsSection: {
+    selectedOutput: {
       eyebrow: 'ผลงานที่เผยแพร่',
       title: 'สิ่งที่ผมเผยแพร่ สร้าง และแบ่งปัน',
       description:
@@ -626,9 +564,9 @@ const siteCopyTh: SiteCopy = {
         {
           key: 'posts',
           href: '/blog',
-          ariaLabel: 'อ่านบล็อก',
+          ariaLabel: 'สำรวจบทความบล็อก',
           title: 'บทความบล็อก',
-          linkText: 'อ่านบล็อก',
+          linkText: 'สำรวจบทความ {count} รายการ',
           accentBgColor: 'var(--accent-blog)',
           description:
             'บทความ ความเห็นเชิงเทคนิค และบันทึกภาคสนามเกี่ยวกับโมเดลภาษา agent workflow และการพัฒนาซอฟต์แวร์',
@@ -637,9 +575,9 @@ const siteCopyTh: SiteCopy = {
         {
           key: 'publications',
           href: '/publications',
-          ariaLabel: 'ดูผลงานตีพิมพ์',
+          ariaLabel: 'สำรวจผลงานตีพิมพ์',
           title: 'ผลงานตีพิมพ์',
-          linkText: 'ดูผลงานตีพิมพ์',
+          linkText: 'สำรวจผลงานตีพิมพ์ {count} รายการ',
           accentBgColor: 'var(--accent-publications)',
           description:
             'งานตีพิมพ์ด้าน prompting reasoning evaluation งาน LLM ที่เกี่ยวกับเกม และระบบ AI ประยุกต์',
@@ -648,9 +586,9 @@ const siteCopyTh: SiteCopy = {
         {
           key: 'talks',
           href: '/talks',
-          ariaLabel: 'ดูงานบรรยาย',
+          ariaLabel: 'สำรวจงานบรรยาย',
           title: 'งานบรรยาย',
-          linkText: 'ดูงานบรรยาย',
+          linkText: 'สำรวจงานบรรยาย {count} รายการ',
           accentBgColor: 'var(--accent-talks)',
           description:
             'งานบรรยายในงานประชุม บรรยายรับเชิญ และเวิร์กช็อปด้านโมเดลให้เหตุผล การประเมินผล และ AI engineering',

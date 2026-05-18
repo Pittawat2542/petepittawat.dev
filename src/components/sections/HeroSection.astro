@@ -7,9 +7,11 @@ import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
   copy: SiteCopy['home']['hero'];
+  selectedOutput: SiteCopy['home']['selectedOutput'];
+  selectedOutputStats: Record<'posts' | 'publications' | 'talks', number>;
 }
 
-const { copy } = Astro.props as Props;
+const { copy, selectedOutput, selectedOutputStats } = Astro.props as Props;
 ---
 
 <Container
@@ -19,6 +21,6 @@ const { copy } = Astro.props as Props;
   <HeroPortrait />
 
   <div class="order-3 mt-1 w-full md:col-span-2 md:mt-3 lg:mt-4">
-    <HeroCtaGrid copy={copy} />
+    <HeroCtaGrid heading={copy.ctaHeading} copy={selectedOutput} stats={selectedOutputStats} />
   </div>
 </Container>

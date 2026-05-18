@@ -1,17 +1,19 @@
 ---
-import { BookOpen, BookText, Mic, Rocket, ScrollText } from '@lucide/astro';
+import { BookText, Mic, ScrollText } from '@lucide/astro';
 import HeroCtaCard from '@/components/sections/hero/HeroCtaCard.astro';
 import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
-  copy: SiteCopy['home']['hero'];
+  heading: string;
+  copy: SiteCopy['home']['selectedOutput'];
+  stats: HeroCtaStats;
 }
 
-const { copy } = Astro.props as Props;
+type HeroCtaStats = Record<'posts' | 'publications' | 'talks', number>;
+
+const { heading, copy, stats } = Astro.props as Props;
 
 const iconMap = {
-  rocket: Rocket,
-  'book-open': BookOpen,
   'book-text': BookText,
   'scroll-text': ScrollText,
   mic: Mic,
@@ -35,8 +37,13 @@ const ctaTokens = [
   },
 ] as const;
 
-const ctas = copy.primaryCtas.map((config, index) => ({
+const formatCtaLabel = (template: string, count: number) =>
+  template.replace('{count}', count.toLocaleString('en-US'));
+
+const ctas = copy.cards.map((config, index) => ({
   ...config,
+  count: stats[config.key] ?? 0,
+  ctaLabel: formatCtaLabel(config.linkText, stats[config.key] ?? 0),
   Icon: iconMap[config.icon],
   token: ctaTokens[index] ?? ctaTokens[0],
 }));
@@ -44,7 +51,7 @@ const ctas = copy.primaryCtas.map((config, index) => ({
 
 <section class="hero-cta" aria-labelledby="hero-cta-title">
   <div class="hero-cta__heading-row">
-    <h2 id="hero-cta-title" class="hero-cta__heading">{copy.ctaHeading}</h2>
+    <h2 id="hero-cta-title" class="hero-cta__heading">{heading}</h2>
     <span class="hero-cta__rule" aria-hidden="true"></span>
   </div>
 
@@ -68,7 +75,7 @@ const ctas = copy.primaryCtas.map((config, index) => ({
 
 <style>
   .hero-cta {
-    --hero-cta-shell-gap: clamp(0.98rem, 1.8vw, 1.18rem);
+    --hero-cta-shell-gap: clamp(1.1rem, 2vw, 1.45rem);
     width: 100%;
   }
 
@@ -78,8 +85,8 @@ const ctas = copy.primaryCtas.map((config, index) => ({
 
   .hero-cta__heading {
     margin: 0;
-    color: #68a7ff;
-    font-size: clamp(0.82rem, 1.3vw, 1rem);
+    color: color-mix(in oklab, #68a7ff 86%, var(--white) 10%);
+    font-size: clamp(1.02rem, 2.1vw, 1.48rem);
     font-weight: 800;
     letter-spacing: 0;
     line-height: 1;
@@ -90,9 +97,9 @@ const ctas = copy.primaryCtas.map((config, index) => ({
   .hero-cta__rule {
     position: relative;
     display: block;
-    width: 2.65rem;
+    width: clamp(3rem, 5vw, 4.25rem);
     height: 2px;
-    margin-top: 0.82rem;
+    margin-top: clamp(0.86rem, 1.4vw, 1.05rem);
     overflow: visible;
     border-radius: 999px;
     background: linear-gradient(90deg, var(--accent), rgba(125, 211, 252, 0.55));
@@ -104,7 +111,7 @@ const ctas = copy.primaryCtas.map((config, index) => ({
 
   .hero-cta__grid {
     display: grid;
-    gap: clamp(0.78rem, 1.35vw, 0.95rem);
+    gap: clamp(1rem, 1.75vw, 1.35rem);
     margin: 0;
     padding: 0;
     list-style: none;
