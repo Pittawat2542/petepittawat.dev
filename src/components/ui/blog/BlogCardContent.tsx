@@ -8,6 +8,7 @@ interface BlogCardContentProps {
   readonly excerpt: string;
   readonly pubDate: Date;
   readonly lang: 'en' | 'th';
+  readonly readingTimeMin?: number | undefined;
   readonly languageBadgeLabel?: string;
   readonly isPartOfSeries: boolean;
   readonly seriesTitle?: string;
@@ -16,6 +17,7 @@ interface BlogCardContentProps {
   readonly fallbackTag: string;
   readonly showTag?: boolean | undefined;
   readonly tone?: 'default' | 'editorial' | undefined;
+  readonly presentation?: 'standard' | 'featured' | 'compact' | undefined;
 }
 
 const BlogCardContentComponent: FC<BlogCardContentProps> = ({
@@ -23,6 +25,7 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
   excerpt,
   pubDate,
   lang,
+  readingTimeMin,
   languageBadgeLabel,
   isPartOfSeries,
   seriesTitle,
@@ -31,9 +34,31 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
   fallbackTag,
   showTag = true,
   tone = 'default',
+  presentation = 'standard',
 }) => {
+  const titleClassName =
+    tone === 'editorial'
+      ? presentation === 'compact'
+        ? 'line-clamp-3 text-lg leading-snug font-semibold text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-xl md:leading-tight'
+        : presentation === 'featured'
+          ? 'text-2xl leading-tight font-semibold text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-3xl'
+          : 'text-xl leading-snug font-semibold text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-2xl md:leading-tight'
+      : 'text-xl leading-snug font-semibold tracking-tight text-[color:var(--white)] transition-colors duration-300 group-hover:text-white md:text-2xl md:leading-tight lg:text-3xl';
+  const excerptClassName =
+    tone === 'editorial'
+      ? presentation === 'compact'
+        ? 'line-clamp-2 text-left text-sm leading-6 text-white/66 transition-colors duration-300 group-hover:text-white/82'
+        : 'line-clamp-3 text-left text-sm leading-6 text-white/68 transition-colors duration-300 group-hover:text-white/84 md:text-base md:leading-7'
+      : 'line-clamp-3 text-left text-sm leading-6 text-[color:var(--white)]/78 transition-colors duration-300 group-hover:text-[color:var(--white,#ffffff)]/92 md:text-base md:leading-7';
+
   return (
-    <div className="flex flex-1 flex-col gap-3 md:gap-4">
+    <div
+      className={
+        presentation === 'compact'
+          ? 'flex flex-1 flex-col gap-2.5'
+          : 'flex flex-1 flex-col gap-3 md:gap-4'
+      }
+    >
       {showTag ? (
         <div
           className={
@@ -53,33 +78,18 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
         </div>
       ) : null}
 
-      <div className="space-y-3 md:space-y-4">
-        <h3
-          className={
-            tone === 'editorial'
-              ? 'md:type-card-title lg:type-featured-card-title text-xl leading-snug font-semibold tracking-[-0.03em] text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:leading-tight'
-              : 'text-xl leading-snug font-semibold tracking-tight text-[color:var(--white)] transition-colors duration-300 group-hover:text-white md:text-2xl md:leading-tight lg:text-3xl'
-          }
-        >
-          {title}
-        </h3>
+      <div className={presentation === 'compact' ? 'space-y-2.5' : 'space-y-3 md:space-y-4'}>
+        <h3 className={titleClassName}>{title}</h3>
 
         <BlogCardMeta
           pubDate={pubDate}
           lang={lang}
+          readingTimeMin={readingTimeMin}
           languageBadgeLabel={languageBadgeLabel}
           tone={tone}
         />
 
-        <p
-          className={
-            tone === 'editorial'
-              ? 'line-clamp-3 text-left text-sm leading-6 text-white/68 transition-colors duration-300 group-hover:text-white/84 md:text-base md:leading-7'
-              : 'line-clamp-3 text-left text-sm leading-6 text-[color:var(--white)]/78 transition-colors duration-300 group-hover:text-[color:var(--white,#ffffff)]/92 md:text-base md:leading-7'
-          }
-        >
-          {excerpt}
-        </p>
+        <p className={excerptClassName}>{excerpt}</p>
       </div>
     </div>
   );
@@ -92,6 +102,7 @@ export const BlogCardContent = memo(BlogCardContentComponent, (prevProps, nextPr
     prevProps.excerpt === nextProps.excerpt &&
     prevProps.pubDate === nextProps.pubDate &&
     prevProps.lang === nextProps.lang &&
+    prevProps.readingTimeMin === nextProps.readingTimeMin &&
     prevProps.languageBadgeLabel === nextProps.languageBadgeLabel &&
     prevProps.isPartOfSeries === nextProps.isPartOfSeries &&
     prevProps.seriesTitle === nextProps.seriesTitle &&
@@ -99,7 +110,8 @@ export const BlogCardContent = memo(BlogCardContentComponent, (prevProps, nextPr
     prevProps.totalParts === nextProps.totalParts &&
     prevProps.fallbackTag === nextProps.fallbackTag &&
     prevProps.showTag === nextProps.showTag &&
-    prevProps.tone === nextProps.tone
+    prevProps.tone === nextProps.tone &&
+    prevProps.presentation === nextProps.presentation
   );
 });
 

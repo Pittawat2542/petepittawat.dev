@@ -29,7 +29,10 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
   <section id="about" class="research-practice" aria-labelledby="research-practice-title">
     <div class="research-practice__ambient" aria-hidden="true"></div>
     <div class="research-practice__intro">
-      <p class="research-practice__eyebrow">{copy.eyebrow}</p>
+      <p class="section-eyebrow research-practice__eyebrow">
+        <span class="section-eyebrow__dot" aria-hidden="true"></span>
+        {copy.eyebrow}
+      </p>
       <h2 id="research-practice-title" class="research-practice__title">
         <span>{copy.title}</span>
         <span class="research-practice__title-accent">{copy.titleAccent}</span>
@@ -125,13 +128,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
   }
 
   .research-practice__eyebrow {
-    margin: 0 0 0.85rem;
-    color: color-mix(in oklab, var(--research-panel-accent) 72%, var(--white) 24%);
-    font-size: var(--type-meta);
-    font-weight: 760;
-    letter-spacing: 0.2em;
-    line-height: 1.2;
-    text-transform: uppercase;
+    margin: 0 0 clamp(1rem, 1.6vw, 1.25rem);
   }
 
   .research-practice__title {

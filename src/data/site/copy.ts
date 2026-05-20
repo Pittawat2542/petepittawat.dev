@@ -360,10 +360,10 @@ const siteCopyEn: SiteCopy = {
     },
     blogSection: {
       eyebrow: 'Latest writing',
-      title: 'Recent notes from the research and engineering loop',
+      title: 'Field notes on AI systems',
       description:
-        'New essays on model behavior, evaluation, agentic workflows, and the practical details that show up while building.',
-      browseLabel: 'Browse all articles',
+        'Essays on model behavior, evaluation, agentic workflows, and the engineering details behind reliable AI.',
+      browseLabel: 'Browse all essays',
       emptyLabel: 'No posts yet. New writing will appear here.',
     },
   },

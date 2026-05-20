@@ -5,6 +5,7 @@ import { memo } from 'react';
 interface BlogCardMetaProps {
   readonly pubDate: Date;
   readonly lang: 'en' | 'th';
+  readonly readingTimeMin?: number | undefined;
   readonly languageBadgeLabel?: string | undefined;
   readonly tone?: 'default' | 'editorial' | undefined;
 }
@@ -12,6 +13,7 @@ interface BlogCardMetaProps {
 const BlogCardMetaComponent: FC<BlogCardMetaProps> = ({
   pubDate,
   lang,
+  readingTimeMin,
   languageBadgeLabel,
   tone = 'default',
 }) => {
@@ -41,6 +43,12 @@ const BlogCardMetaComponent: FC<BlogCardMetaProps> = ({
           })}
         </time>
       </div>
+      {typeof readingTimeMin === 'number' ? (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{readingTimeMin} min read</span>
+        </>
+      ) : null}
       {(languageBadgeLabel ?? (lang === 'th' ? 'TH' : undefined)) && (
         <span
           className={`type-micro rounded-full px-2 py-0.5 font-semibold ${
@@ -61,6 +69,7 @@ export const BlogCardMeta = memo(BlogCardMetaComponent, (prevProps, nextProps) =
   return (
     prevProps.pubDate === nextProps.pubDate &&
     prevProps.lang === nextProps.lang &&
+    prevProps.readingTimeMin === nextProps.readingTimeMin &&
     prevProps.languageBadgeLabel === nextProps.languageBadgeLabel &&
     prevProps.tone === nextProps.tone
   );

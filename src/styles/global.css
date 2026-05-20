@@ -3002,6 +3002,28 @@ body.page-theme .glass-section::before {
   z-index: -1;
 }
 
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.72rem;
+  margin: 0;
+  color: color-mix(in oklab, var(--white) 64%, var(--accent-blog) 20%);
+  font-size: var(--type-meta);
+  font-weight: 760;
+  letter-spacing: 0.28em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.section-eyebrow__dot {
+  width: 0.46rem;
+  height: 0.46rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--accent-blog);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--accent-blog) 72%, transparent);
+}
+
 .media-card {
   position: relative;
   isolation: isolate;
@@ -3100,6 +3122,60 @@ body.page-theme .glass-section::before {
   padding: var(--media-card-footer-padding-y) var(--media-card-padding);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+}
+
+.blog-card--featured-essay {
+  --media-card-media-aspect: 16 / 6.4;
+  --media-card-padding: clamp(1.25rem, 2.35vw, 1.85rem);
+}
+
+.blog-card--compact-note {
+  --media-card-media-aspect: 16 / 6.8;
+  --media-card-padding: clamp(1rem, 1.65vw, 1.3rem);
+}
+
+.blog-card__footer--editorial-note {
+  border-top-color: color-mix(in oklab, var(--white) 7%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.006)),
+    rgba(8, 14, 28, 0.34);
+}
+
+@media (min-width: 720px) {
+  .blog-card--compact-note {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, 36%) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: clamp(14.5rem, 18vw, 16.5rem);
+  }
+
+  .blog-card--compact-note .media-card__media {
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    min-height: 100%;
+    border-radius: var(--media-card-media-radius) 0 0 var(--media-card-media-radius);
+  }
+
+  .blog-card--compact-note .media-card__body {
+    padding-bottom: clamp(0.8rem, 1.15vw, 1rem);
+  }
+
+  .blog-card--compact-note .media-card__footer {
+    grid-column: 2;
+    padding-top: 0.55rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-card--featured-essay {
+    --media-card-media-aspect: 16 / 6.2;
+  }
+}
+
+@media (max-width: 719px) {
+  .blog-card--compact-note {
+    --media-card-media-aspect: 16 / 6.6;
+  }
 }
 
 /* Prose callouts */

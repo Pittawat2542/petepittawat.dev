@@ -25,6 +25,10 @@ interface BlogCardProps {
   readonly post: { id: string; collection: 'blog'; data: BlogPost['data'] };
   /** Whether this card should be displayed with featured styling */
   readonly featured?: boolean | undefined;
+  /** Homepage/editorial presentation variant. */
+  readonly presentation?: 'standard' | 'featured' | 'compact' | undefined;
+  /** Estimated reading time in minutes. */
+  readonly readingTimeMin?: number | undefined;
   /** Array of all posts used to calculate series information */
   readonly allPosts?:
     | readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[]
@@ -57,12 +61,17 @@ interface BlogCardProps {
 const BlogCardComponent: FC<BlogCardProps> = ({
   post,
   featured = false,
+  presentation,
+  readingTimeMin,
   allPosts = [],
   languageState,
   className,
   style,
   tone = 'default',
 }) => {
+  const resolvedPresentation = presentation ?? (featured ? 'featured' : 'standard');
+  const isEditorialFeature = resolvedPresentation === 'featured';
+  const isCompact = resolvedPresentation === 'compact';
   const { isPartOfSeries, partNumber, totalParts, seriesTitle } = useBlogCardSeries(
     post,
     Array.from(allPosts)
@@ -90,20 +99,43 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       ? 'Thai edition'
       : 'English edition';
   const href = post.data.externalUrl ?? getBlogPostPath(post);
+  const ctaLabel = resolvedPresentation === 'standard' ? 'Continue reading' : 'Read essay';
 
   return (
-    <li className="flex h-full min-w-0">
+    <li
+      className={cn(
+        'flex h-full min-w-0',
+        isEditorialFeature && 'latest-blog__featured-item',
+        isCompact && 'latest-blog__compact-item'
+      )}
+    >
       <MediaContentCard
         as="a"
         accent="var(--blog-cover-accent, var(--accent-blog))"
-        featured={featured}
-        className={cn('blog-card blog-card--editorial w-full', className)}
+        featured={featured || isEditorialFeature}
+        className={cn(
+          'blog-card blog-card--editorial w-full',
+          isEditorialFeature && 'blog-card--featured-essay',
+          isCompact && 'blog-card--compact-note',
+          className
+        )}
         style={mergedStyle}
         href={href}
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external ' : ''}blog post: ${post.data.title}`}
         media={<BlogCardImage post={post} tone={tone} />}
+        mediaClassName={
+          isEditorialFeature
+            ? 'blog-card__media--featured-essay'
+            : isCompact
+              ? 'blog-card__media--compact-note'
+              : undefined
+        }
+        bodyClassName={isCompact ? 'blog-card__body--compact-note' : undefined}
+        footerClassName={
+          resolvedPresentation === 'standard' ? undefined : 'blog-card__footer--editorial-note'
+        }
         mediaBadges={
           <>
             <BlogCardTag
@@ -114,9 +146,11 @@ const BlogCardComponent: FC<BlogCardProps> = ({
               fallbackTag={fallbackTag}
               tone="editorial"
             />
-            <span className="type-caption inline-flex rounded-full border border-white/12 bg-slate-950/42 px-2.5 py-1 font-semibold tracking-[0.14em] text-white/76 uppercase backdrop-blur-md md:px-3 md:text-xs">
-              {languageLabel}
-            </span>
+            {!isCompact ? (
+              <span className="type-caption inline-flex rounded-full border border-white/12 bg-slate-950/42 px-2.5 py-1 font-semibold tracking-[0.14em] text-white/76 uppercase backdrop-blur-md md:px-3 md:text-xs">
+                {languageLabel}
+              </span>
+            ) : null}
             {post.data.externalUrl ? (
               <span className="type-caption inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-slate-950/48 px-2.5 py-1 font-semibold text-white/82 backdrop-blur-md md:px-3 md:text-xs">
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -126,12 +160,19 @@ const BlogCardComponent: FC<BlogCardProps> = ({
           </>
         }
         footer={
-          <div className="type-meta flex items-center justify-between gap-4 text-white/72 md:text-sm">
-            <span className="type-micro font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs">
-              {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric' })}
-            </span>
+          <div
+            className={cn(
+              'type-meta flex items-center gap-4 text-white/72 md:text-sm',
+              resolvedPresentation === 'standard' ? 'justify-between' : 'justify-end'
+            )}
+          >
+            {resolvedPresentation === 'standard' ? (
+              <span className="type-micro font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs">
+                {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric' })}
+              </span>
+            ) : null}
             <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))]">
-              Continue reading
+              {ctaLabel}
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/82 transition-[transform,background-color,color,border-color] duration-300 group-hover:translate-x-[3px] group-hover:border-[color:var(--card-accent,var(--accent))]/28 group-hover:bg-[color:var(--card-accent,var(--accent))] group-hover:text-slate-950 md:h-9 md:w-9">
                 <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
               </span>
@@ -144,7 +185,9 @@ const BlogCardComponent: FC<BlogCardProps> = ({
           excerpt={post.data.excerpt}
           pubDate={post.data.pubDate}
           lang={post.data.lang}
+          readingTimeMin={readingTimeMin}
           tone="editorial"
+          presentation={resolvedPresentation}
           {...(languageState?.isFallback
             ? { languageBadgeLabel: getBlogExclusiveLocaleLabel(post.data.lang) }
             : {})}
@@ -176,6 +219,8 @@ export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
   return (
     prevProps.post.id === nextProps.post.id &&
     prevProps.featured === nextProps.featured &&
+    prevProps.presentation === nextProps.presentation &&
+    prevProps.readingTimeMin === nextProps.readingTimeMin &&
     prevProps.languageState === nextProps.languageState &&
     prevProps.className === nextProps.className &&
     prevProps.allPosts === nextProps.allPosts &&

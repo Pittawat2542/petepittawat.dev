@@ -21,7 +21,7 @@ const siteCopy = siteCopyEn;
 const preferredPosts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en').sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const posts = preferredPosts.slice(0, 2);
+const posts = preferredPosts.slice(0, 3);
 const selectedOutputStats = {
   posts: preferredPosts.length,
   publications: publications.length,
@@ -55,5 +55,5 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     selectedOutputStats={selectedOutputStats}
   />
   <ResearchInPracticeSection copy={siteCopy.home.researchInPractice} />
-  <BlogSection posts={posts} copy={siteCopy.home.blogSection} />
+  <BlogSection posts={posts} allPosts={preferredPosts} copy={siteCopy.home.blogSection} />
 </BaseLayout>

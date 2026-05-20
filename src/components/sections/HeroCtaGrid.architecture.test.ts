@@ -79,3 +79,23 @@ test('hero output blog count comes from preferred posts instead of locale divisi
   assert.match(page, /preferredPosts\.length/);
   assert.doesNotMatch(grid, /\/\s*2/);
 });
+
+test('homepage latest writing uses an editorial featured essay layout', () => {
+  const page = readProjectFile('src/pages/index.astro');
+  const blogSection = readProjectFile('src/components/sections/BlogSection.astro');
+  const blogCard = readProjectFile('src/components/ui/cards/BlogCard.tsx');
+  const blogMeta = readProjectFile('src/components/ui/blog/BlogCardMeta.tsx');
+
+  assert.match(page, /preferredPosts\.slice\(0,\s*3\)/);
+  assert.match(blogSection, /import\s+\{\s*estimateReadingMetrics\s*\}/);
+  assert.match(blogSection, /const featuredPost = posts\[0\]/);
+  assert.match(blogSection, /const compactPosts = posts\.slice\(1,\s*3\)/);
+  assert.match(blogSection, /presentation="featured"/);
+  assert.match(blogSection, /presentation="compact"/);
+  assert.match(blogSection, /readingTimeMin={getReadingTimeMin\(featuredPost\)}/);
+  assert.match(blogSection, /readingTimeMin={getReadingTimeMin\(post\)}/);
+  assert.match(blogCard, /presentation\?:\s*'standard'\s*\|\s*'featured'\s*\|\s*'compact'/);
+  assert.match(blogCard, /Read essay/);
+  assert.match(blogMeta, /readingTimeMin\?:\s*number/);
+  assert.match(blogMeta, /\{readingTimeMin\} min read/);
+});
