@@ -3,6 +3,7 @@ import BlogCover from '@/components/ui/blog/BlogCover';
 import ArticleMeta from './ArticleMeta.astro';
 import ArticleTagList from './ArticleTagList.astro';
 import '@/styles/components/article-surface.css';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   title: string;
@@ -11,10 +12,12 @@ interface Props {
   slug?: string | undefined;
   tags: string[];
   pubDate: Date;
+  coverImage?: ImageMetadata | undefined;
   readingTimeMin?: number | undefined;
 }
 
-const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.props as Props;
+const { title, excerpt, lang, slug, tags, pubDate, coverImage, readingTimeMin } =
+  Astro.props as Props;
 ---
 
 <section class="article-surface article-hero">
@@ -26,6 +29,7 @@ const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.prop
       routeSlug={slug ?? title}
       tags={tags}
       pubDate={pubDate}
+      coverImageSrc={coverImage?.src}
       variant="hero"
       renderMode="background"
       className="article-hero__cover"

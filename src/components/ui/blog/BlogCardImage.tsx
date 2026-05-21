@@ -10,6 +10,8 @@ interface BlogCardImageProps {
 }
 
 const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, tone = 'default' }) => {
+  const coverImageSrc = post.data.coverImage?.src;
+
   return (
     <BlogCover
       title={post.data.title}
@@ -18,6 +20,7 @@ const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, tone = 'default'
       routeSlug={getBlogPostRouteSlug(post)}
       tags={post.data.tags}
       pubDate={post.data.pubDate}
+      coverImageSrc={coverImageSrc}
       variant="card"
       renderMode="background"
       className={
