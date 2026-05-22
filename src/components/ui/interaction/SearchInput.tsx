@@ -1,4 +1,4 @@
-import { Search, X } from 'lucide-react';
+import { Search, X, Tag } from 'lucide-react';
 import { memo, useId, useState, type FC } from 'react';
 import { cn } from '@/lib/utils';
 import { useGlassGlow } from '@/lib/hooks';
@@ -56,6 +56,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
     onChange('');
   };
 
+  const isTagSearch = value.startsWith('#');
   const sizeConfig = SIZE_CONFIG[size] ?? SIZE_CONFIG.md;
 
   const iconStateClass = isFocused
@@ -95,7 +96,15 @@ const SearchInputComponent: FC<SearchInputProps> = ({
             sizeConfig.iconWrapper
           )}
         >
-          <Search className={iconStateClass} size={sizeConfig.icon} aria-hidden="true" />
+          {isTagSearch ? (
+            <Tag
+              className={cn(iconStateClass, 'search-input-icon--tag')}
+              size={sizeConfig.icon}
+              aria-hidden="true"
+            />
+          ) : (
+            <Search className={iconStateClass} size={sizeConfig.icon} aria-hidden="true" />
+          )}
         </span>
 
         {/* Input */}

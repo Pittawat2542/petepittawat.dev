@@ -71,6 +71,22 @@ type SearchableContent = {
 };
 
 function scoreSearchContent(content: SearchableContent, query: string) {
+  const isHashtag = query.startsWith('#');
+  const cleanQuery = isHashtag ? query.slice(1).trim() : query;
+
+  if (isHashtag && cleanQuery) {
+    const normalizedQuery = cleanQuery.toLowerCase();
+    const matchingTags = (content.tags ?? []).filter(t =>
+      t.toLowerCase().includes(normalizedQuery)
+    );
+    if (matchingTags.length > 0) {
+      const isExact = matchingTags.some(t => t.toLowerCase() === normalizedQuery);
+      const score = isExact ? 500 : 200;
+      return { score, titlePositions: undefined };
+    }
+    return null;
+  }
+
   const fields: { text: string; weight: number; key: 'title' | 'desc' | 'tags' | 'extra' }[] = [
     { text: content.title, weight: 3, key: 'title' },
     { text: content.description ?? '', weight: 1.4, key: 'desc' },
@@ -236,7 +252,7 @@ export function highlightTitle(title: string, positions?: number[]) {
   for (const [s, e] of ranges) {
     if (last < s) nodes.push(title.slice(last, s));
     nodes.push(
-      <mark key={`${s}-${e}`} className="rounded bg-white/10 px-0.5">
+      <mark key={`${s}-${e}`} className="search-highlight">
         {title.slice(s, e + 1)}
       </mark>
     );

@@ -17,10 +17,15 @@ type SearchResultListProps = {
   getHref: (item: AugmentedSearchItem) => string;
   onItemClick: (item: AugmentedSearchItem) => void;
   onActiveIndexChange: (index: number) => void;
+  query?: string;
+  onTagClick?: (tag: string) => void;
 };
 
 export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListProps>(
-  ({ items, activeIndex, getHref, onItemClick, onActiveIndexChange }, ref) => {
+  (
+    { items, activeIndex, getHref, onItemClick, onActiveIndexChange, query = '', onTagClick },
+    ref
+  ) => {
     const renderTypeIcon = (type: SearchItemType) => {
       const meta = SEARCH_TYPE_META_MAP[type];
       const Icon = meta.Icon;
@@ -40,7 +45,10 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
             key={item.id}
             role="option"
             aria-selected={index === activeIndex}
-            className={cn(index === activeIndex && 'bg-white/10')}
+            className={cn(
+              'search-result-item-wrapper',
+              index === activeIndex && 'search-result-item-wrapper--active'
+            )}
           >
             <a
               href={getHref(item)}
@@ -89,12 +97,33 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                   <p className="text-muted-foreground line-clamp-2 text-xs">{item.description}</p>
                 )}
                 {item.tags && item.tags.length > 0 && (
-                  <div className="mt-1 flex flex-wrap gap-1">
-                    {item.tags.slice(0, 5).map(tag => (
-                      <span key={tag} className="text-muted-foreground/80 type-micro">
-                        #{tag}
-                      </span>
-                    ))}
+                  <div className="mt-1.5 flex flex-wrap gap-1.5" onClick={e => e.stopPropagation()}>
+                    {item.tags.slice(0, 5).map(tag => {
+                      const cleanQuery = query.startsWith('#')
+                        ? query.slice(1).trim()
+                        : query.trim();
+                      const isMatched =
+                        cleanQuery && tag.toLowerCase().includes(cleanQuery.toLowerCase());
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={e => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onTagClick?.(tag);
+                          }}
+                          className={cn(
+                            'type-micro rounded border px-1.5 py-0.5 transition-all hover:scale-[1.03] active:scale-[0.97]',
+                            isMatched
+                              ? 'border-accent/40 bg-accent/10 text-accent font-semibold'
+                              : 'text-muted-foreground/80 border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/5 hover:text-white'
+                          )}
+                        >
+                          #{tag}
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>

@@ -1,18 +1,18 @@
 import '@/styles/components/search.css';
 
-import type { SearchItem, SearchItemType } from './types';
+import type { SearchItemType } from './types';
 
-import { CornerDownLeft } from 'lucide-react';
+import { X } from 'lucide-react';
 import type { FC } from 'react';
 import { RecentSearches } from './RecentSearches';
 import { SearchFilterChips } from './SearchFilterChips';
 import SearchInput from '@/components/ui/interaction/SearchInput';
+import { DialogClose } from '@/components/ui/core/dialog';
 import { memo } from 'react';
 
 interface SearchHeaderProps {
   readonly query: string;
   readonly onQueryChange: (query: string) => void;
-  readonly filtered: readonly SearchItem[];
   readonly typeFilter: Set<SearchItemType>;
   readonly countsByType: Map<SearchItemType, number>;
   readonly onToggleType: (type: SearchItemType) => void;
@@ -26,7 +26,6 @@ interface SearchHeaderProps {
 const SearchHeaderComponent: FC<SearchHeaderProps> = ({
   query,
   onQueryChange,
-  filtered,
   typeFilter,
   countsByType,
   onToggleType,
@@ -38,7 +37,7 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
 }) => {
   return (
     <div className="border-border border-b p-4 md:p-5 lg:p-6">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <div className="flex-1">
           <SearchInput
             value={query}
@@ -48,22 +47,10 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
             size="lg"
           />
         </div>
-      </div>
-
-      <div
-        className="text-muted-foreground mt-3 flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between"
-        aria-live="polite"
-      >
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="hidden sm:inline">Navigate with</span>
-          <kbd className="rounded border px-1 py-0.5">↑</kbd>
-          <kbd className="rounded border px-1 py-0.5">↓</kbd>
-          <span className="inline-flex items-center gap-1">
-            <CornerDownLeft size={12} /> Enter
-          </span>
-          <span className="hidden sm:inline">• Esc to close</span>
-        </div>
-        <div>{filtered.length} results</div>
+        <DialogClose className="search-modal__close" aria-label="Close search" title="Close (Esc)">
+          <span className="sr-only">Close</span>
+          <X size={16} />
+        </DialogClose>
       </div>
 
       <SearchFilterChips
@@ -84,7 +71,6 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
 export const SearchHeader = memo(SearchHeaderComponent, (prevProps, nextProps) => {
   return (
     prevProps.query === nextProps.query &&
-    prevProps.filtered === nextProps.filtered &&
     prevProps.typeFilter === nextProps.typeFilter &&
     prevProps.countsByType === nextProps.countsByType &&
     prevProps.showRecent === nextProps.showRecent &&
