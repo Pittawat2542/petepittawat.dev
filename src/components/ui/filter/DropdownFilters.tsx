@@ -83,8 +83,7 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
         <h3
           className={cn(
             'text-muted-foreground text-sm font-medium',
-            tone === 'editorial' &&
-              'type-meta font-semibold tracking-[0.22em] text-white/45 uppercase'
+            tone === 'editorial' && 'editorial-control-label'
           )}
         >
           Filters

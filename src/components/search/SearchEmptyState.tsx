@@ -20,7 +20,7 @@ const SearchEmptyStateComponent: FC<SearchEmptyStateProps> = ({ suggestions }) =
       </div>
       <h3 className="mb-1 text-sm font-semibold text-white/95">No results found</h3>
       <p className="mb-6 max-w-[280px] text-xs leading-relaxed text-white/40">
-        We couldn't find anything matching your search. Try using a different keyword or explore
+        We could not find anything matching your search. Try using a different keyword or explore
         suggestions below.
       </p>
 

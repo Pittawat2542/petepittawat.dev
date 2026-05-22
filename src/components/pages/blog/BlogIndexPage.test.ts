@@ -34,6 +34,74 @@ test('blog index opts into editorial tones for the toolbar and cards', () => {
   assert.match(page, /tone="editorial"/);
 });
 
+test('blog index uses the blog editorial hero variant', () => {
+  const page = readProjectFile('src/pages/blog/index.astro');
+  const editorialHero = readProjectFile('src/components/layout/core/EditorialPageHero.astro');
+
+  assert.match(editorialHero, /variant\?:\s*'default'\s*\|\s*'blog'/);
+  assert.match(page, /<EditorialPageHero[\s\S]*variant="blog"/);
+});
+
+test('blog editorial hero keeps observatory star motion subtle and accessible', () => {
+  const editorialHero = readProjectFile('src/components/layout/core/EditorialPageHero.astro');
+  const tokens = readProjectFile('src/styles/tokens.css');
+
+  assert.match(editorialHero, /blogHeroStars/);
+  assert.match(editorialHero, /editorial-page-hero__star/);
+  assert.match(editorialHero, /blog-hero-star-enter/);
+  assert.match(editorialHero, /blog-hero-star-drift/);
+  assert.match(
+    editorialHero,
+    /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*\.editorial-page-hero__star/
+  );
+  assert.match(tokens, /--blog-hero-star:/);
+  assert.match(tokens, /--blog-hero-star-shadow:/);
+});
+
+test('blog index renders a filtered featured lead before the remaining grid', () => {
+  const page = readProjectFile('src/components/layout/BlogListPage.tsx');
+
+  assert.match(page, /const featuredPost\s*=\s*sorted\[0\]/);
+  assert.match(page, /const gridPosts\s*=\s*sorted\.slice\(1\)/);
+  assert.match(page, /presentation="featured"/);
+  assert.match(page, /gridPosts\.map/);
+  assert.match(page, /blog-index__featured/);
+  assert.match(page, /blog-index__grid/);
+});
+
+test('blog index surfaces use token-backed editorial classes', () => {
+  const tokens = readProjectFile('src/styles/tokens.css');
+  const filterPanel = readProjectFile('src/components/ui/filter/FilterPanel.tsx');
+  const searchInput = readProjectFile('src/components/ui/interaction/SearchInput.tsx');
+  const languageSwitcher = readProjectFile('src/components/ui/blog/BlogLanguageSwitcher.tsx');
+
+  assert.match(tokens, /--listing-toolbar-surface:/);
+  assert.match(tokens, /--listing-control-surface:/);
+  assert.match(tokens, /--blog-index-featured-min-height:/);
+  assert.match(tokens, /--blog-index-grid-gap:/);
+
+  assert.match(filterPanel, /editorial-filter-panel/);
+  assert.doesNotMatch(filterPanel, /blog-filter-panel--editorial[^']*bg-\[/);
+  assert.match(searchInput, /search-input--editorial/);
+  assert.doesNotMatch(searchInput, /tone === 'editorial'[\s\S]{0,120}bg-\[/);
+  assert.match(languageSwitcher, /language-switcher--editorial/);
+});
+
+test('blog index avoids client-only locale reads during initial render', () => {
+  const page = readProjectFile('src/components/layout/BlogListPage.tsx');
+
+  assert.match(page, /useState<BlogTranslationLocale>\(initialLocale\)/);
+  assert.doesNotMatch(page, /useState<BlogTranslationLocale>\(\(\)\s*=>[\s\S]*typeof window/);
+});
+
+test('interactive blog language switcher keeps a stable element shape for hydration', () => {
+  const languageSwitcher = readProjectFile('src/components/ui/blog/BlogLanguageSwitcher.tsx');
+
+  assert.match(languageSwitcher, /if\s*\(onSelect\)\s*\{[\s\S]*<button/);
+  assert.match(languageSwitcher, /aria-current=\{option\.isActive \? 'true' : undefined\}/);
+  assert.match(languageSwitcher, /if\s*\(option\.isActive\)\s*\{[\s\S]*<span/);
+});
+
 test('listing explorers use the shared editorial explorer abstraction', () => {
   const projectsExplorer = readProjectFile('src/components/explorers/ProjectsExplorer.tsx');
   const publicationsExplorer = readProjectFile('src/components/explorers/PublicationsExplorer.tsx');
@@ -77,7 +145,7 @@ test('listing surfaces render complete filtered collections without pagination c
     assert.doesNotMatch(file, /PageControls/);
   }
 
-  assert.match(blogListPage, /sorted\.map/);
+  assert.match(blogListPage, /gridPosts\.map/);
   assert.doesNotMatch(blogListPage, /pagePosts/);
   assert.match(editorialExplorer, /sorted\.map/);
   assert.doesNotMatch(editorialExplorer, /paged/);

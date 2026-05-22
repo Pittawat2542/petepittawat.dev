@@ -20,7 +20,7 @@ const SearchSuggestionsComponent: FC<SearchSuggestionsProps> = ({ suggestions })
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40">
         <Compass size={20} className="animate-spin-slow" aria-hidden="true" />
       </div>
-      <h3 className="mb-1 text-sm font-semibold text-white/95">Discover Pete's Space</h3>
+      <h3 className="mb-1 text-sm font-semibold text-white/95">Discover Pete&apos;s Space</h3>
       <p className="mb-6 max-w-[280px] text-xs leading-relaxed text-white/40">
         Search for articles, projects, talks, and publications, or jump directly to one of our main
         pages:

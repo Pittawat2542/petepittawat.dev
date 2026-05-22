@@ -51,6 +51,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
   const id = useId();
   const [isFocused, setIsFocused] = useState(false);
   const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLDivElement>();
+  const isEditorial = tone === 'editorial';
 
   const clearValue = () => {
     onChange('');
@@ -60,38 +61,43 @@ const SearchInputComponent: FC<SearchInputProps> = ({
   const sizeConfig = SIZE_CONFIG[size] ?? SIZE_CONFIG.md;
 
   const iconStateClass = isFocused
-    ? tone === 'editorial'
+    ? isEditorial
       ? 'text-[color:var(--accent,#6AC1FF)] opacity-100'
       : 'text-[color:var(--accent,#6AC1FF)] opacity-100'
-    : tone === 'editorial'
+    : isEditorial
       ? 'text-white/60 opacity-90'
       : 'text-[color:var(--white,#FFFFFF)]/80 opacity-70';
 
   return (
-    <label className={cn('relative w-full md:max-w-md', className)} htmlFor={id}>
+    <label
+      className={cn(
+        'relative w-full md:max-w-md',
+        isEditorial && 'search-input--editorial',
+        className
+      )}
+      htmlFor={id}
+    >
       <span className="sr-only">{ariaLabel}</span>
 
       {/* Glass container */}
       <div
         className={cn(
           'shape-squircle-sm group relative flex w-full items-center overflow-hidden rounded-[1.2rem] transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
-          tone === 'editorial'
-            ? 'border border-white/10 bg-[rgba(15,23,42,0.36)] shadow-[0_18px_34px_-30px_rgba(3,7,18,0.85)] backdrop-blur-xl'
-            : 'glass-input',
+          isEditorial ? 'search-input__surface--editorial' : 'glass-input',
           sizeConfig.wrapper
         )}
         data-size={size}
         data-active={isFocused ? 'true' : undefined}
-        style={tone === 'editorial' ? undefined : glowStyle}
-        onMouseMove={tone === 'editorial' ? undefined : handleMouseMove}
-        onMouseLeave={tone === 'editorial' ? undefined : handleMouseLeave}
+        style={isEditorial ? undefined : glowStyle}
+        onMouseMove={isEditorial ? undefined : handleMouseMove}
+        onMouseLeave={isEditorial ? undefined : handleMouseLeave}
       >
         {/* Search icon */}
         <span
           className={cn(
             'shape-squircle-sm relative z-10 inline-flex shrink-0 items-center justify-center rounded-[1.2rem] transition-[color,opacity,background-color] duration-150 ease-out',
-            tone === 'editorial'
-              ? 'bg-white/[0.06] text-white/60'
+            isEditorial
+              ? 'search-input__icon--editorial'
               : 'bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm',
             sizeConfig.iconWrapper
           )}
@@ -126,8 +132,8 @@ const SearchInputComponent: FC<SearchInputProps> = ({
           title={ariaLabel}
           className={cn(
             'relative z-10 w-full flex-1 bg-transparent focus-visible:outline-none',
-            tone === 'editorial'
-              ? 'text-white placeholder:text-white/38'
+            isEditorial
+              ? 'search-input__field--editorial'
               : 'text-foreground placeholder:text-muted-foreground',
             sizeConfig.input
           )}
@@ -140,8 +146,8 @@ const SearchInputComponent: FC<SearchInputProps> = ({
             onClick={clearValue}
             className={cn(
               'focus-visible:ring-ring/50 shape-squircle-sm relative z-10 inline-flex items-center justify-center rounded-[1.2rem] transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              tone === 'editorial'
-                ? 'bg-white/[0.06] text-white/52 hover:bg-white/[0.12] hover:text-white focus-visible:ring-offset-[rgba(5,10,20,0.92)]'
+              isEditorial
+                ? 'search-input__clear--editorial'
                 : 'bg-white/6 text-[color:var(--white,#FFFFFF)]/70 hover:bg-white/14 hover:text-white focus-visible:ring-offset-[rgba(8,12,22,0.85)]',
               sizeConfig.button
             )}
@@ -152,7 +158,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
           </button>
         )}
 
-        {tone === 'default' && <span className="glass-input__sheen" aria-hidden="true" />}
+        {!isEditorial && <span className="glass-input__sheen" aria-hidden="true" />}
       </div>
     </label>
   );

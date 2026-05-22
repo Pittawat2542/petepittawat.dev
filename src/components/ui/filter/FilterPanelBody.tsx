@@ -46,7 +46,7 @@ const FilterPanelBodyComponent: FC<FilterPanelBodyProps> = ({
     <div
       className={cn(
         'shape-squircle animate-in fade-in-0 slide-in-from-top-2 space-y-4 duration-[var(--motion-duration-normal)] ease-[var(--motion-ease-decelerate)]',
-        tone === 'editorial' ? 'px-1 pt-2 pb-1' : 'glass-card'
+        tone === 'editorial' ? 'editorial-filter-panel__body' : 'glass-card'
       )}
     >
       {hasDropdownFilters && onFiltersChange && (

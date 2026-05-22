@@ -33,7 +33,7 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
         <span
           className={cn(
             'text-muted-foreground text-xs',
-            tone === 'editorial' && 'font-semibold tracking-[0.18em] text-white/45 uppercase'
+            tone === 'editorial' && 'editorial-control-label'
           )}
         >
           Active filters
@@ -49,10 +49,7 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
       </div>
       <div className="flex flex-wrap gap-2">
         {activeDropdownEntries.map(([key, value]) => {
-          const editorialClassName =
-            tone === 'editorial'
-              ? 'border-white/10 bg-white/[0.04] text-white/72 hover:border-white/18 hover:bg-white/[0.08]'
-              : undefined;
+          const editorialClassName = tone === 'editorial' ? 'filter-chip--editorial' : undefined;
 
           return (
             <FilterChip
@@ -76,9 +73,7 @@ const ActiveFiltersSummaryComponent: FC<ActiveFiltersSummaryProps> = ({
         })}
         {activeTags.map(tag => {
           const editorialClassName =
-            tone === 'editorial'
-              ? 'border-[color:var(--page-accent,var(--accent))]/30 bg-[color:var(--page-accent,var(--accent))] text-slate-950 shadow-[0_18px_30px_-24px_rgba(15,23,42,0.82)]'
-              : undefined;
+            tone === 'editorial' ? 'filter-chip--editorial-selected-primary' : undefined;
 
           return (
             <FilterChip

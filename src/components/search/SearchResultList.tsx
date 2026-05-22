@@ -97,7 +97,12 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                   <p className="text-muted-foreground line-clamp-2 text-xs">{item.description}</p>
                 )}
                 {item.tags && item.tags.length > 0 && (
-                  <div className="mt-1.5 flex flex-wrap gap-1.5" onClick={e => e.stopPropagation()}>
+                  <div
+                    className="mt-1.5 flex flex-wrap gap-1.5"
+                    onClick={e => {
+                      e.stopPropagation();
+                    }}
+                  >
                     {item.tags.slice(0, 5).map(tag => {
                       const cleanQuery = query.startsWith('#')
                         ? query.slice(1).trim()

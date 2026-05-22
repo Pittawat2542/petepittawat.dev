@@ -92,7 +92,9 @@ const SearchModalComponent: FC<SearchModalProps> = ({
                 onItemClick={handleResultClick}
                 onActiveIndexChange={setActiveIndex}
                 query={query}
-                onTagClick={tag => setQuery('#' + tag)}
+                onTagClick={tag => {
+                  setQuery('#' + tag);
+                }}
               />
             )}
           </div>

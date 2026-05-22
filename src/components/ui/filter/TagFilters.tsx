@@ -27,8 +27,7 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
       <h3
         className={cn(
           'text-muted-foreground mb-3 text-sm font-medium',
-          tone === 'editorial' &&
-            'type-meta font-semibold tracking-[0.22em] text-white/45 uppercase'
+          tone === 'editorial' && 'editorial-control-label'
         )}
       >
         Tags
@@ -44,9 +43,9 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
             tone === 'editorial'
               ? isSelected
                 ? tag === 'All'
-                  ? 'border-[color:var(--page-accent,var(--accent))]/30 bg-[color:var(--page-accent,var(--accent))] text-slate-950 shadow-[0_18px_30px_-24px_rgba(15,23,42,0.82)]'
-                  : 'border-white/10 bg-white/[0.08] text-white shadow-none'
-                : 'border-white/10 bg-white/[0.03] text-white/65 hover:border-white/18 hover:bg-white/[0.07] hover:text-white'
+                  ? 'filter-chip--editorial-selected-primary'
+                  : 'filter-chip--editorial-selected'
+                : 'filter-chip--editorial'
               : undefined;
 
           return (

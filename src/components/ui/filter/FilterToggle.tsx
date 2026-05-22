@@ -22,16 +22,14 @@ const FilterToggleComponent: FC<FilterToggleProps> = ({
       <button
         type="button"
         onClick={onToggle}
-        className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-[1rem] border border-white/10 bg-[rgba(15,23,42,0.38)] px-4 text-sm font-medium text-white/82 shadow-[0_18px_32px_-28px_rgba(3,7,18,0.82)] transition-[border-color,color,transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:border-white/18 hover:bg-[rgba(30,41,59,0.55)] hover:text-white hover:shadow-[0_24px_42px_-28px_rgba(3,7,18,0.82)] focus-visible:ring-2 focus-visible:ring-[color:var(--page-accent,var(--accent))]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.92)] focus-visible:outline-none sm:w-auto"
+        className="editorial-filter-toggle"
         aria-expanded={showFilters}
         aria-label="Toggle filters"
       >
         <Filter size={17} />
         Filters
         {activeFiltersCount > 0 && (
-          <span className="type-micro inline-flex h-[1.35rem] min-w-[1.35rem] items-center justify-center rounded-full bg-[color:var(--page-accent,var(--accent))] px-1.5 leading-none font-semibold text-slate-950">
-            {activeFiltersCount}
-          </span>
+          <span className="editorial-filter-toggle__badge">{activeFiltersCount}</span>
         )}
       </button>
     );

@@ -80,7 +80,9 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
 
       <ItemsWrapper
         className={cn(
-          'mt-6 grid w-full grid-cols-1 gap-5 py-2 md:grid-cols-2 md:gap-7 md:py-3 2xl:grid-cols-3',
+          itemsWrapperClassName
+            ? 'mt-6 w-full py-2 md:py-3'
+            : 'mt-6 grid w-full grid-cols-1 gap-5 py-2 md:grid-cols-2 md:gap-7 md:py-3 2xl:grid-cols-3',
           itemsWrapperClassName
         )}
       >

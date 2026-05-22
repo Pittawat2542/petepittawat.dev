@@ -52,7 +52,9 @@ export const SearchTagSuggestionsComponent: FC<SearchTagSuggestionsProps> = ({
             <button
               key={tag.name}
               type="button"
-              onClick={() => onTagSelect('#' + tag.name)}
+              onClick={() => {
+                onTagSelect('#' + tag.name);
+              }}
               className={cn(
                 'search-badge flex items-center justify-between gap-2 text-left transition-all sm:justify-start',
                 isMatched
