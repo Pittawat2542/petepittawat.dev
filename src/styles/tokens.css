@@ -210,6 +210,44 @@
     0 0 0 2px rgba(5, 10, 20, 0.94),
     0 0 0 4px color-mix(in oklab, var(--page-accent, var(--accent)) 36%, transparent);
 
+  --filter-pane-radius: var(--listing-toolbar-radius);
+  --filter-pane-padding: clamp(0.8rem, 1.5vw, 1.05rem);
+  --filter-pane-gap: clamp(0.7rem, 1.5vw, 1rem);
+  --filter-pane-section-gap: clamp(1.1rem, 2vw, 2rem);
+  --filter-pane-year-width: clamp(12.25rem, 18vw, 15.5rem);
+  --filter-pane-surface:
+    radial-gradient(
+      760px circle at 14% -20%,
+      color-mix(in oklab, var(--page-accent, var(--accent)) 15%, transparent),
+      transparent 52%
+    ),
+    linear-gradient(90deg, rgba(7, 17, 33, 0.94), rgba(7, 19, 38, 0.9));
+  --filter-pane-border: color-mix(in oklab, var(--white) 11%, transparent);
+  --filter-pane-divider: color-mix(in oklab, var(--white) 12%, transparent);
+  --filter-pane-shadow:
+    0 24px 64px -46px rgba(2, 8, 23, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  --filter-pane-label: color-mix(in oklab, var(--white) 54%, transparent);
+  --filter-pane-label-strong: color-mix(in oklab, var(--white) 76%, transparent);
+  --filter-pane-control-surface: rgba(10, 23, 44, 0.62);
+  --filter-pane-control-surface-hover: rgba(18, 35, 64, 0.76);
+  --filter-pane-control-border: color-mix(in oklab, var(--white) 11%, transparent);
+  --filter-pane-control-border-hover: color-mix(in oklab, var(--white) 20%, transparent);
+  --filter-pane-control-text: color-mix(in oklab, var(--white) 88%, transparent);
+  --filter-pane-control-muted: color-mix(in oklab, var(--white) 58%, transparent);
+  --filter-chip-height: 2.18rem;
+  --filter-chip-radius: 999px;
+  --filter-chip-surface: rgba(11, 24, 46, 0.52);
+  --filter-chip-surface-hover: rgba(16, 32, 60, 0.72);
+  --filter-chip-border: color-mix(in oklab, var(--white) 10%, transparent);
+  --filter-chip-border-hover: color-mix(in oklab, var(--white) 18%, transparent);
+  --filter-chip-text: color-mix(in oklab, var(--white) 74%, transparent);
+  --filter-chip-selected-surface: rgba(255, 255, 255, 0.075);
+  --filter-chip-selected-primary-surface: linear-gradient(180deg, #7557ff 0%, #593cf0 100%);
+  --filter-chip-selected-primary-shadow:
+    0 12px 28px -18px rgba(117, 87, 255, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  --filter-chip-count-surface: rgba(255, 255, 255, 0.08);
+  --filter-chip-count-text: color-mix(in oklab, var(--white) 78%, transparent);
+
   --blog-hero-radius: clamp(1.9rem, 4vw, 2.7rem);
   --blog-hero-surface:
     radial-gradient(

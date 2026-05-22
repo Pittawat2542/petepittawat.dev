@@ -72,15 +72,24 @@ test('blog index renders a filtered featured lead before the remaining grid', ()
 test('blog index surfaces use token-backed editorial classes', () => {
   const tokens = readProjectFile('src/styles/tokens.css');
   const filterPanel = readProjectFile('src/components/ui/filter/FilterPanel.tsx');
+  const filterPanelBody = readProjectFile('src/components/ui/filter/FilterPanelBody.tsx');
+  const dropdownFilters = readProjectFile('src/components/ui/filter/DropdownFilters.tsx');
+  const tagFilters = readProjectFile('src/components/ui/filter/TagFilters.tsx');
   const searchInput = readProjectFile('src/components/ui/interaction/SearchInput.tsx');
   const languageSwitcher = readProjectFile('src/components/ui/blog/BlogLanguageSwitcher.tsx');
 
   assert.match(tokens, /--listing-toolbar-surface:/);
   assert.match(tokens, /--listing-control-surface:/);
+  assert.match(tokens, /--filter-pane-surface:/);
+  assert.match(tokens, /--filter-pane-divider:/);
+  assert.match(tokens, /--filter-chip-selected-primary-surface:/);
   assert.match(tokens, /--blog-index-featured-min-height:/);
   assert.match(tokens, /--blog-index-grid-gap:/);
 
   assert.match(filterPanel, /editorial-filter-panel/);
+  assert.match(filterPanelBody, /editorial-filter-panel__filters/);
+  assert.match(dropdownFilters, /editorial-filter-group/);
+  assert.match(tagFilters, /editorial-filter-group--tags/);
   assert.doesNotMatch(filterPanel, /blog-filter-panel--editorial[^']*bg-\[/);
   assert.match(searchInput, /search-input--editorial/);
   assert.doesNotMatch(searchInput, /tone === 'editorial'[\s\S]{0,120}bg-\[/);

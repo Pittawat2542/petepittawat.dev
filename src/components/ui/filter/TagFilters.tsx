@@ -22,31 +22,32 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
     return null;
   }
 
+  const isEditorial = tone === 'editorial';
+
   return (
-    <div>
+    <div className={cn(isEditorial && 'editorial-filter-group editorial-filter-group--tags')}>
       <h3
         className={cn(
           'text-muted-foreground mb-3 text-sm font-medium',
-          tone === 'editorial' && 'editorial-control-label'
+          isEditorial && 'editorial-control-label'
         )}
       >
         Tags
       </h3>
-      <div className="flex flex-wrap gap-2">
+      <div className={cn('flex flex-wrap gap-2', isEditorial && 'editorial-filter-chip-list')}>
         {availableTags.map(tag => {
           const isSelected =
             tag === 'All'
               ? !selectedTags || selectedTags.size === 0
               : Boolean(selectedTags?.has(tag));
           const count = tagCounts[tag];
-          const editorialClassName =
-            tone === 'editorial'
-              ? isSelected
-                ? tag === 'All'
-                  ? 'filter-chip--editorial-selected-primary'
-                  : 'filter-chip--editorial-selected'
-                : 'filter-chip--editorial'
-              : undefined;
+          const editorialClassName = isEditorial
+            ? isSelected
+              ? tag === 'All'
+                ? 'filter-chip--editorial-selected-primary'
+                : 'filter-chip--editorial-selected'
+              : 'filter-chip--editorial'
+            : undefined;
 
           return (
             <FilterChip

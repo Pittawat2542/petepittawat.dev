@@ -16,7 +16,6 @@ import type { FC } from 'react';
 import GlassButton from '@/components/ui/navigation/GlassButton';
 import Selector from '@/components/ui/interaction/Selector';
 import { memo } from 'react';
-import { cn } from '@/lib/utils';
 
 interface DropdownFiltersProps {
   readonly filterOptions: Record<string, readonly string[]>;
@@ -41,6 +40,7 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
     return null;
   }
 
+  const isEditorial = tone === 'editorial';
   const toTitle = (s: string) => s.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
   const iconFor = (k: string, v: string) => {
@@ -77,24 +77,58 @@ const DropdownFiltersComponent: FC<DropdownFiltersProps> = ({
     }
   };
 
+  if (isEditorial) {
+    const entries = Object.entries(filterOptions);
+
+    return (
+      <div className="editorial-filter-groups">
+        {entries.map(([key, options], index) => {
+          const selectedValue = filters[key] ?? 'all';
+          const optObjects = [
+            { value: 'all', label: `All ${toTitle(key)}s`, icon: iconFor(key, 'all') },
+            ...options.map(o => ({
+              value: o,
+              label: toTitle(String(o)),
+              icon: iconFor(key, String(o)),
+            })),
+          ];
+
+          return (
+            <div key={key} className="editorial-filter-group">
+              <div className="editorial-filter-group__heading">
+                <span className="editorial-control-label">{toTitle(key)}</span>
+                {hasActiveFilters && index === 0 ? (
+                  <GlassButton
+                    variant="ghost"
+                    size="sm"
+                    onClick={onClearAll}
+                    className="editorial-filter-clear"
+                  >
+                    Clear all
+                  </GlassButton>
+                ) : null}
+              </div>
+              <label className="sr-only">Filter by {key}</label>
+              <Selector
+                label={`Filter by ${toTitle(key)}`}
+                value={selectedValue}
+                options={optObjects}
+                onChange={val => onFiltersChange?.(f => ({ ...f, [key]: val }))}
+                tone={tone}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <h3
-          className={cn(
-            'text-muted-foreground text-sm font-medium',
-            tone === 'editorial' && 'editorial-control-label'
-          )}
-        >
-          Filters
-        </h3>
+        <h3 className="text-muted-foreground text-sm font-medium">Filters</h3>
         {hasActiveFilters && (
-          <GlassButton
-            variant="ghost"
-            size="sm"
-            onClick={onClearAll}
-            className={cn('text-xs', tone === 'editorial' && 'text-white/50 hover:text-white')}
-          >
+          <GlassButton variant="ghost" size="sm" onClick={onClearAll} className="text-xs">
             Clear all
           </GlassButton>
         )}
