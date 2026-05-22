@@ -1,4 +1,5 @@
 :root {
+  /* Motion */
   --motion-duration-fast: 200ms;
   --motion-duration-normal: 300ms;
   --motion-duration-slow: 400ms;
@@ -12,6 +13,7 @@
   --motion-stagger-md: 100ms;
   --motion-stagger-lg: 160ms;
 
+  /* Typography */
   --type-micro: 0.625rem;
   --type-caption: 0.6875rem;
   --type-meta: 0.75rem;
@@ -37,25 +39,67 @@
   --type-home-lead: 1.5rem;
   --type-home-lead-compact: 1.25rem;
 
+  /* Leading */
   --leading-tight: 1.1;
   --leading-title: 1.16;
   --leading-body: 1.7;
   --leading-prose: 1.88;
   --leading-control: 1.35;
 
+  /* Dark editorial research lab palette */
+  --color-canvas: #080d19;
+  --color-canvas-ink: #f6f8fc;
+  --color-canvas-muted: #a8b4c7;
+  --color-canvas-soft: #d7e0ee;
+  --color-surface-deep: #0b1220;
+  --color-surface: #101a2d;
+  --color-surface-raised: #14213a;
+  --color-surface-glass: rgba(16, 26, 45, 0.68);
+  --color-border-subtle: rgba(215, 224, 238, 0.1);
+  --color-border: rgba(215, 224, 238, 0.16);
+  --color-border-strong: rgba(215, 224, 238, 0.24);
+  --color-shadow: rgba(2, 8, 23, 0.78);
+  --color-accent-primary: #60a5fa;
+  --color-accent-cyan: #38bdf8;
+  --color-accent-mint: #34d399;
+  --color-accent-warm: #fb923c;
+  --color-accent-gold: #facc63;
+  --color-accent-rose: #f472b6;
+  --surface-page: var(--color-canvas);
+  --surface-page-themed: color-mix(
+    in oklab,
+    var(--page-accent, var(--color-accent-primary)) 14%,
+    var(--color-canvas)
+  );
+  --surface-panel: color-mix(in oklab, var(--color-surface) 86%, transparent);
+  --surface-panel-strong: color-mix(in oklab, var(--color-surface-raised) 90%, transparent);
+  --surface-card: color-mix(in oklab, var(--color-surface) 76%, transparent);
+  --surface-card-hover: color-mix(in oklab, var(--color-surface-raised) 84%, transparent);
+  --surface-glass: var(--color-surface-glass);
+  --text-primary: var(--color-canvas-ink);
+  --text-secondary: color-mix(in oklab, var(--color-canvas-ink) 78%, transparent);
+  --text-muted: color-mix(in oklab, var(--color-canvas-ink) 62%, transparent);
+  --text-subtle: color-mix(in oklab, var(--color-canvas-ink) 46%, transparent);
+  --border-subtle: var(--color-border-subtle);
+  --border-default: var(--color-border);
+  --border-strong: var(--color-border-strong);
+  --focus-ring:
+    0 0 0 2px color-mix(in oklab, var(--color-canvas) 88%, transparent),
+    0 0 0 4px color-mix(in oklab, var(--page-accent, var(--color-accent-primary)) 46%, transparent);
+
+  /* Page chrome */
   --site-chrome-max-width: 72rem;
   --site-chrome-padding-x: clamp(1rem, 4vw, 2.5rem);
-  --site-chrome-border: color-mix(in oklab, var(--white, #f9fafb) 9%, transparent);
-  --site-chrome-border-strong: color-mix(in oklab, var(--white, #f9fafb) 14%, transparent);
-  --site-chrome-bg: color-mix(in oklab, var(--black, #111827) 62%, transparent);
-  --site-chrome-bg-strong: color-mix(in oklab, var(--black, #111827) 76%, transparent);
-  --site-chrome-link-color: color-mix(in oklab, var(--white, #f9fafb) 68%, transparent);
-  --site-chrome-link-color-active: color-mix(in oklab, var(--white, #f9fafb) 96%, transparent);
+  --site-chrome-border: var(--border-subtle);
+  --site-chrome-border-strong: var(--border-default);
+  --site-chrome-bg: color-mix(in oklab, var(--color-surface) 68%, transparent);
+  --site-chrome-bg-strong: color-mix(in oklab, var(--color-surface-deep) 82%, transparent);
+  --site-chrome-link-color: var(--text-secondary);
+  --site-chrome-link-color-active: var(--text-primary);
   --site-chrome-control-size: 2.35rem;
-  --site-chrome-focus-ring:
-    0 0 0 2px color-mix(in oklab, var(--black, #111827) 84%, transparent),
-    0 0 0 4px color-mix(in oklab, var(--accent, #60a5fa) 46%, transparent);
+  --site-chrome-focus-ring: var(--focus-ring);
 
+  /* Navigation */
   --nav-height: 3.35rem;
   --nav-content-max-width: var(--site-chrome-max-width);
   --nav-padding-x: var(--site-chrome-padding-x);
@@ -76,6 +120,7 @@
   --nav-logo-expanded-radius: 0.56rem;
   --nav-focus-ring: var(--site-chrome-focus-ring);
 
+  /* Shape */
   --shape-squircle-clip: path(
     'M0,34% C0,16% 16%,0 34%,0 H66% C84%,0 100%,16% 100%,34% V66% C100%,84% 84%,100% 66%,100% H34% C16%,100% 0,84% 0,66% Z'
   );
@@ -83,28 +128,31 @@
   --shape-squircle-radius-md: clamp(1.1rem, 3vw, 1.8rem);
   --shape-squircle-radius-sm: clamp(0.85rem, 2.6vw, 1.3rem);
 
+  /* Legacy color aliases kept for existing components and Tailwind theme mapping. */
   --accent: #60a5fa;
-  --accent-blog: #60a5fa;
-  --accent-publications: #10b981;
+  --accent-blog: var(--color-accent-primary);
+  --accent-publications: var(--color-accent-mint);
   --accent-talks: #f97316;
   --accent-about: #f59e0b;
   --accent-projects: #06b6d4;
   --accent-research: #f472b6;
-  --accent-1: #60a5fa;
+  --accent-1: var(--color-accent-primary);
   --accent-2: #fb923c;
-  --white: #f9fafb;
-  --black: #111827;
-  --black-nav: rgba(31, 41, 55, 0.7);
+  --white: var(--color-canvas-ink);
+  --black: var(--color-canvas);
+  --black-nav: var(--surface-glass);
 
-  --glass-bg-primary: rgba(255, 255, 255, 0.03);
-  --glass-bg-secondary: rgba(255, 255, 255, 0.06);
-  --glass-bg-tertiary: rgba(255, 255, 255, 0.09);
-  --glass-border-primary: rgba(255, 255, 255, 0.08);
-  --glass-border-secondary: rgba(255, 255, 255, 0.12);
-  --glass-border-hover: rgba(255, 255, 255, 0.16);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-  --glass-shadow-hover: rgba(0, 0, 0, 0.4);
+  /* Glass and elevation */
+  --glass-bg-primary: color-mix(in oklab, var(--white) 3%, transparent);
+  --glass-bg-secondary: color-mix(in oklab, var(--white) 6%, transparent);
+  --glass-bg-tertiary: color-mix(in oklab, var(--white) 9%, transparent);
+  --glass-border-primary: var(--border-subtle);
+  --glass-border-secondary: var(--border-default);
+  --glass-border-hover: var(--border-strong);
+  --glass-shadow: color-mix(in oklab, var(--color-shadow) 48%, transparent);
+  --glass-shadow-hover: color-mix(in oklab, var(--color-shadow) 62%, transparent);
 
+  /* Gradients and ambient fields */
   --gradient-primary: linear-gradient(
     135deg,
     rgba(59, 130, 246, 0.18) 0%,
@@ -163,6 +211,7 @@
     radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.08), transparent 50%),
     rgba(31, 41, 55, 0.45);
 
+  /* Homepage output cards */
   --output-card-bg:
     linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.014) 58%),
     color-mix(in oklab, var(--black-nav) 82%, rgba(5, 10, 24, 0.76));
@@ -178,6 +227,7 @@
     0 0 0 2px color-mix(in oklab, var(--black) 82%, transparent),
     0 0 0 4px color-mix(in oklab, var(--accent) 48%, transparent);
 
+  /* Editorial listing and filters */
   --listing-toolbar-radius: clamp(1.1rem, 2.2vw, 1.55rem);
   --listing-toolbar-padding: clamp(0.75rem, 1.4vw, 1rem);
   --listing-toolbar-gap: clamp(0.7rem, 1.5vw, 1rem);
@@ -242,12 +292,18 @@
   --filter-chip-border-hover: color-mix(in oklab, var(--white) 18%, transparent);
   --filter-chip-text: color-mix(in oklab, var(--white) 74%, transparent);
   --filter-chip-selected-surface: rgba(255, 255, 255, 0.075);
-  --filter-chip-selected-primary-surface: linear-gradient(180deg, #7557ff 0%, #593cf0 100%);
+  --filter-chip-selected-primary-surface: linear-gradient(
+    180deg,
+    var(--color-accent-primary) 0%,
+    #2563eb 100%
+  );
   --filter-chip-selected-primary-shadow:
-    0 12px 28px -18px rgba(117, 87, 255, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    0 12px 28px -18px color-mix(in oklab, var(--color-accent-primary) 82%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
   --filter-chip-count-surface: rgba(255, 255, 255, 0.08);
   --filter-chip-count-text: color-mix(in oklab, var(--white) 78%, transparent);
 
+  /* Blog and article index hero */
   --blog-hero-radius: clamp(1.9rem, 4vw, 2.7rem);
   --blog-hero-surface:
     radial-gradient(
@@ -290,6 +346,7 @@
     rgba(7, 14, 28, 0.72);
   --blog-index-empty-border: color-mix(in oklab, var(--white) 10%, transparent);
 
+  /* Shared media card */
   --media-card-radius: clamp(1.18rem, 2.4vw, 1.65rem);
   --media-card-media-radius: calc(var(--media-card-radius) - 1px);
   --media-card-surface:

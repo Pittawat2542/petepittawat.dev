@@ -1,0 +1,112 @@
+/* Listing-specific media card layout adaptations. */
+
+@container filter-pane (min-width: 46rem) {
+  .editorial-filter-panel__filters {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+  }
+
+  .editorial-filter-groups {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+
+  .editorial-filter-group .selector--editorial {
+    min-inline-size: 0;
+  }
+
+  .editorial-filter-groups + .editorial-filter-group--tags {
+    border-inline-start: 1px solid var(--filter-pane-divider);
+    padding-inline-start: var(--filter-pane-section-gap);
+  }
+}
+
+@media (min-width: 720px) {
+  .editorial-filter-toggle,
+  .language-switcher__track--toolbar {
+    width: auto;
+  }
+
+  .language-switcher__option--toolbar {
+    min-width: 4.75rem;
+    flex: 0 0 auto;
+  }
+
+  .blog-card--compact-note {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, 36%) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: clamp(14.5rem, 18vw, 16.5rem);
+  }
+
+  .blog-card--compact-note .media-card__media {
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    min-height: 100%;
+    border-radius: var(--media-card-media-radius) 0 0 var(--media-card-media-radius);
+  }
+
+  .blog-card--compact-note .media-card__body {
+    padding-bottom: clamp(0.8rem, 1.15vw, 1rem);
+  }
+
+  .blog-card--compact-note .media-card__footer {
+    grid-column: 2;
+    padding-top: 0.55rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-index__featured .blog-card--featured-essay {
+    display: grid;
+    grid-template-columns: var(--blog-index-featured-media-width) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: var(--blog-index-featured-min-height);
+  }
+
+  .blog-index__featured .blog-card--featured-essay .media-card__media {
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    min-height: 100%;
+    border-radius: var(--media-card-media-radius) 0 0 var(--media-card-media-radius);
+  }
+
+  .blog-index__featured .blog-card--featured-essay .media-card__body {
+    justify-content: center;
+  }
+
+  .blog-index__featured .blog-card--featured-essay .media-card__footer {
+    grid-column: 2;
+  }
+
+  .editorial-listing__featured .media-card--featured {
+    display: grid;
+    grid-template-columns: var(--blog-index-featured-media-width) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: var(--blog-index-featured-min-height);
+  }
+
+  .editorial-listing__featured .media-card--featured .media-card__media {
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    min-height: 100%;
+    border-radius: var(--media-card-media-radius) 0 0 var(--media-card-media-radius);
+  }
+
+  .editorial-listing__featured .media-card--featured .media-card__body {
+    justify-content: center;
+  }
+
+  .editorial-listing__featured .media-card--featured .media-card__footer {
+    grid-column: 2;
+  }
+
+  .blog-card--featured-essay {
+    --media-card-media-aspect: 16 / 6.2;
+  }
+}
+
+@media (max-width: 719px) {
+  .blog-card--compact-note {
+    --media-card-media-aspect: 16 / 6.6;
+  }
+}

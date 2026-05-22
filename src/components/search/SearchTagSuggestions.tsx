@@ -1,3 +1,5 @@
+import '@/styles/components/search-suggestions.css';
+
 import type { FC } from 'react';
 import { memo } from 'react';
 import { Tag } from 'lucide-react';
@@ -39,7 +41,7 @@ export const SearchTagSuggestionsComponent: FC<SearchTagSuggestionsProps> = ({
     <div className="flex flex-col border-b border-white/5 bg-white/[0.01] px-6 py-8">
       <div className="mb-4 flex items-center gap-2 text-white/60">
         <Tag size={14} className="animate-pulse-subtle" />
-        <h3 className="text-[10px] font-bold tracking-wider uppercase">
+        <h3 className="type-micro font-bold tracking-wider uppercase">
           {query === '#' ? 'Filter by Tag' : 'Matching Tags'}
         </h3>
       </div>
@@ -65,7 +67,7 @@ export const SearchTagSuggestionsComponent: FC<SearchTagSuggestionsProps> = ({
               <span className="truncate">#{tag.name}</span>
               <span
                 className={cn(
-                  'rounded px-1.5 py-0.5 font-mono text-[9px] leading-none font-semibold tracking-normal',
+                  'type-micro rounded px-1.5 py-0.5 font-mono font-semibold tracking-normal',
                   isMatched ? 'bg-accent/20 text-accent' : 'bg-white/10 text-white/40'
                 )}
               >

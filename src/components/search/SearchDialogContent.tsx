@@ -1,4 +1,4 @@
-import '@/styles/components/search.css';
+import '@/styles/components/search-modal.css';
 
 import { DialogContent, DialogDescription, DialogTitle } from '@/components/ui/core/dialog';
 import { cn } from '@/lib/utils';

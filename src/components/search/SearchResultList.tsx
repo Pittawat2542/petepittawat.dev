@@ -1,3 +1,5 @@
+import '@/styles/components/search-results.css';
+
 import { forwardRef } from 'react';
 import { Badge } from '@/components/ui/core/badge';
 import { CornerDownLeft, Command, ExternalLink } from 'lucide-react';

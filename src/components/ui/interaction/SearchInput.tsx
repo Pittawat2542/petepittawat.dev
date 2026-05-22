@@ -1,3 +1,5 @@
+import '@/styles/components/glass-input.css';
+
 import { Search, X, Tag } from 'lucide-react';
 import { memo, useId, useState, type FC } from 'react';
 import { cn } from '@/lib/utils';

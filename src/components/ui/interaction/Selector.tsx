@@ -1,3 +1,5 @@
+import '@/styles/components/glass-input.css';
+
 import { memo, type FC, type ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
 import {

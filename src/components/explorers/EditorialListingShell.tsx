@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import FilterPanel from '@/components/ui/filter/FilterPanel';
+import '@/styles/components/editorial-listing.css';
 
 interface EditorialListingShellProps {
   readonly searchValue: string;

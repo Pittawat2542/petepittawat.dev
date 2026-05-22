@@ -34,4 +34,28 @@
   .search-trigger--navbar::before {
     transition: none !important;
   }
+
+  button:hover .lucide-search,
+  a:hover .lucide-search {
+    animation: none !important;
+  }
+}
+
+/* Search trigger icon microinteraction. */
+@keyframes wobble-subtle {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-8deg) scale(1.06);
+  }
+  75% {
+    transform: rotate(8deg) scale(1.06);
+  }
+}
+
+button:hover .lucide-search,
+a:hover .lucide-search {
+  animation: wobble-subtle 0.5s ease-in-out;
 }

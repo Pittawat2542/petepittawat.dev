@@ -1,4 +1,5 @@
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
+import '@/styles/components/media-card.css';
 import { cn, createAccentStyle } from '@/lib/utils';
 import type { CSSProperties, ElementType, HTMLAttributes, ReactNode } from 'react';
 

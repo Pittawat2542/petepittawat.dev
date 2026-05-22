@@ -1,0 +1,6 @@
+/* Editorial filter controls entrypoint. Keep this file import-only. */
+
+@import './editorial-tag-controls.css';
+@import './editorial-toolbar-controls.css';
+@import './editorial-language-switcher.css';
+@import './editorial-filter-chips.css';

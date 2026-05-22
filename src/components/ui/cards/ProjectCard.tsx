@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 import { memo, type FC } from 'react';
+import '@/styles/components/project-card.css';
 import { Badge } from '@/components/ui/core/badge';
 import { cn, getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toProjectCardVisualInput } from '@/lib/card-visual';

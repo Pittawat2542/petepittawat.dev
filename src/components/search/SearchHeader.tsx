@@ -1,4 +1,4 @@
-import '@/styles/components/search.css';
+import '@/styles/components/search-modal.css';
 
 import type { SearchItemType } from './types';
 

@@ -1,4 +1,5 @@
 import type { CSSProperties, FC } from 'react';
+import '@/styles/components/blog-cover.css';
 
 import {
   getBlogCoverCssVariables,

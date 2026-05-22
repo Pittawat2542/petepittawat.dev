@@ -1,0 +1,52 @@
+/* Editorial filter panel structure and group layout. */
+
+.editorial-filter-panel {
+  container: filter-pane / inline-size;
+  border: 1px solid var(--filter-pane-border);
+  border-radius: var(--filter-pane-radius);
+  background: var(--filter-pane-surface);
+  padding: var(--filter-pane-padding);
+  color: var(--filter-pane-label-strong);
+  box-shadow: var(--filter-pane-shadow);
+}
+
+.editorial-filter-panel__body {
+  padding: 0.45rem 0.05rem 0.05rem;
+}
+
+.editorial-filter-panel__filters {
+  display: grid;
+  gap: var(--filter-pane-section-gap);
+}
+
+.editorial-filter-groups {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--filter-pane-gap);
+}
+
+.editorial-filter-group {
+  min-inline-size: 0;
+}
+
+.editorial-filter-group__heading {
+  display: flex;
+  min-block-size: 1.45rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-block-end: 0.55rem;
+}
+
+.editorial-filter-clear {
+  color: var(--filter-pane-control-muted);
+  font-size: var(--type-caption);
+}
+
+.editorial-filter-clear:hover {
+  color: var(--white);
+}
+
+.editorial-filter-chip-list {
+  gap: 0.55rem 0.6rem;
+}

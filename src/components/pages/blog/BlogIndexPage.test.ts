@@ -9,6 +9,20 @@ function readProjectFile(relativePath: string) {
   return readFileSync(path.join(projectRoot, relativePath), 'utf8');
 }
 
+function readEditorialListingStyles() {
+  return [
+    'src/styles/components/editorial-listing.layout.css',
+    'src/styles/components/editorial-filter-panel.css',
+    'src/styles/components/editorial-tag-controls.css',
+    'src/styles/components/editorial-toolbar-controls.css',
+    'src/styles/components/editorial-language-switcher.css',
+    'src/styles/components/editorial-filter-chips.css',
+    'src/styles/components/editorial-card-layout.css',
+  ]
+    .map(readProjectFile)
+    .join('\n');
+}
+
 test('listing pages use the shared editorial hero path instead of divergent hero components', () => {
   const blogPage = readProjectFile('src/pages/blog/index.astro');
   const projectsPage = readProjectFile('src/pages/projects.astro');
@@ -156,7 +170,7 @@ test('non-blog listing explorers use tag chips and featured editorial sections',
   const talksExplorer = readProjectFile('src/components/explorers/TalksExplorer.tsx');
   const editorialExplorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
   const tagFilters = readProjectFile('src/components/ui/filter/TagFilters.tsx');
-  const globalStyles = readProjectFile('src/styles/global.css');
+  const editorialListingStyles = readEditorialListingStyles();
 
   for (const explorer of [projectsExplorer, publicationsExplorer, talksExplorer]) {
     assert.match(explorer, /tagField=\{item\s*=>\s*item\.tags\}/);
@@ -176,17 +190,17 @@ test('non-blog listing explorers use tag chips and featured editorial sections',
   assert.match(editorialExplorer, /editorial-listing__featured/);
   assert.match(editorialExplorer, /editorial-listing__grid/);
   assert.match(editorialExplorer, /availableTags=\{tagOptions\}/);
-  assert.match(globalStyles, /\.editorial-listing__items/);
-  assert.match(globalStyles, /\.editorial-listing__featured/);
-  assert.match(globalStyles, /\.editorial-listing__grid/);
-  assert.match(globalStyles, /\.editorial-listing__empty/);
+  assert.match(editorialListingStyles, /\.editorial-listing__items/);
+  assert.match(editorialListingStyles, /\.editorial-listing__featured/);
+  assert.match(editorialListingStyles, /\.editorial-listing__grid/);
+  assert.match(editorialListingStyles, /\.editorial-listing__empty/);
   assert.match(tagFilters, /DropdownMenuCheckboxItem/);
   assert.match(tagFilters, /placeholder="Search tags"/);
   assert.match(tagFilters, /selectedTagList/);
   assert.match(tagFilters, /editorial-tag-combobox/);
   assert.doesNotMatch(tagFilters, /availableTags\.map\(tag =>[\s\S]*<FilterChip/);
-  assert.match(globalStyles, /\.editorial-tag-combobox/);
-  assert.match(globalStyles, /\.editorial-selected-tags/);
+  assert.match(editorialListingStyles, /\.editorial-tag-combobox/);
+  assert.match(editorialListingStyles, /\.editorial-selected-tags/);
 });
 
 test('showcase listing pages use hero support chips and preserve single accent policy', () => {
