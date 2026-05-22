@@ -73,7 +73,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
     tone = 'default',
   } = props;
 
-  const [showFilters, setShowFilters] = useState(!compact || tone === 'editorial');
+  const [showFilters, setShowFilters] = useState(!compact);
   const currentSelectedTags = selectedTags ?? null;
 
   const {

@@ -26,9 +26,9 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
       filterFields={{
         mode: item => item.mode,
         year: item => new Date(item.date).getFullYear().toString(),
-        tag: item => item.tags,
         audience: item => item.audience,
       }}
+      tagField={item => item.tags}
       sortComparators={comparators}
       sortOptions={[
         { value: 'newest', label: 'Newest' },
@@ -38,11 +38,15 @@ const TalksExplorerComponent: FC<TalksExplorerProps> = ({ items }) => {
       ]}
       defaultSort="newest"
       renderItem={item => <TalkCard item={item} />}
+      renderFeaturedItem={item => <TalkCard item={item} featured />}
       getItemKey={item => `${item.title}-${item.date}`}
       getItemId={item => `talk-${slugify(item.title)}-${new Date(item.date).getFullYear()}`}
       searchPlaceholder="Search title, audience..."
       hashPrefix="talk-"
-      emptyMessage="No results."
+      featuredLabel="Featured talk"
+      gridLabel="Talks"
+      emptyTitle="No matching talks"
+      emptyCopy="Try a broader search, remove a tag, or reset the mode, year, and audience filters."
     />
   );
 };

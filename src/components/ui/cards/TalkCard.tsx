@@ -19,6 +19,7 @@ import MediaContentCard from './MediaContentCard';
 
 interface TalkCardProps {
   readonly item: Talk;
+  readonly featured?: boolean;
 }
 
 function getTalkResourceKind(label: string) {
@@ -34,7 +35,7 @@ function getTalkResourceKind(label: string) {
   return 'link';
 }
 
-const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
+const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
   const accent = getAccentColorVar('accent');
   const visualSpec = resolveCardVisualSpec(toTalkCardVisualInput(item));
   const tint = (intensity: number) =>
@@ -50,6 +51,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
   return (
     <MediaContentCard
       accent={accent}
+      featured={featured}
       className="talk-card h-full"
       media={
         <CardVisualPanel
@@ -224,7 +226,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item }) => {
 };
 
 export const TalkCard = memo(TalkCardComponent, (prevProps, nextProps) => {
-  return prevProps.item === nextProps.item;
+  return prevProps.item === nextProps.item && prevProps.featured === nextProps.featured;
 });
 
 TalkCard.displayName = 'TalkCard';

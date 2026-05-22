@@ -281,7 +281,7 @@
     0 0 18px color-mix(in oklab, var(--accent-2, #fb923c) 14%, transparent);
 
   --blog-index-stack-gap: clamp(1.25rem, 2vw, 1.75rem);
-  --blog-index-featured-min-height: clamp(28rem, 44vw, 34rem);
+  --blog-index-featured-min-height: clamp(19rem, 28vw, 23rem);
   --blog-index-featured-media-width: minmax(19rem, 42%);
   --blog-index-grid-gap: clamp(1.15rem, 2vw, 1.65rem);
   --blog-index-grid-min: minmax(min(100%, 19rem), 1fr);

@@ -140,8 +140,77 @@ test('editorial listing surface components expose the shared configuration hooks
   assert.match(blogCard, /tone\?:\s*'default'\s*\|\s*'editorial'/);
   assert.match(editorialExplorer, /toolbarAccessory\?:\s*ReactNode/);
   assert.match(editorialExplorer, /footer\?:\s*ReactNode/);
+  assert.match(editorialExplorer, /tagField\?:/);
+  assert.match(editorialExplorer, /renderFeaturedItem\?:/);
+  assert.match(editorialExplorer, /featuredLabel\?:\s*string/);
+  assert.match(editorialExplorer, /gridLabel\?:\s*string/);
+  assert.match(editorialExplorer, /emptyTitle\?:\s*string/);
+  assert.match(editorialExplorer, /emptyCopy\?:\s*string/);
   assert.match(editorialHero, /eyebrow\?:\s*string/);
   assert.match(editorialHero, /<slot\s+name="support"/);
+});
+
+test('non-blog listing explorers use tag chips and featured editorial sections', () => {
+  const projectsExplorer = readProjectFile('src/components/explorers/ProjectsExplorer.tsx');
+  const publicationsExplorer = readProjectFile('src/components/explorers/PublicationsExplorer.tsx');
+  const talksExplorer = readProjectFile('src/components/explorers/TalksExplorer.tsx');
+  const editorialExplorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
+  const tagFilters = readProjectFile('src/components/ui/filter/TagFilters.tsx');
+  const globalStyles = readProjectFile('src/styles/global.css');
+
+  for (const explorer of [projectsExplorer, publicationsExplorer, talksExplorer]) {
+    assert.match(explorer, /tagField=\{item\s*=>\s*item\.tags\}/);
+    assert.doesNotMatch(explorer, /filterFields=\{\{[\s\S]*tag:\s*item\s*=>\s*item\.tags/);
+    assert.match(explorer, /renderFeaturedItem=\{item\s*=>/);
+    assert.match(explorer, /featuredLabel=/);
+    assert.match(explorer, /gridLabel=/);
+    assert.match(explorer, /emptyTitle=/);
+    assert.match(explorer, /emptyCopy=/);
+  }
+
+  assert.match(editorialExplorer, /const featuredItem\s*=\s*sorted\[0\]/);
+  assert.match(
+    editorialExplorer,
+    /const gridItems\s*=\s*renderFeaturedItem \? sorted\.slice\(1\) : sorted/
+  );
+  assert.match(editorialExplorer, /editorial-listing__featured/);
+  assert.match(editorialExplorer, /editorial-listing__grid/);
+  assert.match(editorialExplorer, /availableTags=\{tagOptions\}/);
+  assert.match(globalStyles, /\.editorial-listing__items/);
+  assert.match(globalStyles, /\.editorial-listing__featured/);
+  assert.match(globalStyles, /\.editorial-listing__grid/);
+  assert.match(globalStyles, /\.editorial-listing__empty/);
+  assert.match(tagFilters, /DropdownMenuCheckboxItem/);
+  assert.match(tagFilters, /placeholder="Search tags"/);
+  assert.match(tagFilters, /selectedTagList/);
+  assert.match(tagFilters, /editorial-tag-combobox/);
+  assert.doesNotMatch(tagFilters, /availableTags\.map\(tag =>[\s\S]*<FilterChip/);
+  assert.match(globalStyles, /\.editorial-tag-combobox/);
+  assert.match(globalStyles, /\.editorial-selected-tags/);
+});
+
+test('showcase listing pages use hero support chips and preserve single accent policy', () => {
+  const projectsPage = readProjectFile('src/pages/projects.astro');
+  const publicationsPage = readProjectFile('src/pages/publications.astro');
+  const talksPage = readProjectFile('src/pages/talks.astro');
+  const editorialHero = readProjectFile('src/components/layout/core/EditorialPageHero.astro');
+
+  assert.match(editorialHero, /variant\?:\s*'default'\s*\|\s*'blog'\s*\|\s*'showcase'/);
+
+  for (const page of [projectsPage, publicationsPage, talksPage]) {
+    assert.match(page, /variant="showcase"/);
+    assert.match(page, /slot="support"/);
+    assert.match(page, /listing-hero-support/);
+    assert.doesNotMatch(page, /accent-projects|accent-publications|accent-talks/);
+  }
+});
+
+test('talk cards accept the shared featured card contract', () => {
+  const talkCard = readProjectFile('src/components/ui/cards/TalkCard.tsx');
+
+  assert.match(talkCard, /readonly featured\?:\s*boolean/);
+  assert.match(talkCard, /\{\s*item,\s*featured\s*=\s*false\s*\}/);
+  assert.match(talkCard, /featured=\{featured\}/);
 });
 
 test('listing surfaces render complete filtered collections without pagination controls', () => {
@@ -156,7 +225,7 @@ test('listing surfaces render complete filtered collections without pagination c
 
   assert.match(blogListPage, /gridPosts\.map/);
   assert.doesNotMatch(blogListPage, /pagePosts/);
-  assert.match(editorialExplorer, /sorted\.map/);
+  assert.match(editorialExplorer, /gridItems\.map/);
   assert.doesNotMatch(editorialExplorer, /paged/);
   assert.doesNotMatch(editorialShell, /pagination/);
 });

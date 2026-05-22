@@ -21,7 +21,14 @@ const projects = await getProjects();
       eyebrow="Selected Work"
       title={pageCopy.title}
       subtitle={pageCopy.heroSubtitle}
-    />
+      variant="showcase"
+    >
+      <div slot="support" class="listing-hero-support" aria-label="Project themes">
+        <span class="listing-hero-support__item">AI tooling</span>
+        <span class="listing-hero-support__item">Research prototypes</span>
+        <span class="listing-hero-support__item">Learning systems</span>
+      </div>
+    </EditorialPageHero>
     <ProjectsExplorer client:idle items={projects} />
   </Container>
 </BaseLayout>

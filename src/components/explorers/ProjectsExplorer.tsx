@@ -24,9 +24,9 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
       searchFields={item => [item.title, item.summary, item.collaborators ?? '', item.role ?? '']}
       filterFields={{
         year: item => item.year.toString(),
-        tag: item => item.tags,
         type: item => item.type ?? 'other',
       }}
+      tagField={item => item.tags}
       sortComparators={comparators}
       sortOptions={[
         { value: 'newest', label: 'Newest' },
@@ -36,11 +36,15 @@ const ProjectsExplorerComponent: FC<ProjectsExplorerProps> = ({ items }) => {
       ]}
       defaultSort="newest"
       renderItem={item => <ProjectCard item={item} />}
+      renderFeaturedItem={item => <ProjectCard item={item} featured />}
       getItemKey={item => `${item.title}-${item.year}`}
       getItemId={item => `project-${slugify(item.title)}-${item.year}`}
       searchPlaceholder="Search title, summary, collaborators..."
       hashPrefix="project-"
-      emptyMessage="No results."
+      featuredLabel="Featured project"
+      gridLabel="Projects"
+      emptyTitle="No matching projects"
+      emptyCopy="Try a broader search, remove a tag, or reset the year and type filters."
     />
   );
 };

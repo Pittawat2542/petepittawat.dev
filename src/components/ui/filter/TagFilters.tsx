@@ -1,7 +1,23 @@
-import type { FC } from 'react';
-import { FilterChip } from './FilterChip';
-import { memo } from 'react';
+import {
+  memo,
+  useMemo,
+  useState,
+  useRef,
+  useEffect,
+  type FC,
+  type MouseEvent,
+  type KeyboardEvent,
+} from 'react';
+import { ChevronDown, Search, Tags, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/core/dropdown-menu';
 
 interface TagFiltersProps {
   readonly availableTags: readonly string[];
@@ -18,54 +34,269 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
   onToggleTag,
   tone = 'default',
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [tagQuery, setTagQuery] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const isEditorial = tone === 'editorial';
+  const selectedTagList = useMemo(
+    () => (selectedTags ? Array.from(selectedTags).sort((a, b) => a.localeCompare(b)) : []),
+    [selectedTags]
+  );
+  const selectableTags = useMemo(() => availableTags.filter(tag => tag !== 'All'), [availableTags]);
+
+  const filteredTags = useMemo(() => {
+    const query = tagQuery.trim().toLowerCase();
+    const matches = query
+      ? selectableTags.filter(tag => tag.toLowerCase().includes(query))
+      : selectableTags;
+
+    return [...matches].sort((a, b) => {
+      const aSelected = selectedTags?.has(a) ? 0 : 1;
+      const bSelected = selectedTags?.has(b) ? 0 : 1;
+      return aSelected - bSelected || a.localeCompare(b);
+    });
+  }, [selectableTags, selectedTags, tagQuery]);
+
+  const clearTags = () => {
+    onToggleTag('All');
+  };
+
+  const handleContainerClick = (event: MouseEvent) => {
+    if ((event.target as HTMLElement).closest('.editorial-tag-combobox__chip-remove')) {
+      return;
+    }
+    setIsOpen(true);
+    inputRef.current?.focus();
+  };
+
+  const handleChevronClick = (event: MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsOpen(prev => !prev);
+    if (!isOpen) {
+      inputRef.current?.focus();
+    }
+  };
+
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    // Let navigation and helper keys bubble to Radix UI
+    if (
+      event.key === 'ArrowDown' ||
+      event.key === 'ArrowUp' ||
+      event.key === 'Escape' ||
+      event.key === 'Tab'
+    ) {
+      return;
+    }
+
+    // Stop propagation of other keys so Radix UI doesn't hijack them
+    event.stopPropagation();
+
+    // Pressing Backspace on empty input removes the last active tag
+    if (event.key === 'Backspace' && tagQuery === '' && selectedTagList.length > 0) {
+      const lastTag = selectedTagList[selectedTagList.length - 1];
+      if (lastTag) {
+        onToggleTag(lastTag);
+      }
+    }
+
+    // Pressing Enter selects the first matching tag option and clears search
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (filteredTags.length > 0) {
+        const firstTag = filteredTags[0];
+        if (firstTag) {
+          onToggleTag(firstTag);
+          setTagQuery('');
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (isOpen) {
+      timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [isOpen, selectedTags]);
+
   if (availableTags.length === 0) {
     return null;
   }
 
-  const isEditorial = tone === 'editorial';
-
   return (
     <div className={cn(isEditorial && 'editorial-filter-group editorial-filter-group--tags')}>
-      <h3
-        className={cn(
-          'text-muted-foreground mb-3 text-sm font-medium',
-          isEditorial && 'editorial-control-label'
-        )}
-      >
-        Tags
-      </h3>
-      <div className={cn('flex flex-wrap gap-2', isEditorial && 'editorial-filter-chip-list')}>
-        {availableTags.map(tag => {
-          const isSelected =
-            tag === 'All'
-              ? !selectedTags || selectedTags.size === 0
-              : Boolean(selectedTags?.has(tag));
-          const count = tagCounts[tag];
-          const editorialClassName = isEditorial
-            ? isSelected
-              ? tag === 'All'
-                ? 'filter-chip--editorial-selected-primary'
-                : 'filter-chip--editorial-selected'
-              : 'filter-chip--editorial'
-            : undefined;
-
-          return (
-            <FilterChip
-              key={tag}
-              active={isSelected}
-              onClick={() => {
-                onToggleTag(tag);
-              }}
-              {...(count !== undefined && { count })}
-              variant={tag === 'All' ? 'primary' : 'default'}
-              size="md"
-              {...(editorialClassName ? { className: editorialClassName } : {})}
-            >
-              {tag}
-            </FilterChip>
-          );
-        })}
+      <div className="editorial-filter-group__heading">
+        <span
+          className={cn(
+            'text-muted-foreground text-sm font-medium',
+            isEditorial && 'editorial-control-label'
+          )}
+        >
+          Tags
+        </span>
+        {selectedTagList.length > 0 ? (
+          <button type="button" className="editorial-filter-clear" onClick={clearTags}>
+            Clear tags
+          </button>
+        ) : null}
       </div>
+
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger asChild>
+          <div
+            ref={containerRef}
+            className={cn(
+              'editorial-tag-combobox',
+              !isEditorial && 'border-muted/30 bg-muted/20 text-muted-foreground',
+              isOpen && 'editorial-tag-combobox--focused'
+            )}
+            onClick={handleContainerClick}
+            onKeyDown={event => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                if (event.target === containerRef.current) {
+                  setIsOpen(true);
+                  inputRef.current?.focus();
+                  event.preventDefault();
+                }
+              }
+            }}
+            tabIndex={0}
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-haspopup="listbox"
+            aria-label="Filter by tags"
+          >
+            <span className="editorial-tag-combobox__icon" aria-hidden="true">
+              {tagQuery ? <Search size={15} /> : <Tags size={15} />}
+            </span>
+
+            <div className="editorial-tag-combobox__tags-container">
+              {selectedTagList.map(tag => (
+                <span key={tag} className="editorial-tag-combobox__chip">
+                  {tag}
+                  <button
+                    type="button"
+                    className="editorial-tag-combobox__chip-remove"
+                    onClick={event => {
+                      event.stopPropagation();
+                      onToggleTag(tag);
+                    }}
+                    onPointerDown={event => {
+                      event.stopPropagation();
+                    }}
+                    onMouseDown={event => {
+                      event.stopPropagation();
+                    }}
+                    aria-label={`Remove tag ${tag}`}
+                  >
+                    <X size={11} aria-hidden="true" />
+                  </button>
+                </span>
+              ))}
+              <input
+                ref={inputRef}
+                type="text"
+                value={tagQuery}
+                onChange={event => {
+                  setTagQuery(event.target.value);
+                  setIsOpen(true);
+                }}
+                onKeyDown={handleInputKeyDown}
+                onPointerDown={event => {
+                  if (isOpen) {
+                    event.stopPropagation();
+                  }
+                }}
+                onMouseDown={event => {
+                  if (isOpen) {
+                    event.stopPropagation();
+                  }
+                }}
+                onClick={event => {
+                  if (isOpen) {
+                    event.stopPropagation();
+                  }
+                }}
+                placeholder="Search tags"
+                className={cn(
+                  'editorial-tag-combobox__input',
+                  selectedTagList.length > 0 && 'has-chips'
+                )}
+                aria-label="Search tags"
+              />
+            </div>
+
+            <button
+              type="button"
+              className="editorial-tag-combobox__chevron-btn"
+              onClick={handleChevronClick}
+              onPointerDown={event => {
+                event.stopPropagation();
+              }}
+              onMouseDown={event => {
+                event.stopPropagation();
+              }}
+              aria-label={isOpen ? 'Close tag menu' : 'Open tag menu'}
+              tabIndex={-1}
+            >
+              <ChevronDown
+                className={cn('editorial-tag-combobox__chevron', isOpen && 'rotate-180')}
+                size={16}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="editorial-tag-menu" align="start" sideOffset={8}>
+          <DropdownMenuLabel className="editorial-tag-menu__label">
+            Filter by tags
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator className="editorial-tag-menu__separator" />
+          <div
+            className="editorial-tag-menu__items"
+            aria-label="Tag options"
+            id="tag-filters-listbox"
+          >
+            {filteredTags.length > 0 ? (
+              filteredTags.map(tag => {
+                const checked = Boolean(selectedTags?.has(tag));
+                const count = tagCounts[tag];
+
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={tag}
+                    checked={checked}
+                    onCheckedChange={() => {
+                      onToggleTag(tag);
+                    }}
+                    onSelect={event => {
+                      event.preventDefault();
+                    }}
+                    className="editorial-tag-menu__item"
+                  >
+                    <span className="editorial-tag-menu__item-label">{tag}</span>
+                    {count !== undefined ? (
+                      <span className="editorial-tag-menu__item-count">{count}</span>
+                    ) : null}
+                  </DropdownMenuCheckboxItem>
+                );
+              })
+            ) : (
+              <div className="editorial-tag-menu__empty">No matching tags</div>
+            )}
+          </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

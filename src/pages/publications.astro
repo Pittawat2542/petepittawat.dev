@@ -23,7 +23,14 @@ const publications = await getPublications();
       eyebrow="Research Record"
       title={pageCopy.title}
       subtitle={pageCopy.heroSubtitle}
-    />
+      variant="showcase"
+    >
+      <div slot="support" class="listing-hero-support" aria-label="Publication themes">
+        <span class="listing-hero-support__item">Reasoning models</span>
+        <span class="listing-hero-support__item">Evaluation</span>
+        <span class="listing-hero-support__item">Thai NLP</span>
+      </div>
+    </EditorialPageHero>
     <PublicationsExplorer client:idle items={publications} />
     <AcademicServices
       data={academicServices}
