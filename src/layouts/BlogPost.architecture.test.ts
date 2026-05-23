@@ -38,6 +38,30 @@ test('blog post layout keeps visual ownership in rendered article modules', () =
   assert.match(surface, /\.article-surface\s*\{/);
 });
 
+test('blog post hero raster covers are prioritized as LCP images', () => {
+  const layout = readProjectFile('src/layouts/BlogPost.astro');
+  const hero = readProjectFile('src/components/layout/blog-post/ArticleHero.astro');
+  const blogCover = readProjectFile('src/components/ui/blog/BlogCover.tsx');
+  const blogCardImage = readProjectFile('src/components/ui/blog/BlogCardImage.tsx');
+
+  assert.match(layout, /rel="preload"[\s\S]*as="image"[\s\S]*fetchpriority="high"/);
+  assert.match(layout, /href=\{coverImage\.src\}/);
+
+  assert.match(hero, /imageLoading="eager"/);
+  assert.match(hero, /imageFetchPriority="high"/);
+  assert.match(hero, /imageDecoding="sync"/);
+  assert.match(hero, /imageWidth=\{coverImage\?\.width\}/);
+  assert.match(hero, /imageHeight=\{coverImage\?\.height\}/);
+
+  assert.match(blogCover, /imageLoading\s*=\s*'lazy'/);
+  assert.match(blogCover, /loading=\{imageLoading\}/);
+  assert.match(blogCover, /fetchPriority:\s*imageFetchPriority/);
+  assert.match(blogCover, /width:\s*imageWidth/);
+  assert.match(blogCover, /height:\s*imageHeight/);
+  assert.match(blogCover, /\{\.\.\.coverImageAttributes\}/);
+  assert.doesNotMatch(blogCardImage, /imageLoading="eager"|imageFetchPriority="high"/);
+});
+
 test('related posts visuals are no longer defined inside the blog post layout', () => {
   const layout = readProjectFile('src/layouts/BlogPost.astro');
   const relatedPosts = readProjectFile('src/components/content/RelatedPosts.tsx');

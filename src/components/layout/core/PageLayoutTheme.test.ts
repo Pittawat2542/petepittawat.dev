@@ -19,6 +19,14 @@ test('shared page layout uses a single global accent instead of page-specific ac
   assert.match(themedHero, /var\(--accent,\s*#6ac1ff\)/);
 });
 
+test('shared page layout renders a keyboard skip link to the main content landmark', () => {
+  const baseLayout = readProjectFile('src/layouts/BaseLayout.astro');
+
+  assert.match(baseLayout, /href="#main-content"/);
+  assert.match(baseLayout, /class="skip-link"/);
+  assert.match(baseLayout, /<main[^>]*id="main-content"[^>]*tabindex="-1"/s);
+});
+
 test('non-blog listing cards derive accents from the single site accent', () => {
   const projectCard = readProjectFile('src/components/ui/cards/ProjectCard.tsx');
   const talkCard = readProjectFile('src/components/ui/cards/TalkCard.tsx');

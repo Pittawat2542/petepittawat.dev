@@ -24,6 +24,9 @@ export function createMenuController(): MenuController {
     toggle.dataset['open'] = open ? 'true' : 'false';
 
     menu.dataset['open'] = open ? 'true' : 'false';
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menu.inert = !open;
+    menu.toggleAttribute('inert', !open);
     menu.style.opacity = open ? '1' : '0';
     menu.style.pointerEvents = open ? 'auto' : 'none';
 

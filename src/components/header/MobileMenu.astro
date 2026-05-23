@@ -47,6 +47,8 @@ const isActive = (href: string) =>
     <div
       id="mobile-menu"
       data-open="false"
+      aria-hidden="true"
+      inert
       class="min-[960px]:hidden"
       style="top: calc(env(safe-area-inset-top) + var(--nav-height));"
     >

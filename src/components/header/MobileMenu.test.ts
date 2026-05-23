@@ -14,6 +14,8 @@ test('mobile menu is a full-width simple nav panel', () => {
   const menuController = readProjectFile('src/scripts/components/header/menuController.ts');
 
   assert.match(mobileMenu, /aria-label="Mobile primary navigation"/);
+  assert.match(mobileMenu, /aria-hidden="true"/);
+  assert.match(mobileMenu, /\binert\b/);
   assert.match(
     mobileMenu,
     /min-height:\s*calc\(100dvh - \(env\(safe-area-inset-top\) \+ var\(--nav-height\)\)\)/
@@ -45,5 +47,8 @@ test('mobile menu is a full-width simple nav panel', () => {
 
   assert.match(menuController, /translateY\(0\)/);
   assert.match(menuController, /translateY\(-0\.35rem\)/);
+  assert.match(menuController, /menu\.inert\s*=\s*!open/);
+  assert.match(menuController, /menu\.toggleAttribute\('inert',\s*!open\)/);
+  assert.match(menuController, /menu\.setAttribute\('aria-hidden',\s*open \? 'false' : 'true'\)/);
   assert.doesNotMatch(menuController, /mobile-menu-overlay/);
 });

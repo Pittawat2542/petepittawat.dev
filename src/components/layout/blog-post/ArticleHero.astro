@@ -30,6 +30,11 @@ const { title, excerpt, lang, slug, tags, pubDate, coverImage, readingTimeMin } 
       tags={tags}
       pubDate={pubDate}
       coverImageSrc={coverImage?.src}
+      imageLoading="eager"
+      imageFetchPriority="high"
+      imageDecoding="sync"
+      imageWidth={coverImage?.width}
+      imageHeight={coverImage?.height}
       variant="hero"
       renderMode="background"
       className="article-hero__cover"

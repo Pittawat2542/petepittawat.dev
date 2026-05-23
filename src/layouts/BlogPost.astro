@@ -108,6 +108,11 @@ const schema = generateBlogPostSchema({
   <PageBackdrop variant="article" style={coverThemeStyle} />
   <ReadingProgressBar />
   <Fragment slot="head">
+    {
+      coverImage ? (
+        <link rel="preload" as="image" href={coverImage.src} fetchpriority="high" />
+      ) : null
+    }
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </Fragment>
 

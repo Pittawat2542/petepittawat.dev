@@ -23,6 +23,11 @@ export interface BlogCoverProps {
   readonly tags?: readonly string[] | undefined;
   readonly pubDate?: Date | string | number | undefined;
   readonly coverImageSrc?: string | undefined;
+  readonly imageLoading?: 'eager' | 'lazy' | undefined;
+  readonly imageFetchPriority?: 'high' | 'low' | 'auto' | undefined;
+  readonly imageDecoding?: 'sync' | 'async' | 'auto' | undefined;
+  readonly imageWidth?: number | undefined;
+  readonly imageHeight?: number | undefined;
   readonly variant: BlogCoverVariant;
   readonly renderMode?: BlogCoverRenderMode | undefined;
   readonly className?: string | undefined;
@@ -36,6 +41,11 @@ const BlogCover: FC<BlogCoverProps> = ({
   tags = [],
   pubDate,
   coverImageSrc,
+  imageLoading = 'lazy',
+  imageFetchPriority,
+  imageDecoding = 'async',
+  imageWidth,
+  imageHeight,
   variant,
   renderMode = 'full',
   className,
@@ -49,6 +59,11 @@ const BlogCover: FC<BlogCoverProps> = ({
     pubDate,
   });
   const style = getCoverStyle(spec);
+  const coverImageAttributes = {
+    ...(imageFetchPriority ? { fetchPriority: imageFetchPriority } : {}),
+    ...(imageWidth !== undefined ? { width: imageWidth } : {}),
+    ...(imageHeight !== undefined ? { height: imageHeight } : {}),
+  };
 
   return (
     <div
@@ -68,8 +83,9 @@ const BlogCover: FC<BlogCoverProps> = ({
           <img
             src={coverImageSrc}
             alt=""
-            loading="lazy"
-            decoding="async"
+            loading={imageLoading}
+            decoding={imageDecoding}
+            {...coverImageAttributes}
             aria-hidden="true"
             className="absolute inset-0 h-full w-full scale-[1.01] object-cover"
           />

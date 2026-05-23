@@ -61,9 +61,11 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
   </head>
 
   <body data-page={pageKey || undefined} class:list={bodyClasses} style={bodyStyle}>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <Header />
     <main
       id="main-content"
+      tabindex="-1"
       class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
       style="view-transition-name: page;"
     >
