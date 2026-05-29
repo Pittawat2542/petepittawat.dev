@@ -1,5 +1,4 @@
 ---
-import { Tag as TagIcon } from '@lucide/astro';
 import { slugifyTag } from '@/lib/slug';
 
 interface Props {
@@ -11,94 +10,57 @@ const { tags } = Astro.props as Props;
 
 {
   tags.length ? (
-    <div class="article-tags">
-      <span class="article-tags__icon">
-        <span class="sr-only">Tags</span>
-        <TagIcon class="article-tags__symbol" aria-hidden="true" />
-      </span>
-      <ul class="article-tags__list">
-        {tags.map(tag => (
-          <li>
-            <a href={`/tags/${slugifyTag(tag)}`} class="article-tag">
-              #{tag}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul class="article-tags-inline">
+      {tags.map(tag => (
+        <li>
+          <a href={`/tags/${slugifyTag(tag)}`} class="article-tag-pill">
+            #{tag}
+          </a>
+        </li>
+      ))}
+    </ul>
   ) : null
 }
 
 <style>
-  .article-tags {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .article-tags__icon {
+  .article-tags-inline {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
-    background: color-mix(in oklab, var(--white) 6%, transparent);
-  }
-
-  .article-tags__symbol {
-    width: 1rem;
-    height: 1rem;
-    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
-  }
-
-  .article-tags__list {
-    display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     list-style: none;
     margin: 0;
     padding: 0;
+    align-items: center;
   }
 
-  .article-tag {
+  .article-tag-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.42rem 0.82rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--accent-blog) 32%, transparent);
-    background: rgba(18, 28, 52, 0.72);
+    border: 1px solid color-mix(in oklab, var(--accent-blog) 28%, transparent);
+    background: color-mix(in oklab, var(--accent-blog) 10%, rgba(8, 14, 28, 0.6));
     color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
     font-size: var(--type-meta);
     font-weight: 600;
+    text-decoration: none;
     transition:
       transform 160ms ease,
       border-color 160ms ease,
       background-color 160ms ease;
   }
 
-  .article-tag:hover {
-    transform: translateY(-2px);
+  .article-tag-pill:hover {
+    transform: translateY(-1px);
     border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
-    background: rgba(26, 38, 69, 0.82);
-  }
-
-  @media (max-width: 720px) {
-    .article-tag {
-      font-size: var(--type-meta);
-      padding: 0.34rem 0.72rem;
-    }
+    background: color-mix(in oklab, var(--accent-blog) 18%, rgba(8, 14, 28, 0.7));
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .article-tag {
+    .article-tag-pill {
       transition-duration: 0.01ms;
     }
-
-    .article-tag:hover {
+    .article-tag-pill:hover {
       transform: none;
     }
   }

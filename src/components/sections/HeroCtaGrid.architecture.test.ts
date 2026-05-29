@@ -94,6 +94,11 @@ test('homepage latest writing uses an editorial featured essay layout', () => {
   assert.match(blogSection, /presentation="compact"/);
   assert.match(blogSection, /readingTimeMin={getReadingTimeMin\(featuredPost\)}/);
   assert.match(blogSection, /readingTimeMin={getReadingTimeMin\(post\)}/);
+  assert.match(blogSection, /grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+  assert.match(blogSection, /grid-column:\s*1 \/ -1/);
+  assert.doesNotMatch(blogSection, /grid-auto-rows:\s*minmax\(0,\s*1fr\)/);
+  assert.doesNotMatch(blogSection, /latest-blog__featured-item[\s\S]*grid-row:\s*span 2/);
+  assert.match(blogSection, /blog-card--featured-essay[\s\S]*grid-template-columns/);
   assert.match(blogCard, /presentation\?:\s*'standard'\s*\|\s*'featured'\s*\|\s*'compact'/);
   assert.match(blogCard, /Read essay/);
   assert.match(blogMeta, /readingTimeMin\?:\s*number/);

@@ -1,118 +1,266 @@
 ---
+import { ChevronDown } from '@lucide/astro';
 import Toc from '@/components/layout/blog/Toc.astro';
 import BlogLanguageSwitcher from '@/components/ui/blog/BlogLanguageSwitcher';
 import { languages } from '@/i18n/ui';
 import type { BlogPostLanguageState } from '@/lib/blog-translations';
 import type { CollectionEntry } from 'astro:content';
-import '@/styles/components/article-surface.css';
 
 interface Props {
-  excerpt: string;
   languageHelperText?: string | undefined;
   languageState: BlogPostLanguageState<CollectionEntry<'blog'>>;
 }
 
-const { excerpt, languageHelperText, languageState } = Astro.props as Props;
+const { languageHelperText, languageState } = Astro.props as Props;
 ---
 
-<aside class="article-surface article-rail">
-  <BlogLanguageSwitcher
-    ariaLabel="Select reading language"
-    label="Reading language"
-    variant="rail"
-    helperText={languageHelperText}
-    options={[
-      {
-        locale: 'en',
-        label: languages.en,
-        shortLabel: 'EN',
-        href: languageState.availability.en.href,
-        available: languageState.availability.en.available,
-        isActive: languageState.availability.en.isCurrent,
-        screenReaderLabel: languageState.availability.en.available
-          ? 'Read this post in English'
-          : 'English translation unavailable',
-      },
-      {
-        locale: 'th',
-        label: languages.th,
-        shortLabel: 'TH',
-        href: languageState.availability.th.href,
-        available: languageState.availability.th.available,
-        isActive: languageState.availability.th.isCurrent,
-        screenReaderLabel: languageState.availability.th.available
-          ? 'Read this post in Thai'
-          : 'Thai translation unavailable',
-      },
-    ]}
-  />
+<aside class="article-rail-sidebar" aria-label="Reader tools">
+  <details
+    class="article-reader-pane"
+    data-reader-pane
+    data-storage-key="blog-reader-pane-open"
+    open
+  >
+    <summary class="article-reader-pane__summary">
+      <span class="article-reader-pane__heading">
+        <span class="article-reader-pane__eyebrow">Read</span>
+        <span class="article-reader-pane__title">Language + contents</span>
+      </span>
+      <span class="article-reader-pane__toggle" aria-hidden="true">
+        <ChevronDown class="article-reader-pane__chevron" aria-hidden="true" />
+      </span>
+    </summary>
 
-  {
-    excerpt ? (
-      <section class="article-note" aria-labelledby="article-note-heading">
-        <div class="article-note__eyebrow" id="article-note-heading">
-          TL;DR
-        </div>
-        <p class="article-note__copy">{excerpt}</p>
-      </section>
-    ) : null
-  }
+    <div class="article-reader-pane__content">
+      <BlogLanguageSwitcher
+        ariaLabel="Select reading language"
+        variant="rail"
+        tone="editorial"
+        helperText={languageHelperText}
+        options={[
+          {
+            locale: 'en',
+            label: languages.en,
+            shortLabel: 'EN',
+            href: languageState.availability.en.href,
+            available: languageState.availability.en.available,
+            isActive: languageState.availability.en.isCurrent,
+            screenReaderLabel: languageState.availability.en.available
+              ? 'Read this post in English'
+              : 'English translation unavailable',
+          },
+          {
+            locale: 'th',
+            label: languages.th,
+            shortLabel: 'TH',
+            href: languageState.availability.th.href,
+            available: languageState.availability.th.available,
+            isActive: languageState.availability.th.isCurrent,
+            screenReaderLabel: languageState.availability.th.available
+              ? 'Read this post in Thai'
+              : 'Thai translation unavailable',
+          },
+        ]}
+      />
 
-  <div class="article-rail__toc">
-    <Toc title="On this page" selector="#post-article" levels={[2, 3]} collapsed={false} />
-  </div>
+      <Toc
+        title="Contents"
+        selector="#post-article"
+        levels={[2, 3]}
+        collapsed={false}
+        variant="embedded"
+      />
+    </div>
+  </details>
 </aside>
 
 <style>
-  .article-rail {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 1.25rem;
-    padding: 1.25rem;
+  .article-rail-sidebar {
+    width: min(100%, var(--article-rail-width, 17rem));
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: var(
+      --article-rail-sticky-top,
+      calc(env(safe-area-inset-top, 0px) + var(--nav-height, 3.35rem))
+    );
+    z-index: 10;
+    align-self: start;
+    height: max-content;
+    overflow: visible;
   }
 
-  .article-note {
-    position: relative;
-    z-index: 1;
+  .article-reader-pane {
     display: grid;
-    gap: 0.7rem;
-    padding: 1rem 1rem 1.05rem;
-    border-radius: 1.3rem;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    background: linear-gradient(180deg, rgba(13, 21, 39, 0.88), rgba(8, 13, 26, 0.92));
+    grid-template-rows: auto minmax(0, 1fr);
+    max-block-size: calc(
+      100dvh -
+        var(
+          --article-rail-sticky-top,
+          calc(env(safe-area-inset-top, 0px) + var(--nav-height, 3.35rem))
+        ) -
+        var(--article-rail-bottom-gap, 1rem)
+    );
+    border-radius: 1.25rem;
+    border: 1px solid color-mix(in oklab, var(--white) 8%, transparent);
+    background:
+      radial-gradient(
+        110% 90% at 18% 0%,
+        color-mix(in oklab, var(--accent-blog) 13%, transparent),
+        transparent 62%
+      ),
+      rgba(13, 22, 39, 0.66);
+    box-shadow:
+      0 22px 44px -34px rgba(3, 7, 18, 0.74),
+      inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow: hidden;
   }
 
-  .article-note__eyebrow {
-    display: inline-flex;
-    width: fit-content;
-    padding: 0.32rem 0.7rem;
-    border-radius: 999px;
-    border: 1px solid rgba(129, 140, 248, 0.28);
-    background: rgba(79, 112, 207, 0.16);
-    color: color-mix(in oklab, var(--accent-blog) 84%, white 18%);
+  .article-reader-pane__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    padding: 1rem 1rem 0.9rem;
+    list-style: none;
+    cursor: pointer;
+    color: color-mix(in oklab, var(--white) 88%, transparent);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .article-reader-pane__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .article-reader-pane__summary::marker {
+    content: '';
+  }
+
+  .article-reader-pane__summary:hover {
+    background: color-mix(in oklab, var(--white) 4%, transparent);
+    color: var(--white);
+  }
+
+  .article-reader-pane__summary:focus-visible {
+    outline: none;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--accent-blog) 48%, transparent),
+      0 0 0 3px color-mix(in oklab, var(--accent-blog) 18%, transparent);
+  }
+
+  .article-reader-pane__heading {
+    display: grid;
+    min-width: 0;
+    gap: 0.26rem;
+  }
+
+  .article-reader-pane__eyebrow {
+    color: color-mix(in oklab, var(--accent-blog) 78%, var(--white) 18%);
     font-size: var(--type-caption);
-    font-weight: 700;
-    letter-spacing: 0.28em;
+    font-weight: 760;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
   }
 
-  .article-note__copy {
-    margin: 0;
-    font-size: var(--type-body);
-    line-height: 1.75;
-    color: color-mix(in oklab, var(--white) 84%, transparent);
-    text-wrap: pretty;
+  .article-reader-pane__title {
+    min-width: 0;
+    color: var(--white);
+    font-size: var(--type-body-sm);
+    font-weight: 720;
+    line-height: 1.24;
+    text-wrap: balance;
   }
 
-  .article-rail__toc {
-    position: relative;
-    z-index: 1;
+  .article-reader-pane__toggle {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    background: rgba(37, 99, 235, 0.08);
+    color: color-mix(in oklab, var(--white) 66%, transparent);
+  }
+
+  .article-reader-pane__chevron {
+    width: 1rem;
+    height: 1rem;
+    transition:
+      transform 220ms ease,
+      color 220ms ease;
+  }
+
+  .article-reader-pane[open] .article-reader-pane__chevron {
+    transform: rotate(180deg);
+    color: color-mix(in oklab, var(--accent-blog) 72%, white 18%);
+  }
+
+  .article-reader-pane__content {
+    display: grid;
+    min-block-size: 0;
+    gap: 1.15rem;
+    padding: 0 1rem 1rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: rgba(148, 163, 184, 0.32) transparent;
+    scrollbar-width: thin;
+  }
+
+  .article-reader-pane__content::-webkit-scrollbar {
+    width: 0.45rem;
+  }
+
+  .article-reader-pane__content::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.28);
+  }
+
+  .article-reader-pane__content :global(.language-switcher--editorial) {
+    padding-top: 0.1rem;
+  }
+
+  @media (max-width: 1024px) {
+    .article-rail-sidebar {
+      width: 100%;
+      position: static;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .article-reader-pane {
+      max-block-size: none;
+    }
+
+    .article-reader-pane__content {
+      overflow: visible;
+    }
   }
 
   @media (max-width: 720px) {
-    .article-rail {
-      padding: 1rem;
+    .article-reader-pane {
+      border-radius: 1.12rem;
+    }
+
+    .article-reader-pane__summary {
+      padding: 0.9rem;
+    }
+
+    .article-reader-pane__content {
+      padding: 0 0.9rem 0.9rem;
+      gap: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-reader-pane__summary,
+    .article-reader-pane__chevron {
+      transition: none !important;
     }
   }
 </style>

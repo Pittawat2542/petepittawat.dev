@@ -1,0 +1,83 @@
+---
+interface Props {
+  excerpt?: string | undefined;
+}
+
+const { excerpt } = Astro.props as Props;
+---
+
+{
+  excerpt ? (
+    <section class="article-brief" aria-labelledby="article-brief-heading">
+      <h2 class="article-brief__label" id="article-brief-heading">
+        TL;DR
+      </h2>
+      <p class="article-brief__copy">{excerpt}</p>
+    </section>
+  ) : null
+}
+
+<style>
+  .article-brief {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.85rem;
+    padding: clamp(1.25rem, 2vw, 1.8rem);
+    overflow: hidden;
+    border-radius: 1.35rem;
+    border: 1px solid color-mix(in oklab, var(--accent-blog) 24%, var(--white) 5%);
+    background:
+      radial-gradient(
+        110% 150% at 8% 0%,
+        color-mix(in oklab, var(--accent-blog) 18%, transparent),
+        transparent 58%
+      ),
+      linear-gradient(145deg, rgba(17, 28, 50, 0.72), rgba(7, 12, 26, 0.66));
+    box-shadow:
+      0 22px 52px -42px rgba(3, 7, 18, 0.82),
+      inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .article-brief::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.045), transparent 38%);
+    opacity: 0.8;
+  }
+
+  .article-brief__label,
+  .article-brief__copy {
+    position: relative;
+    z-index: 1;
+  }
+
+  .article-brief__label {
+    margin: 0;
+    color: color-mix(in oklab, var(--accent-blog) 84%, var(--white) 20%);
+    font-size: var(--type-caption);
+    font-weight: 760;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .article-brief__copy {
+    margin: 0;
+    max-width: 68ch;
+    font-size: var(--type-body);
+    line-height: 1.78;
+    color: color-mix(in oklab, var(--white) 88%, transparent);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 720px) {
+    .article-brief {
+      border-radius: 1.15rem;
+      padding: 1.1rem;
+    }
+  }
+</style>

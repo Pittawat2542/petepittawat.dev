@@ -3,7 +3,7 @@ import '@/styles/components/article-surface.css';
 import '@/styles/components/prose.css';
 ---
 
-<div class="article-surface article-body-card">
+<div class="article-body-container">
   <article
     id="post-article"
     class="article-body prose prose-invert prose-a:text-[color:var(--accent)] hover:prose-a:underline prose-a:underline-offset-2 prose-img:rounded-xl prose-pre:text-sm prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-[''] prose-h1:text-3xl prose-h2:text-2xl lg:prose-h1:text-4xl lg:prose-h2:text-3xl prose-headings:mt-10 prose-headings:mb-4 prose-headings:scroll-mt-28 md:prose-headings:scroll-mt-32 prose-p:leading-8"
@@ -13,8 +13,8 @@ import '@/styles/components/prose.css';
 </div>
 
 <style>
-  .article-body-card {
-    padding: clamp(1.6rem, 1.8vw + 1rem, 2.4rem);
+  .article-body-container {
+    width: 100%;
   }
 
   .article-body {
@@ -105,14 +105,18 @@ import '@/styles/components/prose.css';
   }
 
   .article-body :global(table) {
+    display: block;
     width: 100%;
     margin: clamp(1.6rem, 2vw, 2rem) 0;
     border-collapse: collapse;
     border-radius: 1.1rem;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid rgba(148, 163, 184, 0.18);
     background: rgba(9, 14, 28, 0.86);
     box-shadow: 0 24px 60px -46px rgba(7, 12, 26, 0.7);
+    white-space: nowrap;
   }
 
   .article-body :global(thead) {
@@ -147,7 +151,6 @@ import '@/styles/components/prose.css';
     padding: 0.12em 0.42em;
     font-size: 0.95em;
     box-shadow: 0 0 0 1px rgba(10, 16, 32, 0.2);
-    margin-top: 1em;
   }
 
   .article-body :global(pre) {
@@ -163,7 +166,11 @@ import '@/styles/components/prose.css';
     box-shadow:
       0 36px 80px -60px rgba(7, 12, 26, 0.9),
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.32) transparent;
   }
 
   .article-body :global(pre.has-copy) {
@@ -190,32 +197,56 @@ import '@/styles/components/prose.css';
   }
 
   .article-body :global(pre code) {
+    position: relative;
+    z-index: 1;
     display: block;
+    min-width: max-content;
     background: transparent;
     padding: 0;
     line-height: 1.7;
     font-size: var(--type-body-sm);
     color: color-mix(in oklab, var(--white) 97%, transparent);
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(148, 163, 184, 0.32) transparent;
+    white-space: pre;
   }
 
-  .article-body :global(pre code::-webkit-scrollbar) {
+  .article-body :global(pre::-webkit-scrollbar) {
     height: 8px;
   }
 
-  .article-body :global(pre code::-webkit-scrollbar-track) {
+  .article-body :global(pre::-webkit-scrollbar-track) {
     background: transparent;
   }
 
-  .article-body :global(pre code::-webkit-scrollbar-thumb) {
+  .article-body :global(pre::-webkit-scrollbar-thumb) {
     background: rgba(148, 163, 184, 0.28);
     border-radius: 999px;
   }
 
-  .article-body :global(pre code::-webkit-scrollbar-thumb:hover) {
+  .article-body :global(pre::-webkit-scrollbar-thumb:hover) {
     background: rgba(148, 163, 184, 0.38);
+  }
+
+  .article-body :global(.mdx-figure) {
+    margin: clamp(1.8rem, 3.4vw, 3.4rem) 0;
+  }
+
+  .article-body :global(.mdx-figure img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1.15rem;
+    border: 1px solid color-mix(in oklab, var(--white) 10%, transparent);
+    background: rgba(8, 13, 27, 0.64);
+    box-shadow: 0 28px 72px -54px rgba(3, 7, 18, 0.92);
+  }
+
+  .article-body :global(.mdx-figure figcaption) {
+    margin-top: 0.8rem;
+    color: color-mix(in oklab, var(--white) 62%, transparent);
+    font-size: var(--type-body-sm);
+    line-height: 1.55;
+    text-align: center;
+    text-wrap: pretty;
   }
 
   .article-body :global(.code-lang-badge) {
@@ -321,10 +352,6 @@ import '@/styles/components/prose.css';
   }
 
   @media (max-width: 720px) {
-    .article-body-card {
-      padding: 1rem;
-    }
-
     .article-body {
       font-size: var(--type-prose-compact);
     }
@@ -349,6 +376,10 @@ import '@/styles/components/prose.css';
       right: 0.75rem;
       letter-spacing: 0.12em;
       padding: 0.32rem 0.58rem;
+    }
+
+    .article-body :global(.mdx-figure img) {
+      border-radius: 0.95rem;
     }
   }
 </style>

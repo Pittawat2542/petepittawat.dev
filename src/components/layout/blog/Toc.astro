@@ -6,6 +6,7 @@ interface Props {
   selector?: string; // CSS selector for the article root
   levels?: Array<2 | 3 | 4 | 5 | 6>;
   collapsed?: boolean;
+  variant?: 'card' | 'embedded';
 }
 
 const {
@@ -13,38 +14,65 @@ const {
   selector = 'article',
   levels = [2, 3],
   collapsed = true,
+  variant = 'card',
 } = Astro.props as Props;
+const isEmbedded = variant === 'embedded';
 ---
 
 <nav
-  class="toc-root"
+  class:list={['toc-root', isEmbedded && 'toc-root--embedded']}
   aria-label="Table of contents"
   data-selector={selector}
   data-levels={JSON.stringify(levels)}
-  data-open={!collapsed}
+  data-open={isEmbedded || !collapsed}
+  data-variant={variant}
 >
-  <details class="toc-card">
-    <summary class="toc-summary">
-      <span class="toc-summary__content">
-        <span class="toc-summary__eyebrow">
-          <span class="toc-summary__icon" aria-hidden="true">
-            <List class="h-[14px] w-[14px]" aria-hidden="true" />
+  {
+    isEmbedded ? (
+      <section class="toc-card" data-toc-shell>
+        <div class="toc-summary toc-summary--static">
+          <span class="toc-summary__content">
+            <span class="toc-summary__eyebrow">
+              <span class="toc-summary__icon" aria-hidden="true">
+                <List class="h-[14px] w-[14px]" aria-hidden="true" />
+              </span>
+              Contents
+            </span>
+            <span class="toc-summary__title-row">
+              <span class="toc-summary__label">{title}</span>
+              <span class="toc-summary__count" />
+            </span>
           </span>
-          Contents
-        </span>
-        <span class="toc-summary__title-row">
-          <span class="toc-summary__label">{title}</span>
-          <span class="toc-summary__count"></span>
-        </span>
-      </span>
-      <span class="toc-summary__action" aria-hidden="true">
-        <ChevronDown class="toc-summary__chevron" aria-hidden="true" />
-      </span>
-    </summary>
-    <div class="toc-panel">
-      <ul class="toc-list"></ul>
-    </div>
-  </details>
+        </div>
+        <div class="toc-panel">
+          <ul class="toc-list" />
+        </div>
+      </section>
+    ) : (
+      <details class="toc-card">
+        <summary class="toc-summary">
+          <span class="toc-summary__content">
+            <span class="toc-summary__eyebrow">
+              <span class="toc-summary__icon" aria-hidden="true">
+                <List class="h-[14px] w-[14px]" aria-hidden="true" />
+              </span>
+              Contents
+            </span>
+            <span class="toc-summary__title-row">
+              <span class="toc-summary__label">{title}</span>
+              <span class="toc-summary__count" />
+            </span>
+          </span>
+          <span class="toc-summary__action" aria-hidden="true">
+            <ChevronDown class="toc-summary__chevron" aria-hidden="true" />
+          </span>
+        </summary>
+        <div class="toc-panel">
+          <ul class="toc-list" />
+        </div>
+      </details>
+    )
+  }
 </nav>
 
 <script>
@@ -104,14 +132,16 @@ const {
     const list = navEl.querySelector('.toc-list');
     const count = navEl.querySelector('.toc-summary__count');
 
-    if (!article || !details || !list) {
+    if (!article || !list) {
       return;
     }
 
-    if (openByDefault) {
-      details.setAttribute('open', '');
-    } else {
-      details.removeAttribute('open');
+    if (details) {
+      if (openByDefault) {
+        details.setAttribute('open', '');
+      } else {
+        details.removeAttribute('open');
+      }
     }
 
     const selector = levels.map(level => `h${level}`).join(',');
@@ -193,7 +223,7 @@ const {
 
     observerByRoot.set(navEl, observer);
 
-    details.addEventListener('toggle', syncActiveLink);
+    details?.addEventListener('toggle', syncActiveLink);
     window.addEventListener('hashchange', syncActiveLink);
     window.addEventListener('resize', syncActiveLink);
     syncActiveLink();
@@ -221,19 +251,23 @@ const {
   }
 
   .toc-root .toc-card {
-    border-radius: 1.45rem;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background:
-      radial-gradient(
-        140% 120% at 12% 0%,
-        color-mix(in oklab, var(--accent-blog) 12%, transparent),
-        transparent 58%
-      ),
-      linear-gradient(180deg, rgba(12, 19, 35, 0.94), rgba(8, 13, 25, 0.98));
+    border-radius: 1.25rem;
+    border: 1px solid color-mix(in oklab, var(--white) 8%, transparent);
+    background: rgba(16, 26, 45, 0.45);
+    box-shadow: 0 20px 40px -30px rgba(3, 7, 18, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     overflow: hidden;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 26px 48px -42px rgba(3, 7, 18, 0.92);
+  }
+
+  .toc-root--embedded .toc-card {
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    overflow: visible;
   }
 
   .toc-root .toc-summary {
@@ -253,6 +287,10 @@ const {
 
   .toc-root .toc-summary::marker {
     content: '';
+  }
+
+  .toc-root .toc-summary--static {
+    cursor: default;
   }
 
   .toc-root .toc-summary__content {
@@ -345,6 +383,31 @@ const {
       0 0 0 3px rgba(96, 165, 250, 0.12);
   }
 
+  .toc-root--embedded .toc-summary {
+    padding: 0 0 0.72rem;
+  }
+
+  .toc-root--embedded .toc-summary__content {
+    gap: 0.48rem;
+  }
+
+  .toc-root--embedded .toc-summary__eyebrow {
+    color: color-mix(in oklab, var(--white) 52%, transparent);
+  }
+
+  .toc-root--embedded .toc-summary__icon {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .toc-root--embedded .toc-summary__label {
+    font-size: var(--type-body-sm);
+  }
+
+  .toc-root--embedded .toc-summary__action {
+    display: none;
+  }
+
   .toc-root .toc-card[open] .toc-summary__chevron {
     transform: rotate(180deg);
     color: color-mix(in oklab, var(--accent-blog) 70%, white 18%);
@@ -354,6 +417,10 @@ const {
     padding: 0 1rem 1rem;
   }
 
+  .toc-root--embedded .toc-panel {
+    padding: 0;
+  }
+
   .toc-root .toc-list {
     margin: 0;
     padding: 0.95rem 0 0;
@@ -361,6 +428,10 @@ const {
     display: grid;
     gap: 0.38rem;
     list-style: none;
+  }
+
+  .toc-root--embedded .toc-list {
+    padding-top: 0.8rem;
   }
 
   .toc-root .toc-row {
@@ -520,6 +591,16 @@ const {
     .toc-root .toc-row--sub {
       margin-left: 0.65rem;
       padding-left: 0.76rem;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .toc-root:not(.toc-root--embedded) .toc-summary__action {
+      display: none;
+    }
+    .toc-root:not(.toc-root--embedded) .toc-summary {
+      cursor: default;
+      pointer-events: none;
     }
   }
 

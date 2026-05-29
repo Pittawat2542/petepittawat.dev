@@ -148,13 +148,34 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
 
   @media (min-width: 1024px) {
     .latest-blog {
-      grid-template-columns: minmax(0, 1.28fr) minmax(22rem, 0.92fr);
-      grid-auto-rows: minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: stretch;
     }
 
     :global(.latest-blog__featured-item) {
-      grid-row: span 2;
+      grid-column: 1 / -1;
+    }
+
+    .latest-blog :global(.blog-card--featured-essay) {
+      display: grid;
+      grid-template-columns: minmax(19rem, 42%) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) auto;
+      min-height: clamp(20rem, 30vw, 24rem);
+    }
+
+    .latest-blog :global(.blog-card--featured-essay .media-card__media) {
+      grid-row: 1 / 3;
+      aspect-ratio: auto;
+      min-height: 100%;
+      border-radius: var(--media-card-media-radius) 0 0 var(--media-card-media-radius);
+    }
+
+    .latest-blog :global(.blog-card--featured-essay .media-card__body) {
+      justify-content: center;
+    }
+
+    .latest-blog :global(.blog-card--featured-essay .media-card__footer) {
+      grid-column: 2;
     }
   }
 

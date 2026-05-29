@@ -120,6 +120,8 @@ test('blog index avoids client-only locale reads during initial render', () => {
 test('interactive blog language switcher keeps a stable element shape for hydration', () => {
   const languageSwitcher = readProjectFile('src/components/ui/blog/BlogLanguageSwitcher.tsx');
 
+  assert.match(languageSwitcher, /const shortOptionLabel = option\.shortLabel \?\? option\.label/);
+  assert.match(languageSwitcher, /\{option\.label\}/);
   assert.match(languageSwitcher, /if\s*\(onSelect\)\s*\{[\s\S]*<button/);
   assert.match(languageSwitcher, /aria-current=\{option\.isActive \? 'true' : undefined\}/);
   assert.match(languageSwitcher, /if\s*\(option\.isActive\)\s*\{[\s\S]*<span/);

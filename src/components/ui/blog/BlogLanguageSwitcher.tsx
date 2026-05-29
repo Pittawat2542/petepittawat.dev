@@ -1,6 +1,7 @@
 import { memo, type FC } from 'react';
 import { cn } from '@/lib/utils';
 import type { BlogTranslationLocale } from '@/lib/blog-translations';
+import '@/styles/components/editorial-language-switcher.css';
 
 export interface BlogLanguageSwitcherOption {
   readonly locale: BlogTranslationLocale;
@@ -46,7 +47,7 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
   const isEditorial = tone === 'editorial';
 
   const renderOption = (option: BlogLanguageSwitcherOption) => {
-    const optionLabel = option.shortLabel ?? option.label;
+    const shortOptionLabel = option.shortLabel ?? option.label;
     const screenReaderLabel = option.screenReaderLabel ?? option.label;
     const optionClassName = cn(
       OPTION_BY_VARIANT[variant],
@@ -67,10 +68,12 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
 
     const content = (
       <>
-        <span aria-hidden="true" className="sm:hidden">
-          {option.shortLabel ?? optionLabel}
+        <span aria-hidden="true" className="language-switcher__short-label">
+          {shortOptionLabel}
         </span>
-        <span className="hidden sm:inline">{optionLabel}</span>
+        <span aria-hidden="true" className="language-switcher__full-label">
+          {option.label}
+        </span>
         <span className="sr-only">{screenReaderLabel}</span>
       </>
     );
@@ -160,7 +163,7 @@ const BlogLanguageSwitcherComponent: FC<BlogLanguageSwitcherProps> = ({
       {helperText ? (
         <p
           className={cn(
-            'max-w-[24rem] text-sm leading-6',
+            'language-switcher__helper max-w-[24rem] text-sm leading-6',
             isEditorial ? 'editorial-results-info' : 'text-white/60'
           )}
         >
