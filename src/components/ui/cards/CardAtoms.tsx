@@ -430,7 +430,10 @@ const CardTagListComponent: FC<CardTagListProps> = ({
           background: `linear-gradient(180deg, ${tint(24)}, ${tint(12)})`,
           boxShadow: `inset 0 1px 0 ${tint(20)}, 0 10px 24px -18px var(--card-accent)`,
         }}
-        onClick={onOverflowClick}
+        onClick={event => {
+          event.stopPropagation();
+          onOverflowClick();
+        }}
         aria-label={`${overflowLabel}: ${hiddenCount} more`}
       >
         +{hiddenCount} more

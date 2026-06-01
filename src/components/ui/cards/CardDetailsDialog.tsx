@@ -17,6 +17,7 @@ export interface CardDetailsDialogSection {
 interface CardDetailsDialogProps {
   readonly open: boolean;
   readonly onOpenChange: (open: boolean) => void;
+  readonly contentId?: string | undefined;
   readonly accent: string;
   readonly eyebrow: string;
   readonly title: string;
@@ -27,6 +28,7 @@ interface CardDetailsDialogProps {
 const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
   open,
   onOpenChange,
+  contentId,
   accent,
   eyebrow,
   title,
@@ -34,7 +36,10 @@ const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
   sections,
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    <DialogContent className="w-[min(46rem,94vw)] max-w-none overflow-hidden border-none bg-transparent p-0 shadow-none">
+    <DialogContent
+      id={contentId}
+      className="w-[min(46rem,94vw)] max-w-none overflow-hidden border-none bg-transparent p-0 shadow-none"
+    >
       <DialogTitle className="sr-only">{title}</DialogTitle>
       <DialogDescription className="sr-only">{description}</DialogDescription>
       <div
