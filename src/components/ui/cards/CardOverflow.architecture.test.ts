@@ -14,16 +14,38 @@ test('shared card atoms expose measured one-row overflow behavior', () => {
 
   assert.match(cardAtoms, /CardMetaRow/);
   assert.match(cardAtoms, /CardMetaChip/);
+  assert.match(cardAtoms, /flex-wrap items-center gap-2 overflow-visible/);
   assert.match(cardAtoms, /ResizeObserver/);
   assert.match(cardAtoms, /useLayoutEffect/);
   assert.match(cardAtoms, /data-card-overflow-item/);
   assert.match(cardAtoms, /data-card-overflow-more/);
+  assert.match(cardAtoms, /pointer-events-none invisible fixed/);
   assert.match(cardAtoms, /flex-nowrap/);
   assert.match(cardAtoms, /readonly maxVisible\?:\s*number/);
   assert.match(cardAtoms, /readonly minVisible\?:\s*number/);
+  assert.match(cardAtoms, /readonly overflowPlacement\?:\s*'inline'\s*\|\s*'pinned'/);
+  assert.match(cardAtoms, /readonly viewportSafe\?:\s*boolean/);
+  assert.match(cardAtoms, /useState\(floorCount\)/);
+  assert.match(cardAtoms, /setVisibleCount\(floorCount\)/);
+  assert.match(cardAtoms, /overflowPlacement = 'inline'/);
+  assert.match(cardAtoms, /grid-cols-\[minmax\(0,1fr\)_auto\]/);
+  assert.match(cardAtoms, /data-card-overflow-track/);
+  assert.match(cardAtoms, /enforceRenderedFit/);
+  assert.match(cardAtoms, /document\.fonts\.ready/);
+  assert.match(cardAtoms, /data-card-overflow-item[\s\S]*shrink-0/);
   assert.match(cardAtoms, /readonly onOverflowClick\?:\s*(\(\(\)\s*=>\s*void\)|\(\)\s*=>\s*void)/);
   assert.match(cardAtoms, /readonly overflowLabel\?:\s*string/);
   assert.match(cardAtoms, /\+{hiddenCount}\s+more/);
+});
+
+test('editorial listing items leave hover ink unclipped', () => {
+  const explorer = readProjectFile('src/components/explorers/EditorialExplorer.tsx');
+  const listingStyles = readProjectFile('src/styles/components/editorial-listing.layout.css');
+
+  assert.doesNotMatch(explorer, /editorial-listing__item[^\n]*content-visibility:auto/);
+  assert.doesNotMatch(explorer, /editorial-listing__item[^\n]*contain-intrinsic-size/);
+  assert.match(listingStyles, /\.editorial-listing__item\s*\{[\s\S]*margin:\s*-0\.85rem/);
+  assert.match(listingStyles, /\.editorial-listing__item\s*\{[\s\S]*padding:\s*0\.85rem/);
 });
 
 test('media-led cards share a dialog surface for overflow metadata', () => {
@@ -46,6 +68,9 @@ test('project, talk, and publication cards cap visible metadata in collapsed car
   const publicationActions = readProjectFile(
     'src/components/ui/publication/PublicationActions.tsx'
   );
+  const authorList = readProjectFile('src/components/ui/publication/AuthorList.tsx');
+  const cardAtoms = readProjectFile('src/components/ui/cards/CardAtoms.tsx');
+  const publicationStyles = readProjectFile('src/styles/components/publication-card.css');
 
   assert.match(projectCard, /CardDetailsDialog/);
   assert.match(projectCard, /CardMetaRow/);
@@ -62,11 +87,28 @@ test('project, talk, and publication cards cap visible metadata in collapsed car
   assert.match(talkCard, /data-card-description/);
 
   assert.match(publicationCard, /CardMetaRow/);
+  assert.doesNotMatch(publicationCard, /CardMetaChip\s+icon=\{Building2\}/);
+  assert.doesNotMatch(publicationCard, /CardDivider/);
+  assert.match(publicationCard, /publication-card\.css/);
+  assert.match(publicationCard, /AuthorChipList/);
   assert.match(publicationCard, /maxVisible=\{featured \? 4 : 3\}/);
-  assert.match(publicationCard, /data-card-description/);
   assert.match(publicationActions, /readonly maxVisible\?:\s*number/);
   assert.match(publicationActions, /MeasuredOverflowRow/);
   assert.match(publicationActions, /maxVisible=\{maxVisible\}/);
+  assert.match(authorList, /AuthorChipList/);
+  assert.match(authorList, /MeasuredOverflowRow/);
+  assert.match(authorList, /overflowPlacement="pinned"/);
+  assert.match(authorList, /readonly onOverflowClick\?:\s*\(\)\s*=>\s*void/);
+  assert.match(authorList, /\+{hiddenCount}\s+more/);
+  assert.match(cardAtoms, /overflowPlacement="pinned"/);
+  assert.match(publicationStyles, /\.publication-card \.media-card__footer/);
+  assert.match(publicationStyles, /border-top:\s*0/);
+  assert.match(publicationStyles, /background:\s*transparent/);
+  assert.match(
+    publicationStyles,
+    /\.editorial-listing__featured \.media-card--featured\.publication-card/
+  );
+  assert.match(publicationStyles, /grid-template-rows:\s*auto auto/);
 });
 
 test('featured horizontal media cards remove divider lines only in wide layout', () => {

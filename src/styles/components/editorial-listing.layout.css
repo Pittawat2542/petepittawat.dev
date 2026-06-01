@@ -89,8 +89,8 @@
 }
 
 .editorial-listing__item {
-  margin-block: -0.4rem;
-  padding-block: 0.4rem;
+  margin: -0.85rem;
+  padding: 0.85rem;
 }
 
 .editorial-listing__featured {

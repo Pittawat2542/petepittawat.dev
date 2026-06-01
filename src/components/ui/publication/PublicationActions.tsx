@@ -1,4 +1,13 @@
-import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import {
+  ArrowUpRight,
+  BookOpen,
+  Code2,
+  Database,
+  ExternalLink,
+  FileText,
+  Globe,
+  Video,
+} from 'lucide-react';
 import { memo } from 'react';
 import type { CSSProperties, FC, MouseEvent } from 'react';
 
@@ -12,6 +21,26 @@ interface PublicationActionsProps {
   readonly onStopPropagation: (e: MouseEvent) => void;
   readonly maxVisible?: number;
   readonly onOverflowClick?: () => void;
+  readonly viewportSafe?: boolean;
+}
+
+function getPublicationActionIcon(label: string) {
+  if (/paper|pdf|preprint|article/i.test(label)) {
+    return FileText;
+  }
+  if (/github|repo|code|source|implementation/i.test(label)) {
+    return Code2;
+  }
+  if (/data|dataset|benchmark/i.test(label)) {
+    return Database;
+  }
+  if (/video|talk|presentation|demo/i.test(label)) {
+    return Video;
+  }
+  if (/doc|readme|book/i.test(label)) {
+    return BookOpen;
+  }
+  return Globe;
 }
 
 const PublicationActionsComponent: FC<PublicationActionsProps> = ({
@@ -21,12 +50,13 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
   onStopPropagation,
   maxVisible,
   onOverflowClick,
+  viewportSafe,
 }) => {
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const chipStyle = { '--card-accent': accent } as CSSProperties;
   const actionClassName =
-    'group/link inline-flex min-w-0 items-start justify-between gap-3 rounded-[1.4rem] border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-[color:var(--card-accent)]';
+    'group/link inline-flex min-w-0 items-center gap-2.5 rounded-xl border px-4 py-3 text-sm text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/45 focus-visible:outline-none';
   const actions = [
     ...(item.url
       ? [
@@ -51,7 +81,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
     onOverflowClick ? (
       <button
         type="button"
-        className="group/link inline-flex min-w-0 items-center justify-between gap-3 rounded-[1.4rem] border px-4 py-3 font-bold text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white"
+        className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/55 focus-visible:outline-none"
         style={{
           ...chipStyle,
           borderColor: tint(58),
@@ -64,10 +94,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
         }}
         aria-label={`Show ${hiddenActionCount} more publication resources`}
       >
-        <span className="min-w-0 text-left leading-snug font-medium tracking-[0.01em] whitespace-nowrap">
-          +{hiddenActionCount} more
-        </span>
-        <ArrowUpRight size={14} aria-hidden="true" className="icon-bounce" />
+        +{hiddenActionCount} more
       </button>
     ) : null;
 
@@ -79,38 +106,48 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
       className="media-card__action-row text-white/80 md:text-xs"
       itemClassName="media-card__action-item"
       overflowClassName="media-card__action-item media-card__action-item--more"
+      viewportSafe={viewportSafe}
       getKey={action => action.key}
-      renderItem={action => (
-        <a
-          key={action.key}
-          href={action.href}
-          target={action.isExternal ? '_blank' : undefined}
-          rel={action.isExternal ? 'noopener noreferrer' : undefined}
-          className={actionClassName}
-          style={{
-            ...chipStyle,
-            borderColor: tint(48),
-            background: `linear-gradient(180deg, ${tint(12)}, ${tint(6)})`,
-            boxShadow: `inset 0 1px 0 ${tint(12)}`,
-          }}
-          onClick={onStopPropagation}
-          aria-label={action.ariaLabel}
-        >
-          <span className="min-w-0 truncate text-left leading-snug font-medium tracking-[0.01em] whitespace-nowrap">
-            {action.label}
-          </span>
-          <span
-            title={action.isExternal ? 'External link' : 'Internal link'}
-            className="mt-0.5 shrink-0 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+      renderItem={action => {
+        const Icon = getPublicationActionIcon(action.label);
+
+        return (
+          <a
+            key={action.key}
+            href={action.href}
+            target={action.isExternal ? '_blank' : undefined}
+            rel={action.isExternal ? 'noopener noreferrer' : undefined}
+            className={actionClassName}
+            style={{
+              ...chipStyle,
+              borderColor: tint(24),
+              background: `linear-gradient(180deg, ${tint(10)}, ${tint(4)})`,
+              boxShadow: `inset 0 1px 0 ${tint(10)}`,
+            }}
+            onClick={onStopPropagation}
+            aria-label={action.ariaLabel}
           >
-            {action.isExternal ? (
-              <ExternalLink size={14} aria-hidden="true" className="icon-bounce" />
-            ) : (
-              <ArrowUpRight size={14} aria-hidden="true" className="icon-bounce" />
-            )}
-          </span>
-        </a>
-      )}
+            <Icon
+              size={16}
+              aria-hidden="true"
+              className="flex-shrink-0 transition-transform duration-200 group-hover/link:scale-110"
+            />
+            <span className="min-w-0 truncate font-semibold tracking-[0.02em] whitespace-nowrap">
+              {action.label}
+            </span>
+            <span
+              title={action.isExternal ? 'External link' : 'Internal link'}
+              className="ml-auto inline-flex items-center text-white/40 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 group-hover/link:text-white"
+            >
+              {action.isExternal ? (
+                <ExternalLink size={13} aria-hidden="true" />
+              ) : (
+                <ArrowUpRight size={13} aria-hidden="true" />
+              )}
+            </span>
+          </a>
+        );
+      }}
       renderOverflow={renderOverflow}
     />
   );
@@ -124,7 +161,8 @@ export const PublicationActions = memo(PublicationActionsComponent, (prevProps, 
     prevProps.accent === nextProps.accent &&
     prevProps.onStopPropagation === nextProps.onStopPropagation &&
     prevProps.maxVisible === nextProps.maxVisible &&
-    prevProps.onOverflowClick === nextProps.onOverflowClick
+    prevProps.onOverflowClick === nextProps.onOverflowClick &&
+    prevProps.viewportSafe === nextProps.viewportSafe
   );
 });
 

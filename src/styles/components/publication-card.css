@@ -1,0 +1,33 @@
+/* Publication-specific media card refinements. Imported by PublicationCard. */
+
+.publication-card .media-card__footer {
+  border-top: 0;
+  background: transparent;
+  padding-top: clamp(1rem, 1.35vw, 1.25rem);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.publication-card .media-card__body {
+  padding-bottom: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+@media (min-width: 1024px) {
+  .editorial-listing__featured .media-card--featured.publication-card {
+    grid-template-rows: auto auto;
+  }
+
+  .editorial-listing__featured .media-card--featured.publication-card .media-card__media {
+    grid-row: 1 / span 2;
+    min-height: 100%;
+  }
+
+  .editorial-listing__featured .media-card--featured.publication-card .media-card__body {
+    justify-content: flex-start;
+  }
+
+  .editorial-listing__featured .media-card--featured.publication-card .media-card__footer {
+    grid-column: 2;
+    align-self: end;
+  }
+}
