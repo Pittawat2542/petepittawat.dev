@@ -146,7 +146,7 @@ export function EditorialExplorer<TItem, TSort extends string>({
           <li
             id={getItemId(featuredItem)}
             key={getItemKey(featuredItem)}
-            className="target-highlight h-full [contain-intrinsic-size:620px] [content-visibility:auto]"
+            className="editorial-listing__item target-highlight h-full [contain-intrinsic-size:620px] [content-visibility:auto]"
           >
             {renderFeaturedItem(featuredItem)}
           </li>
@@ -162,7 +162,7 @@ export function EditorialExplorer<TItem, TSort extends string>({
             <li
               id={getItemId(item)}
               key={getItemKey(item)}
-              className="target-highlight h-full [contain-intrinsic-size:420px] [content-visibility:auto]"
+              className="editorial-listing__item target-highlight h-full [contain-intrinsic-size:420px] [content-visibility:auto]"
             >
               {renderItem(item)}
             </li>

@@ -88,6 +88,11 @@
   list-style: none;
 }
 
+.editorial-listing__item {
+  margin-block: -0.4rem;
+  padding-block: 0.4rem;
+}
+
 .editorial-listing__featured {
   display: grid;
 }

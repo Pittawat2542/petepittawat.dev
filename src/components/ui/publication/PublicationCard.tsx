@@ -1,15 +1,20 @@
 import { memo, useEffect, useState, type FC } from 'react';
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { ArrowUpRight } from 'lucide-react';
-import { CardDivider, CardInfoPanel, CardKicker, CardTagList } from '@/components/ui/cards';
+import { ArrowUpRight, Building2, CalendarDays, FileText } from 'lucide-react';
+import {
+  CardDivider,
+  CardInfoPanel,
+  CardMetaChip,
+  CardMetaRow,
+  CardTagList,
+} from '@/components/ui/cards';
 import CardVisualPanel from '@/components/ui/cards/CardVisualPanel';
 import MediaContentCard from '@/components/ui/cards/MediaContentCard';
 import type { Publication } from '@/types';
 import { AuthorList } from './AuthorList';
 import { PublicationActions } from './PublicationActions';
-import { PublicationMeta } from './PublicationMeta';
 import { PublicationModal } from './PublicationModal';
-import { deduplicateArtifacts, typeAccentVar } from './utils';
+import { deduplicateArtifacts, toTitleCase, typeAccentVar } from './utils';
 import { getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toPublicationCardVisualInput } from '@/lib/card-visual';
 
@@ -28,7 +33,6 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const dedupedArtifacts = deduplicateArtifacts(item);
   const hasActions = Boolean(item.url) || dedupedArtifacts.length > 0;
-
   // Authors are now rendered using the extracted utility function
 
   function onCardClick() {
@@ -83,6 +87,10 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
               item={item}
               dedupedArtifacts={dedupedArtifacts}
               accent={accent}
+              maxVisible={2}
+              onOverflowClick={() => {
+                setOpen(true);
+              }}
               onStopPropagation={e => {
                 e.stopPropagation();
               }}
@@ -108,9 +116,20 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       }
     >
       <div className="flex h-full flex-col">
-        <CardKicker label="Publication" />
+        <CardMetaRow>
+          <CardMetaChip icon={FileText}>Publication</CardMetaChip>
+          {item.type ? (
+            <CardMetaChip title={item.type}>{toTitleCase(item.type)}</CardMetaChip>
+          ) : null}
+          {item.venue ? (
+            <CardMetaChip icon={Building2} title={item.venue}>
+              {item.venue}
+            </CardMetaChip>
+          ) : null}
+          <CardMetaChip icon={CalendarDays}>{item.year}</CardMetaChip>
+        </CardMetaRow>
 
-        <div className="mt-5 flex flex-1 flex-col gap-5 overflow-x-hidden">
+        <div className="mt-4 flex flex-1 flex-col gap-4 overflow-x-hidden">
           <div className="min-w-0">
             <h3 className="type-featured-card-title md:type-featured-card-title max-w-[18ch] leading-[1.03] font-semibold tracking-[-0.045em] text-balance text-[color:var(--card-accent)]">
               {item.url ? (
@@ -132,10 +151,12 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                 item.title
               )}
             </h3>
-            <p className="mt-4 max-w-[34ch] text-base leading-[1.7] text-[color:var(--white)]/76 md:text-base">
+            <p
+              className="mt-4 max-w-[34ch] text-base leading-[1.7] text-[color:var(--white)]/76 md:text-base"
+              data-card-description
+            >
               <AuthorList authors={item.authors} />
             </p>
-            <PublicationMeta item={item} accent={accent} />
           </div>
 
           {item.venue ? (
@@ -151,8 +172,15 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
             </CardInfoPanel>
           ) : null}
 
-          <div className="mt-auto flex flex-col gap-3">
-            <CardTagList tags={item.tags} />
+          <div className="flex flex-col gap-3">
+            <CardTagList
+              tags={item.tags}
+              maxVisible={featured ? 4 : 3}
+              onOverflowClick={() => {
+                setOpen(true);
+              }}
+              overflowLabel={`Show all tags for ${item.title}`}
+            />
             <CardDivider />
           </div>
         </div>
