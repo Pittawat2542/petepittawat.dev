@@ -373,8 +373,8 @@ const siteCopyEn: SiteCopy = {
       title: 'About Pete',
       subtitle:
         'I work across language models, evaluation, systems-building, and technical communication.',
-      role: 'Research Scientist @ Typhoon',
-      location: 'Bangkok',
+      role: 'Incoming PhD student @ NTU Singapore',
+      location: 'Singapore',
       summary:
         'I work on making language models more reliable in practice, especially through behavior shaping, reasoning, evaluation, and the engineering work needed to turn research into usable systems.',
     },
@@ -383,8 +383,8 @@ const siteCopyEn: SiteCopy = {
       items: [
         {
           label: 'Current role',
-          value: 'Research Scientist @ Typhoon',
-          hint: 'Reasoning models, post-training, evaluation, and applied research collaborations.',
+          value: 'Incoming PhD student @ NTU Singapore',
+          hint: 'Preparing for PhD research across reasoning models, evaluation, and reliable AI systems.',
         },
         {
           label: 'Working style',
@@ -393,8 +393,8 @@ const siteCopyEn: SiteCopy = {
         },
         {
           label: 'Base',
-          value: 'Bangkok',
-          hint: 'Working with regional and international collaborators.',
+          value: 'Singapore',
+          hint: 'Working with regional and international collaborators from Singapore.',
         },
       ],
     },
@@ -610,8 +610,8 @@ const siteCopyTh: SiteCopy = {
       eyebrow: 'นักวิจัย นักสร้างระบบ และผู้สื่อสารเชิงเทคนิค',
       title: 'เกี่ยวกับพีท',
       subtitle: 'ผมทำงานคร่อมระหว่างโมเดลภาษา การประเมินผล การสร้างระบบ และการสื่อสารเชิงเทคนิค',
-      role: 'Research Scientist @ Typhoon',
-      location: 'กรุงเทพฯ',
+      role: 'Incoming PhD student @ NTU Singapore',
+      location: 'สิงคโปร์',
       summary:
         'ผมทำงานเพื่อให้โมเดลภาษามีความน่าเชื่อถือมากขึ้นในการใช้งานจริง โดยเฉพาะผ่านการกำหนดพฤติกรรมของโมเดล งานด้าน reasoning การประเมินผล และงานวิศวกรรมที่จำเป็นต่อการแปลงงานวิจัยให้กลายเป็นระบบที่ใช้งานได้',
     },
@@ -620,8 +620,8 @@ const siteCopyTh: SiteCopy = {
       items: [
         {
           label: 'บทบาทปัจจุบัน',
-          value: 'Research Scientist @ Typhoon',
-          hint: 'ทำงานด้านโมเดลให้เหตุผล post-training การประเมินผล และความร่วมมือวิจัยเชิงประยุกต์',
+          value: 'Incoming PhD student @ NTU Singapore',
+          hint: 'เตรียมเริ่มงานวิจัยระดับปริญญาเอกด้านโมเดลให้เหตุผล การประเมินผล และระบบ AI ที่น่าเชื่อถือ',
         },
         {
           label: 'สไตล์การทำงาน',
@@ -630,8 +630,8 @@ const siteCopyTh: SiteCopy = {
         },
         {
           label: 'ฐานการทำงาน',
-          value: 'กรุงเทพฯ',
-          hint: 'ทำงานร่วมกับพาร์ตเนอร์ทั้งในภูมิภาคและต่างประเทศ',
+          value: 'สิงคโปร์',
+          hint: 'ทำงานร่วมกับพาร์ตเนอร์ทั้งในภูมิภาคและต่างประเทศจากสิงคโปร์',
         },
       ],
     },
