@@ -17,7 +17,7 @@ interface Props {
 const { currentWork } = Astro.props as Props;
 ---
 
-<section id="current-work" class="section-block">
+<section id="current-work" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
       <Activity class="h-5 w-5 text-[color:var(--accent)]" />
@@ -28,51 +28,73 @@ const { currentWork } = Astro.props as Props;
 
   <div class="current-work-grid">
     <GlassCard variant="premium" className="current-work-card current-work-card--primary">
-      <span class="eyebrow text-[color:var(--accent)]">Current focus</span>
-      <ul class="current-work-list">
-        {
-          currentWork.items.map(point => (
-            <li>
-              <span class="current-work-list__dot" />
-              <span>{point}</span>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="current-work-card__body">
+        <span class="eyebrow text-[color:var(--accent)]">Current focus</span>
+        <ul class="current-work-list">
+          {
+            currentWork.items.map(point => (
+              <li>
+                <span class="current-work-list__dot" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="current-work-visual current-work-visual--radar" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <i></i>
+      </div>
     </GlassCard>
 
     <GlassCard variant="premium" className="current-work-card">
-      <div class="current-work-card__title">
-        <Handshake class="h-4 w-4 text-[color:var(--accent)]" />
-        <h3>{currentWork.collaborationTitle}</h3>
+      <div class="current-work-card__body">
+        <div class="current-work-card__title">
+          <Handshake class="h-4 w-4 text-[color:var(--accent)]" />
+          <h3>{currentWork.collaborationTitle}</h3>
+        </div>
+        <ul class="current-work-list current-work-list--compact">
+          {
+            currentWork.collaborationPoints.map(point => (
+              <li>
+                <span class="current-work-list__dot" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
       </div>
-      <ul class="current-work-list current-work-list--compact">
-        {
-          currentWork.collaborationPoints.map(point => (
-            <li>
-              <span class="current-work-list__dot" />
-              <span>{point}</span>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="current-work-visual current-work-visual--loop" aria-hidden="true">
+        <span class="current-work-visual__orbit"></span>
+        <span class="current-work-visual__node current-work-visual__node--one"></span>
+        <span class="current-work-visual__node current-work-visual__node--two"></span>
+        <span class="current-work-visual__node current-work-visual__node--three"></span>
+      </div>
     </GlassCard>
 
     <GlassCard variant="premium" className="current-work-card">
-      <div class="current-work-card__title">
-        <Mic class="h-4 w-4 text-[color:var(--accent)]" />
-        <h3>{currentWork.communicationTitle}</h3>
+      <div class="current-work-card__body">
+        <div class="current-work-card__title">
+          <Mic class="h-4 w-4 text-[color:var(--accent)]" />
+          <h3>{currentWork.communicationTitle}</h3>
+        </div>
+        <ul class="current-work-list current-work-list--compact">
+          {
+            currentWork.communicationPoints.map(point => (
+              <li>
+                <span class="current-work-list__dot" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
       </div>
-      <ul class="current-work-list current-work-list--compact">
-        {
-          currentWork.communicationPoints.map(point => (
-            <li>
-              <span class="current-work-list__dot" />
-              <span>{point}</span>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="current-work-visual current-work-visual--messages" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </div>
     </GlassCard>
   </div>
 </section>

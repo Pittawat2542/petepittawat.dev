@@ -23,7 +23,7 @@ interface Props {
 const { milestones, spotlightTimeline, timeline } = Astro.props as Props;
 ---
 
-<section id="milestones" class="section-block">
+<section id="milestones" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
       <Milestone class="h-5 w-5 text-[color:var(--accent)]" />
@@ -35,12 +35,15 @@ const { milestones, spotlightTimeline, timeline } = Astro.props as Props;
   <div class="milestones-grid">
     <GlassCard variant="glow" className="spotlight-card">
       <span class="eyebrow">{milestones.spotlightTitle}</span>
-      <ol class="spotlight-list">
+      <ol class="milestone-timeline">
         {
           spotlightTimeline.map(item => (
             <li>
-              <p class="spotlight-card__title">{item.title}</p>
-              <p class="spotlight-card__description">{item.description}</p>
+              <span class="milestone-timeline__dot" aria-hidden="true" />
+              <div class="milestone-timeline__content">
+                <p class="spotlight-card__title">{item.title}</p>
+                <p class="spotlight-card__description">{item.description}</p>
+              </div>
             </li>
           ))
         }

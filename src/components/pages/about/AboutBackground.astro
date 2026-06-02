@@ -1,6 +1,6 @@
 ---
-import { History } from '@lucide/astro';
-import Prose from '@/components/content/Prose';
+import { BookOpenText, History, Lightbulb, UsersRound } from '@lucide/astro';
+import GlassCard from '@/components/ui/core/GlassCard.astro';
 
 interface Props {
   background: {
@@ -11,25 +11,43 @@ interface Props {
 }
 
 const { background } = Astro.props as Props;
+const principleIcons = [BookOpenText, Lightbulb, UsersRound] as const;
+const principleLabels = ['What I study', 'How I think', 'Why it matters'] as const;
 ---
 
-<section id="background" class="section-block relative">
-  <div
-    class="pointer-events-none absolute top-0 -left-20 h-64 w-64 rounded-full bg-[color:var(--accent-about)]/5 blur-3xl"
-  >
-  </div>
-  <div class="relative z-10">
-    <div class="section-heading mb-8">
-      <div class="mb-2 flex items-center gap-2">
-        <History class="h-5 w-5 text-[color:var(--accent)]" />
-        <h2>{background.title}</h2>
-      </div>
-      <p>{background.description}</p>
+<section id="background" class="section-block reveal relative">
+  <div class="section-heading">
+    <div class="mb-2 flex items-center gap-2">
+      <History class="h-5 w-5 text-[color:var(--accent)]" />
+      <h2>{background.title}</h2>
     </div>
-    <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8">
-      <Prose className="prose-block text-lg leading-relaxed text-[color:var(--white)]/80">
-        {background.paragraphs.map(note => <p>{note}</p>)}
-      </Prose>
-    </div>
+    <p>{background.description}</p>
   </div>
+
+  <GlassCard variant="premium" className="background-band">
+    <div class="background-principles">
+      {
+        background.paragraphs.map((note, index) => {
+          const Icon = principleIcons[index] || History;
+          return (
+            <article class="background-principle">
+              <div class="background-principle__icon" aria-hidden="true">
+                <Icon class="h-7 w-7" />
+              </div>
+              <div>
+                <h3>{principleLabels[index] || background.title}</h3>
+                <p>{note}</p>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+    <div class="background-layers" aria-hidden="true">
+      <span class="background-layers__plane background-layers__plane--top"></span>
+      <span class="background-layers__plane background-layers__plane--middle"></span>
+      <span class="background-layers__plane background-layers__plane--bottom"></span>
+      <span class="background-layers__mesh"></span>
+    </div>
+  </GlassCard>
 </section>

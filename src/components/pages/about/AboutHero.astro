@@ -1,0 +1,144 @@
+---
+import { Image } from 'astro:assets';
+import { MapPin } from '@lucide/astro';
+import BrandIcon from '@/components/ui/icons/BrandIcon.astro';
+import profileImage from '@/assets/images/profile.jpg';
+import { socialLinks } from '@/components/layout/core/footer-social-links';
+
+interface Props {
+  aboutCopy: {
+    intro: {
+      eyebrow: string;
+      title: string;
+      subtitle: string;
+      role: string;
+      location: string;
+      summary: string;
+    };
+    focusAreas: {
+      items: ReadonlyArray<{
+        title: string;
+      }>;
+    };
+    background: {
+      paragraphs: readonly string[];
+    };
+  };
+}
+
+const { aboutCopy } = Astro.props as Props;
+const featuredLinks = socialLinks.filter(link =>
+  ['LinkedIn', 'GitHub', 'Google Scholar', 'ORCID'].includes(link.label)
+);
+const heroParagraphs = [
+  aboutCopy.intro.summary,
+  aboutCopy.background.paragraphs[1] || aboutCopy.intro.subtitle,
+];
+const heroChips = [
+  aboutCopy.focusAreas.items[1]?.title,
+  aboutCopy.focusAreas.items[2]?.title,
+  aboutCopy.focusAreas.items[3]?.title,
+  aboutCopy.intro.location,
+].filter(Boolean);
+---
+
+<section class="about-hero reveal" aria-labelledby="about-hero-title">
+  <div class="about-hero__ambient" aria-hidden="true">
+    <span class="about-hero__orb about-hero__orb--blue"></span>
+    <span class="about-hero__orb about-hero__orb--gold"></span>
+  </div>
+  <div class="about-hero__field" aria-hidden="true">
+    <svg class="about-hero__constellation" viewBox="0 0 230 340" fill="none">
+      <defs>
+        <linearGradient id="about-line-gradient" x1="42" y1="26" x2="202" y2="312">
+          <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.42"></stop>
+          <stop offset="48%" stop-color="#60a5fa" stop-opacity="0.72"></stop>
+          <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0.4"></stop>
+        </linearGradient>
+      </defs>
+      <path class="about-hero__line" d="M50 72L112 26L157 92L126 176L78 235L42 166L50 72Z"></path>
+      <path class="about-hero__line" d="M50 72L157 92L202 146L126 176L42 166"></path>
+      <path class="about-hero__line" d="M112 26L126 176L190 268L78 235"></path>
+      <path class="about-hero__line" d="M78 235L120 312L190 268L202 146"></path>
+      <circle class="about-hero__node about-hero__node--a" cx="50" cy="72" r="5"></circle>
+      <circle class="about-hero__node about-hero__node--b" cx="112" cy="26" r="6"></circle>
+      <circle class="about-hero__node about-hero__node--c" cx="157" cy="92" r="4.5"></circle>
+      <circle class="about-hero__node about-hero__node--d" cx="202" cy="146" r="4"></circle>
+      <circle class="about-hero__node about-hero__node--e" cx="42" cy="166" r="5"></circle>
+      <circle class="about-hero__node about-hero__node--f" cx="78" cy="235" r="5"></circle>
+      <circle class="about-hero__node about-hero__node--g" cx="120" cy="312" r="5"></circle>
+      <circle class="about-hero__node about-hero__node--h" cx="190" cy="268" r="4"></circle>
+    </svg>
+  </div>
+
+  <div class="about-hero__copy">
+    <p class="about-hero__eyebrow">
+      <span class="about-hero__eyebrow-dot" aria-hidden="true"></span>
+      {aboutCopy.intro.eyebrow}
+    </p>
+    <h1 id="about-hero-title" class="about-hero__title">{aboutCopy.intro.title}</h1>
+    <p class="about-hero__subtitle">{aboutCopy.intro.subtitle}</p>
+    <div class="about-hero__summary">
+      {heroParagraphs.map(paragraph => <p>{paragraph}</p>)}
+    </div>
+    <div class="about-hero__chips" aria-label="Research profile highlights">
+      {heroChips.map(chip => <span>{chip}</span>)}
+    </div>
+  </div>
+
+  <aside class="about-hero__profile" aria-label="Profile and social links">
+    <div class="about-hero__profile-main">
+      <div class="about-hero__portrait">
+        <Image
+          src={profileImage}
+          alt="Pete's profile picture"
+          widths={[180, 240, 320, 420]}
+          sizes="(min-width: 1024px) 11rem, (min-width: 768px) 9rem, 7.5rem"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="about-hero__image"
+        />
+      </div>
+      <div class="about-hero__profile-copy">
+        <p class="about-hero__profile-name">Pittawat (Pete)</p>
+        <p class="about-hero__profile-role">{aboutCopy.intro.role}</p>
+        <p class="about-hero__profile-location">
+          <MapPin class="h-4 w-4" aria-hidden="true" />
+          <span>{aboutCopy.intro.location}</span>
+        </p>
+      </div>
+    </div>
+    <div class="about-hero__profile-rule" aria-hidden="true"></div>
+    <div class="about-hero__profile-note">
+      <span>Incoming PhD student</span>
+      <span>Reasoning systems</span>
+      <span>Evaluation</span>
+    </div>
+    <div class="about-hero__socials" aria-label="Connect">
+      {
+        featuredLinks.map(link => (
+          <a
+            class="about-hero__social-link"
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {link.brandIcon && <BrandIcon icon={link.brandIcon} class="about-hero__social-icon" />}
+            {link.customIcon === 'linkedin' && (
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="about-hero__social-icon"
+                aria-hidden="true"
+              >
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.05-1.86-3.05-1.86 0-2.15 1.45-2.15 2.95v5.67H9.32V9h3.42v1.56h.05c.48-.9 1.64-1.86 3.37-1.86 3.61 0 4.28 2.38 4.28 5.47v6.28zM5.3 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.52V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z" />
+              </svg>
+            )}
+            <span>{link.label}</span>
+          </a>
+        ))
+      }
+    </div>
+  </aside>
+</section>
