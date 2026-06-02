@@ -16,7 +16,7 @@ import '@fontsource/noto-serif/400-italic.css';
 import '@fontsource/noto-serif-thai/400.css';
 import '@fontsource/noto-serif-thai/500.css';
 import '@fontsource/noto-serif-thai/700.css';
-import { SITE_TITLE } from '@/consts';
+import { SITE_CONFIG, SITE_TITLE } from '@/consts';
 
 interface Props {
   title: string;
@@ -69,8 +69,8 @@ const structuredData: Record<string, unknown> = {
   image: new URL(image, Astro.site ?? Astro.url).toString(),
   author: {
     '@type': 'Person',
-    name: 'Pete Pittawat Taveekitworachai',
-    url: 'https://petepittawat.dev',
+    name: SITE_CONFIG.author,
+    url: SITE_CONFIG.url,
     sameAs: [
       'https://twitter.com/petepittawat',
       'https://github.com/petepittawat',
@@ -79,8 +79,8 @@ const structuredData: Record<string, unknown> = {
   },
   publisher: {
     '@type': 'Person',
-    name: 'Pete Pittawat Taveekitworachai',
-    url: 'https://petepittawat.dev',
+    name: SITE_CONFIG.author,
+    url: SITE_CONFIG.url,
   },
 };
 
@@ -99,10 +99,10 @@ if (type === 'article') {
 }
 
 if (type === 'website') {
-  structuredData['name'] = 'PETEPITTAWAT.DEV';
+  structuredData['name'] = SITE_TITLE;
   structuredData['potentialAction'] = {
     '@type': 'SearchAction',
-    target: 'https://petepittawat.dev/search?q={search_term_string}',
+    target: `${SITE_CONFIG.url}/search?q={search_term_string}`,
     'query-input': 'required name=search_term_string',
   };
 }

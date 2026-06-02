@@ -3,6 +3,7 @@ import BaseHead from '@/components/layout/core/BaseHead.astro';
 import Footer from '@/components/layout/core/Footer.astro';
 import Header from '@/components/layout/core/Header.astro';
 import ScrollTop from '@/components/layout/blog/ScrollTop';
+import RevealController from '@/components/common/RevealController.astro';
 import { serializeCssVariables } from '@/lib/blog-cover';
 
 const {
@@ -33,7 +34,7 @@ const {
 const ogImagePath = image ?? '/home-og-image.jpeg';
 const ogImage = Astro.site ? new URL(ogImagePath, Astro.site).href : ogImagePath;
 const pageKey = page?.toLowerCase();
-const pageAccent = pageKey ? 'var(--accent, #6ac1ff)' : undefined;
+const pageAccent = pageKey ? 'var(--accent, var(--color-accent-primary))' : undefined;
 const bodyStyleFragments = [
   pageAccent ? `--page-accent:${pageAccent};--card-accent:${pageAccent};` : undefined,
   Object.keys(themeVariables).length > 0 ? serializeCssVariables(themeVariables) : undefined,
@@ -43,7 +44,10 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
 ---
 
 <!doctype html>
-<html lang={lang} style="background:#080d19;color:#F6F8FC;color-scheme: dark;">
+<html
+  lang={lang}
+  style="background:var(--surface-page);color:var(--text-primary);color-scheme: dark;"
+>
   <head>
     <BaseHead
       title={title}
@@ -73,57 +77,6 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
     </main>
     <Footer />
     <ScrollTop />
-    <script>
-      // Performance optimized initialization
-      (function () {
-        // Reveal-on-scroll for elements with `.reveal` class - optimized with RAF
-        const io = new IntersectionObserver(
-          entries => {
-            for (const e of entries) {
-              if (e.isIntersecting) {
-                requestAnimationFrame(() => {
-                  e.target.classList.add('reveal-visible');
-                });
-                io.unobserve(e.target); // Stop observing once revealed
-              }
-            }
-          },
-          { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }
-        );
-
-        // Observe existing and future .reveal elements
-        const initReveal = () => {
-          const elements = document.querySelectorAll('.reveal');
-          elements.forEach(el => io.observe(el));
-
-          // Observe future additions
-          const mo = new MutationObserver(mutations => {
-            for (const m of mutations) {
-              m.addedNodes.forEach(node => {
-                if (!(node instanceof Element)) return;
-                if (node.classList?.contains('reveal')) io.observe(node);
-                node.querySelectorAll?.('.reveal').forEach(el => io.observe(el));
-              });
-            }
-          });
-          try {
-            mo.observe(document.body, { childList: true, subtree: true });
-          } catch {}
-        };
-
-        // Optimize initialization timing
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-            requestAnimationFrame(() => {
-              initReveal();
-            });
-          });
-        } else {
-          requestAnimationFrame(() => {
-            initReveal();
-          });
-        }
-      })();
-    </script>
+    <RevealController />
   </body>
 </html>

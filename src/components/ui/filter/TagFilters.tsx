@@ -171,9 +171,9 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
               }
             }}
             tabIndex={0}
-            role="combobox"
+            role="button"
             aria-expanded={isOpen}
-            aria-haspopup="listbox"
+            aria-haspopup="menu"
             aria-label="Filter by tags"
           >
             <span className="editorial-tag-combobox__icon" aria-hidden="true">
@@ -203,37 +203,15 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
                   </button>
                 </span>
               ))}
-              <input
-                ref={inputRef}
-                type="text"
-                value={tagQuery}
-                onChange={event => {
-                  setTagQuery(event.target.value);
-                  setIsOpen(true);
-                }}
-                onKeyDown={handleInputKeyDown}
-                onPointerDown={event => {
-                  if (isOpen) {
-                    event.stopPropagation();
-                  }
-                }}
-                onMouseDown={event => {
-                  if (isOpen) {
-                    event.stopPropagation();
-                  }
-                }}
-                onClick={event => {
-                  if (isOpen) {
-                    event.stopPropagation();
-                  }
-                }}
-                placeholder="Search tags"
+              <span
                 className={cn(
                   'editorial-tag-combobox__input',
                   selectedTagList.length > 0 && 'has-chips'
                 )}
-                aria-label="Search tags"
-              />
+                aria-hidden="true"
+              >
+                {selectedTagList.length > 0 ? '' : tagQuery || 'Search tags'}
+              </span>
             </div>
 
             <button
@@ -261,12 +239,45 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
           <DropdownMenuLabel className="editorial-tag-menu__label">
             Filter by tags
           </DropdownMenuLabel>
+          <div className="editorial-tag-menu__search">
+            <Search size={15} aria-hidden="true" />
+            <input
+              ref={inputRef}
+              type="text"
+              value={tagQuery}
+              onChange={event => {
+                setTagQuery(event.target.value);
+              }}
+              onKeyDown={handleInputKeyDown}
+              onPointerDown={event => {
+                event.stopPropagation();
+              }}
+              onMouseDown={event => {
+                event.stopPropagation();
+              }}
+              onClick={event => {
+                event.stopPropagation();
+              }}
+              placeholder="Search tags"
+              aria-label="Search tags"
+            />
+            {tagQuery ? (
+              <button
+                type="button"
+                className="editorial-tag-menu__clear-query"
+                onClick={event => {
+                  event.stopPropagation();
+                  setTagQuery('');
+                  inputRef.current?.focus();
+                }}
+                aria-label="Clear tag search"
+              >
+                <X size={12} aria-hidden="true" />
+              </button>
+            ) : null}
+          </div>
           <DropdownMenuSeparator className="editorial-tag-menu__separator" />
-          <div
-            className="editorial-tag-menu__items"
-            aria-label="Tag options"
-            id="tag-filters-listbox"
-          >
+          <div className="editorial-tag-menu__items" aria-label="Tag options">
             {filteredTags.length > 0 ? (
               filteredTags.map(tag => {
                 const checked = Boolean(selectedTags?.has(tag));

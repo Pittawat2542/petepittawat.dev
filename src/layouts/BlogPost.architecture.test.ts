@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
@@ -12,13 +12,22 @@ function readProjectFile(relativePath: string) {
 test('blog post layout no longer owns table-of-contents visuals', () => {
   const layout = readProjectFile('src/layouts/BlogPost.astro');
   const tocComponent = readProjectFile('src/components/layout/blog/Toc.astro');
+  assert.equal(existsSync(path.join(projectRoot, 'src/styles/components/toc.css')), true);
+  assert.equal(existsSync(path.join(projectRoot, 'src/scripts/toc.ts')), true);
+  const tocStyles = readProjectFile('src/styles/components/toc.css');
+  const tocScript = readProjectFile('src/scripts/toc.ts');
 
   assert.doesNotMatch(
     layout,
     /\.toc-summary__label|\.toc-link\[aria-current='location'\]|\.toc-card/
   );
   assert.match(tocComponent, /toc-summary__label/);
-  assert.match(tocComponent, /<style is:global>/);
+  assert.match(tocComponent, /@\/styles\/components\/toc\.css/);
+  assert.match(tocComponent, /@\/scripts\/toc/);
+  assert.doesNotMatch(tocComponent, /<style is:global>/);
+  assert.match(tocStyles, /\.toc-root/);
+  assert.match(tocScript, /buildTocItems/);
+  assert.match(tocScript, /initToc/);
 });
 
 test('blog post layout keeps visual ownership in rendered article modules', () => {
@@ -100,6 +109,7 @@ test('article rail pins below the navbar while constraining pane overflow', () =
 
 test('table of contents supports embedded rendering without nested disclosure chrome', () => {
   const tocComponent = readProjectFile('src/components/layout/blog/Toc.astro');
+  const tocStyles = readProjectFile('src/styles/components/toc.css');
 
   assert.match(tocComponent, /variant\?:\s*'card' \| 'embedded'/);
   assert.match(tocComponent, /const isEmbedded = variant === 'embedded'/);
@@ -107,7 +117,7 @@ test('table of contents supports embedded rendering without nested disclosure ch
   assert.match(tocComponent, /isEmbedded \?/);
   assert.match(tocComponent, /<section class="toc-card" data-toc-shell>/);
   assert.match(tocComponent, /<details class="toc-card">/);
-  assert.match(tocComponent, /\.toc-root--embedded \.toc-card[\s\S]*background:\s*transparent/);
+  assert.match(tocStyles, /\.toc-root--embedded \.toc-card[\s\S]*background:\s*transparent/);
 });
 
 test('blog post hero is full bleed without editorial badge chrome', () => {
@@ -219,7 +229,12 @@ test('blog post hero raster covers are prioritized as LCP images', () => {
   assert.match(blogCover, /fetchPriority:\s*imageFetchPriority/);
   assert.match(blogCover, /width:\s*imageWidth/);
   assert.match(blogCover, /height:\s*imageHeight/);
+  assert.match(blogCover, /srcSet:\s*imageSrcSet/);
+  assert.match(blogCover, /sizes:\s*imageSizes/);
   assert.match(blogCover, /\{\.\.\.coverImageAttributes\}/);
+  assert.match(blogCardImage, /imageWidth=\{post\.data\.coverImage\?\.width\}/);
+  assert.match(blogCardImage, /imageHeight=\{post\.data\.coverImage\?\.height\}/);
+  assert.match(blogCardImage, /imageSizes=/);
   assert.doesNotMatch(blogCardImage, /imageLoading="eager"|imageFetchPriority="high"/);
 });
 

@@ -26,14 +26,14 @@ test('talk card root opens details as a keyboard-accessible dialog trigger', () 
 
 test('talk card keeps nested direct actions from bubbling to the card trigger', () => {
   const talkCard = readProjectFile('src/components/ui/cards/TalkCard.tsx');
-  const cardAtoms = readProjectFile('src/components/ui/cards/CardAtoms.tsx');
+  const cardTagList = readProjectFile('src/components/ui/cards/CardTagList.tsx');
 
   assert.match(talkCard, /const stopCardClick = \(event: ReactMouseEvent<HTMLElement>\)/);
   assert.match(talkCard, /event\.stopPropagation\(\)/);
   assert.match(talkCard, /onClick=\{stopCardClick\}/);
   assert.match(talkCard, /renderTalkResources\(resources, tint, stopCardClick\)/);
   assert.match(talkCard, /event\.stopPropagation\(\);\s*setDetailsOpen\(true\)/);
-  assert.match(cardAtoms, /event\.stopPropagation\(\);\s*onOverflowClick\(\)/);
+  assert.match(cardTagList, /event\.stopPropagation\(\);\s*onOverflowClick\(\)/);
 });
 
 test('talk card imports scoped styles and mirrors publication viewport-safe layout fixes', () => {

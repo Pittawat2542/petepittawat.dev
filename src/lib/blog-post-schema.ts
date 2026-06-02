@@ -4,6 +4,7 @@
 
 import { getBlogOgImagePath } from './blog-cover/index.ts';
 import { getBlogPostPath, type BlogTranslationLocale } from './blog-translations.ts';
+import { SITE_CONFIG } from './constants.ts';
 
 interface BlogPostSchemaParams {
   title: string;
@@ -45,13 +46,13 @@ export function generateBlogPostSchema(params: BlogPostSchemaParams) {
     mainEntityOfPage: canonicalUrl,
     author: {
       '@type': 'Person',
-      name: 'Pittawat Taveekitworachai',
+      name: SITE_CONFIG.author,
       url: authorUrl,
       sameAs: authorSameAs,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'PETEPITTAWAT.DEV',
+      name: SITE_CONFIG.title,
       url: siteUrl,
       logo: {
         '@type': 'ImageObject',

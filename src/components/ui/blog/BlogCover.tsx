@@ -28,6 +28,8 @@ export interface BlogCoverProps {
   readonly imageDecoding?: 'sync' | 'async' | 'auto' | undefined;
   readonly imageWidth?: number | undefined;
   readonly imageHeight?: number | undefined;
+  readonly imageSrcSet?: string | undefined;
+  readonly imageSizes?: string | undefined;
   readonly variant: BlogCoverVariant;
   readonly renderMode?: BlogCoverRenderMode | undefined;
   readonly className?: string | undefined;
@@ -46,6 +48,8 @@ const BlogCover: FC<BlogCoverProps> = ({
   imageDecoding = 'async',
   imageWidth,
   imageHeight,
+  imageSrcSet,
+  imageSizes,
   variant,
   renderMode = 'full',
   className,
@@ -63,6 +67,8 @@ const BlogCover: FC<BlogCoverProps> = ({
     ...(imageFetchPriority ? { fetchPriority: imageFetchPriority } : {}),
     ...(imageWidth !== undefined ? { width: imageWidth } : {}),
     ...(imageHeight !== undefined ? { height: imageHeight } : {}),
+    ...(imageSrcSet ? { srcSet: imageSrcSet } : {}),
+    ...(imageSizes ? { sizes: imageSizes } : {}),
   };
 
   return (

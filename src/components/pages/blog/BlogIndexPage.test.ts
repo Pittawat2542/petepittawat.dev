@@ -51,21 +51,58 @@ test('blog index opts into editorial tones for the toolbar and cards', () => {
 test('blog index uses the blog editorial hero variant', () => {
   const page = readProjectFile('src/pages/blog/index.astro');
   const editorialHero = readProjectFile('src/components/layout/core/EditorialPageHero.astro');
+  const editorialHeroStylesPath = path.join(
+    projectRoot,
+    'src/styles/components/editorial-page-hero.css'
+  );
+  const editorialHeroPresetsPath = path.join(
+    projectRoot,
+    'src/components/layout/core/editorialPageHeroPresets.ts'
+  );
 
   assert.match(editorialHero, /variant\?:\s*'default'\s*\|\s*'blog'/);
   assert.match(page, /<EditorialPageHero[\s\S]*variant="blog"/);
+  assert.match(editorialHero, /visualPreset\?:\s*EditorialPageHeroVisualPreset/);
+  assert.match(page, /<EditorialPageHero[\s\S]*visualPreset="blog"/);
+  assert.match(editorialHero, /@\/styles\/components\/editorial-page-hero\.css/);
+  assert.match(editorialHero, /editorialPageHeroPresets/);
+  assert.doesNotMatch(editorialHero, /Astro\.url\.pathname/);
+  assert.doesNotMatch(
+    editorialHero,
+    /eyebrow === 'Selected Work'|eyebrow === 'Research Record'|eyebrow === 'Speaking'/
+  );
+  assert.equal(existsSync(editorialHeroStylesPath), true);
+  assert.equal(existsSync(editorialHeroPresetsPath), true);
 });
 
 test('blog editorial hero keeps observatory star motion subtle and accessible', () => {
-  const editorialHero = readProjectFile('src/components/layout/core/EditorialPageHero.astro');
+  const editorialHeroStylesPath = path.join(
+    projectRoot,
+    'src/styles/components/editorial-page-hero.css'
+  );
+  const editorialHeroPresetsPath = path.join(
+    projectRoot,
+    'src/components/layout/core/editorialPageHeroPresets.ts'
+  );
+  assert.equal(existsSync(editorialHeroStylesPath), true);
+  assert.equal(existsSync(editorialHeroPresetsPath), true);
+  const editorialHeroStyles = [
+    readProjectFile('src/styles/components/editorial-page-hero.css'),
+    readProjectFile('src/styles/components/editorial-page-hero.base.css'),
+    readProjectFile('src/styles/components/editorial-page-hero.visuals.css'),
+    readProjectFile('src/styles/components/editorial-page-hero.motion.css'),
+  ].join('\n');
+  const editorialHeroPresets = readProjectFile(
+    'src/components/layout/core/editorialPageHeroPresets.ts'
+  );
   const tokens = readProjectFile('src/styles/tokens.css');
 
-  assert.match(editorialHero, /blogHeroStars/);
-  assert.match(editorialHero, /editorial-page-hero__star/);
-  assert.match(editorialHero, /blog-hero-star-enter/);
-  assert.match(editorialHero, /blog-hero-star-drift/);
+  assert.match(editorialHeroPresets, /blogHeroStars/);
+  assert.match(editorialHeroPresets, /editorial-page-hero__star/);
+  assert.match(editorialHeroStyles, /blog-hero-star-enter/);
+  assert.match(editorialHeroStyles, /blog-hero-star-drift/);
   assert.match(
-    editorialHero,
+    editorialHeroStyles,
     /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*\.editorial-page-hero__star/
   );
   assert.match(tokens, /--blog-hero-star:/);
@@ -205,6 +242,19 @@ test('non-blog listing explorers use tag chips and featured editorial sections',
   assert.match(editorialListingStyles, /\.editorial-selected-tags/);
 });
 
+test('tag filter trigger uses menu semantics instead of a faux combobox', () => {
+  const tagFilters = readProjectFile('src/components/ui/filter/TagFilters.tsx');
+
+  assert.match(tagFilters, /aria-haspopup="menu"/);
+  assert.match(tagFilters, /aria-expanded=\{isOpen\}/);
+  assert.match(tagFilters, /aria-label="Filter by tags"/);
+  assert.match(tagFilters, /aria-label="Search tags"/);
+  assert.doesNotMatch(tagFilters, /role="combobox"/);
+  assert.doesNotMatch(tagFilters, /aria-haspopup="listbox"/);
+  assert.doesNotMatch(tagFilters, /id="tag-filters-listbox"/);
+  assert.doesNotMatch(tagFilters, /aria-activedescendant/);
+});
+
 test('showcase listing pages use hero support chips and preserve single accent policy', () => {
   const projectsPage = readProjectFile('src/pages/projects.astro');
   const publicationsPage = readProjectFile('src/pages/publications.astro');
@@ -215,6 +265,7 @@ test('showcase listing pages use hero support chips and preserve single accent p
 
   for (const page of [projectsPage, publicationsPage, talksPage]) {
     assert.match(page, /variant="showcase"/);
+    assert.match(page, /visualPreset="(?:projects|publications|talks)"/);
     assert.match(page, /slot="support"/);
     assert.match(page, /listing-hero-support/);
     assert.doesNotMatch(page, /accent-projects|accent-publications|accent-talks/);

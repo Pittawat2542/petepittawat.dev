@@ -1,0 +1,9 @@
+.about-page {
+  --about-panel-border: color-mix(in oklab, var(--white) 13%, transparent);
+  --about-panel-border-strong: color-mix(in oklab, var(--accent) 34%, var(--white) 8%);
+  --about-panel-shadow: 0 28px 72px -54px rgba(2, 8, 23, 0.86);
+  --about-cyan: var(--color-accent-cyan);
+  --about-mint: var(--color-accent-mint);
+  --about-warm: var(--color-accent-warm);
+  --about-drift-ease: cubic-bezier(0.45, 0, 0.2, 1);
+}

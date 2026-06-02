@@ -11,6 +11,10 @@ interface BlogCardImageProps {
 
 const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, tone = 'default' }) => {
   const coverImageSrc = post.data.coverImage?.src;
+  const imageSizes =
+    tone === 'editorial'
+      ? '(min-width: 1024px) 36rem, (min-width: 768px) 50vw, 100vw'
+      : '(min-width: 1024px) 28rem, (min-width: 768px) 50vw, 100vw';
 
   return (
     <BlogCover
@@ -21,6 +25,9 @@ const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, tone = 'default'
       tags={post.data.tags}
       pubDate={post.data.pubDate}
       coverImageSrc={coverImageSrc}
+      imageWidth={post.data.coverImage?.width}
+      imageHeight={post.data.coverImage?.height}
+      imageSizes={imageSizes}
       variant="card"
       renderMode="background"
       className={

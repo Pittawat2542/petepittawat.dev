@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
@@ -30,6 +30,18 @@ test('about page is rebuilt around the reference-inspired research profile struc
   assert.doesNotMatch(page, /AboutIntro/);
   assert.doesNotMatch(page, /AboutSnapshot/);
   assert.doesNotMatch(page, /AboutJourney/);
+  assert.equal(
+    existsSync(path.join(projectRoot, 'src/components/pages/about/AboutIntro.astro')),
+    false
+  );
+  assert.equal(
+    existsSync(path.join(projectRoot, 'src/components/pages/about/AboutSnapshot.astro')),
+    false
+  );
+  assert.equal(
+    existsSync(path.join(projectRoot, 'src/components/pages/about/AboutJourney.astro')),
+    false
+  );
 });
 
 test('about hero reuses the shared social link source instead of hardcoded profile links', () => {

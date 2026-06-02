@@ -11,31 +11,37 @@ function readProjectFile(relativePath: string) {
 
 test('shared card atoms expose measured one-row overflow behavior', () => {
   const cardAtoms = readProjectFile('src/components/ui/cards/CardAtoms.tsx');
+  const cardMeta = readProjectFile('src/components/ui/cards/CardMeta.tsx');
+  const measuredOverflowRow = readProjectFile('src/components/ui/cards/MeasuredOverflowRow.tsx');
+  const cardTagList = readProjectFile('src/components/ui/cards/CardTagList.tsx');
 
   assert.match(cardAtoms, /CardMetaRow/);
   assert.match(cardAtoms, /CardMetaChip/);
-  assert.match(cardAtoms, /flex-wrap items-center gap-2 overflow-visible/);
-  assert.match(cardAtoms, /ResizeObserver/);
-  assert.match(cardAtoms, /useLayoutEffect/);
-  assert.match(cardAtoms, /data-card-overflow-item/);
-  assert.match(cardAtoms, /data-card-overflow-more/);
-  assert.match(cardAtoms, /pointer-events-none invisible fixed/);
-  assert.match(cardAtoms, /flex-nowrap/);
-  assert.match(cardAtoms, /readonly maxVisible\?:\s*number/);
-  assert.match(cardAtoms, /readonly minVisible\?:\s*number/);
-  assert.match(cardAtoms, /readonly overflowPlacement\?:\s*'inline'\s*\|\s*'pinned'/);
-  assert.match(cardAtoms, /readonly viewportSafe\?:\s*boolean/);
-  assert.match(cardAtoms, /useState\(floorCount\)/);
-  assert.match(cardAtoms, /setVisibleCount\(floorCount\)/);
-  assert.match(cardAtoms, /overflowPlacement = 'inline'/);
-  assert.match(cardAtoms, /grid-cols-\[minmax\(0,1fr\)_auto\]/);
-  assert.match(cardAtoms, /data-card-overflow-track/);
-  assert.match(cardAtoms, /enforceRenderedFit/);
-  assert.match(cardAtoms, /document\.fonts\.ready/);
-  assert.match(cardAtoms, /data-card-overflow-item[\s\S]*shrink-0/);
-  assert.match(cardAtoms, /readonly onOverflowClick\?:\s*(\(\(\)\s*=>\s*void\)|\(\)\s*=>\s*void)/);
-  assert.match(cardAtoms, /readonly overflowLabel\?:\s*string/);
-  assert.match(cardAtoms, /\+{hiddenCount}\s+more/);
+  assert.match(cardMeta, /flex-wrap items-center gap-2 overflow-visible/);
+  assert.match(measuredOverflowRow, /ResizeObserver/);
+  assert.match(measuredOverflowRow, /useLayoutEffect/);
+  assert.match(measuredOverflowRow, /data-card-overflow-item/);
+  assert.match(measuredOverflowRow, /data-card-overflow-more/);
+  assert.match(measuredOverflowRow, /pointer-events-none invisible fixed/);
+  assert.match(measuredOverflowRow, /flex-nowrap/);
+  assert.match(measuredOverflowRow, /readonly maxVisible\?:\s*number/);
+  assert.match(measuredOverflowRow, /readonly minVisible\?:\s*number/);
+  assert.match(measuredOverflowRow, /readonly overflowPlacement\?:\s*'inline'\s*\|\s*'pinned'/);
+  assert.match(measuredOverflowRow, /readonly viewportSafe\?:\s*boolean/);
+  assert.match(measuredOverflowRow, /useState\(floorCount\)/);
+  assert.match(measuredOverflowRow, /setVisibleCount\(floorCount\)/);
+  assert.match(measuredOverflowRow, /overflowPlacement = 'inline'/);
+  assert.match(measuredOverflowRow, /grid-cols-\[minmax\(0,1fr\)_auto\]/);
+  assert.match(measuredOverflowRow, /data-card-overflow-track/);
+  assert.match(measuredOverflowRow, /enforceRenderedFit/);
+  assert.match(measuredOverflowRow, /document\.fonts\.ready/);
+  assert.match(measuredOverflowRow, /data-card-overflow-item[\s\S]*shrink-0/);
+  assert.match(
+    cardTagList,
+    /readonly onOverflowClick\?:\s*(\(\(\)\s*=>\s*void\)|\(\)\s*=>\s*void)/
+  );
+  assert.match(cardTagList, /readonly overflowLabel\?:\s*string/);
+  assert.match(cardTagList, /\+{hiddenCount}\s+more/);
 });
 
 test('editorial listing items leave hover ink unclipped', () => {
@@ -69,7 +75,7 @@ test('project, talk, and publication cards cap visible metadata in collapsed car
     'src/components/ui/publication/PublicationActions.tsx'
   );
   const authorList = readProjectFile('src/components/ui/publication/AuthorList.tsx');
-  const cardAtoms = readProjectFile('src/components/ui/cards/CardAtoms.tsx');
+  const cardTagList = readProjectFile('src/components/ui/cards/CardTagList.tsx');
   const publicationStyles = readProjectFile('src/styles/components/publication-card.css');
 
   assert.match(projectCard, /CardDetailsDialog/);
@@ -100,7 +106,7 @@ test('project, talk, and publication cards cap visible metadata in collapsed car
   assert.match(authorList, /overflowPlacement="pinned"/);
   assert.match(authorList, /readonly onOverflowClick\?:\s*\(\)\s*=>\s*void/);
   assert.match(authorList, /\+{hiddenCount}\s+more/);
-  assert.match(cardAtoms, /overflowPlacement="pinned"/);
+  assert.match(cardTagList, /overflowPlacement="pinned"/);
   assert.match(publicationStyles, /\.publication-card \.media-card__footer/);
   assert.match(publicationStyles, /border-top:\s*0/);
   assert.match(publicationStyles, /background:\s*transparent/);
