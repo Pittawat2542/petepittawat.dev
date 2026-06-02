@@ -16,9 +16,6 @@ interface Props {
 const { posts, allPosts, copy } = Astro.props as Props;
 const featuredPost = posts[0];
 const compactPosts = posts.slice(1, 3);
-const titleLines = copy.title.includes('research and engineering loop')
-  ? ['Recent notes from the research', 'and engineering loop']
-  : [copy.title];
 const getReadingTimeMin = (post: BlogPost | undefined) =>
   post ? estimateReadingMetrics(post.body || '').readingTimeMin : undefined;
 ---
@@ -35,14 +32,7 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
         {copy.eyebrow}
       </div>
       <h2 id="latest-writing-title" class="latest-writing__title">
-        {
-          titleLines.map((line, index) => (
-            <>
-              <span>{line}</span>
-              {index < titleLines.length - 1 ? ' ' : ''}
-            </>
-          ))
-        }
+        {copy.title}
       </h2>
       <p class="latest-writing__description">
         {copy.description}
@@ -113,10 +103,7 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
     font-weight: 760;
     letter-spacing: 0;
     line-height: 0.98;
-  }
-
-  .latest-writing__title span {
-    display: block;
+    text-wrap: balance;
   }
 
   .latest-writing__description {

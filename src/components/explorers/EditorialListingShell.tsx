@@ -65,8 +65,9 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
         sortValue,
         filteredResults,
         totalResults,
+        selectedTags: selectedTags ? Array.from(selectedTags) : [],
       }),
-    [filters, filteredResults, searchValue, sortValue, totalResults]
+    [filters, filteredResults, searchValue, sortValue, totalResults, selectedTags]
   );
 
   useRowDescriptionClamp(rootRef, clampDependencyKey);

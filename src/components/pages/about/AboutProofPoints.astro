@@ -14,6 +14,11 @@ interface Props {
 }
 
 const { proofPoints } = Astro.props as Props;
+// NOTE: Index-based coupling between proofIcons and the proofPoints items:
+// - Index 0: BriefcaseBusiness (typically experience-related label)
+// - Index 1: Workflow (typically project/working style label)
+// - Index 2: Globe (typically location/base label)
+// Fallback icon is BadgeCheck. Ensure the copy order in copy.ts remains aligned.
 const proofIcons = [BriefcaseBusiness, Workflow, Globe] as const;
 ---
 

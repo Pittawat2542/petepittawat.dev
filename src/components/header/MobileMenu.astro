@@ -140,10 +140,13 @@ const isActive = (href: string) =>
     border-radius: 0;
     padding: 0 0.15rem;
     color: var(--nav-link-color);
-    outline: none;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
     transition:
       color var(--motion-duration-fast) var(--motion-ease-standard),
-      background-color var(--motion-duration-fast) var(--motion-ease-standard);
+      background-color var(--motion-duration-fast) var(--motion-ease-standard),
+      outline-color var(--motion-duration-fast) var(--motion-ease-standard),
+      border-radius var(--motion-duration-fast) var(--motion-ease-standard);
   }
 
   .mobile-menu-link::before {
@@ -168,10 +171,16 @@ const isActive = (href: string) =>
     background: color-mix(in oklab, var(--white, #f9fafb) 7%, transparent);
   }
 
-  .mobile-menu-link:hover,
-  .mobile-menu-link:focus-visible {
+  .mobile-menu-link:hover {
     color: var(--nav-link-color-active);
     background: color-mix(in oklab, var(--white, #f9fafb) 3%, transparent);
+  }
+
+  .mobile-menu-link:focus-visible {
+    color: var(--nav-link-color-active);
+    background: color-mix(in oklab, var(--white, #f9fafb) 5%, transparent);
+    outline-color: var(--accent, #60a5fa);
+    border-radius: 0.375rem;
   }
 
   .mobile-menu-link__icon {

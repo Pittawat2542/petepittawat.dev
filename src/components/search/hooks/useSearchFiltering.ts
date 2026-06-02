@@ -50,10 +50,9 @@ export function useSearchFiltering(
 
   const tagSuggestions = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const item of items) {
-      const resolved = resolveSearchItem(item, activeLocale);
-      if (resolved.tags) {
-        for (const tag of resolved.tags) {
+    for (const item of filtered) {
+      if (item.tags) {
+        for (const tag of item.tags) {
           const normalized = tag.trim();
           if (normalized) {
             counts.set(normalized, (counts.get(normalized) ?? 0) + 1);
@@ -81,7 +80,7 @@ export function useSearchFiltering(
     }
 
     return [];
-  }, [items, query, activeLocale]);
+  }, [filtered, query]);
 
   return {
     filtered,

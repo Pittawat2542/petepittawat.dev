@@ -8,10 +8,8 @@ const { excerpt } = Astro.props as Props;
 
 {
   excerpt ? (
-    <section class="article-brief" aria-labelledby="article-brief-heading">
-      <h2 class="article-brief__label" id="article-brief-heading">
-        TL;DR
-      </h2>
+    <section class="article-brief" aria-label="TL;DR">
+      <h2 class="article-brief__label">TL;DR</h2>
       <p class="article-brief__copy">{excerpt}</p>
     </section>
   ) : null

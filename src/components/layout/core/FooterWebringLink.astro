@@ -10,14 +10,14 @@ const { label } = Astro.props as Props;
 
 <a
   href="https://webring.wonderful.software#petepittawat.dev"
-  title="Thai Webring"
-  aria-label="Thai Webring"
+  title={label}
+  aria-label={label}
   rel="noopener noreferrer"
   target="_blank"
   class="site-footer__webring-link"
 >
   <img
-    alt="Thai Webring"
+    alt={label}
     class="site-footer__webring-icon"
     src="https://webring.wonderful.software/webring.white.svg"
     loading="lazy"

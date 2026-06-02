@@ -35,9 +35,7 @@ const heroParagraphs = [
   aboutCopy.background.paragraphs[1] || aboutCopy.intro.subtitle,
 ];
 const heroChips = [
-  aboutCopy.focusAreas.items[1]?.title,
-  aboutCopy.focusAreas.items[2]?.title,
-  aboutCopy.focusAreas.items[3]?.title,
+  ...aboutCopy.focusAreas.items.slice(0, 3).map(item => item?.title),
   aboutCopy.intro.location,
 ].filter(Boolean);
 ---

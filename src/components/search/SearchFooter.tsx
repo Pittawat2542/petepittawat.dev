@@ -22,16 +22,19 @@ const SearchFooterComponent: FC<SearchFooterProps> = ({
       <div className="hidden flex-wrap items-center gap-4 sm:flex">
         <span className="flex items-center gap-1.5">
           <kbd className="type-micro inline-flex h-5 items-center justify-center rounded border border-white/10 bg-white/5 px-1.5 font-mono font-medium text-white/70">
-            <ArrowUp size={10} />
+            <ArrowUp size={10} aria-hidden="true" />
+            <span className="sr-only">Up Arrow</span>
           </kbd>
           <kbd className="type-micro inline-flex h-5 items-center justify-center rounded border border-white/10 bg-white/5 px-1.5 font-mono font-medium text-white/70">
-            <ArrowDown size={10} />
+            <ArrowDown size={10} aria-hidden="true" />
+            <span className="sr-only">Down Arrow</span>
           </kbd>
           <span className="text-white/40">to navigate</span>
         </span>
         <span className="flex items-center gap-1.5">
           <kbd className="type-micro inline-flex h-5 items-center justify-center rounded border border-white/10 bg-white/5 px-1.5 font-mono font-medium text-white/70">
-            <CornerDownLeft size={10} />
+            <CornerDownLeft size={10} aria-hidden="true" />
+            <span className="sr-only">Enter</span>
           </kbd>
           <span className="text-white/40">to select</span>
         </span>

@@ -9,6 +9,7 @@ import {
   getBlogOgManifestKey,
   type BlogCoverLocale,
 } from '../src/lib/blog-cover/index.ts';
+import { extractBlogFrontmatter } from './validate-cover-assets.ts';
 
 const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, 'src', 'content', 'blog');
@@ -27,6 +28,23 @@ await generate();
 
 async function generate() {
   const [files, manifest] = await Promise.all([collectContentFiles(BLOG_DIR), loadManifest()]);
+
+  // Fail-fast validation step: ensure all posts have valid cover image frontmatter
+  let hasValidationErrors = false;
+  for (const file of files) {
+    const content = await fs.readFile(file, 'utf8');
+    const validated = extractBlogFrontmatter(content);
+    if (!validated) {
+      console.error(
+        `Error: Post is missing required cover-asset frontmatter fields (coverImage, lang, routeSlug): ${path.relative(ROOT, file)}`
+      );
+      hasValidationErrors = true;
+    }
+  }
+  if (hasValidationErrors) {
+    console.error('Build aborted: Cover asset validation failed.');
+    process.exit(1);
+  }
 
   const updatedManifest: Record<string, { hash: string; generatedAt: string }> = {};
   let generatedCount = 0;
@@ -55,8 +73,9 @@ async function generate() {
     const currentHash = createPostHash(frontmatter, sourceHash);
     const previousHash = manifest[manifestKey]?.hash;
     const fileExists = await exists(outPath);
+    const isUnchanged = fileExists && previousHash === currentHash;
 
-    if (!fileExists || previousHash !== currentHash) {
+    if (!isUnchanged) {
       await fs.mkdir(path.dirname(outPath), { recursive: true });
       await sharp(sourcePath)
         .resize(1200, 630, { fit: 'cover', position: 'center' })
@@ -71,7 +90,10 @@ async function generate() {
 
     updatedManifest[manifestKey] = {
       hash: currentHash,
-      generatedAt: new Date().toISOString(),
+      generatedAt:
+        isUnchanged && manifest[manifestKey]?.generatedAt
+          ? manifest[manifestKey].generatedAt
+          : new Date().toISOString(),
     };
   }
 

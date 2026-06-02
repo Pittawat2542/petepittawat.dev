@@ -48,21 +48,21 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
             role="option"
             aria-selected={index === activeIndex}
             className={cn(
-              'search-result-item-wrapper',
+              'search-result-item-wrapper flex flex-col transition-colors hover:bg-white/5',
               index === activeIndex && 'search-result-item-wrapper--active'
             )}
+            onMouseEnter={() => {
+              onActiveIndexChange(index);
+            }}
           >
             <a
               href={getHref(item)}
               className={cn(
-                'flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/5',
+                'flex items-start gap-3 px-4 pt-3 pb-1.5 transition-colors',
                 'focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:outline-none'
               )}
               onClick={() => {
                 onItemClick(item);
-              }}
-              onMouseEnter={() => {
-                onActiveIndexChange(index);
               }}
             >
               <div className="flex min-w-[7rem] items-center gap-2 pt-0.5">
@@ -98,41 +98,6 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                 {item.description && (
                   <p className="text-muted-foreground line-clamp-2 text-xs">{item.description}</p>
                 )}
-                {item.tags && item.tags.length > 0 && (
-                  <div
-                    className="mt-1.5 flex flex-wrap gap-1.5"
-                    onClick={e => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    {item.tags.slice(0, 5).map(tag => {
-                      const cleanQuery = query.startsWith('#')
-                        ? query.slice(1).trim()
-                        : query.trim();
-                      const isMatched =
-                        cleanQuery && tag.toLowerCase().includes(cleanQuery.toLowerCase());
-                      return (
-                        <button
-                          key={tag}
-                          type="button"
-                          onClick={e => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onTagClick?.(tag);
-                          }}
-                          className={cn(
-                            'type-micro rounded border px-1.5 py-0.5 transition-all hover:scale-[1.03] active:scale-[0.97]',
-                            isMatched
-                              ? 'border-accent/40 bg-accent/10 text-accent font-semibold'
-                              : 'text-muted-foreground/80 border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/5 hover:text-white'
-                          )}
-                        >
-                          #{tag}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
               </div>
               <div className="text-muted-foreground type-caption mt-1 flex items-center gap-2">
                 {index === activeIndex && (
@@ -148,6 +113,39 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                 <ExternalLink size={14} className="opacity-60" />
               </div>
             </a>
+            {item.tags && item.tags.length > 0 && (
+              <div
+                className="mt-1 ml-[8.75rem] flex flex-wrap gap-1.5 px-4 pb-3"
+                onClick={e => {
+                  e.stopPropagation();
+                }}
+              >
+                {item.tags.slice(0, 5).map(tag => {
+                  const cleanQuery = query.startsWith('#') ? query.slice(1).trim() : query.trim();
+                  const isMatched =
+                    cleanQuery && tag.toLowerCase().includes(cleanQuery.toLowerCase());
+                  return (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onTagClick?.(tag);
+                      }}
+                      className={cn(
+                        'type-micro rounded border px-1.5 py-0.5 transition-all hover:scale-[1.03] active:scale-[0.97]',
+                        isMatched
+                          ? 'border-accent/40 bg-accent/10 text-accent font-semibold'
+                          : 'text-muted-foreground/80 border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/5 hover:text-white'
+                      )}
+                    >
+                      #{tag}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </li>
         ))}
       </ul>

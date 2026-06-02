@@ -35,6 +35,8 @@ function normalizeFilterValues(value: FilterValue | readonly FilterValue[]) {
     .map(String);
 }
 
+export const RESET_TAG = '__ALL_OPTION__';
+
 export function EditorialExplorer<TItem, TSort extends string>({
   items,
   searchFields,
@@ -74,12 +76,12 @@ export function EditorialExplorer<TItem, TSort extends string>({
   const tagOptions = useMemo(() => {
     if (!tagField) return [];
     const values = items.flatMap(item => normalizeFilterValues(tagField(item))).sort();
-    return ['All', ...Array.from(new Set(values))];
+    return [RESET_TAG, ...Array.from(new Set(values))];
   }, [items, tagField]);
 
   const tagCounts = useMemo(() => {
     if (!tagField) return {};
-    const counts: Record<string, number> = { All: items.length };
+    const counts: Record<string, number> = { [RESET_TAG]: items.length };
     for (const item of items) {
       for (const tag of normalizeFilterValues(tagField(item))) {
         counts[tag] = (counts[tag] ?? 0) + 1;

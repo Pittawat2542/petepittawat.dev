@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { ActiveFiltersSummary } from './ActiveFiltersSummary';
 import { FilterPanelBody } from './FilterPanelBody';
 import { FilterPanelHeader } from './FilterPanelHeader';
+import { RESET_TAG } from '@/components/explorers/EditorialExplorer';
 import {
   deriveFilterTotals,
   EMPTY_FILTERS,
@@ -110,7 +111,7 @@ const FilterPanelComponent: FC<FilterPanelProps> = props => {
   const toggleTag = (tag: string) => {
     if (!onTagsChange || !currentSelectedTags) return;
 
-    if (tag === 'All') {
+    if (tag === RESET_TAG || tag === 'All') {
       onTagsChange(() => new Set<string>());
       return;
     }

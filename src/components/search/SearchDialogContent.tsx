@@ -45,8 +45,8 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
       )}
     >
       <DialogContent
-        className="no-paint-contain top-0 left-0 max-h-none w-full max-w-none translate-x-0 translate-y-0 overflow-visible border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:left-1/2 sm:w-[min(72rem,92vw)] sm:-translate-x-1/2 sm:-translate-y-1/2"
-        style={{ overflowY: 'visible' }}
+        className="no-paint-contain top-0 left-0 max-h-[calc(100vh-48px)] w-full max-w-none translate-x-0 translate-y-0 overflow-auto border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:left-1/2 sm:w-[min(72rem,92vw)] sm:-translate-x-1/2 sm:-translate-y-1/2"
+        style={{ overflowY: 'auto' }}
       >
         <DialogTitle className="sr-only">Site Search</DialogTitle>
         <DialogDescription className="sr-only">

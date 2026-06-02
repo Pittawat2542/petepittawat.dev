@@ -5,9 +5,10 @@ import FormattedDate from '@/components/content/FormattedDate';
 interface Props {
   readonly pubDate: Date;
   readonly readingTimeMin?: number | undefined;
+  readonly author?: string | undefined;
 }
 
-const { pubDate, readingTimeMin } = Astro.props as Props;
+const { pubDate, readingTimeMin, author = 'Pete' } = Astro.props as Props;
 ---
 
 <div class="article-meta">
@@ -20,7 +21,7 @@ const { pubDate, readingTimeMin } = Astro.props as Props;
   <div class="article-meta__item">
     <span class="sr-only">Author</span>
     <CircleUser class="article-meta__icon" aria-hidden="true" />
-    <span class="article-meta__text">Pete</span>
+    <span class="article-meta__text">{author}</span>
   </div>
   {
     typeof readingTimeMin === 'number' ? (

@@ -25,13 +25,16 @@ const preset = editorialPageHeroPresets[visualPreset];
 const isProjects = visualPreset === 'projects';
 const isPublications = visualPreset === 'publications';
 const isTalks = visualPreset === 'talks';
+
+const showDecorations = visualPreset !== 'default';
+const computedVariant = showDecorations ? (visualPreset === 'blog' ? 'blog' : 'showcase') : variant;
 ---
 
-<section class="editorial-page-hero reveal" data-variant={variant}>
+<section class="editorial-page-hero reveal" data-variant={computedVariant}>
   <div class="editorial-page-hero__wash" aria-hidden="true"></div>
   <div class="editorial-page-hero__grid" aria-hidden="true"></div>
   {
-    variant === 'blog' || variant === 'showcase' ? (
+    computedVariant === 'blog' || computedVariant === 'showcase' ? (
       <div
         class:list={[
           'editorial-page-hero__observatory',

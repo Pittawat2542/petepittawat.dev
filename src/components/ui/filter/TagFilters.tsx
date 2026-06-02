@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/core/dropdown-menu';
+import { RESET_TAG } from '@/components/explorers/EditorialExplorer';
 
 interface TagFiltersProps {
   readonly availableTags: readonly string[];
@@ -44,7 +45,10 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
     () => (selectedTags ? Array.from(selectedTags).sort((a, b) => a.localeCompare(b)) : []),
     [selectedTags]
   );
-  const selectableTags = useMemo(() => availableTags.filter(tag => tag !== 'All'), [availableTags]);
+  const selectableTags = useMemo(
+    () => availableTags.filter(tag => tag !== RESET_TAG && tag !== 'All'),
+    [availableTags]
+  );
 
   const filteredTags = useMemo(() => {
     const query = tagQuery.trim().toLowerCase();
@@ -60,7 +64,7 @@ const TagFiltersComponent: FC<TagFiltersProps> = ({
   }, [selectableTags, selectedTags, tagQuery]);
 
   const clearTags = () => {
-    onToggleTag('All');
+    onToggleTag(RESET_TAG);
   };
 
   const handleContainerClick = (event: MouseEvent) => {

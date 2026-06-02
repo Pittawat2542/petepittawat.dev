@@ -1,5 +1,5 @@
 ---
-import { Activity, Flame, Globe, Layers, ShieldCheck } from '@lucide/astro';
+import { Activity, Flame, Globe, Layers, ShieldCheck, BadgeCheck } from '@lucide/astro';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 import type { ResearchThemeIcon } from '@/data/site/copy';
 
@@ -35,7 +35,7 @@ const themeIconMap = {
   <div class="themes-grid">
     {
       focusAreas.items.map(theme => {
-        const Icon = themeIconMap[theme.icon];
+        const Icon = themeIconMap[theme.icon] || BadgeCheck;
         return (
           <GlassCard variant="premium" className="theme-card">
             <div class="theme-card__icon" aria-hidden="true">

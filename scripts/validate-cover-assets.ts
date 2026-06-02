@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import sharp from 'sharp';
 
@@ -47,15 +48,19 @@ type TalkJson = {
 
 const errors: string[] = [];
 
-await validate();
+const isMain = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 
-if (errors.length > 0) {
-  for (const error of errors) {
-    console.error(error);
+if (isMain) {
+  await validate();
+
+  if (errors.length > 0) {
+    for (const error of errors) {
+      console.error(error);
+    }
+    process.exitCode = 1;
+  } else {
+    console.log('Cover asset validation complete.');
   }
-  process.exitCode = 1;
-} else {
-  console.log('Cover asset validation complete.');
 }
 
 async function validate() {
@@ -129,8 +134,8 @@ async function collectContentFiles(dir: string): Promise<string[]> {
   return nestedFiles.flat();
 }
 
-function extractBlogFrontmatter(content: string): BlogFrontmatter | undefined {
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+export function extractBlogFrontmatter(content: string): BlogFrontmatter | undefined {
+  const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   const frontmatter = frontmatterMatch?.[1];
   if (!frontmatter) {
     return undefined;

@@ -24,7 +24,7 @@ Density is balanced, with layouts centering content within a clean, max-width sh
 
 ### Dynamic Accents
 
-- **Base / Blog Accent** (`--accent` / `--accent-blog` — #60a5fa): Bright Action Blue.Themes the default landing pages, blog indexes, and main links.
+- **Base / Blog Accent** (`--accent` / `--accent-blog` — #60a5fa): Bright Action Blue. Themes the default landing pages, blog indexes, and main links.
 - **Publications Accent** (`--accent-publications` — #10b981): Emerald Green. Themes the paper listings and scientific articles.
 - **Talks Accent** (`--accent-talks` — #f97316): Safety Orange. Themes speaking engagements, videos, and slides.
 - **About Accent** (`--accent-about` — #f59e0b): Amber Yellow. Themes biography pages and career timeline sections.

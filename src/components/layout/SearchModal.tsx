@@ -52,10 +52,10 @@ const SearchModalComponent: FC<SearchModalProps> = ({
 
   const trimmedQuery = query.trim();
   const hasQuery = trimmedQuery.length > 0;
-  const isTagSearch = query.startsWith('#');
+  const isTagSearch = trimmedQuery.startsWith('#');
   const showRecent = open && loaded && !hasQuery && recent.length > 0;
   const showSuggestions = loaded && !hasQuery;
-  const showTagSuggestions = loaded && isTagSearch && tagSuggestions.length > 0;
+  const showTagSuggestions = loaded && isTagSearch;
   const showResults = loaded && hasQuery && filtered.length > 0;
   const showEmpty = loaded && hasQuery && filtered.length === 0 && !showTagSuggestions;
 

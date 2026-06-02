@@ -3,9 +3,14 @@ import SiteLogo from '@/components/header/SiteLogo.astro';
 import { socialLinks } from './footer-social-links';
 import FooterSocialLink from './FooterSocialLink.astro';
 import FooterWebringLink from './FooterWebringLink.astro';
-import { siteCopyEn } from '@/data/site/copy';
+import { getSiteCopy } from '@/data/site/copy';
 
-const siteCopy = siteCopyEn;
+interface Props {
+  readonly locale?: 'en' | 'th' | undefined;
+}
+
+const { locale = 'en' } = Astro.props as Props;
+const siteCopy = getSiteCopy(locale);
 const year = new Date().getFullYear();
 ---
 
