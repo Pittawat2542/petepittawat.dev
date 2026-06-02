@@ -16,7 +16,7 @@ import '@fontsource/noto-serif/400-italic.css';
 import '@fontsource/noto-serif-thai/400.css';
 import '@fontsource/noto-serif-thai/500.css';
 import '@fontsource/noto-serif-thai/700.css';
-import { SITE_CONFIG, SITE_TITLE } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 
 interface Props {
   title: string;
@@ -99,7 +99,7 @@ if (type === 'article') {
 }
 
 if (type === 'website') {
-  structuredData['name'] = SITE_TITLE;
+  structuredData['name'] = SITE_CONFIG.title;
   structuredData['potentialAction'] = {
     '@type': 'SearchAction',
     target: `${SITE_CONFIG.url}/search?q={search_term_string}`,
@@ -188,7 +188,7 @@ const structuredDataJson = JSON.stringify(structuredData);
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.site ?? Astro.url)} />
-<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:site_name" content={SITE_CONFIG.title} />
 {
   type === 'article' && publishedTime ? (
     <meta property="article:published_time" content={publishedTime} />

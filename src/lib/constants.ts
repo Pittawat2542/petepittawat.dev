@@ -12,9 +12,6 @@ export const SITE_CONFIG = {
   author: 'Pittawat Taveekitworachai',
 } as const;
 
-// Re-export for backward compatibility
-export const SITE_TITLE = SITE_CONFIG.title;
-export const SITE_DESCRIPTION = SITE_CONFIG.description;
 export const FIRST_AUTHOR_TITLE = 'First Author Publications';
 
 // Component configuration

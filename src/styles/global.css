@@ -105,24 +105,6 @@
   }
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  :where(button, input, textarea, select, fieldset, hr, dialog, table, th, td),
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
 @utility type-micro {
   font-size: var(--type-micro);
   line-height: var(--leading-control);
@@ -326,16 +308,11 @@
 @layer components {
   .shape-squircle {
     border-radius: var(--shape-squircle-radius-lg);
+    clip-path: var(--shape-squircle-clip);
   }
 
   .shape-squircle-sm {
     border-radius: var(--shape-squircle-radius-md);
-  }
-}
-
-@supports (clip-path: path('M0,0 H100 V100 H0 Z')) {
-  .shape-squircle,
-  .shape-squircle-sm {
     clip-path: var(--shape-squircle-clip);
   }
 }
@@ -2954,13 +2931,8 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   position: relative;
-}
-@supports (-webkit-mask-image: linear-gradient(#000, transparent)) or
-  (mask-image: linear-gradient(#000, transparent)) {
-  .clamp-fade-3 {
-    -webkit-mask-image: linear-gradient(180deg, #000 65%, rgba(0, 0, 0, 0.7) 85%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 65%, rgba(0, 0, 0, 0.7) 85%, transparent 100%);
-  }
+  -webkit-mask-image: linear-gradient(180deg, #000 65%, rgba(0, 0, 0, 0.7) 85%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 65%, rgba(0, 0, 0, 0.7) 85%, transparent 100%);
 }
 
 /* ScrollTop microinteraction - hover effects only */

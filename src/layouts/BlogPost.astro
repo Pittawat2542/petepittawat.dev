@@ -15,7 +15,7 @@ import {
 } from '@/lib/blog-cover';
 import { computeBlogPostMetadata, generateBlogPostSchema } from '@/lib/blog-post-schema';
 import type { BlogPostLanguageState } from '@/lib/blog-translations';
-import { SITE_TITLE } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 
 type Props = CollectionEntry<'blog'>['data'] & {
   slug?: string;
@@ -95,7 +95,7 @@ const schema = generateBlogPostSchema({
 ---
 
 <BaseLayout
-  title={`${title} - ${SITE_TITLE}`}
+  title={`${title} - ${SITE_CONFIG.title}`}
   description={excerpt}
   lang={lang}
   alternateLanguages={alternateLanguages}

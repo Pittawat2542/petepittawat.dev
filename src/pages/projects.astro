@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { ProjectsExplorer } from '@/components/explorers';
 import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -12,8 +12,8 @@ const projects = await getProjects();
 ---
 
 <BaseLayout
-  title={`${SITE_TITLE} - ${pageCopy.title}`}
-  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_CONFIG.description}
   page="projects"
 >
   <Container className="space-y-8 md:space-y-10">

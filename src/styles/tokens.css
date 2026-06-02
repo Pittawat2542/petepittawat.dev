@@ -131,13 +131,6 @@
   /* Legacy color aliases kept for existing components and Tailwind theme mapping. */
   --accent: #60a5fa;
   --accent-blog: var(--color-accent-primary);
-  --accent-publications: var(--color-accent-mint);
-  --accent-talks: #f97316;
-  --accent-about: #f59e0b;
-  --accent-projects: #06b6d4;
-  --accent-research: #f472b6;
-  --accent-1: var(--color-accent-primary);
-  --accent-2: #fb923c;
   --white: var(--color-canvas-ink);
   --black: var(--color-canvas);
   --black-nav: var(--surface-glass);

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import Container from '@/components/ui/core/Container.astro';
 import AboutBackground from '@/components/pages/about/AboutBackground.astro';
@@ -20,8 +20,8 @@ const spotlightTimeline = timeline.filter(item => item.highlight);
 ---
 
 <BaseLayout
-  title={`${SITE_TITLE} - ${aboutPage.title}`}
-  description={aboutPage.metaDescription || SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - ${aboutPage.title}`}
+  description={aboutPage.metaDescription || SITE_CONFIG.description}
   page="about"
 >
   <PageBackdrop variant="landing" />

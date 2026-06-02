@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogListPage from '@/components/layout/BlogListPage';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { createTagSlugMap } from '@/lib/slug';
 import PageWithHero from '@/layouts/PageWithHero.astro';
 
@@ -26,8 +26,8 @@ const selectedTag = map[params.tag] ?? params.tag;
 ---
 
 <PageWithHero
-  title={`${SITE_TITLE} - #${selectedTag}`}
-  description={SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - #${selectedTag}`}
+  description={SITE_CONFIG.description}
   hero={{
     title: `#${selectedTag}`,
     subtitle: `Posts tagged with “${selectedTag}”.`,

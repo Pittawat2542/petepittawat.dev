@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { SITE_TITLE } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import type { BlogCoverSpec } from '@/lib/blog-cover';
 import { cn } from '@/lib/utils';
 
@@ -77,7 +77,7 @@ export const BlogCoverContent: FC<BlogCoverContentProps> = ({ spec, excerpt, var
               boxShadow: '0 0 18px color-mix(in oklab, var(--blog-cover-accent) 48%, transparent)',
             }}
           />
-          <span>{SITE_TITLE}</span>
+          <span>{SITE_CONFIG.title}</span>
         </div>
         {spec.publishedLabel ? (
           <span className="blog-cover-date text-xs font-medium text-white/58">

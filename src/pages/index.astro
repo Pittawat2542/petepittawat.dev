@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getImage } from 'astro:assets';
 import profileImage from '@/assets/images/profile.jpg';
@@ -33,7 +33,10 @@ const heroW384 = await getImage({ src: profileImage, width: 384, format: 'webp' 
 const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' });
 ---
 
-<BaseLayout title={SITE_TITLE} description={siteCopy.meta.description || SITE_DESCRIPTION}>
+<BaseLayout
+  title={SITE_CONFIG.title}
+  description={siteCopy.meta.description || SITE_CONFIG.description}
+>
   <PageBackdrop variant="landing" />
   {
     heroW384 && (

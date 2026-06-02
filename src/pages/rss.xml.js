@@ -1,4 +1,4 @@
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
 import {
@@ -13,8 +13,8 @@ export async function GET(context) {
     'en'
   ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return rss({
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    title: SITE_CONFIG.title,
+    description: SITE_CONFIG.description,
     site: context.site,
     items: posts.map(post => {
       let title = post.data.title;

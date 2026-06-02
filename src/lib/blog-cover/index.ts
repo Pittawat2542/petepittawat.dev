@@ -606,6 +606,3 @@ function hashToUint32(value: string) {
   }
   return hash >>> 0;
 }
-
-export { SITE_TITLE };
-import { SITE_TITLE } from '../constants.ts';

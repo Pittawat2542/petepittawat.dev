@@ -41,15 +41,17 @@ function setActiveLink(navEl: HTMLElement, activeId: string | null) {
 
 export function initToc(navEl: HTMLElement) {
   const ds = navEl.dataset;
-  const rootSelector = ds['selector'] || 'article';
+  const rootSelector = ds['selector'] ?? 'article';
   let levels = [2, 3];
 
   try {
-    levels = JSON.parse(ds['levels'] || '[2,3]') as number[];
-  } catch {}
+    levels = JSON.parse(ds['levels'] ?? '[2,3]') as number[];
+  } catch {
+    // Ignore parsing errors and default to [2, 3]
+  }
 
   const openByDefault = ds['open'] === 'true';
-  const article = document.querySelector(rootSelector) || document.querySelector('article');
+  const article = document.querySelector(rootSelector) ?? document.querySelector('article');
   const details = navEl.querySelector('details');
   const list = navEl.querySelector('.toc-list');
   const count = navEl.querySelector('.toc-summary__count');

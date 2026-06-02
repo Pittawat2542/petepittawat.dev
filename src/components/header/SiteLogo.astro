@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export interface Props {
   showTitle?: boolean;
@@ -42,7 +42,7 @@ const renderTitle = showTitle || revealTitle;
   {
     renderTitle && (
       <span class="site-logo__title">
-        <span class="site-logo__title-text">{SITE_TITLE}</span>
+        <span class="site-logo__title-text">{SITE_CONFIG.title}</span>
       </span>
     )
   }

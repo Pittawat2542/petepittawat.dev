@@ -3,8 +3,8 @@ import path from 'node:path';
 
 import sharp from 'sharp';
 
+import { SITE_CONFIG } from '../src/lib/constants.ts';
 import {
-  SITE_TITLE,
   getBlogCoverDecorationSpec,
   getBlogCoverTextLayout,
   resolveBlogCoverSpec,
@@ -391,7 +391,7 @@ function renderAuditSvg(spec: BlogCoverSpec, viewport: BlogCoverViewport) {
       : ''
   }
   <line x1="${round(contentX)}" y1="${round(dividerY)}" x2="${round(contentX + titleMeasureWidth)}" y2="${round(dividerY)}" stroke="${spec.theme.chipBorder}" stroke-width="1.5" stroke-linecap="round" />
-  <text x="${round(contentX)}" y="${round(contentBottom)}" fill="${spec.theme.accentSoft}" font-family="${fontStacks.ui}" font-size="${viewport.variant === 'card' ? 18 : 22}" font-weight="650" letter-spacing="0.08em">${escapeXml(SITE_TITLE)}</text>
+  <text x="${round(contentX)}" y="${round(contentBottom)}" fill="${spec.theme.accentSoft}" font-family="${fontStacks.ui}" font-size="${viewport.variant === 'card' ? 18 : 22}" font-weight="650" letter-spacing="0.08em">${escapeXml(SITE_CONFIG.title)}</text>
   <text x="${round(contentRight)}" y="${round(contentBottom)}" text-anchor="end" fill="rgba(241,247,255,0.68)" font-family="${fontStacks.ui}" font-size="${viewport.variant === 'card' ? 14 : 17}" font-weight="600" letter-spacing="0.1em">${viewport.variant === 'card' ? escapeXml(spec.localeLabel) : escapeXml(spec.lang === 'th' ? 'BLOG / TH' : 'BLOG / EN')}</text>
 </svg>`;
 }

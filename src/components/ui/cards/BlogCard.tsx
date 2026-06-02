@@ -228,10 +228,3 @@ export const BlogCard = memo(BlogCardComponent, (prevProps, nextProps) => {
   );
 });
 BlogCard.displayName = 'BlogCard';
-
-/**
- * Default export for backward compatibility with existing imports.
- *
- * @deprecated Consider using the named export `BlogCard` instead
- */
-export default BlogCard;

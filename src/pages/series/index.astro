@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import { BookOpen, ChevronRight } from '@lucide/astro';
 import FormattedDate from '@/components/content/FormattedDate';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import {
   getBlogPostPath,
   getPreferredBlogPosts,
@@ -27,8 +27,8 @@ allSeries.sort((a, b) => {
 ---
 
 <PageWithHero
-  title={`${SITE_TITLE} - Series`}
-  description={`${SITE_DESCRIPTION} - Explore multi-part blog series`}
+  title={`${SITE_CONFIG.title} - Series`}
+  description={`${SITE_CONFIG.description} - Explore multi-part blog series`}
   hero={{
     title: 'Blog Series',
     subtitle:
