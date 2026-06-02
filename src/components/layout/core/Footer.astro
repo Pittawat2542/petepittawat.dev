@@ -17,11 +17,11 @@ const year = new Date().getFullYear();
 <footer class="site-footer" style="view-transition-name: site-footer;">
   <div class="site-footer__container">
     <div class="site-footer__main">
-      <section class="site-footer__brand" aria-label="Site summary">
+      <section class="site-footer__brand" aria-label={siteCopy.footer.siteSummaryLabel}>
         <SiteLogo showTitle class="site-footer__logo" />
       </section>
       <div class="site-footer__spacer" aria-hidden="true"></div>
-      <nav class="site-footer__socials" aria-label="External profiles">
+      <nav class="site-footer__socials" aria-label={siteCopy.footer.externalProfilesLabel}>
         {socialLinks.map(link => <FooterSocialLink {...link} />)}
       </nav>
     </div>
@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
   <div class="site-footer__bottom">
     <div class="site-footer__bottom-inner">
       <p class="site-footer__copyright">
-        &copy; 2020-{year} Pittawat Taveekitworachai. All rights reserved.
+        &copy; 2020-{year} Pittawat Taveekitworachai. {siteCopy.footer.copyrightLabel}
       </p>
       <FooterWebringLink label={siteCopy.footer.webringLabel} />
     </div>

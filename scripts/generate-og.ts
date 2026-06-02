@@ -4,25 +4,14 @@ import path from 'node:path';
 
 import sharp from 'sharp';
 
-import {
-  getBlogOgImagePath,
-  getBlogOgManifestKey,
-  type BlogCoverLocale,
-} from '../src/lib/blog-cover/index.ts';
-import { extractBlogFrontmatter } from './validate-cover-assets.ts';
+import { getBlogOgImagePath, getBlogOgManifestKey } from '../src/lib/blog-cover/index.ts';
+import { extractBlogFrontmatter, type BlogFrontmatter } from './validate-cover-assets.ts';
 
 const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, 'src', 'content', 'blog');
 const PUBLIC_DIR = path.join(ROOT, 'public');
 const MANIFEST_FILE = path.join(ROOT, 'public', 'og', 'manifest.json');
 const RENDER_VERSION = 'blog-raster-og-v1';
-
-type BlogFrontmatter = {
-  title: string;
-  lang: BlogCoverLocale;
-  routeSlug: string;
-  coverImage: string;
-};
 
 await generate();
 
@@ -52,9 +41,11 @@ async function generate() {
 
   for (const file of files) {
     const content = await fs.readFile(file, 'utf8');
-    const frontmatter = extractFrontmatter(content);
+    const frontmatter = extractBlogFrontmatter(content);
     if (!frontmatter) {
-      continue;
+      throw new Error(
+        `Failed to parse frontmatter from ${path.relative(ROOT, file)} in generator pass.`
+      );
     }
 
     const sourcePath = path.resolve(path.dirname(file), frontmatter.coverImage);
@@ -116,55 +107,6 @@ async function collectContentFiles(dir: string): Promise<string[]> {
   );
 
   return nestedFiles.flat();
-}
-
-function extractFrontmatter(content: string): BlogFrontmatter | undefined {
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-  const frontmatter = frontmatterMatch?.[1];
-  if (!frontmatter) {
-    return undefined;
-  }
-
-  const title = readScalar(frontmatter, 'title');
-  const lang = readScalar(frontmatter, 'lang');
-  const routeSlug = readScalar(frontmatter, 'routeSlug');
-  const coverImage = readScalar(frontmatter, 'coverImage');
-
-  if (!title || !routeSlug || !coverImage || (lang !== 'en' && lang !== 'th')) {
-    return undefined;
-  }
-
-  return {
-    title,
-    lang,
-    routeSlug,
-    coverImage,
-  };
-}
-
-function readScalar(frontmatter: string, key: string): string | undefined {
-  const pattern = new RegExp(`^${escapeRegExp(key)}:\\s*(.+)$`, 'm');
-  const match = frontmatter.match(pattern);
-  const value = match?.[1];
-  if (!value) {
-    return undefined;
-  }
-
-  return stripWrappedQuotes(value.trim());
-}
-
-function stripWrappedQuotes(value: string) {
-  if (
-    (value.startsWith("'") && value.endsWith("'")) ||
-    (value.startsWith('"') && value.endsWith('"'))
-  ) {
-    return value.slice(1, -1).replace(/''/g, "'");
-  }
-  return value;
-}
-
-function escapeRegExp(value: string) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function createPostHash(frontmatter: BlogFrontmatter, sourceHash: string) {

@@ -35,6 +35,9 @@ export interface SiteCopy {
   readonly footer: {
     readonly title: string;
     readonly webringLabel: string;
+    readonly siteSummaryLabel: string;
+    readonly externalProfilesLabel: string;
+    readonly copyrightLabel: string;
   };
   readonly home: {
     readonly hero: {
@@ -293,6 +296,9 @@ const siteCopyEn: SiteCopy = {
   footer: {
     title: 'Research, engineering, and clear notes from the field.',
     webringLabel: 'Thai Webring',
+    siteSummaryLabel: 'Site summary',
+    externalProfilesLabel: 'External profiles',
+    copyrightLabel: 'All rights reserved.',
   },
   home: {
     hero: {
@@ -531,6 +537,9 @@ const siteCopyTh: SiteCopy = {
   footer: {
     title: 'งานวิจัย วิศวกรรม และบันทึกจากภาคสนามที่เล่าให้ชัด',
     webringLabel: 'วงแหวนเว็บไทย',
+    siteSummaryLabel: 'สรุปข้อมูลเว็บไซต์',
+    externalProfilesLabel: 'โปรไฟล์ภายนอก',
+    copyrightLabel: 'สงวนลิขสิทธิ์ทั้งหมด',
   },
   home: {
     hero: {

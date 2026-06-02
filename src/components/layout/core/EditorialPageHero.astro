@@ -21,13 +21,19 @@ const {
   variant = 'default',
   visualPreset = 'default',
 } = Astro.props as Props;
-const preset = editorialPageHeroPresets[visualPreset];
-const isProjects = visualPreset === 'projects';
-const isPublications = visualPreset === 'publications';
-const isTalks = visualPreset === 'talks';
+const resolvedVisualPreset =
+  visualPreset === 'default' ? (variant === 'blog' ? 'blog' : 'default') : visualPreset;
+const preset = editorialPageHeroPresets[resolvedVisualPreset];
+const isProjects = resolvedVisualPreset === 'projects';
+const isPublications = resolvedVisualPreset === 'publications';
+const isTalks = resolvedVisualPreset === 'talks';
 
-const showDecorations = visualPreset !== 'default';
-const computedVariant = showDecorations ? (visualPreset === 'blog' ? 'blog' : 'showcase') : variant;
+const showDecorations = resolvedVisualPreset !== 'default';
+const computedVariant = showDecorations
+  ? resolvedVisualPreset === 'blog'
+    ? 'blog'
+    : 'showcase'
+  : variant;
 ---
 
 <section class="editorial-page-hero reveal" data-variant={computedVariant}>
@@ -39,7 +45,7 @@ const computedVariant = showDecorations ? (visualPreset === 'blog' ? 'blog' : 's
         class:list={[
           'editorial-page-hero__observatory',
           {
-            'editorial-page-hero__observatory--blog': visualPreset === 'blog',
+            'editorial-page-hero__observatory--blog': resolvedVisualPreset === 'blog',
             'editorial-page-hero__observatory--projects': isProjects,
             'editorial-page-hero__observatory--publications': isPublications,
             'editorial-page-hero__observatory--talks': isTalks,

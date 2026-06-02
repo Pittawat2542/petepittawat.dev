@@ -19,7 +19,8 @@ const PROJECTS_FILE = path.join(ROOT, 'src', 'content', 'projects', 'projects.js
 const PUBLICATIONS_FILE = path.join(ROOT, 'src', 'content', 'publications', 'publications.json');
 const TALKS_FILE = path.join(ROOT, 'src', 'content', 'talks', 'talks.json');
 
-type BlogFrontmatter = {
+export type BlogFrontmatter = {
+  title: string;
   lang: BlogCoverLocale;
   routeSlug: string;
   coverImage: string;
@@ -141,15 +142,17 @@ export function extractBlogFrontmatter(content: string): BlogFrontmatter | undef
     return undefined;
   }
 
+  const title = readScalar(frontmatter, 'title');
   const lang = readScalar(frontmatter, 'lang');
   const routeSlug = readScalar(frontmatter, 'routeSlug');
   const coverImage = readScalar(frontmatter, 'coverImage');
 
-  if (!routeSlug || !coverImage || (lang !== 'en' && lang !== 'th')) {
+  if (!title || !routeSlug || !coverImage || (lang !== 'en' && lang !== 'th')) {
     return undefined;
   }
 
   return {
+    title,
     lang,
     routeSlug,
     coverImage,
