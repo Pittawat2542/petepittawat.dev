@@ -1,11 +1,32 @@
-import { ArrowUpRight, CalendarDays, ExternalLink, Star, Users } from 'lucide-react';
-import { memo, type FC } from 'react';
-import { Badge } from '@/components/ui/core/badge';
-import AuroraCardShell from './AuroraCardShell';
-import { getAccentColorVar } from '@/lib/utils';
+import {
+  ArrowUpRight,
+  BookOpen,
+  CalendarDays,
+  Code,
+  Code2,
+  Cpu,
+  ExternalLink,
+  FileText,
+  Globe,
+  Star,
+  Tag,
+  Users,
+} from 'lucide-react';
+import { memo, useState, type FC, type ReactNode } from 'react';
+import '@/styles/components/project-card.css';
+import { cn, getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toProjectCardVisualInput } from '@/lib/card-visual';
-import type { Project } from '@/types';
+import type { Project, ProjectLink } from '@/types';
 import CardVisualPanel from './CardVisualPanel';
+import {
+  CardInfoPanel,
+  CardMetaChip,
+  CardMetaRow,
+  CardTagList,
+  MeasuredOverflowRow,
+} from './CardAtoms';
+import CardDetailsDialog from './CardDetailsDialog';
+import MediaContentCard from './MediaContentCard';
 
 function toTitleCase(input?: string) {
   if (!input) return '';
@@ -16,124 +37,209 @@ function typeAccentVar(_type?: string) {
   return 'var(--accent)';
 }
 
+function getLinkIcon(label: string) {
+  const normalized = label.toLowerCase();
+  if (
+    normalized.includes('paper') ||
+    normalized.includes('pdf') ||
+    normalized.includes('report') ||
+    normalized.includes('thesis')
+  ) {
+    return FileText;
+  }
+  if (
+    normalized.includes('model') ||
+    normalized.includes('weights') ||
+    normalized.includes('hugging')
+  ) {
+    return Cpu;
+  }
+  if (
+    normalized.includes('book') ||
+    normalized.includes('doc') ||
+    normalized.includes('tutorial') ||
+    normalized.includes('read')
+  ) {
+    return BookOpen;
+  }
+  if (normalized.includes('github') || normalized.includes('repo')) {
+    return Code2;
+  }
+  if (
+    normalized.includes('code') ||
+    normalized.includes('source') ||
+    normalized.includes('implementation')
+  ) {
+    return Code;
+  }
+  return Globe;
+}
+
 interface ProjectCardProps {
   readonly item: Project;
   readonly featured?: boolean;
 }
 
+interface ProjectLinkButtonProps {
+  readonly link: ProjectLink;
+  readonly index: number;
+  readonly tint: (intensity: number) => string;
+  readonly compact?: boolean;
+}
+
+const ProjectLinkButton: FC<ProjectLinkButtonProps> = ({ link, index, tint, compact = false }) => {
+  const isExternal = !link.href.startsWith('/');
+  const Icon = getLinkIcon(link.label);
+
+  return (
+    <a
+      key={`${link.href}-${index}`}
+      href={link.href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+      className={cn(
+        'group/link inline-flex min-w-0 items-center gap-2.5 rounded-xl border px-4 text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/45 focus-visible:outline-none',
+        compact ? 'justify-start py-2.5 text-sm' : 'justify-center py-3 text-sm'
+      )}
+      style={{
+        borderColor: tint(24),
+        background: `linear-gradient(180deg, ${tint(10)}, ${tint(4)})`,
+        boxShadow: `inset 0 1px 0 ${tint(10)}`,
+      }}
+      aria-label={link.label}
+    >
+      <Icon
+        size={16}
+        aria-hidden="true"
+        className="flex-shrink-0 transition-transform duration-200 group-hover/link:scale-110"
+      />
+      <span className="truncate font-semibold tracking-[0.02em]">{link.label}</span>
+      <span
+        title={isExternal ? 'External link' : 'Internal link'}
+        className="ml-auto inline-flex items-center text-white/40 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 group-hover/link:text-white"
+      >
+        {isExternal ? (
+          <ExternalLink size={13} aria-hidden="true" />
+        ) : (
+          <ArrowUpRight size={13} aria-hidden="true" />
+        )}
+      </span>
+    </a>
+  );
+};
+
+function renderProjectLinks(
+  links: readonly ProjectLink[],
+  tint: (intensity: number) => string,
+  compact = false
+) {
+  return links.map((link, idx) => (
+    <ProjectLinkButton
+      key={`${link.href}-${idx}`}
+      link={link}
+      index={idx}
+      tint={tint}
+      compact={compact}
+    />
+  ));
+}
+
 const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) => {
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const accentColor = getAccentColorVar(typeAccentVar(item.type));
   const visualSpec = resolveCardVisualSpec(toProjectCardVisualInput(item));
   const tint = (intensity: number) =>
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
+  const links = item.links ?? [];
+  const hasHiddenMetadata = links.length > 1 || item.tags.length > 1;
+  const renderLinkOverflow = (hiddenCount: number) => (
+    <button
+      type="button"
+      className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/55 focus-visible:outline-none"
+      style={{
+        borderColor: tint(58),
+        background: `linear-gradient(180deg, ${tint(26)}, ${tint(13)})`,
+        boxShadow: `inset 0 1px 0 ${tint(22)}, 0 14px 28px -22px var(--card-accent)`,
+      }}
+      onClick={() => {
+        setDetailsOpen(true);
+      }}
+      aria-label={`Show all metadata for ${item.title}`}
+    >
+      +{hiddenCount} more
+    </button>
+  );
+  const detailSections: { title: string; content: ReactNode }[] = [
+    {
+      title: 'Tags',
+      content: <CardTagList tags={item.tags} tone="muted" />,
+    },
+  ];
+
+  if (links.length) {
+    detailSections.push({
+      title: 'Links',
+      content: (
+        <div className="grid gap-2.5 sm:grid-cols-2">{renderProjectLinks(links, tint, true)}</div>
+      ),
+    });
+  }
+
   return (
-    <AuroraCardShell
+    <MediaContentCard
       accent={accentColor}
       featured={featured}
       className="project-card h-full"
-      bodyClassName="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6 lg:px-7 lg:py-7"
+      media={
+        <CardVisualPanel
+          spec={visualSpec}
+          className="mb-0 [aspect-ratio:auto] h-full rounded-none border-0 shadow-none"
+        />
+      }
       footer={
-        item.links?.length ? (
-          <div className="flex flex-wrap gap-2.5 text-[11px] text-white/80 md:text-xs">
-            {item.links.map((l, idx) => {
-              const isExternal = !l.href.startsWith('/');
-              return (
-                <a
-                  key={`${l.href}-${idx}`}
-                  href={l.href}
-                  target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noopener noreferrer' : undefined}
-                  className="group/link inline-flex min-w-[8.5rem] flex-1 items-center justify-between gap-2 rounded-full border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-[color:var(--card-accent)]"
-                  style={{
-                    borderColor: tint(48),
-                    background: `linear-gradient(180deg, ${tint(12)}, ${tint(6)})`,
-                    boxShadow: `inset 0 1px 0 ${tint(12)}`,
-                  }}
-                  aria-label={l.label}
-                >
-                  <span className="font-medium tracking-[0.01em]">{l.label}</span>
-                  <span
-                    title={isExternal ? 'External link' : 'Internal link'}
-                    className="icon-bounce text-[color:var(--card-accent)] transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                  >
-                    {isExternal ? (
-                      <ExternalLink size={14} aria-hidden="true" />
-                    ) : (
-                      <ArrowUpRight size={14} aria-hidden="true" />
-                    )}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
+        links.length ? (
+          <MeasuredOverflowRow
+            items={links}
+            maxVisible={2}
+            minVisible={1}
+            className="media-card__action-row project-card__actions"
+            itemClassName="media-card__action-item"
+            overflowClassName="media-card__action-item media-card__action-item--more"
+            getKey={(link, idx) => `${link.href}-${idx}`}
+            renderItem={(link, idx) => <ProjectLinkButton link={link} index={idx} tint={tint} />}
+            renderOverflow={renderLinkOverflow}
+          />
         ) : null
       }
     >
       <div className="flex h-full flex-col">
-        <CardVisualPanel spec={visualSpec} />
+        <CardMetaRow>
+          <CardMetaChip>Project</CardMetaChip>
+          {item.type ? (
+            <CardMetaChip icon={Tag} title={item.type}>
+              {toTitleCase(item.type)}
+            </CardMetaChip>
+          ) : null}
+          {item.year ? <CardMetaChip icon={CalendarDays}>{item.year}</CardMetaChip> : null}
+        </CardMetaRow>
 
-        <div className="flex items-start justify-between gap-3">
-          <div className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/48 uppercase">
-            <span
-              className="inline-block h-2 w-2 rounded-full"
-              style={{
-                background: 'color-mix(in oklab, var(--card-accent) 72%, white)',
-                boxShadow: `0 0 0 6px ${tint(12)}`,
-              }}
-            />
-            Project
-          </div>
-          <div className="flex flex-wrap items-center justify-end gap-2 text-[11px] md:text-xs">
-            {item.type ? (
-              <Badge
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium whitespace-nowrap md:text-xs"
-                style={{
-                  color: 'var(--card-accent)',
-                  borderColor: tint(52),
-                  background: `linear-gradient(180deg, ${tint(14)}, ${tint(8)})`,
-                }}
-                title={item.type}
-              >
-                <Star size={12} aria-hidden="true" className="icon-bounce" />
-                {toTitleCase(item.type)}
-              </Badge>
-            ) : null}
-            {item.year ? (
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium md:text-xs"
-                style={{
-                  color: 'var(--card-accent)',
-                  background: `linear-gradient(180deg, ${tint(12)}, ${tint(7)})`,
-                  border: `1px solid ${tint(42)}`,
-                }}
-              >
-                <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
-                <span>{item.year}</span>
-              </span>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="mt-5 flex flex-1 flex-col gap-5">
+        <div className="mt-4 flex flex-1 flex-col gap-4">
           <div className="space-y-3">
-            <h3 className="max-w-[16ch] text-[1.95rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-white">
+            <h3 className="type-featured-card-title max-w-full leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-white">
               {item.title}
             </h3>
             {item.summary ? (
-              <p className="max-w-[30ch] text-[1rem] leading-[1.72] text-[color:var(--white)]/78 md:text-[1.02rem]">
+              <p
+                className="max-w-full text-base leading-[1.72] text-[color:var(--white)]/78 md:text-base"
+                data-card-description
+              >
                 {item.summary}
               </p>
             ) : null}
           </div>
 
           {item.role || item.collaborators ? (
-            <div
-              className="grid gap-2 rounded-[1.2rem] border px-3 py-3"
-              style={{
-                borderColor: tint(18),
-                background: `linear-gradient(180deg, ${tint(8)}, transparent)`,
-              }}
-            >
+            <CardInfoPanel className="grid gap-2 px-3 py-3">
               {item.role ? (
                 <div className="flex items-start gap-3">
                   <span
@@ -143,7 +249,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                     <Star size={13} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                    <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
                       Role
                     </p>
                     <p className="text-sm leading-relaxed text-white/78">{item.role}</p>
@@ -159,44 +265,42 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
                     <Users size={13} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] font-semibold tracking-[0.24em] text-white/42 uppercase">
+                    <p className="type-micro font-semibold tracking-[0.24em] text-white/42 uppercase">
                       Collaborators
                     </p>
                     <p className="text-sm leading-relaxed text-white/78">{item.collaborators}</p>
                   </div>
                 </div>
               ) : null}
-            </div>
+            </CardInfoPanel>
           ) : null}
 
-          <div className="mt-auto flex flex-col gap-3">
-            {item.tags?.length ? (
-              <div className="flex flex-wrap gap-2">
-                {item.tags.map(t => (
-                  <Badge
-                    key={t}
-                    className="rounded-full border px-3 py-1 text-[11px] font-medium text-white/70 md:text-xs"
-                    variant="outline"
-                    style={{
-                      borderColor: tint(20),
-                      background: tint(6),
-                    }}
-                  >
-                    {t}
-                  </Badge>
-                ))}
-              </div>
-            ) : null}
-            <div
-              className="h-px w-full"
-              style={{
-                background: `linear-gradient(90deg, ${tint(32)}, transparent 85%)`,
+          <div className="flex flex-col gap-3">
+            <CardTagList
+              tags={item.tags}
+              tone="muted"
+              maxVisible={featured ? 4 : 3}
+              onOverflowClick={() => {
+                setDetailsOpen(true);
               }}
+              overflowLabel={`Show all tags for ${item.title}`}
             />
           </div>
         </div>
       </div>
-    </AuroraCardShell>
+
+      {hasHiddenMetadata ? (
+        <CardDetailsDialog
+          open={detailsOpen}
+          onOpenChange={setDetailsOpen}
+          accent={accentColor}
+          eyebrow="Project details"
+          title={item.title}
+          description="All visible tags and linked project resources."
+          sections={detailSections}
+        />
+      ) : null}
+    </MediaContentCard>
   );
 };
 

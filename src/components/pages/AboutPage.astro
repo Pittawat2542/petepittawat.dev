@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
-import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
+import { SITE_CONFIG } from '@/lib/constants';
+import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import Container from '@/components/ui/core/Container.astro';
 import AboutBackground from '@/components/pages/about/AboutBackground.astro';
 import AboutCurrentWork from '@/components/pages/about/AboutCurrentWork.astro';
-import AboutIntro from '@/components/pages/about/AboutIntro.astro';
+import AboutHero from '@/components/pages/about/AboutHero.astro';
 import AboutMilestones from '@/components/pages/about/AboutMilestones.astro';
 import AboutProofPoints from '@/components/pages/about/AboutProofPoints.astro';
 import AboutThemes from '@/components/pages/about/AboutThemes.astro';
@@ -20,24 +20,13 @@ const spotlightTimeline = timeline.filter(item => item.highlight);
 ---
 
 <BaseLayout
-  title={`${SITE_TITLE} - ${aboutPage.title}`}
-  description={aboutPage.metaDescription || SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - ${aboutPage.title}`}
+  description={aboutPage.metaDescription || SITE_CONFIG.description}
   page="about"
 >
-  <Container className="about-page space-y-16 pt-10 pb-24 lg:space-y-20">
-    <EditorialPageHero
-      eyebrow={aboutCopy.intro.eyebrow}
-      title={aboutCopy.intro.title}
-      subtitle={aboutCopy.intro.subtitle}
-    >
-      <Fragment slot="support">
-        <div class="about-hero-support">
-          <span class="about-hero-support__pill">{aboutCopy.intro.role}</span>
-          <span class="about-hero-support__pill">{aboutCopy.intro.location}</span>
-        </div>
-      </Fragment>
-    </EditorialPageHero>
-    <AboutIntro aboutCopy={aboutCopy} />
+  <PageBackdrop variant="landing" />
+  <Container className="about-page space-y-12 pt-2 pb-24 lg:space-y-16">
+    <AboutHero aboutCopy={aboutCopy} />
     <AboutProofPoints proofPoints={aboutCopy.proofPoints} />
     <AboutThemes focusAreas={aboutCopy.focusAreas} />
     <AboutCurrentWork currentWork={aboutCopy.currentWork} />

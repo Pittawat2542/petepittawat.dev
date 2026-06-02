@@ -21,6 +21,7 @@ export const ui = {
     'blog.readInEnglish': 'Read this post in English',
     'page.notFound': 'Page Not Found',
     'page.backToHome': 'Back to Home',
+    allPosts: 'All posts',
   },
   th: {
     'nav.home': 'หน้าแรก',
@@ -37,5 +38,6 @@ export const ui = {
     'blog.readInEnglish': 'Read this post in English',
     'page.notFound': 'ไม่พบหน้า',
     'page.backToHome': 'กลับสู่หน้าแรก',
+    allPosts: 'บทความทั้งหมด',
   },
 } as const;

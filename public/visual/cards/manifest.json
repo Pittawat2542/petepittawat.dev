@@ -1,386 +1,390 @@
 {
   "projects:2026-typhoon-si-med-thinking-4b": {
     "hash": "8b78d23dc649d84e54c8d4ef2251adf86cebc7f9",
-    "generatedAt": "2026-05-08T08:15:55.626Z"
+    "generatedAt": "2026-05-22T15:58:57.287Z"
   },
   "projects:2025-typhoon-t1-open-thai-reasoning-model": {
     "hash": "bfc845938501b4ecfe7fb7b1f6b91a62defa65bf",
-    "generatedAt": "2026-05-08T08:15:55.626Z"
+    "generatedAt": "2026-05-22T15:58:57.346Z"
   },
   "projects:2025-benching-structured-output-benchmark-for-llms": {
     "hash": "652844001277af239f7bacf2f042ce5dd079a5fc",
-    "generatedAt": "2026-05-08T08:15:55.626Z"
+    "generatedAt": "2026-05-22T15:58:57.407Z"
   },
   "projects:2025-thai-earthquake-timeline-visualizer": {
     "hash": "4e4330c2ea31b4af856bb638345f716d293a700e",
-    "generatedAt": "2026-05-08T08:15:55.626Z"
+    "generatedAt": "2026-05-22T15:58:57.470Z"
   },
   "projects:2025-typhoon-application-week": {
     "hash": "8a2c4620098d61f1843495fea9d46ea7191f47bc",
-    "generatedAt": "2026-05-08T08:15:55.626Z"
+    "generatedAt": "2026-05-22T15:58:57.539Z"
   },
   "projects:2025-openrlhf-contributor": {
     "hash": "86bd6f97fd4375a8300b75e18fa835cabc3d9bfb",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:57.614Z"
   },
   "projects:2025-themis": {
     "hash": "6e33f51b815799382a7d96f1efa4297e576033ff",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:57.679Z"
   },
   "projects:2025-thoth": {
     "hash": "de396c0670c7272b0ca39834d7468e01478dfa1a",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:57.745Z"
   },
   "projects:2024-multiverse-of-greatness-story-branching-with-llms": {
     "hash": "6a3d5a93147613a4eef4c6a931598dba4c206b77",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:57.814Z"
   },
   "projects:2024-driving-assistant-for-simulator-based-assessment": {
     "hash": "a7f4ed84510876cdc2bdd256f9879b6f15ee1a78",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:57.881Z"
   },
   "projects:2024-prompt-engineering-for-game-content-generation": {
     "hash": "a874b4feca126c5715c215041c6c45cd40cb65c2",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:57.946Z"
   },
   "projects:2023-multi-modal-llm-anomaly-detection": {
     "hash": "299383a8d25d75f7655f68ce442debcd2f6a9684",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:58.005Z"
   },
   "projects:2023-dashcam-driving-video-generation-with-carla": {
     "hash": "bedfa7af8d4759ca94d7da7122fc1f0c442e1423",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:58.064Z"
   },
   "projects:2023-chatgpt4pcg-competition-platform": {
     "hash": "ac3867714bc849ba0c17466b2c4946f4b52d6edd",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:58.125Z"
   },
   "projects:2022-ultra-ar-poster-showcase-platform": {
     "hash": "ef63cec72532900689f79c2da1abc764b6c02143",
-    "generatedAt": "2026-05-08T08:15:55.627Z"
+    "generatedAt": "2026-05-22T15:58:58.187Z"
   },
   "projects:2022-thai-learning": {
     "hash": "6a2f4365dfe5bc8a1ed8503fafdbbd14653770b9",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.249Z"
   },
   "projects:2022-poster-showcase-websites": {
     "hash": "f5eb08456d76193847b12377b0c8ee1a07635291",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.318Z"
   },
   "projects:2021-krathu-500": {
     "hash": "e5d773f7d41c864ad8e33111e3f59bcc3f925c1b",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.382Z"
   },
   "projects:2021-coeus-mind-map-generation-from-text": {
     "hash": "3b78c5204129de936c458c1e95cd5c39ebb5667c",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.447Z"
   },
   "projects:2021-zeus-interactive-physics-simulation": {
     "hash": "3c5841bc522269d5a4c16ece65d683e7c2b71260",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.506Z"
   },
   "projects:2020-navi-event-companion-with-ar-guidance": {
     "hash": "23103a53fc02c55a8ac509adaea8b014c192c647",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.564Z"
   },
   "projects:2020-gdsc-gdgoc-lead-kmutt": {
     "hash": "8d0302b13ef28d546c8b31ab066be126ac98da35",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.623Z"
   },
   "projects:2019-kmutt-covid-19-support-platform": {
     "hash": "f7b647f071f81341e91494aa340be2d3c95e2394",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.683Z"
   },
   "projects:2019-travelaloha-agoda-clone": {
     "hash": "1e248c5697c9995156928d0098ca75735f65db02",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.741Z"
   },
   "projects:2019-junior-programmer-camp-xv": {
     "hash": "f27a22e38671c2b4399df6d56d5520e63fd34df7",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.802Z"
   },
   "projects:2019-announce-message": {
     "hash": "13748e2a47e8d28d7181b7f06df5c7fbf433f376",
-    "generatedAt": "2026-05-08T08:15:55.628Z"
+    "generatedAt": "2026-05-22T15:58:58.870Z"
   },
   "projects:2019-sit-code-2019": {
     "hash": "fb08400fe698627e12f709bdb14a2d9466aa488b",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:58.940Z"
   },
   "projects:2019-medu": {
     "hash": "7a19c1e5512c30f23c43b2fb0cd9a4b8000551f9",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.014Z"
   },
   "projects:2016-newshub": {
     "hash": "226d14f81373ad0baf61e9d6182c2c71c206267c",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2023-driving-scenarios-and-environmental-settings-in-simulator-based-driving-assessment-systems-for-stroke-a-systematic-review": {
     "hash": "ca2d3326303b09d73d6b90d0dfed8879968bcac2",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2025-the-role-of-large-language-model-generated-stories-in-the-narrative-experience-of-serious-visual-novel-games": {
     "hash": "67691fb5256e11fadfcfb163445b86984bb8d519",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2025-benching-a-benchmark-for-evaluating-large-language-models-in-following-structured-output-format-instruction-in-text-based-narrative-game-tasks": {
     "hash": "c76ea86124312126461974e79328a0fc1b2cdbe5",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2026-extending-audio-context-for-long-form-understanding-in-large-audio-language-models": {
     "hash": "5a3174249663524dc9b6c9cec0299edff0a1c098",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2026-on-the-robustness-of-answer-formats-in-medical-reasoning-models": {
     "hash": "ee080d1ececd6ef39f4638c46ebf75d9ce6e37b2",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2024-driving-assistant-using-generative-ai-pre-generated-messages-in-simulator-based-driving-assessment-a-step-towards-low-cost-simulator-based-driving-assessment": {
     "hash": "84731648180c03859de918f62614d223eb442edc",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2024-a-systematic-review-of-major-evaluation-metrics-for-simulator-based-automatic-assessment-of-driving-after-stroke": {
     "hash": "0b81f2e84858f5a92a33ce82716d03bb8e05d374",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2024-the-1st-chatgpt4pcg-competition": {
     "hash": "b4af29bb6c188c6a688dffe1ea4ca6c09552dce7",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2025-prior-prompt-engineering-for-reinforcement-fine-tuning": {
     "hash": "d60871b08e8fa3694f6e08968eee5c87b41cd384",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2025-typhoon-t1-an-open-thai-reasoning-model": {
     "hash": "ae322bd8d3f2ebfff2e6bc8a8f8631c92c44acfc",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.073Z"
   },
   "publications:2025-adapting-language-specific-llms-to-a-reasoning-model-in-one-day-via-model-merging-an-open-recipe": {
     "hash": "9c8d9f13370afe8aac7eccb5004690b44846b157",
-    "generatedAt": "2026-05-08T08:15:55.629Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-temporal-collage-prompting-a-cost-effective-simulator-based-driving-accident-video-recognition-with-gpt-4o": {
     "hash": "00133b0b73d3c588b50ef8f9e94ad6d6c4232a17",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-null-shot-prompting-rethinking-prompting-large-language-models-with-hallucination": {
     "hash": "4fa7517577f4dbf8ec25d017a85e9812bfeb3d09",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-don-t-do-that-reverse-role-prompting-helps-large-language-models-stay-in-personality-traits": {
     "hash": "c9bf8d86243b76ed3df274445f0632a30cd3dcda",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-llms-in-eduverse-llm-integrated-english-educational-game-in-metaverse": {
     "hash": "5f425439ffa5e2b05a55b52bacd2b0fac813e3dd",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-assessing-inherent-biases-following-prompt-compression-of-large-language-models-for-game-story-generation": {
     "hash": "71e60a357310fa8e95d58687acb327d02d363ea1",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-towards-llm4pcg-a-preliminary-evaluation-of-open-weight-large-language-models-beyond-chatgpt4pcg": {
     "hash": "8608a50b3b577884c5ca17a54c935e6632a1105f",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-chatgpt4pcg-2-competition-prompt-engineering-for-science-birds-level-generation": {
     "hash": "11c400f07fa671dd05e066aad6c03ccff94aaa1c",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-dungeons-dragons-and-emotions-a-preliminary-study-of-player-sentiment-in-llm-driven-ttrpgs": {
     "hash": "c1779b70298e7cbfa1f65956df545cf52836dc34",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-speed-up-cost-effective-large-language-model-for-adas-via-knowledge-distillation": {
     "hash": "65239f59f0ab22f842c5159370a3d13a707d0ec5",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2024-prompt-evolution-through-examples-for-large-language-models-a-case-study-in-game-comment-toxicity-classification": {
     "hash": "cf76daf708362b7a4b144cc168df277cc3646f5b",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2023-enhancing-novelty-in-chatgpt-responses-incorporating-random-word-brainstorming": {
     "hash": "43bbda22cc7cdfc7db47ed14207e8c999ee8d00e",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2023-am-i-fighting-well-fighting-game-commentary-generation-with-chatgpt": {
     "hash": "bfee45356c316c0e86be130ba4b60e345fc5fd99",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2023-chatgpt4pcg-competition-character-like-level-generation-for-science-birds": {
     "hash": "41b15afeb2381e63f68373645b770711598ebbfa",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2023-what-is-waiting-for-us-at-the-end-inherent-biases-of-game-story-endings-in-large-language-models": {
     "hash": "444d74ba3de424f14be0c0f0e976ab4f79eb5eee",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.074Z"
   },
   "publications:2023-breaking-bad-unraveling-influences-and-risks-of-user-inputs-to-chatgpt-for-game-story-generation": {
     "hash": "517d4478f18fe6235a5374eaee71bc35ee3d3fa4",
-    "generatedAt": "2026-05-08T08:15:55.630Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2023-the-chronicles-of-chatgpt-generating-and-evaluating-visual-novel-narratives-on-climate-change-through-chatgpt": {
     "hash": "93c3a0fd9ebf458c032c1d3f50b1046e06e82cb1",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2023-analyzing-audience-comments-improving-interactive-narrative-with-chatgpt": {
     "hash": "762ee41e29e560bb0f2ddad4e2dbf8b18720f612",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2023-journey-of-chatgpt-from-prompts-to-stories-in-games-the-positive-the-negative-and-the-neutral": {
     "hash": "6c40755578f4e32a985a5453e59114b09e75d401",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2022-krathu-500-post-comments-thai-corpus": {
     "hash": "376d844123a2a818f46f678fd15da2c62ae38685",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2026-wait-do-we-need-to-wait-revisiting-budget-forcing-for-sequential-test-time-scaling": {
     "hash": "8f36da59f421ad288f9fb0af47edd5d64298b985",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2025-talk-less-call-right-enhancing-role-play-llm-agents-with-automatic-prompt-optimization-and-role-prompting": {
     "hash": "8b6318435bfdb53ca91724ad8606324ee767f5ef",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2025-fincot-grounding-chain-of-thought-in-expert-financial-reasoning": {
     "hash": "251edbcb9a3691d49e3acbb9553968a2e7e4fa77",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2024-typhoon-2-a-family-of-open-text-and-multimodal-thai-large-language-models": {
     "hash": "6022e0929f8112ad51cfa568c52b24e317a4144e",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2024-multiverse-of-greatness-generating-story-branches-with-llms": {
     "hash": "f2af7f64f694d979b08b7ad2de35a927870d5518",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2026-formula-one-prompting-adaptive-reasoning-through-equations-for-applied-mathematics": {
     "hash": "c607f8706ccb6dbd81a3842a198f542fd61b1364",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2026-typhoon-s-minimal-open-post-training-for-sovereign-large-language-models": {
     "hash": "06ee7b3ad2700ead4b9e09b87ab90ca33e5fc566",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2026-typhoon-ocr-open-vision-language-model-for-thai-document-extraction": {
     "hash": "01d892ceaf33383fe60397f02a682319385a4ab2",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "publications:2026-typhoon-asr-real-time-fastconformer-transducer-for-thai-automatic-speech-recognition": {
     "hash": "8edeb34143c7f8e8b2e67677585bbe56621b36ad",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
+  },
+  "talks:2026-05-08-where-are-we-in-the-ai-world-from-ai-adoption-to-building-national-capability": {
+    "hash": "a73fbfc9f89d3e22f4be209f5d32d1703f0ecda5",
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "talks:2026-03-13-ai-research-for-thailand-and-beyond": {
     "hash": "c458307a5911133daae66d5c9f7ae677ea602bfe",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.075Z"
   },
   "talks:2026-03-09-open-models-smarter-agents-practical-lessons-from-modern-agentic-workflows": {
     "hash": "574d84e927b015dc41c9674fbbbe98faf0d5ea15",
-    "generatedAt": "2026-05-08T08:15:55.631Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2026-02-26-agentic-ai-with-context-engineering": {
     "hash": "bd40fa0762226d2c90d7fc0900dbe3fe994682ab",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2026-02-18-global-south-research-posters-showcase-prior-prompt-engineering-for-reinforcement-fine-tuning": {
     "hash": "3c6f7ebfb62455dcd674f3ad23d2ff8a54c193fb",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2026-01-23-a-single-answer-is-not-enough-on-generating-ranked-lists-with-medical-reasoning-models": {
     "hash": "069c6bfbe7a6c1c410f29d0d7b7a811efc26a65f",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-11-08-after-a-phd-what-is-waiting-for-us-a-discussion-and-experience-from-industry-academia-and-startups": {
     "hash": "28037691e3764e6618e9afe70638fb5440267935",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-10-23-prior-prompt-engineering-for-reinforcement-fine-tuning": {
     "hash": "0b18c7ba4d24c8dd39a4e8bc4e508437620991fe",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-07-31-agentic-ai-with-context-engineering": {
     "hash": "3d4b2cb5c48322e6a957a727165179a88e915a31",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-06-27-judge": {
     "hash": "46f07e23093306b026c5ade5938c7bb20d1e4a27",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-05-29-8-web-apps-under-100-hours-insights-from-typhoon-application-week": {
     "hash": "d94bfcc8f17b19c90e14d3eacc59ea539592468c",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-05-07-how-to-train-your-reasoning-models": {
     "hash": "ec59e5128708ab43ea4dca9047eaadd9ae6e22be",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-03-20-typhoon-2-typhoon-t1-and-typhoon-r1": {
     "hash": "fa69bf7bc28c8202f45fb029ddf4a3a0e0b39937",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-03-15-open-source-typhoon-democratizing-advanced-ai": {
     "hash": "827dd09e9ab9be8fa1aaa3e444331f2dfcfbabea",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-02-27-sidata-journal-club-typhoon-t1-typhoon-r1": {
     "hash": "0c17ba3e6379d381d8d8f9b0180dcc3bf7c5c532",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-02-03-from-text-to-thought-how-modern-ai-models-learn-to-reason": {
     "hash": "ccc981ec403e8cb757db7e722f5146850ac40948",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2025-01-23-introducing-typhoon-t1-first-south-east-asia-open-reasoning-model": {
     "hash": "ea1e4aa395866098121b416d4feecc7a5ebf4a4f",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2024-08-06-prompt-engineering-for-science-birds-level-generation-and-beyond": {
     "hash": "80313c3a345107ad1e9823e0d5fc62f3845f0b4e",
-    "generatedAt": "2026-05-08T08:15:55.632Z"
+    "generatedAt": "2026-05-22T15:58:59.076Z"
   },
   "talks:2024-07-26-a-tale-from-ais-generating-a-mythology-based-visual-novel-using-generative-ais": {
     "hash": "76f8ea96bd969dd58a382c4072f687cf88bf321a",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2024-07-25-prompt-engineering-for-game-content-generation-using-large-language-models": {
     "hash": "20c6747cdd427a1130fed8c67117e3c3765c79f0",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2024-07-21-a-brief-introduction-to-prompt-engineering-chatgpt4pcg-2-edition": {
     "hash": "79fc9c13677834203c2af8491afb4496aef4bd67",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2024-02-19-fantastic-llms-and-how-to-train-run-them": {
     "hash": "47e02a4b90f0dc1a5a6e9a65fc0a0a4ceddc528f",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2023-07-21-generative-ais-for-games-panel-generative-ai": {
     "hash": "d1b4a51312c840804cb0fb71f3854cbed8e41647",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2023-06-13-a-brief-introduction-to-prompt-engineering": {
     "hash": "d213f6a1df25fee2b8ea71fbeab59d54211008b5",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2023-04-12-collaborate-with-ais-introduction-to-prompt-engineering-for-learning-writing-coding-and-designing-with-ais": {
     "hash": "4f13c40eab55b19d6daecd4c7825f233b94f76ea",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2022-05-18-ar-poster-tutorial-using-mindar": {
     "hash": "fff0b963aafbfd8e9faf5b89676f0ca446f1889f",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2022-04-25-developing-software-for-humans-human-centered-design-codebase": {
     "hash": "a54664cc646611db752c577e35aa6755d0dcea30",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2020-01-11-introduction-to-node-js": {
     "hash": "331d514d1d2105fca65b80c383b0ff6a7d4213d1",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   },
   "talks:2019-10-16-web-development-crash-course": {
     "hash": "945678aef372b0f387c2a22cb6dc8e3970b04ada",
-    "generatedAt": "2026-05-08T08:15:55.633Z"
+    "generatedAt": "2026-05-22T15:58:59.077Z"
   }
 }

@@ -40,7 +40,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   // Focused hooks for each responsibility
   const { items, loaded } = useSearchData(open);
   const { recent, saveRecent, clearRecent } = useRecentSearches(open);
-  const { filtered, countsByType, suggestions } = useSearchFiltering(
+  const { filtered, countsByType, suggestions, tagSuggestions } = useSearchFiltering(
     items,
     query,
     typeFilter,
@@ -117,6 +117,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
       countsByType,
       typeFilter,
       activeIndex,
+      tagSuggestions,
     },
     actions: {
       setQuery,

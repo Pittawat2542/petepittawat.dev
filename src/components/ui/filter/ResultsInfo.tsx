@@ -21,7 +21,7 @@ const ResultsInfoComponent: FC<ResultsInfoProps> = ({
     <div
       className={cn(
         'text-muted-foreground w-full text-sm leading-5 sm:w-auto',
-        tone === 'editorial' && 'text-white/52'
+        tone === 'editorial' && 'editorial-results-info'
       )}
     >
       {filteredResults !== undefined

@@ -9,7 +9,7 @@ const SIZE_CLASSES = {
 } as const;
 
 const BASE_CHIP_CLASSES =
-  'glass-surface rounded-full transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-out backdrop-blur-md border will-change-transform';
+  'glass-surface relative rounded-full transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-out backdrop-blur-md border will-change-transform';
 
 const ACTIVE_VARIANT_CLASSES = {
   default: 'glass-surface-elevated border-ring/30 text-foreground shadow-ring/10',
@@ -87,12 +87,12 @@ const FilterChipComponent: FC<FilterChipProps> = ({
       {...(onClick && { 'aria-pressed': active })}
       {...(onClick && { role: 'button' })}
     >
-      <span className="truncate">{children}</span>
+      <span className="filter-chip__label truncate">{children}</span>
 
       {count !== undefined && (
         <span
           className={cn(
-            'min-w-[1.25rem] rounded-full px-1.5 py-0.5 text-center text-xs font-semibold transition-[background-color,color,border-color] duration-150',
+            'filter-chip__count min-w-[1.25rem] rounded-full px-1.5 py-0.5 text-center text-xs font-semibold transition-[background-color,color,border-color] duration-150',
             active ? ACTIVE_COUNT_CLASSES[variant] : INACTIVE_COUNT_CLASSES
           )}
         >
@@ -119,7 +119,7 @@ const FilterChipComponent: FC<FilterChipProps> = ({
 
       {/* Subtle inner glow for active state */}
       {active && (
-        <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05]" />
+        <div className="filter-chip__shine pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05]" />
       )}
     </Component>
   );

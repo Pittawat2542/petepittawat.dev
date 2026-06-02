@@ -1,0 +1,144 @@
+---
+import { Activity, BrainCircuit, ChartColumn, Network } from '@lucide/astro';
+import type { SiteCopy } from '@/data/site/copy';
+
+interface Props {
+  topics: SiteCopy['home']['hero']['topics'];
+}
+
+const { topics } = Astro.props as Props;
+
+const topicIconMap = {
+  brain: BrainCircuit,
+  activity: Activity,
+  'bar-chart-3': ChartColumn,
+  network: Network,
+} as const;
+
+const topicItems = topics.map(config => ({
+  ...config,
+  Icon: topicIconMap[config.icon],
+}));
+---
+
+<div class="hero-topic-list" aria-label="Research focus areas">
+  {
+    topicItems.map(({ label, Icon }) => (
+      <span class="hero-topic">
+        <Icon class="hero-topic__icon" aria-hidden="true" />
+        <span>{label}</span>
+      </span>
+    ))
+  }
+</div>
+
+<style>
+  .hero-topic-list {
+    position: relative;
+    display: grid;
+    width: min(100%, 22rem);
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.56rem;
+    justify-content: center;
+    isolation: isolate;
+  }
+
+  .hero-topic-list::before {
+    display: none;
+  }
+
+  .hero-topic {
+    position: relative;
+    display: inline-flex;
+    min-height: 2.18rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.48rem;
+    border: 1px solid color-mix(in oklab, var(--site-chrome-border) 82%, rgba(96, 165, 250, 0.12));
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 18% 50%, rgba(96, 165, 250, 0.12), transparent 42%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.014)),
+      var(--site-chrome-bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.052),
+      0 10px 26px -25px rgba(96, 165, 250, 0.34);
+    color: var(--site-chrome-link-color-active);
+    font-size: var(--type-meta);
+    font-weight: 670;
+    line-height: 1.1;
+    padding: 0.16rem 0.68rem;
+    white-space: nowrap;
+    transition:
+      border-color var(--motion-duration-fast) var(--motion-ease-decelerate),
+      box-shadow var(--motion-duration-fast) var(--motion-ease-decelerate),
+      color var(--motion-duration-fast) ease,
+      transform var(--motion-duration-fast) var(--motion-ease-decelerate);
+  }
+
+  .hero-topic:hover,
+  .hero-topic:focus-within {
+    border-color: rgba(96, 165, 250, 0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 14px 30px -26px rgba(96, 165, 250, 0.52);
+    color: rgba(255, 255, 255, 0.92);
+    transform: translate3d(0, -0.06rem, 0);
+  }
+
+  .hero-topic__icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    flex: 0 0 auto;
+    color: #60a5fa;
+    filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.35));
+    transition: transform var(--motion-duration-fast) var(--motion-ease-decelerate);
+  }
+
+  .hero-topic:hover .hero-topic__icon,
+  .hero-topic:focus-within .hero-topic__icon {
+    transform: rotate(-7deg) scale(1.06);
+  }
+
+  @media (min-width: 768px) {
+    .hero-topic-list {
+      justify-content: start;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-topic-list {
+      width: fit-content;
+      grid-template-columns: repeat(4, max-content);
+      gap: 0.5rem;
+    }
+
+    .hero-topic {
+      min-height: 2.08rem;
+      gap: 0.42rem;
+      font-size: var(--type-meta);
+      padding-inline: 0.58rem;
+    }
+
+    .hero-topic__icon {
+      width: 0.88rem;
+      height: 0.88rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-topic,
+    .hero-topic__icon {
+      animation: none;
+      transition: none;
+    }
+
+    .hero-topic:hover,
+    .hero-topic:focus-within,
+    .hero-topic:hover .hero-topic__icon,
+    .hero-topic:focus-within .hero-topic__icon {
+      transform: none;
+    }
+  }
+</style>

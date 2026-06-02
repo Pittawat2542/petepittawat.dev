@@ -1,0 +1,78 @@
+/* Search suggestions and empty-state microinteractions. */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+  transition: animation-duration 0.3s var(--motion-ease-standard, ease);
+}
+
+/* Speed up compass rotation when the search suggestions/discover container is hovered */
+.search-modal__content div:hover > .animate-spin-slow,
+.animate-spin-slow:hover {
+  animation-duration: 4s;
+}
+
+/* Bouncy empty state inbox icon */
+@keyframes bounce-subtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.search-modal__content div:hover > .lucide-inbox,
+.lucide-inbox:hover {
+  animation: bounce-subtle 0.6s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+/* Centralized Suggestion Badges */
+.search-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  font-size: var(--type-meta, 0.75rem);
+  font-weight: 500;
+  border-radius: var(--shape-squircle-radius-sm, 0.85rem);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  transition: all var(--motion-duration-fast, 0.15s) var(--motion-ease-standard, ease-out);
+  cursor: pointer;
+}
+
+.search-badge:hover,
+.search-badge:focus-visible {
+  border-color: color-mix(in oklab, var(--accent, #60a5fa) 45%, rgba(255, 255, 255, 0.2));
+  background: color-mix(in oklab, var(--accent, #60a5fa) 8%, rgba(255, 255, 255, 0.08));
+  color: var(--white, #f9fafb);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.search-badge:active {
+  transform: scale(0.96) !important;
+}
+
+.search-badge:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent, #60a5fa) 50%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .search-modal__content div:hover > .lucide-inbox,
+  .lucide-inbox:hover {
+    animation: none !important;
+  }
+}

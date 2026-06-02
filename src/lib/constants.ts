@@ -5,15 +5,13 @@
 
 // Site configuration
 export const SITE_CONFIG = {
-  TITLE: 'PETEPITTAWAT.DEV',
-  DESCRIPTION:
+  url: 'https://petepittawat.dev',
+  title: 'PETEPITTAWAT.DEV',
+  description:
     'Researcher-builder working on language models, reasoning, evaluation, and AI systems. Writing, projects, publications, and talks by Pittawat Taveekitworachai.',
-  AUTHOR: 'Pittawat Taveekitworachai',
+  author: 'Pittawat Taveekitworachai',
 } as const;
 
-// Re-export for backward compatibility
-export const SITE_TITLE = SITE_CONFIG.TITLE;
-export const SITE_DESCRIPTION = SITE_CONFIG.DESCRIPTION;
 export const FIRST_AUTHOR_TITLE = 'First Author Publications';
 
 // Component configuration

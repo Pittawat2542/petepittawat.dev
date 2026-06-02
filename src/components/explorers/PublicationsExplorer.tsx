@@ -24,9 +24,9 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
       searchFields={item => [item.title, item.venue, item.authors]}
       filterFields={{
         year: item => item.year.toString(),
-        tag: item => item.tags,
         type: item => item.type,
       }}
+      tagField={item => item.tags}
       sortComparators={comparators}
       sortOptions={[
         { value: 'newest', label: 'Newest' },
@@ -36,11 +36,15 @@ const PublicationsExplorerComponent: FC<PublicationsExplorerProps> = ({ items })
       ]}
       defaultSort="newest"
       renderItem={item => <PublicationCard item={item} />}
+      renderFeaturedItem={item => <PublicationCard item={item} featured />}
       getItemKey={item => `${item.title}-${item.year}`}
       getItemId={item => `publication-${slugify(item.title)}-${item.year}`}
       searchPlaceholder="Search title, venue, authors..."
       hashPrefix="publication-"
-      emptyMessage="No results."
+      featuredLabel="Featured publication"
+      gridLabel="Publications"
+      emptyTitle="No matching publications"
+      emptyCopy="Try a broader search, remove a tag, or reset the year and type filters."
     />
   );
 };

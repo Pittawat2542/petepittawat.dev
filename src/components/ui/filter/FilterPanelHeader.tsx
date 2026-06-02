@@ -95,7 +95,6 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
               tone === 'editorial' && 'flex-wrap items-center gap-3 md:w-full md:justify-start'
             )}
           >
-            {toolbarAccessory}
             {canSort && onSortChange && (
               <SortControl
                 sortOptions={sortOptions}
@@ -104,6 +103,7 @@ const FilterPanelHeaderComponent: FC<FilterPanelHeaderProps> = ({
                 tone={tone}
               />
             )}
+            {toolbarAccessory}
           </div>
         )}
 

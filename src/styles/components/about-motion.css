@@ -1,0 +1,359 @@
+@keyframes about-grid-breathe {
+  from {
+    opacity: 0.14;
+    transform: rotate(-2deg) scale(1.08) translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 0.24;
+    transform: rotate(-2deg) scale(1.11) translate3d(-0.7rem, 0.35rem, 0);
+  }
+}
+
+@keyframes about-orb-drift-blue {
+  from {
+    opacity: 0.78;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(1.2rem, -0.8rem, 0) scale(1.08);
+  }
+}
+
+@keyframes about-orb-drift-gold {
+  from {
+    opacity: 0.62;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    opacity: 0.92;
+    transform: translate3d(-1rem, 0.7rem, 0) scale(1.06);
+  }
+}
+
+@keyframes about-constellation-drift {
+  from {
+    opacity: 0.84;
+    transform: translate3d(0, 0, 0) rotate(-1deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0.55rem, -0.45rem, 0) rotate(1.35deg);
+  }
+}
+
+@keyframes about-line-flow {
+  to {
+    stroke-dashoffset: -56;
+  }
+}
+
+@keyframes about-node-pulse {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes about-eyebrow-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 18px color-mix(in oklab, #facc63 30%, transparent);
+  }
+
+  50% {
+    transform: scale(1.16);
+    box-shadow: 0 0 28px color-mix(in oklab, #facc63 48%, transparent);
+  }
+}
+
+@keyframes about-chip-sheen {
+  0% {
+    opacity: 0;
+    transform: translateX(0) skewX(-18deg);
+  }
+
+  28% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(21rem) skewX(-18deg);
+  }
+}
+
+@keyframes about-profile-glow {
+  from {
+    opacity: 0.58;
+    transform: translate3d(-0.25rem, -0.15rem, 0);
+  }
+
+  to {
+    opacity: 0.92;
+    transform: translate3d(0.25rem, 0.2rem, 0);
+  }
+}
+
+@keyframes about-profile-ring {
+  from {
+    transform: rotate(-18deg) scale(1);
+  }
+
+  to {
+    transform: rotate(342deg) scale(1);
+  }
+}
+
+@keyframes about-rule-scan {
+  0%,
+  28% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(430%);
+  }
+}
+
+@keyframes about-visual-ping {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes about-loop-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes about-node-float {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0.2rem, -0.34rem, 0);
+  }
+}
+
+@keyframes about-message-float {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-0.2rem, -0.32rem, 0);
+  }
+}
+
+@keyframes about-layer-lift {
+  from {
+    opacity: 0.74;
+    transform: translateX(-50%) translateY(0) rotateX(64deg) rotateZ(-28deg);
+  }
+
+  to {
+    opacity: 0.96;
+    transform: translateX(-50%) translateY(-0.36rem) rotateX(64deg) rotateZ(-28deg);
+  }
+}
+
+@keyframes about-mesh-flicker {
+  from {
+    opacity: 0.58;
+    transform: translateX(-50%) translateY(0) rotateX(64deg) rotateZ(-28deg);
+  }
+
+  to {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(-0.18rem) rotateX(64deg) rotateZ(-28deg);
+  }
+}
+
+@keyframes about-radar-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 719px) {
+  .about-page .about-hero {
+    gap: 1rem;
+    min-height: auto;
+  }
+
+  .about-page .about-hero__field {
+    top: 1rem;
+    right: -1.5rem;
+    left: auto;
+    opacity: 0.34;
+  }
+
+  .about-page .about-hero__copy {
+    gap: 0.9rem;
+    padding: 1.6rem 1.35rem 0;
+    padding-bottom: 0;
+  }
+
+  .about-page .about-hero__subtitle {
+    font-size: var(--type-body-lg);
+    line-height: var(--leading-control);
+  }
+
+  .about-page .about-hero__summary {
+    gap: 0.65rem;
+  }
+
+  .about-page .about-hero__summary p {
+    font-size: var(--type-body-sm);
+    line-height: 1.56;
+  }
+
+  .about-page .about-hero__summary p:nth-child(2),
+  .about-page .about-hero__socials {
+    display: none;
+  }
+
+  .about-page .about-hero__chips {
+    gap: 0.55rem;
+  }
+
+  .about-page .about-hero__chips span {
+    min-height: 2rem;
+    padding: 0.35rem 0.65rem;
+    font-size: var(--type-meta);
+  }
+
+  .about-page .about-hero__profile {
+    margin-top: 0;
+    padding: 0.85rem;
+  }
+
+  .about-page .about-hero__profile-main {
+    grid-template-columns: 4.75rem minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+
+  .about-page .about-hero__profile-rule {
+    margin: 0.75rem 0;
+  }
+
+  .about-page .about-hero__profile-note {
+    display: none;
+  }
+
+  .about-page .about-hero__profile-note span {
+    min-height: 1.55rem;
+    padding: 0.2rem 0.48rem;
+  }
+
+  .about-page .about-hero__portrait {
+    width: 4.75rem;
+    align-self: start;
+    border-radius: 1rem;
+  }
+
+  .about-page .about-hero__profile-copy {
+    align-content: start;
+    gap: 0.4rem;
+    margin-top: 0;
+  }
+
+  .about-page .about-hero__profile-name {
+    font-size: var(--type-body-lg);
+  }
+
+  .about-page .about-hero__social-link {
+    justify-content: center;
+    width: 2.35rem;
+    padding: 0;
+  }
+
+  .about-page .about-hero__social-link span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .about-page .proof-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 540px) {
+  .about-page .about-hero__title {
+    font-size: var(--type-page-title-compact);
+    line-height: 1;
+  }
+
+  .about-page .section-heading h2 {
+    font-size: var(--type-section-title-compact);
+  }
+
+  .about-page .current-work-card {
+    min-height: 24rem;
+  }
+
+  .about-page .current-work-visual {
+    opacity: 0.42;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-page .about-hero__ambient::before,
+  .about-page .about-hero__orb,
+  .about-page .about-hero__constellation,
+  .about-page .about-hero__line,
+  .about-page .about-hero__node,
+  .about-page .about-hero__eyebrow-dot,
+  .about-page .about-hero__profile::before,
+  .about-page .about-hero__profile::after,
+  .about-page .about-hero__profile-rule::after,
+  .about-page .current-work-visual--radar i,
+  .about-page .current-work-visual--radar span,
+  .about-page .current-work-visual__orbit,
+  .about-page .current-work-visual__node,
+  .about-page .current-work-visual--messages span,
+  .about-page .background-layers__plane,
+  .about-page .background-layers__mesh {
+    animation: none;
+  }
+
+  .about-page .about-hero__chips span:hover::after {
+    animation: none;
+  }
+
+  .about-page .proof-card:hover,
+  .about-page .current-work-card:hover,
+  .about-page .theme-card:hover,
+  .about-page .spotlight-card:hover,
+  .about-page .journey-card:hover,
+  .about-page .about-hero__profile:hover,
+  .about-page .about-hero__social-link:hover,
+  .about-page .profile-card__link:hover {
+    transform: none;
+  }
+}

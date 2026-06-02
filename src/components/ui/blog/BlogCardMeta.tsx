@@ -5,6 +5,7 @@ import { memo } from 'react';
 interface BlogCardMetaProps {
   readonly pubDate: Date;
   readonly lang: 'en' | 'th';
+  readonly readingTimeMin?: number | undefined;
   readonly languageBadgeLabel?: string | undefined;
   readonly tone?: 'default' | 'editorial' | undefined;
 }
@@ -12,6 +13,7 @@ interface BlogCardMetaProps {
 const BlogCardMetaComponent: FC<BlogCardMetaProps> = ({
   pubDate,
   lang,
+  readingTimeMin,
   languageBadgeLabel,
   tone = 'default',
 }) => {
@@ -19,8 +21,8 @@ const BlogCardMetaComponent: FC<BlogCardMetaProps> = ({
     <div
       className={
         tone === 'editorial'
-          ? 'flex flex-wrap items-center gap-2 text-[11px] text-white/52 transition-colors duration-300 group-hover:text-white/72 md:text-xs lg:text-sm'
-          : 'flex flex-wrap items-center gap-2 text-[11px] text-white/60 transition-colors duration-300 group-hover:text-white/80 md:text-xs lg:text-sm'
+          ? 'type-caption flex flex-wrap items-center gap-2 text-white/52 transition-colors duration-300 group-hover:text-white/72 md:text-xs lg:text-sm'
+          : 'type-caption flex flex-wrap items-center gap-2 text-white/60 transition-colors duration-300 group-hover:text-white/80 md:text-xs lg:text-sm'
       }
     >
       <div className="inline-flex items-center gap-1.5 tracking-wide uppercase md:gap-2">
@@ -41,9 +43,15 @@ const BlogCardMetaComponent: FC<BlogCardMetaProps> = ({
           })}
         </time>
       </div>
+      {typeof readingTimeMin === 'number' ? (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{readingTimeMin} min read</span>
+        </>
+      ) : null}
       {(languageBadgeLabel ?? (lang === 'th' ? 'TH' : undefined)) && (
         <span
-          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+          className={`type-micro rounded-full px-2 py-0.5 font-semibold ${
             tone === 'editorial'
               ? 'border border-white/10 bg-white/[0.06] text-white/72'
               : 'border border-white/10 bg-white/8 text-white/85'
@@ -61,6 +69,7 @@ export const BlogCardMeta = memo(BlogCardMetaComponent, (prevProps, nextProps) =
   return (
     prevProps.pubDate === nextProps.pubDate &&
     prevProps.lang === nextProps.lang &&
+    prevProps.readingTimeMin === nextProps.readingTimeMin &&
     prevProps.languageBadgeLabel === nextProps.languageBadgeLabel &&
     prevProps.tone === nextProps.tone
   );

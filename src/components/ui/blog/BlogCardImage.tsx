@@ -10,29 +10,32 @@ interface BlogCardImageProps {
 }
 
 const BlogCardImageComponent: FC<BlogCardImageProps> = ({ post, tone = 'default' }) => {
+  const coverImageSrc = post.data.coverImage?.src;
+  const imageSizes =
+    tone === 'editorial'
+      ? '(min-width: 1024px) 36rem, (min-width: 768px) 50vw, 100vw'
+      : '(min-width: 1024px) 28rem, (min-width: 768px) 50vw, 100vw';
+
   return (
-    <div
+    <BlogCover
+      title={post.data.title}
+      excerpt={post.data.excerpt}
+      lang={post.data.lang}
+      routeSlug={getBlogPostRouteSlug(post)}
+      tags={post.data.tags}
+      pubDate={post.data.pubDate}
+      coverImageSrc={coverImageSrc}
+      imageWidth={post.data.coverImage?.width}
+      imageHeight={post.data.coverImage?.height}
+      imageSizes={imageSizes}
+      variant="card"
+      renderMode="background"
       className={
         tone === 'editorial'
-          ? 'shape-squircle-sm overflow-hidden rounded-[1.35rem] border border-white/10 shadow-[0_26px_44px_-30px_rgba(3,7,18,0.62)]'
-          : 'shape-squircle-sm overflow-hidden rounded-2xl'
+          ? 'rounded-none border-0 shadow-none transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.02]'
+          : 'rounded-none border-0 shadow-none transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.025] group-hover:rotate-[0.25deg]'
       }
-    >
-      <BlogCover
-        title={post.data.title}
-        excerpt={post.data.excerpt}
-        lang={post.data.lang}
-        routeSlug={getBlogPostRouteSlug(post)}
-        tags={post.data.tags}
-        pubDate={post.data.pubDate}
-        variant="card"
-        className={
-          tone === 'editorial'
-            ? 'transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.02]'
-            : 'transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.025] group-hover:rotate-[0.25deg]'
-        }
-      />
-    </div>
+    />
   );
 };
 

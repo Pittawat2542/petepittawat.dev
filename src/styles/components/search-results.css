@@ -1,0 +1,68 @@
+/* Search result list animation, active state, and highlights. */
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search result item & premium active highlights */
+.search-result-item-wrapper {
+  border-left: 3px solid transparent;
+  transition: all var(--motion-duration-fast) var(--motion-ease-standard);
+  animation: slide-in-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger delays for list items loading */
+.search-result-item-wrapper:nth-child(1) {
+  animation-delay: 0ms;
+}
+.search-result-item-wrapper:nth-child(2) {
+  animation-delay: 25ms;
+}
+.search-result-item-wrapper:nth-child(3) {
+  animation-delay: 50ms;
+}
+.search-result-item-wrapper:nth-child(4) {
+  animation-delay: 75ms;
+}
+.search-result-item-wrapper:nth-child(5) {
+  animation-delay: 100ms;
+}
+.search-result-item-wrapper:nth-child(6) {
+  animation-delay: 125ms;
+}
+.search-result-item-wrapper:nth-child(7) {
+  animation-delay: 150ms;
+}
+.search-result-item-wrapper:nth-child(8) {
+  animation-delay: 175ms;
+}
+
+.search-result-item-wrapper--active {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--accent, #60a5fa) 8%, transparent) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border-left-color: var(--accent, #60a5fa);
+}
+
+/* Keyword highlights in search results */
+.search-highlight {
+  background: color-mix(in oklab, var(--accent, #60a5fa) 20%, transparent);
+  color: color-mix(in oklab, var(--accent, #60a5fa) 95%, var(--white, #f9fafb));
+  padding-inline: 0.18rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-result-item-wrapper {
+    animation: none !important;
+  }
+}

@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { PublicationsExplorer } from '@/components/explorers';
 import academicServices from '@/data/services/academic.json';
 import AcademicServices from '@/components/sections/AcademicServices.astro';
@@ -14,8 +14,8 @@ const publications = await getPublications();
 ---
 
 <BaseLayout
-  title={`${SITE_TITLE} - ${pageCopy.title}`}
-  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_CONFIG.description}
   page="publications"
 >
   <Container className="space-y-8 md:space-y-10">
@@ -23,7 +23,15 @@ const publications = await getPublications();
       eyebrow="Research Record"
       title={pageCopy.title}
       subtitle={pageCopy.heroSubtitle}
-    />
+      variant="showcase"
+      visualPreset="publications"
+    >
+      <div slot="support" class="listing-hero-support" aria-label="Publication themes">
+        <span class="listing-hero-support__item">Reasoning models</span>
+        <span class="listing-hero-support__item">Evaluation</span>
+        <span class="listing-hero-support__item">Thai NLP</span>
+      </div>
+    </EditorialPageHero>
     <PublicationsExplorer client:idle items={publications} />
     <AcademicServices
       data={academicServices}

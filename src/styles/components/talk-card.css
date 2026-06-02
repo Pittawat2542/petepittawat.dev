@@ -1,0 +1,50 @@
+/* Talk-specific media card refinements. Imported by TalkCard. */
+
+.talk-card .media-card__footer {
+  border-top: 0;
+  background: transparent;
+  padding-top: clamp(1rem, 1.35vw, 1.25rem);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.talk-card .media-card__body {
+  padding-bottom: clamp(1rem, 1.4vw, 1.35rem);
+}
+
+.talk-card--no-resources .media-card__body {
+  padding-bottom: clamp(2rem, 6vw, 2.75rem);
+}
+
+.talk-card__actions {
+  width: 100%;
+}
+
+.talk-card:hover,
+.talk-card:focus-within {
+  border-color: color-mix(in oklab, var(--card-accent) 36%, transparent);
+  box-shadow:
+    0 22px 48px -20px color-mix(in oklab, var(--card-accent) 18%, rgba(3, 7, 18, 0.95)),
+    0 0 24px -6px color-mix(in oklab, var(--card-accent) 24%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1024px) {
+  .editorial-listing__featured .media-card--featured.talk-card {
+    grid-template-rows: auto auto;
+  }
+
+  .editorial-listing__featured .media-card--featured.talk-card .media-card__media {
+    grid-row: 1 / span 2;
+    min-height: 100%;
+  }
+
+  .editorial-listing__featured .media-card--featured.talk-card .media-card__body {
+    justify-content: flex-start;
+  }
+
+  .editorial-listing__featured .media-card--featured.talk-card .media-card__footer {
+    grid-column: 2;
+    align-self: end;
+  }
+}

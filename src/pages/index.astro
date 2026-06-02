@@ -1,13 +1,12 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getImage } from 'astro:assets';
 import profileImage from '@/assets/images/profile.jpg';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
-import AboutSection from '@/components/sections/AboutSection.astro';
 import BlogSection from '@/components/sections/BlogSection.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
-import StatsSection from '@/components/sections/StatsSection.astro';
+import ResearchInPracticeSection from '@/components/sections/ResearchInPracticeSection.astro';
 import { siteCopyEn } from '@/data/site/copy';
 import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { getBlogPosts, getPublications, getTalks } from '@/lib/content';
@@ -19,11 +18,12 @@ const [blogPosts, publications, talks] = await Promise.all([
 ]);
 const allPosts = blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const siteCopy = siteCopyEn;
-const posts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en')
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 2);
-const stats = {
-  posts: allPosts.length,
+const preferredPosts = getPreferredBlogPosts(groupBlogPostsByTranslation(allPosts), 'en').sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const posts = preferredPosts.slice(0, 3);
+const selectedOutputStats = {
+  posts: preferredPosts.length,
   publications: publications.length,
   talks: talks.length,
 };
@@ -33,7 +33,10 @@ const heroW384 = await getImage({ src: profileImage, width: 384, format: 'webp' 
 const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' });
 ---
 
-<BaseLayout title={SITE_TITLE} description={siteCopy.meta.description || SITE_DESCRIPTION}>
+<BaseLayout
+  title={SITE_CONFIG.title}
+  description={siteCopy.meta.description || SITE_CONFIG.description}
+>
   <PageBackdrop variant="landing" />
   {
     heroW384 && (
@@ -49,8 +52,11 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
       </Fragment>
     )
   }
-  <HeroSection copy={siteCopy.home.hero} />
-  <AboutSection copy={siteCopy.home.aboutSection} />
-  <StatsSection stats={stats} copy={siteCopy.home.statsSection} />
-  <BlogSection posts={posts} copy={siteCopy.home.blogSection} />
+  <HeroSection
+    copy={siteCopy.home.hero}
+    selectedOutput={siteCopy.home.selectedOutput}
+    selectedOutputStats={selectedOutputStats}
+  />
+  <ResearchInPracticeSection copy={siteCopy.home.researchInPractice} />
+  <BlogSection posts={posts} allPosts={preferredPosts} copy={siteCopy.home.blogSection} />
 </BaseLayout>

@@ -1,0 +1,179 @@
+---
+import type { SiteCopy } from '@/data/site/copy';
+import HeroTopicList from '@/components/sections/hero/HeroTopicList.astro';
+import { displayName, getIntroVariant } from '@/components/sections/hero/hero-data';
+
+interface Props {
+  copy: SiteCopy['home']['hero'];
+}
+
+const { copy } = Astro.props as Props;
+
+const [givenName = displayName, ...familyNameParts] = displayName.split(' ');
+const familyName = familyNameParts.join(' ');
+const introVariant = getIntroVariant(copy.intro);
+---
+
+<div class="hero-copy order-1 md:col-span-1">
+  <div class="hero-copy__inner">
+    <div class="hero-statement">
+      <h1 class="hero-name">
+        <span class="hero-name__given">{givenName}</span>
+        {familyName && <span class="hero-name__family">{familyName}</span>}
+      </h1>
+
+      <p class="hero-lead">
+        {
+          introVariant === 'en' ? (
+            <>
+              I study how language models <span>acquire</span>
+              <br class="hidden sm:block" /> and <span>express behavior</span>.
+            </>
+          ) : introVariant === 'th' ? (
+            <>
+              ผมศึกษาว่าโมเดลภาษา<span>เรียนรู้</span>
+              <br class="hidden sm:block" /> และ<span>แสดงพฤติกรรม</span>ออกมาอย่างไร
+            </>
+          ) : (
+            copy.intro
+          )
+        }
+      </p>
+
+      <p class="hero-summary">{copy.summary}</p>
+    </div>
+
+    <HeroTopicList topics={copy.topics} />
+  </div>
+</div>
+
+<style>
+  .hero-copy {
+    width: 100%;
+    max-width: 43rem;
+    text-align: center;
+  }
+
+  .hero-copy__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.15rem, 2.2vw, 1.6rem);
+  }
+
+  .hero-statement {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.88rem, 1.8vw, 1.12rem);
+  }
+
+  .hero-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin: 0;
+    font-weight: 800;
+    line-height: 0.98;
+  }
+
+  .hero-name__given,
+  .hero-name__family {
+    display: block;
+  }
+
+  .hero-name__given {
+    color: #facc63;
+    font-size: var(--type-home-display-compact);
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.14),
+      0 18px 42px rgba(250, 204, 99, 0.18);
+  }
+
+  .hero-name__family {
+    color: rgba(255, 255, 255, 0.94);
+    font-size: var(--type-home-display-secondary-compact);
+    text-shadow: 0 18px 46px rgba(148, 163, 184, 0.22);
+  }
+
+  .hero-lead {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: var(--type-home-lead-compact);
+    line-height: 1.5;
+  }
+
+  .hero-lead span {
+    color: #60a5fa;
+    text-shadow: 0 0 24px rgba(96, 165, 250, 0.34);
+  }
+
+  .hero-summary {
+    margin: 0;
+    max-width: 34rem;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: var(--type-body);
+    line-height: 1.68;
+  }
+
+  @media (min-width: 640px) {
+    .hero-name__given {
+      font-size: var(--type-home-display);
+    }
+
+    .hero-name__family {
+      font-size: var(--type-home-display-secondary);
+    }
+
+    .hero-lead {
+      font-size: var(--type-home-lead);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-copy {
+      max-width: none;
+      text-align: left;
+    }
+
+    .hero-copy__inner {
+      align-items: flex-start;
+      gap: 1.45rem;
+    }
+
+    .hero-name__given {
+      font-size: var(--type-home-display);
+    }
+
+    .hero-name__family {
+      font-size: var(--type-home-display-secondary-compact);
+    }
+
+    .hero-summary {
+      max-width: 32rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-copy__inner {
+      gap: 1.58rem;
+    }
+
+    .hero-name__given {
+      font-size: var(--type-home-display);
+    }
+
+    .hero-name__family {
+      font-size: var(--type-home-display-secondary);
+    }
+
+    .hero-lead {
+      font-size: var(--type-home-lead);
+      line-height: 1.46;
+    }
+
+    .hero-summary {
+      max-width: 31rem;
+      font-size: var(--type-body);
+    }
+  }
+</style>

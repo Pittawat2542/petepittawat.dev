@@ -1,0 +1,131 @@
+.about-page .spotlight-list {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.about-page .milestone-timeline {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-page .milestone-timeline::before {
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: 0.48rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent) 62%, transparent),
+    color-mix(in oklab, #a78bfa 44%, transparent),
+    color-mix(in oklab, var(--accent) 36%, transparent)
+  );
+  content: '';
+}
+
+.about-page .milestone-timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.about-page .milestone-timeline__dot {
+  position: relative;
+  z-index: 1;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: 0.35rem;
+  border: 1px solid color-mix(in oklab, var(--white) 42%, transparent);
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent) 72%, white);
+  box-shadow:
+    0 0 0 7px color-mix(in oklab, var(--accent) 11%, transparent),
+    0 0 20px color-mix(in oklab, var(--accent) 34%, transparent);
+  transition:
+    transform var(--motion-duration-fast) var(--motion-ease-decelerate),
+    box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.about-page .milestone-timeline li:hover .milestone-timeline__dot {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 9px color-mix(in oklab, var(--accent) 14%, transparent),
+    0 0 30px color-mix(in oklab, var(--accent) 46%, transparent);
+}
+
+.about-page .spotlight-card__title,
+.about-page .timeline-details__title,
+.about-page .journey-card__header p {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.95);
+  font-weight: 700;
+  line-height: var(--leading-control);
+}
+
+.about-page .journey-card__group {
+  gap: 1.15rem;
+}
+
+.about-page .journey-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .about-page .journey-card__header {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.about-page .journey-card__header span {
+  color: rgba(191, 219, 254, 0.68);
+  font-size: var(--type-body-sm);
+}
+
+.about-page .timeline-details {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.25rem;
+}
+
+.about-page .timeline-details summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.035);
+  padding: 0.45rem 0.9rem;
+  color: rgba(226, 232, 240, 0.9);
+  cursor: pointer;
+  font-weight: 700;
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.about-page .timeline-details summary:hover {
+  border-color: var(--about-panel-border-strong);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.about-page .timeline-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.about-page .timeline-details ol {
+  display: grid;
+  gap: 0.95rem;
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+}

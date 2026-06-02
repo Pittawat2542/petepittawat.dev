@@ -1,0 +1,198 @@
+.about-page .intro-grid,
+.about-page .current-work-grid,
+.about-page .proof-grid,
+.about-page .milestones-grid,
+.about-page .themes-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .about-page .proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .about-page .themes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-page .current-work-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .about-page .milestones-grid {
+    grid-template-columns: minmax(0, 1.12fr) minmax(21rem, 0.88fr);
+    align-items: start;
+  }
+
+  .about-page .themes-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.about-page .proof-card,
+.about-page .current-work-card,
+.about-page .theme-card,
+.about-page .spotlight-card,
+.about-page .journey-card,
+.about-page .snapshot-card,
+.about-page .background-band {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  transition:
+    transform var(--motion-duration-normal) var(--motion-ease-decelerate),
+    border-color var(--motion-duration-normal) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-normal) var(--motion-ease-standard);
+}
+
+.about-page .proof-card:hover,
+.about-page .current-work-card:hover,
+.about-page .theme-card:hover,
+.about-page .spotlight-card:hover,
+.about-page .journey-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--about-panel-border-strong);
+  box-shadow:
+    0 30px 70px -52px rgba(2, 8, 23, 0.94),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.about-page .section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.45rem;
+}
+
+.about-page .section-heading,
+.about-page .current-work-card__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.about-page .current-work-card__title {
+  flex-direction: row;
+  align-items: center;
+}
+
+.about-page .profile-card__body h2,
+.about-page .section-heading h2 {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.98);
+  font-size: var(--type-section-title);
+  line-height: var(--leading-title);
+  letter-spacing: -0.02em;
+}
+
+.about-page .proof-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  min-height: 10.5rem;
+}
+
+.about-page .proof-card__icon,
+.about-page .theme-card__icon,
+.about-page .background-principle__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.2rem;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+  border-radius: 50%;
+  color: color-mix(in oklab, var(--accent) 82%, white);
+  background:
+    radial-gradient(circle at 45% 38%, rgba(255, 255, 255, 0.14), transparent 42%),
+    color-mix(in oklab, var(--accent) 18%, transparent);
+  box-shadow: 0 0 34px color-mix(in oklab, var(--accent) 22%, transparent);
+  transition:
+    transform var(--motion-duration-normal) var(--motion-ease-decelerate),
+    box-shadow var(--motion-duration-normal) var(--motion-ease-standard);
+}
+
+.about-page .theme-card:nth-child(2) .theme-card__icon {
+  color: #c084fc;
+  border-color: color-mix(in oklab, #c084fc 34%, transparent);
+  background: color-mix(in oklab, #a855f7 16%, transparent);
+  box-shadow: 0 0 34px color-mix(in oklab, #a855f7 20%, transparent);
+}
+
+.about-page .theme-card:nth-child(3) .theme-card__icon {
+  color: var(--about-mint);
+  border-color: color-mix(in oklab, var(--about-mint) 34%, transparent);
+  background: color-mix(in oklab, var(--about-mint) 14%, transparent);
+}
+
+.about-page .theme-card:nth-child(4) .theme-card__icon {
+  color: var(--about-warm);
+  border-color: color-mix(in oklab, var(--about-warm) 34%, transparent);
+  background: color-mix(in oklab, var(--about-warm) 14%, transparent);
+}
+
+.about-page .proof-card:hover .proof-card__icon,
+.about-page .theme-card:hover .theme-card__icon,
+.about-page .background-principle:hover .background-principle__icon {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 46px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.about-page .proof-card__content,
+.about-page .theme-card,
+.about-page .current-work-card,
+.about-page .journey-card__group {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.about-page .proof-card__value {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.95);
+  font-size: var(--type-body-lg);
+  font-weight: 700;
+  line-height: var(--leading-control);
+}
+
+.about-page .current-work-card {
+  position: relative;
+  min-height: 22rem;
+  overflow: hidden;
+}
+
+.about-page .current-work-card__body {
+  position: relative;
+  z-index: 1;
+}
+
+.about-page .current-work-card__title h3,
+.about-page .journey-card h3,
+.about-page .theme-card h3,
+.about-page .background-principle h3 {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.96);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-title);
+}
+
+.about-page .now-card ul,
+.about-page .current-work-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-page .current-work-list {
+  display: grid;
+  gap: 0.78rem;
+  margin-top: 1rem;
+}
+
+.about-page .current-work-list li {
+  display: flex;
+  gap: 0.7rem;
+  color: color-mix(in oklab, var(--white) 78%, transparent);
+  font-size: var(--type-body-sm);
+  line-height: 1.58;
+}

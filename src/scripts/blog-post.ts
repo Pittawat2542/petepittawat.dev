@@ -4,6 +4,8 @@
  */
 
 // Add copy buttons to code blocks within the article
+const READER_PANE_STORAGE_KEY = 'blog-reader-pane-open';
+
 function getAttribute(el: Element | null, key: string) {
   return el?.getAttribute(key) ?? '';
 }
@@ -91,6 +93,9 @@ const setupCopyButtons = () => {
     const pre = code.parentElement;
     if (!pre || pre.classList.contains('has-copy')) return;
     pre.classList.add('has-copy');
+    if (!pre.hasAttribute('tabindex')) {
+      pre.setAttribute('tabindex', '0');
+    }
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy-button';
@@ -139,9 +144,47 @@ const improveImages = () => {
   });
 };
 
+function readReaderPaneState(storageKey: string) {
+  try {
+    return window.localStorage.getItem(storageKey);
+  } catch {
+    return null;
+  }
+}
+
+function writeReaderPaneState(storageKey: string, isOpen: boolean) {
+  try {
+    window.localStorage.setItem(storageKey, isOpen ? 'true' : 'false');
+  } catch {
+    // Storage can be unavailable in strict privacy contexts.
+  }
+}
+
+const setupReaderPane = () => {
+  document.querySelectorAll('[data-reader-pane]').forEach(pane => {
+    if (!(pane instanceof HTMLDetailsElement)) {
+      return;
+    }
+
+    const storageKey = pane.dataset['storageKey'] ?? READER_PANE_STORAGE_KEY;
+    const storedState = readReaderPaneState(storageKey);
+
+    if (storedState === 'false') {
+      pane.removeAttribute('open');
+    } else if (storedState === 'true') {
+      pane.setAttribute('open', '');
+    }
+
+    pane.addEventListener('toggle', () => {
+      writeReaderPaneState(storageKey, pane.open);
+    });
+  });
+};
+
 const onReady = () => {
   setupCopyButtons();
   improveImages();
+  setupReaderPane();
 };
 
 if (document.readyState === 'loading') {

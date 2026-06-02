@@ -1,0 +1,115 @@
+---
+import { BookText, Mic, ScrollText } from '@lucide/astro';
+import HeroCtaCard from '@/components/sections/hero/HeroCtaCard.astro';
+import type { SiteCopy } from '@/data/site/copy';
+
+interface Props {
+  heading: string;
+  copy: SiteCopy['home']['selectedOutput'];
+  stats: HeroCtaStats;
+}
+
+type HeroCtaStats = Record<'posts' | 'publications' | 'talks', number>;
+
+const { heading, copy, stats } = Astro.props as Props;
+
+const iconMap = {
+  'book-text': BookText,
+  'scroll-text': ScrollText,
+  mic: Mic,
+} as const;
+
+const ctaTokens = [
+  {
+    accent: '#63a8ff',
+    accentMuted: 'rgba(99, 168, 255, 0.24)',
+    glow: 'rgba(59, 130, 246, 0.34)',
+  },
+  {
+    accent: '#6f83ff',
+    accentMuted: 'rgba(111, 131, 255, 0.2)',
+    glow: 'rgba(99, 102, 241, 0.24)',
+  },
+  {
+    accent: '#a16cff',
+    accentMuted: 'rgba(161, 108, 255, 0.22)',
+    glow: 'rgba(147, 51, 234, 0.24)',
+  },
+] as const;
+
+const formatCtaLabel = (template: string, count: number) =>
+  template.replace('{count}', count.toLocaleString('en-US'));
+
+const ctas = copy.cards.map((config, index) => ({
+  ...config,
+  count: stats[config.key] ?? 0,
+  ctaLabel: formatCtaLabel(config.linkText, stats[config.key] ?? 0),
+  Icon: iconMap[config.icon],
+  token: ctaTokens[index] ?? ctaTokens[0],
+}));
+---
+
+<section class="hero-cta" aria-labelledby="hero-cta-title">
+  <div class="hero-cta__heading-row">
+    <h2 id="hero-cta-title" class="section-eyebrow hero-cta__heading">
+      <span class="section-eyebrow__dot" aria-hidden="true"></span>
+      {heading}
+    </h2>
+  </div>
+
+  <ul class="hero-cta__grid">
+    {
+      ctas.map(({ href, title, description, ctaLabel, Icon, token }) => (
+        <li class="hero-cta__item">
+          <HeroCtaCard
+            href={href}
+            title={title}
+            description={description}
+            ctaLabel={ctaLabel}
+            Icon={Icon}
+            token={token}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .hero-cta {
+    --hero-cta-shell-gap: clamp(1.1rem, 2vw, 1.45rem);
+    width: 100%;
+  }
+
+  .hero-cta__heading-row {
+    margin-bottom: var(--hero-cta-shell-gap);
+  }
+
+  .hero-cta__heading {
+    margin: 0;
+  }
+
+  .hero-cta__grid {
+    display: grid;
+    gap: clamp(1rem, 1.75vw, 1.35rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero-cta__item {
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .hero-cta__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-cta__heading-row {
+      margin-bottom: 1rem;
+    }
+  }
+</style>

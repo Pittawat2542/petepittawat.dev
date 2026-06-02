@@ -1,8 +1,17 @@
 [
   {
-    "title": "Feb 2026 – Present — Research Scientist, Typhoon team (SCB DataX R&I)",
-    "description": "Advise fellow research scientists on language model research, support internal knowledge sharing, and help connect agentic AI work to product and strategy decisions.",
-    "titleTh": "ก.พ. 2026 – ปัจจุบัน — Research Scientist, ทีม Typhoon (SCB DataX R&I)",
+    "title": "2026 — Incoming PhD student, Nanyang Technological University (NTU Singapore)",
+    "description": "Preparing to begin doctoral research on reasoning models, evaluation, and reliable AI systems.",
+    "titleTh": "2026 — Incoming PhD student, Nanyang Technological University (NTU Singapore)",
+    "descriptionTh": "เตรียมเริ่มงานวิจัยระดับปริญญาเอกด้านโมเดลให้เหตุผล การประเมินผล และระบบ AI ที่น่าเชื่อถือ",
+    "startYear": 2026,
+    "accent": "publications",
+    "highlight": true
+  },
+  {
+    "title": "Feb 2026 – May 2026 — Research Scientist, Typhoon team (SCB DataX R&I)",
+    "description": "Advised fellow research scientists on language model research, supported internal knowledge sharing, and helped connect agentic AI work to product and strategy decisions.",
+    "titleTh": "ก.พ. 2026 – พ.ค. 2026 — Research Scientist, ทีม Typhoon (SCB DataX R&I)",
     "descriptionTh": "ทำงานร่วมกับนักวิจัยคนอื่นในประเด็นด้าน language model research สนับสนุนการแลกเปลี่ยนความรู้ภายในองค์กร และช่วยเชื่อมงาน agentic AI เข้ากับการตัดสินใจด้านผลิตภัณฑ์และกลยุทธ์",
     "startYear": 2026,
     "startMonth": 2,

@@ -64,13 +64,7 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
   initialTags,
 }) => {
   const [q, setQ] = useState('');
-  const [locale, setLocale] = useState<BlogTranslationLocale>(() =>
-    resolveBlogLocalePreference({
-      searchParams: typeof window !== 'undefined' ? window.location.search : undefined,
-      storedLocale: typeof window !== 'undefined' ? getStoredBlogLocalePreference() : undefined,
-      fallbackLocale: initialLocale,
-    })
-  );
+  const [locale, setLocale] = useState<BlogTranslationLocale>(initialLocale);
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<BlogSort>('newest');
   const [filters, setFilters] = useState<Record<string, string>>({});
@@ -153,6 +147,8 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
     filters,
     sort,
   });
+  const featuredPost = sorted[0];
+  const gridPosts = sorted.slice(1);
 
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -223,19 +219,47 @@ const BlogListPageComponent: FC<BlogListPageProps> = ({
       filteredResults={sorted.length}
       totalResults={localizedPosts.length}
       toolbarAccessory={languageSwitcher}
-      itemsWrapperElement="ul"
+      itemsWrapperElement="div"
+      itemsWrapperClassName="blog-index__items"
+      emptyState={
+        <div className="blog-index__empty" role="status">
+          <h2 className="blog-index__empty-title">No matching notes</h2>
+          <p className="blog-index__empty-copy">
+            Try a broader search or clear a filter to bring the field notes back into view.
+          </p>
+        </div>
+      }
       footer={null}
     >
-      {sorted.map((post: BlogPost) => (
-        <BlogCard
-          key={post.id}
-          post={post}
-          allPosts={localizedPosts}
-          languageState={localizedStateById.get(post.id)}
-          tone="editorial"
-          className="[contain-intrinsic-size:520px] [content-visibility:auto]"
-        />
-      ))}
+      {featuredPost ? (
+        <ul className="blog-index__featured" aria-label="Featured blog post">
+          <BlogCard
+            key={featuredPost.id}
+            post={featuredPost}
+            featured
+            presentation="featured"
+            allPosts={localizedPosts}
+            languageState={localizedStateById.get(featuredPost.id)}
+            tone="editorial"
+            className="[contain-intrinsic-size:620px] [content-visibility:auto]"
+          />
+        </ul>
+      ) : null}
+
+      {gridPosts.length > 0 ? (
+        <ul className="blog-index__grid" aria-label="Blog posts">
+          {gridPosts.map((post: BlogPost) => (
+            <BlogCard
+              key={post.id}
+              post={post}
+              allPosts={localizedPosts}
+              languageState={localizedStateById.get(post.id)}
+              tone="editorial"
+              className="[contain-intrinsic-size:520px] [content-visibility:auto]"
+            />
+          ))}
+        </ul>
+      ) : null}
     </EditorialListingShell>
   );
 };

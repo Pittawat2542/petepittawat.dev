@@ -66,8 +66,6 @@ type ThemeDefinition = BlogCoverTheme & {
   aliases: readonly string[];
 };
 
-const SITE_TITLE = 'PETEPITTAWAT.DEV';
-
 const coverThemes: readonly ThemeDefinition[] = [
   {
     id: 'flutter',
@@ -608,5 +606,3 @@ function hashToUint32(value: string) {
   }
   return hash >>> 0;
 }
-
-export { SITE_TITLE };

@@ -1,8 +1,10 @@
 ---
-import { Calendar, CircleUser, Clock3, Tag as TagIcon } from '@lucide/astro';
 import BlogCover from '@/components/ui/blog/BlogCover';
-import FormattedDate from '@/components/content/FormattedDate';
+import ArticleMeta from './ArticleMeta.astro';
+import ArticleTagList from './ArticleTagList.astro';
 import '@/styles/components/article-surface.css';
+import type { ImageMetadata } from 'astro';
+import { useTranslations } from '@/i18n/utils';
 
 interface Props {
   title: string;
@@ -11,20 +13,20 @@ interface Props {
   slug?: string | undefined;
   tags: string[];
   pubDate: Date;
+  coverImage?: ImageMetadata | undefined;
   readingTimeMin?: number | undefined;
 }
 
-const { title, excerpt, lang, slug, tags, pubDate, readingTimeMin } = Astro.props as Props;
-
-const toTagHref = (tag: string) =>
-  `/tags/${tag
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')}`;
+const { title, excerpt, lang, slug, tags, pubDate, coverImage, readingTimeMin } =
+  Astro.props as Props;
+const t = useTranslations(lang);
 ---
 
-<section class="article-surface article-hero">
+<section
+  class="article-hero article-surface"
+  data-lang={lang}
+  data-has-cover={coverImage ? 'true' : 'false'}
+>
   <div class="article-hero__background" aria-hidden="true">
     <BlogCover
       title={title}
@@ -33,235 +35,99 @@ const toTagHref = (tag: string) =>
       routeSlug={slug ?? title}
       tags={tags}
       pubDate={pubDate}
+      coverImageSrc={coverImage?.src}
+      imageLoading="eager"
+      imageFetchPriority="high"
+      imageDecoding="sync"
+      imageWidth={coverImage?.width}
+      imageHeight={coverImage?.height}
       variant="hero"
       renderMode="background"
       className="article-hero__cover"
     />
   </div>
 
-  <div class="article-hero__overlay">
-    <div class="article-hero__badge">
-      <span class="article-hero__badge-dot"></span>
-      Field Notes
-    </div>
+  <div class="article-hero__content">
+    <a href="/blog" class="article-back" aria-label={t('allPosts')}>
+      <span class="article-back__icon" aria-hidden="true">←</span>
+      {t('allPosts')}
+    </a>
     <h1 class="article-hero__title">{title}</h1>
-    <div class="article-meta">
-      <div class="article-meta__item">
-        <span class="sr-only">Published</span>
-        <Calendar class="article-meta__icon" aria-hidden="true" />
-        <span class="article-meta__text"><FormattedDate date={pubDate} /></span>
-      </div>
-      <div class="article-meta__divider" aria-hidden="true">·</div>
-      <div class="article-meta__item">
-        <span class="sr-only">Author</span>
-        <CircleUser class="article-meta__icon" aria-hidden="true" />
-        <span class="article-meta__text">Pete</span>
-      </div>
-      {
-        typeof readingTimeMin === 'number' ? (
-          <>
-            <div class="article-meta__divider" aria-hidden="true">
-              ·
-            </div>
-            <div class="article-meta__item">
-              <span class="sr-only">Reading time</span>
-              <Clock3 class="article-meta__icon" aria-hidden="true" />
-              <span class="article-meta__text">{readingTimeMin} min read</span>
-            </div>
-          </>
-        ) : null
-      }
+    <div class="article-hero__meta-row">
+      <ArticleMeta pubDate={pubDate} readingTimeMin={readingTimeMin} />
+      {tags.length ? <ArticleTagList tags={tags} /> : null}
     </div>
-
-    {
-      tags.length ? (
-        <div class="article-tags">
-          <span class="article-tags__icon">
-            <span class="sr-only">Tags</span>
-            <TagIcon class="article-tags__symbol" aria-hidden="true" />
-          </span>
-          <ul class="article-tags__list">
-            {tags.map(tag => (
-              <li>
-                <a href={toTagHref(tag)} class="article-tag">
-                  #{tag}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null
-    }
   </div>
 </section>
 
 <style>
   .article-hero {
     position: relative;
-    isolation: isolate;
     display: flex;
-    min-height: clamp(25rem, 52vw, 42rem);
-    align-items: flex-end;
+    inline-size: 100dvw;
+    margin-inline: calc(50% - 50dvw);
+    min-height: clamp(24rem, 34vw, 31rem);
+    align-items: flex-start;
     overflow: hidden;
-    padding: clamp(1.5rem, 1rem + 1.8vw, 2.5rem);
+    border-inline: 0;
+    border-radius: 0;
+    padding: clamp(1.35rem, 2.4vw, 2.45rem) clamp(1.35rem, 2vw + 1rem, 2.8rem)
+      clamp(4.75rem, 10vw, 7rem);
+  }
+
+  .article-hero__background,
+  .article-hero__background::before,
+  .article-hero__background::after {
+    position: absolute;
+    inset: 0;
   }
 
   .article-hero__background {
-    position: absolute;
-    inset: 0;
+    z-index: 0;
   }
 
-  .article-hero__background::after {
+  .article-hero__background::before {
     content: '';
-    position: absolute;
-    inset: 0;
+    z-index: 1;
     background:
+      radial-gradient(
+        90% 90% at 76% 12%,
+        color-mix(in oklab, var(--accent-blog) 24%, transparent),
+        transparent 56%
+      ),
       linear-gradient(
         90deg,
-        rgba(3, 7, 18, 0.84) 0%,
-        rgba(3, 7, 18, 0.62) 46%,
-        rgba(3, 7, 18, 0.24) 76%,
-        rgba(3, 7, 18, 0.1) 100%
+        rgba(3, 7, 18, 0.82) 0%,
+        rgba(3, 7, 18, 0.58) 52%,
+        rgba(3, 7, 18, 0.34) 100%
       ),
       linear-gradient(
         180deg,
-        rgba(4, 8, 18, 0.05) 0%,
-        rgba(4, 8, 18, 0.16) 42%,
-        rgba(4, 8, 18, 0.7) 100%
+        rgba(3, 7, 18, 0.08) 0%,
+        rgba(3, 7, 18, 0.5) 76%,
+        rgba(3, 7, 18, 0.88) 100%
       );
     pointer-events: none;
   }
 
-  .article-hero__overlay {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    width: min(100%, 48rem);
-    min-width: 0;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 1.15rem;
-  }
-
-  .article-hero__badge {
-    display: inline-flex;
-    width: fit-content;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.52rem 1rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
-    background: color-mix(in oklab, var(--white) 5%, transparent);
-    color: color-mix(in oklab, var(--white) 78%, transparent);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-  }
-
-  .article-hero__badge-dot {
-    width: 0.62rem;
-    height: 0.62rem;
-    border-radius: 999px;
-    background: color-mix(in oklab, var(--accent-blog) 84%, transparent);
-    box-shadow: 0 0 14px rgba(129, 140, 248, 0.55);
-  }
-
-  .article-hero__title {
-    margin: 0;
-    max-width: 13ch;
-    font-size: clamp(2.35rem, 1.7rem + 3vw, 5.4rem);
-    font-weight: 700;
-    line-height: 0.98;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-    text-shadow: 0 18px 46px rgba(3, 7, 18, 0.42);
-  }
-
-  .article-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem 1rem;
-    font-size: 0.94rem;
-    color: color-mix(in oklab, var(--white) 78%, transparent);
-  }
-
-  .article-meta__item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .article-meta__icon {
-    width: 1rem;
-    height: 1rem;
-    opacity: 0.74;
-  }
-
-  .article-meta__text {
-    font-weight: 650;
-    color: color-mix(in oklab, var(--white) 92%, transparent);
-  }
-
-  .article-meta__divider {
-    opacity: 0.3;
-  }
-
-  .article-tags {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .article-tags__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--white) 12%, transparent);
-    background: color-mix(in oklab, var(--white) 6%, transparent);
-  }
-
-  .article-tags__symbol {
-    width: 1rem;
-    height: 1rem;
-    color: color-mix(in oklab, var(--accent-blog) 82%, white 16%);
-  }
-
-  .article-tags__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .article-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.42rem 0.82rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--accent-blog) 32%, transparent);
-    background: rgba(18, 28, 52, 0.72);
-    color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
-    font-size: 0.78rem;
-    font-weight: 600;
-    transition:
-      transform 160ms ease,
-      border-color 160ms ease,
-      background-color 160ms ease;
-  }
-
-  .article-tag:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
-    background: rgba(26, 38, 69, 0.82);
+  .article-hero__background::after {
+    content: '';
+    z-index: 2;
+    background-image:
+      radial-gradient(1.4px 1.4px at 12% 22%, rgba(255, 255, 255, 0.2), transparent 60%),
+      radial-gradient(1px 1px at 72% 18%, rgba(191, 219, 254, 0.22), transparent 65%),
+      radial-gradient(1.6px 1.6px at 84% 64%, rgba(165, 180, 252, 0.18), transparent 70%),
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size:
+      30rem 30rem,
+      26rem 26rem,
+      34rem 34rem,
+      88px 88px,
+      88px 88px;
+    opacity: 0.18;
+    mix-blend-mode: screen;
+    pointer-events: none;
   }
 
   .article-hero :global(.article-hero__cover) {
@@ -269,70 +135,111 @@ const toTagHref = (tag: string) =>
     min-height: 100%;
     border: none;
     box-shadow: none;
+    filter: saturate(1.08) blur(4px);
+    transform: scale(1.025);
   }
 
-  @media (max-width: 1100px) {
-    .article-hero {
-      min-height: clamp(23rem, 66vw, 34rem);
-    }
+  .article-hero__content {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    width: min(var(--article-content-width, 60rem), calc(100% - 2rem));
+    gap: clamp(1rem, 1.8vw, 1.35rem);
+    margin-inline: auto;
+    padding-block: clamp(0.35rem, 1vw, 1rem);
+  }
 
-    .article-hero__overlay {
-      width: min(100%, 40rem);
-    }
+  .article-back {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 0.55rem;
+    margin-bottom: clamp(0.25rem, 0.7vw, 0.55rem);
+    padding: 0.35rem 0;
+    color: color-mix(in oklab, var(--white) 82%, transparent);
+    font-size: var(--type-control);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--accent-blog) 28%, transparent);
+    text-shadow: 0 12px 30px rgba(3, 7, 18, 0.72);
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
 
-    .article-hero__title {
-      max-width: 14ch;
-    }
+  .article-back:hover {
+    transform: translateX(-2px);
+    color: color-mix(in oklab, var(--accent-blog) 80%, var(--white) 30%);
+    border-color: color-mix(in oklab, var(--accent-blog) 55%, transparent);
+  }
+
+  .article-back__icon {
+    font-size: var(--type-body);
+  }
+
+  .article-hero__title {
+    margin: 0;
+    max-width: 22ch;
+    color: var(--white);
+    font-size: var(--type-page-title);
+    font-weight: 760;
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+    text-shadow: 0 20px 56px rgba(3, 7, 18, 0.66);
+  }
+
+  .article-hero[data-lang='th'] .article-hero__title {
+    max-width: 24ch;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+  }
+
+  .article-hero__meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem 1rem;
+    max-width: 54rem;
   }
 
   @media (max-width: 720px) {
     .article-hero {
-      padding: 1.35rem;
-      min-height: clamp(22rem, 96vw, 31rem);
+      min-height: clamp(23rem, 104vw, 32rem);
+      padding: 1.15rem 1.15rem clamp(3.25rem, 12vw, 5rem);
     }
 
-    .article-hero__background::after {
+    .article-hero__background::before {
       background:
         linear-gradient(
           180deg,
-          rgba(4, 8, 18, 0.16) 0%,
-          rgba(4, 8, 18, 0.42) 44%,
-          rgba(4, 8, 18, 0.86) 100%
+          rgba(3, 7, 18, 0.18) 0%,
+          rgba(3, 7, 18, 0.54) 48%,
+          rgba(3, 7, 18, 0.9) 100%
         ),
-        linear-gradient(
-          90deg,
-          rgba(3, 7, 18, 0.54) 0%,
-          rgba(3, 7, 18, 0.22) 72%,
-          rgba(3, 7, 18, 0.08) 100%
-        );
-    }
-
-    .article-hero__overlay {
-      width: 100%;
-      gap: 1rem;
+        linear-gradient(90deg, rgba(3, 7, 18, 0.72), rgba(3, 7, 18, 0.28));
     }
 
     .article-hero__title {
-      max-width: none;
-      font-size: clamp(2rem, 8vw, 3rem);
+      max-width: 100%;
+      font-size: var(--type-page-title-compact);
+      line-height: 1.08;
     }
 
-    .article-meta {
-      font-size: 0.82rem;
-    }
-
-    .article-tag {
-      font-size: 0.72rem;
-      padding: 0.34rem 0.72rem;
+    .article-hero__meta-row {
+      gap: 0.7rem;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .article-tag {
+    .article-back {
       transition-duration: 0.01ms;
     }
 
-    .article-tag:hover {
+    .article-back:hover {
       transform: none;
     }
   }

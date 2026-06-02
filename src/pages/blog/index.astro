@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { getCollection } from 'astro:content';
 import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
 import Container from '@/components/ui/core/Container.astro';
@@ -14,13 +14,45 @@ const allPosts = (await getCollection('blog')).sort(
 const compactPosts = toCompactBlogPosts(allPosts);
 ---
 
-<BaseLayout title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION} page="blog">
+<BaseLayout title={`${SITE_CONFIG.title} - Blog`} description={SITE_CONFIG.description} page="blog">
   <Container className="space-y-8 md:space-y-10">
     <EditorialPageHero
       eyebrow="Field Notes"
       title="Blog"
       subtitle="Explore my thoughts, tutorials, and insights on technology, programming, and AI."
-    />
+      variant="blog"
+      visualPreset="blog"
+    >
+      <div slot="support" class="blog-hero-support" aria-label="Blog themes">
+        <span class="blog-hero-support__item">AI systems</span>
+        <span class="blog-hero-support__item">Software craft</span>
+        <span class="blog-hero-support__item">Research notes</span>
+      </div>
+    </EditorialPageHero>
     <BlogListPage client:idle posts={compactPosts} initialLocale="en" />
   </Container>
 </BaseLayout>
+
+<style>
+  .blog-hero-support {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 0.35rem;
+  }
+
+  .blog-hero-support__item {
+    border: 1px solid color-mix(in oklab, var(--white) 7%, transparent);
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--black) 36%, transparent);
+    padding: 0.45rem 0.7rem;
+    color: color-mix(in oklab, var(--white) 62%, transparent);
+    font-size: var(--type-caption);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: var(--leading-control);
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+</style>

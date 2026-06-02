@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { slugifyTag } from '@/lib/slug';
 import PageWithHero from '@/layouts/PageWithHero.astro';
@@ -22,8 +22,8 @@ const tags = Array.from(tagCounts.entries()).sort((a, b) => {
 ---
 
 <PageWithHero
-  title={`${SITE_TITLE} - Tags`}
-  description={SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - Tags`}
+  description={SITE_CONFIG.description}
   hero={{
     title: 'Tags',
     subtitle: 'Browse articles by topic. Click a tag to see all related posts.',

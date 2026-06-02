@@ -45,7 +45,7 @@ const FigureComponent: FC<FigureProps> = ({ src, alt = '', caption, className = 
           .mdx-figure figcaption { 
             margin-top: 0.5rem; 
             color: rgb(148 163 184); 
-            font-size: 0.9rem; 
+            font-size: var(--type-body-sm);
             text-align: center; 
           }
         `,

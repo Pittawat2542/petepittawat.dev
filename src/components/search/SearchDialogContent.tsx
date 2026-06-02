@@ -1,12 +1,6 @@
-import '@/styles/components/search.css';
+import '@/styles/components/search-modal.css';
 
-import {
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from '@/components/ui/core/dialog';
-import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
+import { DialogContent, DialogDescription, DialogTitle } from '@/components/ui/core/dialog';
 import { cn } from '@/lib/utils';
 import { memo, useEffect, useState, type FC, type ReactNode } from 'react';
 
@@ -50,45 +44,33 @@ const SearchDialogContentComponent: FC<SearchDialogContentProps> = ({ children }
         mounted ? 'scale-100 opacity-100' : 'scale-[0.98] opacity-0'
       )}
     >
-      <DialogContent
-        className="no-paint-contain top-[12vh] w-[min(72rem,92vw)] max-w-none -translate-y-0 overflow-visible border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:-translate-y-1/2"
-        style={{ overflowY: 'visible' }}
-      >
+      <DialogContent className="no-paint-contain top-0 left-0 max-h-[calc(100vh-48px)] w-full max-w-none translate-x-0 translate-y-0 overflow-auto border-none bg-transparent p-0 shadow-none sm:top-1/2 sm:left-1/2 sm:w-[min(72rem,92vw)] sm:-translate-x-1/2 sm:-translate-y-1/2">
         <DialogTitle className="sr-only">Site Search</DialogTitle>
         <DialogDescription className="sr-only">
           Type to search posts, projects, publications, talks, and pages. Use arrow keys to navigate
           results.
         </DialogDescription>
-        <div className="search-modal shape-squircle">
-          <BlogCardOverlays accent="var(--accent)" intensity="subtle" />
-          <header className="search-modal__header">
-            <div className="search-modal__headline">
-              <span className="search-modal__eyebrow">Search</span>
-              <p>Type to explore posts, projects, publications, talks, and pages.</p>
-            </div>
-            <DialogClose
-              className="search-modal__close"
-              aria-label="Close search"
-              title="Close (Esc)"
-            >
-              <span className="sr-only">Close</span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </DialogClose>
-          </header>
-          <div className="search-modal__body">{children}</div>
+        <div className="search-modal shape-squircle relative overflow-hidden">
+          {/* Subtle blue radial glows matching new theming */}
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-64 opacity-30"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 0%, var(--accent, #60a5fa) 0%, transparent 70%)',
+              filter: 'blur(32px)',
+            }}
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 opacity-10"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 100%, var(--accent, #60a5fa) 0%, transparent 70%)',
+              filter: 'blur(24px)',
+            }}
+            aria-hidden="true"
+          />
+          {children}
         </div>
       </DialogContent>
     </div>

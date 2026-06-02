@@ -8,6 +8,8 @@ import { SearchSkeleton } from '@/components/search/SearchSkeleton';
 import { SearchSuggestions } from '@/components/search/SearchSuggestions';
 import { SearchTriggers } from '@/components/search/SearchTriggers';
 import { memo } from 'react';
+import { SearchFooter } from '@/components/search/SearchFooter';
+import { SearchTagSuggestions } from '@/components/search/SearchTagSuggestions';
 import { useSearchController } from '@/components/search/useSearchController';
 
 interface SearchModalProps {
@@ -32,6 +34,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
       countsByType,
       typeFilter,
       activeIndex,
+      tagSuggestions,
     },
     actions: {
       setQuery,
@@ -49,10 +52,12 @@ const SearchModalComponent: FC<SearchModalProps> = ({
 
   const trimmedQuery = query.trim();
   const hasQuery = trimmedQuery.length > 0;
+  const isTagSearch = trimmedQuery.startsWith('#');
   const showRecent = open && loaded && !hasQuery && recent.length > 0;
   const showSuggestions = loaded && !hasQuery;
+  const showTagSuggestions = loaded && isTagSearch;
   const showResults = loaded && hasQuery && filtered.length > 0;
-  const showEmpty = loaded && hasQuery && filtered.length === 0;
+  const showEmpty = loaded && hasQuery && filtered.length === 0 && !showTagSuggestions;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -62,7 +67,6 @@ const SearchModalComponent: FC<SearchModalProps> = ({
           <SearchHeader
             query={query}
             onQueryChange={setQuery}
-            filtered={filtered}
             typeFilter={typeFilter}
             countsByType={countsByType}
             onToggleType={toggleType}
@@ -75,6 +79,9 @@ const SearchModalComponent: FC<SearchModalProps> = ({
           <div className="search-modal__content" role="presentation">
             {!loaded && <SearchSkeleton />}
             {showSuggestions && <SearchSuggestions suggestions={suggestions} />}
+            {showTagSuggestions && (
+              <SearchTagSuggestions tags={tagSuggestions} onTagSelect={setQuery} query={query} />
+            )}
             {showEmpty && <SearchEmptyState suggestions={suggestions} />}
             {showResults && (
               <SearchResultList
@@ -84,9 +91,20 @@ const SearchModalComponent: FC<SearchModalProps> = ({
                 getHref={getHref}
                 onItemClick={handleResultClick}
                 onActiveIndexChange={setActiveIndex}
+                query={query}
+                onTagClick={tag => {
+                  setQuery('#' + tag);
+                }}
               />
             )}
           </div>
+          {loaded && (
+            <SearchFooter
+              resultCount={filtered.length}
+              isTagSearch={isTagSearch}
+              tagCount={tagSuggestions.length}
+            />
+          )}
         </SearchDialogContent>
       )}
     </Dialog>

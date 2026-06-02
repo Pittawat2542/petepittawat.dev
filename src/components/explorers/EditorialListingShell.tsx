@@ -1,6 +1,8 @@
-import type { FC, ReactNode } from 'react';
+import { useMemo, useRef, type FC, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import FilterPanel from '@/components/ui/filter/FilterPanel';
+import { useRowDescriptionClamp } from './rowClamp';
+import '@/styles/components/editorial-listing.css';
 
 interface EditorialListingShellProps {
   readonly searchValue: string;
@@ -54,9 +56,24 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
   className,
 }) => {
   const ItemsWrapper = itemsWrapperElement;
+  const rootRef = useRef<HTMLElement | null>(null);
+  const clampDependencyKey = useMemo(
+    () =>
+      JSON.stringify({
+        searchValue,
+        filters,
+        sortValue,
+        filteredResults,
+        totalResults,
+        selectedTags: selectedTags ? Array.from(selectedTags) : [],
+      }),
+    [filters, filteredResults, searchValue, sortValue, totalResults, selectedTags]
+  );
+
+  useRowDescriptionClamp(rootRef, clampDependencyKey);
 
   return (
-    <section className={cn('flex w-full flex-col', className)}>
+    <section ref={rootRef} className={cn('flex w-full flex-col', className)}>
       <FilterPanel
         searchValue={searchValue}
         onSearchChange={onSearchChange}
@@ -80,7 +97,9 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
 
       <ItemsWrapper
         className={cn(
-          'mt-6 grid w-full grid-cols-1 gap-5 py-2 md:grid-cols-2 md:gap-7 md:py-3 2xl:grid-cols-3',
+          itemsWrapperClassName
+            ? 'mt-6 w-full py-2 md:py-3'
+            : 'mt-6 grid w-full grid-cols-1 gap-5 py-2 md:grid-cols-2 md:gap-7 md:py-3 2xl:grid-cols-3',
           itemsWrapperClassName
         )}
       >

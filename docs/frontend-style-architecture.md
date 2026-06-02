@@ -147,6 +147,46 @@ Typical split direction:
 - component visuals move into the component or a colocated stylesheet
 - shared tokens stay in global styles
 
+### 5. Use the project typography system
+
+Font sizes must communicate intent, not isolated pixel matching.
+
+Use these project-level typography APIs for runtime UI:
+
+- standard Tailwind text utilities (`text-xs`, `text-sm`, `text-base`, etc.), which are backed by the project scale in `src/styles/global.css`
+- semantic type utilities such as `type-eyebrow`, `type-meta`, `type-body`, `type-prose`, `type-card-title`, `type-section-title`, `type-page-title`, and `type-home-display`
+- component-local `font-size: var(--type-*)` declarations when the component owns a distinctive visual surface
+
+Do not add raw runtime font sizes:
+
+```css
+/* Avoid */
+.card-title {
+  font-size: 1.93rem;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 6vw, 5rem);
+}
+```
+
+Use semantic tokens instead:
+
+```css
+.card-title {
+  font-size: var(--type-card-title);
+}
+
+.hero-title {
+  font-size: var(--type-page-title);
+}
+```
+
+Avoid numeric arbitrary Tailwind text utilities such as `text-[11px]` or `text-[1.8rem]`.
+Color-only arbitrary utilities such as `text-[color:var(--accent)]` are still valid.
+
+Fixed-canvas generation code, embedded article assets, and non-runtime content illustrations may use explicit numeric font sizes when the visual format requires exact coordinates and sizing.
+
 ## Frontend Verification Workflow
 
 Visible UI changes must not be closed from static checks alone.
@@ -175,6 +215,7 @@ Reviewers should explicitly verify the following for frontend changes:
 - Is Astro style scoping used consistently in each edited file?
 - If `<style is:global>` is present, is `:global(...)` absent from that file?
 - Are shared styles actually shared, or are they styling one component from afar?
+- Does runtime typography use project text tokens or semantic utilities instead of raw numeric sizes?
 - Did the author provide desktop and narrow/mobile screenshots?
 - Did the author verify the interaction states affected by the change?
 

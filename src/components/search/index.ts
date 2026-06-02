@@ -10,3 +10,5 @@ export { SearchResultList } from './SearchResultList';
 export { default as SearchSkeleton } from './SearchSkeleton';
 export { default as SearchSuggestions } from './SearchSuggestions';
 export { default as SearchTriggers } from './SearchTriggers';
+export { default as SearchFooter } from './SearchFooter';
+export { default as SearchTagSuggestions } from './SearchTagSuggestions';

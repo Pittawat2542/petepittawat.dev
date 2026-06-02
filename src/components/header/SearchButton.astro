@@ -11,15 +11,15 @@ const VARIANT_CONFIG = {
   desktop: {
     id: 'open-search-desktop',
     baseClass:
-      'search-trigger search-trigger--primary hidden min-[960px]:inline-flex items-center gap-2 shape-squircle-sm rounded-[1.25rem] px-3.5 py-2 text-sm text-[color:var(--white)]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28',
-    iconSize: 16,
-    showText: true,
-    showShortcut: true,
+      'search-trigger search-trigger--navbar hidden min-[960px]:inline-flex items-center justify-center rounded-full text-[color:var(--nav-link-color)] focus-visible:outline-none',
+    iconSize: 18,
+    showText: false,
+    showShortcut: false,
   },
   mobile: {
     id: 'open-search-mobile',
     baseClass:
-      'search-trigger search-trigger--icon inline-flex items-center justify-center rounded-[1.2rem] p-2.5 text-[color:var(--white)]/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--white)]/28 min-[960px]:hidden',
+      'search-trigger search-trigger--navbar inline-flex items-center justify-center rounded-full text-[color:var(--nav-link-color)] focus-visible:outline-none min-[960px]:hidden',
     iconSize: 18,
     showText: false,
     showShortcut: false,

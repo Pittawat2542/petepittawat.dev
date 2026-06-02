@@ -1,5 +1,5 @@
 ---
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_CONFIG } from '@/lib/constants';
 import { TalksExplorer } from '@/components/explorers';
 import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -12,12 +12,24 @@ const talks = await getTalks();
 ---
 
 <BaseLayout
-  title={`${SITE_TITLE} - ${pageCopy.title}`}
-  description={pageCopy.metaDescription || SITE_DESCRIPTION}
+  title={`${SITE_CONFIG.title} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_CONFIG.description}
   page="talks"
 >
   <Container className="space-y-8 md:space-y-10">
-    <EditorialPageHero eyebrow="Speaking" title={pageCopy.title} subtitle={pageCopy.heroSubtitle} />
+    <EditorialPageHero
+      eyebrow="Speaking"
+      title={pageCopy.title}
+      subtitle={pageCopy.heroSubtitle}
+      variant="showcase"
+      visualPreset="talks"
+    >
+      <div slot="support" class="listing-hero-support" aria-label="Talk themes">
+        <span class="listing-hero-support__item">Invited sessions</span>
+        <span class="listing-hero-support__item">Workshops</span>
+        <span class="listing-hero-support__item">AI engineering</span>
+      </div>
+    </EditorialPageHero>
     <TalksExplorer client:idle items={talks} />
   </Container>
 </BaseLayout>

@@ -27,16 +27,16 @@ const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({
       <div
         className={cn(
           tone === 'editorial'
-            ? 'flex items-center justify-between gap-4 border-t border-white/8 bg-[rgba(8,14,28,0.5)] py-3 text-[13px] text-white/66 backdrop-blur-xl md:py-4 md:text-sm'
-            : 'aurora-card__footer flex items-center justify-between gap-4 py-3 text-[13px] text-[color:var(--white)]/78 md:py-4 md:text-sm',
+            ? 'type-meta flex items-center justify-between gap-4 border-t border-white/8 bg-[rgba(8,14,28,0.5)] py-3 text-white/66 backdrop-blur-xl md:py-4 md:text-sm'
+            : 'aurora-card__footer type-meta flex items-center justify-between gap-4 py-3 text-[color:var(--white)]/78 md:py-4 md:text-sm',
           barPadding
         )}
       >
         <span
           className={
             tone === 'editorial'
-              ? 'inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs'
-              : 'inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.28em] text-[color:var(--card-accent)]/65 uppercase transition-colors duration-300 group-hover:text-[color:var(--card-accent)] md:text-xs'
+              ? 'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs'
+              : 'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-[color:var(--card-accent)]/65 uppercase transition-colors duration-300 group-hover:text-[color:var(--card-accent)] md:text-xs'
           }
         >
           {yearLabel}
@@ -44,8 +44,8 @@ const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({
         <span
           className={
             tone === 'editorial'
-              ? 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-[15px]'
-              : 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white/90 transition-colors duration-300 group-hover:text-[color:var(--card-accent)] md:text-[15px]'
+              ? 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-sm'
+              : 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white/90 transition-colors duration-300 group-hover:text-[color:var(--card-accent)] md:text-sm'
           }
         >
           Continue reading

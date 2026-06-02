@@ -9,12 +9,16 @@ export interface ScrollController {
 
 export function createScrollController(): ScrollController {
   let scrollTicking = false;
+  let header: HTMLElement | null = null;
   let nav: HTMLElement | null = null;
   let shell: HTMLElement | null = null;
 
   const readScrollState = () => (window.scrollY > 6 ? 'true' : 'false');
 
   const writeScrollState = (value: string) => {
+    if (header && header.dataset['scrolled'] !== value) {
+      header.dataset['scrolled'] = value;
+    }
     if (nav && nav.dataset['scrolled'] !== value) {
       nav.dataset['scrolled'] = value;
     }
@@ -34,6 +38,7 @@ export function createScrollController(): ScrollController {
   };
 
   const init = () => {
+    header = document.getElementById('site-header');
     nav = document.getElementById('site-nav');
     shell = document.getElementById('site-nav-shell');
 
@@ -46,6 +51,7 @@ export function createScrollController(): ScrollController {
 
   const cleanup = () => {
     window.removeEventListener('scroll', scheduleScrollUpdate);
+    header = null;
     nav = null;
     shell = null;
   };

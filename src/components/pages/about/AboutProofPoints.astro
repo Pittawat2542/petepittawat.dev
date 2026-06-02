@@ -1,5 +1,5 @@
 ---
-import { BadgeCheck } from '@lucide/astro';
+import { BadgeCheck, BriefcaseBusiness, Globe, Workflow } from '@lucide/astro';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 
 interface Props {
@@ -14,9 +14,15 @@ interface Props {
 }
 
 const { proofPoints } = Astro.props as Props;
+// NOTE: Index-based coupling between proofIcons and the proofPoints items:
+// - Index 0: BriefcaseBusiness (typically experience-related label)
+// - Index 1: Workflow (typically project/working style label)
+// - Index 2: Globe (typically location/base label)
+// Fallback icon is BadgeCheck. Ensure the copy order in copy.ts remains aligned.
+const proofIcons = [BriefcaseBusiness, Workflow, Globe] as const;
 ---
 
-<section id="proof-points" class="section-block">
+<section id="proof-points" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
       <BadgeCheck class="h-5 w-5 text-[color:var(--accent)]" />
@@ -27,13 +33,21 @@ const { proofPoints } = Astro.props as Props;
 
   <div class="proof-grid">
     {
-      proofPoints.items.map(item => (
-        <GlassCard variant="premium" className="proof-card">
-          <p class="proof-card__label">{item.label}</p>
-          <p class="proof-card__value">{item.value}</p>
-          <p class="proof-card__hint">{item.hint}</p>
-        </GlassCard>
-      ))
+      proofPoints.items.map((item, index) => {
+        const Icon = proofIcons[index] || BadgeCheck;
+        return (
+          <GlassCard variant="premium" className="proof-card">
+            <div class="proof-card__icon" aria-hidden="true">
+              <Icon class="h-8 w-8" />
+            </div>
+            <div class="proof-card__content">
+              <p class="proof-card__label">{item.label}</p>
+              <p class="proof-card__value">{item.value}</p>
+              <p class="proof-card__hint">{item.hint}</p>
+            </div>
+          </GlassCard>
+        );
+      })
     }
   </div>
 </section>

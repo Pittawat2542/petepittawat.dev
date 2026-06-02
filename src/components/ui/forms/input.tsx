@@ -1,3 +1,5 @@
+import '@/styles/components/glass-input.css';
+
 import { forwardRef, isValidElement, memo, type InputHTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { useGlassGlow } from '@/lib/hooks';

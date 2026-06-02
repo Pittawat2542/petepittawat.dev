@@ -1,0 +1,67 @@
+---
+import { slugifyTag } from '@/lib/slug';
+
+interface Props {
+  readonly tags: readonly string[];
+}
+
+const { tags } = Astro.props as Props;
+---
+
+{
+  tags.length ? (
+    <ul class="article-tags-inline">
+      {tags.map(tag => (
+        <li>
+          <a href={`/tags/${slugifyTag(tag)}`} class="article-tag-pill">
+            #{tag}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : null
+}
+
+<style>
+  .article-tags-inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .article-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--accent-blog) 28%, transparent);
+    background: color-mix(in oklab, var(--accent-blog) 10%, rgba(8, 14, 28, 0.6));
+    color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
+    font-size: var(--type-meta);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .article-tag-pill:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
+    background: color-mix(in oklab, var(--accent-blog) 18%, rgba(8, 14, 28, 0.7));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-tag-pill {
+      transition-duration: 0.01ms;
+    }
+    .article-tag-pill:hover {
+      transform: none;
+    }
+  }
+</style>

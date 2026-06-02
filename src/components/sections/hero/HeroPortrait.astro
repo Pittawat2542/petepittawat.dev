@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import profileImage from '@/assets/images/profile.jpg';
+import HeroAspectOrbit from '@/components/sections/hero/HeroAspectOrbit.astro';
+import HeroGalaxy from '@/components/sections/hero/HeroGalaxy.astro';
+---
+
+<div
+  class="relative order-2 flex w-full max-w-[22rem] flex-col items-center pb-3 md:mt-8 md:ml-auto md:max-w-[27rem] md:justify-self-center md:pb-2 lg:mt-10"
+>
+  <div
+    class="hero-avatar group relative mx-auto w-full max-w-[15.5rem] overflow-visible md:mx-0 md:max-w-[20.8rem]"
+  >
+    <HeroGalaxy />
+    <HeroAspectOrbit />
+    <Image
+      src={profileImage}
+      alt="Pete's profile picture"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      widths={[192, 224, 384, 448]}
+      sizes="(min-width: 768px) 20rem, 13rem"
+      class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15.5rem] object-cover shadow-lg ring-4 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20.8rem]"
+    />
+  </div>
+</div>
+
+<script>
+  import '@/scripts/homeHeroAspectLabels';
+</script>
+
+<style>
+  .hero-avatar {
+    width: 100%;
+    isolation: isolate;
+  }
+
+  .hero-avatar__image {
+    transition-property: transform, box-shadow, filter, border-color;
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.2, 0.65, 0.25, 1);
+    animation: hero-avatar-image-enter 760ms var(--motion-ease-decelerate) 140ms backwards;
+  }
+
+  .hero-avatar:hover .hero-avatar__image,
+  .hero-avatar:focus-within .hero-avatar__image {
+    transform: translate3d(0, -0.42rem, 0) scale(1.024);
+    box-shadow:
+      0 0 0 1px rgba(125, 211, 252, 0.22),
+      0 26px 68px -26px rgba(59, 130, 246, 0.62),
+      0 14px 34px -22px rgba(124, 58, 237, 0.42),
+      0 18px 36px -24px rgba(14, 28, 56, 0.58);
+    filter: saturate(110%) contrast(101%);
+  }
+
+  @keyframes hero-avatar-image-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 1rem, 0) scale(0.94);
+      filter: saturate(82%) contrast(96%);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: saturate(100%) contrast(100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-avatar__image {
+      animation: none;
+      transition: none;
+      transform: none;
+    }
+
+    .hero-avatar:hover .hero-avatar__image,
+    .hero-avatar:focus-within .hero-avatar__image {
+      transform: none;
+      box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.45);
+      filter: none;
+    }
+  }
+</style>

@@ -24,8 +24,8 @@ const BlogCardTagComponent: FC<BlogCardTagProps> = ({
       <span
         className={
           tone === 'editorial'
-            ? 'inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[11px] text-white/82 shadow-none transition-all duration-300 group-hover:border-white/16 group-hover:bg-white/[0.09] md:gap-2 md:px-3 md:text-xs'
-            : 'inline-flex items-center gap-1.5 rounded-full border border-white/14 bg-white/10 px-2.5 py-1 text-[11px] text-[color:var(--card-accent,var(--accent))] shadow-[0_6px_18px_rgba(9,14,24,0.25)] transition-all duration-300 group-hover:border-white/25 group-hover:bg-white/16 group-hover:text-[color:var(--card-accent,var(--accent))]/90 md:gap-2 md:px-3 md:text-xs'
+            ? 'type-caption inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-white/82 shadow-none transition-all duration-300 group-hover:border-white/16 group-hover:bg-white/[0.09] md:gap-2 md:px-3 md:text-xs'
+            : 'type-caption inline-flex items-center gap-1.5 rounded-full border border-white/14 bg-white/10 px-2.5 py-1 text-[color:var(--card-accent,var(--accent))] shadow-[0_6px_18px_rgba(9,14,24,0.25)] transition-all duration-300 group-hover:border-white/25 group-hover:bg-white/16 group-hover:text-[color:var(--card-accent,var(--accent))]/90 md:gap-2 md:px-3 md:text-xs'
         }
         style={{
           ...(tone === 'editorial'
@@ -71,8 +71,8 @@ const BlogCardTagComponent: FC<BlogCardTagProps> = ({
     <span
       className={
         tone === 'editorial'
-          ? 'inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] text-white/56 transition-all duration-300 group-hover:border-white/16 group-hover:bg-white/[0.07] group-hover:text-white md:gap-2 md:px-3 md:text-xs'
-          : 'inline-flex items-center gap-1.5 rounded-full border border-white/12 px-2.5 py-1 text-[11px] text-white/65 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/8 group-hover:text-white/85 md:gap-2 md:px-3 md:text-xs'
+          ? 'type-caption inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-white/56 transition-all duration-300 group-hover:border-white/16 group-hover:bg-white/[0.07] group-hover:text-white md:gap-2 md:px-3 md:text-xs'
+          : 'type-caption inline-flex items-center gap-1.5 rounded-full border border-white/12 px-2.5 py-1 text-white/65 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/8 group-hover:text-white/85 md:gap-2 md:px-3 md:text-xs'
       }
     >
       {fallbackTag}

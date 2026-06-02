@@ -13,7 +13,6 @@ export function createMenuController(): MenuController {
 
   // DOM element references
   let menu: HTMLElement | null = null;
-  let overlay: HTMLElement | null = null;
   let toggle: HTMLElement | null = null;
   let sheet: HTMLElement | null = null;
 
@@ -25,19 +24,16 @@ export function createMenuController(): MenuController {
     toggle.dataset['open'] = open ? 'true' : 'false';
 
     menu.dataset['open'] = open ? 'true' : 'false';
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menu.inert = !open;
+    menu.toggleAttribute('inert', !open);
     menu.style.opacity = open ? '1' : '0';
     menu.style.pointerEvents = open ? 'auto' : 'none';
 
     if (sheet) {
       sheet.dataset['open'] = open ? 'true' : 'false';
       sheet.style.opacity = open ? '1' : '0';
-      sheet.style.transform = open ? 'translateY(0) scale(1)' : 'translateY(1.1rem) scale(0.98)';
-    }
-
-    if (overlay) {
-      overlay.dataset['open'] = open ? 'true' : 'false';
-      overlay.style.opacity = open ? '1' : '0';
-      overlay.style.pointerEvents = open ? 'auto' : 'none';
+      sheet.style.transform = open ? 'translateY(0)' : 'translateY(-0.35rem)';
     }
 
     const root = document.documentElement;
@@ -62,11 +58,6 @@ export function createMenuController(): MenuController {
     }
   };
 
-  const handleBackdropClick = () => {
-    isMenuOpen = false;
-    setMenuOpen(false);
-  };
-
   const handleKeydown = (event: KeyboardEvent) => {
     if (event.key !== 'Escape' || !isMenuOpen) return;
 
@@ -85,7 +76,6 @@ export function createMenuController(): MenuController {
   const init = () => {
     // Get DOM references
     menu = document.getElementById('mobile-menu');
-    overlay = document.getElementById('mobile-menu-overlay');
     toggle = document.getElementById('menu-toggle');
     sheet = document.getElementById('mobile-menu-sheet');
 
@@ -96,10 +86,6 @@ export function createMenuController(): MenuController {
 
     if (menu) {
       menu.addEventListener('click', handleMenuNavigation);
-    }
-
-    if (overlay) {
-      overlay.addEventListener('click', handleBackdropClick);
     }
 
     setMenuOpen(false);
@@ -117,10 +103,6 @@ export function createMenuController(): MenuController {
       menu.removeEventListener('click', handleMenuNavigation);
     }
 
-    if (overlay) {
-      overlay.removeEventListener('click', handleBackdropClick);
-    }
-
     document.removeEventListener('keydown', handleKeydown);
     desktopBreakpoint.removeEventListener('change', handleDesktopBreakpoint);
 
@@ -132,7 +114,6 @@ export function createMenuController(): MenuController {
 
     // Clear references
     menu = null;
-    overlay = null;
     toggle = null;
     sheet = null;
   };
