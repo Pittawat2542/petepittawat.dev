@@ -6,6 +6,7 @@ import {
   groupBlogPostsByTranslation,
 } from '@/lib/blog-translations';
 import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
+import { buildPageSearchItems } from '@/lib/search-page-items';
 import { slugify } from '@/lib/slug';
 import type { SearchItem, SearchItemVariant } from '@/components/search/types';
 
@@ -142,50 +143,7 @@ export async function GET(_context: APIContext) {
     );
   }
 
-  items.push(
-    createEnglishItem({
-      id: 'page:home',
-      type: 'page',
-      title: siteCopyEn.listingPages.home.title,
-      path: siteCopyEn.listingPages.home.path,
-      description: siteCopyEn.listingPages.home.searchDescription,
-    }),
-    createEnglishItem({
-      id: 'page:blog',
-      type: 'page',
-      title: siteCopyEn.listingPages.blog.title,
-      path: siteCopyEn.listingPages.blog.path,
-      description: siteCopyEn.listingPages.blog.searchDescription,
-    }),
-    createEnglishItem({
-      id: 'page:projects',
-      type: 'page',
-      title: siteCopyEn.listingPages.projects.title,
-      path: siteCopyEn.listingPages.projects.path,
-      description: siteCopyEn.listingPages.projects.searchDescription,
-    }),
-    createEnglishItem({
-      id: 'page:publications',
-      type: 'page',
-      title: siteCopyEn.listingPages.publications.title,
-      path: siteCopyEn.listingPages.publications.path,
-      description: siteCopyEn.listingPages.publications.searchDescription,
-    }),
-    createEnglishItem({
-      id: 'page:talks',
-      type: 'page',
-      title: siteCopyEn.listingPages.talks.title,
-      path: siteCopyEn.listingPages.talks.path,
-      description: siteCopyEn.listingPages.talks.searchDescription,
-    }),
-    createEnglishItem({
-      id: 'page:about',
-      type: 'page',
-      title: siteCopyEn.listingPages.about.title,
-      path: siteCopyEn.listingPages.about.path,
-      description: siteCopyEn.listingPages.about.searchDescription,
-    })
-  );
+  items.push(...buildPageSearchItems(siteCopyEn));
 
   return new Response(JSON.stringify({ items }), {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600' },

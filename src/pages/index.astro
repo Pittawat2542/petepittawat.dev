@@ -7,6 +7,7 @@ import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import BlogSection from '@/components/sections/BlogSection.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
 import ResearchInPracticeSection from '@/components/sections/ResearchInPracticeSection.astro';
+import ResearchMapTeaser from '@/components/sections/ResearchMapTeaser.astro';
 import { siteCopyEn } from '@/data/site/copy';
 import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
 import { getBlogPosts, getPublications, getTalks } from '@/lib/content';
@@ -58,5 +59,6 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
     selectedOutputStats={selectedOutputStats}
   />
   <ResearchInPracticeSection copy={siteCopy.home.researchInPractice} />
+  <ResearchMapTeaser copy={siteCopy.home.researchMapTeaser} />
   <BlogSection posts={posts} allPosts={preferredPosts} copy={siteCopy.home.blogSection} />
 </BaseLayout>

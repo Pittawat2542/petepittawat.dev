@@ -1,0 +1,171 @@
+---
+import '@/styles/components/research-map.css';
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/ui/core/Container.astro';
+import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
+import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
+import { siteCopyEn } from '@/data/site/copy';
+import {
+  RESEARCH_THEMES,
+  assertResearchThemesResolved,
+  resolveResearchThemeArtifacts,
+} from '@/data/site/research-map';
+import { SITE_CONFIG } from '@/lib/constants';
+import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
+import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
+import { ArrowRight, BookOpenText, Boxes, FileText, Mic } from '@lucide/astro';
+
+const pageCopy = siteCopyEn.listingPages.research;
+const [blogPosts, projects, publications, talks] = await Promise.all([
+  getBlogPosts(),
+  getProjects(),
+  getPublications(),
+  getTalks(),
+]);
+const preferredBlogPosts = getPreferredBlogPosts(groupBlogPostsByTranslation(blogPosts), 'en');
+const themes = resolveResearchThemeArtifacts(RESEARCH_THEMES, {
+  blogPosts: preferredBlogPosts,
+  projects,
+  publications,
+  talks,
+});
+
+assertResearchThemesResolved(themes);
+
+const artifactIcons = {
+  blog: BookOpenText,
+  project: Boxes,
+  publication: FileText,
+  talk: Mic,
+} as const;
+
+const artifactLabels = {
+  blog: 'Writing',
+  project: 'Project',
+  publication: 'Publication',
+  talk: 'Talk',
+} as const;
+
+const themeStats = {
+  publications: publications.length,
+  talks: talks.length,
+  projects: projects.length,
+  posts: preferredBlogPosts.length,
+};
+---
+
+<BaseLayout
+  title={`${SITE_CONFIG.title} - ${pageCopy.title}`}
+  description={pageCopy.metaDescription || SITE_CONFIG.description}
+  page="research"
+>
+  <PageBackdrop />
+  <Container className="research-map-page space-y-8 md:space-y-10">
+    <EditorialPageHero
+      eyebrow="Research Map"
+      title={pageCopy.title}
+      subtitle={pageCopy.heroSubtitle}
+      variant="showcase"
+      visualPreset="publications"
+    >
+      <div slot="support" class="research-map-hero-support" aria-label="Research map themes">
+        {
+          themes.map(theme => (
+            <a href={`#${theme.id}`} class="research-map-hero-support__item">
+              {theme.title}
+            </a>
+          ))
+        }
+      </div>
+    </EditorialPageHero>
+
+    <section class="research-map-overview" aria-label="Research map overview">
+      <div class="research-map-overview__copy">
+        <p>
+          This map is the guided route through the archive. Each theme starts with the research
+          question, then points to the papers, talks, projects, and notes that carry the idea
+          forward.
+        </p>
+      </div>
+      <dl class="research-map-overview__stats" aria-label="Archive scale">
+        <div>
+          <dt>Publications</dt>
+          <dd>{themeStats.publications}</dd>
+        </div>
+        <div>
+          <dt>Talks</dt>
+          <dd>{themeStats.talks}</dd>
+        </div>
+        <div>
+          <dt>Projects</dt>
+          <dd>{themeStats.projects}</dd>
+        </div>
+        <div>
+          <dt>Posts</dt>
+          <dd>{themeStats.posts}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <div class="research-map-themes">
+      {
+        themes.map((theme, themeIndex) => (
+          <section
+            id={theme.id}
+            class="research-map-theme target-highlight"
+            aria-labelledby={`${theme.id}-title`}
+            style={`--theme-index: ${themeIndex};`}
+          >
+            <div class="research-map-theme__header">
+              <p class="research-map-theme__kicker">
+                Theme {String(themeIndex + 1).padStart(2, '0')}
+              </p>
+              <h2 id={`${theme.id}-title`} class="research-map-theme__title">
+                {theme.title}
+              </h2>
+              <p class="research-map-theme__summary">{theme.summary}</p>
+              <ul
+                class="research-map-theme__tags"
+                aria-label={`${theme.title} representative tags`}
+              >
+                {theme.representativeTags.map(tag => (
+                  <li>#{tag}</li>
+                ))}
+              </ul>
+              {theme.startHere ? (
+                <a class="research-map-theme__start" href={theme.startHere.href}>
+                  <span>Start here</span>
+                  <ArrowRight class="research-map-theme__start-icon" aria-hidden="true" />
+                </a>
+              ) : null}
+            </div>
+
+            <ul class="research-map-artifacts" aria-label={`${theme.title} artifacts`}>
+              {theme.artifacts.map(artifact => {
+                const Icon = artifactIcons[artifact.type];
+                return (
+                  <li class="research-map-artifact">
+                    <a class="research-map-artifact__link" href={artifact.href}>
+                      <span class="research-map-artifact__type">
+                        <Icon class="research-map-artifact__type-icon" aria-hidden="true" />
+                        {artifactLabels[artifact.type]}
+                      </span>
+                      <span class="research-map-artifact__body">
+                        <span class="research-map-artifact__title">{artifact.title}</span>
+                        <span class="research-map-artifact__description">
+                          {artifact.description}
+                        </span>
+                      </span>
+                      <span class="research-map-artifact__meta">{artifact.meta}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </Container>
+</BaseLayout>

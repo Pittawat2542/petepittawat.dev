@@ -17,7 +17,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "test:content": "node --test scripts/blog-content-audit.test.mjs scripts/translate-blog-post.test.mjs scripts/translate-blog-post-lib.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/card-visual/index.test.ts src/lib/blog-post-schema.test.ts src/lib/about-timeline.test.ts src/lib/reading-time.test.ts src/lib/toc.test.ts src/lib/blog-recommendations.test.ts src/data/site/copy.test.ts src/components/explorers/rowClamp.test.ts src/components/layout/core/footer-social-links.test.ts src/styles/typography.architecture.test.ts",
+    "test:content": "node --test scripts/blog-content-audit.test.mjs scripts/translate-blog-post.test.mjs scripts/translate-blog-post-lib.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/card-visual/index.test.ts src/lib/blog-post-schema.test.ts src/lib/about-timeline.test.ts src/lib/reading-time.test.ts src/lib/toc.test.ts src/lib/blog-recommendations.test.ts src/lib/search-page-items.test.ts src/data/site/copy.test.ts src/data/site/research-map.test.ts src/components/explorers/rowClamp.test.ts src/components/layout/core/footer-social-links.test.ts src/styles/typography.architecture.test.ts",
     "validate:cover-assets": "node --experimental-strip-types scripts/validate-cover-assets.ts",
     "clean": "rm -rf dist .astro node_modules/.astro",
     "dev:clean": "npm run clean && npm run dev",

@@ -1,0 +1,45 @@
+---
+import '@/styles/components/research-map.css';
+
+import Container from '@/components/ui/core/Container.astro';
+import type { SiteCopy } from '@/data/site/copy';
+import { ArrowRight, Compass } from '@lucide/astro';
+
+interface Props {
+  copy: SiteCopy['home']['researchMapTeaser'];
+}
+
+const { copy } = Astro.props as Props;
+---
+
+<Container className="reveal mt-10 md:mt-12">
+  <section class="research-map-teaser" aria-labelledby="research-map-teaser-title">
+    <div class="research-map-teaser__intro">
+      <p class="section-eyebrow research-map-teaser__eyebrow">
+        <span class="section-eyebrow__dot" aria-hidden="true"></span>
+        {copy.eyebrow}
+      </p>
+      <h2 id="research-map-teaser-title" class="research-map-teaser__title">{copy.title}</h2>
+      <p class="research-map-teaser__description">{copy.description}</p>
+      <a class="research-map-teaser__link" href={copy.ctaHref}>
+        <Compass class="research-map-teaser__link-icon" aria-hidden="true" />
+        <span>{copy.ctaLabel}</span>
+        <ArrowRight class="research-map-teaser__link-arrow" aria-hidden="true" />
+      </a>
+    </div>
+
+    <div class="research-map-teaser__steps" aria-label="Research map path">
+      {
+        copy.items.map((item, index) => (
+          <article class="research-map-teaser__step">
+            <span class="research-map-teaser__step-index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Container>

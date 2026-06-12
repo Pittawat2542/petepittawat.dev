@@ -1,6 +1,13 @@
 export type SiteLocale = 'en' | 'th';
 
-export type SiteNavLinkKey = 'home' | 'blog' | 'projects' | 'publications' | 'talks' | 'about';
+export type SiteNavLinkKey =
+  | 'home'
+  | 'blog'
+  | 'projects'
+  | 'research'
+  | 'publications'
+  | 'talks'
+  | 'about';
 export type HeroTopicIcon = 'brain' | 'activity' | 'bar-chart-3' | 'network';
 export type HomeStatIcon = 'book-text' | 'scroll-text' | 'mic';
 export type ResearchThemeIcon = 'activity' | 'layers' | 'shield-check' | 'globe';
@@ -59,6 +66,17 @@ export interface SiteCopy {
       readonly ctaLabel: string;
       readonly ctaHref: string;
       readonly pillars: readonly ResearchPillar[];
+    };
+    readonly researchMapTeaser: {
+      readonly eyebrow: string;
+      readonly title: string;
+      readonly description: string;
+      readonly ctaLabel: string;
+      readonly ctaHref: string;
+      readonly items: readonly {
+        readonly title: string;
+        readonly description: string;
+      }[];
     };
     readonly selectedOutput: {
       readonly eyebrow: string;
@@ -152,6 +170,13 @@ export interface SiteCopy {
       readonly searchDescription: string;
     };
     readonly projects: {
+      readonly path: string;
+      readonly title: string;
+      readonly heroSubtitle: string;
+      readonly metaDescription: string;
+      readonly searchDescription: string;
+    };
+    readonly research: {
       readonly path: string;
       readonly title: string;
       readonly heroSubtitle: string;
@@ -288,6 +313,7 @@ const siteCopyEn: SiteCopy = {
       { key: 'home', href: '/', label: 'Home' },
       { key: 'blog', href: '/blog', label: 'Blog' },
       { key: 'projects', href: '/projects', label: 'Projects' },
+      { key: 'research', href: '/research', label: 'Research' },
       { key: 'publications', href: '/publications', label: 'Publications' },
       { key: 'talks', href: '/talks', label: 'Talks' },
       { key: 'about', href: '/about', label: 'About' },
@@ -322,6 +348,25 @@ const siteCopyEn: SiteCopy = {
       ctaLabel: 'Learn more about me',
       ctaHref: '/about',
       pillars: researchPillars,
+    },
+    researchMapTeaser: {
+      eyebrow: 'Research map',
+      title: 'Follow the threads across papers, talks, projects, and writing',
+      description:
+        'A guided view of the main research directions behind the archive: behavior shaping, evaluation, reasoning models, and agentic systems.',
+      ctaLabel: 'Open the research map',
+      ctaHref: '/research',
+      items: [
+        {
+          title: 'Start with a theme',
+          description: 'See the question each line of work is trying to answer.',
+        },
+        {
+          title: 'Then follow the artifacts',
+          description:
+            'Move from papers to talks, projects, and notes without guessing the archive.',
+        },
+      ],
     },
     selectedOutput: {
       eyebrow: 'Selected output',
@@ -495,6 +540,16 @@ const siteCopyEn: SiteCopy = {
         'Selected projects by Pittawat Taveekitworachai across language models, reasoning, evaluation, and applied systems.',
       searchDescription: 'Selected research systems, tooling, and prototypes.',
     },
+    research: {
+      path: '/research',
+      title: 'Research',
+      heroSubtitle:
+        'A guided map of the themes connecting my papers, talks, projects, and field notes on AI systems.',
+      metaDescription:
+        'Research map by Pittawat Taveekitworachai connecting work on behavior shaping, evaluation, reasoning models, and agentic systems.',
+      searchDescription:
+        'Guided research themes across publications, talks, projects, and writing.',
+    },
     publications: {
       path: '/publications',
       title: 'Publications',
@@ -529,6 +584,7 @@ const siteCopyTh: SiteCopy = {
       { key: 'home', href: '/', label: 'หน้าแรก' },
       { key: 'blog', href: '/blog', label: 'บล็อก' },
       { key: 'projects', href: '/projects', label: 'โปรเจกต์' },
+      { key: 'research', href: '/research', label: 'งานวิจัย' },
       { key: 'publications', href: '/publications', label: 'ผลงานตีพิมพ์' },
       { key: 'talks', href: '/talks', label: 'งานบรรยาย' },
       { key: 'about', href: '/about', label: 'เกี่ยวกับ' },
@@ -563,6 +619,25 @@ const siteCopyTh: SiteCopy = {
       ctaLabel: 'ดูแนวทางงานวิจัยเพิ่มเติม',
       ctaHref: '/about',
       pillars: researchPillarsTh,
+    },
+    researchMapTeaser: {
+      eyebrow: 'แผนที่งานวิจัย',
+      title: 'ติดตามธีมหลักจากงานตีพิมพ์ งานบรรยาย โปรเจกต์ และบันทึก',
+      description:
+        'มุมมองแบบมีไกด์ของทิศทางงานวิจัยหลัก ได้แก่ การกำหนดพฤติกรรม การประเมินผล โมเดลให้เหตุผล และระบบ agentic',
+      ctaLabel: 'เปิดแผนที่งานวิจัย',
+      ctaHref: '/research',
+      items: [
+        {
+          title: 'เริ่มจากธีม',
+          description: 'ดูคำถามหลักที่งานแต่ละสายพยายามตอบ',
+        },
+        {
+          title: 'ต่อด้วยผลงานจริง',
+          description:
+            'เชื่อมจาก paper ไปยัง talk โปรเจกต์ และบันทึก โดยไม่ต้องเดาโครงสร้าง archive',
+        },
+      ],
     },
     selectedOutput: {
       eyebrow: 'ผลงานที่เผยแพร่',
@@ -733,6 +808,14 @@ const siteCopyTh: SiteCopy = {
       metaDescription:
         'คัดเลือกโปรเจกต์ของ Pittawat Taveekitworachai ด้านโมเดลภาษา reasoning การประเมินผล และระบบ AI ประยุกต์',
       searchDescription: 'โปรเจกต์ระบบวิจัย เครื่องมือ และต้นแบบที่คัดเลือกมา',
+    },
+    research: {
+      path: '/research',
+      title: 'งานวิจัย',
+      heroSubtitle: 'แผนที่ธีมหลักที่เชื่อมงานตีพิมพ์ งานบรรยาย โปรเจกต์ และบันทึกเกี่ยวกับระบบ AI',
+      metaDescription:
+        'แผนที่งานวิจัยของ Pittawat Taveekitworachai ครอบคลุมการกำหนดพฤติกรรม การประเมินผล โมเดลให้เหตุผล และระบบ agentic',
+      searchDescription: 'ธีมงานวิจัยแบบมีไกด์ที่เชื่อมงานตีพิมพ์ งานบรรยาย โปรเจกต์ และงานเขียน',
     },
     publications: {
       path: '/publications',

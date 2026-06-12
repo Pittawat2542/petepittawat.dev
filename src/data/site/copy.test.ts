@@ -8,6 +8,9 @@ test('returns the canonical English site copy for the default locale', () => {
 
   assert.equal(copy.nav.links.find(link => link.key === 'about')?.label, 'About');
   assert.equal(copy.listingPages.projects.path, '/projects');
+  assert.equal(copy.listingPages.research.path, '/research');
+  assert.equal(copy.listingPages.research.title, 'Research');
+  assert.equal(copy.nav.links.find(link => link.key === 'research')?.label, 'Research');
   assert.equal(copy.home.hero.ctaHeading, 'Explore my work');
   assert.equal('primaryCtas' in copy.home.hero, false);
   assert.equal(copy.home.selectedOutput.eyebrow, 'Selected output');
@@ -27,6 +30,8 @@ test('returns translated Thai copy for the Thai locale', () => {
   const thaiCopy = getSiteCopy('th');
 
   assert.equal(thaiCopy.nav.links.find(link => link.key === 'about')?.label, 'เกี่ยวกับ');
+  assert.equal(thaiCopy.nav.links.find(link => link.key === 'research')?.label, 'งานวิจัย');
+  assert.equal(thaiCopy.listingPages.research.path, '/research');
   assert.equal(thaiCopy.home.hero.title, 'สวัสดีครับ ผมพีท');
   assert.equal(thaiCopy.footer.title, 'งานวิจัย วิศวกรรม และบันทึกจากภาคสนามที่เล่าให้ชัด');
   assert.equal(thaiCopy.home.hero.ctaHeading, 'สำรวจผลงาน');
