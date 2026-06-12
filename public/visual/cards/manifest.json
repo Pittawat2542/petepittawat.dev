@@ -386,5 +386,17 @@
   "talks:2019-10-16-web-development-crash-course": {
     "hash": "945678aef372b0f387c2a22cb6dc8e3970b04ada",
     "generatedAt": "2026-05-22T15:58:59.077Z"
+  },
+  "talks:2026-05-28-scbx-ai-outlook-2026": {
+    "hash": "cf3cdfe320644ac82fd1e8f9d535d186e59177df",
+    "generatedAt": "2026-06-12T18:08:13.668Z"
+  },
+  "talks:2026-05-29-software-engineering-career-in-the-ai-first-era": {
+    "hash": "3c91a71c62b85acfbb80b1deebbf01a97e8744c8",
+    "generatedAt": "2026-06-12T18:08:13.673Z"
+  },
+  "talks:2026-05-31-sit-hackathon-2026": {
+    "hash": "b129de78e5caf2ad36694b2efc3505fb815ed154",
+    "generatedAt": "2026-06-12T18:08:13.673Z"
   }
 }

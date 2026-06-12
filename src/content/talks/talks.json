@@ -1,5 +1,42 @@
 [
   {
+    "date": "2026-05-31",
+    "title": "SIT Hackathon 2026",
+    "audience": "1st Year CS students",
+    "audienceUrl": null,
+    "mode": "on-site: SIT, KMUTT",
+    "resources": [],
+    "tags": ["Hackathon", "Judge", "Software Engineering"]
+  },
+  {
+    "date": "2026-05-29",
+    "title": "Software Engineering Career in the AI-First Era",
+    "audience": "1st Year CS students",
+    "audienceUrl": null,
+    "mode": "on-site: SIT, KMUTT",
+    "resources": [{ "label": "Slide", "href": "/files/swe_ai_2026.pdf", "download": true }],
+    "tags": ["Software Engineering", "AI Engineering", "Career Advice"]
+  },
+  {
+    "date": "2026-05-28",
+    "title": "SCBX AI Outlook 2026",
+    "audience": "Press and general audience",
+    "audienceUrl": null,
+    "mode": "on-site: SCBX NEXT TECH, Siam Paragon",
+    "resources": [
+      {
+        "label": "AI Outlook 2026 (English/Thai)",
+        "href": "https://www.scbx.com/en/scbx-exclusive/scbx-ai-outlook-2026/",
+        "download": true
+      },
+      {
+        "label": "Recording",
+        "href": "https://www.scbx.com/th/scbx-video/scbx-ai-outlook-2026-event/"
+      }
+    ],
+    "tags": ["AI Outlook", "AI Adoption", "Sovereign AI"]
+  },
+  {
     "date": "2026-05-08",
     "title": "Where are we in the AI world? From AI adoption to building national capability",
     "audience": "Artificial Intelligence Association of Thailand",
