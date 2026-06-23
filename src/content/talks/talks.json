@@ -1,5 +1,19 @@
 [
   {
+    "date": "2026-06-18",
+    "title": "Research Capability as the Foundation of Sovereign Al",
+    "audience": "Connect the Dots 2026: Realizing Sovereign AI – Thailand’s LLM Direction",
+    "audienceUrl": "https://bridge.bdi.or.th/events/ctd-18jun-ai-llm/",
+    "mode": "on-site: Grande Centre Point Lumphini",
+    "resources": [
+      {
+        "label": "Event page",
+        "href": "https://bridge.bdi.or.th/events/ctd-18jun-ai-llm/"
+      }
+    ],
+    "tags": ["Panel", "AI Research", "Sovereign AI", "Large Language Models"]
+  },
+  {
     "date": "2026-05-31",
     "title": "SIT Hackathon 2026",
     "audience": "1st Year CS students",
