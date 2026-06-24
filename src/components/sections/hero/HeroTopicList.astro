@@ -1,5 +1,5 @@
 ---
-import { Activity, BrainCircuit, ChartColumn, Network } from '@lucide/astro';
+import { Activity, BrainCircuit, ChartColumn, Network } from 'lucide-react';
 import type { SiteCopy } from '@/data/site/copy';
 
 interface Props {
@@ -25,7 +25,7 @@ const topicItems = topics.map(config => ({
   {
     topicItems.map(({ label, Icon }) => (
       <span class="hero-topic">
-        <Icon class="hero-topic__icon" aria-hidden="true" />
+        <Icon className="hero-topic__icon" aria-hidden="true" />
         <span>{label}</span>
       </span>
     ))

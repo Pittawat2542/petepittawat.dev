@@ -3,7 +3,7 @@ import '@/styles/components/research-map.css';
 
 import Container from '@/components/ui/core/Container.astro';
 import type { SiteCopy } from '@/data/site/copy';
-import { ArrowRight, Compass } from '@lucide/astro';
+import { ArrowRight, Compass } from 'lucide-react';
 
 interface Props {
   copy: SiteCopy['home']['researchMapTeaser'];
@@ -22,9 +22,9 @@ const { copy } = Astro.props as Props;
       <h2 id="research-map-teaser-title" class="research-map-teaser__title">{copy.title}</h2>
       <p class="research-map-teaser__description">{copy.description}</p>
       <a class="research-map-teaser__link" href={copy.ctaHref}>
-        <Compass class="research-map-teaser__link-icon" aria-hidden="true" />
+        <Compass className="research-map-teaser__link-icon" aria-hidden="true" />
         <span>{copy.ctaLabel}</span>
-        <ArrowRight class="research-map-teaser__link-arrow" aria-hidden="true" />
+        <ArrowRight className="research-map-teaser__link-arrow" aria-hidden="true" />
       </a>
     </div>
 

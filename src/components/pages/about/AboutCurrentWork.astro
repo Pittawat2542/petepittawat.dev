@@ -1,5 +1,5 @@
 ---
-import { Activity, Handshake, Mic } from '@lucide/astro';
+import { Activity, Handshake, Mic } from 'lucide-react';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 
 interface Props {
@@ -20,7 +20,7 @@ const { currentWork } = Astro.props as Props;
 <section id="current-work" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
-      <Activity class="h-5 w-5 text-[color:var(--accent)]" />
+      <Activity className="h-5 w-5 text-[color:var(--accent)]" />
       <h2>{currentWork.title}</h2>
     </div>
     <p>{currentWork.description}</p>
@@ -52,7 +52,7 @@ const { currentWork } = Astro.props as Props;
     <GlassCard variant="premium" className="current-work-card">
       <div class="current-work-card__body">
         <div class="current-work-card__title">
-          <Handshake class="h-4 w-4 text-[color:var(--accent)]" />
+          <Handshake className="h-4 w-4 text-[color:var(--accent)]" />
           <h3>{currentWork.collaborationTitle}</h3>
         </div>
         <ul class="current-work-list current-work-list--compact">
@@ -77,7 +77,7 @@ const { currentWork } = Astro.props as Props;
     <GlassCard variant="premium" className="current-work-card">
       <div class="current-work-card__body">
         <div class="current-work-card__title">
-          <Mic class="h-4 w-4 text-[color:var(--accent)]" />
+          <Mic className="h-4 w-4 text-[color:var(--accent)]" />
           <h3>{currentWork.communicationTitle}</h3>
         </div>
         <ul class="current-work-list current-work-list--compact">

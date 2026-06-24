@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { BookOpen, ChevronRight } from '@lucide/astro';
+import { BookOpen, ChevronRight } from 'lucide-react';
 import FormattedDate from '@/components/content/FormattedDate';
 import { SITE_CONFIG } from '@/lib/constants';
 import {
@@ -46,7 +46,7 @@ allSeries.sort((a, b) => {
             class="focus-visible:ring-ring inline-flex items-center gap-2 rounded-xl bg-[color:var(--accent)]/[.12] px-4 py-2.5 text-sm font-medium text-[color:var(--accent)] ring-1 ring-[color:var(--accent)]/40 hover:bg-[color:var(--accent)]/[.18] focus-visible:ring-2 focus-visible:outline-none"
           >
             All posts
-            <ChevronRight class="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </a>
         </div>
       </Fragment>
@@ -68,7 +68,7 @@ allSeries.sort((a, b) => {
               <article class="glass-card border-border bg-card rounded-2xl border p-6 md:p-8">
                 <div class="flex items-start gap-4">
                   <div class="flex-shrink-0 rounded-xl bg-[color:var(--accent)]/20 p-3">
-                    <BookOpen class="h-6 w-6 text-[color:var(--accent)]" />
+                    <BookOpen className="h-6 w-6 text-[color:var(--accent)]" />
                   </div>
 
                   <div class="min-w-0 flex-1">
@@ -116,7 +116,7 @@ allSeries.sort((a, b) => {
                             </a>
                           </div>
 
-                          <ChevronRight class="h-4 w-4 flex-shrink-0 text-[color:var(--white)]/30" />
+                          <ChevronRight className="h-4 w-4 flex-shrink-0 text-[color:var(--white)]/30" />
                         </div>
                       ))}
                     </div>
@@ -127,7 +127,7 @@ allSeries.sort((a, b) => {
                         class="inline-flex items-center gap-2 rounded-lg bg-[color:var(--accent)] px-4 py-2 text-sm font-medium text-[color:var(--bg)] transition-colors duration-200 hover:bg-[color:var(--accent)]/90"
                       >
                         Start reading
-                        <ChevronRight class="h-4 w-4" />
+                        <ChevronRight className="h-4 w-4" />
                       </a>
 
                       <div class="flex items-center gap-2 text-xs text-[color:var(--white)]/50">
@@ -144,7 +144,7 @@ allSeries.sort((a, b) => {
       ) : (
         <div class="py-16 text-center">
           <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--accent)]/20">
-            <BookOpen class="h-8 w-8 text-[color:var(--accent)]" />
+            <BookOpen className="h-8 w-8 text-[color:var(--accent)]" />
           </div>
           <h2 class="mb-2 text-2xl font-bold text-[color:var(--white)]">No Series Yet</h2>
           <p class="mb-6 text-[color:var(--white)]/70">
@@ -155,7 +155,7 @@ allSeries.sort((a, b) => {
             class="inline-flex items-center gap-2 rounded-lg bg-[color:var(--accent)] px-4 py-2 text-sm font-medium text-[color:var(--bg)] transition-colors duration-200 hover:bg-[color:var(--accent)]/90"
           >
             Browse all posts
-            <ChevronRight class="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </a>
         </div>
       )

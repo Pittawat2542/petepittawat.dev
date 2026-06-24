@@ -1,5 +1,5 @@
 ---
-import { BadgeCheck, BriefcaseBusiness, Globe, Workflow } from '@lucide/astro';
+import { BadgeCheck, BriefcaseBusiness, Globe, Workflow } from 'lucide-react';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 
 interface Props {
@@ -25,7 +25,7 @@ const proofIcons = [BriefcaseBusiness, Workflow, Globe] as const;
 <section id="proof-points" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
-      <BadgeCheck class="h-5 w-5 text-[color:var(--accent)]" />
+      <BadgeCheck className="h-5 w-5 text-[color:var(--accent)]" />
       <h2>{proofPoints.title}</h2>
     </div>
     <p>The fastest way to understand what I do, how I work, and where I am operating from.</p>
@@ -38,7 +38,7 @@ const proofIcons = [BriefcaseBusiness, Workflow, Globe] as const;
         return (
           <GlassCard variant="premium" className="proof-card">
             <div class="proof-card__icon" aria-hidden="true">
-              <Icon class="h-8 w-8" />
+              <Icon className="h-8 w-8" />
             </div>
             <div class="proof-card__content">
               <p class="proof-card__label">{item.label}</p>

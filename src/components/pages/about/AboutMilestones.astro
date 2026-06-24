@@ -1,5 +1,5 @@
 ---
-import { Milestone } from '@lucide/astro';
+import { Milestone } from 'lucide-react';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 import type { AboutTimelineItem } from '@/lib/content';
 
@@ -26,7 +26,7 @@ const { milestones, spotlightTimeline, timeline } = Astro.props as Props;
 <section id="milestones" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
-      <Milestone class="h-5 w-5 text-[color:var(--accent)]" />
+      <Milestone className="h-5 w-5 text-[color:var(--accent)]" />
       <h2>{milestones.title}</h2>
     </div>
     <p>{milestones.description}</p>

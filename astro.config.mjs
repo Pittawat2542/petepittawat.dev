@@ -49,45 +49,16 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 		build: {
-			minify: 'esbuild',
-			cssMinify: 'esbuild',
 			reportCompressedSize: false, // Disable for faster builds
-			rollupOptions: {
+			rolldownOptions: {
 				output: {
-					// Split vendor by real package (robust for pnpm store),
-					// and co-locate React + scheduler to avoid runtime mismatches.
-					manualChunks(id) {
-						if (!id.includes('node_modules')) return;
-						// Keep React stack together to ensure consistent runtime ordering.
-						if (id.includes('/react-dom/')) return 'vendor-react';
-						if (id.includes('/react/')) return 'vendor-react';
-						if (id.includes('/scheduler/')) return 'vendor-react';
-						// Bundle React dependencies with React to ensure proper load order
-						if (id.includes('/lucide-react/')) return 'vendor-react';
-						if (id.includes('/@radix-ui/')) return 'vendor-react';
-
-						// Extract the actual package name even with pnpm's .pnpm indirection
-						try {
-							const after = id.split('node_modules/')[1];
-							const segs = after.split('/');
-							let pkg;
-							if (segs[0] === '.pnpm') {
-								const nmIdx = segs.indexOf('node_modules');
-								if (nmIdx !== -1 && nmIdx + 1 < segs.length) {
-									pkg = segs[nmIdx + 1];
-									if (pkg?.startsWith('@') && nmIdx + 2 < segs.length) {
-										pkg = `${pkg}/${segs[nmIdx + 2]}`;
-									}
-								}
-							} else {
-								pkg = segs[0].startsWith('@') ? `${segs[0]}/${segs[1]}` : segs[0];
-							}
-							if (!pkg) return;
-							return `vendor-${pkg.replace('@', '').replace('/', '-')}`;
-						} catch {
-							// Let Vite decide if we can't parse
-							return;
-						}
+					codeSplitting: {
+						groups: [
+							{
+								name: 'vendor-react',
+								test: /node_modules\/(?:\.pnpm\/[^/]+\/node_modules\/)?(?:react|react-dom|scheduler|lucide-react|@radix-ui)\//,
+							},
+						],
 					},
 				},
 			},

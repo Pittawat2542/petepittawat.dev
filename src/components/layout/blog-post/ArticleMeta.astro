@@ -1,5 +1,5 @@
 ---
-import { Calendar, CircleUser, Clock3 } from '@lucide/astro';
+import { Calendar, CircleUser, Clock3 } from 'lucide-react';
 import FormattedDate from '@/components/content/FormattedDate';
 
 interface Props {
@@ -14,13 +14,13 @@ const { pubDate, readingTimeMin, author = 'Pete' } = Astro.props as Props;
 <div class="article-meta">
   <div class="article-meta__item">
     <span class="sr-only">Published</span>
-    <Calendar class="article-meta__icon" aria-hidden="true" />
+    <Calendar className="article-meta__icon" aria-hidden="true" />
     <span class="article-meta__text"><FormattedDate date={pubDate} /></span>
   </div>
   <div class="article-meta__divider" aria-hidden="true">·</div>
   <div class="article-meta__item">
     <span class="sr-only">Author</span>
-    <CircleUser class="article-meta__icon" aria-hidden="true" />
+    <CircleUser className="article-meta__icon" aria-hidden="true" />
     <span class="article-meta__text">{author}</span>
   </div>
   {
@@ -31,7 +31,7 @@ const { pubDate, readingTimeMin, author = 'Pete' } = Astro.props as Props;
         </div>
         <div class="article-meta__item">
           <span class="sr-only">Reading time</span>
-          <Clock3 class="article-meta__icon" aria-hidden="true" />
+          <Clock3 className="article-meta__icon" aria-hidden="true" />
           <span class="article-meta__text">{readingTimeMin} min read</span>
         </div>
       </>

@@ -1,5 +1,5 @@
 ---
-import { Activity, Flame, Globe, Layers, ShieldCheck, BadgeCheck } from '@lucide/astro';
+import { Activity, Flame, Globe, Layers, ShieldCheck, BadgeCheck } from 'lucide-react';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 import type { ResearchThemeIcon } from '@/data/site/copy';
 
@@ -27,7 +27,7 @@ const themeIconMap = {
 <section id="themes" class="section-block reveal">
   <div class="section-heading">
     <div class="mb-2 flex items-center gap-2">
-      <Flame class="h-5 w-5 text-[color:var(--accent)]" />
+      <Flame className="h-5 w-5 text-[color:var(--accent)]" />
       <h2>{focusAreas.title}</h2>
     </div>
     <p>{focusAreas.description}</p>
@@ -39,7 +39,7 @@ const themeIconMap = {
         return (
           <GlassCard variant="premium" className="theme-card">
             <div class="theme-card__icon" aria-hidden="true">
-              <Icon class="h-9 w-9" />
+              <Icon className="h-9 w-9" />
             </div>
             <h3>{theme.title}</h3>
             <p>{theme.description}</p>

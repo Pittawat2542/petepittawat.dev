@@ -1,7 +1,7 @@
 ---
 import Container from '@/components/ui/core/Container.astro';
 import type { SiteCopy } from '@/data/site/copy';
-import { Activity, ArrowRight, BrainCircuit, ChartColumn, Network } from '@lucide/astro';
+import { Activity, ArrowRight, BrainCircuit, ChartColumn, Network } from 'lucide-react';
 
 interface Props {
   copy: SiteCopy['home']['researchInPractice'];
@@ -40,7 +40,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
       <p class="research-practice__body">{copy.body}</p>
       <a class="research-practice__link" href={copy.ctaHref}>
         <span>{copy.ctaLabel}</span>
-        <ArrowRight class="research-practice__link-icon" aria-hidden="true" />
+        <ArrowRight className="research-practice__link-icon" aria-hidden="true" />
       </a>
     </div>
 
@@ -49,7 +49,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
         pillarItems.map(({ title, description, Icon, style }) => (
           <article class="research-practice__pillar" style={style}>
             <div class="research-practice__pillar-icon-shell" aria-hidden="true">
-              <Icon class="research-practice__pillar-icon" />
+              <Icon className="research-practice__pillar-icon" />
             </div>
             <h3>{title}</h3>
             <p>{description}</p>

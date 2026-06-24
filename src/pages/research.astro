@@ -14,7 +14,7 @@ import {
 import { SITE_CONFIG } from '@/lib/constants';
 import { getBlogPosts, getProjects, getPublications, getTalks } from '@/lib/content';
 import { getPreferredBlogPosts, groupBlogPostsByTranslation } from '@/lib/blog-translations';
-import { ArrowRight, BookOpenText, Boxes, FileText, Mic } from '@lucide/astro';
+import { ArrowRight, BookOpenText, Boxes, FileText, Mic } from 'lucide-react';
 
 const pageCopy = siteCopyEn.listingPages.research;
 const [blogPosts, projects, publications, talks] = await Promise.all([
@@ -136,7 +136,7 @@ const themeStats = {
               {theme.startHere ? (
                 <a class="research-map-theme__start" href={theme.startHere.href}>
                   <span>Start here</span>
-                  <ArrowRight class="research-map-theme__start-icon" aria-hidden="true" />
+                  <ArrowRight className="research-map-theme__start-icon" aria-hidden="true" />
                 </a>
               ) : null}
             </div>
@@ -148,7 +148,7 @@ const themeStats = {
                   <li class="research-map-artifact">
                     <a class="research-map-artifact__link" href={artifact.href}>
                       <span class="research-map-artifact__type">
-                        <Icon class="research-map-artifact__type-icon" aria-hidden="true" />
+                        <Icon className="research-map-artifact__type-icon" aria-hidden="true" />
                         {artifactLabels[artifact.type]}
                       </span>
                       <span class="research-map-artifact__body">

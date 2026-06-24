@@ -1,5 +1,5 @@
 ---
-import { Building2, Calendar, ExternalLink } from '@lucide/astro';
+import { Building2, Calendar, ExternalLink } from 'lucide-react';
 import GlassCard from '@/components/ui/core/GlassCard.astro';
 
 interface ServiceLink {
@@ -109,7 +109,7 @@ const getItemUrl = (item: ServiceItem): string | undefined => {
                           {item.url && (
                             <ExternalLink
                               size={14}
-                              class="opacity-70 group-hover:opacity-100"
+                              className="opacity-70 group-hover:opacity-100"
                               aria-hidden="true"
                             />
                           )}
