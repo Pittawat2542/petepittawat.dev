@@ -5,10 +5,15 @@ import { cn } from '@/lib/utils';
 
 interface CardVisualPanelProps {
   readonly spec: CardVisualSpec;
+  readonly priority?: boolean | undefined;
   readonly className?: string | undefined;
 }
 
-const CardVisualPanelComponent: FC<CardVisualPanelProps> = ({ spec, className }) => {
+const CardVisualPanelComponent: FC<CardVisualPanelProps> = ({
+  spec,
+  priority = false,
+  className,
+}) => {
   const [showImage, setShowImage] = useState(true);
 
   return (
@@ -27,9 +32,12 @@ const CardVisualPanelComponent: FC<CardVisualPanelProps> = ({ spec, className })
         <img
           src={spec.imagePath}
           alt=""
-          loading="lazy"
-          decoding="async"
-          className="relative z-10 h-full w-full object-cover transition-transform duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] will-change-transform group-hover:scale-[1.025] group-hover:rotate-[0.18deg]"
+          width={1200}
+          height={630}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          fetchPriority={priority ? 'high' : 'low'}
+          className="relative z-10 h-full w-full object-cover transition-transform duration-[var(--motion-duration-slow)] ease-[var(--motion-ease-decelerate)] group-hover:scale-[1.025] group-hover:rotate-[0.18deg]"
           onError={() => {
             setShowImage(false);
           }}

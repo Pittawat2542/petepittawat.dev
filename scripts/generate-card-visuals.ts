@@ -65,11 +65,16 @@ async function generate() {
   for (const spec of specs) {
     const outPath = path.join(PUBLIC_DIR, spec.imagePath.replace(/^\//, ''));
     const fileExists = await exists(outPath);
+    const isStale = isCardVisualStale(spec, manifest, fileExists);
+    const previousGeneratedAt = manifest[spec.manifestKey]?.generatedAt;
 
-    if (isCardVisualStale(spec, manifest, fileExists)) {
+    if (isStale) {
       await fs.mkdir(path.dirname(outPath), { recursive: true });
-      const svg = renderCardVisualSvg(spec);
-      await sharp(Buffer.from(svg)).png().toFile(outPath);
+      const sourcePngPath = outPath.replace(/\.webp$/, '.png');
+      const image = (await exists(sourcePngPath))
+        ? sharp(sourcePngPath)
+        : sharp(Buffer.from(renderCardVisualSvg(spec)));
+      await image.webp({ quality: 82, effort: 6, smartSubsample: true }).toFile(outPath);
       generatedCount += 1;
       console.log(`Card visual generated: ${path.relative(ROOT, outPath)}`);
     } else {
@@ -79,7 +84,7 @@ async function generate() {
 
     updatedManifest[spec.manifestKey] = {
       hash: createCardVisualHash(spec),
-      generatedAt: new Date().toISOString(),
+      generatedAt: !isStale && previousGeneratedAt ? previousGeneratedAt : new Date().toISOString(),
     };
   }
 

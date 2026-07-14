@@ -8,7 +8,7 @@ import {
   type BlogCoverViewport,
 } from '../blog-cover/index.ts';
 
-export const CARD_VISUAL_RENDER_VERSION = 'card-visual-v1';
+export const CARD_VISUAL_RENDER_VERSION = 'card-visual-v3';
 
 export type CardVisualCollection = 'projects' | 'publications' | 'talks';
 
@@ -248,7 +248,7 @@ export function getCardVisualPath(params: {
   readonly collection: CardVisualCollection;
   readonly slug: string;
 }) {
-  return `/visual/cards/${params.collection}/${normalizeSlug(params.slug)}.png`;
+  return `/visual/cards/${params.collection}/${normalizeSlug(params.slug)}.webp`;
 }
 
 export function getCardVisualManifestKey(params: {

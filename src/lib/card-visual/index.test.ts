@@ -16,21 +16,21 @@ test('resolves stable public image paths for each supported collection', () => {
       collection: 'projects',
       slug: '2026-typhoon-si-med-thinking-4b',
     }),
-    '/visual/cards/projects/2026-typhoon-si-med-thinking-4b.png'
+    '/visual/cards/projects/2026-typhoon-si-med-thinking-4b.webp'
   );
   assert.equal(
     getCardVisualPath({
       collection: 'publications',
       slug: '2025-benching-structured-output-benchmark-for-llms',
     }),
-    '/visual/cards/publications/2025-benching-structured-output-benchmark-for-llms.png'
+    '/visual/cards/publications/2025-benching-structured-output-benchmark-for-llms.webp'
   );
   assert.equal(
     getCardVisualPath({
       collection: 'talks',
       slug: '2025-02-15-agentic-ai-context-engineering',
     }),
-    '/visual/cards/talks/2025-02-15-agentic-ai-context-engineering.png'
+    '/visual/cards/talks/2025-02-15-agentic-ai-context-engineering.webp'
   );
 });
 

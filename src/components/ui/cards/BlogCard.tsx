@@ -124,7 +124,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external ' : ''}blog post: ${post.data.title}`}
-        media={<BlogCardImage post={post} tone={tone} />}
+        media={<BlogCardImage post={post} tone={tone} priority={featured || isEditorialFeature} />}
         mediaClassName={
           isEditorialFeature
             ? 'blog-card__media--featured-essay'

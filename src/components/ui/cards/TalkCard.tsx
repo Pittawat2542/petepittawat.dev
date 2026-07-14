@@ -239,6 +239,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
       media={
         <CardVisualPanel
           spec={visualSpec}
+          priority={featured}
           className="mb-0 [aspect-ratio:auto] h-full rounded-none border-0 shadow-none"
         />
       }
