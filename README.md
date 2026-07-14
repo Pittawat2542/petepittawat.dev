@@ -331,16 +331,16 @@ This will:
 
 ### Automated Scripts
 
-#### 🎨 OG Image Generation (`scripts/generate-og.mjs`)
+#### 🎨 Content Image Generation
 
-- **Purpose**: Generates social media preview images
+- **Purpose**: Generates WebP card visuals and social media preview images
 - **Trigger**: Runs automatically during `prebuild`
-- **Output**: Creates optimized images in `public/og/`
+- **Detection**: Regenerates only missing images or images whose content metadata changed
+- **Output**: Creates optimized card images in `public/visual/cards/` and previews in `public/og/`
 - **Features**:
-  - Dynamic text rendering
-  - Brand-consistent styling
-  - Multiple size variants
-  - Automatic optimization
+  - Converts card artwork to WebP
+  - Validates every generated image before the site build starts
+  - Runs locally and in the GitHub Pages build without a separate CI step
 
 #### 🔄 Content Migration (`scripts/codemod-content.mjs`)
 
@@ -363,7 +363,7 @@ This will:
 ```bash
 # Complete build process
 pnpm install          # Install dependencies
-pnpm prebuild         # Generate OG images
+pnpm prebuild         # Generate and validate content images
 pnpm build            # Type check + build
 pnpm preview          # Test production build
 ```
