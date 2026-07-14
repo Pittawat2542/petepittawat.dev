@@ -1,7 +1,6 @@
-import { useMemo, useRef, type FC, type ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import FilterPanel from '@/components/ui/filter/FilterPanel';
-import { useRowDescriptionClamp } from './rowClamp';
 import '@/styles/components/editorial-listing.css';
 
 interface EditorialListingShellProps {
@@ -56,24 +55,9 @@ export const EditorialListingShell: FC<EditorialListingShellProps> = ({
   className,
 }) => {
   const ItemsWrapper = itemsWrapperElement;
-  const rootRef = useRef<HTMLElement | null>(null);
-  const clampDependencyKey = useMemo(
-    () =>
-      JSON.stringify({
-        searchValue,
-        filters,
-        sortValue,
-        filteredResults,
-        totalResults,
-        selectedTags: selectedTags ? Array.from(selectedTags) : [],
-      }),
-    [filters, filteredResults, searchValue, sortValue, totalResults, selectedTags]
-  );
-
-  useRowDescriptionClamp(rootRef, clampDependencyKey);
 
   return (
-    <section ref={rootRef} className={cn('flex w-full flex-col', className)}>
+    <section className={cn('flex w-full flex-col', className)}>
       <FilterPanel
         searchValue={searchValue}
         onSearchChange={onSearchChange}

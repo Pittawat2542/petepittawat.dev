@@ -14,13 +14,13 @@
   background: var(--media-card-surface);
   box-shadow: var(--media-card-shadow);
   color: var(--white);
+  contain: layout style paint;
   text-decoration: none;
   transition:
     transform var(--motion-duration-normal) var(--motion-ease-decelerate),
     border-color var(--motion-duration-normal) var(--motion-ease-decelerate),
     box-shadow var(--motion-duration-normal) var(--motion-ease-decelerate),
     background var(--motion-duration-normal) var(--motion-ease-decelerate);
-  will-change: transform;
 }
 
 .media-card:hover,
@@ -102,7 +102,11 @@
 }
 
 .media-card [data-card-description] {
+  display: -webkit-box;
   min-height: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .media-card__action-row {
