@@ -1,13 +1,18 @@
+const researchAffiliations = [
+  {
+    label: 'Nanyang Technological University AI Language Group',
+    href: 'https://ntu-nail.github.io/people/',
+  },
+  {
+    label: 'Autonomous Agents Research Group',
+    href: 'https://agents-lab.org/people/',
+  },
+] as const;
+
 export type SiteLocale = 'en' | 'th';
 
 export type SiteNavLinkKey =
-  | 'home'
-  | 'blog'
-  | 'projects'
-  | 'research'
-  | 'publications'
-  | 'talks'
-  | 'about';
+  'home' | 'blog' | 'projects' | 'research' | 'publications' | 'talks' | 'about';
 export type HeroTopicIcon = 'brain' | 'activity' | 'bar-chart-3' | 'network';
 export type HomeStatIcon = 'book-text' | 'scroll-text' | 'mic';
 export type ResearchThemeIcon = 'activity' | 'layers' | 'shield-check' | 'globe';
@@ -109,6 +114,8 @@ export interface SiteCopy {
       readonly role: string;
       readonly location: string;
       readonly summary: string;
+      readonly affiliationsLabel: string;
+      readonly affiliations: readonly { readonly label: string; readonly href: string }[];
     };
     readonly proofPoints: {
       readonly title: string;
@@ -424,18 +431,20 @@ const siteCopyEn: SiteCopy = {
       title: 'About Pete',
       subtitle:
         'I work across language models, evaluation, systems-building, and technical communication.',
-      role: 'Incoming PhD student @ NTU Singapore',
+      role: 'PhD student @ NTU Singapore',
       location: 'Singapore',
       summary:
-        'I work on making language models more reliable in practice, especially through behavior shaping, reasoning, evaluation, and the engineering work needed to turn research into usable systems.',
+        'I am a PhD student at Nanyang Technological University in Singapore and collaborate with AI Singapore. I work on making language models more reliable in practice, especially through behavior shaping, reasoning, evaluation, and the engineering work needed to turn research into usable systems.',
+      affiliationsLabel: 'Affiliated with',
+      affiliations: researchAffiliations,
     },
     proofPoints: {
       title: 'At a glance',
       items: [
         {
           label: 'Current role',
-          value: 'Incoming PhD student @ NTU Singapore',
-          hint: 'Preparing for PhD research across reasoning models, evaluation, and reliable AI systems.',
+          value: 'PhD student @ NTU Singapore',
+          hint: 'Doctoral research across reasoning models, evaluation, and reliable AI systems.',
         },
         {
           label: 'Working style',
@@ -694,18 +703,20 @@ const siteCopyTh: SiteCopy = {
       eyebrow: 'นักวิจัย นักสร้างระบบ และผู้สื่อสารเชิงเทคนิค',
       title: 'เกี่ยวกับพีท',
       subtitle: 'ผมทำงานคร่อมระหว่างโมเดลภาษา การประเมินผล การสร้างระบบ และการสื่อสารเชิงเทคนิค',
-      role: 'Incoming PhD student @ NTU Singapore',
+      role: 'PhD student @ NTU Singapore',
       location: 'สิงคโปร์',
       summary:
-        'ผมทำงานเพื่อให้โมเดลภาษามีความน่าเชื่อถือมากขึ้นในการใช้งานจริง โดยเฉพาะผ่านการกำหนดพฤติกรรมของโมเดล งานด้าน reasoning การประเมินผล และงานวิศวกรรมที่จำเป็นต่อการแปลงงานวิจัยให้กลายเป็นระบบที่ใช้งานได้',
+        'ผมเป็นนักศึกษาปริญญาเอกที่ Nanyang Technological University ประเทศสิงคโปร์ และทำงานวิจัยร่วมกับ AI Singapore ผมทำงานเพื่อให้โมเดลภาษามีความน่าเชื่อถือมากขึ้นในการใช้งานจริง โดยเฉพาะผ่านการกำหนดพฤติกรรมของโมเดล งานด้าน reasoning การประเมินผล และงานวิศวกรรมที่จำเป็นต่อการแปลงงานวิจัยให้กลายเป็นระบบที่ใช้งานได้',
+      affiliationsLabel: 'สังกัด',
+      affiliations: researchAffiliations,
     },
     proofPoints: {
       title: 'ภาพรวมแบบสั้น',
       items: [
         {
           label: 'บทบาทปัจจุบัน',
-          value: 'Incoming PhD student @ NTU Singapore',
-          hint: 'เตรียมเริ่มงานวิจัยระดับปริญญาเอกด้านโมเดลให้เหตุผล การประเมินผล และระบบ AI ที่น่าเชื่อถือ',
+          value: 'PhD student @ NTU Singapore',
+          hint: 'ทำวิจัยระดับปริญญาเอกด้านโมเดลให้เหตุผล การประเมินผล และระบบ AI ที่น่าเชื่อถือ',
         },
         {
           label: 'สไตล์การทำงาน',
