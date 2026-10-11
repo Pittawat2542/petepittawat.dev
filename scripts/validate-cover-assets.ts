@@ -65,6 +65,12 @@ if (isMain) {
 }
 
 async function validate() {
+  await assertImageDimensions(
+    path.join(PUBLIC_DIR, 'home-og-image.jpeg'),
+    1200,
+    630,
+    'Site cover invalid'
+  );
   await validateBlogCoverReferences();
   await validateCardVisualReferences();
 }

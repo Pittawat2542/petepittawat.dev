@@ -2,6 +2,65 @@
 
 This directory contains utility scripts for the project.
 
+## Cover and hero images
+
+`pnpm generate:content-images` exports the shared site cover, project/publication/talk
+cards, and blog sharing images, then validates their dimensions. It also runs before
+each build. All derivatives are 1200×630, with orientation corrected and colors
+converted to sRGB. See [Sharp's resize documentation](https://sharp.pixelplumbing.com/api-resize/).
+
+- `generate-site-cover.ts` exports `public/visual/site/home-cover.png` to the
+  default sharing image, `public/home-og-image.jpeg`, using quality 94 and 4:4:4
+  chroma sampling to preserve typography and colored edges.
+- `generate-card-visuals.ts` prefers a `.png` source beside each `.webp` output in
+  `public/visual/cards/`. Cards use WebP quality 90. When no source exists, the
+  deterministic SVG is rasterized at twice the output resolution and downsampled
+  for smoother fine lines.
+- `generate-og.ts` derives lossless blog sharing PNGs from each post's
+  `coverImage`. English and Thai variants continue to share their source artwork.
+
+Caches track source image bytes and metadata separately from the export version.
+Replacing or removing source artwork regenerates its derivative on the next run.
+Existing archive images retain their bytes and timestamps when only export
+settings change; new items and changed artwork use the latest settings. Older
+manifests are migrated by recording an input hash without re-exporting their
+images. Increment `CONTENT_IMAGE_VERSION` in `content-image.ts` whenever export
+settings change. To explicitly re-export an archive later, pass `--refresh` to
+`scripts/generate-card-visuals.ts` or `scripts/generate-og.ts`.
+
+### Refresh the site cover
+
+```bash
+# Print the art direction and exact copy, using current site metadata
+pnpm prompt:site-cover
+
+# After replacing the source PNG, export the production image
+pnpm generate:site-cover
+```
+
+Use the printed prompt with the built-in image generation tool, supplying
+`src/assets/images/logo.png` as the brand reference (and the original cover when
+available for its vivid cyan-blue and black colors). Review spelling,
+thumbnail legibility, safe margins, and composition before saving the selected
+image to `public/visual/site/home-cover.png`. Prefer a source at least 1200×630
+in a 1.905:1 aspect ratio; the prompt requests 2400×1260 when available. Save the
+actual prompt beside it as `home-cover.prompt.txt` for future revisions. The
+current cover was generated using the built-in tool, with the original blue logo
+beside the site wordmark, the theme “Research. Build. Understand.”, and a glass
+orbital sculpture on a midnight navy backdrop.
+Builds only export the approved artwork; they do not call an image generation API.
+
+For individual content covers, base the visual concept on the article, project,
+paper, or talk rather than its first tag alone. Choose one recognizable subject,
+use restrained lighting and a clear focal point, and keep important details within
+the central safe area. Blog heroes have HTML titles over the left side, so keep
+that area quiet and avoid duplicating their title in the image. Save replacement
+blog artwork at its frontmatter `coverImage` path; save replacement card artwork
+as the PNG beside its existing WebP, then run `pnpm generate:content-images`.
+
+Run `node --test scripts/content-image.test.ts` to check source-change
+invalidation, skipping, fallback recovery, and output dimensions.
+
 ## `generate-favicons.sh`
 
 Converts the `public/favicon.svg` file to all necessary favicon formats for comprehensive browser and device support.
