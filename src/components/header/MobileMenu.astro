@@ -23,72 +23,62 @@ const isActive = (href: string) =>
   currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
 ---
 
-{
-  renderToggle && (
-    <button
-      id="menu-toggle"
-      type="button"
-      data-open="false"
-      class="menu-toggle min-[960px]:hidden"
-      aria-label="Open menu"
-      aria-controls="mobile-menu"
-      aria-expanded="false"
-    >
-      <span class="menu-toggle__icon" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </span>
-    </button>
-  )
-}
+{renderToggle && (
+  <button
+    id="menu-toggle"
+    type="button"
+    data-open="false"
+    class="menu-toggle min-[960px]:hidden"
+    aria-label="Open menu"
+    aria-controls="mobile-menu"
+    aria-expanded="false"
+  >
+    <span class="menu-toggle__icon" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+    </span>
+  </button>
+)}
 
-{
-  renderPanel && (
-    <div
-      id="mobile-menu"
-      data-open="false"
-      aria-hidden="true"
-      inert
-      class="min-[960px]:hidden"
-      style="top: calc(env(safe-area-inset-top) + var(--nav-height));"
-    >
-      <div id="mobile-menu-sheet" data-open="false" class="mx-auto w-full">
-        <nav class="mobile-menu-panel" aria-label="Mobile primary navigation">
-          <ul class="mobile-menu-panel__list">
-            {links.map(({ href, label }) => (
-              <li>
-                <a
-                  href={href}
-                  class={`mobile-menu-link ${isActive(href) ? 'mobile-menu-link--active' : ''}`}
-                  data-active={isActive(href) ? 'true' : undefined}
-                  aria-current={isActive(href) ? 'page' : undefined}
-                >
-                  <span class="mobile-menu-link__icon" aria-hidden="true">
-                    {label === 'Blog' && <BookOpenText className="h-5 w-5" aria-hidden="true" />}
-                    {label === 'Projects' && (
-                      <FolderKanban className="h-5 w-5" aria-hidden="true" />
-                    )}
-                    {label === 'Research' && (
-                      <BrainCircuit className="h-5 w-5" aria-hidden="true" />
-                    )}
-                    {label === 'Publications' && (
-                      <FileText className="h-5 w-5" aria-hidden="true" />
-                    )}
-                    {label === 'Talks' && <Mic className="h-5 w-5" aria-hidden="true" />}
-                    {label === 'About' && <CircleUser className="h-5 w-5" aria-hidden="true" />}
-                  </span>
+{renderPanel && (
+  <div
+    id="mobile-menu"
+    data-open="false"
+    aria-hidden="true"
+    inert
+    class="min-[960px]:hidden"
+    style="top: calc(env(safe-area-inset-top) + var(--nav-height));"
+  >
+    <div id="mobile-menu-sheet" data-open="false" class="mx-auto w-full">
+      <nav class="mobile-menu-panel" aria-label="Mobile primary navigation">
+        <ul class="mobile-menu-panel__list">
+          {links.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class={`mobile-menu-link ${isActive(href) ? 'mobile-menu-link--active' : ''}`}
+                data-active={isActive(href) ? 'true' : undefined}
+                aria-current={isActive(href) ? 'page' : undefined}
+              >
+                <span class="mobile-menu-link__icon" aria-hidden="true">
+                  {label === 'Blog' && <BookOpenText className="h-5 w-5" aria-hidden="true" />}
+                  {label === 'Projects' && <FolderKanban className="h-5 w-5" aria-hidden="true" />}
+                  {label === 'Research' && <BrainCircuit className="h-5 w-5" aria-hidden="true" />}
+                  {label === 'Publications' && <FileText className="h-5 w-5" aria-hidden="true" />}
+                  {label === 'Talks' && <Mic className="h-5 w-5" aria-hidden="true" />}
+                  {label === 'About' && <CircleUser className="h-5 w-5" aria-hidden="true" />}
+                </span>
 
-                  <span class="mobile-menu-link__label">{label}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+                <span class="mobile-menu-link__label">{label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
-  )
-}
+  </div>
+)}
 
 <style>
   #mobile-menu {
@@ -102,14 +92,11 @@ const isActive = (href: string) =>
     opacity: 0;
     pointer-events: none;
     border-top: 1px solid var(--nav-border);
-    background: var(--nav-bg-scrolled);
-    backdrop-filter: blur(var(--nav-blur-scrolled)) saturate(150%);
-    -webkit-backdrop-filter: blur(var(--nav-blur-scrolled)) saturate(150%);
+    background: var(--color-surface-deep);
     transition:
       opacity var(--motion-duration-normal) var(--motion-ease-standard),
       border-color var(--motion-duration-normal) var(--motion-ease-standard),
-      background-color var(--motion-duration-normal) var(--motion-ease-standard),
-      backdrop-filter var(--motion-duration-normal) var(--motion-ease-standard);
+      background-color var(--motion-duration-normal) var(--motion-ease-standard);
   }
 
   #mobile-menu-sheet {

@@ -7,6 +7,7 @@
 import type { SearchItemType } from './types';
 import { ensureAllTypes, getActiveSearchLocale } from './utils';
 import { useCallback, useEffect, useState } from 'react';
+import { SEARCH_OPEN_EVENT } from '@/scripts/openSearch';
 import {
   useSearchData,
   useRecentSearches,
@@ -36,6 +37,21 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   useEffect(() => {
     if (openKey !== undefined) setOpen(true);
   }, [openKey]);
+
+  useEffect(() => {
+    const openRequestedSearch = () => {
+      delete document.documentElement.dataset['searchRequested'];
+      setOpen(true);
+    };
+
+    window.addEventListener(SEARCH_OPEN_EVENT, openRequestedSearch);
+    if (document.documentElement.dataset['searchRequested'] === 'true') {
+      openRequestedSearch();
+    }
+    return () => {
+      window.removeEventListener(SEARCH_OPEN_EVENT, openRequestedSearch);
+    };
+  }, []);
 
   // Focused hooks for each responsibility
   const { items, loaded } = useSearchData(open);

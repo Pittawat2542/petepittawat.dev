@@ -2,6 +2,7 @@
 import SiteLogo from '@/components/header/SiteLogo.astro';
 import SearchButton from '@/components/header/SearchButton.astro';
 import MobileMenu from '@/components/header/MobileMenu.astro';
+import SearchModal from '@/components/layout/SearchModal';
 import '@/styles/components/site-header.css';
 
 // Normalize current path to work with both `build.format: "file"` (e.g. "/talks.html")
@@ -41,24 +42,22 @@ const isActive = (href: string) =>
       </div>
 
       <ul id="nav-list" class="site-nav__links">
-        {
-          links.map(({ href, label }) => {
-            const active = isActive(href);
-            return (
-              <li>
-                <a
-                  href={href}
-                  aria-label={`Navigate to ${label}`}
-                  aria-current={active ? 'page' : undefined}
-                  data-active={active ? 'true' : undefined}
-                  class:list={['site-nav__link', active && 'site-nav__link--active']}
-                >
-                  <span>{label}</span>
-                </a>
-              </li>
-            );
-          })
-        }
+        {links.map(({ href, label }) => {
+          const active = isActive(href);
+          return (
+            <li>
+              <a
+                href={href}
+                aria-label={`Navigate to ${label}`}
+                aria-current={active ? 'page' : undefined}
+                data-active={active ? 'true' : undefined}
+                class:list={['site-nav__link', active && 'site-nav__link--active']}
+              >
+                <span>{label}</span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
 
       <div class="site-header__actions">
@@ -70,6 +69,7 @@ const isActive = (href: string) =>
   </div>
 </header>
 <MobileMenu currentPath={current} renderToggle={false} />
+<SearchModal client:load hideTriggers />
 
 <script>
   import '@/scripts/components/header.ts';
