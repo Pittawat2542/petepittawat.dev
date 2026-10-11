@@ -57,7 +57,10 @@ export interface CardVisualSpec {
   readonly renderVersion: string;
 }
 
-export type CardVisualManifest = Record<string, { hash: string; generatedAt: string }>;
+export type CardVisualManifest = Record<
+  string,
+  { hash: string; generatedAt: string; inputHash?: string }
+>;
 
 type ThemeDefinition = CardVisualTheme & {
   readonly aliases: readonly string[];

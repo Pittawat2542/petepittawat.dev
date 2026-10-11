@@ -1,11 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import sharp from 'sharp';
+import {
+  createContentImageHash,
+  createContentImageInputHash,
+  renderCoverWebp,
+} from './content-image.ts';
 
 import {
   createCardVisualHash,
-  isCardVisualStale,
   renderCardVisualSvg,
   resolveCardVisualSpec,
   toProjectCardVisualInput,
@@ -64,17 +67,24 @@ async function generate() {
 
   for (const spec of specs) {
     const outPath = path.join(PUBLIC_DIR, spec.imagePath.replace(/^\//, ''));
+    const sourcePngPath = outPath.replace(/\.webp$/, '.png');
+    const hasSourcePng = await exists(sourcePngPath);
+    const source = hasSourcePng
+      ? await fs.readFile(sourcePngPath)
+      : Buffer.from(renderCardVisualSvg(spec));
+    const hash = createContentImageHash(source, createCardVisualHash(spec));
+    const inputHash = createContentImageInputHash(source, createCardVisualHash(spec));
     const fileExists = await exists(outPath);
-    const isStale = isCardVisualStale(spec, manifest, fileExists);
+    const previous = manifest[spec.manifestKey];
+    const unchangedInput = previous?.inputHash
+      ? previous.inputHash === inputHash
+      : previous?.hash === createCardVisualHash(spec) || previous?.hash === hash;
+    const isStale = !fileExists || !unchangedInput || process.argv.includes('--refresh');
     const previousGeneratedAt = manifest[spec.manifestKey]?.generatedAt;
 
     if (isStale) {
       await fs.mkdir(path.dirname(outPath), { recursive: true });
-      const sourcePngPath = outPath.replace(/\.webp$/, '.png');
-      const image = (await exists(sourcePngPath))
-        ? sharp(sourcePngPath)
-        : sharp(Buffer.from(renderCardVisualSvg(spec)));
-      await image.webp({ quality: 82, effort: 6, smartSubsample: true }).toFile(outPath);
+      await fs.writeFile(outPath, await renderCoverWebp(source, !hasSourcePng));
       generatedCount += 1;
       console.log(`Card visual generated: ${path.relative(ROOT, outPath)}`);
     } else {
@@ -83,7 +93,8 @@ async function generate() {
     }
 
     updatedManifest[spec.manifestKey] = {
-      hash: createCardVisualHash(spec),
+      hash: !isStale && previous ? previous.hash : hash,
+      inputHash,
       generatedAt: !isStale && previousGeneratedAt ? previousGeneratedAt : new Date().toISOString(),
     };
   }

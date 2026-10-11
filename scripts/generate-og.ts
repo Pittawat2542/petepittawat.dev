@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import sharp from 'sharp';
+import { CONTENT_IMAGE_VERSION, renderCoverPng } from './content-image.ts';
 
 import { getBlogOgImagePath, getBlogOgManifestKey } from '../src/lib/blog-cover/index.ts';
 import { extractBlogFrontmatter, type BlogFrontmatter } from './validate-cover-assets.ts';
@@ -11,7 +11,8 @@ const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, 'src', 'content', 'blog');
 const PUBLIC_DIR = path.join(ROOT, 'public');
 const MANIFEST_FILE = path.join(ROOT, 'public', 'og', 'manifest.json');
-const RENDER_VERSION = 'blog-raster-og-v1';
+const RENDER_VERSION = `blog-raster-og-v2:${CONTENT_IMAGE_VERSION}`;
+type OgManifest = Record<string, { hash: string; generatedAt: string; inputHash?: string }>;
 
 await generate();
 
@@ -35,7 +36,7 @@ async function generate() {
     process.exit(1);
   }
 
-  const updatedManifest: Record<string, { hash: string; generatedAt: string }> = {};
+  const updatedManifest: OgManifest = {};
   let generatedCount = 0;
   let skippedCount = 0;
 
@@ -62,16 +63,18 @@ async function generate() {
       )
     );
     const currentHash = createPostHash(frontmatter, sourceHash);
-    const previousHash = manifest[manifestKey]?.hash;
+    const inputHash = createPostHash(frontmatter, sourceHash, 'blog-input-v1');
+    const previous = manifest[manifestKey];
+    const unchangedInput = previous?.inputHash
+      ? previous.inputHash === inputHash
+      : previous?.hash === createPostHash(frontmatter, sourceHash, 'blog-raster-og-v1') ||
+        previous?.hash === currentHash;
     const fileExists = await exists(outPath);
-    const isUnchanged = fileExists && previousHash === currentHash;
+    const isUnchanged = fileExists && unchangedInput && !process.argv.includes('--refresh');
 
     if (!isUnchanged) {
       await fs.mkdir(path.dirname(outPath), { recursive: true });
-      await sharp(sourcePath)
-        .resize(1200, 630, { fit: 'cover', position: 'center' })
-        .png({ compressionLevel: 9, adaptiveFiltering: true })
-        .toFile(outPath);
+      await fs.writeFile(outPath, await renderCoverPng(await fs.readFile(sourcePath)));
       generatedCount += 1;
       console.log(`OG synced: ${path.relative(ROOT, outPath)}`);
     } else {
@@ -80,7 +83,8 @@ async function generate() {
     }
 
     updatedManifest[manifestKey] = {
-      hash: currentHash,
+      hash: isUnchanged && previous ? previous.hash : currentHash,
+      inputHash,
       generatedAt:
         isUnchanged && manifest[manifestKey]?.generatedAt
           ? manifest[manifestKey].generatedAt
@@ -109,12 +113,16 @@ async function collectContentFiles(dir: string): Promise<string[]> {
   return nestedFiles.flat();
 }
 
-function createPostHash(frontmatter: BlogFrontmatter, sourceHash: string) {
+function createPostHash(
+  frontmatter: BlogFrontmatter,
+  sourceHash: string,
+  version = RENDER_VERSION
+) {
   return crypto
     .createHash('sha1')
     .update(
       JSON.stringify({
-        version: RENDER_VERSION,
+        version,
         title: frontmatter.title,
         lang: frontmatter.lang,
         routeSlug: frontmatter.routeSlug,
@@ -133,7 +141,7 @@ async function hashFile(filePath: string) {
 async function loadManifest() {
   try {
     const content = await fs.readFile(MANIFEST_FILE, 'utf8');
-    return JSON.parse(content) as Record<string, { hash: string; generatedAt: string }>;
+    return JSON.parse(content) as OgManifest;
   } catch {
     return {};
   }
