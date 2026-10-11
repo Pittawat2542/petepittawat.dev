@@ -1,5 +1,32 @@
 [
   {
+    "year": 2026,
+    "type": "preprint",
+    "title": "When a Kindergartener Solves Calculus: Measuring Capability Leakage in Role-Prompted Reasoning Models",
+    "authors": "Pakhapoom Sarapat, Saksorn Ruangtanusak, Kunat Pipatanakul, and Pittawat Taveekitworachai",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2609.39846",
+    "artifacts": [],
+    "tags": ["Large Language Models", "Reasoning Models", "Role Prompting", "LLM Evaluation"],
+    "abstract": "RoleCapBench evaluates whether role-prompted reasoning models respect the capability limits implied by six educational roles. Across three open-weight models, convincing role-specific language often coexists with strong performance on questions above the assigned role’s level. The paper introduces Injection, an inference-time intervention combining role-specific capability guidelines with a prefilled response prefix, to improve capability alignment while largely preserving in-role accuracy."
+  },
+  {
+    "year": 2026,
+    "type": "preprint",
+    "title": "Exploring Extrinsic and Intrinsic Properties for Effective Reasoning with Code Interpreter",
+    "authors": "Patomporn Payoungkhamdee, Napat Laosaengpha, Jenta Wonglertsakul, Pittawat Taveekitworachai, Pume Tuchinda, Panjapong Poobanchuen, Ekapol Chuangsuwanich, Can Udomcharoenchaikit, Samuel Cahyawijaya, Peerat Limkonchotiwat, and Sarana Nutanong",
+    "venue": "arXiv",
+    "url": "https://arxiv.org/abs/2606.16934",
+    "artifacts": [],
+    "tags": [
+      "Large Language Models",
+      "Code Interpreter",
+      "Tool-Integrated Reasoning",
+      "Post-Training"
+    ],
+    "abstract": "This study characterizes effective Code Interpreter reasoning through crucial tokens and code-specific cognitive behaviors. Stronger models exhibit more verification, backtracking, and backward chaining. Experiments examine token injection during inference and behavior augmentation during supervised fine-tuning and reinforcement learning, finding improvements in selected reasoning tasks and models alongside limits to generalization. The analysis also examines overthinking and token efficiency."
+  },
+  {
     "year": 2023,
     "type": "journal",
     "title": "Driving scenarios and environmental settings in simulator-based driving assessment systems for stroke: a systematic review",
