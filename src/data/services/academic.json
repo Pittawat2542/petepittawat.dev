@@ -2,19 +2,79 @@
   "sections": [
     {
       "type": "conferences",
-      "label": "Conferences",
+      "label": "Conferences and workshops",
       "items": [
-        { "venue": "ACL 2025 SRW", "year": 2025, "url": "https://acl2025-srw.github.io" },
-        { "venue": "ICIDS 2023", "year": 2023, "url": "https://icids2023.ardin.online" },
-        { "venue": "ACM FDG 2024", "year": 2024, "url": "https://fdg2024.org" },
+        {
+          "venue": "ACM CIKM 2026 Workshop LASS",
+          "year": 2026,
+          "url": "https://lassworkshop26.github.io/",
+          "roles": ["Reviewer"]
+        },
+        {
+          "venue": "ACL ARR",
+          "roles": ["Reviewer"],
+          "year": 2026,
+          "cycle": "May",
+          "url": "https://aclrollingreview.org/"
+        },
+        {
+          "venue": "ACL ARR",
+          "roles": ["Reviewer"],
+          "year": 2026,
+          "cycle": "August",
+          "url": "https://aclrollingreview.org/"
+        },
+        {
+          "venue": "ACL ARR",
+          "roles": ["Reviewer"],
+          "year": 2026,
+          "cycle": "October",
+          "url": "https://aclrollingreview.org/"
+        },
+        {
+          "venue": "ACL 2025 SRW",
+          "year": 2025,
+          "url": "https://acl2025-srw.github.io",
+          "roles": ["Reviewer"]
+        },
+        {
+          "venue": "ICIDS 2023",
+          "year": 2023,
+          "url": "https://icids2023.ardin.online",
+          "roles": ["Reviewer"]
+        },
+        {
+          "venue": "ACM FDG 2024",
+          "year": 2024,
+          "url": "https://fdg2024.org",
+          "roles": ["Reviewer"]
+        },
         {
           "venue": "IEEE ICCE",
           "links": [
-            { "year": 2024, "url": "https://icce.org/2024" },
-            { "year": 2026, "url": "https://icce.org/2026/" }
-          ]
+            {
+              "year": 2024,
+              "url": "https://icce.org/2024"
+            },
+            {
+              "year": 2026,
+              "url": "https://icce.org/2026/"
+            }
+          ],
+          "roles": ["Reviewer"]
         },
-        { "venue": "IEEE CoG 2024", "year": 2024, "url": "https://2024.ieee-cog.org" }
+        {
+          "venue": "IEEE CoG 2024",
+          "year": 2024,
+          "url": "https://2024.ieee-cog.org",
+          "roles": ["Reviewer"]
+        },
+        {
+          "venue": "EMNLP 2025 Workshop WiNLP",
+          "year": 2025,
+          "url": "https://openreview.net/group?id=EMNLP%2F2025%2FWorkshop%2FWiNLP",
+          "roles": ["Area chair"]
+        }
       ]
     },
     {
@@ -23,8 +83,9 @@
       "items": [
         {
           "venue": "IEEE Transactions on Games (ToG)",
-          "years": [2024, 2025],
-          "url": "https://transactions.games"
+          "years": [2024, 2025, 2026],
+          "url": "https://transactions.games",
+          "roles": ["Reviewer"]
         }
       ]
     }
