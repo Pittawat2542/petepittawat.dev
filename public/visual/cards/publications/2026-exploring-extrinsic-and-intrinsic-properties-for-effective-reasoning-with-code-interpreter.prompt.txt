@@ -1,0 +1,11 @@
+Generated with the built-in image_gen tool.
+
+Use case: stylized-concept
+Asset type: wide research publication cover for a personal academic website, landscape 1.905:1 aspect ratio, ideally 2400 by 1260.
+Primary request: Create a polished editorial scientific illustration for the paper "Exploring Extrinsic and Intrinsic Properties for Effective Reasoning with Code Interpreter". The paper studies crucial tokens, verification, backtracking, backward chaining, and efficiency in code-assisted reasoning.
+Scene/backdrop: deep midnight navy with restrained violet and cool blue lighting, uncluttered negative space around a single central object.
+Subject: a sculptural transparent glass computation chamber, gently angled in three-quarter view. Inside it, a precise branching network of small luminous token beads forms a compact reasoning path. Some branches terminate faintly; one clear path reconnects backward to an earlier node and continues toward a bright result. A translucent code-execution pane integrated into the chamber shows a few elegant indented rows of symbolic code marks, with no readable words. Outside the chamber, a single distinct luminous feedback ribbon travels from the code pane around the chamber and returns to the internal path, visually representing execution, verification, and revised reasoning. Keep the relationship between inner structure and outer feedback visually coherent and immediately readable at thumbnail size.
+Style/medium: refined high-end 3D editorial illustration; architectural precision, frosted and clear glass, subtle metal, soft realistic reflections, crisp restrained emissive details. A quiet research aesthetic.
+Composition/framing: wide horizontal composition, object and feedback loop centered in the inner 75 percent, generous safe margins, readable silhouette, moderately close view. One focal object.
+Lighting/mood: thoughtful, rigorous, elegant; soft studio illumination and subtle violet-blue glow, deep clean shadows.
+Constraints: illustration only, no title, no labels, no typography, no watermark, no logos, no human figures, no robot, no decorative dashboard panels, no busy particle field, no excessive bloom. Fully opaque background.
