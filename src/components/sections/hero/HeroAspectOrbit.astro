@@ -3,24 +3,22 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
 ---
 
 <div class="hero-aspects" aria-label="Research, engineering, and design orbit">
-  {
-    orbitAspects.map(({ label, detail, tone, style }) => (
-      <span
-        class={`hero-aspect-star hero-aspect-star--${tone}`}
-        style={style}
-        tabindex="0"
-        aria-label={`${label}: ${detail}`}
-      >
-        <span class="hero-aspect-star__core">
-          <span class="hero-aspect-star__spark" aria-hidden="true" />
-          <span class="hero-aspect-star__label">
-            <span>{label}</span>
-            <small>{detail}</small>
-          </span>
+  {orbitAspects.map(({ label, detail, tone, style }) => (
+    <span
+      class={`hero-aspect-star hero-aspect-star--${tone}`}
+      style={style}
+      tabindex="0"
+      aria-label={`${label}: ${detail}`}
+    >
+      <span class="hero-aspect-star__core">
+        <span class="hero-aspect-star__spark" aria-hidden="true" />
+        <span class="hero-aspect-star__label">
+          <span>{label}</span>
+          <small>{detail}</small>
         </span>
       </span>
-    ))
-  }
+    </span>
+  ))}
 </div>
 
 <style>
@@ -51,7 +49,8 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
     color: var(--star-color, #7dd3fc);
     cursor: default;
     pointer-events: auto;
-    transform: translate(-50%, -50%) rotate(var(--orbit-start)) translateX(var(--orbit-radius))
+    transform: translate(-50%, -50%) rotate(var(--orbit-start))
+      translateX(min(var(--orbit-radius), var(--orbit-radius-limit, var(--orbit-radius))))
       rotate(var(--orbit-start-inverse));
     animation: hero-aspect-orbit var(--orbit-duration, 8s) ease-in-out infinite alternate;
     animation-delay: var(--orbit-delay, 0ms);
@@ -229,11 +228,13 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
 
   @keyframes hero-aspect-orbit {
     0% {
-      transform: translate(-50%, -50%) rotate(var(--orbit-start)) translateX(var(--orbit-radius))
+      transform: translate(-50%, -50%) rotate(var(--orbit-start))
+        translateX(min(var(--orbit-radius), var(--orbit-radius-limit, var(--orbit-radius))))
         rotate(var(--orbit-start-inverse));
     }
     100% {
-      transform: translate(-50%, -50%) rotate(var(--orbit-end)) translateX(var(--orbit-radius))
+      transform: translate(-50%, -50%) rotate(var(--orbit-end))
+        translateX(min(var(--orbit-radius), var(--orbit-radius-limit, var(--orbit-radius))))
         rotate(var(--orbit-end-inverse));
     }
   }

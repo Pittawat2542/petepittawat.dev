@@ -101,18 +101,10 @@ const { languageHelperText, languageState } = Astro.props as Props;
         ) -
         var(--article-rail-bottom-gap, 1rem)
     );
-    border-radius: 1.25rem;
+    border-radius: var(--editorial-radius);
     border: 1px solid color-mix(in oklab, var(--white) 8%, transparent);
-    background:
-      radial-gradient(
-        110% 90% at 18% 0%,
-        color-mix(in oklab, var(--accent-blog) 13%, transparent),
-        transparent 62%
-      ),
-      rgba(13, 22, 39, 0.66);
-    box-shadow:
-      0 22px 44px -34px rgba(3, 7, 18, 0.74),
-      inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    background: var(--color-surface-deep);
+    box-shadow: none;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
@@ -244,7 +236,7 @@ const { languageHelperText, languageState } = Astro.props as Props;
 
   @media (max-width: 720px) {
     .article-reader-pane {
-      border-radius: 1.12rem;
+      border-radius: var(--editorial-radius);
     }
 
     .article-reader-pane__summary {

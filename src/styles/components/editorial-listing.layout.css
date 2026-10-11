@@ -51,28 +51,6 @@
   line-height: var(--leading-body);
 }
 
-.listing-hero-support {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-top: 0.35rem;
-}
-
-.listing-hero-support__item {
-  border: 1px solid color-mix(in oklab, var(--white) 7%, transparent);
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--black) 36%, transparent);
-  padding: 0.45rem 0.7rem;
-  color: color-mix(in oklab, var(--white) 62%, transparent);
-  font-size: var(--type-caption);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: var(--leading-control);
-  text-transform: uppercase;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
 .editorial-listing__items {
   display: flex;
   width: 100%;

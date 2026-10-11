@@ -10,10 +10,9 @@ interface CardInfoPanelProps {
 
 const CardInfoPanelComponent: FC<CardInfoPanelProps> = ({ children, className, style }) => (
   <div
-    className={cn('rounded-[1.2rem] border px-4 py-4', className)}
+    className={cn('border-l-2 py-1 pl-4', className)}
     style={{
       borderColor: getCardAccentTint(18),
-      background: `linear-gradient(180deg, ${getCardAccentTint(8)}, transparent)`,
       ...style,
     }}
   >

@@ -17,27 +17,26 @@ const introVariant = getIntroVariant(copy.intro);
 <div class="hero-copy order-1 md:col-span-1">
   <div class="hero-copy__inner">
     <div class="hero-statement">
+      <p class="hero-eyebrow">Research &amp; engineering</p>
       <h1 class="hero-name">
         <span class="hero-name__given">{givenName}</span>
         {familyName && <span class="hero-name__family">{familyName}</span>}
       </h1>
 
       <p class="hero-lead">
-        {
-          introVariant === 'en' ? (
-            <>
-              I study how language models <span>acquire</span>
-              <br class="hidden sm:block" /> and <span>express behavior</span>.
-            </>
-          ) : introVariant === 'th' ? (
-            <>
-              ผมศึกษาว่าโมเดลภาษา<span>เรียนรู้</span>
-              <br class="hidden sm:block" /> และ<span>แสดงพฤติกรรม</span>ออกมาอย่างไร
-            </>
-          ) : (
-            copy.intro
-          )
-        }
+        {introVariant === 'en' ? (
+          <>
+            I study how language models <span>acquire</span>
+            <br class="hidden sm:block" /> and <span>express behavior</span>.
+          </>
+        ) : introVariant === 'th' ? (
+          <>
+            ผมศึกษาว่าโมเดลภาษา<span>เรียนรู้</span>
+            <br class="hidden sm:block" /> และ<span>แสดงพฤติกรรม</span>ออกมาอย่างไร
+          </>
+        ) : (
+          copy.intro
+        )}
       </p>
 
       <p class="hero-summary">{copy.summary}</p>
@@ -50,130 +49,53 @@ const introVariant = getIntroVariant(copy.intro);
 <style>
   .hero-copy {
     width: 100%;
-    max-width: 43rem;
-    text-align: center;
+    text-align: left;
   }
-
-  .hero-copy__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(1.15rem, 2.2vw, 1.6rem);
-  }
-
+  .hero-copy__inner,
   .hero-statement {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.88rem, 1.8vw, 1.12rem);
+    display: grid;
+    gap: 1.35rem;
   }
-
-  .hero-name {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
+  .hero-eyebrow {
     margin: 0;
-    font-weight: 800;
-    line-height: 0.98;
+    color: var(--color-canvas-muted);
+    font-size: var(--type-meta);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
-
-  .hero-name__given,
-  .hero-name__family {
-    display: block;
+  .hero-name {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 1.08;
   }
-
   .hero-name__given {
-    color: #facc63;
-    font-size: var(--type-home-display-compact);
-    text-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.14),
-      0 18px 42px rgba(250, 204, 99, 0.18);
+    font-size: clamp(3.25rem, 6vw, 5.5rem);
   }
-
   .hero-name__family {
-    color: rgba(255, 255, 255, 0.94);
-    font-size: var(--type-home-display-secondary-compact);
-    text-shadow: 0 18px 46px rgba(148, 163, 184, 0.22);
+    font-size: clamp(1.55rem, 3.5vw, 2.7rem);
+    overflow-wrap: anywhere;
   }
-
   .hero-lead {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: var(--type-home-lead-compact);
-    line-height: 1.5;
+    color: var(--text-secondary);
+    font-family: var(--editorial-serif);
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    line-height: 1.65;
+    text-wrap: pretty;
   }
-
   .hero-lead span {
-    color: #60a5fa;
-    text-shadow: 0 0 24px rgba(96, 165, 250, 0.34);
+    color: var(--text-primary);
   }
-
   .hero-summary {
+    max-width: 46ch;
     margin: 0;
-    max-width: 34rem;
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--color-canvas-muted);
     font-size: var(--type-body);
-    line-height: 1.68;
-  }
-
-  @media (min-width: 640px) {
-    .hero-name__given {
-      font-size: var(--type-home-display);
-    }
-
-    .hero-name__family {
-      font-size: var(--type-home-display-secondary);
-    }
-
-    .hero-lead {
-      font-size: var(--type-home-lead);
-    }
-  }
-
-  @media (min-width: 768px) {
-    .hero-copy {
-      max-width: none;
-      text-align: left;
-    }
-
-    .hero-copy__inner {
-      align-items: flex-start;
-      gap: 1.45rem;
-    }
-
-    .hero-name__given {
-      font-size: var(--type-home-display);
-    }
-
-    .hero-name__family {
-      font-size: var(--type-home-display-secondary-compact);
-    }
-
-    .hero-summary {
-      max-width: 32rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero-copy__inner {
-      gap: 1.58rem;
-    }
-
-    .hero-name__given {
-      font-size: var(--type-home-display);
-    }
-
-    .hero-name__family {
-      font-size: var(--type-home-display-secondary);
-    }
-
-    .hero-lead {
-      font-size: var(--type-home-lead);
-      line-height: 1.46;
-    }
-
-    .hero-summary {
-      max-width: 31rem;
-      font-size: var(--type-body);
-    }
+    line-height: 1.8;
   }
 </style>

@@ -27,7 +27,7 @@
 .media-card:focus-within {
   border-color: var(--media-card-hover-border);
   box-shadow: var(--media-card-shadow-hover);
-  transform: translate3d(0, -0.28rem, 0);
+  transform: none;
 }
 
 .media-card:focus-visible {
@@ -97,8 +97,6 @@
   border-top: 1px solid color-mix(in oklab, var(--white) 9%, transparent);
   background: var(--media-card-footer-surface);
   padding: var(--media-card-footer-padding-y) var(--media-card-padding);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .media-card [data-card-description] {
@@ -172,4 +170,15 @@
     > .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* Titles stay readable when the archive is arranged in columns. */
+.media-card:not(.media-card--featured) h3 {
+  font-size: var(--type-card-title-compact);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+.media-card--featured h3 {
+  line-height: 1.25;
+  letter-spacing: -0.03em;
 }

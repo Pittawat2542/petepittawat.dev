@@ -17,19 +17,14 @@ const talks = await getTalks();
   page="talks"
 >
   <Container className="space-y-8 md:space-y-10">
-    <EditorialPageHero
-      eyebrow="Speaking"
-      title={pageCopy.title}
-      subtitle={pageCopy.heroSubtitle}
-      variant="showcase"
-      visualPreset="talks"
-    >
+    <EditorialPageHero eyebrow="Speaking" title={pageCopy.title} subtitle={pageCopy.heroSubtitle}>
       <div slot="support" class="listing-hero-support" aria-label="Talk themes">
         <span class="listing-hero-support__item">Invited sessions</span>
         <span class="listing-hero-support__item">Workshops</span>
         <span class="listing-hero-support__item">AI engineering</span>
       </div>
     </EditorialPageHero>
+    <h2 class="sr-only">Talk archive</h2>
     <TalksExplorer client:idle items={talks} />
   </Container>
 </BaseLayout>

@@ -1,8 +1,364 @@
-@import './about-page.tokens.css';
-@import './about-hero.css';
-@import './about-profile.css';
-@import './about-cards.css';
-@import './about-current-work.css';
-@import './about-background.css';
-@import './about-milestones.css';
-@import './about-motion.css';
+/* Biography in the same editorial language as the Research map. */
+.about-page .about-hero {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: 1.5rem 3rem;
+  border-bottom: 1px solid var(--editorial-rule);
+}
+
+.about-page .about-hero__copy {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.about-page :is(.about-hero__eyebrow, .eyebrow, .proof-card__label) {
+  margin: 0;
+  color: var(--color-canvas-muted);
+  font-size: var(--type-meta);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.about-page .about-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.about-page .about-hero__eyebrow-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-accent-mint);
+}
+
+.about-page .about-hero__title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--editorial-display);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.about-page .about-hero__subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--editorial-serif);
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.about-page :is(.about-hero__summary, .proof-card__content, .journey-card__group) {
+  display: grid;
+  gap: 1rem;
+}
+
+.about-page p {
+  margin: 0;
+  color: var(--color-canvas-muted);
+  font-size: var(--type-body-sm);
+  line-height: 1.8;
+}
+
+.about-page .about-hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: var(--color-accent-primary);
+  font-size: var(--type-meta);
+}
+
+.about-page .about-hero__profile {
+  align-self: start;
+  padding: 1.5rem;
+  border: 1px solid var(--editorial-rule);
+  border-radius: var(--editorial-radius);
+  background: var(--color-surface-deep);
+}
+
+.about-page .about-hero__profile-main {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.about-page .about-hero__portrait {
+  max-width: 11rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--editorial-control-radius);
+}
+
+.about-page .about-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-page .about-hero__profile-name {
+  color: var(--text-primary);
+  font-size: var(--type-body-lg);
+  font-weight: 600;
+}
+
+.about-page .about-hero__profile-location {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  font-size: var(--type-control);
+}
+
+.about-page .about-hero__profile-rule {
+  height: 1px;
+  margin-block: 1.25rem;
+  background: var(--editorial-rule);
+}
+
+.about-page .about-hero__profile-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: var(--color-canvas-muted);
+  font-size: var(--type-meta);
+}
+
+.about-page .about-hero__socials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1rem;
+  margin-top: 1.25rem;
+}
+
+.about-page .about-hero__social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  color: var(--text-secondary);
+  font-size: var(--type-control);
+  text-decoration: none;
+}
+
+.about-page .about-hero__social-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-accent-primary);
+}
+
+.about-page a:hover {
+  color: var(--color-accent-primary);
+}
+
+.about-page :is(a, summary):focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+}
+
+.about-page .section-block {
+  display: grid;
+  gap: 1.75rem;
+  scroll-margin-top: calc(var(--nav-height) + 2rem);
+}
+
+.about-page .section-heading {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--editorial-rule);
+}
+
+.about-page .section-heading h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--type-section-title-compact);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+
+.about-page
+  :is(.proof-grid, .themes-grid, .current-work-grid, .milestones-grid, .background-principles) {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.about-page
+  :is(
+    .proof-card,
+    .theme-card,
+    .current-work-card,
+    .spotlight-card,
+    .journey-card,
+    .background-band
+  ) {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  clip-path: none;
+  transform: none;
+}
+
+.about-page
+  :is(
+    .proof-card,
+    .theme-card,
+    .current-work-card,
+    .spotlight-card,
+    .journey-card,
+    .background-band
+  )::before,
+.about-page
+  :is(
+    .proof-card,
+    .theme-card,
+    .current-work-card,
+    .spotlight-card,
+    .journey-card,
+    .background-band
+  )::after {
+  display: none;
+}
+
+.about-page :is(.proof-card__icon, .theme-card__icon, .background-principle__icon) {
+  color: var(--color-accent-primary);
+}
+
+.about-page :is(.proof-card__icon, .theme-card__icon, .background-principle__icon) svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.about-page .proof-card__value {
+  color: var(--text-primary);
+  font-size: var(--type-body-lg);
+  font-weight: 600;
+}
+
+.about-page :is(.theme-card h3, .current-work-card h3, .journey-card h3, .background-principle h3) {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--type-body-lg);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.about-page .current-work-card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.about-page .current-work-list {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-page .current-work-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  color: var(--color-canvas-muted);
+  font-size: var(--type-body-sm);
+  line-height: 1.8;
+}
+
+.about-page .current-work-list__dot {
+  flex-shrink: 0;
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background: var(--color-accent-primary);
+}
+
+.about-page .background-principle {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+.about-page .background-principle p {
+  margin-top: 0.75rem;
+}
+
+.about-page .milestone-timeline {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0 0 0 1rem;
+  border-left: 1px solid var(--editorial-rule);
+  list-style: none;
+}
+
+.about-page :is(.spotlight-card__title, .journey-card__header p, .timeline-details__title) {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about-page .journey-card__header span {
+  color: var(--color-accent-primary);
+  font-size: var(--type-meta);
+}
+
+.about-page .timeline-details {
+  padding-block: 1rem;
+  border-block: 1px solid var(--editorial-rule);
+}
+.about-page .timeline-details summary {
+  padding-block: 0.5rem;
+  color: var(--text-secondary);
+  font-size: var(--type-control);
+  cursor: pointer;
+}
+.about-page .timeline-details ol {
+  display: grid;
+  gap: 1rem;
+  padding-left: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .about-page .themes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .about-page .about-hero__profile-main {
+    grid-template-columns: 8rem minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+@media (min-width: 960px) {
+  .about-page .about-hero {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 4rem;
+  }
+  .about-page :is(.proof-grid, .current-work-grid, .background-principles) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+  .about-page .themes-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .about-page .milestones-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .about-page .about-hero {
+    padding-top: 0.25rem;
+  }
+}

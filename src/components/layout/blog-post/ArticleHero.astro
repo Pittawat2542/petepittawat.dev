@@ -49,7 +49,9 @@ const t = useTranslations(lang);
 
   <div class="article-hero__content">
     <a href="/blog" class="article-back" aria-label={t('allPosts')}>
-      <span class="article-back__icon" aria-hidden="true">←</span>
+      <span class="article-back__icon" aria-hidden="true">
+        ←
+      </span>
       {t('allPosts')}
     </a>
     <h1 class="article-hero__title">{title}</h1>
@@ -89,45 +91,7 @@ const t = useTranslations(lang);
   .article-hero__background::before {
     content: '';
     z-index: 1;
-    background:
-      radial-gradient(
-        90% 90% at 76% 12%,
-        color-mix(in oklab, var(--accent-blog) 24%, transparent),
-        transparent 56%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(3, 7, 18, 0.82) 0%,
-        rgba(3, 7, 18, 0.58) 52%,
-        rgba(3, 7, 18, 0.34) 100%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(3, 7, 18, 0.08) 0%,
-        rgba(3, 7, 18, 0.5) 76%,
-        rgba(3, 7, 18, 0.88) 100%
-      );
-    pointer-events: none;
-  }
-
-  .article-hero__background::after {
-    content: '';
-    z-index: 2;
-    background-image:
-      radial-gradient(1.4px 1.4px at 12% 22%, rgba(255, 255, 255, 0.2), transparent 60%),
-      radial-gradient(1px 1px at 72% 18%, rgba(191, 219, 254, 0.22), transparent 65%),
-      radial-gradient(1.6px 1.6px at 84% 64%, rgba(165, 180, 252, 0.18), transparent 70%),
-      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-    background-size:
-      30rem 30rem,
-      26rem 26rem,
-      34rem 34rem,
-      88px 88px,
-      88px 88px;
-    opacity: 0.18;
-    mix-blend-mode: screen;
-    pointer-events: none;
+    background: linear-gradient(90deg, rgba(8, 13, 25, 0.94), rgba(8, 13, 25, 0.78));
   }
 
   .article-hero :global(.article-hero__cover) {
@@ -135,7 +99,7 @@ const t = useTranslations(lang);
     min-height: 100%;
     border: none;
     box-shadow: none;
-    filter: saturate(1.08) blur(4px);
+    filter: saturate(0.65);
     transform: scale(1.025);
   }
 
@@ -184,12 +148,13 @@ const t = useTranslations(lang);
     margin: 0;
     max-width: 22ch;
     color: var(--white);
-    font-size: var(--type-page-title);
-    font-weight: 760;
-    line-height: 1.02;
-    letter-spacing: -0.055em;
+    font-size: clamp(2rem, 4.5vw, 3.75rem);
+    font-weight: 400;
+    font-family: var(--editorial-serif);
+    line-height: 1.25;
+    letter-spacing: -0.035em;
     text-wrap: balance;
-    text-shadow: 0 20px 56px rgba(3, 7, 18, 0.66);
+    text-shadow: none;
   }
 
   .article-hero[data-lang='th'] .article-hero__title {
@@ -225,8 +190,8 @@ const t = useTranslations(lang);
 
     .article-hero__title {
       max-width: 100%;
-      font-size: var(--type-page-title-compact);
-      line-height: 1.08;
+      font-size: clamp(1.75rem, 7vw, 2.5rem);
+      line-height: 1.3;
     }
 
     .article-hero__meta-row {

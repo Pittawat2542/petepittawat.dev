@@ -21,10 +21,7 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
 ---
 
 <!-- Latest from the Blog -->
-<Container
-  className="latest-writing reveal glass-section mt-20"
-  aria-labelledby="latest-writing-title"
->
+<Container className="latest-writing reveal mt-20" aria-labelledby="latest-writing-title">
   <div class="latest-writing__header">
     <div class="latest-writing__intro">
       <div class="section-eyebrow latest-writing__eyebrow">
@@ -34,41 +31,37 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
       <h2 id="latest-writing-title" class="latest-writing__title">
         {copy.title}
       </h2>
-      <p class="latest-writing__description">
-        {copy.description}
-      </p>
+      <p class="latest-writing__description">{copy.description}</p>
     </div>
     <GlassButton className="latest-writing__button" href="/blog" variant="ghost" size="md">
       {copy.browseLabel}
       <ArrowRight className="h-4 w-4" aria-hidden="true" />
     </GlassButton>
   </div>
-  {
-    posts.length === 0 ? (
-      <div class="shape-squircle rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-[color:var(--white)]/70">
-        {copy.emptyLabel}
-      </div>
-    ) : (
-      <ul class="latest-blog" id="latest-blog">
-        {featuredPost ? (
-          <BlogCard
-            post={featuredPost}
-            allPosts={allPosts || undefined}
-            presentation="featured"
-            readingTimeMin={getReadingTimeMin(featuredPost)}
-          />
-        ) : null}
-        {compactPosts.map(post => (
-          <BlogCard
-            post={post}
-            allPosts={allPosts || undefined}
-            presentation="compact"
-            readingTimeMin={getReadingTimeMin(post)}
-          />
-        ))}
-      </ul>
-    )
-  }
+  {posts.length === 0 ? (
+    <div class="shape-squircle rounded-2xl border border-white/10 bg-white/5 px-6 py-10 text-center text-[color:var(--white)]/70">
+      {copy.emptyLabel}
+    </div>
+  ) : (
+    <ul class="latest-blog" id="latest-blog">
+      {featuredPost ? (
+        <BlogCard
+          post={featuredPost}
+          allPosts={allPosts || undefined}
+          presentation="featured"
+          readingTimeMin={getReadingTimeMin(featuredPost)}
+        />
+      ) : null}
+      {compactPosts.map(post => (
+        <BlogCard
+          post={post}
+          allPosts={allPosts || undefined}
+          presentation="compact"
+          readingTimeMin={getReadingTimeMin(post)}
+        />
+      ))}
+    </ul>
+  )}
 </Container>
 
 <style>
@@ -100,9 +93,9 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
     color: var(--white);
     overflow-wrap: normal;
     font-size: var(--type-section-title);
-    font-weight: 760;
-    letter-spacing: 0;
-    line-height: 0.98;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
     text-wrap: balance;
   }
 

@@ -5,22 +5,18 @@ import HeroAspectOrbit from '@/components/sections/hero/HeroAspectOrbit.astro';
 import HeroGalaxy from '@/components/sections/hero/HeroGalaxy.astro';
 ---
 
-<div
-  class="relative order-2 flex w-full max-w-[22rem] flex-col items-center pb-3 md:mt-8 md:ml-auto md:max-w-[27rem] md:justify-self-center md:pb-2 lg:mt-10"
->
-  <div
-    class="hero-avatar group relative mx-auto w-full max-w-[15.5rem] overflow-visible md:mx-0 md:max-w-[20.8rem]"
-  >
+<div class="relative order-2 flex w-full max-w-[22rem] flex-col items-center self-center py-12 md:mt-8 md:ml-auto md:max-w-[27rem] md:justify-self-center md:py-2 lg:mt-10">
+  <div class="hero-avatar group relative mx-auto w-full max-w-[15.5rem] overflow-visible md:mx-0 md:max-w-[20.8rem]">
     <HeroGalaxy />
     <HeroAspectOrbit />
     <Image
       src={profileImage}
-      alt="Pete's profile picture"
+      alt="Pittawat (Pete) Taveekitworachai"
       loading="eager"
       fetchpriority="high"
       decoding="async"
-      widths={[192, 224, 384, 448]}
-      sizes="(min-width: 768px) 20rem, 13rem"
+      widths={[224, 384, 448, 640]}
+      sizes="(min-width: 768px) 20.8rem, 15.5rem"
       class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15.5rem] object-cover shadow-lg ring-4 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20.8rem]"
     />
   </div>
@@ -32,8 +28,15 @@ import HeroGalaxy from '@/components/sections/hero/HeroGalaxy.astro';
 
 <style>
   .hero-avatar {
+    --orbit-radius-limit: min(8.8rem, 38vw);
     width: 100%;
     isolation: isolate;
+  }
+
+  @media (min-width: 768px) {
+    .hero-avatar {
+      --orbit-radius-limit: 14rem;
+    }
   }
 
   .hero-avatar__image {

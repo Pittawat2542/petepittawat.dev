@@ -49,7 +49,9 @@ export default function MediaContentCard({
       className={cn('media-card group', featured && 'media-card--featured', className)}
       style={cardStyle}
     >
-      <BlogCardOverlays accent="var(--card-accent)" intensity={overlayIntensity} />
+      {overlayIntensity === 'default' && (
+        <BlogCardOverlays accent="var(--card-accent)" intensity={overlayIntensity} />
+      )}
       <div className={cn('media-card__media', mediaClassName)}>
         {media}
         {mediaBadges ? <div className="media-card__badges">{mediaBadges}</div> : null}

@@ -87,6 +87,13 @@
     0 0 0 2px color-mix(in oklab, var(--color-canvas) 88%, transparent),
     0 0 0 4px color-mix(in oklab, var(--page-accent, var(--color-accent-primary)) 46%, transparent);
 
+  /* Editorial language shared with the Research map. */
+  --editorial-rule: color-mix(in oklab, var(--white) 13%, transparent);
+  --editorial-serif: 'Noto Serif', 'Noto Serif Thai', serif;
+  --editorial-display: clamp(2.5rem, 7.5vw, 6.25rem);
+  --editorial-radius: 0.625rem;
+  --editorial-control-radius: 0.375rem;
+
   /* Page chrome */
   --site-chrome-max-width: 72rem;
   --site-chrome-padding-x: clamp(1rem, 4vw, 2.5rem);
@@ -205,50 +212,38 @@
     rgba(31, 41, 55, 0.45);
 
   /* Homepage output cards */
-  --output-card-bg:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.014) 58%),
-    color-mix(in oklab, var(--black-nav) 82%, rgba(5, 10, 24, 0.76));
+  --output-card-bg: var(--color-surface-deep);
   --output-card-border: color-mix(in oklab, var(--white) 10%, transparent);
   --output-card-hover-border: color-mix(in oklab, var(--accent) 36%, var(--white) 9%);
   --output-card-text: color-mix(in oklab, var(--white) 94%, transparent);
   --output-card-muted: color-mix(in oklab, var(--white) 66%, transparent);
-  --output-card-shadow:
-    0 18px 48px -40px rgba(2, 8, 23, 0.86), inset 0 1px 0 rgba(255, 255, 255, 0.064);
-  --output-card-shadow-hover:
-    0 24px 64px -44px rgba(2, 8, 23, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --output-card-shadow: none;
+  --output-card-shadow-hover: none;
   --output-card-focus-ring:
     0 0 0 2px color-mix(in oklab, var(--black) 82%, transparent),
     0 0 0 4px color-mix(in oklab, var(--accent) 48%, transparent);
 
   /* Editorial listing and filters */
-  --listing-toolbar-radius: clamp(1.1rem, 2.2vw, 1.55rem);
+  --listing-toolbar-radius: var(--editorial-radius);
   --listing-toolbar-padding: clamp(0.75rem, 1.4vw, 1rem);
   --listing-toolbar-gap: clamp(0.7rem, 1.5vw, 1rem);
-  --listing-toolbar-surface:
-    radial-gradient(
-      740px circle at 18% 0%,
-      color-mix(in oklab, var(--page-accent, var(--accent)) 18%, transparent),
-      transparent 48%
-    ),
-    radial-gradient(820px circle at 88% 110%, rgba(87, 129, 190, 0.11), transparent 58%),
-    linear-gradient(180deg, rgba(17, 31, 54, 0.9), rgba(10, 21, 40, 0.92));
+  --listing-toolbar-surface: var(--color-surface-deep);
   --listing-toolbar-border: color-mix(in oklab, var(--white) 14%, transparent);
-  --listing-toolbar-shadow:
-    0 24px 64px -44px rgba(3, 7, 18, 0.74), inset 0 1px 0 rgba(255, 255, 255, 0.085);
+  --listing-toolbar-shadow: none;
   --listing-toolbar-muted: color-mix(in oklab, var(--white) 58%, transparent);
   --listing-toolbar-muted-strong: color-mix(in oklab, var(--white) 74%, transparent);
 
-  --listing-control-radius: 1rem;
+  --listing-control-radius: var(--editorial-control-radius);
   --listing-control-height: 3rem;
-  --listing-control-surface: rgba(24, 39, 66, 0.52);
+  --listing-control-surface: var(--color-surface);
   --listing-control-surface-hover: rgba(38, 57, 91, 0.66);
   --listing-control-border: color-mix(in oklab, var(--white) 14%, transparent);
   --listing-control-border-hover: color-mix(in oklab, var(--white) 24%, transparent);
   --listing-control-text: color-mix(in oklab, var(--white) 88%, transparent);
   --listing-control-muted: color-mix(in oklab, var(--white) 64%, transparent);
   --listing-control-placeholder: color-mix(in oklab, var(--white) 46%, transparent);
-  --listing-control-shadow: 0 18px 34px -30px rgba(3, 7, 18, 0.76);
-  --listing-control-shadow-hover: 0 24px 42px -28px rgba(3, 7, 18, 0.74);
+  --listing-control-shadow: none;
+  --listing-control-shadow-hover: none;
   --listing-control-focus-ring:
     0 0 0 2px rgba(5, 10, 20, 0.94),
     0 0 0 4px color-mix(in oklab, var(--page-accent, var(--accent)) 36%, transparent);
@@ -258,17 +253,10 @@
   --filter-pane-gap: clamp(0.7rem, 1.5vw, 1rem);
   --filter-pane-section-gap: clamp(1.1rem, 2vw, 2rem);
   --filter-pane-year-width: clamp(12.25rem, 18vw, 15.5rem);
-  --filter-pane-surface:
-    radial-gradient(
-      760px circle at 14% -20%,
-      color-mix(in oklab, var(--page-accent, var(--accent)) 15%, transparent),
-      transparent 52%
-    ),
-    linear-gradient(90deg, rgba(7, 17, 33, 0.94), rgba(7, 19, 38, 0.9));
+  --filter-pane-surface: color-mix(in oklab, var(--color-surface-deep) 80%, transparent);
   --filter-pane-border: color-mix(in oklab, var(--white) 11%, transparent);
   --filter-pane-divider: color-mix(in oklab, var(--white) 12%, transparent);
-  --filter-pane-shadow:
-    0 24px 64px -46px rgba(2, 8, 23, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  --filter-pane-shadow: none;
   --filter-pane-label: color-mix(in oklab, var(--white) 54%, transparent);
   --filter-pane-label-strong: color-mix(in oklab, var(--white) 76%, transparent);
   --filter-pane-control-surface: rgba(10, 23, 44, 0.62);
@@ -278,21 +266,15 @@
   --filter-pane-control-text: color-mix(in oklab, var(--white) 88%, transparent);
   --filter-pane-control-muted: color-mix(in oklab, var(--white) 58%, transparent);
   --filter-chip-height: 2.18rem;
-  --filter-chip-radius: 999px;
+  --filter-chip-radius: var(--editorial-control-radius);
   --filter-chip-surface: rgba(11, 24, 46, 0.52);
   --filter-chip-surface-hover: rgba(16, 32, 60, 0.72);
   --filter-chip-border: color-mix(in oklab, var(--white) 10%, transparent);
   --filter-chip-border-hover: color-mix(in oklab, var(--white) 18%, transparent);
   --filter-chip-text: color-mix(in oklab, var(--white) 74%, transparent);
   --filter-chip-selected-surface: rgba(255, 255, 255, 0.075);
-  --filter-chip-selected-primary-surface: linear-gradient(
-    180deg,
-    var(--color-accent-primary) 0%,
-    #2563eb 100%
-  );
-  --filter-chip-selected-primary-shadow:
-    0 12px 28px -18px color-mix(in oklab, var(--color-accent-primary) 82%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  --filter-chip-selected-primary-surface: #2b5283;
+  --filter-chip-selected-primary-shadow: none;
   --filter-chip-count-surface: rgba(255, 255, 255, 0.08);
   --filter-chip-count-text: color-mix(in oklab, var(--white) 78%, transparent);
 
@@ -340,34 +322,24 @@
   --blog-index-empty-border: color-mix(in oklab, var(--white) 10%, transparent);
 
   /* Shared media card */
-  --media-card-radius: clamp(1.18rem, 2.4vw, 1.65rem);
+  --media-card-radius: var(--editorial-radius);
   --media-card-media-radius: calc(var(--media-card-radius) - 1px);
-  --media-card-surface:
-    radial-gradient(
-      circle at 88% 0%,
-      color-mix(in oklab, var(--card-accent, var(--accent)) 13%, transparent),
-      transparent 30%
-    ),
-    linear-gradient(180deg, rgba(11, 20, 38, 0.95), rgba(7, 14, 28, 0.98));
+  --media-card-surface: var(--color-surface-deep);
   --media-card-border: color-mix(in oklab, var(--white) 10%, transparent);
   --media-card-hover-border: color-mix(
     in oklab,
     var(--card-accent, var(--accent)) 36%,
     var(--white) 10%
   );
-  --media-card-shadow:
-    0 30px 70px -44px rgba(3, 7, 18, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.055);
-  --media-card-shadow-hover:
-    0 40px 84px -46px rgba(3, 7, 18, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.085);
+  --media-card-shadow: none;
+  --media-card-shadow-hover: none;
   --media-card-focus-ring:
     0 0 0 2px rgba(5, 10, 20, 0.94),
     0 0 0 4px color-mix(in oklab, var(--card-accent, var(--accent)) 44%, transparent);
   --media-card-media-aspect: 16 / 7;
   --media-card-padding: clamp(1.1rem, 2vw, 1.55rem);
   --media-card-footer-padding-y: clamp(0.8rem, 1.35vw, 1rem);
-  --media-card-footer-surface:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.012)),
-    rgba(8, 14, 28, 0.54);
+  --media-card-footer-surface: transparent;
   --media-card-muted: color-mix(in oklab, var(--white) 66%, transparent);
   --media-card-muted-strong: color-mix(in oklab, var(--white) 78%, transparent);
   --media-card-accent-soft: color-mix(in oklab, var(--card-accent, var(--accent)) 12%, transparent);

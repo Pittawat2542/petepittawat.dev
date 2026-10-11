@@ -1,122 +1,35 @@
 ---
 import '@/styles/components/editorial-page-hero.css';
 
-import {
-  editorialPageHeroPresets,
-  type EditorialPageHeroVisualPreset,
-} from './editorialPageHeroPresets';
-
 interface Props {
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
   eyebrow?: string;
-  variant?: 'default' | 'blog' | 'showcase';
-  visualPreset?: EditorialPageHeroVisualPreset;
+  collectionLabel?: string;
 }
 
 const {
   title,
   subtitle,
   eyebrow = 'Overview',
-  variant = 'default',
-  visualPreset = 'default',
+  collectionLabel = 'In this collection',
 } = Astro.props as Props;
-const resolvedVisualPreset =
-  visualPreset === 'default' ? (variant === 'blog' ? 'blog' : 'default') : visualPreset;
-const preset = editorialPageHeroPresets[resolvedVisualPreset];
-const isProjects = resolvedVisualPreset === 'projects';
-const isPublications = resolvedVisualPreset === 'publications';
-const isTalks = resolvedVisualPreset === 'talks';
-
-const showDecorations = resolvedVisualPreset !== 'default';
-const computedVariant = showDecorations
-  ? resolvedVisualPreset === 'blog'
-    ? 'blog'
-    : 'showcase'
-  : variant;
+const hasSupport = Astro.slots.has('support');
 ---
 
-<section class="editorial-page-hero reveal" data-variant={computedVariant}>
-  <div class="editorial-page-hero__wash" aria-hidden="true"></div>
-  <div class="editorial-page-hero__grid" aria-hidden="true"></div>
-  {
-    computedVariant === 'blog' || computedVariant === 'showcase' ? (
-      <div
-        class:list={[
-          'editorial-page-hero__observatory',
-          {
-            'editorial-page-hero__observatory--blog': resolvedVisualPreset === 'blog',
-            'editorial-page-hero__observatory--projects': isProjects,
-            'editorial-page-hero__observatory--publications': isPublications,
-            'editorial-page-hero__observatory--talks': isTalks,
-          },
-        ]}
-        aria-hidden="true"
-      >
-        {/* Constellation SVG lines for projects */}
-        {isProjects && (
-          <svg
-            class="editorial-page-hero__network"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <path
-              class="editorial-page-hero__line"
-              d="M 56 22 L 66 42 L 82 26 L 88 52 L 74 74 L 66 42"
-            />
-            <path class="editorial-page-hero__line" d="M 56 22 L 74 74" />
-          </svg>
-        )}
-
-        {/* Orbit/pulse lines */}
-        {isPublications ? (
-          <>
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--concentric-lg" />
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--concentric-md" />
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--concentric-sm" />
-          </>
-        ) : isTalks ? (
-          <>
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--pulse-a" />
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--pulse-b" />
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--pulse-c" />
-          </>
-        ) : (
-          <>
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--wide" />
-            <span class="editorial-page-hero__orbit editorial-page-hero__orbit--tight" />
-          </>
-        )}
-
-        {/* Planet container with glow */}
-        <div class="editorial-page-hero__planet-container">
-          <span class="editorial-page-hero__planet-glow" />
-          <span class="editorial-page-hero__planet" />
-        </div>
-
-        {/* Signal dots */}
-        <span class="editorial-page-hero__signal editorial-page-hero__signal--a" />
-        <span class="editorial-page-hero__signal editorial-page-hero__signal--b" />
-
-        {/* Star instances */}
-        {preset.stars.map(({ className, style }) => (
-          <span class={className} style={style} />
-        ))}
-      </div>
-    ) : null
-  }
+<header class:list={['editorial-page-hero', { 'editorial-page-hero--with-index': hasSupport }]}>
   <div class="editorial-page-hero__inner">
-    <div class="editorial-page-hero__eyebrow">
-      <span class="editorial-page-hero__eyebrow-dot"></span>
+    <p class="editorial-page-hero__eyebrow">
+      <span class="editorial-page-hero__eyebrow-dot" aria-hidden="true"></span>
       {eyebrow}
-    </div>
+    </p>
     <h1 class="editorial-page-hero__title">{title}</h1>
-    {subtitle ? <p class="editorial-page-hero__subtitle">{subtitle}</p> : null}
-    <div class="editorial-page-hero__rule" aria-hidden="true">
-      <span class="editorial-page-hero__rule-accent"></span>
-    </div>
-    <div class="editorial-page-hero__support">
-      <slot name="support" />
-    </div>
+    {subtitle && <p class="editorial-page-hero__subtitle">{subtitle}</p>}
   </div>
-</section>
+  {hasSupport && (
+    <aside class="editorial-page-hero__support" aria-label={collectionLabel}>
+      <p class="editorial-page-hero__index-label">{collectionLabel}</p>
+      <slot name="support" />
+    </aside>
+  )}
+</header>

@@ -3,7 +3,6 @@ import { SITE_CONFIG } from '@/lib/constants';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getImage } from 'astro:assets';
 import profileImage from '@/assets/images/profile.jpg';
-import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import BlogSection from '@/components/sections/BlogSection.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
 import ResearchInPracticeSection from '@/components/sections/ResearchInPracticeSection.astro';
@@ -28,7 +27,7 @@ const selectedOutputStats = {
   publications: publications.length,
   talks: talks.length,
 };
-const heroW192 = await getImage({ src: profileImage, width: 192, format: 'webp' });
+const heroW640 = await getImage({ src: profileImage, width: 640, format: 'webp' });
 const heroW224 = await getImage({ src: profileImage, width: 224, format: 'webp' });
 const heroW384 = await getImage({ src: profileImage, width: 384, format: 'webp' });
 const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' });
@@ -38,21 +37,18 @@ const heroW448 = await getImage({ src: profileImage, width: 448, format: 'webp' 
   title={SITE_CONFIG.title}
   description={siteCopy.meta.description || SITE_CONFIG.description}
 >
-  <PageBackdrop variant="landing" />
-  {
-    heroW384 && (
-      <Fragment slot="head">
-        <link
-          rel="preload"
-          as="image"
-          fetchpriority="high"
-          href={heroW384.src}
-          imagesrcset={`${heroW192.src} 192w, ${heroW224.src} 224w, ${heroW384.src} 384w, ${heroW448.src} 448w`}
-          imagesizes="(min-width: 768px) 14rem, 12rem"
-        />
-      </Fragment>
-    )
-  }
+  {heroW384 && (
+    <Fragment slot="head">
+      <link
+        rel="preload"
+        as="image"
+        fetchpriority="high"
+        href={heroW384.src}
+        imagesrcset={`${heroW224.src} 224w, ${heroW384.src} 384w, ${heroW448.src} 448w, ${heroW640.src} 640w`}
+        imagesizes="(min-width: 768px) 20.8rem, 15.5rem"
+      />
+    </Fragment>
+  )}
   <HeroSection
     copy={siteCopy.home.hero}
     selectedOutput={siteCopy.home.selectedOutput}

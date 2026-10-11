@@ -4,15 +4,10 @@ import ArticleBrief from '@/components/layout/blog-post/ArticleBrief.astro';
 import ArticleBody from '@/components/layout/blog-post/ArticleBody.astro';
 import ArticleHero from '@/components/layout/blog-post/ArticleHero.astro';
 import ArticleRail from '@/components/layout/blog-post/ArticleRail.astro';
-import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import ReadingProgressBar from '@/components/layout/core/ReadingProgressBar';
 import { useTranslations } from '@/i18n/utils';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import {
-  getBlogCoverCssVariables,
-  resolveBlogCoverSpec,
-  serializeCssVariables,
-} from '@/lib/blog-cover';
+import { getBlogCoverCssVariables, resolveBlogCoverSpec } from '@/lib/blog-cover';
 import { computeBlogPostMetadata, generateBlogPostSchema } from '@/lib/blog-post-schema';
 import type { BlogPostLanguageState } from '@/lib/blog-translations';
 import { SITE_CONFIG } from '@/lib/constants';
@@ -62,11 +57,6 @@ const coverSpec =
       })
     : undefined;
 const coverThemeVariables = coverSpec ? getBlogCoverCssVariables(coverSpec.theme) : {};
-const coverThemeStyle =
-  Object.keys(coverThemeVariables).length > 0
-    ? serializeCssVariables(coverThemeVariables)
-    : undefined;
-
 const twitterHandle = import.meta.env.PUBLIC_TWITTER_HANDLE;
 const metadata = computeBlogPostMetadata({
   slug,
@@ -107,15 +97,11 @@ const schema = generateBlogPostSchema({
   page="blog"
   themeVariables={coverThemeVariables}
 >
-  <div class="article-header-glow" aria-hidden="true"></div>
-  <PageBackdrop variant="article" style={coverThemeStyle} />
   <ReadingProgressBar />
   <Fragment slot="head">
-    {
-      coverImage ? (
-        <link rel="preload" as="image" href={coverImage.src} fetchpriority="high" />
-      ) : null
-    }
+    {coverImage ? (
+      <link rel="preload" as="image" href={coverImage.src} fetchpriority="high" />
+    ) : null}
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </Fragment>
 
@@ -149,26 +135,6 @@ const schema = generateBlogPostSchema({
 </BaseLayout>
 
 <style>
-  .article-header-glow {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    height: clamp(350px, 45vw, 650px);
-    background:
-      radial-gradient(
-        circle at 50% 30%,
-        rgba(99, 102, 241, 0.22) 0%,
-        rgba(124, 58, 237, 0.12) 42%,
-        transparent 70%
-      ),
-      radial-gradient(circle at 35% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 55%),
-      radial-gradient(circle at 65% 45%, rgba(167, 139, 250, 0.12) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .article-container,
   .article-related {
     --article-content-width: 60rem;

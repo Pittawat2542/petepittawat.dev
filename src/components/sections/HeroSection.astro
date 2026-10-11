@@ -14,9 +14,7 @@ interface Props {
 const { copy, selectedOutput, selectedOutputStats } = Astro.props as Props;
 ---
 
-<Container
-  className="relative -mt-2 flex flex-col items-center justify-center gap-7 md:-mt-4 md:grid md:grid-cols-[minmax(0,0.98fr)_minmax(18rem,1.02fr)] md:items-start md:gap-x-14 md:gap-y-7 lg:gap-x-20 lg:gap-y-8"
->
+<Container className="relative -mt-2 flex flex-col items-start justify-center gap-10 md:-mt-4 md:grid md:grid-cols-[minmax(0,0.98fr)_minmax(18rem,1.02fr)] md:items-center md:gap-x-14 md:gap-y-7 lg:gap-x-20 lg:gap-y-12">
   <HeroIntro copy={copy} />
   <HeroPortrait />
 

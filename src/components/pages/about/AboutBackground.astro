@@ -26,28 +26,20 @@ const principleLabels = ['What I study', 'How I think', 'Why it matters'] as con
 
   <GlassCard variant="premium" className="background-band">
     <div class="background-principles">
-      {
-        background.paragraphs.map((note, index) => {
-          const Icon = principleIcons[index] || History;
-          return (
-            <article class="background-principle">
-              <div class="background-principle__icon" aria-hidden="true">
-                <Icon className="h-7 w-7" />
-              </div>
-              <div>
-                <h3>{principleLabels[index] || background.title}</h3>
-                <p>{note}</p>
-              </div>
-            </article>
-          );
-        })
-      }
-    </div>
-    <div class="background-layers" aria-hidden="true">
-      <span class="background-layers__plane background-layers__plane--top"></span>
-      <span class="background-layers__plane background-layers__plane--middle"></span>
-      <span class="background-layers__plane background-layers__plane--bottom"></span>
-      <span class="background-layers__mesh"></span>
+      {background.paragraphs.map((note, index) => {
+        const Icon = principleIcons[index] || History;
+        return (
+          <article class="background-principle">
+            <div class="background-principle__icon" aria-hidden="true">
+              <Icon className="h-7 w-7" />
+            </div>
+            <div>
+              <h3>{principleLabels[index] || background.title}</h3>
+              <p>{note}</p>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </GlassCard>
 </section>

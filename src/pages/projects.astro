@@ -21,8 +21,6 @@ const projects = await getProjects();
       eyebrow="Selected Work"
       title={pageCopy.title}
       subtitle={pageCopy.heroSubtitle}
-      variant="showcase"
-      visualPreset="projects"
     >
       <div slot="support" class="listing-hero-support" aria-label="Project themes">
         <span class="listing-hero-support__item">AI tooling</span>
@@ -30,6 +28,7 @@ const projects = await getProjects();
         <span class="listing-hero-support__item">Learning systems</span>
       </div>
     </EditorialPageHero>
+    <h2 class="sr-only">Project archive</h2>
     <ProjectsExplorer client:idle items={projects} />
   </Container>
 </BaseLayout>

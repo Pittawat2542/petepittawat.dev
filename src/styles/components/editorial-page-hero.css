@@ -1,3 +1,106 @@
-@import './editorial-page-hero.base.css';
-@import './editorial-page-hero.visuals.css';
-@import './editorial-page-hero.motion.css';
+/* Shared editorial introduction, derived from the Research map. */
+.editorial-page-hero {
+  display: grid;
+  gap: 2rem;
+  padding-block: 1.5rem clamp(2.5rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--editorial-rule);
+}
+
+.editorial-page-hero__eyebrow,
+.editorial-page-hero__index-label {
+  margin: 0;
+  color: var(--color-canvas-muted);
+  font-size: var(--type-meta);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.editorial-page-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.editorial-page-hero__eyebrow-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-accent-mint);
+}
+
+.editorial-page-hero__title {
+  margin: 1rem 0 1.25rem;
+  color: var(--text-primary);
+  font-size: var(--editorial-display);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.editorial-page-hero__title::after {
+  content: '.';
+  color: var(--color-accent-primary);
+}
+
+.editorial-page-hero__subtitle {
+  max-width: 42ch;
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--editorial-serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  letter-spacing: -0.02em;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.editorial-page-hero__support {
+  align-self: end;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--editorial-rule);
+}
+
+.editorial-page-hero__index-label {
+  margin-bottom: 1rem;
+  font-size: var(--type-caption);
+}
+
+.editorial-page-hero :is(.listing-hero-support, .blog-hero-support) {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  counter-reset: collection;
+}
+
+.editorial-page-hero :is(.listing-hero-support__item, .blog-hero-support__item) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding-block: 0.7rem;
+  color: var(--text-secondary);
+  font-size: var(--type-control);
+  line-height: 1.5;
+  counter-increment: collection;
+}
+
+.editorial-page-hero :is(.listing-hero-support__item, .blog-hero-support__item)::before {
+  content: counter(collection, decimal-leading-zero);
+  color: var(--color-accent-primary);
+  font-size: var(--type-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 900px) {
+  .editorial-page-hero--with-index {
+    grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.35fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+@media (max-width: 639px) {
+  .editorial-page-hero {
+    padding-top: 0.25rem;
+  }
+}

@@ -1,0 +1,28 @@
+.academic-services {
+  padding-top: 2rem;
+  border-top: 1px solid var(--editorial-rule);
+}
+.academic-services header {
+  margin-bottom: 2rem;
+}
+.academic-services h2 {
+  font-weight: 600;
+}
+.academic-services__entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 4.5rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--editorial-rule);
+  text-decoration: none;
+}
+.academic-services__entry:hover {
+  background: color-mix(in oklab, var(--white) 3%, transparent);
+}
+.academic-services__entry:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
+}

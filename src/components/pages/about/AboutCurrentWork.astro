@@ -31,21 +31,13 @@ const { currentWork } = Astro.props as Props;
       <div class="current-work-card__body">
         <span class="eyebrow text-[color:var(--accent)]">Current focus</span>
         <ul class="current-work-list">
-          {
-            currentWork.items.map(point => (
-              <li>
-                <span class="current-work-list__dot" />
-                <span>{point}</span>
-              </li>
-            ))
-          }
+          {currentWork.items.map(point => (
+            <li>
+              <span class="current-work-list__dot" />
+              <span>{point}</span>
+            </li>
+          ))}
         </ul>
-      </div>
-      <div class="current-work-visual current-work-visual--radar" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-        <i></i>
       </div>
     </GlassCard>
 
@@ -56,21 +48,13 @@ const { currentWork } = Astro.props as Props;
           <h3>{currentWork.collaborationTitle}</h3>
         </div>
         <ul class="current-work-list current-work-list--compact">
-          {
-            currentWork.collaborationPoints.map(point => (
-              <li>
-                <span class="current-work-list__dot" />
-                <span>{point}</span>
-              </li>
-            ))
-          }
+          {currentWork.collaborationPoints.map(point => (
+            <li>
+              <span class="current-work-list__dot" />
+              <span>{point}</span>
+            </li>
+          ))}
         </ul>
-      </div>
-      <div class="current-work-visual current-work-visual--loop" aria-hidden="true">
-        <span class="current-work-visual__orbit"></span>
-        <span class="current-work-visual__node current-work-visual__node--one"></span>
-        <span class="current-work-visual__node current-work-visual__node--two"></span>
-        <span class="current-work-visual__node current-work-visual__node--three"></span>
       </div>
     </GlassCard>
 
@@ -81,19 +65,13 @@ const { currentWork } = Astro.props as Props;
           <h3>{currentWork.communicationTitle}</h3>
         </div>
         <ul class="current-work-list current-work-list--compact">
-          {
-            currentWork.communicationPoints.map(point => (
-              <li>
-                <span class="current-work-list__dot" />
-                <span>{point}</span>
-              </li>
-            ))
-          }
+          {currentWork.communicationPoints.map(point => (
+            <li>
+              <span class="current-work-list__dot" />
+              <span>{point}</span>
+            </li>
+          ))}
         </ul>
-      </div>
-      <div class="current-work-visual current-work-visual--messages" aria-hidden="true">
-        <span></span>
-        <span></span>
       </div>
     </GlassCard>
   </div>
