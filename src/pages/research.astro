@@ -1,9 +1,8 @@
 ---
-import '@/styles/components/research-map.css';
+import '@/styles/components/research-page.css';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/ui/core/Container.astro';
-import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
 import PageBackdrop from '@/components/layout/core/PageBackdrop.astro';
 import { siteCopyEn } from '@/data/site/copy';
 import {
@@ -53,6 +52,20 @@ const themeStats = {
   projects: projects.length,
   posts: preferredBlogPosts.length,
 };
+
+const themeQuestions = [
+  'How do we steer model behavior?',
+  'How do we know what works?',
+  'How can models reason better?',
+  'How do we put models to work?',
+];
+
+const archiveLinks = [
+  { label: 'Publications', count: themeStats.publications, href: '/publications', icon: FileText },
+  { label: 'Talks', count: themeStats.talks, href: '/talks', icon: Mic },
+  { label: 'Projects', count: themeStats.projects, href: '/projects', icon: Boxes },
+  { label: 'Posts', count: themeStats.posts, href: '/blog', icon: BookOpenText },
+];
 ---
 
 <BaseLayout
@@ -61,111 +74,130 @@ const themeStats = {
   page="research"
 >
   <PageBackdrop />
-  <Container className="research-map-page space-y-8 md:space-y-10">
-    <EditorialPageHero
-      eyebrow="Research Map"
-      title={pageCopy.title}
-      subtitle={pageCopy.heroSubtitle}
-      variant="showcase"
-      visualPreset="publications"
-    >
-      <div slot="support" class="research-map-hero-support" aria-label="Research map themes">
-        {
-          themes.map(theme => (
-            <a href={`#${theme.id}`} class="research-map-hero-support__item">
-              {theme.title}
-            </a>
-          ))
-        }
-      </div>
-    </EditorialPageHero>
-
-    <section class="research-map-overview" aria-label="Research map overview">
-      <div class="research-map-overview__copy">
-        <p>
-          This map is the guided route through the archive. Each theme starts with the research
-          question, then points to the papers, talks, projects, and notes that carry the idea
-          forward.
+  <Container className="research-page">
+    <header class="research-hero">
+      <div class="research-hero__copy">
+        <p class="research-eyebrow">
+          <span aria-hidden="true"></span> Research map
         </p>
+        <h1>
+          {pageCopy.title}
+          <span aria-hidden="true">.</span>
+        </h1>
+        <p class="research-hero__lead">
+          Making language models
+          <br /> more reliable in practice.
+        </p>
+        <p class="research-hero__description">{pageCopy.heroSubtitle}</p>
+        <a href="#research-directions" class="research-hero__cta">
+          Explore the work <ArrowRight aria-hidden="true" />
+        </a>
       </div>
-      <dl class="research-map-overview__stats" aria-label="Archive scale">
-        <div>
-          <dt>Publications</dt>
-          <dd>{themeStats.publications}</dd>
+      <nav class="research-index" aria-label="Research themes">
+        <div class="research-index__heading">
+          <span>Four connected directions</span>
+          <span aria-hidden="true">01 — 04</span>
         </div>
-        <div>
-          <dt>Talks</dt>
-          <dd>{themeStats.talks}</dd>
-        </div>
-        <div>
-          <dt>Projects</dt>
-          <dd>{themeStats.projects}</dd>
-        </div>
-        <div>
-          <dt>Posts</dt>
-          <dd>{themeStats.posts}</dd>
-        </div>
-      </dl>
-    </section>
+        <ol>
+          {themes.map((theme, index) => (
+            <li>
+              <a href={`#${theme.id}`}>
+                <span class="research-index__number">{String(index + 1).padStart(2, '0')}</span>
+                <span class="research-index__body">
+                  <span class="research-index__title">{theme.title}</span>
+                  <span class="research-index__question">{themeQuestions[index]}</span>
+                </span>
+                <ArrowRight aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ol>
+        <p class="research-index__note">From research questions to working systems.</p>
+      </nav>
+    </header>
 
-    <div class="research-map-themes">
-      {
-        themes.map((theme, themeIndex) => (
-          <section
-            id={theme.id}
-            class="research-map-theme target-highlight"
-            aria-labelledby={`${theme.id}-title`}
-            style={`--theme-index: ${themeIndex};`}
-          >
-            <div class="research-map-theme__header">
-              <p class="research-map-theme__kicker">
-                Theme {String(themeIndex + 1).padStart(2, '0')}
-              </p>
-              <h2 id={`${theme.id}-title`} class="research-map-theme__title">
-                {theme.title}
-              </h2>
-              <p class="research-map-theme__summary">{theme.summary}</p>
-              <ul
-                class="research-map-theme__tags"
-                aria-label={`${theme.title} representative tags`}
-              >
-                {theme.representativeTags.map(tag => (
-                  <li>#{tag}</li>
-                ))}
-              </ul>
-              {theme.startHere ? (
-                <a class="research-map-theme__start" href={theme.startHere.href}>
-                  <span>Start here</span>
-                  <ArrowRight className="research-map-theme__start-icon" aria-hidden="true" />
-                </a>
-              ) : null}
-            </div>
+    <nav class="research-archive" aria-label="Browse the full archive">
+      <p class="research-eyebrow">Across the archive</p>
+      <ul>
+        {archiveLinks.map(({ label, count, href, icon: Icon }) => (
+          <li>
+            <a href={href}>
+              <Icon className="research-archive__icon" aria-hidden="true" />
+              <span class="research-archive__count">{count}</span>
+              <span>{label}</span>
+              <ArrowRight className="research-archive__arrow" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-            <ul class="research-map-artifacts" aria-label={`${theme.title} artifacts`}>
-              {theme.artifacts.map(artifact => {
-                const Icon = artifactIcons[artifact.type];
-                return (
-                  <li class="research-map-artifact">
-                    <a class="research-map-artifact__link" href={artifact.href}>
-                      <span class="research-map-artifact__type">
-                        <Icon className="research-map-artifact__type-icon" aria-hidden="true" />
-                        {artifactLabels[artifact.type]}
-                      </span>
-                      <span class="research-map-artifact__body">
-                        <span class="research-map-artifact__title">{artifact.title}</span>
-                        <span class="research-map-artifact__description">
-                          {artifact.description}
-                        </span>
-                      </span>
-                      <span class="research-map-artifact__meta">{artifact.meta}</span>
-                    </a>
-                  </li>
-                );
-              })}
+    <div class="research-directions" id="research-directions">
+      <div class="research-directions__intro">
+        <h2>Follow a research thread</h2>
+        <p>Start with a question. Explore the work behind it.</p>
+      </div>
+      {themes.map((theme, themeIndex) => (
+        <section id={theme.id} class="research-theme" aria-labelledby={`${theme.id}-title`}>
+          <div class="research-map-theme__header">
+            <p class="research-map-theme__kicker">
+              Theme {String(themeIndex + 1).padStart(2, '0')}
+            </p>
+            <h3 id={`${theme.id}-title`} class="research-map-theme__title">
+              {theme.title}
+            </h3>
+            <p class="research-map-theme__summary">{theme.summary}</p>
+            <ul class="research-map-theme__tags" aria-label={`${theme.title} representative tags`}>
+              {theme.representativeTags.map(tag => (
+                <li>{tag}</li>
+              ))}
             </ul>
-          </section>
-        ))
-      }
+            {theme.startHere ? (
+              <a class="research-map-theme__start" href={theme.startHere.href}>
+                <span>
+                  <span class="research-map-theme__start-label">Suggested starting point</span>
+                  <span class="research-map-theme__start-title">{theme.startHere.title}</span>
+                </span>
+                <ArrowRight className="research-map-theme__start-icon" aria-hidden="true" />
+              </a>
+            ) : null}
+          </div>
+
+          <ul class="research-map-artifacts" aria-label={`${theme.title} artifacts`}>
+            {theme.artifacts.map(artifact => {
+              const Icon = artifactIcons[artifact.type];
+              return (
+                <li class="research-map-artifact">
+                  <a class="research-map-artifact__link" href={artifact.href}>
+                    <span class="research-map-artifact__body">
+                      <span class="research-map-artifact__details">
+                        <span class="research-map-artifact__type">
+                          <Icon className="research-map-artifact__type-icon" aria-hidden="true" />
+                          {artifactLabels[artifact.type]}
+                        </span>
+                        <span class="research-map-artifact__meta">{artifact.meta}</span>
+                      </span>
+                      <span class="research-map-artifact__title">{artifact.title}</span>
+                      <span class="research-map-artifact__description">{artifact.description}</span>
+                    </span>
+                    <ArrowRight className="research-map-artifact__arrow" aria-hidden="true" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
     </div>
+    <aside class="research-continue" aria-label="Continue exploring">
+      <div>
+        <p class="research-eyebrow">Keep exploring</p>
+        <h2>The ideas continue in the writing.</h2>
+        <p>Field notes, experiments, and lessons from building with language models.</p>
+      </div>
+      <a href="/blog">
+        Read the field notes <ArrowRight aria-hidden="true" />
+      </a>
+    </aside>
   </Container>
 </BaseLayout>
