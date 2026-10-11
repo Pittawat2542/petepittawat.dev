@@ -19,7 +19,10 @@ const DialogOverlay = forwardRef<
   <DialogPrimitive.Close asChild>
     <DialogPrimitive.Overlay
       ref={ref}
-      className={cn('fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm', className)}
+      className={cn(
+        'site-dialog-overlay fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm',
+        className
+      )}
       onClick={e => {
         e.stopPropagation();
       }}
@@ -41,7 +44,7 @@ const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'border-border bg-card no-hover-lift text-card-foreground shape-squircle fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border p-6 shadow-lg',
+        'site-dialog border-border bg-card no-hover-lift text-card-foreground shape-squircle fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border p-6 shadow-lg',
         'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
         // Constrain height while allowing inner content to manage overflow
         'max-h-[90vh]',
