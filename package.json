@@ -9,7 +9,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "prebuild": "node --run generate:content-images",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/performance/audit-build.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint . && astro check && tsc --noEmit",
@@ -17,7 +17,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
-    "test:content": "node --test scripts/content-image.test.ts scripts/blog-content-audit.test.mjs scripts/translate-blog-post.test.mjs scripts/translate-blog-post-lib.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/card-visual/index.test.ts src/lib/blog-post-schema.test.ts src/lib/about-timeline.test.ts src/lib/reading-time.test.ts src/lib/toc.test.ts src/lib/blog-recommendations.test.ts src/lib/search-page-items.test.ts src/data/site/copy.test.ts src/data/site/research-map.test.ts src/components/ui/cards/cardOverflow.test.ts src/components/layout/core/footer-social-links.test.ts src/styles/typography.architecture.test.ts",
+    "test:content": "node --test scripts/content-image.test.ts scripts/blog-content-audit.test.mjs scripts/translate-blog-post.test.mjs scripts/translate-blog-post-lib.test.mjs src/lib/blog-translations.test.ts src/lib/blog-locale-preference.test.ts src/lib/blog-cover/index.test.ts src/lib/card-visual/index.test.ts src/lib/blog-post-schema.test.ts src/lib/about-timeline.test.ts src/lib/reading-time.test.ts src/lib/toc.test.ts src/lib/blog-recommendations.test.ts src/lib/search-page-items.test.ts src/data/site/copy.test.ts src/data/site/research-map.test.ts src/components/ui/cards/cardOverflow.test.ts src/components/layout/core/footer-social-links.test.ts src/styles/typography.architecture.test.ts src/lib/listing.test.ts",
     "validate:cover-assets": "node --experimental-strip-types scripts/validate-cover-assets.ts",
     "generate:content-images": "node --experimental-strip-types scripts/generate-site-cover.ts && node --experimental-strip-types scripts/generate-card-visuals.ts && node --experimental-strip-types scripts/generate-og.ts && node --experimental-strip-types scripts/validate-cover-assets.ts",
     "generate:site-cover": "node --experimental-strip-types scripts/generate-site-cover.ts",
@@ -28,7 +28,8 @@
     "audit:blog-cover": "node --experimental-strip-types scripts/blog-cover-audit.ts",
     "translate-blog-post": "node scripts/translate-blog-post.mjs",
     "prepare": "husky",
-    "update-deps": "node scripts/update-dependencies.mjs"
+    "update-deps": "node scripts/update-dependencies.mjs",
+    "audit:performance": "node scripts/performance/audit-build.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx,astro,json,md,css,js,yml,yaml}": [

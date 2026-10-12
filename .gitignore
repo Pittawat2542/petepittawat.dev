@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 /.superpowers
 /.pnpm-store
+
+# Local browser verification artifacts
+output/playwright/
