@@ -1,5 +1,3 @@
-import '@/styles/components/search-modal.css';
-
 import type { SearchItemType } from './types';
 
 import { X } from 'lucide-react';

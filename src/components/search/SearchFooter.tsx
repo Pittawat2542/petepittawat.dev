@@ -1,5 +1,3 @@
-import '@/styles/components/search-modal.css';
-
 import type { FC } from 'react';
 import { memo } from 'react';
 import { CornerDownLeft, ArrowUp, ArrowDown } from 'lucide-react';

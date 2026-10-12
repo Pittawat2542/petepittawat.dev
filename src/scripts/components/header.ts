@@ -77,10 +77,10 @@ if (document.readyState === 'loading') {
   initializeHeader();
 }
 
-// Cleanup on page unload
-window.addEventListener('beforeunload', () => {
-  if (headerController) {
-    headerController.cleanup();
+// Preserve the controller when restored from the browser back/forward cache.
+window.addEventListener('pagehide', event => {
+  if (!event.persisted) {
+    headerController?.cleanup();
     headerController = null;
   }
 });

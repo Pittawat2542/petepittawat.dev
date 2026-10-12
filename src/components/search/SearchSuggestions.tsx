@@ -1,5 +1,3 @@
-import '@/styles/components/search-suggestions.css';
-
 import type { FC } from 'react';
 import { memo } from 'react';
 import { Compass } from 'lucide-react';

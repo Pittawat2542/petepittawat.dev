@@ -28,6 +28,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
       open,
       query,
       loaded,
+      failed,
       filtered,
       suggestions,
       recent,
@@ -37,6 +38,8 @@ const SearchModalComponent: FC<SearchModalProps> = ({
       tagSuggestions,
     },
     actions: {
+      retry,
+      restoreFocus,
       setQuery,
       setActiveIndex,
       toggleType,
@@ -63,7 +66,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <SearchTriggers hideTriggers={hideTriggers} />
       {open && (
-        <SearchDialogContent>
+        <SearchDialogContent onClose={restoreFocus}>
           <SearchHeader
             query={query}
             onQueryChange={setQuery}
@@ -77,7 +80,16 @@ const SearchModalComponent: FC<SearchModalProps> = ({
             onClearRecent={clearRecent}
           />
           <div className="search-modal__content" role="presentation">
-            {!loaded && <SearchSkeleton />}
+            {failed ? (
+              <p role="alert" className="p-6 text-white">
+                Search could not load.{' '}
+                <button type="button" onClick={retry} className="underline">
+                  Retry
+                </button>
+              </p>
+            ) : (
+              !loaded && <SearchSkeleton />
+            )}
             {showSuggestions && <SearchSuggestions suggestions={suggestions} />}
             {showTagSuggestions && (
               <SearchTagSuggestions tags={tagSuggestions} onTagSelect={setQuery} query={query} />

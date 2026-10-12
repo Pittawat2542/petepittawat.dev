@@ -5,38 +5,41 @@
 
 import { useEffect, useState } from 'react';
 import type { SearchItem } from '../types';
-
-interface SearchDataResponse {
-  items: SearchItem[];
-}
+import { loadSearchData } from '@/scripts/search-data';
 
 export function useSearchData(shouldLoad: boolean) {
   const [items, setItems] = useState<SearchItem[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     if (!shouldLoad || loaded) return;
 
-    const controller = new AbortController();
-
-    fetch('/search.json', { signal: controller.signal })
-      .then(async response => {
-        if (!response.ok) {
-          throw new Error(`Search index request failed with status ${response.status}`);
-        }
-
-        const data = (await response.json()) as SearchDataResponse;
-        setItems(data.items || []);
+    let active = true;
+    loadSearchData()
+      .then(data => {
+        if (!active) return;
+        setFailed(false);
+        setItems(data);
         setLoaded(true);
       })
       .catch(() => {
-        setLoaded(true);
+        if (!active) return;
+        setFailed(true);
       });
-
     return () => {
-      controller.abort();
+      active = false;
     };
-  }, [shouldLoad, loaded]);
+  }, [shouldLoad, loaded, attempt]);
 
-  return { items, loaded };
+  return {
+    items,
+    loaded,
+    failed,
+    retry: () => {
+      setFailed(false);
+      setAttempt(value => value + 1);
+    },
+  };
 }

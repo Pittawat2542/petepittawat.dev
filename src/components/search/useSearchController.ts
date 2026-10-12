@@ -6,7 +6,7 @@
 
 import type { SearchItemType } from './types';
 import { ensureAllTypes, getActiveSearchLocale } from './utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SEARCH_OPEN_EVENT } from '@/scripts/openSearch';
 import {
   useSearchData,
@@ -23,6 +23,15 @@ type UseSearchControllerParams = {
 
 export function useSearchController({ autoOpen = false, openKey }: UseSearchControllerParams) {
   const [open, setOpen] = useState(autoOpen);
+  const opener = useRef<HTMLElement | null>(null);
+  const rememberOpener = useCallback(() => {
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && !active.closest('[role="dialog"]'))
+      opener.current = active;
+  }, []);
+  const restoreFocus = useCallback(() => {
+    opener.current?.focus();
+  }, []);
   const [query, setQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<Set<SearchItemType>>(ensureAllTypes);
   const activeLocale = getActiveSearchLocale();
@@ -40,6 +49,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
 
   useEffect(() => {
     const openRequestedSearch = () => {
+      rememberOpener();
       delete document.documentElement.dataset['searchRequested'];
       setOpen(true);
     };
@@ -51,10 +61,10 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     return () => {
       window.removeEventListener(SEARCH_OPEN_EVENT, openRequestedSearch);
     };
-  }, []);
+  }, [rememberOpener]);
 
   // Focused hooks for each responsibility
-  const { items, loaded } = useSearchData(open);
+  const { items, loaded, failed, retry } = useSearchData(open);
   const { recent, saveRecent, clearRecent } = useRecentSearches(open);
   const { filtered, countsByType, suggestions, tagSuggestions } = useSearchFiltering(
     items,
@@ -67,6 +77,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   useKeyboardShortcut(
     'k',
     () => {
+      rememberOpener();
       setOpen(true);
       setTimeout(() => {
         const el = document.querySelector(
@@ -127,6 +138,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
       open,
       query,
       loaded,
+      failed,
       filtered,
       suggestions,
       recent,
@@ -136,6 +148,8 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
       tagSuggestions,
     },
     actions: {
+      retry,
+      restoreFocus,
       setQuery,
       setActiveIndex,
       toggleType,

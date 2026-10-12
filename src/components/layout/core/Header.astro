@@ -2,7 +2,6 @@
 import SiteLogo from '@/components/header/SiteLogo.astro';
 import SearchButton from '@/components/header/SearchButton.astro';
 import MobileMenu from '@/components/header/MobileMenu.astro';
-import SearchModal from '@/components/layout/SearchModal';
 import '@/styles/components/site-header.css';
 
 // Normalize current path to work with both `build.format: "file"` (e.g. "/talks.html")
@@ -69,8 +68,33 @@ const isActive = (href: string) =>
   </div>
 </header>
 <MobileMenu currentPath={current} renderToggle={false} />
-<SearchModal client:load hideTriggers />
+<div id="search-modal-host"></div>
 
+<script is:inline>
+  (() => {
+    const remember = event => {
+      const click =
+        event.type === 'click' && event.target.closest?.('button[aria-label="Open search"]');
+      const shortcut =
+        event.type === 'keydown' &&
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === 'k';
+      if (!click && !shortcut) return;
+      event.preventDefault();
+      document.documentElement.dataset.searchRequested = 'true';
+    };
+    document.addEventListener('click', remember);
+    document.addEventListener('keydown', remember);
+    window.addEventListener(
+      'site:search-ready',
+      () => {
+        document.removeEventListener('click', remember);
+        document.removeEventListener('keydown', remember);
+      },
+      { once: true }
+    );
+  })();
+</script>
 <script>
   import '@/scripts/components/header.ts';
 </script>
