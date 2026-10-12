@@ -112,7 +112,7 @@ export async function GET(_context: APIContext) {
   }
 
   for (const publication of publications) {
-    const anchor = `pub-${slugify(publication.title)}-${publication.year}`;
+    const anchor = `publication-${slugify(publication.title)}-${publication.year}`;
     items.push(
       createEnglishItem({
         id: `publication:${publication.title}-${publication.year}`,

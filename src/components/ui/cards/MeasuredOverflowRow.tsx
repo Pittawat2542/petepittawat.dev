@@ -5,6 +5,7 @@ import { resolveVisibleItemCount } from './cardOverflow';
 interface MeasuredOverflowRowProps<TItem> {
   readonly items: readonly TItem[];
   readonly maxVisible?: number | undefined;
+  readonly featuredMaxVisible?: number | undefined;
   readonly minVisible?: number | undefined;
   readonly overflowPlacement?: 'inline' | 'pinned' | undefined;
   readonly className?: string | undefined;
@@ -19,6 +20,7 @@ interface MeasuredOverflowRowProps<TItem> {
 function MeasuredOverflowRowComponent<TItem>({
   items,
   maxVisible,
+  featuredMaxVisible,
   minVisible = 1,
   overflowPlacement = 'inline',
   className,
@@ -31,8 +33,16 @@ function MeasuredOverflowRowComponent<TItem>({
 }: MeasuredOverflowRowProps<TItem>) {
   const isPinned = overflowPlacement === 'pinned';
   const visibleCount = resolveVisibleItemCount(items.length, maxVisible, minVisible);
-  const visibleItems = items.slice(0, visibleCount);
-  const hiddenCount = Math.max(0, items.length - visibleItems.length);
+  const capacity =
+    featuredMaxVisible === undefined
+      ? visibleCount
+      : resolveVisibleItemCount(
+          items.length,
+          Math.max(featuredMaxVisible, maxVisible ?? 0),
+          minVisible
+        );
+  const visibleItems = items.slice(0, capacity);
+  const hiddenCount = Math.max(0, items.length - visibleCount);
   const itemWrapperClassName = isPinned
     ? 'inline-flex min-w-0 max-w-full shrink overflow-hidden'
     : 'inline-flex min-w-0 shrink-0';
@@ -46,6 +56,7 @@ function MeasuredOverflowRowComponent<TItem>({
     <span
       key={getKey(item, index)}
       data-card-overflow-item
+      hidden={index >= visibleCount}
       className={cn(itemWrapperClassName, itemClassName)}
     >
       {renderItem(item, index)}
@@ -53,8 +64,12 @@ function MeasuredOverflowRowComponent<TItem>({
   ));
 
   const renderedOverflow =
-    hiddenCount > 0 ? (
-      <span data-card-overflow-more className={cn(overflowWrapperClassName, overflowClassName)}>
+    hiddenCount > 0 || featuredMaxVisible !== undefined ? (
+      <span
+        data-card-overflow-more
+        hidden={!hiddenCount}
+        className={cn(overflowWrapperClassName, overflowClassName)}
+      >
         {renderOverflow(hiddenCount)}
       </span>
     ) : null;
@@ -65,6 +80,8 @@ function MeasuredOverflowRowComponent<TItem>({
 
     return (
       <div
+        data-adaptive-overflow={featuredMaxVisible === undefined ? undefined : items.length}
+        data-overflow-min={minVisible}
         className={cn(
           'relative grid w-full max-w-full min-w-0 items-center overflow-hidden',
           pinnedGridClassName,

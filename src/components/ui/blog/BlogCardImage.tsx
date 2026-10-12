@@ -1,3 +1,4 @@
+import type { ResponsiveCover } from '@/lib/responsive-cover';
 import BlogCover from '@/components/ui/blog/BlogCover';
 import { getBlogPostRouteSlug } from '@/lib/blog-translations';
 import type { BlogPost } from '@/types';
@@ -5,6 +6,7 @@ import type { FC } from 'react';
 import { memo } from 'react';
 
 interface BlogCardImageProps {
+  readonly cover?: ResponsiveCover | undefined;
   readonly post: BlogPost;
   readonly tone?: 'default' | 'editorial' | undefined;
   readonly priority?: boolean | undefined;
@@ -14,12 +16,14 @@ const BlogCardImageComponent: FC<BlogCardImageProps> = ({
   post,
   tone = 'default',
   priority = false,
+  cover,
 }) => {
-  const coverImageSrc = post.data.coverImage?.src;
-  const imageSizes =
-    tone === 'editorial'
-      ? '(min-width: 1024px) 36rem, (min-width: 768px) 50vw, 100vw'
-      : '(min-width: 1024px) 28rem, (min-width: 768px) 50vw, 100vw';
+  const coverImageSrc = cover?.src ?? post.data.coverImage?.src;
+  // Lazy covers follow the concrete layout, including cards promoted by filtering.
+  // The eager feature occupies 42% of the 72rem container above 1024px.
+  const imageSizes = priority
+    ? '(min-width: 1280px) 30.5rem, (min-width: 1024px) calc(42vw - 2.1rem), (min-width: 768px) calc(100vw - 5rem), calc(100vw - 3rem)'
+    : 'auto, (min-width: 1280px) 36rem, (min-width: 1024px) 50vw, 100vw';
 
   return (
     <BlogCover
@@ -30,8 +34,9 @@ const BlogCardImageComponent: FC<BlogCardImageProps> = ({
       tags={post.data.tags}
       pubDate={post.data.pubDate}
       coverImageSrc={coverImageSrc}
-      imageWidth={post.data.coverImage?.width}
-      imageHeight={post.data.coverImage?.height}
+      imageSrcSet={cover?.srcSet}
+      imageWidth={cover?.width ?? post.data.coverImage?.width}
+      imageHeight={cover?.height ?? post.data.coverImage?.height}
       imageSizes={imageSizes}
       imageLoading={priority ? 'eager' : 'lazy'}
       imageFetchPriority={priority ? 'high' : 'low'}
@@ -52,7 +57,8 @@ export const BlogCardImage = memo(BlogCardImageComponent, (prevProps, nextProps)
   return (
     prevProps.post === nextProps.post &&
     prevProps.tone === nextProps.tone &&
-    prevProps.priority === nextProps.priority
+    prevProps.priority === nextProps.priority &&
+    prevProps.cover === nextProps.cover
   );
 });
 

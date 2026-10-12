@@ -33,6 +33,7 @@ type SearchInputSize = keyof typeof SIZE_CONFIG;
 
 interface SearchInputProps {
   readonly value: string;
+  readonly staticControls?: boolean;
   readonly onChange: (value: string) => void;
   readonly placeholder?: string;
   readonly ariaLabel?: string;
@@ -43,6 +44,7 @@ interface SearchInputProps {
 
 const SearchInputComponent: FC<SearchInputProps> = ({
   value,
+  staticControls = false,
   onChange,
   placeholder = 'Search…',
   ariaLabel = 'Search',
@@ -142,10 +144,12 @@ const SearchInputComponent: FC<SearchInputProps> = ({
         />
 
         {/* Clear button */}
-        {value && (
+        {(value || staticControls) && (
           <button
             type="button"
             onClick={clearValue}
+            data-clear-query={staticControls ? '' : undefined}
+            hidden={!value}
             className={cn(
               'focus-visible:ring-ring/50 shape-squircle-sm relative z-10 inline-flex items-center justify-center rounded-[1.2rem] transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               isEditorial
@@ -170,6 +174,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
 export const SearchInput = memo(SearchInputComponent, (prevProps, nextProps) => {
   return (
     prevProps.value === nextProps.value &&
+    prevProps.staticControls === nextProps.staticControls &&
     prevProps.placeholder === nextProps.placeholder &&
     prevProps.ariaLabel === nextProps.ariaLabel &&
     prevProps.className === nextProps.className &&

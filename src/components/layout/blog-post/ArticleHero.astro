@@ -1,4 +1,5 @@
 ---
+import { responsiveCover } from '@/lib/responsive-cover';
 import BlogCover from '@/components/ui/blog/BlogCover';
 import ArticleMeta from './ArticleMeta.astro';
 import ArticleTagList from './ArticleTagList.astro';
@@ -20,6 +21,7 @@ interface Props {
 const { title, excerpt, lang, slug, tags, pubDate, coverImage, readingTimeMin } =
   Astro.props as Props;
 const t = useTranslations(lang);
+const optimizedCover = coverImage ? await responsiveCover(coverImage) : undefined;
 ---
 
 <section
@@ -35,12 +37,14 @@ const t = useTranslations(lang);
       routeSlug={slug ?? title}
       tags={tags}
       pubDate={pubDate}
-      coverImageSrc={coverImage?.src}
+      coverImageSrc={optimizedCover?.src}
+      imageSrcSet={optimizedCover?.srcSet}
+      imageSizes="100vw"
       imageLoading="eager"
       imageFetchPriority="high"
       imageDecoding="sync"
-      imageWidth={coverImage?.width}
-      imageHeight={coverImage?.height}
+      imageWidth={optimizedCover?.width}
+      imageHeight={optimizedCover?.height}
       variant="hero"
       renderMode="background"
       className="article-hero__cover"

@@ -8,6 +8,7 @@ interface CardTagListProps {
   readonly tags?: readonly string[] | undefined;
   readonly tone?: 'accent' | 'muted' | undefined;
   readonly maxVisible?: number;
+  readonly adaptiveFeatured?: boolean;
   readonly minVisible?: number;
   readonly onOverflowClick?: () => void;
   readonly overflowLabel?: string;
@@ -19,6 +20,7 @@ const CardTagListComponent: FC<CardTagListProps> = ({
   tags,
   tone = 'accent',
   maxVisible,
+  adaptiveFeatured,
   minVisible = 1,
   onOverflowClick,
   overflowLabel = 'Show all tags',
@@ -77,6 +79,7 @@ const CardTagListComponent: FC<CardTagListProps> = ({
       <MeasuredOverflowRow
         items={tags}
         maxVisible={maxVisible}
+        featuredMaxVisible={adaptiveFeatured ? 4 : undefined}
         minVisible={minVisible}
         overflowPlacement="pinned"
         getKey={tag => tag}

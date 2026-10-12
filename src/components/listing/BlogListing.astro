@@ -1,0 +1,24 @@
+---
+import ListingShell from './ListingShell.astro';
+import BlogListingContent from './BlogListingContent.astro';
+import { buildBlogListing, blogFragmentPath } from '@/lib/listing-build';
+interface Props {
+  initialTags?: string[];
+}
+const { initialTags = [] } = Astro.props;
+const entries = await buildBlogListing('en');
+const localeUrl = blogFragmentPath('th');
+---
+
+<ListingShell
+  items={entries.map(entry => entry.meta)}
+  kind="blog"
+  fields={['year']}
+  initialTags={initialTags}
+  localeUrl={localeUrl}
+  placeholder="Search title, excerpt, series, or tags..."
+  emptyTitle="No matching notes"
+  emptyCopy="Try a broader search or clear a filter to bring the field notes back into view."
+>
+  <BlogListingContent entries={entries} initialTags={initialTags} />
+</ListingShell>

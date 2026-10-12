@@ -1,0 +1,69 @@
+---
+import ListingShell from './ListingShell.astro';
+import ProjectCard from '@/components/ui/cards/ProjectCard';
+import TalkCard from '@/components/ui/cards/TalkCard';
+import PublicationCard from '@/components/ui/publication/PublicationCard';
+import { collectionMetadata } from '@/lib/listing-build';
+import type { Project, Publication, Talk } from '@/types';
+interface Props {
+  kind: 'projects' | 'publications' | 'talks';
+  items: Project[] | Publication[] | Talk[];
+}
+const { kind, items } = Astro.props;
+const entries = items
+  .map(item => ({ item, meta: collectionMetadata(kind, item) }))
+  .sort((a, b) => b.meta.date - a.meta.date || a.meta.title.localeCompare(b.meta.title));
+const fields = kind === 'talks' ? ['mode', 'year', 'audience'] : ['year', 'type'];
+const placeholder =
+  kind === 'publications'
+    ? 'Search title, venue, authors...'
+    : kind === 'projects'
+      ? 'Search title, summary, collaborators...'
+      : 'Search title, audience...';
+---
+
+<ListingShell
+  items={entries.map(entry => entry.meta)}
+  kind={kind}
+  fields={fields}
+  placeholder={placeholder}
+  emptyTitle={`No matching ${kind}`}
+  emptyCopy="Try a broader search, remove a tag, or reset the filters."
+>
+  <ul class="editorial-listing__featured" data-featured-list aria-label={`Featured ${kind}`}>
+    {entries.slice(0, 1).map(({ item, meta }) => (
+      <li
+        id={meta.id}
+        data-listing-item
+        data-meta={JSON.stringify(meta)}
+        class="editorial-listing__item target-highlight h-full"
+      >
+        {kind === 'projects' ? (
+          <ProjectCard item={item as Project} featured />
+        ) : kind === 'talks' ? (
+          <TalkCard item={item as Talk} featured />
+        ) : (
+          <PublicationCard item={item as Publication} featured />
+        )}
+      </li>
+    ))}
+  </ul>
+  <ul class="editorial-listing__grid" data-grid-list aria-label={kind}>
+    {entries.slice(1).map(({ item, meta }) => (
+      <li
+        id={meta.id}
+        data-listing-item
+        data-meta={JSON.stringify(meta)}
+        class="editorial-listing__item target-highlight h-full"
+      >
+        {kind === 'projects' ? (
+          <ProjectCard item={item as Project} />
+        ) : kind === 'talks' ? (
+          <TalkCard item={item as Talk} />
+        ) : (
+          <PublicationCard item={item as Publication} />
+        )}
+      </li>
+    ))}
+  </ul>
+</ListingShell>

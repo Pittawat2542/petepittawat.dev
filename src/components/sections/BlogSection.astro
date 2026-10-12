@@ -1,4 +1,5 @@
 ---
+import { responsiveCover } from '@/lib/responsive-cover';
 import Container from '@/components/ui/core/Container.astro';
 import { BlogCard } from '@/components/ui/cards/BlogCard';
 import GlassButton from '@/components/ui/navigation/GlassButton';
@@ -16,6 +17,19 @@ interface Props {
 const { posts, allPosts, copy } = Astro.props as Props;
 const featuredPost = posts[0];
 const compactPosts = posts.slice(1, 3);
+const covers = new Map(
+  await Promise.all(
+    posts
+      .slice(0, 3)
+      .map(
+        async post =>
+          [
+            post.id,
+            post.data.coverImage ? await responsiveCover(post.data.coverImage) : undefined,
+          ] as const
+      )
+  )
+);
 const getReadingTimeMin = (post: BlogPost | undefined) =>
   post ? estimateReadingMetrics(post.body || '').readingTimeMin : undefined;
 ---
@@ -47,6 +61,7 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
       {featuredPost ? (
         <BlogCard
           post={featuredPost}
+          cover={covers.get(featuredPost.id)}
           allPosts={allPosts || undefined}
           presentation="featured"
           readingTimeMin={getReadingTimeMin(featuredPost)}
@@ -55,6 +70,7 @@ const getReadingTimeMin = (post: BlogPost | undefined) =>
       {compactPosts.map(post => (
         <BlogCard
           post={post}
+          cover={covers.get(post.id)}
           allPosts={allPosts || undefined}
           presentation="compact"
           readingTimeMin={getReadingTimeMin(post)}

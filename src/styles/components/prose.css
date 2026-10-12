@@ -59,3 +59,21 @@
 .prose .callout.note {
   border-color: color-mix(in oklab, var(--accent-blog) 55%, transparent);
 }
+
+@layer utilities {
+  /* Content link hover animation (prose only) */
+  .prose a {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 2px;
+    transition:
+      color 120ms ease-out,
+      background-size 140ms ease-out;
+  }
+  .prose a:hover,
+  .prose a:focus-visible {
+    background-size: 100% 2px;
+  }
+}

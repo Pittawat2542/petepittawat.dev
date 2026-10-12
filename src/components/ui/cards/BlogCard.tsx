@@ -13,6 +13,8 @@ import {
   type BlogPostLanguageState,
 } from '@/lib/blog-translations';
 import type { BlogPost } from '@/types';
+import type { ListingItem, SeriesInfo } from '@/lib/listing';
+import type { ResponsiveCover } from '@/lib/responsive-cover';
 import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
 import MediaContentCard from './MediaContentCard';
@@ -21,6 +23,10 @@ import MediaContentCard from './MediaContentCard';
  * Blog post card component properties
  */
 interface BlogCardProps {
+  readonly listingMeta?: ListingItem | undefined;
+  readonly seriesInfo?: SeriesInfo | undefined;
+  readonly cover?: ResponsiveCover | undefined;
+  readonly hidden?: boolean | undefined;
   /** The blog post data to display */
   readonly post: { id: string; collection: 'blog'; data: BlogPost['data'] };
   /** Whether this card should be displayed with featured styling */
@@ -31,12 +37,10 @@ interface BlogCardProps {
   readonly readingTimeMin?: number | undefined;
   /** Array of all posts used to calculate series information */
   readonly allPosts?:
-    | readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[]
-    | undefined;
+    readonly { id: string; collection: 'blog'; data: BlogPost['data'] }[] | undefined;
   /** Locale-aware translation state for this card */
   readonly languageState?:
-    | BlogPostLanguageState<{ id: string; collection: 'blog'; data: BlogPost['data'] }>
-    | undefined;
+    BlogPostLanguageState<{ id: string; collection: 'blog'; data: BlogPost['data'] }> | undefined;
   /** Additional CSS classes to apply */
   readonly className?: string | undefined;
   /** Inline styles to apply */
@@ -68,14 +72,16 @@ const BlogCardComponent: FC<BlogCardProps> = ({
   className,
   style,
   tone = 'default',
+  listingMeta,
+  seriesInfo,
+  cover,
+  hidden,
 }) => {
   const resolvedPresentation = presentation ?? (featured ? 'featured' : 'standard');
   const isEditorialFeature = resolvedPresentation === 'featured';
   const isCompact = resolvedPresentation === 'compact';
-  const { isPartOfSeries, partNumber, totalParts, seriesTitle } = useBlogCardSeries(
-    post,
-    Array.from(allPosts)
-  );
+  const legacySeries = useBlogCardSeries(post, seriesInfo ? [] : allPosts);
+  const { isPartOfSeries, partNumber, totalParts, seriesTitle } = seriesInfo ?? legacySeries;
   const fallbackTag = post.data.tags?.[0] ?? 'Article';
   const coverSpec = useMemo(
     () =>
@@ -103,6 +109,11 @@ const BlogCardComponent: FC<BlogCardProps> = ({
 
   return (
     <li
+      id={listingMeta?.id}
+      data-listing-item={listingMeta ? true : undefined}
+      data-meta={listingMeta ? JSON.stringify(listingMeta) : undefined}
+      data-featured={listingMeta ? String(isEditorialFeature) : undefined}
+      hidden={hidden}
       className={cn(
         'flex h-full min-w-0',
         isEditorialFeature && 'latest-blog__featured-item',
@@ -124,7 +135,14 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         target={post.data.externalUrl ? '_blank' : undefined}
         rel={post.data.externalUrl ? 'noopener noreferrer' : undefined}
         aria-label={`Read ${post.data.externalUrl ? 'external ' : ''}blog post: ${post.data.title}`}
-        media={<BlogCardImage post={post} tone={tone} priority={featured || isEditorialFeature} />}
+        media={
+          <BlogCardImage
+            post={post}
+            tone={tone}
+            cover={cover}
+            priority={featured || isEditorialFeature}
+          />
+        }
         mediaClassName={
           isEditorialFeature
             ? 'blog-card__media--featured-essay'
@@ -161,18 +179,29 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         }
         footer={
           <div
+            data-blog-footer={listingMeta ? true : undefined}
             className={cn(
               'type-meta flex items-center gap-4 text-white/72 md:text-sm',
               resolvedPresentation === 'standard' ? 'justify-between' : 'justify-end'
             )}
           >
-            {resolvedPresentation === 'standard' ? (
-              <span className="type-micro font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs">
+            {resolvedPresentation === 'standard' || listingMeta ? (
+              <span
+                data-card-year
+                className="type-micro font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs"
+              >
                 {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric' })}
               </span>
             ) : null}
             <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))]">
-              {ctaLabel}
+              {listingMeta ? (
+                <>
+                  <span data-standard-cta>Continue reading</span>
+                  <span data-featured-cta>Read essay</span>
+                </>
+              ) : (
+                ctaLabel
+              )}
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/82 transition-[transform,background-color,color,border-color] duration-300 group-hover:translate-x-[3px] group-hover:border-[color:var(--card-accent,var(--accent))]/28 group-hover:bg-[color:var(--card-accent,var(--accent))] group-hover:text-slate-950 md:h-9 md:w-9">
                 <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
               </span>

@@ -281,6 +281,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
               tags={item.tags}
               tone="muted"
               maxVisible={featured ? 4 : 3}
+              adaptiveFeatured
               onOverflowClick={() => {
                 setDetailsOpen(true);
               }}

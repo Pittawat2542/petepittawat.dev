@@ -1,0 +1,47 @@
+---
+import { BlogCard } from '@/components/ui/cards/BlogCard';
+import { selectListing, readListingState } from '@/lib/listing';
+import type { buildBlogListing } from '@/lib/listing-build';
+interface Props {
+  entries: Awaited<ReturnType<typeof buildBlogListing>>;
+  initialTags?: string[];
+}
+const { entries, initialTags = [] } = Astro.props;
+const selected = selectListing(
+  entries.map(entry => entry.meta),
+  readListingState(new URL('https://local.invalid'), initialTags)
+);
+const featuredId = selected[0]?.id;
+const visibleIds = new Set(selected.map(item => item.id));
+const featured = entries.find(entry => entry.meta.id === featuredId);
+---
+
+<ul class="blog-index__featured" data-featured-list aria-label="Featured blog post">
+  {featured && (
+    <BlogCard
+      post={featured.post}
+      featured
+      presentation="featured"
+      tone="editorial"
+      languageState={featured.state}
+      seriesInfo={featured.series}
+      cover={featured.cover}
+      listingMeta={featured.meta}
+    />
+  )}
+</ul>
+<ul class="blog-index__grid" data-grid-list aria-label="Blog posts">
+  {entries
+    .filter(entry => entry !== featured)
+    .map(entry => (
+      <BlogCard
+        post={entry.post}
+        tone="editorial"
+        languageState={entry.state}
+        seriesInfo={entry.series}
+        cover={entry.cover}
+        listingMeta={entry.meta}
+        hidden={!visibleIds.has(entry.meta.id)}
+      />
+    ))}
+</ul>

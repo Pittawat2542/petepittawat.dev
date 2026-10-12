@@ -1,0 +1,12 @@
+---
+import { blogFragmentPath, buildBlogListing } from '@/lib/listing-build';
+import BlogListingContent from '@/components/listing/BlogListingContent.astro';
+export const partial = true;
+export async function getStaticPaths() {
+  const url = blogFragmentPath('th');
+  return [{ params: { version: url.split('/').filter(Boolean).pop()! } }];
+}
+const entries = await buildBlogListing('th');
+---
+
+<BlogListingContent entries={entries} />

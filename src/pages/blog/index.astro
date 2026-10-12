@@ -1,17 +1,9 @@
 ---
 import { SITE_CONFIG } from '@/lib/constants';
-import { getCollection } from 'astro:content';
 import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
 import Container from '@/components/ui/core/Container.astro';
-import BlogListPage from '@/components/layout/BlogListPage';
+import BlogListing from '@/components/listing/BlogListing.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-
-import { toCompactBlogPosts } from '@/lib/compact';
-
-const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-const compactPosts = toCompactBlogPosts(allPosts);
 ---
 
 <BaseLayout title={`${SITE_CONFIG.title} - Blog`} description={SITE_CONFIG.description} page="blog">
@@ -28,6 +20,6 @@ const compactPosts = toCompactBlogPosts(allPosts);
       </div>
     </EditorialPageHero>
     <h2 class="sr-only">Writing archive</h2>
-    <BlogListPage client:idle posts={compactPosts} initialLocale="en" />
+    <BlogListing />
   </Container>
 </BaseLayout>

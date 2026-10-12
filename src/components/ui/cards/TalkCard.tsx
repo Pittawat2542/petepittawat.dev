@@ -335,6 +335,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
             <CardTagList
               tags={item.tags}
               maxVisible={featured ? 4 : 3}
+              adaptiveFeatured
               viewportSafe={featured}
               className={cardViewportRowClassName}
               onOverflowClick={() => {

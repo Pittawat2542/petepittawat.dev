@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogListPage from '@/components/layout/BlogListPage';
+import BlogListing from '@/components/listing/BlogListing.astro';
 import { SITE_CONFIG } from '@/lib/constants';
 import { createTagSlugMap } from '@/lib/slug';
 import PageWithHero from '@/layouts/PageWithHero.astro';
@@ -12,13 +12,10 @@ export async function getStaticPaths() {
   return Object.keys(map).map(slug => ({ params: { tag: slug } }));
 }
 
-import { toCompactBlogPosts } from '@/lib/compact';
-
 const params = Astro.params as { tag: string };
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const compactPosts = toCompactBlogPosts(allPosts);
 const allTags = ['All', ...Array.from(new Set(allPosts.flatMap(p => p.data.tags))).sort()];
 
 const map = createTagSlugMap(allTags.filter(t => t !== 'All'));
@@ -35,9 +32,11 @@ const selectedTag = map[params.tag] ?? params.tag;
   }}
 >
   <div class="mb-4">
-    <a href="/tags" class="link-underline">← All tags</a>
+    <a href="/tags" class="link-underline">
+      ← All tags
+    </a>
   </div>
-  <BlogListPage client:idle posts={compactPosts} initialTags={[selectedTag]} />
+  <BlogListing initialTags={[selectedTag]} />
 
   <!-- SR summary for quick context -->
   <p class="sr-only">Posts tagged with {selectedTag}.</p>

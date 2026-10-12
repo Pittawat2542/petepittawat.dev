@@ -1,4 +1,11 @@
 ---
+import { responsiveCover } from '@/lib/responsive-cover';
+import '@fontsource/noto-serif/400.css';
+import '@fontsource/noto-serif/700.css';
+import '@fontsource/noto-serif/400-italic.css';
+import '@fontsource/noto-serif-thai/400.css';
+import '@fontsource/noto-serif-thai/500.css';
+import '@fontsource/noto-serif-thai/700.css';
 import type { CollectionEntry } from 'astro:content';
 import ArticleBrief from '@/components/layout/blog-post/ArticleBrief.astro';
 import ArticleBody from '@/components/layout/blog-post/ArticleBody.astro';
@@ -38,6 +45,7 @@ const {
   alternateLanguages = [],
 } = Astro.props as Props;
 
+const optimizedCover = coverImage ? await responsiveCover(coverImage) : undefined;
 const t = useTranslations(lang);
 const languageHelperText = !languageState.availability.en.available
   ? t('blog.onlyInThai')
@@ -100,7 +108,14 @@ const schema = generateBlogPostSchema({
   <ReadingProgressBar />
   <Fragment slot="head">
     {coverImage ? (
-      <link rel="preload" as="image" href={coverImage.src} fetchpriority="high" />
+      <link
+        rel="preload"
+        as="image"
+        href={optimizedCover?.src}
+        imagesrcset={optimizedCover?.srcSet}
+        imagesizes="100vw"
+        fetchpriority="high"
+      />
     ) : null}
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </Fragment>

@@ -1,6 +1,6 @@
 ---
 import { SITE_CONFIG } from '@/lib/constants';
-import { PublicationsExplorer } from '@/components/explorers';
+import CollectionListing from '@/components/listing/CollectionListing.astro';
 import academicServices from '@/data/services/academic.json';
 import AcademicServices from '@/components/sections/AcademicServices.astro';
 import EditorialPageHero from '@/components/layout/core/EditorialPageHero.astro';
@@ -31,7 +31,7 @@ const publications = await getPublications();
       </div>
     </EditorialPageHero>
     <h2 class="sr-only">Publication archive</h2>
-    <PublicationsExplorer client:idle items={publications} />
+    <CollectionListing kind="publications" items={publications} />
     <AcademicServices
       data={academicServices}
       title={pageCopy.academicServicesTitle}

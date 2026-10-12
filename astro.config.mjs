@@ -3,6 +3,7 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import robotsTxt from 'astro-robots-txt';
 import sitemap from '@astrojs/sitemap';
+import { finalizeListingAssets } from './scripts/finalize-listing-assets.mjs';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
@@ -10,7 +11,9 @@ export default defineConfig({
 	site: 'https://petepittawat.dev',
 	integrations: [
 		mdx(),
+		{ name: 'content-hashed-listing-fragments', hooks: { 'astro:build:done': ({ dir }) => finalizeListingAssets(dir) } },
 		sitemap({
+			filter: page => !new URL(page).pathname.startsWith('/listing-assets/'),
 			changefreq: 'weekly',
 			priority: 0.7,
 			lastmod: new Date(),
@@ -50,18 +53,6 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 		build: {
 			reportCompressedSize: false, // Disable for faster builds
-			rolldownOptions: {
-				output: {
-					codeSplitting: {
-						groups: [
-							{
-								name: 'vendor-react',
-								test: /node_modules\/(?:\.pnpm\/[^/]+\/node_modules\/)?(?:react|react-dom|scheduler|lucide-react|@radix-ui)\//,
-							},
-						],
-					},
-				},
-			},
 		},
 		optimizeDeps: {
 			include: ['react', 'react-dom', 'lucide-react'],

@@ -1,0 +1,61 @@
+---
+import ListingToolbar from './ListingToolbar';
+import '@/styles/components/editorial-listing.css';
+import '@/styles/components/static-listing.css';
+import type { ListingItem } from '@/lib/listing';
+interface Props {
+  items: ListingItem[];
+  kind: string;
+  fields: string[];
+  initialTags?: string[];
+  localeUrl?: string;
+  placeholder: string;
+  emptyTitle: string;
+  emptyCopy: string;
+}
+const {
+  items,
+  kind,
+  fields,
+  initialTags = [],
+  localeUrl,
+  placeholder,
+  emptyTitle,
+  emptyCopy,
+} = Astro.props;
+---
+
+<section
+  data-static-listing
+  data-kind={kind}
+  data-initial-tags={JSON.stringify(initialTags)}
+  data-locale-url={localeUrl}
+  class="flex w-full flex-col"
+>
+  <ListingToolbar
+    items={items}
+    blog={kind === 'blog'}
+    fields={fields}
+    initialTags={initialTags}
+    placeholder={placeholder}
+  />
+  <div
+    data-listing-content
+    class:list={[
+      kind === 'blog' ? 'blog-index__items' : 'editorial-listing__items',
+      'mt-6 w-full py-2 md:py-3',
+    ]}
+  >
+    <slot />
+  </div>
+  <div data-listing-empty hidden class="editorial-listing__empty" role="status">
+    <h2 class="editorial-listing__empty-title">{emptyTitle}</h2>
+    <p class="editorial-listing__empty-copy">{emptyCopy}</p>
+  </div>
+  <dialog data-listing-dialog aria-label="Item details" class="static-listing-dialog">
+    <div data-dialog-content></div>
+  </dialog>
+</section>
+<script>
+  import '@/scripts/static-listing';
+</script>

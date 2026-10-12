@@ -137,6 +137,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
               {item.url ? (
                 <a
                   href={item.url}
+                  data-details-trigger
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-inherit transition-colors hover:text-[color:var(--card-accent)]"
@@ -180,6 +181,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
             <CardTagList
               tags={item.tags}
               maxVisible={featured ? 4 : 3}
+              adaptiveFeatured
               viewportSafe={featured}
               className={cardViewportRowClassName}
               onOverflowClick={() => {
