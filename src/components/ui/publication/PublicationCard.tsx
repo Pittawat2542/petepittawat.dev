@@ -61,7 +61,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       accent={accent}
       featured={featured}
       overlayIntensity="subtle"
-      className="publication-card cursor-pointer hover:-translate-y-1 hover:border-[color:var(--card-accent)]/30 hover:shadow-[0_38px_78px_-42px_rgba(3,7,18,0.95)] focus-visible:-translate-y-1 focus-visible:border-[color:var(--card-accent)]/38 focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.94)] focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0"
+      className="publication-card cursor-pointer hover:border-[color:var(--card-accent)]/30 focus-visible:border-[color:var(--card-accent)]/38 focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.94)] focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0"
       role="button"
       tabIndex={0}
       onClick={onCardClick}
@@ -95,11 +95,10 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
           ) : (
             <button
               type="button"
-              className="group/details inline-flex min-h-13 w-full min-w-0 items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm font-semibold text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/45 focus-visible:outline-none"
+              className="group/details inline-flex min-h-13 w-full min-w-0 items-center justify-between gap-3 rounded-[var(--radius-control)] border px-4 py-3 text-left text-sm font-semibold text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none"
               style={{
                 borderColor: tint(32),
-                background: `linear-gradient(180deg, ${tint(12)}, ${tint(5)})`,
-                boxShadow: `inset 0 1px 0 ${tint(12)}`,
+                background: 'var(--color-surface)',
               }}
               onClick={event => {
                 event.stopPropagation();

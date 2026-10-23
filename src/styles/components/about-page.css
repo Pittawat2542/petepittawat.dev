@@ -2,7 +2,7 @@
 .about-page .about-hero {
   display: grid;
   gap: 2.5rem;
-  padding-block: 1.5rem 3rem;
+  padding-block: var(--page-intro-top) var(--page-intro-bottom);
   border-bottom: 1px solid var(--editorial-rule);
 }
 
@@ -49,7 +49,7 @@
   margin: 0;
   color: var(--text-secondary);
   font-family: var(--editorial-serif);
-  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  font-size: var(--type-editorial-lead);
   line-height: 1.65;
   text-wrap: pretty;
 }

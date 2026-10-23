@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { memo } from 'react';
 import { SEARCH_TYPE_META, type SearchItemType } from './types';
-import { cn } from '@/lib/utils';
 
 interface SearchFilterChipsProps {
   readonly activeTypes: Set<SearchItemType>;
@@ -20,24 +19,13 @@ const SearchFilterChipsComponent: FC<SearchFilterChipsProps> = ({
 
   return (
     <div className="mt-3 flex flex-wrap gap-1.5">
-      <button
-        className={cn(
-          'shape-squircle-sm rounded-[1.1rem] border px-3 py-1 text-xs',
-          allSelected ? 'border-white/20 bg-white/10' : 'border-white/10 hover:bg-white/5'
-        )}
-        onClick={onSelectAll}
-      >
+      <button className="search-type-chip" aria-pressed={allSelected} onClick={onSelectAll}>
         All
       </button>
       {SEARCH_TYPE_META.map(({ key, label, Icon }) => (
         <button
           key={key}
-          className={cn(
-            'shape-squircle-sm inline-flex items-center gap-1 rounded-[1.1rem] border px-3 py-1 text-xs',
-            activeTypes.has(key)
-              ? 'border-white/20 bg-white/10'
-              : 'border-white/10 hover:bg-white/5'
-          )}
+          className="search-type-chip"
           onClick={() => {
             onToggle(key);
           }}

@@ -1,11 +1,5 @@
 ---
 import { responsiveCover } from '@/lib/responsive-cover';
-import '@fontsource/noto-serif/400.css';
-import '@fontsource/noto-serif/700.css';
-import '@fontsource/noto-serif/400-italic.css';
-import '@fontsource/noto-serif-thai/400.css';
-import '@fontsource/noto-serif-thai/500.css';
-import '@fontsource/noto-serif-thai/700.css';
 import type { CollectionEntry } from 'astro:content';
 import ArticleBrief from '@/components/layout/blog-post/ArticleBrief.astro';
 import ArticleBody from '@/components/layout/blog-post/ArticleBody.astro';
@@ -162,7 +156,7 @@ const schema = generateBlogPostSchema({
 
   .article-container {
     position: relative;
-    margin: calc(-1 * (var(--nav-height, 3.35rem) + 1.25rem)) auto 0;
+    margin: 0 auto;
     max-width: none;
     padding: 0 0 clamp(1.5rem, 2vw + 0.65rem, 3rem);
   }
@@ -264,7 +258,7 @@ const schema = generateBlogPostSchema({
     }
 
     .article-container {
-      margin-top: calc(-1 * (var(--nav-height, 3.35rem) + 1rem));
+      margin-top: 0;
       padding: 0 0 2.2rem;
     }
   }

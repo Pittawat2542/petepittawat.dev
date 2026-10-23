@@ -8,19 +8,17 @@ interface Props {
 const { tags } = Astro.props as Props;
 ---
 
-{
-  tags.length ? (
-    <ul class="article-tags-inline">
-      {tags.map(tag => (
-        <li>
-          <a href={`/tags/${slugifyTag(tag)}`} class="article-tag-pill">
-            #{tag}
-          </a>
-        </li>
-      ))}
-    </ul>
-  ) : null
-}
+{tags.length ? (
+  <ul class="article-tags-inline">
+    {tags.map(tag => (
+      <li>
+        <a href={`/tags/${slugifyTag(tag)}`} class="article-tag-pill">
+          #{tag}
+        </a>
+      </li>
+    ))}
+  </ul>
+) : null}
 
 <style>
   .article-tags-inline {
@@ -37,7 +35,7 @@ const { tags } = Astro.props as Props;
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.75rem;
-    border-radius: 999px;
+    border-radius: var(--radius-control);
     border: 1px solid color-mix(in oklab, var(--accent-blog) 28%, transparent);
     background: color-mix(in oklab, var(--accent-blog) 10%, rgba(8, 14, 28, 0.6));
     color: color-mix(in oklab, var(--accent-blog) 86%, white 14%);
@@ -51,7 +49,6 @@ const { tags } = Astro.props as Props;
   }
 
   .article-tag-pill:hover {
-    transform: translateY(-1px);
     border-color: color-mix(in oklab, var(--accent-blog) 48%, transparent);
     background: color-mix(in oklab, var(--accent-blog) 18%, rgba(8, 14, 28, 0.7));
   }

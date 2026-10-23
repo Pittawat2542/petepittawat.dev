@@ -23,7 +23,7 @@ const spotlightTimeline = timeline.filter(item => item.highlight);
   description={aboutPage.metaDescription || SITE_CONFIG.description}
   page="about"
 >
-  <Container className="about-page space-y-12 pt-2 pb-24 lg:space-y-16">
+  <Container className="about-page page-stack">
     <AboutHero aboutCopy={aboutCopy} />
     <AboutProofPoints proofPoints={aboutCopy.proofPoints} />
     <AboutThemes focusAreas={aboutCopy.focusAreas} />

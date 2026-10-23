@@ -17,8 +17,7 @@ const {
   ...rest
 } = Astro.props as Props;
 
-const BASE_CARD_CLASSES =
-  'shape-squircle rounded-[1.75rem] text-card-foreground transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out p-6 md:p-8 will-change-transform';
+const BASE_CARD_CLASSES = 'rounded-[var(--radius-card)] text-card-foreground p-6 md:p-8';
 
 const VARIANT_CARD_CLASSES = {
   default: 'glass-card',
@@ -30,7 +29,7 @@ const VARIANT_CARD_CLASSES = {
 const cardClassName = cn(
   BASE_CARD_CLASSES,
   VARIANT_CARD_CLASSES[variant],
-  animated && 'glass-border-animated',
+  animated && 'motion-reduce:transition-none',
   className,
   legacyClassName
 );

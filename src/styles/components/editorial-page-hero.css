@@ -1,8 +1,10 @@
 /* Shared editorial introduction, derived from the Research map. */
 .editorial-page-hero {
   display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
-  padding-block: 1.5rem clamp(2.5rem, 5vw, 4rem);
+  padding-block: var(--page-intro-top) var(--page-intro-bottom);
   border-bottom: 1px solid var(--editorial-rule);
 }
 
@@ -50,7 +52,7 @@
   margin: 0;
   color: var(--text-secondary);
   font-family: var(--editorial-serif);
-  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-size: var(--type-editorial-lead);
   letter-spacing: -0.02em;
   line-height: 1.65;
   text-wrap: pretty;

@@ -2,7 +2,7 @@
 
 .filter-chip--editorial-selected-primary {
   min-height: var(--filter-chip-height);
-  border-color: color-mix(in oklab, #8d7aff 46%, transparent);
+  border-color: var(--border-selected);
   border-radius: var(--filter-chip-radius);
   background: var(--filter-chip-selected-primary-surface);
   color: var(--white);
@@ -11,7 +11,7 @@
 
 .filter-chip--editorial-selected {
   min-height: var(--filter-chip-height);
-  border-color: var(--filter-chip-border-hover);
+  border-color: var(--border-selected);
   border-radius: var(--filter-chip-radius);
   background: var(--filter-chip-selected-surface);
   color: var(--white);

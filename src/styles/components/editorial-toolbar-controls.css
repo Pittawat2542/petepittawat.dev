@@ -7,8 +7,6 @@
   border: 1px solid var(--filter-pane-control-border);
   background: var(--filter-pane-control-surface);
   box-shadow: var(--listing-control-shadow);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .editorial-filter-toggle,
@@ -41,15 +39,13 @@
   background: var(--filter-pane-control-surface-hover);
   box-shadow: var(--listing-control-shadow-hover);
   color: var(--white);
-  transform: translateY(-0.08rem);
 }
 
 .editorial-filter-toggle[aria-expanded='true'] {
   border-color: var(--filter-pane-control-border-hover);
   background: var(--filter-pane-control-surface-hover);
-  box-shadow: var(--listing-control-shadow-hover), var(--listing-control-focus-ring);
+  border-color: var(--border-selected);
   color: var(--white);
-  transform: translateY(-0.08rem);
 }
 
 .editorial-filter-toggle:focus-visible,
@@ -137,7 +133,6 @@
   background-color: var(--filter-pane-control-surface-hover);
   box-shadow: var(--listing-control-shadow-hover);
   color: var(--white);
-  transform: translateY(-0.08rem);
 }
 
 .selector--editorial:focus-visible,
@@ -145,7 +140,7 @@
   outline: none;
   border-color: var(--filter-pane-control-border-hover);
   background-color: var(--filter-pane-control-surface-hover);
-  box-shadow: var(--listing-control-shadow-hover), var(--listing-control-focus-ring);
+  border-color: var(--border-selected);
   color: var(--white);
 }
 
@@ -177,9 +172,7 @@
 
 .selector__content--editorial {
   border-color: var(--filter-pane-control-border);
-  background: rgba(8, 14, 28, 0.96);
+  background: var(--surface-overlay);
   color: var(--white);
-  box-shadow: 0 26px 44px -28px rgba(3, 7, 18, 0.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-overlay);
 }

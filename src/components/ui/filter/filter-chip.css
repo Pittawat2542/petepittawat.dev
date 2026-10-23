@@ -1,0 +1,23 @@
+.filter-chip {
+  min-height: var(--control-height);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-control);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  transition:
+    background-color var(--motion-duration-fast) ease-out,
+    border-color var(--motion-duration-fast) ease-out;
+}
+.filter-chip:is(button):hover {
+  background: var(--surface-card-hover);
+  border-color: var(--border-strong);
+}
+.filter-chip--active {
+  background: var(--surface-selected);
+  border-color: var(--border-selected);
+  color: var(--text-primary);
+}
+.filter-chip:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

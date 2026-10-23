@@ -13,8 +13,7 @@
 /* Search result item & premium active highlights */
 .search-result-item-wrapper {
   border-left: 3px solid transparent;
-  transition: all var(--motion-duration-fast) var(--motion-ease-standard);
-  animation: slide-in-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 /* Stagger delays for list items loading */
@@ -44,12 +43,8 @@
 }
 
 .search-result-item-wrapper--active {
-  background: linear-gradient(
-    90deg,
-    color-mix(in oklab, var(--accent, #60a5fa) 8%, transparent) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  border-left-color: var(--accent, #60a5fa);
+  background: var(--surface-selected);
+  border-left-color: var(--color-accent-primary);
 }
 
 /* Keyword highlights in search results */
@@ -63,6 +58,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .search-result-item-wrapper {
-    animation: none !important;
   }
 }

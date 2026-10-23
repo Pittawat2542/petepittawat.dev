@@ -9,8 +9,12 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
   <span class="hero-galaxy__orbit hero-galaxy__orbit--primary"></span>
   <span class="hero-galaxy__orbit hero-galaxy__orbit--secondary"></span>
   <span class="hero-galaxy__orbit hero-galaxy__orbit--tertiary"></span>
-  {galaxyStars.map(({ className, style }) => <span class={className} style={style} />)}
-  {galaxyComets.map(({ className, style }) => <span class={className} style={style} />)}
+  {galaxyStars.map(({ className, style }) => (
+    <span class={className} style={style} />
+  ))}
+  {galaxyComets.map(({ className, style }) => (
+    <span class={className} style={style} />
+  ))}
 </div>
 
 <style>
@@ -20,7 +24,7 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
     pointer-events: none;
     z-index: -1;
     border-radius: 999px;
-    opacity: 0.95;
+    opacity: 0.68;
     transform: translateZ(0);
     animation: hero-galaxy-enter 900ms var(--motion-ease-decelerate) 90ms backwards;
   }
@@ -48,7 +52,7 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
   .hero-galaxy__nebula--core {
     inset: 11%;
     --blur: 22px;
-    --opacity: 0.5;
+    --opacity: 0.35;
     animation-delay: 90ms;
     background:
       radial-gradient(circle at 52% 42%, rgba(125, 211, 252, 0.18), transparent 34%),
@@ -62,7 +66,7 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
     width: 54%;
     aspect-ratio: 1;
     --blur: 24px;
-    --opacity: 0.42;
+    --opacity: 0.28;
     animation-delay: 180ms;
     background: radial-gradient(circle, rgba(34, 211, 238, 0.48), transparent 64%);
   }
@@ -73,7 +77,7 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
     width: 58%;
     aspect-ratio: 1;
     --blur: 28px;
-    --opacity: 0.38;
+    --opacity: 0.24;
     animation-delay: 230ms;
     background: radial-gradient(circle, rgba(139, 92, 246, 0.44), transparent 66%);
   }
@@ -227,17 +231,17 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
 
   :global(.hero-avatar:hover) .hero-galaxy__nebula--core,
   :global(.hero-avatar:focus-within) .hero-galaxy__nebula--core {
-    transform: scale(1.08) rotate(7deg);
+    transform: scale(1.02) rotate(2deg);
   }
 
   :global(.hero-avatar:hover) .hero-galaxy__nebula--cyan,
   :global(.hero-avatar:focus-within) .hero-galaxy__nebula--cyan {
-    transform: translate3d(-0.35rem, -0.45rem, 0) scale(1.12);
+    transform: translate3d(-0.35rem, -0.45rem, 0) scale(1.04);
   }
 
   :global(.hero-avatar:hover) .hero-galaxy__nebula--violet,
   :global(.hero-avatar:focus-within) .hero-galaxy__nebula--violet {
-    transform: translate3d(0.4rem, 0.5rem, 0) scale(1.1);
+    transform: translate3d(0.4rem, 0.5rem, 0) scale(1.04);
   }
 
   :global(.hero-avatar:hover) .hero-galaxy__orbit,
@@ -246,7 +250,7 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
     box-shadow:
       inset 0 0 24px rgba(125, 211, 252, 0.14),
       0 0 34px rgba(59, 130, 246, 0.18);
-    opacity: 0.95;
+    opacity: 0.68;
   }
 
   :global(.hero-avatar:hover) .hero-galaxy__orbit--primary,
@@ -269,7 +273,7 @@ import { galaxyComets, galaxyStars } from '@/components/sections/hero/hero-data'
     opacity: 1;
     filter: saturate(150%);
     animation-play-state: paused;
-    transform: scale(1.45);
+    transform: scale(1.04);
   }
 
   :global(.hero-avatar:hover) .hero-galaxy__comet,

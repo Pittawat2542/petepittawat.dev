@@ -1,0 +1,151 @@
+/* Publication dialog owns its internal layout. */
+.publication-modal {
+  padding: var(--space-6);
+  gap: var(--space-6);
+  overflow: hidden;
+}
+
+.publication-modal__header {
+  position: relative;
+  z-index: 10;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-right: 0.25rem;
+}
+
+.publication-modal__headline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-width: 46rem;
+}
+
+.publication-modal__eyebrow {
+  font-size: var(--type-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.publication-modal__headline h3 {
+  font-size: var(--type-card-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.publication-modal__meta {
+  display: grid;
+  gap: clamp(0.85rem, 1.4vw, 1.35rem);
+  padding-right: clamp(0.1rem, 0.4vw, 0.5rem);
+}
+
+.publication-modal__authors {
+  margin-block: 0;
+}
+
+.publication-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.publication-modal__scroll {
+  position: relative;
+  z-index: 5;
+  min-height: 0;
+  flex: 1 1 auto;
+  display: grid;
+  gap: clamp(1.4rem, 2.2vw, 1.9rem);
+  overflow-y: auto;
+  padding-top: 0.25rem;
+  padding-right: clamp(0.25rem, 0.6vw, 0.75rem);
+  padding-bottom: 0.15rem;
+  scrollbar-gutter: stable both-edges;
+}
+
+.publication-modal__section {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.publication-modal__section h4 {
+  margin: 0;
+  font-size: var(--type-body-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.publication-modal__section p {
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: pre-wrap;
+  max-width: 65ch;
+  word-break: break-word;
+}
+
+.publication-modal__resource-bar {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  gap: 0.8rem;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-default);
+}
+
+.publication-modal__resource-bar h4 {
+  margin: 0;
+  font-size: var(--type-body-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.publication-modal__resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  row-gap: 0.85rem;
+}
+
+.publication-modal__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--control-height);
+  padding: 0.55rem 0.95rem;
+  border-radius: var(--radius-control);
+  font-size: var(--type-control);
+  color: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--border-default);
+  background: var(--color-surface);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.publication-modal__chip:hover {
+  border-color: var(--border-strong);
+  background: var(--color-surface-raised);
+}
+
+.publication-modal__chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.publication-modal__chip:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

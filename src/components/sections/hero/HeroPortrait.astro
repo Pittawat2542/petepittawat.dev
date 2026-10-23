@@ -17,7 +17,7 @@ import HeroGalaxy from '@/components/sections/hero/HeroGalaxy.astro';
       decoding="async"
       widths={[224, 384, 448, 640]}
       sizes="(min-width: 768px) 20.8rem, 15.5rem"
-      class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15.5rem] object-cover shadow-lg ring-4 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20.8rem]"
+      class="hero-avatar__image avatar-round no-cv relative mx-auto w-full max-w-[15.5rem] object-cover ring-2 ring-[color:var(--white)]/15 transition-all duration-300 ease-out will-change-transform group-hover:ring-[color:var(--accent)]/60 md:mx-0 md:max-w-[20.8rem]"
     />
   </div>
 </div>
@@ -41,19 +41,15 @@ import HeroGalaxy from '@/components/sections/hero/HeroGalaxy.astro';
 
   .hero-avatar__image {
     transition-property: transform, box-shadow, filter, border-color;
-    transition-duration: 280ms;
+    transition-duration: var(--motion-duration-normal);
     transition-timing-function: cubic-bezier(0.2, 0.65, 0.25, 1);
     animation: hero-avatar-image-enter 760ms var(--motion-ease-decelerate) 140ms backwards;
   }
 
   .hero-avatar:hover .hero-avatar__image,
   .hero-avatar:focus-within .hero-avatar__image {
-    transform: translate3d(0, -0.42rem, 0) scale(1.024);
-    box-shadow:
-      0 0 0 1px rgba(125, 211, 252, 0.22),
-      0 26px 68px -26px rgba(59, 130, 246, 0.62),
-      0 14px 34px -22px rgba(124, 58, 237, 0.42),
-      0 18px 36px -24px rgba(14, 28, 56, 0.58);
+    transform: translate3d(0, -0.12rem, 0) scale(1.01);
+    box-shadow: 0 0 0 1px var(--border-selected);
     filter: saturate(110%) contrast(101%);
   }
 
@@ -80,7 +76,7 @@ import HeroGalaxy from '@/components/sections/hero/HeroGalaxy.astro';
     .hero-avatar:hover .hero-avatar__image,
     .hero-avatar:focus-within .hero-avatar__image {
       transform: none;
-      box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.45);
+      box-shadow: none;
       filter: none;
     }
   }

@@ -27,23 +27,23 @@ const SearchFooterComponent: FC<SearchFooterProps> = ({
             <ArrowDown size={10} aria-hidden="true" />
             <span className="sr-only">Down Arrow</span>
           </kbd>
-          <span className="text-white/40">to navigate</span>
+          <span className="text-muted-foreground">to navigate</span>
         </span>
         <span className="flex items-center gap-1.5">
           <kbd className="type-micro inline-flex h-5 items-center justify-center rounded border border-white/10 bg-white/5 px-1.5 font-mono font-medium text-white/70">
             <CornerDownLeft size={10} aria-hidden="true" />
             <span className="sr-only">Enter</span>
           </kbd>
-          <span className="text-white/40">to select</span>
+          <span className="text-muted-foreground">to select</span>
         </span>
         <span className="flex items-center gap-1.5">
           <kbd className="type-micro inline-flex h-5 items-center justify-center rounded border border-white/10 bg-white/5 px-1.5 font-mono font-medium text-white/70">
             esc
           </kbd>
-          <span className="text-white/40">to close</span>
+          <span className="text-muted-foreground">to close</span>
         </span>
       </div>
-      <div className="font-mono font-medium text-white/50 tabular-nums">
+      <div className="text-muted-foreground font-mono font-medium tabular-nums">
         {showTagCount
           ? `${tagCount} ${tagCount === 1 ? 'tag' : 'tags'}`
           : `${resultCount} ${resultCount === 1 ? 'result' : 'results'}`}

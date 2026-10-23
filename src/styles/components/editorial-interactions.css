@@ -72,7 +72,7 @@
 
   .media-card:is(a, [role='button']):focus-visible {
     transform: none;
-    translate: 0 -2px;
+    translate: 0;
   }
 
   :is(.editorial-filter-toggle, .selector--editorial, .search-input__clear--editorial) {
@@ -144,12 +144,12 @@
 
   .media-card:is(a, [role='button']):hover {
     transform: none;
-    translate: 0 -2px;
+    translate: 0;
   }
 
   .media-card:is(a, [role='button']):active {
     translate: 0;
-    scale: 0.995;
+    scale: 1;
   }
 }
 

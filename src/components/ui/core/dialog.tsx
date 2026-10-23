@@ -44,7 +44,7 @@ const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'site-dialog border-border bg-card no-hover-lift text-card-foreground shape-squircle fixed z-[1000] grid w-full max-w-lg gap-4 rounded-2xl border p-6 shadow-lg',
+        'site-dialog border-border bg-card no-hover-lift text-card-foreground fixed z-[1000] grid w-full max-w-lg gap-4 rounded-[var(--radius-dialog)] border p-6',
         'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
         // Constrain height while allowing inner content to manage overflow
         'max-h-[90vh]',

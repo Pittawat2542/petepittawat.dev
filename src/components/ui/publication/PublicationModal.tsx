@@ -1,3 +1,5 @@
+import './publication-modal.css';
+import '@/styles/components/dialog-surface.css';
 import { Code2, Database, ExternalLink, FileText, Video, X } from 'lucide-react';
 
 import { AuthorChipCloud } from './AuthorList';
@@ -6,7 +8,6 @@ import type { CSSProperties, FC, MouseEvent } from 'react';
 import type { Publication } from '@/types';
 import { PublicationMeta } from './PublicationMeta';
 import { memo } from 'react';
-import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 interface PublicationModalProps {
   readonly item: Publication;
@@ -29,11 +30,9 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, de
       <h2 className="sr-only">Publication Details</h2>
       <p className="sr-only">Full details and resources for the selected publication.</p>
       <div
-        className="aurora-modal aurora-modal--publication publication-modal flex max-h-[86vh] flex-col"
+        className="dialog-surface publication-modal flex max-h-[86vh] flex-col"
         style={{ '--card-accent': accent } as CSSProperties}
       >
-        <BlogCardOverlays accent={accent} intensity="subtle" />
-
         <header className="publication-modal__header">
           <div className="publication-modal__headline">
             <span className="publication-modal__eyebrow">Publication</span>
@@ -42,7 +41,7 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, de
           <button
             type="button"
             data-close-details
-            className="publication-modal__close"
+            className="publication-modal__close dialog-close"
             aria-label="Close details"
             title="Close"
           >

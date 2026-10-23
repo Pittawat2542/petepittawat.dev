@@ -55,7 +55,7 @@ const TalkResourceButton: FC<TalkResourceButtonProps> = ({ resource, tint, onCli
   const label = resource.label || '';
   const icon = getTalkResourceKind(label);
   const actionClassName =
-    'group/link inline-flex min-w-0 items-center justify-between gap-3 rounded-[1.55rem] border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-[color:var(--card-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/45';
+    'group/link inline-flex min-w-0 items-center justify-between gap-3 rounded-[var(--radius-control)] border px-4 py-3 text-[color:var(--card-accent)]/88 transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:text-[color:var(--card-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)]';
 
   return (
     <a
@@ -67,52 +67,27 @@ const TalkResourceButton: FC<TalkResourceButtonProps> = ({ resource, tint, onCli
       onClick={onClick}
       style={{
         borderColor: tint(48),
-        background: `linear-gradient(180deg, ${tint(12)}, ${tint(6)})`,
-        boxShadow: `inset 0 1px 0 ${tint(12)}`,
+        background: 'var(--color-surface)',
       }}
       aria-label={label}
     >
       <span className="inline-flex min-w-0 items-center gap-2 leading-snug font-medium tracking-[0.01em]">
         {icon === 'slides' ? (
-          <FileText
-            size={14}
-            aria-hidden="true"
-            className="icon-bounce text-[color:var(--card-accent)]"
-          />
+          <FileText size={14} aria-hidden="true" className="text-[color:var(--card-accent)]" />
         ) : icon === 'video' ? (
-          <Video
-            size={14}
-            aria-hidden="true"
-            className="icon-bounce text-[color:var(--card-accent)]"
-          />
+          <Video size={14} aria-hidden="true" className="text-[color:var(--card-accent)]" />
         ) : icon === 'code' ? (
-          <Code2
-            size={14}
-            aria-hidden="true"
-            className="icon-bounce text-[color:var(--card-accent)]"
-          />
+          <Code2 size={14} aria-hidden="true" className="text-[color:var(--card-accent)]" />
         ) : (
-          <ExternalLink
-            size={14}
-            aria-hidden="true"
-            className="icon-bounce text-[color:var(--card-accent)]"
-          />
+          <ExternalLink size={14} aria-hidden="true" className="text-[color:var(--card-accent)]" />
         )}
         <span className="min-w-0 truncate whitespace-nowrap">{label}</span>
       </span>
       <span className="shrink-0 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
         {isExternal ? (
-          <ExternalLink
-            size={14}
-            aria-hidden="true"
-            className="icon-bounce text-[color:var(--card-accent)]"
-          />
+          <ExternalLink size={14} aria-hidden="true" className="text-[color:var(--card-accent)]" />
         ) : (
-          <ArrowUpRight
-            size={14}
-            aria-hidden="true"
-            className="icon-bounce text-[color:var(--card-accent)]"
-          />
+          <ArrowUpRight size={14} aria-hidden="true" className="text-[color:var(--card-accent)]" />
         )}
       </span>
     </a>
@@ -226,7 +201,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
       accent={accent}
       featured={featured}
       className={cn(
-        'talk-card h-full cursor-pointer hover:-translate-y-1 hover:border-[color:var(--card-accent)]/30 hover:shadow-[0_38px_78px_-42px_rgba(3,7,18,0.95)] focus-visible:-translate-y-1 focus-visible:border-[color:var(--card-accent)]/38 focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.94)] focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0',
+        'talk-card h-full cursor-pointer hover:border-[color:var(--card-accent)]/30 focus-visible:border-[color:var(--card-accent)]/38 focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.94)] focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0',
         !hasResources && 'talk-card--no-resources'
       )}
       role="button"
@@ -260,11 +235,10 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
             renderOverflow={hiddenResourceCount => (
               <button
                 type="button"
-                className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-[1.55rem] border px-4 py-3 font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/55 focus-visible:outline-none"
+                className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-[var(--radius-control)] border px-4 py-3 font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none"
                 style={{
                   borderColor: tint(58),
-                  background: `linear-gradient(180deg, ${tint(26)}, ${tint(13)})`,
-                  boxShadow: `inset 0 1px 0 ${tint(22)}, 0 14px 28px -22px var(--card-accent)`,
+                  background: 'var(--color-surface)',
                 }}
                 onClick={event => {
                   event.stopPropagation();

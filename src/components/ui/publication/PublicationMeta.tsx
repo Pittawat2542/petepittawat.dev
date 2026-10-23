@@ -17,7 +17,7 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
     <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-[color:var(--white)]/60 md:text-sm">
       {item.type ? (
         <Badge
-          className="type-caption rounded-full px-3 py-1 font-medium whitespace-nowrap md:text-xs"
+          className="type-caption rounded-[var(--radius-control)] px-3 py-1 font-medium whitespace-nowrap md:text-xs"
           style={{
             color: accent,
             borderColor: `color-mix(in oklab, ${accent} 52%, transparent)`,
@@ -32,14 +32,14 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
       {item.venue ? (
         <Tooltip content={item.venue}>
           <span
-            className="type-caption inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 font-medium md:max-w-[22rem] md:text-xs"
+            className="type-caption inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-control)] px-3 py-1 font-medium md:max-w-[22rem] md:text-xs"
             style={{
               color: accent,
               background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 12%, transparent), color-mix(in oklab, ${accent} 7%, transparent))`,
               border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
             }}
           >
-            <Building2 size={12} aria-hidden="true" className="icon-bounce" />
+            <Building2 size={12} aria-hidden="true" />
             <span className="min-w-0 truncate leading-tight">{item.venue}</span>
           </span>
         </Tooltip>
@@ -47,14 +47,14 @@ const PublicationMetaComponent: FC<PublicationMetaProps> = ({ item, accent }) =>
 
       <Tooltip content={String(item.year)}>
         <span
-          className="type-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-medium md:text-xs"
+          className="type-caption inline-flex items-center gap-1.5 rounded-[var(--radius-control)] px-3 py-1 font-medium md:text-xs"
           style={{
             color: accent,
             background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 12%, transparent), color-mix(in oklab, ${accent} 7%, transparent))`,
             border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
           }}
         >
-          <CalendarDays size={12} aria-hidden="true" className="icon-bounce" />
+          <CalendarDays size={12} aria-hidden="true" />
           <span>{item.year}</span>
         </span>
       </Tooltip>

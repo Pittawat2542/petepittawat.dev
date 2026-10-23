@@ -15,8 +15,6 @@
   font-size: var(--type-control);
   font-weight: 650;
   box-shadow: var(--listing-control-shadow);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   transition:
     transform var(--motion-duration-fast) var(--motion-ease-decelerate),
     border-color var(--motion-duration-fast) var(--motion-ease-decelerate),
@@ -30,7 +28,6 @@
   border-color: var(--filter-pane-control-border-hover);
   background: var(--filter-pane-control-surface-hover);
   box-shadow: var(--listing-control-shadow-hover);
-  transform: translateY(-0.08rem);
 }
 
 .editorial-tag-combobox--focused,
@@ -81,7 +78,7 @@
   background: color-mix(in oklab, var(--page-accent, var(--accent)) 12%, rgba(255, 255, 255, 0.05));
   border: 1px solid
     color-mix(in oklab, var(--page-accent, var(--accent)) 30%, rgba(255, 255, 255, 0.12));
-  border-radius: calc(var(--listing-control-radius) - 0.4rem);
+  border-radius: var(--radius-control);
   padding: 0.15rem 0.45rem;
   color: var(--white);
   font-size: var(--type-meta);

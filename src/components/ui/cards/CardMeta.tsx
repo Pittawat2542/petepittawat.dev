@@ -10,7 +10,7 @@ interface CardKickerProps {
 const CardKickerComponent: FC<CardKickerProps> = ({ label, className }) => (
   <div
     className={cn(
-      'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-white/48 uppercase',
+      'type-micro text-muted-foreground inline-flex items-center gap-2 font-semibold tracking-[0.12em] uppercase',
       className
     )}
   >
@@ -58,17 +58,16 @@ const CardMetaChipComponent: FC<CardMetaChipProps> = ({
 }) => (
   <span
     className={cn(
-      'type-caption inline-flex max-w-full shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-medium text-[color:var(--card-accent)]/76 uppercase md:text-xs',
+      'type-caption inline-flex max-w-full shrink-0 items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1 font-medium text-[color:var(--card-accent)]/76 uppercase md:text-xs',
       className
     )}
     style={{
       borderColor: getCardAccentTint(28),
-      background: `linear-gradient(180deg, ${getCardAccentTint(10)}, ${getCardAccentTint(5)})`,
-      boxShadow: `inset 0 1px 0 ${getCardAccentTint(10)}`,
+      background: 'var(--color-surface)',
     }}
     title={title}
   >
-    {Icon ? <Icon size={12} aria-hidden="true" className="icon-bounce shrink-0" /> : null}
+    {Icon ? <Icon size={12} aria-hidden="true" className="shrink-0" /> : null}
     <span className="min-w-0 truncate leading-tight">{children}</span>
   </span>
 );

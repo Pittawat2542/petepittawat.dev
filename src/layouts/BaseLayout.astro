@@ -71,12 +71,7 @@ const bodyClasses = pageKey ? ['page-theme', `page-theme--${pageKey}`] : [];
       Skip to main content
     </a>
     <Header />
-    <main
-      id="main-content"
-      tabindex="-1"
-      class="page-shell mx-auto mb-12 max-w-screen-lg px-6 pt-28 md:max-w-screen-xl md:px-10"
-      style="view-transition-name: page;"
-    >
+    <main id="main-content" tabindex="-1" class="page-shell" style="view-transition-name: page;">
       <PageBackdrop variant={type === 'article' ? 'article' : 'landing'} />
       <slot />
     </main>

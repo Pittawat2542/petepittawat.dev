@@ -43,7 +43,7 @@ const CardTagListComponent: FC<CardTagListProps> = ({
   const renderTag = (tag: string) => (
     <Badge
       className={cn(
-        'type-caption max-w-[min(18rem,100%)] min-w-0 overflow-hidden rounded-full border px-3 py-1 font-medium md:text-xs',
+        'type-caption max-w-[min(18rem,100%)] min-w-0 overflow-hidden rounded-[var(--radius-control)] border px-3 py-1 font-medium md:text-xs',
         tone === 'muted' && 'text-white/70'
       )}
       variant="outline"
@@ -57,12 +57,11 @@ const CardTagListComponent: FC<CardTagListProps> = ({
       <button
         type="button"
         className={cn(
-          'type-caption rounded-full border px-3.5 py-1 font-semibold whitespace-nowrap text-[color:var(--card-accent)] transition-[border-color,background-color,color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/55 focus-visible:outline-none md:text-xs'
+          'type-caption min-h-11 rounded-[var(--radius-control)] border px-3.5 py-1 font-semibold whitespace-nowrap text-[color:var(--card-accent)] transition-[border-color,background-color,color,transform,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none md:text-xs'
         )}
         style={{
           borderColor: getCardAccentTint(58),
-          background: `linear-gradient(180deg, ${getCardAccentTint(24)}, ${getCardAccentTint(12)})`,
-          boxShadow: `inset 0 1px 0 ${getCardAccentTint(20)}, 0 10px 24px -18px var(--card-accent)`,
+          background: 'var(--color-surface)',
         }}
         onClick={event => {
           event.stopPropagation();

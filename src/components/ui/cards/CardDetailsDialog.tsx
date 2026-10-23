@@ -1,6 +1,6 @@
+import '@/styles/components/dialog-surface.css';
 import { X } from 'lucide-react';
 import { memo, type CSSProperties, type FC, type ReactNode } from 'react';
-import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 
 export interface CardDetailsDialogSection {
   readonly title: string;
@@ -30,11 +30,9 @@ const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
     <h2 className="sr-only">{title}</h2>
     <p className="sr-only">{description}</p>
     <div
-      className="aurora-modal card-details-modal relative flex max-h-[86vh] flex-col overflow-hidden rounded-[1.65rem] border border-white/10 bg-[rgba(7,14,28,0.92)] shadow-[0_36px_92px_-50px_rgba(3,7,18,0.98)]"
+      className="dialog-surface card-details-modal relative flex max-h-[86vh] flex-col"
       style={{ '--card-accent': accent } as CSSProperties}
     >
-      <BlogCardOverlays accent={accent} intensity="subtle" />
-
       <header className="relative z-10 flex items-start justify-between gap-4 border-b border-white/10 px-5 py-5 sm:px-6">
         <div className="min-w-0">
           <span className="type-micro font-semibold tracking-[0.26em] text-[color:var(--card-accent)]/76 uppercase">
@@ -51,7 +49,7 @@ const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
         <button
           type="button"
           data-close-details
-          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.06] text-white/72 transition-[border-color,background-color,color,transform] duration-200 hover:-translate-y-0.5 hover:border-[color:var(--card-accent)]/35 hover:bg-[color:var(--card-accent)]/12 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/45 focus-visible:outline-none"
+          className="dialog-close"
           aria-label="Close details"
           title="Close"
         >

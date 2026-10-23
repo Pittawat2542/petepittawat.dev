@@ -1,7 +1,7 @@
 .research-page {
   --research-rule: var(--editorial-rule);
   --research-muted: var(--color-canvas-muted);
-  padding-block: 1.5rem 3rem;
+  padding-block: var(--page-intro-top) 0;
 }
 
 .research-page a {
@@ -46,7 +46,7 @@
   display: grid;
   gap: 3rem;
   align-items: center;
-  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  padding-bottom: var(--page-intro-bottom);
 }
 
 .research-hero h1 {
@@ -55,7 +55,7 @@
   gap: 0.025em;
   margin: 1rem 0 1.25rem;
   color: var(--text-primary);
-  font-size: clamp(3.5rem, 7.5vw, 6.25rem);
+  font-size: var(--type-page-title);
   font-weight: 700;
   letter-spacing: -0.055em;
   line-height: 1.05;
@@ -69,7 +69,7 @@
   margin: 0;
   color: var(--text-secondary);
   font-family: var(--editorial-serif);
-  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  font-size: var(--type-editorial-lead);
   letter-spacing: -0.025em;
   line-height: 1.5;
 }
@@ -295,7 +295,7 @@
 .research-map-theme__title {
   margin: 0;
   color: var(--text-primary);
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-size: var(--type-section-title);
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.2;
@@ -443,7 +443,7 @@
 .research-continue h2 {
   margin: 0.75rem 0;
   font-family: var(--editorial-serif);
-  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-size: var(--type-editorial-lead);
   font-weight: 400;
   line-height: 1.5;
 }

@@ -1,0 +1,74 @@
+.site-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--control-height);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  padding: 0.625rem 1rem;
+  font-family: var(--font-body);
+  font-size: var(--type-control);
+  font-weight: 600;
+  line-height: var(--leading-control);
+  text-decoration: none;
+  transition:
+    color var(--motion-duration-fast) ease-out,
+    background-color var(--motion-duration-fast) ease-out,
+    border-color var(--motion-duration-fast) ease-out;
+}
+.site-button--primary {
+  background: var(--color-accent-primary);
+  color: var(--color-on-accent);
+}
+.site-button--primary:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--color-accent-primary) 85%, white);
+}
+.site-button--secondary,
+.site-button--outline {
+  border-color: var(--border-default);
+  background: var(--color-surface);
+  color: var(--text-primary);
+}
+.site-button--secondary:hover:not(:disabled),
+.site-button--outline:hover:not(:disabled),
+.site-button--ghost:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--color-surface-raised);
+  color: var(--text-primary);
+}
+.site-button--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.site-button--link {
+  color: var(--color-accent-primary);
+  text-underline-offset: 0.2em;
+}
+.site-button--link:hover {
+  text-decoration: underline;
+}
+.site-button--destructive {
+  background: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+}
+.site-button--sm {
+  padding-inline: 0.75rem;
+}
+.site-button--lg {
+  min-height: 3rem;
+  padding-inline: 1.5rem;
+}
+.site-button--icon {
+  width: var(--control-height);
+  padding: 0;
+}
+.site-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.site-button:disabled,
+.site-button[aria-disabled='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -188,12 +188,12 @@ const BlogCardComponent: FC<BlogCardProps> = ({
             {resolvedPresentation === 'standard' || listingMeta ? (
               <span
                 data-card-year
-                className="type-micro font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs"
+                className="type-micro font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-200 group-hover:text-white/68 md:text-xs"
               >
                 {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric' })}
               </span>
             ) : null}
-            <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))]">
+            <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-200 group-hover:text-[color:var(--card-accent,var(--accent))]">
               {listingMeta ? (
                 <>
                   <span data-standard-cta>Continue reading</span>
@@ -202,7 +202,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
               ) : (
                 ctaLabel
               )}
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/82 transition-[transform,background-color,color,border-color] duration-300 group-hover:translate-x-[3px] group-hover:border-[color:var(--card-accent,var(--accent))]/28 group-hover:bg-[color:var(--card-accent,var(--accent))] group-hover:text-slate-950 md:h-9 md:w-9">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/82 transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-[3px] group-hover:border-[color:var(--card-accent,var(--accent))]/28 group-hover:bg-[color:var(--card-accent,var(--accent))] group-hover:text-slate-950 md:h-9 md:w-9">
                 <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
               </span>
             </span>

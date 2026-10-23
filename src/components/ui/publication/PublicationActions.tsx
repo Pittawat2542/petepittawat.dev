@@ -56,7 +56,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
     `color-mix(in oklab, var(--card-accent) ${intensity}%, transparent)`;
   const chipStyle = { '--card-accent': accent } as CSSProperties;
   const actionClassName =
-    'group/link inline-flex min-w-0 items-center gap-2.5 rounded-xl border px-4 py-3 text-sm text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/45 focus-visible:outline-none';
+    'group/link inline-flex min-w-0 items-center gap-2.5 rounded-[var(--radius-control)] border px-4 py-3 text-sm text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none';
   const actions = [
     ...(item.url
       ? [
@@ -81,12 +81,11 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
     onOverflowClick ? (
       <button
         type="button"
-        className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/55 focus-visible:outline-none"
+        className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-[var(--radius-control)] border px-4 py-3 text-sm font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none"
         style={{
           ...chipStyle,
           borderColor: tint(58),
-          background: `linear-gradient(180deg, ${tint(26)}, ${tint(13)})`,
-          boxShadow: `inset 0 1px 0 ${tint(22)}, 0 14px 28px -22px var(--card-accent)`,
+          background: 'var(--color-surface)',
         }}
         onClick={event => {
           event.stopPropagation();
@@ -121,8 +120,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
             style={{
               ...chipStyle,
               borderColor: tint(24),
-              background: `linear-gradient(180deg, ${tint(10)}, ${tint(4)})`,
-              boxShadow: `inset 0 1px 0 ${tint(10)}`,
+              background: 'var(--color-surface)',
             }}
             onClick={onStopPropagation}
             aria-label={action.ariaLabel}

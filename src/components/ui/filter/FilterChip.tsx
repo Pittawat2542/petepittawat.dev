@@ -1,32 +1,27 @@
+import './filter-chip.css';
 import { memo, type FC, type MouseEvent, type ReactNode } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const SIZE_CLASSES = {
-  sm: 'px-2.5 py-1 text-xs h-7',
-  md: 'px-3 py-1.5 text-sm h-8',
-  lg: 'px-4 py-2 text-base h-10',
+  sm: 'px-2.5 py-1 text-xs',
+  md: 'px-3 py-1.5 text-sm',
+  lg: 'px-4 py-2 text-base',
 } as const;
 
-const BASE_CHIP_CLASSES =
-  'glass-surface relative rounded-full transition-[transform,background-color,color,border-color,box-shadow] duration-150 ease-out backdrop-blur-md border will-change-transform';
-
+const BASE_CHIP_CLASSES = 'filter-chip relative';
 const ACTIVE_VARIANT_CLASSES = {
-  default: 'glass-surface-elevated border-ring/30 text-foreground shadow-ring/10',
-  primary: 'bg-primary/30 text-primary-foreground border-primary/40 shadow-primary/20',
-  accent: 'bg-ring/30 text-white border-ring/40 shadow-ring/20',
+  default: 'filter-chip--active',
+  primary: 'filter-chip--active',
+  accent: 'filter-chip--active',
 } as const;
-
-const INACTIVE_CLASSES =
-  'bg-muted/20 text-muted-foreground border-muted/30 hover:glass-surface-elevated hover:bg-muted/30 hover:text-foreground hover:border-muted/50';
-
+const INACTIVE_CLASSES = '';
 const ACTIVE_COUNT_CLASSES = {
-  default: 'bg-white/20 font-bold text-white shadow-sm',
-  primary: 'bg-white/20 font-bold text-white shadow-sm',
-  accent: 'bg-white/25 font-bold text-white shadow-sm',
+  default: 'text-foreground',
+  primary: 'text-foreground',
+  accent: 'text-foreground',
 } as const;
-
-const INACTIVE_COUNT_CLASSES = 'bg-muted/40 text-muted-foreground opacity-70';
+const INACTIVE_COUNT_CLASSES = 'text-muted-foreground';
 
 export interface FilterChipProps {
   readonly children: ReactNode;
@@ -76,7 +71,7 @@ const FilterChipComponent: FC<FilterChipProps> = ({
     'inline-flex items-center gap-1.5 font-medium whitespace-nowrap focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none',
     SIZE_CLASSES[size],
     getVariantClasses(variant, active),
-    onClick ? 'cursor-pointer hover:scale-[1.03] active:scale-95' : 'cursor-default',
+    onClick ? 'cursor-pointer' : 'cursor-default',
     className
   );
 
@@ -92,7 +87,7 @@ const FilterChipComponent: FC<FilterChipProps> = ({
       {count !== undefined && (
         <span
           className={cn(
-            'filter-chip__count min-w-[1.25rem] rounded-full px-1.5 py-0.5 text-center text-xs font-semibold transition-[background-color,color,border-color] duration-150',
+            'filter-chip__count min-w-[1.25rem] rounded-[var(--radius-control)] px-1.5 py-0.5 text-center text-xs font-semibold transition-[background-color,color,border-color] duration-150',
             active ? ACTIVE_COUNT_CLASSES[variant] : INACTIVE_COUNT_CLASSES
           )}
         >
@@ -105,9 +100,9 @@ const FilterChipComponent: FC<FilterChipProps> = ({
           type="button"
           onClick={handleRemove}
           className={cn(
-            'focus-visible:ring-ring/40 rounded-full p-0.5 transition-[background-color,color] duration-150 ease-out focus-visible:ring-1 focus-visible:outline-none',
+            'focus-visible:ring-ring/40 rounded-[var(--radius-control)] p-0.5 transition-[background-color,color] duration-150 ease-out focus-visible:ring-1 focus-visible:outline-none',
             active
-              ? 'text-black/60 hover:bg-black/20 hover:text-black'
+              ? 'text-foreground hover:bg-white/10'
               : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
           )}
           aria-label={`Remove ${children} filter`}
@@ -115,11 +110,6 @@ const FilterChipComponent: FC<FilterChipProps> = ({
         >
           <X size={size === 'sm' ? 12 : size === 'lg' ? 16 : 14} />
         </button>
-      )}
-
-      {/* Subtle inner glow for active state */}
-      {active && (
-        <div className="filter-chip__shine pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05]" />
       )}
     </Component>
   );

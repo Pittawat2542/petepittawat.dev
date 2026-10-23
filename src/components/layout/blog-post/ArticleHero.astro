@@ -152,9 +152,9 @@ const optimizedCover = coverImage ? await responsiveCover(coverImage) : undefine
     margin: 0;
     max-width: 22ch;
     color: var(--white);
-    font-size: clamp(2rem, 4.5vw, 3.75rem);
-    font-weight: 400;
-    font-family: var(--editorial-serif);
+    font-size: var(--type-article-title);
+    font-weight: 600;
+    font-family: var(--font-heading);
     line-height: 1.25;
     letter-spacing: -0.035em;
     text-wrap: balance;
@@ -163,8 +163,8 @@ const optimizedCover = coverImage ? await responsiveCover(coverImage) : undefine
 
   .article-hero[data-lang='th'] .article-hero__title {
     max-width: 24ch;
-    line-height: 1.12;
-    letter-spacing: -0.04em;
+    line-height: 1.45;
+    letter-spacing: 0;
   }
 
   .article-hero__meta-row {
@@ -194,7 +194,7 @@ const optimizedCover = coverImage ? await responsiveCover(coverImage) : undefine
 
     .article-hero__title {
       max-width: 100%;
-      font-size: clamp(1.75rem, 7vw, 2.5rem);
+      font-size: var(--type-article-title-compact);
       line-height: 1.3;
     }
 

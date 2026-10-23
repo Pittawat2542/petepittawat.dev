@@ -49,9 +49,6 @@ function getAuthorChipStyle(author: ReturnType<typeof renderAuthorsBold>[number]
     background: author.isOwner
       ? 'linear-gradient(180deg, color-mix(in oklab, var(--card-accent) 13%, transparent), color-mix(in oklab, var(--card-accent) 6%, transparent))'
       : 'color-mix(in oklab, var(--white) 5%, transparent)',
-    boxShadow: author.isOwner
-      ? 'inset 0 1px 0 color-mix(in oklab, var(--card-accent) 13%, transparent)'
-      : undefined,
   } as CSSProperties;
 }
 
@@ -60,7 +57,7 @@ function renderAuthorChip(author: ReturnType<typeof renderAuthorsBold>[number]) 
     <span
       data-publication-author-chip
       className={cn(
-        'type-caption inline-flex max-w-[min(24rem,100%)] min-w-0 items-center overflow-hidden rounded-full border px-3 py-1.5 font-medium md:text-xs',
+        'type-caption inline-flex max-w-[min(24rem,100%)] min-w-0 items-center overflow-hidden rounded-[var(--radius-control)] border px-3 py-1.5 font-medium md:text-xs',
         author.isOwner ? 'text-[color:var(--card-accent)]' : 'text-white/72'
       )}
       style={getAuthorChipStyle(author)}
@@ -87,13 +84,10 @@ const AuthorChipListComponent: FC<AuthorChipListProps> = ({
     onOverflowClick ? (
       <button
         type="button"
-        className="type-caption rounded-full border px-3.5 py-1.5 font-semibold whitespace-nowrap text-[color:var(--card-accent)] transition-[border-color,background-color,color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--card-accent)]/55 focus-visible:outline-none md:text-xs"
+        className="type-caption min-h-11 rounded-[var(--radius-control)] border px-3.5 py-1.5 font-semibold whitespace-nowrap text-[color:var(--card-accent)] transition-[border-color,background-color,color,transform,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none md:text-xs"
         style={{
           borderColor: 'color-mix(in oklab, var(--card-accent) 58%, transparent)',
-          background:
-            'linear-gradient(180deg, color-mix(in oklab, var(--card-accent) 24%, transparent), color-mix(in oklab, var(--card-accent) 12%, transparent))',
-          boxShadow:
-            'inset 0 1px 0 color-mix(in oklab, var(--card-accent) 20%, transparent), 0 10px 24px -18px var(--card-accent)',
+          background: 'var(--color-surface)',
         }}
         onClick={onOverflowClick}
         aria-label={`${overflowLabel}: ${hiddenCount} more`}

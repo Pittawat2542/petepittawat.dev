@@ -154,7 +154,7 @@ const { languageHelperText, languageState } = Astro.props as Props;
     color: color-mix(in oklab, var(--accent-blog) 78%, var(--white) 18%);
     font-size: var(--type-caption);
     font-weight: 760;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
@@ -169,12 +169,12 @@ const { languageHelperText, languageState } = Astro.props as Props;
 
   .article-reader-pane__toggle {
     display: inline-flex;
-    width: 2rem;
-    height: 2rem;
+    width: var(--control-height);
+    height: var(--control-height);
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    border-radius: 999px;
+    border-radius: var(--radius-control);
     border: 1px solid rgba(96, 165, 250, 0.18);
     background: rgba(37, 99, 235, 0.08);
     color: color-mix(in oklab, var(--white) 66%, transparent);
@@ -209,7 +209,7 @@ const { languageHelperText, languageState } = Astro.props as Props;
   }
 
   .article-reader-pane__content::-webkit-scrollbar-thumb {
-    border-radius: 999px;
+    border-radius: var(--radius-control);
     background: rgba(148, 163, 184, 0.28);
   }
 

@@ -8,7 +8,11 @@ interface Props extends HTMLAttributes<'section'> {
 }
 
 const { class: className, className: legacyClassName, ...rest } = Astro.props as Props;
-const mergedClassName = cn('mx-auto max-w-6xl', className, legacyClassName);
+const mergedClassName = cn(
+  'mx-auto w-full max-w-[var(--content-width)]',
+  className,
+  legacyClassName
+);
 ---
 
 <section {...rest} class={mergedClassName}>

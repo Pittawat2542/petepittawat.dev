@@ -25,7 +25,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
 }));
 ---
 
-<Container className="reveal mt-16">
+<Container className="reveal page-section">
   <section id="about" class="research-practice" aria-labelledby="research-practice-title">
     <div class="research-practice__intro">
       <p class="section-eyebrow research-practice__eyebrow">
@@ -70,7 +70,7 @@ const pillarItems = copy.pillars.map((pillar, index) => ({
     margin: 1rem 0;
     color: var(--text-primary);
     font-family: var(--editorial-serif);
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: var(--type-section-title-compact);
     font-weight: 400;
     line-height: 1.5;
   }

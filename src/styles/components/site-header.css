@@ -8,8 +8,8 @@
   padding-inline: var(--nav-padding-x);
   border-bottom: 1px solid var(--nav-border);
   background: var(--nav-bg);
-  backdrop-filter: blur(var(--nav-blur)) saturate(135%);
-  -webkit-backdrop-filter: blur(var(--nav-blur)) saturate(135%);
+  backdrop-filter: blur(var(--nav-blur));
+  -webkit-backdrop-filter: blur(var(--nav-blur));
   transition:
     background-color var(--motion-duration-normal) var(--motion-ease-standard),
     border-color var(--motion-duration-normal) var(--motion-ease-standard),
@@ -19,8 +19,8 @@
 .site-header[data-scrolled='true'] {
   border-bottom-color: var(--nav-border-scrolled);
   background: var(--nav-bg-scrolled);
-  backdrop-filter: blur(var(--nav-blur-scrolled)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--nav-blur-scrolled)) saturate(150%);
+  backdrop-filter: blur(var(--nav-blur-scrolled));
+  -webkit-backdrop-filter: blur(var(--nav-blur-scrolled));
 }
 
 .site-header__container {
@@ -53,13 +53,13 @@
 
 .site-header__brand-link {
   --site-logo-title-width: 13.6rem;
-  --site-logo-radius: 999px;
+  --site-logo-radius: var(--radius-control);
   --site-logo-bg: linear-gradient(
     160deg,
     color-mix(in oklab, var(--page-accent, var(--accent, #6ac1ff)) 24%, rgba(255, 255, 255, 0.16)),
     rgba(14, 22, 38, 0.92)
   );
-  --site-logo-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 20px -18px rgba(0, 0, 0, 0.7);
+  --site-logo-shadow: none;
   --site-logo-hover-radius: var(--nav-logo-expanded-radius, 0.62rem);
   --site-logo-hover-bg: linear-gradient(
     145deg,
@@ -71,7 +71,7 @@
     0 16px 28px -22px
       color-mix(in oklab, var(--nav-logo-expanded-blue, #6aa8ff) 70%, rgba(3, 8, 20, 0.9));
   padding: 0;
-  border-radius: 999px;
+  border-radius: var(--radius-control);
   color: var(--nav-link-color-active);
 }
 
@@ -102,7 +102,7 @@
 
 .site-header__brand-link .site-logo__title {
   max-width: none;
-  font-family: 'Anuphan', sans-serif;
+  font-family: var(--font-heading);
   font-size: var(--type-body-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -178,7 +178,7 @@
   justify-content: center;
   height: 100%;
   padding-inline: clamp(0.55rem, 1.15vw, 0.95rem);
-  font-family: 'Anuphan', sans-serif;
+  font-family: var(--font-heading);
   font-size: var(--type-control);
   font-weight: 520;
   color: var(--nav-link-color);
@@ -231,7 +231,7 @@
 .site-header__actions .menu-toggle {
   width: var(--nav-control-size);
   height: var(--nav-control-size);
-  border-radius: 999px;
+  border-radius: var(--radius-control);
   border: 1px solid transparent;
   background: transparent;
   color: var(--nav-link-color);

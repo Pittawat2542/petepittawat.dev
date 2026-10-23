@@ -2,7 +2,6 @@ import '@/styles/components/glass-input.css';
 
 import { forwardRef, isValidElement, memo, type InputHTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { useGlassGlow } from '@/lib/hooks';
 
 type InputSize = 'sm' | 'md' | 'lg';
 
@@ -52,7 +51,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const { glowStyle, handleMouseMove, handleMouseLeave } = useGlassGlow<HTMLDivElement>();
     const sizeClasses = sizeMap[fieldSize];
 
     const renderIcon = (icon: ReactNode, position: 'leading' | 'trailing') => {
@@ -74,7 +72,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         <span
           aria-hidden={isInteractive ? undefined : 'true'}
           className={cn(
-            'shape-squircle-sm relative z-10 inline-flex shrink-0 items-center justify-center rounded-[1.1rem] bg-white/4 text-[color:var(--white,#FFFFFF)]/80 backdrop-blur-sm transition-[background-color,box-shadow] duration-150 ease-out',
+            'relative z-10 inline-flex shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-white/4 text-[color:var(--white,#FFFFFF)]/80 transition-[background-color,box-shadow] duration-150 ease-out',
             !isInteractive && 'pointer-events-none',
             isInteractive &&
               'focus-within:ring-ring/40 cursor-pointer focus-within:ring-2 focus-within:outline-none hover:bg-white/8',
@@ -96,14 +94,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         data-size={fieldSize}
         data-disabled={disabled ? 'true' : undefined}
         className={cn(
-          'glass-input shape-squircle-sm group w-full cursor-text overflow-hidden rounded-[1.2rem] transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
+          'glass-input group w-full cursor-text overflow-hidden rounded-[var(--radius-control)] transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out',
           sizeClasses.wrapper,
           disabled && 'cursor-not-allowed opacity-70',
           wrapperClassName
         )}
-        style={glowStyle}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
         onClick={event => {
           if (disabled) return;
           const input = event.currentTarget.querySelector('input');
@@ -133,7 +128,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {renderIcon(trailingIcon, 'trailing')}
-        <span className="glass-input__sheen" aria-hidden="true" />
       </div>
     );
   }

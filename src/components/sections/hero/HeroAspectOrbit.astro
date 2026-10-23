@@ -40,8 +40,8 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
     top: 50%;
     left: 50%;
     display: grid;
-    width: 1.35rem;
-    height: 1.35rem;
+    width: var(--control-height);
+    height: var(--control-height);
     place-items: center;
     border: 0;
     border-radius: 999px;
@@ -83,8 +83,8 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
       currentColor;
     box-shadow:
       0 0 0 0.24rem color-mix(in srgb, currentColor 13%, transparent),
-      0 0 1rem color-mix(in srgb, currentColor 72%, transparent),
-      0 0 2rem color-mix(in srgb, currentColor 38%, transparent);
+      0 0 1rem color-mix(in srgb, currentColor 42%, transparent),
+      0 0 2rem color-mix(in srgb, currentColor 22%, transparent);
     animation: hero-aspect-twinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0ms)
       infinite;
   }
@@ -119,14 +119,9 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
     left: 50%;
     width: min(11.4rem, 42vw);
     border: 1px solid color-mix(in srgb, currentColor 34%, rgba(255, 255, 255, 0.1));
-    border-radius: 0.9rem;
-    background:
-      linear-gradient(180deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.82)),
-      rgba(10, 15, 28, 0.78);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 18px 36px -24px color-mix(in srgb, currentColor 72%, transparent),
-      0 16px 34px -28px rgba(0, 0, 0, 0.8);
+    border-radius: var(--radius-card);
+    background: var(--surface-overlay);
+    box-shadow: var(--shadow-overlay);
     padding: 0.62rem 0.72rem 0.68rem;
     color: rgba(255, 255, 255, 0.84);
     text-align: left;
@@ -185,7 +180,7 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
 
   .hero-aspect-star:hover .hero-aspect-star__core,
   .hero-aspect-star:focus-visible .hero-aspect-star__core {
-    transform: scale(1.18);
+    transform: scale(1.06);
   }
 
   .hero-aspect-star:hover .hero-aspect-star__spark,
@@ -244,8 +239,8 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
     100% {
       box-shadow:
         0 0 0 0.24rem color-mix(in srgb, currentColor 13%, transparent),
-        0 0 1rem color-mix(in srgb, currentColor 72%, transparent),
-        0 0 2rem color-mix(in srgb, currentColor 38%, transparent);
+        0 0 1rem color-mix(in srgb, currentColor 42%, transparent),
+        0 0 2rem color-mix(in srgb, currentColor 22%, transparent);
     }
     45% {
       box-shadow:
@@ -305,8 +300,8 @@ import { orbitAspects } from '@/components/sections/hero/hero-data';
     }
 
     .hero-aspect-star {
-      width: 1.55rem;
-      height: 1.55rem;
+      width: var(--control-height);
+      height: var(--control-height);
     }
 
     .hero-aspect-star__spark {

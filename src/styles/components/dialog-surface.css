@@ -1,0 +1,33 @@
+.dialog-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  border-radius: var(--radius-dialog);
+  border: 1px solid var(--border-default);
+  background: var(--surface-overlay);
+  color: var(--text-primary);
+}
+.dialog-close {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border-default);
+  background: var(--color-surface);
+  color: var(--text-secondary);
+  transition:
+    background-color var(--motion-duration-fast) ease-out,
+    border-color var(--motion-duration-fast) ease-out;
+}
+.dialog-close:hover {
+  background: var(--color-surface-raised);
+  color: var(--text-primary);
+}
+.dialog-close:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

@@ -11,7 +11,7 @@ interface ChipProps {
 
 const ChipComponent: FC<ChipProps> = ({ children, variant = 'default', className }) => {
   const baseClasses =
-    'inline-flex items-center rounded-full border border-border bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium whitespace-nowrap';
+    'inline-flex items-center rounded-[var(--radius-control)] border border-border bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium whitespace-nowrap';
 
   const variantClasses = {
     default: '',

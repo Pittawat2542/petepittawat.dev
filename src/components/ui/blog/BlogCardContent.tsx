@@ -39,17 +39,17 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
   const titleClassName =
     tone === 'editorial'
       ? presentation === 'compact'
-        ? 'line-clamp-3 text-lg leading-snug font-semibold text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-xl md:leading-tight'
+        ? 'line-clamp-3 text-lg leading-snug font-semibold text-white transition-colors duration-200 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-xl md:leading-tight'
         : presentation === 'featured'
-          ? 'text-2xl leading-tight font-semibold text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-3xl'
-          : 'text-xl leading-snug font-semibold text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-2xl md:leading-tight'
-      : 'text-xl leading-snug font-semibold tracking-tight text-[color:var(--white)] transition-colors duration-300 group-hover:text-white md:text-2xl md:leading-tight lg:text-3xl';
+          ? 'text-2xl leading-tight font-semibold text-white transition-colors duration-200 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-3xl'
+          : 'text-xl leading-snug font-semibold text-white transition-colors duration-200 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-2xl md:leading-tight'
+      : 'text-xl leading-snug font-semibold tracking-tight text-[color:var(--white)] transition-colors duration-200 group-hover:text-white md:text-2xl md:leading-tight lg:text-3xl';
   const excerptClassName =
     tone === 'editorial'
       ? presentation === 'compact'
-        ? 'line-clamp-2 text-left text-sm leading-6 text-white/66 transition-colors duration-300 group-hover:text-white/82'
-        : 'line-clamp-3 text-left text-sm leading-6 text-white/68 transition-colors duration-300 group-hover:text-white/84 md:text-base md:leading-7'
-      : 'line-clamp-3 text-left text-sm leading-6 text-[color:var(--white)]/78 transition-colors duration-300 group-hover:text-[color:var(--white,#ffffff)]/92 md:text-base md:leading-7';
+        ? 'line-clamp-2 text-left text-sm leading-6 text-white/66 transition-colors duration-200 group-hover:text-white/82'
+        : 'line-clamp-3 text-left text-sm leading-6 text-white/68 transition-colors duration-200 group-hover:text-white/84 md:text-base md:leading-7'
+      : 'line-clamp-3 text-left text-sm leading-6 text-[color:var(--white)]/78 transition-colors duration-200 group-hover:text-[color:var(--white,#ffffff)]/92 md:text-base md:leading-7';
 
   return (
     <div
@@ -63,8 +63,8 @@ const BlogCardContentComponent: FC<BlogCardContentProps> = ({
         <div
           className={
             tone === 'editorial'
-              ? 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/48 uppercase transition-all duration-300 group-hover:text-white/72 md:gap-2 md:text-xs'
-              : 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/60 uppercase transition-all duration-300 group-hover:text-white/75 md:gap-2 md:text-xs'
+              ? 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/48 uppercase transition-all duration-200 group-hover:text-white/72 md:gap-2 md:text-xs'
+              : 'type-caption flex items-center gap-1.5 tracking-[0.15em] text-white/60 uppercase transition-all duration-200 group-hover:text-white/75 md:gap-2 md:text-xs'
           }
         >
           <BlogCardTag

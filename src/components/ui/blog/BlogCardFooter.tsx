@@ -21,7 +21,7 @@ const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({
         className={
           tone === 'editorial'
             ? 'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/16 to-transparent opacity-100'
-            : 'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--card-accent,rgba(255,255,255,0.4))]/45 to-transparent opacity-35 transition-opacity duration-300 group-hover:opacity-80'
+            : 'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--card-accent,rgba(255,255,255,0.4))]/45 to-transparent opacity-35 transition-opacity duration-200 group-hover:opacity-80'
         }
       />
       <div
@@ -35,8 +35,8 @@ const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({
         <span
           className={
             tone === 'editorial'
-              ? 'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-300 group-hover:text-white/68 md:text-xs'
-              : 'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-[color:var(--card-accent)]/65 uppercase transition-colors duration-300 group-hover:text-[color:var(--card-accent)] md:text-xs'
+              ? 'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-white/42 uppercase transition-colors duration-200 group-hover:text-white/68 md:text-xs'
+              : 'type-micro inline-flex items-center gap-2 font-semibold tracking-[0.28em] text-[color:var(--card-accent)]/65 uppercase transition-colors duration-200 group-hover:text-[color:var(--card-accent)] md:text-xs'
           }
         >
           {yearLabel}
@@ -44,16 +44,16 @@ const BlogCardFooterComponent: FC<BlogCardFooterProps> = ({
         <span
           className={
             tone === 'editorial'
-              ? 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-sm'
-              : 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white/90 transition-colors duration-300 group-hover:text-[color:var(--card-accent)] md:text-sm'
+              ? 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white transition-colors duration-200 group-hover:text-[color:var(--card-accent,var(--accent))] md:text-sm'
+              : 'inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-white/90 transition-colors duration-200 group-hover:text-[color:var(--card-accent)] md:text-sm'
           }
         >
           Continue reading
           <span
             className={
               tone === 'editorial'
-                ? 'inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/82 transition-[transform,background-color,color,border-color] duration-300 group-hover:translate-x-[3px] group-hover:border-[color:var(--card-accent,var(--accent))]/28 group-hover:bg-[color:var(--card-accent,var(--accent))] group-hover:text-slate-950 md:h-9 md:w-9'
-                : 'aurora-chip aurora-chip--icon inline-flex h-8 w-8 items-center justify-center bg-[color:var(--card-accent)]/15 text-[color:var(--card-accent)] shadow-[0_10px_24px_rgba(15,35,75,0.28)] backdrop-blur-sm transition-[transform,background-color,color] duration-300 group-hover:translate-x-[3px] group-hover:-translate-y-[2px] group-hover:bg-[color:var(--card-accent)]/25 md:h-9 md:w-9'
+                ? 'inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/82 transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-[3px] group-hover:border-[color:var(--card-accent,var(--accent))]/28 group-hover:bg-[color:var(--card-accent,var(--accent))] group-hover:text-slate-950 md:h-9 md:w-9'
+                : 'aurora-chip aurora-chip--icon inline-flex h-8 w-8 items-center justify-center bg-[color:var(--card-accent)]/15 text-[color:var(--card-accent)] shadow-[0_10px_24px_rgba(15,35,75,0.28)] backdrop-blur-sm transition-[transform,background-color,color] duration-200 group-hover:translate-x-[3px] group-hover:-translate-y-[2px] group-hover:bg-[color:var(--card-accent)]/25 md:h-9 md:w-9'
             }
           >
             <ArrowUpRight

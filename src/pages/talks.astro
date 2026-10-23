@@ -16,7 +16,7 @@ const talks = await getTalks();
   description={pageCopy.metaDescription || SITE_CONFIG.description}
   page="talks"
 >
-  <Container className="space-y-8 md:space-y-10">
+  <Container className="page-stack">
     <EditorialPageHero eyebrow="Speaking" title={pageCopy.title} subtitle={pageCopy.heroSubtitle}>
       <div slot="support" class="listing-hero-support" aria-label="Talk themes">
         <span class="listing-hero-support__item">Invited sessions</span>

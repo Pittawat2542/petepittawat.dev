@@ -6,8 +6,8 @@
   -webkit-overflow-scrolling: touch;
   background: color-mix(in oklab, var(--black) 86%, var(--accent) 4%);
   border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) inset;
-  border-radius: 0.875rem;
+
+  border-radius: var(--radius-card);
   padding-top: 2.2rem;
 }
 .prose code {
@@ -18,7 +18,7 @@
   background: color-mix(in oklab, var(--white) 7%, transparent);
   border: 1px solid color-mix(in oklab, var(--white) 16%, transparent);
   padding: 0.05rem 0.1rem;
-  border-radius: 0.375rem;
+  border-radius: var(--radius-control);
 }
 .prose pre code {
   display: block;
@@ -33,11 +33,9 @@
 /* Prose callouts */
 .prose .callout {
   padding: 1rem 1rem 1rem 0.875rem;
-  border-radius: 0.875rem;
+  border-radius: var(--radius-card);
   border: 1px solid color-mix(in oklab, var(--white) 14%, transparent);
   background: color-mix(in oklab, var(--white) 6%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   margin: 1rem 0;
 }
 .prose .callout > .callout-title {
@@ -48,32 +46,30 @@
   margin-bottom: 0.35rem;
 }
 .prose .callout.tip {
-  border-color: color-mix(in oklab, var(--accent-projects) 55%, transparent);
+  border-color: color-mix(in oklab, var(--color-accent-mint) 55%, transparent);
 }
 .prose .callout.info {
   border-color: color-mix(in oklab, var(--accent) 55%, transparent);
 }
 .prose .callout.warn {
-  border-color: color-mix(in oklab, var(--accent-about) 55%, transparent);
+  border-color: color-mix(in oklab, var(--color-accent-warm) 55%, transparent);
 }
 .prose .callout.note {
   border-color: color-mix(in oklab, var(--accent-blog) 55%, transparent);
 }
 
-@layer utilities {
-  /* Content link hover animation (prose only) */
-  .prose a {
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    background-size: 0% 2px;
-    transition:
-      color 120ms ease-out,
-      background-size 140ms ease-out;
-  }
-  .prose a:hover,
-  .prose a:focus-visible {
-    background-size: 100% 2px;
-  }
+/* Content link hover animation (prose only) */
+.prose a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition:
+    color 120ms ease-out,
+    background-size 140ms ease-out;
+}
+.prose a:hover,
+.prose a:focus-visible {
+  background-size: 100% 2px;
 }
