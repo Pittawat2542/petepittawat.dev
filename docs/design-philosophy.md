@@ -9,7 +9,7 @@ This site is the public front‑door for Pittawat Taveekitworachai’s work. Eve
 
 ## 2. Calm, Confident Aesthetics
 
-- **Glassmorphism with restraint**: the glass panels and blurred header exist to separate layers, not to show off. When they appear, they should enhance readability and never obscure content.
+- **Dark editorial surfaces**: use an ink navy canvas, quiet opaque panels, fine dividers, and blue accents. Translucency belongs to navigation; shadows belong to overlays. The homepage portrait, galaxy, and orbit form the signature illustration, with restrained glow and motion.
 - **Typography first**: writing is the core product. Favor generous line heights, controlled measure, and high contrast. Decorative elements must never distract from the text.
 - **Ambient motion**: animations signal state change and delight without demanding attention. Respect `prefers-reduced-motion` and avoid gratuitous effects.
 
@@ -46,3 +46,13 @@ This site is the public front‑door for Pittawat Taveekitworachai’s work. Eve
 ---
 
 This philosophy is a living artifact. Revisit it whenever we introduce a new surface or notice tension between user needs and implementation reality. The goal is a site that feels crafted, fast, and unmistakably Pete.
+
+## Shared visual system
+
+- `src/styles/tokens.css` owns palette channels, semantic surfaces, typography, spacing, shape, focus and motion. Tailwind and legacy aliases derive from these tokens.
+- Use Anuphan for headings, Krub for body text and controls, and Noto Serif / Noto Serif Thai for editorial introductions. Use semantic `--type-*` sizes, including fluid page and article titles. Article code/math may scale in `em` with its prose; fixed artwork keeps its own canvas typography.
+- Page content shares a 72rem maximum width and responsive gutters. Use `page-stack` between page regions and `page-section` between homepage sections. Article reading columns and full-width cover artwork remain purpose-specific.
+- Controls use 6px corners, cards 10px, dialogs 16px. Standalone buttons and icon controls have a minimum 44px target; inline text links and noninteractive metadata retain natural dimensions.
+- Selected controls use a blue-tinted surface and border. Keyboard focus uses a separate blue ring. Ordinary content cards have no elevation or lift; actionable arrows may shift slightly.
+- Feedback transitions use the shared 150–200ms durations. The signature illustration may use slower orbital motion; reduced-motion mode retains its complete static composition and accessible labels.
+- Preserve the bilingual reading experience, static HTML, deferred search, native listing dialogs and build performance budgets when refining the design.

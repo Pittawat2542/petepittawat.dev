@@ -263,3 +263,14 @@ If the same class of issue continues to slip through, escalate to automation-fir
 
 - Debt inventory and cleanup plan: [frontend-style-debt-audit.md](./frontend-style-debt-audit.md)
 - Design principles: [design-philosophy.md](./design-philosophy.md)
+
+## Editorial component contracts
+
+- Prefer semantic surfaces (`--surface-card`, `--surface-overlay`, `--surface-selected`) and shared radii (`--radius-control`, `--radius-card`, `--radius-dialog`) over per-component palettes or arbitrary rounding.
+- `Button` and the compatibility `GlassButton` share `button.css`. The compatibility `GlassCard` renders a quiet opaque card. Their existing props remain available.
+- React dialogs and native listing dialogs share the same overlay palette. Publication dialog internals live with `PublicationModal`; global CSS must not style search or publication internals.
+- `BaseLayout` owns content width, gutters and top clearance. `Container` adds no second gutter. Component-owned introduction spacing uses `--page-intro-top` and `--page-intro-bottom`.
+- `src/styles/typography.architecture.test.ts` checks runtime Astro, React and CSS for independent numeric font sizes. Fixed-canvas content/assets and article-relative `em` sizes are deliberate exceptions.
+- Verify normal, hover, keyboard focus, selected, expanded, disabled and relevant loading/empty/retry states. Capture desktop and mobile production previews; JavaScript-disabled content and reduced-motion illustrations must remain usable.
+
+Component stylesheets must not establish a cascade layer before the global Tailwind layer order. In particular, prose styles load before the base stylesheet on article routes: keep those component-owned rules unlayered so they cannot place `utilities` below the reset and remove page-shell padding.
