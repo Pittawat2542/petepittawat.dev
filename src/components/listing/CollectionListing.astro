@@ -3,16 +3,12 @@ import ListingShell from './ListingShell.astro';
 import ProjectCard from '@/components/ui/cards/ProjectCard';
 import TalkCard from '@/components/ui/cards/TalkCard';
 import PublicationCard from '@/components/ui/publication/PublicationCard';
-import { collectionMetadata } from '@/lib/listing-build';
-import type { Project, Publication, Talk } from '@/types';
-interface Props {
-  kind: 'projects' | 'publications' | 'talks';
-  items: Project[] | Publication[] | Talk[];
-}
-const { kind, items } = Astro.props;
-const entries = items
-  .map(item => ({ item, meta: collectionMetadata(kind, item) }))
-  .sort((a, b) => b.meta.date - a.meta.date || a.meta.title.localeCompare(b.meta.title));
+import { buildCollectionListing } from '@/lib/collection-listing';
+import type { CollectionListingInput } from '@/lib/collection-listing';
+type Props = CollectionListingInput;
+const props = Astro.props;
+const { kind } = props;
+const entries = buildCollectionListing(props);
 const fields = kind === 'talks' ? ['mode', 'year', 'audience'] : ['year', 'type'];
 const placeholder =
   kind === 'publications'
@@ -31,37 +27,39 @@ const placeholder =
   emptyCopy="Try a broader search, remove a tag, or reset the filters."
 >
   <ul class="editorial-listing__featured" data-featured-list aria-label={`Featured ${kind}`}>
-    {entries.slice(0, 1).map(({ item, meta }) => (
+    {entries.slice(0, 1).map(entry => (
       <li
-        id={meta.id}
+        id={entry.meta.id}
         data-listing-item
-        data-meta={JSON.stringify(meta)}
+        data-featured={entries[0] === entry ? 'true' : 'false'}
+        data-meta={JSON.stringify(entry.meta)}
         class="editorial-listing__item target-highlight h-full"
       >
-        {kind === 'projects' ? (
-          <ProjectCard item={item as Project} featured />
-        ) : kind === 'talks' ? (
-          <TalkCard item={item as Talk} featured />
+        {entry.kind === 'projects' ? (
+          <ProjectCard item={entry.item} featured />
+        ) : entry.kind === 'talks' ? (
+          <TalkCard item={entry.item} featured />
         ) : (
-          <PublicationCard item={item as Publication} featured />
+          <PublicationCard item={entry.item} featured />
         )}
       </li>
     ))}
   </ul>
   <ul class="editorial-listing__grid" data-grid-list aria-label={kind}>
-    {entries.slice(1).map(({ item, meta }) => (
+    {entries.slice(1).map(entry => (
       <li
-        id={meta.id}
+        id={entry.meta.id}
         data-listing-item
-        data-meta={JSON.stringify(meta)}
+        data-featured={entries[0] === entry ? 'true' : 'false'}
+        data-meta={JSON.stringify(entry.meta)}
         class="editorial-listing__item target-highlight h-full"
       >
-        {kind === 'projects' ? (
-          <ProjectCard item={item as Project} />
-        ) : kind === 'talks' ? (
-          <TalkCard item={item as Talk} />
+        {entry.kind === 'projects' ? (
+          <ProjectCard item={entry.item} />
+        ) : entry.kind === 'talks' ? (
+          <TalkCard item={entry.item} />
         ) : (
-          <PublicationCard item={item as Publication} />
+          <PublicationCard item={entry.item} />
         )}
       </li>
     ))}
