@@ -9,7 +9,7 @@ import {
   Video,
 } from 'lucide-react';
 import { memo } from 'react';
-import type { CSSProperties, FC, MouseEvent } from 'react';
+import type { CSSProperties, FC } from 'react';
 
 import { MeasuredOverflowRow } from '@/components/ui/cards/CardAtoms';
 import type { Publication } from '@/types';
@@ -18,9 +18,8 @@ interface PublicationActionsProps {
   readonly item: Publication;
   readonly dedupedArtifacts: NonNullable<Publication['artifacts']>;
   readonly accent: string;
-  readonly onStopPropagation: (e: MouseEvent) => void;
   readonly maxVisible?: number;
-  readonly onOverflowClick?: () => void;
+  readonly detailsTrigger?: boolean;
   readonly viewportSafe?: boolean;
 }
 
@@ -47,9 +46,8 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
   item,
   dedupedArtifacts,
   accent,
-  onStopPropagation,
   maxVisible,
-  onOverflowClick,
+  detailsTrigger,
   viewportSafe,
 }) => {
   const tint = (intensity: number) =>
@@ -78,7 +76,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
     })),
   ];
   const renderOverflow = (hiddenActionCount: number) =>
-    onOverflowClick ? (
+    detailsTrigger ? (
       <button
         type="button"
         className="group/link inline-flex min-w-0 items-center justify-center gap-2 rounded-[var(--radius-control)] border px-4 py-3 text-sm font-bold whitespace-nowrap text-[color:var(--card-accent)] transition-[transform,border-color,background-color,color,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none"
@@ -87,10 +85,7 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
           borderColor: tint(58),
           background: 'var(--color-surface)',
         }}
-        onClick={event => {
-          event.stopPropagation();
-          onOverflowClick();
-        }}
+        data-details-trigger
         aria-label={`Show ${hiddenActionCount} more publication resources`}
       >
         +{hiddenActionCount} more
@@ -122,7 +117,6 @@ const PublicationActionsComponent: FC<PublicationActionsProps> = ({
               borderColor: tint(24),
               background: 'var(--color-surface)',
             }}
-            onClick={onStopPropagation}
             aria-label={action.ariaLabel}
           >
             <Icon
@@ -157,9 +151,8 @@ export const PublicationActions = memo(PublicationActionsComponent, (prevProps, 
     prevProps.item === nextProps.item &&
     prevProps.dedupedArtifacts === nextProps.dedupedArtifacts &&
     prevProps.accent === nextProps.accent &&
-    prevProps.onStopPropagation === nextProps.onStopPropagation &&
     prevProps.maxVisible === nextProps.maxVisible &&
-    prevProps.onOverflowClick === nextProps.onOverflowClick &&
+    prevProps.detailsTrigger === nextProps.detailsTrigger &&
     prevProps.viewportSafe === nextProps.viewportSafe
   );
 });

@@ -12,7 +12,7 @@ import {
   Tag,
   Users,
 } from 'lucide-react';
-import { memo, useState, type FC, type ReactNode } from 'react';
+import { memo, type FC, type ReactNode } from 'react';
 import '@/styles/components/project-card.css';
 import { cn, getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toProjectCardVisualInput } from '@/lib/card-visual';
@@ -25,7 +25,7 @@ import {
   CardTagList,
   MeasuredOverflowRow,
 } from './CardAtoms';
-import CardDetailsDialog from './CardDetailsDialog';
+import CardDetailsTemplate from './CardDetailsTemplate';
 import MediaContentCard from './MediaContentCard';
 
 function toTitleCase(input?: string) {
@@ -144,7 +144,6 @@ function renderProjectLinks(
 }
 
 const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) => {
-  const [detailsOpen, setDetailsOpen] = useState(false);
   const accentColor = getAccentColorVar(typeAccentVar(item.type));
   const visualSpec = resolveCardVisualSpec(toProjectCardVisualInput(item));
   const tint = (intensity: number) =>
@@ -159,9 +158,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
         borderColor: tint(58),
         background: 'var(--color-surface)',
       }}
-      onClick={() => {
-        setDetailsOpen(true);
-      }}
+      data-details-trigger
       aria-label={`Show all metadata for ${item.title}`}
     >
       +{hiddenCount} more
@@ -278,11 +275,10 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
             <CardTagList
               tags={item.tags}
               tone="muted"
-              maxVisible={featured ? 4 : 3}
-              adaptiveFeatured
-              onOverflowClick={() => {
-                setDetailsOpen(true);
-              }}
+              maxVisible={3}
+              featuredMaxVisible={4}
+              featured={featured}
+              detailsTrigger
               overflowLabel={`Show all tags for ${item.title}`}
             />
           </div>
@@ -290,9 +286,7 @@ const ProjectCardComponent: FC<ProjectCardProps> = ({ item, featured = false }) 
       </div>
 
       {hasHiddenMetadata ? (
-        <CardDetailsDialog
-          open={detailsOpen}
-          onOpenChange={setDetailsOpen}
+        <CardDetailsTemplate
           accent={accentColor}
           eyebrow="Project details"
           title={item.title}

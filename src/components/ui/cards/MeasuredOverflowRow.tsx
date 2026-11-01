@@ -6,6 +6,8 @@ interface MeasuredOverflowRowProps<TItem> {
   readonly items: readonly TItem[];
   readonly maxVisible?: number | undefined;
   readonly featuredMaxVisible?: number | undefined;
+  readonly featured?: boolean | undefined;
+  readonly overflowLabel?: string;
   readonly minVisible?: number | undefined;
   readonly overflowPlacement?: 'inline' | 'pinned' | undefined;
   readonly className?: string | undefined;
@@ -21,6 +23,8 @@ function MeasuredOverflowRowComponent<TItem>({
   items,
   maxVisible,
   featuredMaxVisible,
+  featured = false,
+  overflowLabel = 'Show all items',
   minVisible = 1,
   overflowPlacement = 'inline',
   className,
@@ -32,7 +36,11 @@ function MeasuredOverflowRowComponent<TItem>({
   renderOverflow,
 }: MeasuredOverflowRowProps<TItem>) {
   const isPinned = overflowPlacement === 'pinned';
-  const visibleCount = resolveVisibleItemCount(items.length, maxVisible, minVisible);
+  const visibleCount = resolveVisibleItemCount(
+    items.length,
+    featured ? (featuredMaxVisible ?? maxVisible) : maxVisible,
+    minVisible
+  );
   const capacity =
     featuredMaxVisible === undefined
       ? visibleCount
@@ -82,6 +90,9 @@ function MeasuredOverflowRowComponent<TItem>({
       <div
         data-adaptive-overflow={featuredMaxVisible === undefined ? undefined : items.length}
         data-overflow-min={minVisible}
+        data-overflow-max={maxVisible ?? items.length}
+        data-overflow-featured-max={featuredMaxVisible}
+        data-overflow-label={overflowLabel}
         className={cn(
           'relative grid w-full max-w-full min-w-0 items-center overflow-hidden',
           pinnedGridClassName,

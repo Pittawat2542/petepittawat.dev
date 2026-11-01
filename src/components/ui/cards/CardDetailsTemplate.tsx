@@ -2,24 +2,20 @@ import '@/styles/components/dialog-surface.css';
 import { X } from 'lucide-react';
 import { memo, type CSSProperties, type FC, type ReactNode } from 'react';
 
-export interface CardDetailsDialogSection {
+export interface CardDetailsTemplateSection {
   readonly title: string;
   readonly content: ReactNode;
 }
 
-interface CardDetailsDialogProps {
-  readonly open: boolean;
-  readonly onOpenChange: (open: boolean) => void;
-  readonly contentId?: string | undefined;
+interface CardDetailsTemplateProps {
   readonly accent: string;
   readonly eyebrow: string;
   readonly title: string;
   readonly description: string;
-  readonly sections: readonly CardDetailsDialogSection[];
+  readonly sections: readonly CardDetailsTemplateSection[];
 }
 
-const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
-  contentId,
+const CardDetailsTemplateComponent: FC<CardDetailsTemplateProps> = ({
   accent,
   eyebrow,
   title,
@@ -38,10 +34,7 @@ const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
           <span className="type-micro font-semibold tracking-[0.26em] text-[color:var(--card-accent)]/76 uppercase">
             {eyebrow}
           </span>
-          <h3
-            id={contentId}
-            className="type-card-title mt-2 leading-[1.05] font-semibold tracking-[-0.035em] text-white"
-          >
+          <h3 className="type-card-title mt-2 leading-[1.05] font-semibold tracking-[-0.035em] text-white">
             {title}
           </h3>
           <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-white/66">{description}</p>
@@ -71,6 +64,6 @@ const CardDetailsDialogComponent: FC<CardDetailsDialogProps> = ({
   </template>
 );
 
-export const CardDetailsDialog = memo(CardDetailsDialogComponent);
-CardDetailsDialog.displayName = 'CardDetailsDialog';
-export default CardDetailsDialog;
+export const CardDetailsTemplate = memo(CardDetailsTemplateComponent);
+CardDetailsTemplate.displayName = 'CardDetailsTemplate';
+export default CardDetailsTemplate;

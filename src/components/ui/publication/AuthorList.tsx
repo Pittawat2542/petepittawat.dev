@@ -11,7 +11,7 @@ interface AuthorListProps {
 interface AuthorChipListProps extends AuthorListProps {
   readonly maxVisible?: number;
   readonly minVisible?: number;
-  readonly onOverflowClick?: () => void;
+  readonly detailsTrigger?: boolean;
   readonly overflowLabel?: string;
   readonly className?: string | undefined;
   readonly viewportSafe?: boolean;
@@ -72,7 +72,7 @@ const AuthorChipListComponent: FC<AuthorChipListProps> = ({
   authors,
   maxVisible,
   minVisible = 1,
-  onOverflowClick,
+  detailsTrigger,
   overflowLabel = 'Show all authors',
   className,
   viewportSafe,
@@ -81,7 +81,7 @@ const AuthorChipListComponent: FC<AuthorChipListProps> = ({
   const renderAuthor = (author: ReturnType<typeof renderAuthorsBold>[number]) =>
     renderAuthorChip(author);
   const renderOverflow = (hiddenCount: number) =>
-    onOverflowClick ? (
+    detailsTrigger ? (
       <button
         type="button"
         className="type-caption min-h-11 rounded-[var(--radius-control)] border px-3.5 py-1.5 font-semibold whitespace-nowrap text-[color:var(--card-accent)] transition-[border-color,background-color,color,transform,box-shadow] duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:outline-none md:text-xs"
@@ -89,7 +89,7 @@ const AuthorChipListComponent: FC<AuthorChipListProps> = ({
           borderColor: 'color-mix(in oklab, var(--card-accent) 58%, transparent)',
           background: 'var(--color-surface)',
         }}
-        onClick={onOverflowClick}
+        data-details-trigger
         aria-label={`${overflowLabel}: ${hiddenCount} more`}
       >
         +{hiddenCount} more
@@ -134,7 +134,7 @@ export const AuthorChipList = memo(AuthorChipListComponent, (prevProps, nextProp
     prevProps.authors === nextProps.authors &&
     prevProps.maxVisible === nextProps.maxVisible &&
     prevProps.minVisible === nextProps.minVisible &&
-    prevProps.onOverflowClick === nextProps.onOverflowClick &&
+    prevProps.detailsTrigger === nextProps.detailsTrigger &&
     prevProps.overflowLabel === nextProps.overflowLabel &&
     prevProps.className === nextProps.className &&
     prevProps.viewportSafe === nextProps.viewportSafe

@@ -1,5 +1,4 @@
-import { memo, useEffect, useState, type FC } from 'react';
-import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { memo, type FC } from 'react';
 import { ArrowUpRight, CalendarDays, FileText } from 'lucide-react';
 import { CardInfoPanel, CardMetaChip, CardMetaRow, CardTagList } from '@/components/ui/cards';
 import CardVisualPanel from '@/components/ui/cards/CardVisualPanel';
@@ -8,7 +7,7 @@ import '@/styles/components/publication-card.css';
 import type { Publication } from '@/types';
 import { AuthorChipList } from './AuthorList';
 import { PublicationActions } from './PublicationActions';
-import { PublicationModal } from './PublicationModal';
+import { PublicationDetailsTemplate } from './PublicationDetailsTemplate';
 import { deduplicateArtifacts, toTitleCase, typeAccentVar } from './utils';
 import { getAccentColorVar } from '@/lib/utils';
 import { resolveCardVisualSpec, toPublicationCardVisualInput } from '@/lib/card-visual';
@@ -19,8 +18,6 @@ interface PublicationCardProps {
 }
 
 const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = false }) => {
-  const [open, setOpen] = useState(false);
-  const detailsId = `pub-details-${encodeURIComponent(item.title).replace(/%/g, '')}`;
   const cardViewportRowClassName = featured ? 'max-w-[calc(100vw-5rem)]' : undefined;
 
   const accent = getAccentColorVar(typeAccentVar(item.type));
@@ -30,32 +27,6 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
   const dedupedArtifacts = deduplicateArtifacts(item);
   const hasActions = Boolean(item.url) || dedupedArtifacts.length > 0;
 
-  function onCardClick() {
-    setOpen(true);
-  }
-
-  // Lock scroll when modal is open and bind Esc to close
-  useEffect(() => {
-    if (!open) return;
-    const prevOverflow = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = 'hidden';
-    const onEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    window.addEventListener('keydown', onEsc);
-    return () => {
-      document.documentElement.style.overflow = prevOverflow;
-      window.removeEventListener('keydown', onEsc);
-    };
-  }, [open]);
-
-  function onKeyDown(e: ReactKeyboardEvent<HTMLElement>) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      setOpen(true);
-    }
-  }
-
   return (
     <MediaContentCard
       accent={accent}
@@ -64,11 +35,9 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       className="publication-card cursor-pointer hover:border-[color:var(--card-accent)]/30 focus-visible:border-[color:var(--card-accent)]/38 focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(5,10,20,0.94)] focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0"
       role="button"
       tabIndex={0}
-      onClick={onCardClick}
-      onKeyDown={onKeyDown}
+      data-details-trigger
       aria-haspopup="dialog"
-      aria-expanded={open}
-      aria-controls={detailsId}
+      aria-expanded={false}
       media={
         <CardVisualPanel
           spec={visualSpec}
@@ -85,12 +54,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
               accent={accent}
               maxVisible={2}
               viewportSafe={featured}
-              onOverflowClick={() => {
-                setOpen(true);
-              }}
-              onStopPropagation={e => {
-                e.stopPropagation();
-              }}
+              detailsTrigger
             />
           ) : (
             <button
@@ -100,10 +64,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                 borderColor: tint(32),
                 background: 'var(--color-surface)',
               }}
-              onClick={event => {
-                event.stopPropagation();
-                setOpen(true);
-              }}
+              data-details-trigger
               aria-label={`Open details for ${item.title}`}
             >
               <span className="min-w-0 truncate">View details</span>
@@ -140,12 +101,6 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-inherit transition-colors hover:text-[color:var(--card-accent)]"
-                  onClick={e => {
-                    // Prefer expanding details modal on title click
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setOpen(true);
-                  }}
                 >
                   {item.title}
                 </a>
@@ -158,9 +113,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
               maxVisible={3}
               viewportSafe={featured}
               className={cardViewportRowClassName}
-              onOverflowClick={() => {
-                setOpen(true);
-              }}
+              detailsTrigger
               overflowLabel={`Show all authors for ${item.title}`}
             />
           </div>
@@ -179,13 +132,12 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
           <div className="flex flex-col gap-3">
             <CardTagList
               tags={item.tags}
-              maxVisible={featured ? 4 : 3}
-              adaptiveFeatured
+              maxVisible={3}
+              featuredMaxVisible={4}
+              featured={featured}
               viewportSafe={featured}
               className={cardViewportRowClassName}
-              onOverflowClick={() => {
-                setOpen(true);
-              }}
+              detailsTrigger
               overflowLabel={`Show all tags for ${item.title}`}
             />
           </div>
@@ -193,13 +145,7 @@ const PublicationCardComponent: FC<PublicationCardProps> = ({ item, featured = f
       </div>
 
       {/* Modal with full details */}
-      <PublicationModal
-        item={item}
-        open={open}
-        onOpenChange={setOpen}
-        accent={accent}
-        detailsId={detailsId}
-      />
+      <PublicationDetailsTemplate item={item} accent={accent} />
     </MediaContentCard>
   );
 };

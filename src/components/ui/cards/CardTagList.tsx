@@ -8,9 +8,10 @@ interface CardTagListProps {
   readonly tags?: readonly string[] | undefined;
   readonly tone?: 'accent' | 'muted' | undefined;
   readonly maxVisible?: number;
-  readonly adaptiveFeatured?: boolean;
+  readonly featuredMaxVisible?: number;
+  readonly featured?: boolean;
   readonly minVisible?: number;
-  readonly onOverflowClick?: () => void;
+  readonly detailsTrigger?: boolean;
   readonly overflowLabel?: string;
   readonly viewportSafe?: boolean;
   readonly className?: string | undefined;
@@ -20,9 +21,10 @@ const CardTagListComponent: FC<CardTagListProps> = ({
   tags,
   tone = 'accent',
   maxVisible,
-  adaptiveFeatured,
+  featuredMaxVisible,
+  featured,
   minVisible = 1,
-  onOverflowClick,
+  detailsTrigger,
   overflowLabel = 'Show all tags',
   viewportSafe,
   className,
@@ -53,7 +55,7 @@ const CardTagListComponent: FC<CardTagListProps> = ({
     </Badge>
   );
   const renderOverflow = (hiddenCount: number) =>
-    onOverflowClick ? (
+    detailsTrigger ? (
       <button
         type="button"
         className={cn(
@@ -63,22 +65,21 @@ const CardTagListComponent: FC<CardTagListProps> = ({
           borderColor: getCardAccentTint(58),
           background: 'var(--color-surface)',
         }}
-        onClick={event => {
-          event.stopPropagation();
-          onOverflowClick();
-        }}
+        data-details-trigger
         aria-label={`${overflowLabel}: ${hiddenCount} more`}
       >
         +{hiddenCount} more
       </button>
     ) : null;
 
-  if (typeof maxVisible === 'number' && onOverflowClick) {
+  if (typeof maxVisible === 'number' && detailsTrigger) {
     return (
       <MeasuredOverflowRow
         items={tags}
         maxVisible={maxVisible}
-        featuredMaxVisible={adaptiveFeatured ? 4 : undefined}
+        featuredMaxVisible={featuredMaxVisible}
+        featured={featured}
+        overflowLabel={overflowLabel}
         minVisible={minVisible}
         overflowPlacement="pinned"
         getKey={tag => tag}

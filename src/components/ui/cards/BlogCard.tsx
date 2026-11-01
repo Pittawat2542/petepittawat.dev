@@ -18,6 +18,7 @@ import type { ResponsiveCover } from '@/lib/responsive-cover';
 import { cn } from '@/lib/utils';
 import { useBlogCardSeries } from '@/lib/useBlogCardSeries';
 import MediaContentCard from './MediaContentCard';
+import { featuredClasses } from './cardPresentation';
 
 /**
  * Blog post card component properties
@@ -116,7 +117,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
       hidden={hidden}
       className={cn(
         'flex h-full min-w-0',
-        isEditorialFeature && 'latest-blog__featured-item',
+        isEditorialFeature && featuredClasses.blogItem,
         isCompact && 'latest-blog__compact-item'
       )}
     >
@@ -126,7 +127,7 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         featured={featured || isEditorialFeature}
         className={cn(
           'blog-card blog-card--editorial w-full',
-          isEditorialFeature && 'blog-card--featured-essay',
+          isEditorialFeature && featuredClasses.blogCard,
           isCompact && 'blog-card--compact-note',
           className
         )}
@@ -145,14 +146,14 @@ const BlogCardComponent: FC<BlogCardProps> = ({
         }
         mediaClassName={
           isEditorialFeature
-            ? 'blog-card__media--featured-essay'
+            ? featuredClasses.blogMedia
             : isCompact
               ? 'blog-card__media--compact-note'
               : undefined
         }
         bodyClassName={isCompact ? 'blog-card__body--compact-note' : undefined}
         footerClassName={
-          resolvedPresentation === 'standard' ? undefined : 'blog-card__footer--editorial-note'
+          resolvedPresentation === 'standard' ? undefined : featuredClasses.blogFooter
         }
         mediaBadges={
           <>

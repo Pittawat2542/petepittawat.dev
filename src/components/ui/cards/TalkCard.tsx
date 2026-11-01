@@ -8,8 +8,7 @@ import {
   Users,
   Video,
 } from 'lucide-react';
-import { memo, useState, type FC, type ReactNode } from 'react';
-import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from 'react';
+import { memo, type FC, type ReactNode } from 'react';
 import '@/styles/components/talk-card.css';
 import { cn, getAccentColorVar } from '@/lib/utils';
 import { formatDate } from '@/lib';
@@ -23,7 +22,7 @@ import {
   CardTagList,
   MeasuredOverflowRow,
 } from './CardAtoms';
-import CardDetailsDialog from './CardDetailsDialog';
+import CardDetailsTemplate from './CardDetailsTemplate';
 import MediaContentCard from './MediaContentCard';
 
 interface TalkCardProps {
@@ -47,10 +46,9 @@ function getTalkResourceKind(label: string) {
 interface TalkResourceButtonProps {
   readonly resource: TalkResource;
   readonly tint: (intensity: number) => string;
-  readonly onClick?: ((event: ReactMouseEvent<HTMLAnchorElement>) => void) | undefined;
 }
 
-const TalkResourceButton: FC<TalkResourceButtonProps> = ({ resource, tint, onClick }) => {
+const TalkResourceButton: FC<TalkResourceButtonProps> = ({ resource, tint }) => {
   const isExternal = /^https?:\/\//i.test(resource.href);
   const label = resource.label || '';
   const icon = getTalkResourceKind(label);
@@ -64,7 +62,6 @@ const TalkResourceButton: FC<TalkResourceButtonProps> = ({ resource, tint, onCli
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
       className={actionClassName}
-      onClick={onClick}
       style={{
         borderColor: tint(48),
         background: 'var(--color-surface)',
@@ -96,24 +93,14 @@ const TalkResourceButton: FC<TalkResourceButtonProps> = ({ resource, tint, onCli
 
 function renderTalkResources(
   resources: readonly TalkResource[],
-  tint: (intensity: number) => string,
-  onResourceClick?: (event: ReactMouseEvent<HTMLAnchorElement>) => void
+  tint: (intensity: number) => string
 ) {
   return resources.map(resource => (
-    <TalkResourceButton
-      key={resource.href}
-      resource={resource}
-      tint={tint}
-      onClick={onResourceClick}
-    />
+    <TalkResourceButton key={resource.href} resource={resource} tint={tint} />
   ));
 }
 
 const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
-  const [detailsOpen, setDetailsOpen] = useState(false);
-  const detailsId = `talk-details-${encodeURIComponent(
-    `${item.title}-${formatDate(item.date)}`
-  ).replace(/%/g, '')}`;
   const cardViewportRowClassName = featured ? 'max-w-[calc(100vw-5rem)]' : undefined;
   const accent = getAccentColorVar('accent');
   const visualSpec = resolveCardVisualSpec(toTalkCardVisualInput(item));
@@ -125,18 +112,6 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
     item.mode?.toLowerCase().includes('virtual') || item.mode?.toLowerCase().includes('online');
   const modeLabel = item.mode || (isVirtual ? 'Virtual' : 'Live');
   const formattedDate = formatDate(item.date);
-  const stopCardClick = (event: ReactMouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-  };
-  const openDetails = () => {
-    setDetailsOpen(true);
-  };
-  const onCardKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      openDetails();
-    }
-  };
   const detailSections: { title: string; content: ReactNode }[] = [
     {
       title: 'Event context',
@@ -164,7 +139,6 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex text-sm leading-relaxed text-[color:var(--card-accent)]/88 transition-colors hover:text-[color:var(--card-accent)]"
-                onClick={stopCardClick}
               >
                 {item.audience}
               </a>
@@ -189,9 +163,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
     detailSections.push({
       title: 'Resources',
       content: (
-        <div className="grid gap-2.5 sm:grid-cols-2">
-          {renderTalkResources(resources, tint, stopCardClick)}
-        </div>
+        <div className="grid gap-2.5 sm:grid-cols-2">{renderTalkResources(resources, tint)}</div>
       ),
     });
   }
@@ -206,11 +178,9 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
       )}
       role="button"
       tabIndex={0}
-      onClick={openDetails}
-      onKeyDown={onCardKeyDown}
+      data-details-trigger
       aria-haspopup="dialog"
-      aria-expanded={detailsOpen}
-      aria-controls={detailsId}
+      aria-expanded={false}
       media={
         <CardVisualPanel
           spec={visualSpec}
@@ -229,9 +199,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
             itemClassName="media-card__action-item"
             overflowClassName="media-card__action-item media-card__action-item--more"
             getKey={resource => resource.href}
-            renderItem={resource => (
-              <TalkResourceButton resource={resource} tint={tint} onClick={stopCardClick} />
-            )}
+            renderItem={resource => <TalkResourceButton resource={resource} tint={tint} />}
             renderOverflow={hiddenResourceCount => (
               <button
                 type="button"
@@ -240,10 +208,7 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
                   borderColor: tint(58),
                   background: 'var(--color-surface)',
                 }}
-                onClick={event => {
-                  event.stopPropagation();
-                  setDetailsOpen(true);
-                }}
+                data-details-trigger
                 aria-label={`Show all resources for ${item.title}`}
               >
                 +{hiddenResourceCount} more
@@ -287,7 +252,6 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex text-sm leading-relaxed text-[color:var(--card-accent)]/88 transition-colors hover:text-[color:var(--card-accent)]"
-                    onClick={stopCardClick}
                     data-card-description
                   >
                     {item.audience}
@@ -308,23 +272,19 @@ const TalkCardComponent: FC<TalkCardProps> = ({ item, featured = false }) => {
           <div className="flex flex-col gap-3">
             <CardTagList
               tags={item.tags}
-              maxVisible={featured ? 4 : 3}
-              adaptiveFeatured
+              maxVisible={3}
+              featuredMaxVisible={4}
+              featured={featured}
               viewportSafe={featured}
               className={cardViewportRowClassName}
-              onOverflowClick={() => {
-                setDetailsOpen(true);
-              }}
+              detailsTrigger
               overflowLabel={`Show all tags for ${item.title}`}
             />
           </div>
         </div>
       </div>
 
-      <CardDetailsDialog
-        open={detailsOpen}
-        onOpenChange={setDetailsOpen}
-        contentId={detailsId}
+      <CardDetailsTemplate
         accent={accent}
         eyebrow="Talk details"
         title={item.title}

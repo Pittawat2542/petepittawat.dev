@@ -2,7 +2,7 @@
  * Card components - Reusable card components
  */
 export { BlogCard } from './BlogCard';
-export { default as CardDetailsDialog } from './CardDetailsDialog';
+export { default as CardDetailsTemplate } from './CardDetailsTemplate';
 export { default as CardVisualPanel } from './CardVisualPanel';
 export {
   CardDivider,

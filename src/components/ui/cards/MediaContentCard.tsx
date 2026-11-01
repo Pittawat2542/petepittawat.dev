@@ -1,6 +1,7 @@
 import { BlogCardOverlays } from '@/components/ui/blog/BlogCardOverlays';
 import '@/styles/components/media-card.css';
 import { cn, createAccentStyle } from '@/lib/utils';
+import { featuredClasses } from './cardPresentation';
 import type { CSSProperties, ElementType, HTMLAttributes, ReactNode } from 'react';
 
 interface MediaContentCardProps extends HTMLAttributes<HTMLElement> {
@@ -46,7 +47,7 @@ export default function MediaContentCard({
   return (
     <Component
       {...rest}
-      className={cn('media-card group', featured && 'media-card--featured', className)}
+      className={cn('media-card group', featured && featuredClasses.card, className)}
       style={cardStyle}
     >
       {overlayIntensity === 'default' && (

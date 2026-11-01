@@ -1,5 +1,5 @@
 import { SEARCH_OPEN_EVENT } from '@/scripts/openSearch';
-import { resolveVisibleItemCount } from '@/components/ui/cards/cardOverflow';
+import { updateCardPresentation } from '@/components/ui/cards/cardPresentation';
 import {
   listingOptions,
   listingHashTarget,
@@ -49,6 +49,11 @@ function initListing(root: HTMLElement) {
     records = Array.from(content.querySelectorAll<HTMLElement>('[data-listing-item]')).map(
       node => ({ node, meta: JSON.parse(requiredData(node, 'meta')) as ListingItem })
     );
+    for (const trigger of content.querySelectorAll<HTMLElement>('[data-details-trigger]')) {
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-controls', dialog.id);
+    }
   };
   readRecords();
   const menus = () => Array.from(root.querySelectorAll<HTMLElement>('[data-menu]'));
@@ -135,46 +140,6 @@ function initListing(root: HTMLElement) {
       else button.removeAttribute('aria-current');
     }
   }
-  function feature(node: HTMLElement, featured: boolean) {
-    if (node.dataset['featured'] === String(featured)) return;
-    node.dataset['featured'] = String(featured);
-    const card = node.querySelector<HTMLElement>('.media-card');
-    card?.classList.toggle('media-card--featured', featured);
-    for (const row of node.querySelectorAll<HTMLElement>('[data-adaptive-overflow]')) {
-      const total = Number(row.dataset['adaptiveOverflow']);
-      const count = resolveVisibleItemCount(
-        total,
-        featured ? 4 : 3,
-        Number(row.dataset['overflowMin'])
-      );
-      Array.from(row.querySelectorAll<HTMLElement>('[data-card-overflow-item]')).forEach(
-        (item, index) => {
-          item.hidden = index >= count;
-        }
-      );
-      const overflow = requiredElement<HTMLElement>(row, '[data-card-overflow-more]');
-      overflow.hidden = total === count;
-      const button = overflow.querySelector('button');
-      if (button) {
-        button.textContent = `+${total - count} more`;
-        button.setAttribute('aria-label', `Show all tags: ${total - count} more`);
-      }
-      row.classList.toggle('grid-cols-[minmax(0,1fr)_auto]', total > count);
-      row.classList.toggle('grid-cols-[minmax(0,1fr)]', total === count);
-      row.classList.toggle('gap-2', total > count);
-      row.classList.toggle('gap-0', total === count);
-    }
-    if (blog) {
-      card?.classList.toggle('blog-card--featured-essay', featured);
-      node.classList.toggle('latest-blog__featured-item', featured);
-      card
-        ?.querySelector('.media-card__media')
-        ?.classList.toggle('blog-card__media--featured-essay', featured);
-      card
-        ?.querySelector('.media-card__footer')
-        ?.classList.toggle('blog-card__footer--editorial-note', featured);
-    }
-  }
   function render(writeUrl = true) {
     const matches = selectListing(
       records.map(record => record.meta),
@@ -199,7 +164,7 @@ function initListing(root: HTMLElement) {
       const reference: ChildNode | null =
         i === 0 ? parent.firstChild : previous ? previous.nextSibling : parent.firstChild;
       if (node !== reference) parent.insertBefore(node, reference);
-      feature(node, i === 0);
+      updateCardPresentation(node, i === 0);
       if (i > 0) previous = node;
     });
     featuredList.hidden = !matches.length;
@@ -334,14 +299,15 @@ function initListing(root: HTMLElement) {
     );
     const title = dialog.querySelector<HTMLElement>('h3');
     if (title) {
-      dialog.id = title.id || 'listing-item-details';
-      title.id = 'listing-dialog-title';
+      title.id = `${dialog.id}-title`;
       dialog.setAttribute('aria-labelledby', title.id);
     }
     dialogActive = true;
     previousOverflow = document.documentElement.style.overflow;
     document.documentElement.style.overflow = 'hidden';
-    node.querySelector('[aria-haspopup="dialog"]')?.setAttribute('aria-expanded', 'true');
+    node.querySelectorAll('[data-details-trigger]').forEach(trigger => {
+      trigger.setAttribute('aria-expanded', 'true');
+    });
     dialog.showModal();
     dialog.querySelector<HTMLElement>('[data-close-details]')?.focus();
   }
@@ -445,15 +411,14 @@ function initListing(root: HTMLElement) {
       return;
     }
     const detailsTrigger = target.closest('[data-details-trigger]');
+    const link = target.closest('a');
+    if (link && !link.matches('[data-details-trigger]')) return;
     if (detailsTrigger) {
       event.preventDefault();
       const node = detailsTrigger.closest<HTMLElement>('[data-listing-item]');
       if (node) openDetails(node);
       return;
     }
-    if (target.closest('a, [data-menu], [data-listing-toolbar], dialog')) return;
-    const card = target.closest<HTMLElement>('[data-listing-item]');
-    if (card && (button || target.closest('[aria-haspopup="dialog"]'))) openDetails(card);
   });
   let typeahead = '';
   let typedAt = 0;
@@ -508,10 +473,7 @@ function initListing(root: HTMLElement) {
       root.querySelector<HTMLElement>(`#${target.dataset['menuTrigger']}`)?.showPopover();
       return;
     }
-    if (
-      (event.key === 'Enter' || event.key === ' ') &&
-      target.matches('[aria-haspopup="dialog"]')
-    ) {
+    if ((event.key === 'Enter' || event.key === ' ') && target.matches('[data-details-trigger]')) {
       event.preventDefault();
       const node = target.closest<HTMLElement>('[data-listing-item]');
       if (node) openDetails(node);

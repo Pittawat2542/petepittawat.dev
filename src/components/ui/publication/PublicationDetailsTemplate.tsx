@@ -4,26 +4,23 @@ import { Code2, Database, ExternalLink, FileText, Video, X } from 'lucide-react'
 
 import { AuthorChipCloud } from './AuthorList';
 import { Badge } from '@/components/ui/core/badge';
-import type { CSSProperties, FC, MouseEvent } from 'react';
+import type { CSSProperties, FC } from 'react';
 import type { Publication } from '@/types';
 import { PublicationMeta } from './PublicationMeta';
 import { memo } from 'react';
 
-interface PublicationModalProps {
+interface PublicationDetailsTemplateProps {
   readonly item: Publication;
-  readonly open: boolean;
-  readonly onOpenChange: (open: boolean) => void;
   readonly accent: string;
-  readonly detailsId: string;
 }
 
-const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, detailsId }) => {
+const PublicationDetailsTemplateComponent: FC<PublicationDetailsTemplateProps> = ({
+  item,
+  accent,
+}) => {
   const trimmedAbstract = item.abstract?.trim();
   const abstractText = trimmedAbstract === '' ? undefined : trimmedAbstract;
   const hasResources = Boolean(item.url) || Boolean(item.artifacts?.length);
-  const handleLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-  };
 
   return (
     <template data-details-template>
@@ -36,7 +33,7 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, de
         <header className="publication-modal__header">
           <div className="publication-modal__headline">
             <span className="publication-modal__eyebrow">Publication</span>
-            <h3 id={detailsId}>{item.title}</h3>
+            <h3>{item.title}</h3>
           </div>
           <button
             type="button"
@@ -81,7 +78,6 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, de
                   target="_blank"
                   rel="noopener noreferrer"
                   className="publication-modal__chip"
-                  onClick={handleLinkClick}
                 >
                   <span aria-hidden="true" className="publication-modal__chip-icon">
                     <FileText size={14} aria-hidden="true" />
@@ -117,7 +113,6 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, de
                     target="_blank"
                     rel="noreferrer"
                     className="publication-modal__chip"
-                    onClick={handleLinkClick}
                   >
                     <span aria-hidden="true" className="publication-modal__chip-icon" title={title}>
                       {icon}
@@ -134,6 +129,6 @@ const PublicationModalComponent: FC<PublicationModalProps> = ({ item, accent, de
   );
 };
 
-export const PublicationModal = memo(PublicationModalComponent);
-PublicationModal.displayName = 'PublicationModal';
-export default PublicationModal;
+export const PublicationDetailsTemplate = memo(PublicationDetailsTemplateComponent);
+PublicationDetailsTemplate.displayName = 'PublicationDetailsTemplate';
+export default PublicationDetailsTemplate;
