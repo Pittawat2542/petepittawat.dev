@@ -1,0 +1,30 @@
+<div
+  data-reading-progress
+  class="fixed top-0 left-0 z-50 h-1 w-full origin-left bg-[color:var(--accent)]"
+  style="transform:scaleX(0)"
+  role="progressbar"
+  aria-label="Reading progress"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+></div>
+
+<style>
+  @keyframes reading-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      [data-reading-progress] {
+        /* Prevent minification from folding the timeline into unsupported animation shorthand. */
+        animation: var(--reading-progress-animation, reading-progress auto linear);
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+</style>
