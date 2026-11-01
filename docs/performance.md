@@ -61,6 +61,22 @@ Browser checks covered search/filter empty states and clearing, sort typeahead, 
 
 ## Validation
 
-- `pnpm test:content`: 86 tests pass, including listing filtering, sorting, route defaults, URL preservation, legacy publication anchors, and series metadata. Existing translation tests cover fallback behavior.
+- `pnpm test:content`: 89 tests pass, including listing filtering, sorting, route defaults, URL preservation, legacy publication anchors, and series metadata. Existing translation tests cover fallback behavior.
 - `pnpm lint`: ESLint, Astro diagnostics, and TypeScript checks.
 - `pnpm build`: content-image validation, Astro diagnostics, full static generation, responsive image transforms, fragment hashing, and asset budgets.
+
+## Static interaction ownership
+
+The listing controller owns filtering, ordering, URL and locale state, and the single native details dialog. Project, talk, and publication cards render declarative `data-details-trigger` controls and inert `CardDetailsTemplate` or `PublicationDetailsTemplate` contents. They carry no React dialog state. The controller keeps every trigger's `aria-controls` and `aria-expanded` aligned with the actual dialog and restores focus when it closes.
+
+Featured presentation belongs to the card subsystem: shared class names are used during the build and by `updateCardPresentation`, and adaptive overflow rows publish normal and featured limits from their props. Collection inputs are discriminated by kind so unrelated item schemas cannot be mixed. The former React listing/explorer and filter-hook implementations have been removed.
+
+Back-to-top and reading-progress markup is rendered by Astro. A shared browser script updates visibility, accessible progress values, and document-height changes without loading React. The progress indicator uses native CSS scroll animation when available and a transform fallback otherwise; back-to-top respects reduced motion.
+
+After starting the site and opening it in a Playwright CLI session, run the browser regressions with:
+
+```sh
+playwright-cli run-code --filename scripts/verify-static-ui.js
+```
+
+The checks use that page's origin, so they can run against development or a production preview. Desktop/mobile parity captures for this cleanup are saved locally under `output/playwright/solid-kiss/`.
