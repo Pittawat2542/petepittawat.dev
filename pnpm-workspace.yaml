@@ -1,0 +1,9 @@
+allowBuilds:
+  esbuild: true
+
+# astro2tsx 0.1.2 uses emnapi core 1.x. Supply the matching runtime so the
+# wasm runtime peer cannot resolve to the 2.0 beta from a different tool.
+packageExtensions:
+  '@astrojs/astro2tsx@0.1.2':
+    dependencies:
+      '@emnapi/runtime': 1.11.3

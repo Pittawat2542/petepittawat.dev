@@ -126,14 +126,13 @@ The generated favicons are automatically included in your HTML via the `BaseHead
 
 ## `update-dependencies.mjs`
 
-Runs dependency upgrades in explicit groups instead of a single blanket update.
+Updates the project’s runtime and development dependencies.
 
 ### Behavior
 
-- Prints `pnpm outdated` first so you can review available updates
-- Upgrades Astro core, runtime packages, and tooling in separate steps
-- Verifies each step with `pnpm lint` and `pnpm build`
-- Leaves review and commit decisions to the caller after the grouped run completes
+- Discovers direct packages from `package.json` and upgrades them to stable releases.
+- Updates TypeScript within its supported range and prints the Astro checker and ESLint parser peer requirements.
+- Runs lint, the content tests, and the production build.
 
 ### Usage
 

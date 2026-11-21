@@ -22,7 +22,8 @@ const parseJsonArray = <T extends Record<string, unknown>>(
     const message = error instanceof Error ? error.message : String(error);
     const preview = fileContent.trim().slice(0, 120).replace(/\s+/g, ' ');
     throw new Error(
-      `parseJsonArray failed for ${callerName}: could not parse JSON input "${preview}" (${message})`
+      `parseJsonArray failed for ${callerName}: could not parse JSON input "${preview}" (${message})`,
+      { cause: error }
     );
   }
 

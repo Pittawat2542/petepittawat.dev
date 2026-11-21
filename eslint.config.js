@@ -2,7 +2,7 @@ import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import astroPlugin from 'eslint-plugin-astro';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import reactPlugin from 'eslint-plugin-react';
+import reactPlugin from '@eslint-react/eslint-plugin';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 
 const browserGlobals = {
@@ -31,6 +31,21 @@ const browserGlobals = {
   HTMLTextAreaElement: 'readonly',
   ResizeObserver: 'readonly',
   Event: 'readonly',
+};
+
+const reactRules = {
+  '@eslint-react/no-missing-key': 'error',
+  '@eslint-react/jsx-no-comment-textnodes': 'error',
+  '@eslint-react/jsx-no-children-prop': 'error',
+  '@eslint-react/dom-no-unsafe-target-blank': 'error',
+  '@eslint-react/dom-no-dangerously-set-innerhtml-with-children': 'error',
+  '@eslint-react/dom-no-unknown-property': 'error',
+  '@eslint-react/no-direct-mutation-state': 'error',
+  '@eslint-react/dom-no-find-dom-node': 'error',
+  '@eslint-react/dom-no-render-return-value': 'error',
+  '@eslint-react/no-unsafe-component-will-mount': 'error',
+  '@eslint-react/no-unsafe-component-will-receive-props': 'error',
+  '@eslint-react/no-unsafe-component-will-update': 'error',
 };
 
 export default [
@@ -65,12 +80,11 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescriptPlugin,
-      react: reactPlugin,
+      '@eslint-react': reactPlugin,
       'react-hooks': reactHooksPlugin,
     },
     rules: {
-      ...reactPlugin.configs.flat.recommended.rules,
-      ...reactPlugin.configs.flat['jsx-runtime'].rules,
+      ...reactRules,
 
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -82,9 +96,6 @@ export default [
       '@typescript-eslint/prefer-nullish-coalescing': 'warn',
       '@typescript-eslint/prefer-optional-chain': 'warn',
 
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
-      'react/display-name': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
 
@@ -92,11 +103,6 @@ export default [
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',
       'no-var': 'error',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
     },
   },
   {
@@ -112,22 +118,14 @@ export default [
       globals: browserGlobals,
     },
     plugins: {
-      react: reactPlugin,
+      '@eslint-react': reactPlugin,
     },
     rules: {
-      ...reactPlugin.configs.flat.recommended.rules,
-      ...reactPlugin.configs.flat['jsx-runtime'].rules,
+      ...reactRules,
 
-      'react/prop-types': 'off',
-      'react/display-name': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',
       'no-var': 'error',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
     },
   },
   {

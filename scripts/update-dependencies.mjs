@@ -1,81 +1,23 @@
-#!/usr/bin/env node
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
-import { execSync } from 'node:child_process';
+const readJson = url => JSON.parse(readFileSync(new URL(url, import.meta.url), 'utf8'));
+const { dependencies, devDependencies } = readJson('../package.json');
+const packageNames = Object.keys({ ...dependencies, ...devDependencies });
+const run = (...args) => {
+  console.log(`\n$ pnpm ${args.join(' ')}`);
+  execFileSync('pnpm', args, { stdio: 'inherit' });
+};
 
-const upgradeGroups = [
-  {
-    name: 'Astro core',
-    packages: [
-      'astro',
-      '@astrojs/check',
-      '@astrojs/mdx',
-      '@astrojs/react',
-      '@astrojs/rss',
-      '@astrojs/sitemap',
-    ],
-  },
-  {
-    name: 'Runtime packages',
-    packages: [
-      '@lucide/astro',
-      'lucide-react',
-      'react',
-      'react-dom',
-      'framer-motion',
-      'katex',
-      'sharp',
-      'tailwindcss',
-      '@tailwindcss/vite',
-      'tailwind-merge',
-    ],
-  },
-  {
-    name: 'Tooling',
-    packages: [
-      'typescript',
-      'eslint',
-      '@eslint/js',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
-      'eslint-plugin-astro',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
-      '@types/react',
-      '@types/react-dom',
-      '@types/katex',
-      'prettier',
-      'prettier-plugin-tailwindcss',
-      'lint-staged',
-    ],
-  },
-];
-
-function run(command, options = {}) {
-  console.log(`\n$ ${command}`);
-  execSync(command, { stdio: 'inherit', ...options });
+run('update', '--latest', ...packageNames.filter(name => name !== 'typescript'));
+// Astro check currently accepts ^5.0.0 || ^6.0.0 and the TypeScript ESLint parser
+// accepts >=4.8.4 <6.1.0. Check both peers before widening this range.
+run('update', 'typescript');
+for (const name of ['@astrojs/check', '@typescript-eslint/parser']) {
+  const { peerDependencies } = readJson(`../node_modules/${name}/package.json`);
+  console.log(`${name} supports TypeScript ${peerDependencies.typescript}`);
 }
 
-function runOptional(command) {
-  try {
-    run(command);
-  } catch (error) {
-    console.warn(`\nSkipping optional step after failure: ${command}`);
-    if (error instanceof Error) {
-      console.warn(error.message);
-    }
-  }
-}
-
-console.log('Checking outdated dependencies...');
-runOptional('pnpm outdated');
-
-for (const group of upgradeGroups) {
-  console.log(`\n=== ${group.name} ===`);
-  run(`pnpm up -L ${group.packages.join(' ')}`);
-}
-
-run('pnpm lint');
-run('pnpm build');
-
-console.log('\nDependency update workflow complete.');
-console.log('Review package.json and pnpm-lock.yaml before committing.');
+run('lint');
+run('test:content');
+run('build');

@@ -28,7 +28,7 @@ Personal website and blog of **Pittawat Taveekitworachai** — a modern, fast, a
 
 ### Core Framework
 
-- **[Astro 6.x](https://astro.build)** - Static site generation with islands architecture
+- **[Astro 7.x](https://astro.build)** - Static site generation with islands architecture
 - **[TypeScript](https://typescriptlang.org)** - Type-safe development
 - **[React 19](https://react.dev)** - Interactive islands with React Compiler
 
@@ -55,10 +55,10 @@ Personal website and blog of **Pittawat Taveekitworachai** — a modern, fast, a
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js 22.22.1+** - [Download here](https://nodejs.org)
+- **Node.js 26.13.1+** - [Download here](https://nodejs.org)
 - **pnpm** - [Install pnpm](https://pnpm.io/installation)
   ```bash
-  npm install -g pnpm
+  npm install -g pnpm@12.21.0
   ```
 
 > **Note**: This project uses pnpm workspace and lockfile for dependency management.
@@ -403,14 +403,14 @@ This site generates a static build and can be deployed to any static hosting pla
 ```bash
 Build Command: pnpm build
 Output Directory: dist/
-Node Version: 22.22.1 or higher
+Node Version: 26.13.1 or higher
 ```
 
 **Workflow:**
 
 - Push to `main` to trigger `.github/workflows/deploy.yml`
 - The workflow uses `withastro/action@v3`
-- The build runs on Node `22.23.3` with `pnpm@10.18.3`
+- The build runs on Node `26.13.1` with `pnpm@12.21.0`
 - `public/CNAME` preserves the custom domain configuration during deployment
 
 ### Manual Deployment
