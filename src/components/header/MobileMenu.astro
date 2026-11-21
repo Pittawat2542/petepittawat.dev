@@ -281,6 +281,12 @@ const isActive = (href: string) =>
     transform: translateY(0);
   }
 
+  @media (min-width: 960px) {
+    #mobile-menu {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     #mobile-menu,
     #mobile-menu-sheet,

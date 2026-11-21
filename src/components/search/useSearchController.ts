@@ -16,6 +16,8 @@ import {
   useSearchNavigation,
 } from './hooks';
 
+const resultBatchSize = 50;
+
 type UseSearchControllerParams = {
   autoOpen?: boolean;
   openKey?: number;
@@ -32,7 +34,8 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
   const restoreFocus = useCallback(() => {
     opener.current?.focus();
   }, []);
-  const [query, setQuery] = useState('');
+  const [query, setQueryValue] = useState('');
+  const [visibleLimit, setVisibleLimit] = useState(resultBatchSize);
   const [typeFilter, setTypeFilter] = useState<Set<SearchItemType>>(ensureAllTypes);
   const activeLocale = getActiveSearchLocale();
 
@@ -94,43 +97,71 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     (item: { type: string; title: string }) => {
       saveRecent(item.type !== 'page' ? item.title : query);
       setOpen(false);
+      setQueryValue('');
+      setVisibleLimit(resultBatchSize);
     },
     [query, saveRecent]
   );
 
-  const { activeIndex, setActiveIndex, listRef, getHref } = useSearchNavigation(
-    filtered,
-    query,
-    open,
-    handleItemSelected
+  const visibleResults = loaded && query.trim() ? filtered.slice(0, visibleLimit) : [];
+  const { activeIndex, setActiveIndex, listRef, inputRef, onResultKeyDown, getHref } =
+    useSearchNavigation(visibleResults, query, handleItemSelected);
+
+  const resetResults = useCallback(() => {
+    setVisibleLimit(resultBatchSize);
+    setActiveIndex(0);
+  }, [setActiveIndex]);
+
+  const setQuery = useCallback(
+    (next: string) => {
+      setQueryValue(next);
+      resetResults();
+    },
+    [resetResults]
   );
 
+  const showMore = () => {
+    setActiveIndex(visibleResults.length);
+    setVisibleLimit(limit => limit + resultBatchSize);
+    inputRef.current?.focus({ preventScroll: true });
+  };
+
   // Type filter management
-  const toggleType = useCallback((type: SearchItemType) => {
-    setTypeFilter(prev => {
-      const next = new Set(prev);
-      if (next.has(type)) next.delete(type);
-      else next.add(type);
-      if (next.size === 0) next.add(type);
-      return next;
-    });
-  }, []);
+  const toggleType = useCallback(
+    (type: SearchItemType) => {
+      resetResults();
+      setTypeFilter(prev => {
+        const next = new Set(prev);
+        if (next.has(type)) next.delete(type);
+        else next.add(type);
+        if (next.size === 0) next.add(type);
+        return next;
+      });
+    },
+    [resetResults]
+  );
 
   const selectAllTypes = useCallback(() => {
+    resetResults();
     setTypeFilter(ensureAllTypes());
-  }, []);
+  }, [resetResults]);
 
-  const handleOpenChange = useCallback((next: boolean) => {
-    setOpen(next);
-    if (!next) setQuery('');
-  }, []);
+  const handleOpenChange = useCallback(
+    (next: boolean) => {
+      setOpen(next);
+      if (!next) setQuery('');
+    },
+    [setQuery]
+  );
 
   const handleResultClick = useCallback(
     (item: { type: string; title: string }) => {
       saveRecent(item.type !== 'page' ? item.title : query);
+      resetResults();
+      setQueryValue('');
       setOpen(false);
     },
-    [query, saveRecent]
+    [query, saveRecent, resetResults]
   );
 
   return {
@@ -140,6 +171,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
       loaded,
       failed,
       filtered,
+      visibleResults,
       suggestions,
       recent,
       countsByType,
@@ -149,6 +181,8 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     },
     actions: {
       retry,
+      showMore,
+      onResultKeyDown,
       restoreFocus,
       setQuery,
       setActiveIndex,
@@ -162,6 +196,7 @@ export function useSearchController({ autoOpen = false, openKey }: UseSearchCont
     },
     refs: {
       listRef,
+      inputRef,
     },
   };
 }

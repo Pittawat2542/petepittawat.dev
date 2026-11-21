@@ -1,82 +1,75 @@
-/**
- * useSearchNavigation - Responsible for keyboard navigation through search results
- * Follows Single Responsibility Principle (SRP)
- */
-
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { buildHref } from '../utils';
 import type { AugmentedSearchItem } from '../types';
+
+export const searchResultsId = 'site-search-results';
+export const searchResultId = (index: number) => `${searchResultsId}-${index}`;
 
 export function useSearchNavigation(
   results: AugmentedSearchItem[],
   query: string,
-  isActive: boolean,
   onItemSelected: (item: AugmentedSearchItem) => void
 ) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const listRef = useRef<HTMLUListElement | null>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Reset active index when results change
   useEffect(() => {
-    setActiveIndex(0);
-  }, [results, isActive]);
-
-  // Scroll active item into view
-  useEffect(() => {
-    const element = listRef.current?.children[activeIndex] as HTMLElement | undefined;
-    element?.scrollIntoView({ block: 'nearest' });
+    const row = listRef.current?.children[activeIndex];
+    const scroller = listRef.current?.parentElement;
+    if (!row || !scroller) return;
+    const rowBounds = row.getBoundingClientRect();
+    const scrollBounds = scroller.getBoundingClientRect();
+    if (rowBounds.top < scrollBounds.top) {
+      scroller.scrollTop += rowBounds.top - scrollBounds.top;
+    } else if (rowBounds.bottom > scrollBounds.bottom) {
+      scroller.scrollTop += rowBounds.bottom - scrollBounds.bottom;
+    }
   }, [activeIndex]);
-
-  // Handle keyboard navigation
-  useEffect(() => {
-    if (!isActive) return;
-
-    const handler = (event: KeyboardEvent) => {
-      if (!results.length) return;
-
-      const key = event.key;
-
-      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].includes(key)) {
-        event.preventDefault();
-      }
-
-      if (key === 'ArrowDown') setActiveIndex(index => Math.min(index + 1, results.length - 1));
-      if (key === 'ArrowUp') setActiveIndex(index => Math.max(index - 1, 0));
-      if (key === 'PageDown') setActiveIndex(index => Math.min(index + 5, results.length - 1));
-      if (key === 'PageUp') setActiveIndex(index => Math.max(index - 5, 0));
-      if (key === 'Home') setActiveIndex(0);
-      if (key === 'End') setActiveIndex(results.length - 1);
-
-      if (key === 'Enter') {
-        const item = results[activeIndex];
-        if (!item) return;
-
-        const href = buildHref(item, query);
-        onItemSelected(item);
-
-        if (event.metaKey || event.ctrlKey) {
-          const newWindow = window.open(href, '_blank', 'noopener,noreferrer');
-          if (newWindow) {
-            newWindow.opener = null;
-          }
-        } else {
-          window.location.assign(href);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handler);
-    return () => {
-      window.removeEventListener('keydown', handler);
-    };
-  }, [isActive, results, activeIndex, query, onItemSelected]);
 
   const getHref = useCallback((item: AugmentedSearchItem) => buildHref(item, query), [query]);
 
-  return {
-    activeIndex,
-    setActiveIndex,
-    listRef,
-    getHref,
+  const onResultKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    const { key, nativeEvent } = event;
+    // Safari can clear isComposing before it dispatches the confirming Enter.
+    if (
+      !results.length ||
+      nativeEvent.isComposing ||
+      (key === 'Enter' && nativeEvent.keyCode === 229)
+    )
+      return;
+
+    switch (key) {
+      case 'ArrowDown':
+      case 'ArrowUp':
+      case 'PageDown':
+      case 'PageUp': {
+        event.preventDefault();
+        const step = key.startsWith('Page') ? 5 : 1;
+        const offset = key.endsWith('Down') ? step : -step;
+        setActiveIndex(index => Math.max(0, Math.min(index + offset, results.length - 1)));
+        break;
+      }
+      case 'Home':
+      case 'End':
+        event.preventDefault();
+        setActiveIndex(key === 'Home' ? 0 : results.length - 1);
+        break;
+      case 'Enter': {
+        const item = results[activeIndex];
+        if (!item) return;
+        event.preventDefault();
+        const href = getHref(item);
+        onItemSelected(item);
+        if (event.metaKey || event.ctrlKey) {
+          window.open(href, '_blank', 'noopener,noreferrer');
+        } else {
+          window.location.assign(href);
+        }
+        break;
+      }
+    }
   };
+
+  return { activeIndex, setActiveIndex, listRef, inputRef, onResultKeyDown, getHref };
 }

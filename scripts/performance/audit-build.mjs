@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve, join, dirname } from 'node:path';
 import { gzipSync } from 'node:zlib';
+import { validateRss, validateSearchAnchors } from './validate-build-content.mjs';
 
 const root = resolve(process.argv[2] ?? 'dist');
 const routes = ['blog', 'projects', 'publications', 'talks', 'tags/ai'];
@@ -95,18 +96,9 @@ for (const route of routes) {
     htmlGzipKiB: +(gzipSync(html).length / 1024).toFixed(2),
   });
 }
-// Search links must point at the build-rendered listing IDs.
+validateRss(await readFile(join(root, 'rss.xml'), 'utf8'));
 const index = JSON.parse(await readFile(join(root, 'search.json'), 'utf8'));
-for (const item of index.items.filter(item =>
-  ['publication', 'project', 'talk'].includes(item.type)
-)) {
-  const url = new URL(item.url, 'https://local.invalid');
-  if (url.hash)
-    assert(
-      routeHtml.get(url.pathname.replace(/^\/|\/$/g, ''))?.includes(`id="${url.hash.slice(1)}"`),
-      `Broken search anchor: ${item.url}`
-    );
-}
+const checkedSearchAnchors = validateSearchAnchors(index.items, routeHtml);
 const sitemap = await readFile(join(root, 'sitemap-0.xml'), 'utf8');
 assert(!sitemap.includes('/listing-assets/'), 'Locale fragments must stay out of the sitemap');
 // Social preview images and downloadable resources remain available.
@@ -137,6 +129,7 @@ console.log(
   JSON.stringify(
     {
       routes: report,
+      checkedSearchAnchors,
       largestCoverDownloadReductionPercent: +(
         100 -
         (optimizedCovers / originalCovers) * 100

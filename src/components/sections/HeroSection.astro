@@ -16,9 +16,8 @@ const { copy, selectedOutput, selectedOutputStats } = Astro.props as Props;
 
 <Container className="relative -mt-2 flex flex-col items-start justify-center gap-10 md:-mt-4 md:grid md:grid-cols-[minmax(0,0.98fr)_minmax(18rem,1.02fr)] md:items-center md:gap-x-14 md:gap-y-7 lg:gap-x-20 lg:gap-y-12">
   <HeroIntro copy={copy} />
-  <HeroPortrait />
-
-  <div class="order-3 mt-1 w-full md:col-span-2 md:mt-3 lg:mt-4">
+  <div class="mt-1 w-full md:col-span-2 md:row-start-2 md:mt-3 lg:mt-4">
     <HeroCtaGrid heading={copy.ctaHeading} copy={selectedOutput} stats={selectedOutputStats} />
   </div>
+  <HeroPortrait />
 </Container>

@@ -102,6 +102,10 @@
 }
 
 @media (max-width: 639px) {
+  .editorial-page-hero__support {
+    display: none;
+  }
+
   .editorial-page-hero {
     padding-top: 0.25rem;
   }

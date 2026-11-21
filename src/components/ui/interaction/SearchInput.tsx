@@ -1,7 +1,7 @@
 import '@/styles/components/glass-input.css';
 
 import { Search, X, Tag } from 'lucide-react';
-import { memo, useId, useState, type FC } from 'react';
+import { memo, useId, useState, type FC, type ComponentPropsWithRef } from 'react';
 import { cn } from '@/lib/utils';
 
 const SIZE_CONFIG = {
@@ -30,7 +30,19 @@ const SIZE_CONFIG = {
 
 type SearchInputSize = keyof typeof SIZE_CONFIG;
 
+export type SearchFieldProps = Pick<
+  ComponentPropsWithRef<'input'>,
+  | 'role'
+  | 'aria-haspopup'
+  | 'aria-expanded'
+  | 'aria-controls'
+  | 'aria-activedescendant'
+  | 'onKeyDown'
+  | 'ref'
+>;
+
 interface SearchInputProps {
+  readonly fieldProps?: SearchFieldProps;
   readonly value: string;
   readonly staticControls?: boolean;
   readonly onChange: (value: string) => void;
@@ -43,6 +55,7 @@ interface SearchInputProps {
 
 const SearchInputComponent: FC<SearchInputProps> = ({
   value,
+  fieldProps,
   staticControls = false,
   onChange,
   placeholder = 'Search…',
@@ -114,6 +127,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
 
         {/* Input */}
         <input
+          {...fieldProps}
           type="search"
           value={value}
           onChange={e => {
@@ -167,6 +181,7 @@ const SearchInputComponent: FC<SearchInputProps> = ({
 export const SearchInput = memo(SearchInputComponent, (prevProps, nextProps) => {
   return (
     prevProps.value === nextProps.value &&
+    prevProps.fieldProps === nextProps.fieldProps &&
     prevProps.staticControls === nextProps.staticControls &&
     prevProps.placeholder === nextProps.placeholder &&
     prevProps.ariaLabel === nextProps.ariaLabel &&

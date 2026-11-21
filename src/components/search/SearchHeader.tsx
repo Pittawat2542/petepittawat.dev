@@ -4,11 +4,12 @@ import { X } from 'lucide-react';
 import type { FC } from 'react';
 import { RecentSearches } from './RecentSearches';
 import { SearchFilterChips } from './SearchFilterChips';
-import SearchInput from '@/components/ui/interaction/SearchInput';
+import SearchInput, { type SearchFieldProps } from '@/components/ui/interaction/SearchInput';
 import { DialogClose } from '@/components/ui/core/dialog';
 import { memo } from 'react';
 
 interface SearchHeaderProps {
+  readonly fieldProps: SearchFieldProps;
   readonly query: string;
   readonly onQueryChange: (query: string) => void;
   readonly typeFilter: Set<SearchItemType>;
@@ -22,6 +23,7 @@ interface SearchHeaderProps {
 }
 
 const SearchHeaderComponent: FC<SearchHeaderProps> = ({
+  fieldProps,
   query,
   onQueryChange,
   typeFilter,
@@ -38,6 +40,7 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
       <div className="flex items-center gap-3">
         <div className="flex-1">
           <SearchInput
+            fieldProps={fieldProps}
             value={query}
             onChange={onQueryChange}
             placeholder="Search posts, projects, publications, talks..."
@@ -68,6 +71,7 @@ const SearchHeaderComponent: FC<SearchHeaderProps> = ({
 // Memoize the component with custom comparison
 export const SearchHeader = memo(SearchHeaderComponent, (prevProps, nextProps) => {
   return (
+    prevProps.fieldProps === nextProps.fieldProps &&
     prevProps.query === nextProps.query &&
     prevProps.typeFilter === nextProps.typeFilter &&
     prevProps.countsByType === nextProps.countsByType &&

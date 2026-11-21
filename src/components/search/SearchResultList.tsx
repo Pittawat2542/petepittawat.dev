@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { searchResultId, searchResultsId } from './hooks/useSearchNavigation';
 import { Badge } from '@/components/ui/core/badge';
 import { CornerDownLeft, Command, ExternalLink } from 'lucide-react';
 
@@ -21,7 +22,7 @@ type SearchResultListProps = {
   onTagClick?: (tag: string) => void;
 };
 
-export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListProps>(
+export const SearchResultList = forwardRef<HTMLDivElement, SearchResultListProps>(
   (
     { items, activeIndex, getHref, onItemClick, onActiveIndexChange, query = '', onTagClick },
     ref
@@ -33,17 +34,18 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
     };
 
     return (
-      <ul
+      <div
         ref={ref}
         className="divide-border divide-y"
-        role="listbox"
-        aria-activedescendant={`sr-${activeIndex}`}
+        id={searchResultsId}
+        role="grid"
+        aria-label="Search results"
       >
-        {items.slice(0, 50).map((item, index) => (
-          <li
-            id={`sr-${index}`}
+        {items.map((item, index) => (
+          <div
+            id={searchResultId(index)}
             key={item.id}
-            role="option"
+            role="row"
             aria-selected={index === activeIndex}
             className={cn(
               'search-result-item-wrapper flex flex-col transition-colors hover:bg-white/5',
@@ -53,71 +55,68 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
               onActiveIndexChange(index);
             }}
           >
-            <a
-              href={getHref(item)}
-              className={cn(
-                'flex items-start gap-3 px-4 pt-3 pb-1.5 transition-colors',
-                'focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:outline-none'
-              )}
-              onClick={() => {
-                onItemClick(item);
-              }}
-            >
-              <div className="flex min-w-[7rem] items-center gap-2 pt-0.5">
-                <div
-                  className={cn(
-                    'rounded-md border border-white/10 p-1.5',
-                    typeAccentClasses(item.type)
-                  )}
-                >
-                  {renderTypeIcon(item.type)}
-                </div>
-                <Badge className={cn('capitalize', typeAccentClasses(item.type))}>
-                  {item.type}
-                </Badge>
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="truncate text-sm font-medium">
-                    {highlightTitle(item.title, item.__titlePositions)}
-                  </h3>
-                  {(item.locale === 'th' ||
-                    (item.isFallback && item.availableLocales.length > 1)) && (
-                    <Badge className="type-micro bg-white/10 text-white/75">
-                      {item.locale.toUpperCase()}
-                    </Badge>
-                  )}
-                  {item.date && (
-                    <span className="text-muted-foreground text-xs">
-                      {String(item.date).slice(0, 10)}
-                    </span>
-                  )}
-                </div>
-                {item.description && (
-                  <p className="text-muted-foreground line-clamp-2 text-xs">{item.description}</p>
+            <div role="gridcell">
+              <a
+                href={getHref(item)}
+                className={cn(
+                  'flex items-start gap-3 px-4 pt-3 pb-1.5 transition-colors',
+                  'focus-visible:ring-ring/40 focus-visible:ring-2 focus-visible:outline-none'
                 )}
-              </div>
-              <div className="text-muted-foreground type-caption mt-1 flex items-center gap-2">
-                {index === activeIndex && (
-                  <>
-                    <span className="hidden items-center gap-1 sm:inline-flex">
-                      <CornerDownLeft size={12} /> Open
-                    </span>
-                    <span className="hidden items-center gap-1 lg:inline-flex">
-                      <Command size={12} /> + Enter new tab
-                    </span>
-                  </>
-                )}
-                <ExternalLink size={14} className="opacity-60" />
-              </div>
-            </a>
-            {item.tags && item.tags.length > 0 && (
-              <div
-                className="mt-1 ml-[8.75rem] flex flex-wrap gap-1.5 px-4 pb-3"
-                onClick={e => {
-                  e.stopPropagation();
+                onClick={() => {
+                  onItemClick(item);
                 }}
               >
+                <div className="flex min-w-[7rem] items-center gap-2 pt-0.5">
+                  <div
+                    className={cn(
+                      'rounded-md border border-white/10 p-1.5',
+                      typeAccentClasses(item.type)
+                    )}
+                  >
+                    {renderTypeIcon(item.type)}
+                  </div>
+                  <Badge className={cn('capitalize', typeAccentClasses(item.type))}>
+                    {item.type}
+                  </Badge>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="truncate text-sm font-medium">
+                      {highlightTitle(item.title, item.__titlePositions)}
+                    </h3>
+                    {(item.locale === 'th' ||
+                      (item.isFallback && item.availableLocales.length > 1)) && (
+                      <Badge className="type-micro bg-white/10 text-white/75">
+                        {item.locale.toUpperCase()}
+                      </Badge>
+                    )}
+                    {item.date && (
+                      <span className="text-muted-foreground text-xs">
+                        {String(item.date).slice(0, 10)}
+                      </span>
+                    )}
+                  </div>
+                  {item.description && (
+                    <p className="text-muted-foreground line-clamp-2 text-xs">{item.description}</p>
+                  )}
+                </div>
+                <div className="text-muted-foreground type-caption mt-1 flex items-center gap-2">
+                  {index === activeIndex && (
+                    <>
+                      <span className="hidden items-center gap-1 sm:inline-flex">
+                        <CornerDownLeft size={12} /> Open
+                      </span>
+                      <span className="hidden items-center gap-1 lg:inline-flex">
+                        <Command size={12} /> + Enter new tab
+                      </span>
+                    </>
+                  )}
+                  <ExternalLink size={14} className="opacity-60" />
+                </div>
+              </a>
+            </div>
+            {item.tags && item.tags.length > 0 && (
+              <div className="mt-1 ml-[8.75rem] flex flex-wrap gap-1.5 px-4 pb-3" role="gridcell">
                 {item.tags.slice(0, 5).map(tag => {
                   const cleanQuery = query.startsWith('#') ? query.slice(1).trim() : query.trim();
                   const isMatched =
@@ -144,9 +143,9 @@ export const SearchResultList = forwardRef<HTMLUListElement, SearchResultListPro
                 })}
               </div>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     );
   }
 );

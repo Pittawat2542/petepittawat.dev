@@ -117,10 +117,6 @@ export default function ListingToolbar({
           </button>
         </div>
         <div className="static-toolbar-tools grid items-center gap-3 md:grid-cols-[minmax(0,1fr)_auto]">
-          <div className="static-toolbar-sort flex w-full flex-col items-start gap-1 sm:w-auto sm:flex-row sm:items-center">
-            <span className="editorial-control-label">Sort</span>
-            {select('sort', 'Sort results', sortOptions)}
-          </div>
           {blog && (
             <BlogLanguageSwitcher
               ariaLabel="Select blog language"
@@ -184,6 +180,12 @@ export default function ListingToolbar({
         className="editorial-filter-panel__body editorial-filter-panel__filters space-y-4"
       >
         <div className="editorial-filter-groups">
+          <div className="editorial-filter-group">
+            <div className="editorial-filter-group__heading">
+              <span className="editorial-control-label">Sort</span>
+            </div>
+            {select('sort', 'Sort results', sortOptions)}
+          </div>
           {Object.entries(options).map(([key, values], index) => (
             <div className="editorial-filter-group" key={key}>
               <div className="editorial-filter-group__heading">

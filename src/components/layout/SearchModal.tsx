@@ -10,6 +10,7 @@ import { SearchTriggers } from '@/components/search/SearchTriggers';
 import { memo } from 'react';
 import { SearchFooter } from '@/components/search/SearchFooter';
 import { SearchTagSuggestions } from '@/components/search/SearchTagSuggestions';
+import { searchResultId, searchResultsId } from '@/components/search/hooks/useSearchNavigation';
 import { useSearchController } from '@/components/search/useSearchController';
 
 interface SearchModalProps {
@@ -30,6 +31,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
       loaded,
       failed,
       filtered,
+      visibleResults,
       suggestions,
       recent,
       countsByType,
@@ -39,6 +41,8 @@ const SearchModalComponent: FC<SearchModalProps> = ({
     },
     actions: {
       retry,
+      showMore,
+      onResultKeyDown,
       restoreFocus,
       setQuery,
       setActiveIndex,
@@ -50,7 +54,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
       getHref,
       handleResultClick,
     },
-    refs: { listRef },
+    refs: { listRef, inputRef },
   } = useSearchController({ autoOpen, ...(openKey !== undefined && { openKey }) });
 
   const trimmedQuery = query.trim();
@@ -59,7 +63,8 @@ const SearchModalComponent: FC<SearchModalProps> = ({
   const showRecent = open && loaded && !hasQuery && recent.length > 0;
   const showSuggestions = loaded && !hasQuery;
   const showTagSuggestions = loaded && isTagSearch;
-  const showResults = loaded && hasQuery && filtered.length > 0;
+  const showResults = visibleResults.length > 0;
+  const hasMore = showResults && visibleResults.length < filtered.length;
   const showEmpty = loaded && hasQuery && filtered.length === 0 && !showTagSuggestions;
 
   return (
@@ -68,6 +73,15 @@ const SearchModalComponent: FC<SearchModalProps> = ({
       {open && (
         <SearchDialogContent onClose={restoreFocus}>
           <SearchHeader
+            fieldProps={{
+              ref: inputRef,
+              role: 'combobox',
+              'aria-haspopup': 'grid',
+              'aria-expanded': showResults,
+              'aria-controls': showResults ? searchResultsId : undefined,
+              'aria-activedescendant': showResults ? searchResultId(activeIndex) : undefined,
+              onKeyDown: onResultKeyDown,
+            }}
             query={query}
             onQueryChange={setQuery}
             typeFilter={typeFilter}
@@ -98,7 +112,7 @@ const SearchModalComponent: FC<SearchModalProps> = ({
             {showResults && (
               <SearchResultList
                 ref={listRef}
-                items={filtered}
+                items={visibleResults}
                 activeIndex={activeIndex}
                 getHref={getHref}
                 onItemClick={handleResultClick}
@@ -112,7 +126,10 @@ const SearchModalComponent: FC<SearchModalProps> = ({
           </div>
           {loaded && (
             <SearchFooter
-              resultCount={filtered.length}
+              resultCount={hasQuery ? filtered.length : 0}
+              visibleCount={visibleResults.length}
+              {...(hasMore && { onShowMore: showMore })}
+              hasQuery={hasQuery}
               isTagSearch={isTagSearch}
               tagCount={tagSuggestions.length}
             />

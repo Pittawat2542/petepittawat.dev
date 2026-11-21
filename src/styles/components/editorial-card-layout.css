@@ -110,3 +110,13 @@
     --media-card-media-aspect: 16 / 6.6;
   }
 }
+
+@media (max-width: 639px) {
+  :is(.blog-index__featured, .editorial-listing__featured) .media-card__body {
+    order: -1;
+  }
+
+  :is(.blog-index__featured, .editorial-listing__featured) .media-card__media {
+    border-radius: 0;
+  }
+}

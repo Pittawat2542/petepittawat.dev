@@ -1,4 +1,13 @@
 /* Search dialog shell, close button, scroll area, and footer. */
+.search-dialog {
+  inset: 0;
+  margin: auto;
+  width: min(56rem, 92vw);
+  max-width: none;
+  height: fit-content;
+  max-height: 100dvh;
+  translate: none;
+}
 .search-modal {
   position: relative;
   width: 100%;
@@ -79,6 +88,9 @@
   box-shadow: var(--focus-ring);
 }
 @media (max-width: 639px) {
+  .search-dialog {
+    width: 100%;
+  }
   .search-modal {
     height: 100dvh;
     border-radius: 0;

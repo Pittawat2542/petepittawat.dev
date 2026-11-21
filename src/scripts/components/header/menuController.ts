@@ -1,6 +1,4 @@
-/**
- * Mobile menu management for header
- */
+import { SEARCH_OPEN_EVENT } from '@/scripts/openSearch';
 
 export interface MenuController {
   init(): void;
@@ -8,115 +6,116 @@ export interface MenuController {
 }
 
 export function createMenuController(): MenuController {
-  let isMenuOpen = false;
   const desktopBreakpoint = window.matchMedia('(min-width: 960px)');
+  const menu = document.getElementById('mobile-menu');
+  const toggle = document.getElementById('menu-toggle');
+  const sheet = document.getElementById('mobile-menu-sheet');
+  const links = Array.from(menu?.querySelectorAll<HTMLAnchorElement>('a[href]') ?? []);
+  const inactiveBackground = new Set<HTMLElement>();
+  const root = document.documentElement;
+  let isOpen = false;
+  let previousOverflow = '';
+  let lastFocusedLink: HTMLAnchorElement | undefined;
 
-  // DOM element references
-  let menu: HTMLElement | null = null;
-  let toggle: HTMLElement | null = null;
-  let sheet: HTMLElement | null = null;
+  function close(focusTarget?: HTMLElement | null) {
+    if (!isOpen || !menu || !toggle) return;
+    isOpen = false;
+    inactiveBackground.forEach(element => {
+      element.inert = false;
+    });
+    inactiveBackground.clear();
+    root.style.overflow = previousOverflow;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    toggle.dataset['open'] = 'false';
+    focusTarget?.focus({ preventScroll: true });
+    menu.dataset['open'] = 'false';
+    menu.inert = true;
+    menu.setAttribute('aria-hidden', 'true');
+    if (sheet) sheet.dataset['open'] = 'false';
+    lastFocusedLink = undefined;
+  }
 
-  const setMenuOpen = (open: boolean) => {
+  function handleToggle() {
     if (!menu || !toggle) return;
-
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    toggle.dataset['open'] = open ? 'true' : 'false';
-
-    menu.dataset['open'] = open ? 'true' : 'false';
-    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    menu.inert = !open;
-    menu.toggleAttribute('inert', !open);
-    menu.style.opacity = open ? '1' : '0';
-    menu.style.pointerEvents = open ? 'auto' : 'none';
-
-    if (sheet) {
-      sheet.dataset['open'] = open ? 'true' : 'false';
-      sheet.style.opacity = open ? '1' : '0';
-      sheet.style.transform = open ? 'translateY(0)' : 'translateY(-0.35rem)';
+    if (isOpen) {
+      close(toggle);
+      return;
     }
+    if (desktopBreakpoint.matches) return;
 
-    const root = document.documentElement;
-    if (open) {
-      root.style.overflow = 'hidden';
-    } else {
-      root.style.overflow = '';
+    isOpen = true;
+    previousOverflow = root.style.overflow;
+    root.style.overflow = 'hidden';
+    for (const element of document.querySelectorAll<HTMLElement>(
+      'body > :is(main, footer, .skip-link, [data-scroll-top])'
+    )) {
+      if (element.inert) continue;
+      element.inert = true;
+      inactiveBackground.add(element);
     }
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    toggle.dataset['open'] = 'true';
+    menu.dataset['open'] = 'true';
+    menu.removeAttribute('aria-hidden');
+    menu.inert = false;
+    if (sheet) sheet.dataset['open'] = 'true';
+    links[0]?.focus();
+  }
+
+  function handleNavigation(event: MouseEvent) {
+    if (event.target instanceof Element && event.target.closest('a')) close(toggle);
+  }
+
+  function handleFocus(event: FocusEvent) {
+    if (event.target instanceof HTMLAnchorElement) lastFocusedLink = event.target;
+  }
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (!isOpen || !toggle) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close(toggle);
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    const items = [toggle, ...links];
+    const index = items.findIndex(item => item === document.activeElement);
+    const step = event.shiftKey ? -1 : 1;
+    event.preventDefault();
+    items[(index + step + items.length) % items.length]?.focus();
+  }
+
+  function handleDesktopBreakpoint(event: MediaQueryListEvent) {
+    if (!event.matches || !isOpen) return;
+    const desktopLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('#nav-list a'));
+    const matchingLink = desktopLinks.find(link => link.href === lastFocusedLink?.href);
+    close(matchingLink ?? desktopLinks[0]);
+  }
+
+  function handleOpenSearch() {
+    close(menu?.contains(document.activeElement) ? toggle : undefined);
+  }
+
+  return {
+    init() {
+      toggle?.addEventListener('click', handleToggle);
+      menu?.addEventListener('click', handleNavigation);
+      menu?.addEventListener('focusin', handleFocus);
+      document.addEventListener('keydown', handleKeydown);
+      desktopBreakpoint.addEventListener('change', handleDesktopBreakpoint);
+      window.addEventListener(SEARCH_OPEN_EVENT, handleOpenSearch);
+    },
+    cleanup() {
+      toggle?.removeEventListener('click', handleToggle);
+      menu?.removeEventListener('click', handleNavigation);
+      menu?.removeEventListener('focusin', handleFocus);
+      document.removeEventListener('keydown', handleKeydown);
+      desktopBreakpoint.removeEventListener('change', handleDesktopBreakpoint);
+      window.removeEventListener(SEARCH_OPEN_EVENT, handleOpenSearch);
+      close();
+    },
   };
-
-  const handleMenuToggle = () => {
-    isMenuOpen = !isMenuOpen;
-    setMenuOpen(isMenuOpen);
-  };
-
-  const handleMenuNavigation = (e: Event) => {
-    const target = e.target;
-    const element = target instanceof Element ? target.closest('a') : null;
-    if (element?.tagName === 'A') {
-      isMenuOpen = false;
-      setMenuOpen(false);
-    }
-  };
-
-  const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key !== 'Escape' || !isMenuOpen) return;
-
-    isMenuOpen = false;
-    setMenuOpen(false);
-    toggle?.focus();
-  };
-
-  const handleDesktopBreakpoint = (event: MediaQueryListEvent) => {
-    if (!event.matches || !isMenuOpen) return;
-
-    isMenuOpen = false;
-    setMenuOpen(false);
-  };
-
-  const init = () => {
-    // Get DOM references
-    menu = document.getElementById('mobile-menu');
-    toggle = document.getElementById('menu-toggle');
-    sheet = document.getElementById('mobile-menu-sheet');
-
-    // Setup mobile menu
-    if (toggle) {
-      toggle.addEventListener('click', handleMenuToggle);
-    }
-
-    if (menu) {
-      menu.addEventListener('click', handleMenuNavigation);
-    }
-
-    setMenuOpen(false);
-    document.addEventListener('keydown', handleKeydown);
-    desktopBreakpoint.addEventListener('change', handleDesktopBreakpoint);
-  };
-
-  const cleanup = () => {
-    // Remove event listeners
-    if (toggle) {
-      toggle.removeEventListener('click', handleMenuToggle);
-    }
-
-    if (menu) {
-      menu.removeEventListener('click', handleMenuNavigation);
-    }
-
-    document.removeEventListener('keydown', handleKeydown);
-    desktopBreakpoint.removeEventListener('change', handleDesktopBreakpoint);
-
-    // Reset menu state
-    if (isMenuOpen) {
-      setMenuOpen(false);
-      isMenuOpen = false;
-    }
-
-    // Clear references
-    menu = null;
-    toggle = null;
-    sheet = null;
-  };
-
-  return { init, cleanup };
 }

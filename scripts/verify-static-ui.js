@@ -120,7 +120,10 @@ async function verifyStaticUi(page) {
         'page scroll was not locked'
       );
       await page.keyboard.press('Escape');
-      await page.waitForTimeout(50);
+      await page.waitForFunction(
+        el => el.getAttribute('aria-expanded') === 'false',
+        await trigger.elementHandle()
+      );
       assert(!(await dialog.evaluate(el => el.open)), 'Escape did not close details');
       assert(await trigger.evaluate(el => el === document.activeElement), 'focus was not restored');
       assert(
@@ -194,6 +197,7 @@ async function verifyStaticUi(page) {
     await page.reload();
     assert((await input.inputValue()) === 'zzzz-unmatched', 'URL query was not restored');
     await page.locator('[data-clear-query]').click();
+    await page.locator('[data-toggle-filters]').click();
     await page.locator('[data-menu-trigger="listing-menu-sort"]').click();
     await page.locator('[data-filter-key="sort"] [data-value="oldest"]').click();
     const dates = await page
@@ -203,7 +207,6 @@ async function verifyStaticUi(page) {
       dates.every((date, i) => !i || date >= dates[i - 1]),
       'oldest sorting is incorrect'
     );
-    await page.locator('[data-toggle-filters]').click();
     const tagTrigger = page.locator('[data-menu-trigger="listing-tag-menu"]');
     await tagTrigger.scrollIntoViewIfNeeded();
     await page.waitForTimeout(100);

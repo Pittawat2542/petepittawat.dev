@@ -108,15 +108,25 @@
   }
 }
 
-.static-toolbar-tools .static-select {
-  width: 100%;
+@media (max-width: 639px) {
+  [data-listing-toolbar] > div:first-child {
+    gap: 0.65rem;
+  }
+
+  [data-listing-toolbar] .static-toolbar-tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  [data-listing-content] {
+    margin-top: 0.75rem;
+  }
 }
+
 @media (min-width: 640px) {
   .static-toolbar-tools {
     display: flex;
     flex-wrap: wrap;
-  }
-  .static-toolbar-tools .static-select {
-    width: auto;
   }
 }

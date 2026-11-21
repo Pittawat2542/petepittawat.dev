@@ -42,8 +42,6 @@ export async function GET(context) {
         content: post.body,
       };
     }),
-    // Add namespace + extra data
-    customData:
-      '<language>en</language>\n' + '<xmlns:content="http://purl.org/rss/1.0/modules/content/"/>',
+    customData: '<language>en</language>',
   });
 }

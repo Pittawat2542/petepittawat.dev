@@ -3,6 +3,9 @@ import { memo } from 'react';
 import { CornerDownLeft, ArrowUp, ArrowDown } from 'lucide-react';
 
 interface SearchFooterProps {
+  readonly onShowMore?: () => void;
+  readonly visibleCount: number;
+  readonly hasQuery: boolean;
   readonly resultCount: number;
   readonly isTagSearch?: boolean;
   readonly tagCount?: number;
@@ -10,6 +13,9 @@ interface SearchFooterProps {
 
 const SearchFooterComponent: FC<SearchFooterProps> = ({
   resultCount,
+  onShowMore,
+  visibleCount,
+  hasQuery,
   isTagSearch = false,
   tagCount = 0,
 }) => {
@@ -43,10 +49,20 @@ const SearchFooterComponent: FC<SearchFooterProps> = ({
           <span className="text-muted-foreground">to close</span>
         </span>
       </div>
-      <div className="text-muted-foreground font-mono font-medium tabular-nums">
-        {showTagCount
-          ? `${tagCount} ${tagCount === 1 ? 'tag' : 'tags'}`
-          : `${resultCount} ${resultCount === 1 ? 'result' : 'results'}`}
+      <div className="flex items-center gap-3">
+        {onShowMore && (
+          <button type="button" className="search-type-chip min-h-11" onClick={onShowMore}>
+            Show more
+          </button>
+        )}
+        <span role="status" className="text-muted-foreground font-mono font-medium tabular-nums">
+          {hasQuery &&
+            (showTagCount
+              ? `${tagCount} ${tagCount === 1 ? 'tag' : 'tags'}`
+              : visibleCount < resultCount
+                ? `${visibleCount} of ${resultCount} results`
+                : `${resultCount} ${resultCount === 1 ? 'result' : 'results'}`)}
+        </span>
       </div>
     </footer>
   );
